@@ -1,4 +1,4 @@
-# rules-uk Agent Notes
+# rulespec-uk Agent Notes
 
 This repo stores UK RuleSpec source registry materials and related policy metadata.
 
