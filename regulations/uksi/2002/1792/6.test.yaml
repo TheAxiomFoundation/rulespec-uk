@@ -1,0 +1,74 @@
+- name: standard_minimum_guarantee_partner_positive
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2024-01-01'
+    end: '2024-01-07'
+  input:
+    uk:regulations/uksi/2002/1792/6#input.claimant_is_prisoner: false
+    uk:regulations/uksi/2002/1792/6#input.member_of_religious_order_fully_maintained_by_order: false
+    uk:regulations/uksi/2002/1792/6#input.claimant_has_partner: true
+    uk:regulations/uksi/2002/1792/6#input.treated_as_severely_disabled_person_under_schedule_i_part_i_paragraph_1: false
+    uk:regulations/uksi/2002/1792/6#input.severe_disability_couple_rate_conditions_satisfied: false
+    uk:regulations/uksi/2002/1792/6#input.paragraph_4_of_part_ii_of_schedule_i_satisfied_for_this_partner: false
+  output:
+    uk:regulations/uksi/2002/1792/6#paragraph_3_case_applies: not_holds
+    uk:regulations/uksi/2002/1792/6#standard_minimum_guarantee: 363.25
+    uk:regulations/uksi/2002/1792/6#severe_disability_additional_amount: 0
+    uk:regulations/uksi/2002/1792/6#carer_additional_amount: 0
+- name: paragraph_3_case_sets_standard_minimum_guarantee_to_nil
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2024-01-01'
+    end: '2024-01-07'
+  input:
+    uk:regulations/uksi/2002/1792/6#input.claimant_is_prisoner: true
+    uk:regulations/uksi/2002/1792/6#input.member_of_religious_order_fully_maintained_by_order: false
+    uk:regulations/uksi/2002/1792/6#input.claimant_has_partner: true
+    uk:regulations/uksi/2002/1792/6#input.treated_as_severely_disabled_person_under_schedule_i_part_i_paragraph_1: true
+    uk:regulations/uksi/2002/1792/6#input.severe_disability_couple_rate_conditions_satisfied: true
+    uk:regulations/uksi/2002/1792/6#input.paragraph_4_of_part_ii_of_schedule_i_satisfied_for_this_partner: true
+  output:
+    uk:regulations/uksi/2002/1792/6#paragraph_3_case_applies: holds
+    uk:regulations/uksi/2002/1792/6#standard_minimum_guarantee: 0
+    uk:regulations/uksi/2002/1792/6#severe_disability_additional_amount: 0
+    uk:regulations/uksi/2002/1792/6#carer_additional_amount: 0
+- name: severe_disability_couple_rate_and_carer_amount
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2024-01-01'
+    end: '2024-01-07'
+  input:
+    uk:regulations/uksi/2002/1792/6#input.claimant_is_prisoner: false
+    uk:regulations/uksi/2002/1792/6#input.member_of_religious_order_fully_maintained_by_order: false
+    uk:regulations/uksi/2002/1792/6#input.claimant_has_partner: true
+    uk:regulations/uksi/2002/1792/6#input.treated_as_severely_disabled_person_under_schedule_i_part_i_paragraph_1: true
+    uk:regulations/uksi/2002/1792/6#input.severe_disability_couple_rate_conditions_satisfied: true
+    uk:regulations/uksi/2002/1792/6#input.paragraph_4_of_part_ii_of_schedule_i_satisfied_for_this_partner: true
+  output:
+    uk:regulations/uksi/2002/1792/6#paragraph_3_case_applies: not_holds
+    uk:regulations/uksi/2002/1792/6#standard_minimum_guarantee: 363.25
+    uk:regulations/uksi/2002/1792/6#severe_disability_additional_amount: 172.1
+    uk:regulations/uksi/2002/1792/6#carer_additional_amount: 48.15
+- name: remand_prisoner_long_detention_and_tax_credit_cessation
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2024-01-01'
+    end: '2024-01-07'
+  input:
+    uk:regulations/uksi/2002/1792/6#input.detained_for_period_not_exceeding_52_weeks: true
+    uk:regulations/uksi/2002/1792/6#input.detained_in_custody_on_remand_pending_trial: false
+    uk:regulations/uksi/2002/1792/6#input.required_as_condition_of_bail_to_reside_in_approved_hostel: true
+    uk:regulations/uksi/2002/1792/6#input.detained_pending_sentence_upon_conviction: false
+    uk:regulations/uksi/2002/1792/6#input.detained_in_custody_for_more_than_52_weeks: true
+    uk:regulations/uksi/2002/1792/6#input.detained_pending_trial_or_sentence_following_conviction_by_court: true
+    uk:regulations/uksi/2002/1792/6#input.awarded_tax_credit_under_tax_credits_act: true
+    uk:regulations/uksi/2002/1792/6#input.tax_credit_award_circumstances_in_paragraph_15: false
+    uk:regulations/uksi/2002/1792/6#input.tax_credit_decision_revised_in_favour_after_paragraph_16_event: true
+  output:
+    uk:regulations/uksi/2002/1792/6#remand_prisoner: holds
+    uk:regulations/uksi/2002/1792/6#detained_more_than_52_weeks_pending_trial_or_sentence: holds
+    uk:regulations/uksi/2002/1792/6#schedule_iia_additional_amount_entitlement_ceases_for_tax_credit_award: holds

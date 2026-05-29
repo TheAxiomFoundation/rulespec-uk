@@ -1,0 +1,255 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2013/376/36
+  summary: |-
+    "The amounts of the standard allowance, the child element, the LCWRA element and the carer element ... and the maximum amounts of the childcare costs element are given in the following table." The table gives fixed amounts for each assessment period and states that housing costs are dealt with in regulation 26.
+rules:
+  - name: standard_allowance_single_under_25
+    kind: parameter
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: regulation 36 table, Standard allowance
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/36
+              excerpt: "single claimant aged under 25 | £338.58"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          338.58
+
+  - name: standard_allowance_single_25_or_over
+    kind: parameter
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: regulation 36 table, Standard allowance
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/36
+              excerpt: "single claimant aged 25 or over | £424.90"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          424.90
+
+  - name: standard_allowance_joint_both_under_25
+    kind: parameter
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: regulation 36 table, Standard allowance
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/36
+              excerpt: "joint claimants both aged under 25 | £528.34"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          528.34
+
+  - name: standard_allowance_joint_either_25_or_over
+    kind: parameter
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: regulation 36 table, Standard allowance
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/36
+              excerpt: "joint claimants where either is aged 25 or over | £666.97"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          666.97
+
+  - name: child_element_first_child_or_qualifying_young_person
+    kind: parameter
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: regulation 36 table, Child element
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/36
+              excerpt: "first child or qualifying young person | £351.88"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          351.88
+
+  - name: child_element_second_and_each_subsequent_child_or_qualifying_young_person
+    kind: parameter
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: regulation 36 table, Child element
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/36
+              excerpt: "second and each subsequenteach child or qualifying young person | £303.94"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          303.94
+
+  - name: disabled_child_additional_amount_lower_rate
+    kind: parameter
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: regulation 36 table, Additional amount for disabled child or qualifying young person
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/36
+              excerpt: "lower rate | £164.79"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          164.79
+
+  - name: disabled_child_additional_amount_higher_rate
+    kind: parameter
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: regulation 36 table, Additional amount for disabled child or qualifying young person
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/36
+              excerpt: "higher rate | £514.71"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          514.71
+
+  - name: lcwra_element_standard_lcwra_claimant
+    kind: parameter
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: regulation 36 table, LCWRA element
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/36
+              excerpt: "claimant with limited capability for work and work-related activity, other than a pre-2026 claimant, a severe conditions criteria claimant or a claimant who is terminally ill | £217.26"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          217.26
+
+  - name: lcwra_element_pre_2026_severe_conditions_or_terminally_ill_claimant
+    kind: parameter
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: regulation 36 table, LCWRA element
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/36
+              excerpt: "pre-2026 claimant, severe conditions criteria claimant or claimant who is terminally ill | £429.80"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          429.80
+
+  - name: carer_element
+    kind: parameter
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: regulation 36 table, Carer element
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/36
+              excerpt: "Carer element | £209.34"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          209.34
+
+  - name: childcare_costs_element_maximum_one_child
+    kind: parameter
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: regulation 36 table, Childcare costs element
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/36
+              excerpt: "maximum amount for one child | £1,071.09"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          1071.09
+
+  - name: childcare_costs_element_maximum_two_or_more_children
+    kind: parameter
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: regulation 36 table, Childcare costs element
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/36
+              excerpt: "maximum amount for two or more children | £1,836.16"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          1836.16

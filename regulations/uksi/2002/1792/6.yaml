@@ -1,0 +1,348 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2002/1792/6
+  summary: |-
+    The standard minimum guarantee is £363.25 per week for a claimant with a partner and £238.00 per week for a claimant with no partner, except as otherwise provided. Paragraph (3) applies to prisoners and fully maintained members of religious orders; in those cases section 2(3)(a) refers to a nil amount and, except for remand prisoners, nil is prescribed for section 2(3)(b). Outside paragraph (3) cases, severe-disability additions are £86.05 or £172.10 per week, carer additions are £48.15 per week, and specified child/tax-credit additional-amount rules apply. “Remand prisoner” covers detention for a period not exceeding 52 weeks in the stated remand, bail-hostel, or pending-sentence circumstances; another paragraph applies after more than 52 weeks pending trial or sentence following conviction.
+  deferred_outputs:
+    - output: uk:regulations/uksi/2002/1792/6#standard_minimum_guarantee_for_section_2_3_a
+      reason: The source substitutes a nil amount for the reference to the standard minimum guarantee in section 2(3)(a), but no executable RuleSpec source for section 2(3)(a) is available.
+      source_values:
+        - uk:regulations/uksi/2002/1792/6#nil_amount
+    - output: uk:regulations/uksi/2002/1792/6#prescribed_additional_amount_for_section_2_3_b
+      reason: The source prescribes nil as the additional amount for section 2(3)(b), except for remand prisoners, but no executable RuleSpec source for section 2(3)(b) is available.
+      source_values:
+        - uk:regulations/uksi/2002/1792/6#nil_amount
+rules:
+  - name: standard_minimum_guarantee_with_partner
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: regulation 6(1), claimant who has a partner
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2002/1792/6
+              excerpt: "£363.25 per week in the case of a claimant who has a partner"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          363.25
+
+  - name: standard_minimum_guarantee_no_partner
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: regulation 6(1), claimant who has no partner
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2002/1792/6
+              excerpt: "£238.00 per week in the case of a claimant who has no partner"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          238.00
+
+  - name: nil_amount
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: regulation 6(3)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2002/1792/6
+              excerpt: "a reference to a nil amount"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          0
+
+  - name: paragraph_3_case_applies
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Week
+    source: regulation 6(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2002/1792/6
+              excerpt: "prisoners; and members of religious orders who are fully maintained by their order"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          claimant_is_prisoner
+          or member_of_religious_order_fully_maintained_by_order
+
+  - name: standard_minimum_guarantee
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: regulation 6(1) and 6(3)(a)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2002/1792/6
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2002/1792/6#standard_minimum_guarantee_with_partner
+              output: standard_minimum_guarantee_with_partner
+              hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2002/1792/6#standard_minimum_guarantee_no_partner
+              output: standard_minimum_guarantee_no_partner
+              hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2002/1792/6#nil_amount
+              output: nil_amount
+              hash: sha256:local
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if paragraph_3_case_applies: nil_amount else: if claimant_has_partner: standard_minimum_guarantee_with_partner else: standard_minimum_guarantee_no_partner
+
+  - name: severe_disability_additional_amount_single
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: regulation 6(5)(a)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2002/1792/6
+              excerpt: "£86.05 per week if paragraph 1(1)(a), (b) or (c) of Part I of Schedule I is satisfied"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          86.05
+
+  - name: severe_disability_additional_amount_couple
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: regulation 6(5)(b)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2002/1792/6
+              excerpt: "£172.10 per week if paragraph 1(1)(b) of Part I of Schedule I is satisfied"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          172.10
+
+  - name: severe_disability_additional_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: regulation 6(4) and 6(5)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2002/1792/6
+              excerpt: "Except in a case to which paragraph (3) applies"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2002/1792/6#severe_disability_additional_amount_single
+              output: severe_disability_additional_amount_single
+              hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2002/1792/6#severe_disability_additional_amount_couple
+              output: severe_disability_additional_amount_couple
+              hash: sha256:local
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if paragraph_3_case_applies: 0 else: if treated_as_severely_disabled_person_under_schedule_i_part_i_paragraph_1: if severe_disability_couple_rate_conditions_satisfied: severe_disability_additional_amount_couple else: severe_disability_additional_amount_single else: 0
+
+  - name: carer_additional_amount_per_partner
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: regulation 6(8)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2002/1792/6
+              excerpt: "£48.15 per week"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          48.15
+
+  - name: carer_additional_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: regulation 6(6)(a) and 6(8)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2002/1792/6
+              excerpt: "if paragraph 4 of Part II of Schedule I is satisfied"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2002/1792/6#carer_additional_amount_per_partner
+              output: carer_additional_amount_per_partner
+              hash: sha256:local
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if paragraph_3_case_applies: 0 else: if paragraph_4_of_part_ii_of_schedule_i_satisfied_for_this_partner: carer_additional_amount_per_partner else: 0
+
+  - name: remand_prisoner_maximum_detention_weeks
+    kind: parameter
+    dtype: Count
+    period: Week
+    source: regulation 6(10)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/regulation/uksi/2002/1792/6
+              excerpt: "for a period not exceeding 52 weeks"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          52
+
+  - name: remand_prisoner
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Week
+    source: regulation 6(10)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2002/1792/6
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          detained_for_period_not_exceeding_52_weeks
+          and (
+            detained_in_custody_on_remand_pending_trial
+            or required_as_condition_of_bail_to_reside_in_approved_hostel
+            or detained_pending_sentence_upon_conviction
+          )
+
+  - name: custody_pending_trial_or_sentence_threshold_weeks
+    kind: parameter
+    dtype: Count
+    period: Week
+    source: regulation 6(7)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/regulation/uksi/2002/1792/6
+              excerpt: "detained in custody for more than 52 weeks"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          52
+
+  - name: detained_more_than_52_weeks_pending_trial_or_sentence
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Week
+    source: regulation 6(7)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2002/1792/6
+              excerpt: "detained in custody for more than 52 weeks pending trial or sentence following conviction by a court"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          detained_in_custody_for_more_than_52_weeks
+          and detained_pending_trial_or_sentence_following_conviction_by_court
+
+  - name: schedule_iia_additional_amount_entitlement_ceases_for_tax_credit_award
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Week
+    source: regulation 6(14) to 6(16)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2002/1792/6
+              excerpt: "Entitlement to the additional amount specified in Schedule IIA ceases where a person is awarded a tax credit in the circumstances specified in paragraph (15) or (16)."
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          awarded_tax_credit_under_tax_credits_act
+          and (
+            tax_credit_award_circumstances_in_paragraph_15
+            or tax_credit_decision_revised_in_favour_after_paragraph_16_event
+          )

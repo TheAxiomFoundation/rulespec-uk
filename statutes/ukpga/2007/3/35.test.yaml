@@ -1,0 +1,62 @@
+- name: claimant_meets_section_56_below_threshold_receives_full_allowance
+  period:
+    period_kind: tax_year
+    start: '2024-01-01'
+    end: '2024-12-31'
+  input:
+    uk:statutes/ukpga/2007/3/35#input.individual_makes_claim: true
+    uk:statutes/ukpga/2007/3/35#input.individual_meets_requirements_under_section_56: true
+    uk:statutes/ukpga/2007/3/35#input.adjusted_net_income: 90000
+  output:
+    uk:statutes/ukpga/2007/3/35#individual_entitled_to_personal_allowance: holds
+    uk:statutes/ukpga/2007/3/35#personal_allowance: 12570
+- name: claimant_meets_section_56_below_threshold_receives_full_allowance_scalar_outputs
+  period:
+    period_kind: tax_year
+    start: '2024-01-01'
+    end: '2024-12-31'
+  input:
+    uk:statutes/ukpga/2007/3/35#input.individual_makes_claim: true
+    uk:statutes/ukpga/2007/3/35#input.individual_meets_requirements_under_section_56: true
+    uk:statutes/ukpga/2007/3/35#input.adjusted_net_income: 90000
+  output:
+    uk:statutes/ukpga/2007/3/35#personal_allowance_base_amount: 12570
+    uk:statutes/ukpga/2007/3/35#adjusted_net_income_reduction_threshold: 100000
+    uk:statutes/ukpga/2007/3/35#excess_income_reduction_fraction: 0.5
+    uk:statutes/ukpga/2007/3/35#allowance_rounding_multiple: 1
+- name: claimant_meets_section_56_fractional_reduction_rounded_up_to_pound
+  period:
+    period_kind: tax_year
+    start: '2024-01-01'
+    end: '2024-12-31'
+  input:
+    uk:statutes/ukpga/2007/3/35#input.individual_makes_claim: true
+    uk:statutes/ukpga/2007/3/35#input.individual_meets_requirements_under_section_56: true
+    uk:statutes/ukpga/2007/3/35#input.adjusted_net_income: 100001
+  output:
+    uk:statutes/ukpga/2007/3/35#individual_entitled_to_personal_allowance: holds
+    uk:statutes/ukpga/2007/3/35#personal_allowance: 12570
+- name: no_claim_means_no_entitlement_or_allowance
+  period:
+    period_kind: tax_year
+    start: '2024-01-01'
+    end: '2024-12-31'
+  input:
+    uk:statutes/ukpga/2007/3/35#input.individual_makes_claim: false
+    uk:statutes/ukpga/2007/3/35#input.individual_meets_requirements_under_section_56: true
+    uk:statutes/ukpga/2007/3/35#input.adjusted_net_income: 90000
+  output:
+    uk:statutes/ukpga/2007/3/35#individual_entitled_to_personal_allowance: not_holds
+    uk:statutes/ukpga/2007/3/35#personal_allowance: 0
+- name: section_56_requirements_not_met_means_no_entitlement_or_allowance
+  period:
+    period_kind: tax_year
+    start: '2024-01-01'
+    end: '2024-12-31'
+  input:
+    uk:statutes/ukpga/2007/3/35#input.individual_makes_claim: true
+    uk:statutes/ukpga/2007/3/35#input.individual_meets_requirements_under_section_56: false
+    uk:statutes/ukpga/2007/3/35#input.adjusted_net_income: 90000
+  output:
+    uk:statutes/ukpga/2007/3/35#individual_entitled_to_personal_allowance: not_holds
+    uk:statutes/ukpga/2007/3/35#personal_allowance: 0
