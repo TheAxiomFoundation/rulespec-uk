@@ -1,0 +1,110 @@
+- name: enhanced_rate_for_only_elder_or_eldest_child
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2025-04-07'
+    end: '2025-04-13'
+  input:
+    uk:regulations/uksi/2006/965/2#input.during_subsistence_of_marriage_any_party_married_to_more_than_one_person: false
+    uk:regulations/uksi/2006/965/2#input.marriage_ceremony_took_place_under_law_permitting_polygamy: true
+    uk:regulations/uksi/2006/965/2#input.specified_benefit_allowance_or_increase_paid_for_week_to_person: false
+    ? uk:regulations/uksi/2006/965/2#input.specified_benefit_is_in_respect_of_only_elder_or_eldest_child_for_child_benefit_entitlement
+    : false
+    uk:regulations/uksi/2006/965/2#input.child_or_qualifying_young_person_is_only_elder_or_eldest_for_payee: true
+    uk:regulations/uksi/2006/965/2#input.paragraph_2_relationship_coordination_applies: false
+    uk:regulations/uksi/2006/965/2#input.child_or_qualifying_young_person_is_elder_or_eldest_among_paragraph_2_children: false
+    uk:regulations/uksi/2006/965/2#input.payee_is_voluntary_organisation: false
+    uk:regulations/uksi/2006/965/2#input.payee_resides_with_parent_otherwise_than_paragraph_2_a: false
+  output:
+    uk:regulations/uksi/2006/965/2#member_of_polygamous_marriage: not_holds
+    uk:regulations/uksi/2006/965/2#child_benefit_enhanced_due_to_specified_benefit: not_holds
+    uk:regulations/uksi/2006/965/2#child_benefit_enhanced_rate_payable: holds
+    uk:regulations/uksi/2006/965/2#child_benefit_weekly_rate: 27.05
+- name: paragraph_2_coordination_blocks_non_eldest_child
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2025-04-14'
+    end: '2025-04-20'
+  input:
+    uk:regulations/uksi/2006/965/2#input.during_subsistence_of_marriage_any_party_married_to_more_than_one_person: true
+    uk:regulations/uksi/2006/965/2#input.marriage_ceremony_took_place_under_law_permitting_polygamy: true
+    uk:regulations/uksi/2006/965/2#input.specified_benefit_allowance_or_increase_paid_for_week_to_person: false
+    ? uk:regulations/uksi/2006/965/2#input.specified_benefit_is_in_respect_of_only_elder_or_eldest_child_for_child_benefit_entitlement
+    : false
+    uk:regulations/uksi/2006/965/2#input.child_or_qualifying_young_person_is_only_elder_or_eldest_for_payee: true
+    uk:regulations/uksi/2006/965/2#input.paragraph_2_relationship_coordination_applies: true
+    uk:regulations/uksi/2006/965/2#input.child_or_qualifying_young_person_is_elder_or_eldest_among_paragraph_2_children: false
+    uk:regulations/uksi/2006/965/2#input.payee_is_voluntary_organisation: false
+    uk:regulations/uksi/2006/965/2#input.payee_resides_with_parent_otherwise_than_paragraph_2_a: false
+  output:
+    uk:regulations/uksi/2006/965/2#member_of_polygamous_marriage: holds
+    uk:regulations/uksi/2006/965/2#child_benefit_enhanced_due_to_specified_benefit: not_holds
+    uk:regulations/uksi/2006/965/2#child_benefit_enhanced_rate_payable: not_holds
+    uk:regulations/uksi/2006/965/2#child_benefit_weekly_rate: 17.9
+- name: paragraph_4_voluntary_organisation_blocks_enhanced_rate
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2025-04-21'
+    end: '2025-04-27'
+  input:
+    uk:regulations/uksi/2006/965/2#input.during_subsistence_of_marriage_any_party_married_to_more_than_one_person: true
+    uk:regulations/uksi/2006/965/2#input.marriage_ceremony_took_place_under_law_permitting_polygamy: false
+    uk:regulations/uksi/2006/965/2#input.specified_benefit_allowance_or_increase_paid_for_week_to_person: false
+    ? uk:regulations/uksi/2006/965/2#input.specified_benefit_is_in_respect_of_only_elder_or_eldest_child_for_child_benefit_entitlement
+    : false
+    uk:regulations/uksi/2006/965/2#input.child_or_qualifying_young_person_is_only_elder_or_eldest_for_payee: true
+    uk:regulations/uksi/2006/965/2#input.paragraph_2_relationship_coordination_applies: false
+    uk:regulations/uksi/2006/965/2#input.child_or_qualifying_young_person_is_elder_or_eldest_among_paragraph_2_children: false
+    uk:regulations/uksi/2006/965/2#input.payee_is_voluntary_organisation: true
+    uk:regulations/uksi/2006/965/2#input.payee_resides_with_parent_otherwise_than_paragraph_2_a: false
+  output:
+    uk:regulations/uksi/2006/965/2#member_of_polygamous_marriage: not_holds
+    uk:regulations/uksi/2006/965/2#child_benefit_enhanced_due_to_specified_benefit: not_holds
+    uk:regulations/uksi/2006/965/2#child_benefit_enhanced_rate_payable: not_holds
+    uk:regulations/uksi/2006/965/2#child_benefit_weekly_rate: 17.9
+- name: paragraph_4_residing_with_parent_blocks_enhanced_rate
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2025-04-28'
+    end: '2025-05-04'
+  input:
+    uk:regulations/uksi/2006/965/2#input.during_subsistence_of_marriage_any_party_married_to_more_than_one_person: false
+    uk:regulations/uksi/2006/965/2#input.marriage_ceremony_took_place_under_law_permitting_polygamy: false
+    uk:regulations/uksi/2006/965/2#input.specified_benefit_allowance_or_increase_paid_for_week_to_person: true
+    ? uk:regulations/uksi/2006/965/2#input.specified_benefit_is_in_respect_of_only_elder_or_eldest_child_for_child_benefit_entitlement
+    : false
+    uk:regulations/uksi/2006/965/2#input.child_or_qualifying_young_person_is_only_elder_or_eldest_for_payee: true
+    uk:regulations/uksi/2006/965/2#input.paragraph_2_relationship_coordination_applies: false
+    uk:regulations/uksi/2006/965/2#input.child_or_qualifying_young_person_is_elder_or_eldest_among_paragraph_2_children: false
+    uk:regulations/uksi/2006/965/2#input.payee_is_voluntary_organisation: false
+    uk:regulations/uksi/2006/965/2#input.payee_resides_with_parent_otherwise_than_paragraph_2_a: true
+  output:
+    uk:regulations/uksi/2006/965/2#member_of_polygamous_marriage: not_holds
+    uk:regulations/uksi/2006/965/2#child_benefit_enhanced_due_to_specified_benefit: not_holds
+    uk:regulations/uksi/2006/965/2#child_benefit_enhanced_rate_payable: not_holds
+    uk:regulations/uksi/2006/965/2#child_benefit_weekly_rate: 17.9
+- name: specified_benefit_requires_enhanced_rate
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2025-05-05'
+    end: '2025-05-11'
+  input:
+    uk:regulations/uksi/2006/965/2#input.during_subsistence_of_marriage_any_party_married_to_more_than_one_person: false
+    uk:regulations/uksi/2006/965/2#input.marriage_ceremony_took_place_under_law_permitting_polygamy: false
+    uk:regulations/uksi/2006/965/2#input.specified_benefit_allowance_or_increase_paid_for_week_to_person: true
+    ? uk:regulations/uksi/2006/965/2#input.specified_benefit_is_in_respect_of_only_elder_or_eldest_child_for_child_benefit_entitlement
+    : true
+    uk:regulations/uksi/2006/965/2#input.child_or_qualifying_young_person_is_only_elder_or_eldest_for_payee: false
+    uk:regulations/uksi/2006/965/2#input.paragraph_2_relationship_coordination_applies: false
+    uk:regulations/uksi/2006/965/2#input.child_or_qualifying_young_person_is_elder_or_eldest_among_paragraph_2_children: false
+    uk:regulations/uksi/2006/965/2#input.payee_is_voluntary_organisation: false
+    uk:regulations/uksi/2006/965/2#input.payee_resides_with_parent_otherwise_than_paragraph_2_a: false
+  output:
+    uk:regulations/uksi/2006/965/2#member_of_polygamous_marriage: not_holds
+    uk:regulations/uksi/2006/965/2#child_benefit_enhanced_due_to_specified_benefit: holds
+    uk:regulations/uksi/2006/965/2#child_benefit_enhanced_rate_payable: holds
+    uk:regulations/uksi/2006/965/2#child_benefit_weekly_rate: 27.05
