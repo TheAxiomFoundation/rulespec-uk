@@ -1,0 +1,74 @@
+- name: taxpayer_liability_after_reliefs_allowances_reductions_and_added_tax
+  period:
+    period_kind: tax_year
+    start: '2024-04-06'
+    end: '2025-04-05'
+  input:
+    uk:statutes/ukpga/2007/3/23#relation.income_component_of_taxpayer:
+    - uk:statutes/ukpga/2007/3/23#input.amount_charged_to_income_tax: 30000
+      uk:statutes/ukpga/2007/3/23#input.relief_deducted_under_section_24: 1000
+    - uk:statutes/ukpga/2007/3/23#input.amount_charged_to_income_tax: 10000
+      uk:statutes/ukpga/2007/3/23#input.relief_deducted_under_section_24: 500
+    uk:statutes/ukpga/2007/3/23#input.net_income_taken_as_zero_under_section_24b: false
+    uk:statutes/ukpga/2007/3/23#input.other_allowances_under_chapter_2_part_3: 500
+    uk:statutes/ukpga/2007/3/23#input.tax_calculated_at_applicable_rates_on_income_remaining_after_allowances: 4500
+    uk:statutes/ukpga/2007/3/23#input.tax_reductions_listed_in_section_26: 300
+    uk:statutes/ukpga/2007/3/23#input.additional_tax_amounts_listed_in_section_30: 100
+    uk:statutes/ukpga/2007/3/35#input.individual_makes_claim: true
+    uk:statutes/ukpga/2007/3/35#input.individual_meets_requirements_under_section_56: true
+    uk:statutes/ukpga/2007/3/35#input.adjusted_net_income: 90000
+  output:
+    uk:statutes/ukpga/2007/3/23#net_income_zero_amount: 0
+    uk:statutes/ukpga/2007/3/23#total_income: 40000
+    uk:statutes/ukpga/2007/3/23#net_income: 38500
+    uk:statutes/ukpga/2007/3/23#income_remaining_after_allowances: 25430
+    uk:statutes/ukpga/2007/3/23#tax_left_after_reductions: 4200
+    uk:statutes/ukpga/2007/3/23#income_tax_liability: 4300
+- name: section_24b_zero_net_income_leaves_only_added_section_30_tax
+  period:
+    period_kind: tax_year
+    start: '2024-04-06'
+    end: '2025-04-05'
+  input:
+    uk:statutes/ukpga/2007/3/23#relation.income_component_of_taxpayer:
+    - uk:statutes/ukpga/2007/3/23#input.amount_charged_to_income_tax: 30000
+      uk:statutes/ukpga/2007/3/23#input.relief_deducted_under_section_24: 1000
+    - uk:statutes/ukpga/2007/3/23#input.amount_charged_to_income_tax: 10000
+      uk:statutes/ukpga/2007/3/23#input.relief_deducted_under_section_24: 500
+    uk:statutes/ukpga/2007/3/23#input.net_income_taken_as_zero_under_section_24b: true
+    uk:statutes/ukpga/2007/3/23#input.other_allowances_under_chapter_2_part_3: 500
+    uk:statutes/ukpga/2007/3/23#input.tax_calculated_at_applicable_rates_on_income_remaining_after_allowances: 0
+    uk:statutes/ukpga/2007/3/23#input.tax_reductions_listed_in_section_26: 0
+    uk:statutes/ukpga/2007/3/23#input.additional_tax_amounts_listed_in_section_30: 75
+    uk:statutes/ukpga/2007/3/35#input.individual_makes_claim: true
+    uk:statutes/ukpga/2007/3/35#input.individual_meets_requirements_under_section_56: true
+    uk:statutes/ukpga/2007/3/35#input.adjusted_net_income: 90000
+  output:
+    uk:statutes/ukpga/2007/3/23#total_income: 40000
+    uk:statutes/ukpga/2007/3/23#net_income: 0
+    uk:statutes/ukpga/2007/3/23#income_remaining_after_allowances: 0
+    uk:statutes/ukpga/2007/3/23#tax_left_after_reductions: 0
+    uk:statutes/ukpga/2007/3/23#income_tax_liability: 75
+- name: no_personal_allowance_and_reductions_cannot_make_tax_left_negative
+  period:
+    period_kind: tax_year
+    start: '2024-04-06'
+    end: '2025-04-05'
+  input:
+    uk:statutes/ukpga/2007/3/23#relation.income_component_of_taxpayer:
+    - uk:statutes/ukpga/2007/3/23#input.amount_charged_to_income_tax: 12000
+      uk:statutes/ukpga/2007/3/23#input.relief_deducted_under_section_24: 2000
+    uk:statutes/ukpga/2007/3/23#input.net_income_taken_as_zero_under_section_24b: false
+    uk:statutes/ukpga/2007/3/23#input.other_allowances_under_chapter_2_part_3: 0
+    uk:statutes/ukpga/2007/3/23#input.tax_calculated_at_applicable_rates_on_income_remaining_after_allowances: 500
+    uk:statutes/ukpga/2007/3/23#input.tax_reductions_listed_in_section_26: 800
+    uk:statutes/ukpga/2007/3/23#input.additional_tax_amounts_listed_in_section_30: 20
+    uk:statutes/ukpga/2007/3/35#input.individual_makes_claim: false
+    uk:statutes/ukpga/2007/3/35#input.individual_meets_requirements_under_section_56: true
+    uk:statutes/ukpga/2007/3/35#input.adjusted_net_income: 90000
+  output:
+    uk:statutes/ukpga/2007/3/23#total_income: 12000
+    uk:statutes/ukpga/2007/3/23#net_income: 10000
+    uk:statutes/ukpga/2007/3/23#income_remaining_after_allowances: 10000
+    uk:statutes/ukpga/2007/3/23#tax_left_after_reductions: 0
+    uk:statutes/ukpga/2007/3/23#income_tax_liability: 20
