@@ -1,0 +1,161 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/statute/legislation.gov.uk/ukpga/2007/3/section/23/block-13
+  summary: |-
+    “To find the liability of a person (‘the taxpayer’) to income tax for a tax year, take the following steps.” Step 1 defines total income as the sum of charged income amounts. Step 2 deducts section 24 reliefs and defines net income, with section 24B cases where net income is taken to be £0. Step 3 deducts Chapter 2 Part 3 allowances. Steps 4 to 7 calculate tax at applicable rates, deduct section 26 reductions, add section 30 tax amounts, and produce the taxpayer's liability to income tax.
+imports:
+  - uk:statutes/ukpga/2007/3/35#personal_allowance
+rules:
+  - name: income_component_of_taxpayer
+    kind: data_relation
+    data_relation:
+      predicate: income_component_of_taxpayer
+      arity: 2
+      arguments: [Payment, Person]
+    source: Income Tax Act 2007 s.23 Step 1
+
+  - name: net_income_zero_amount
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: Income Tax Act 2007 s.23 Step 2
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/legislation.gov.uk/ukpga/2007/3/section/23/block-13
+              excerpt: "net income is taken to be £0"
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          0
+
+  - name: total_income
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.23 Step 1
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/statute/legislation.gov.uk/ukpga/2007/3/section/23/block-13
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          sum(income_component_of_taxpayer.amount_charged_to_income_tax)
+
+  - name: net_income
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.23 Step 2
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/legislation.gov.uk/ukpga/2007/3/section/23/block-13
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/2007/3/23#total_income
+              output: total_income
+              hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/2007/3/23#net_income_zero_amount
+              output: net_income_zero_amount
+              hash: sha256:local
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          if net_income_taken_as_zero_under_section_24b: net_income_zero_amount else: max(0, total_income - sum(income_component_of_taxpayer.relief_deducted_under_section_24))
+
+  - name: income_remaining_after_allowances
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.23 Step 3
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/legislation.gov.uk/ukpga/2007/3/section/23/block-13
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/2007/3/23#net_income
+              output: net_income
+              hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/2007/3/35#personal_allowance
+              output: personal_allowance
+              hash: sha256:40fa47b7b5bdef3c8bac84cbdb483cd114c81aa40560bfd5bfc3e3d19b4eeaf7
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          max(0, net_income - personal_allowance - other_allowances_under_chapter_2_part_3)
+
+  - name: tax_left_after_reductions
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.23 Steps 4 to 6
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/legislation.gov.uk/ukpga/2007/3/section/23/block-13
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          max(0, tax_calculated_at_applicable_rates_on_income_remaining_after_allowances - tax_reductions_listed_in_section_26)
+
+  - name: income_tax_liability
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.23 Step 7
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/legislation.gov.uk/ukpga/2007/3/section/23/block-13
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/2007/3/23#tax_left_after_reductions
+              output: tax_left_after_reductions
+              hash: sha256:local
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          tax_left_after_reductions + additional_tax_amounts_listed_in_section_30
