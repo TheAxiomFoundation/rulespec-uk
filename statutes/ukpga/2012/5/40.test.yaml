@@ -1,0 +1,40 @@
+- name: person_under_age_16_is_child
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:statutes/ukpga/2012/5/40#input.person_is_under_age_16: true
+  output:
+    uk:statutes/ukpga/2012/5/40#child: holds
+- name: person_not_under_age_16_is_not_child
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:statutes/ukpga/2012/5/40#input.person_is_under_age_16: false
+  output:
+    uk:statutes/ukpga/2012/5/40#child: not_holds
+- name: activity_likely_to_support_work_is_work_related_activity
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:statutes/ukpga/2012/5/40#input.activity_makes_it_more_likely_person_will_obtain_or_remain_in_work_or_be_able_to_do_so: true
+  output:
+    uk:statutes/ukpga/2012/5/40#work_related_activity: holds
+- name: activity_not_likely_to_support_work_is_not_work_related_activity
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:statutes/ukpga/2012/5/40#input.activity_makes_it_more_likely_person_will_obtain_or_remain_in_work_or_be_able_to_do_so: false
+  output:
+    uk:statutes/ukpga/2012/5/40#work_related_activity: not_holds

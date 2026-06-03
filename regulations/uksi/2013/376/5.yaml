@@ -1,0 +1,144 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2013/376/5
+  summary: |-
+    A person who has reached age 16 but not age 20 is a qualifying young person up to the 1st September following their 16th birthday, and up to the 1st September following their 19th birthday if enrolled on or accepted for approved training or a qualifying course of education exceeding 12 hours per week. A person receiving universal credit, employment and support allowance, or jobseeker's allowance is not a qualifying young person.
+rules:
+  - name: qualifying_course_average_time_threshold_hours_per_week
+    kind: parameter
+    dtype: Decimal
+    source: regulation 5(1)(b)(iii)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/5
+              excerpt: "exceeds 12 hours per week"
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          12
+
+  - name: enrolled_or_accepted_for_approved_training
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Day
+    source: regulation 5(1)(b) and regulation 5(3)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/5
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          person_is_enrolled_on_or_accepted_for_training
+          and training_is_in_pursuance_of_employment_and_training_act_1973_section_2_1_or_enterprise_and_new_towns_scotland_act_1990_section_2_3
+          and training_is_approved_by_secretary_of_state_for_this_regulation
+
+  - name: enrolled_or_accepted_for_qualifying_course_of_education
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Day
+    source: regulation 5(1)(b)(i) to (iii)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/5
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2013/376/5#qualifying_course_average_time_threshold_hours_per_week
+              output: qualifying_course_average_time_threshold_hours_per_week
+              hash: sha256:local
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          person_is_enrolled_on_or_accepted_for_course_of_education
+          and not course_is_advanced_education
+          and (course_is_provided_at_school_or_college or course_is_provided_elsewhere_and_approved_by_secretary_of_state)
+          and course_average_time_spent_hours_per_week > qualifying_course_average_time_threshold_hours_per_week
+
+  - name: continued_education_or_training_qualifying_condition
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Day
+    source: regulation 5(1)(b), regulation 5(2), and regulation 5(4)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/5
+          - path: versions[0].formula
+            kind: exception
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/5
+              excerpt: "does not include education or training provided by means of a contract of employment"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2013/376/5#enrolled_or_accepted_for_approved_training
+              output: enrolled_or_accepted_for_approved_training
+              hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2013/376/5#enrolled_or_accepted_for_qualifying_course_of_education
+              output: enrolled_or_accepted_for_qualifying_course_of_education
+              hash: sha256:local
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          current_day_is_before_first_september_following_19th_birthday
+          and (enrolled_or_accepted_for_approved_training or enrolled_or_accepted_for_qualifying_course_of_education)
+          and not education_or_training_is_provided_by_contract_of_employment
+          and (not person_is_aged_19 or education_or_training_started_or_enrolled_or_accepted_before_reaching_age_19)
+
+  - name: qualifying_young_person
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Day
+    source: regulation 5
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/5
+          - path: versions[0].formula
+            kind: exception
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/5
+              excerpt: "receiving universal credit, an employment and support allowance or a jobseeker's allowance"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2013/376/5#continued_education_or_training_qualifying_condition
+              output: continued_education_or_training_qualifying_condition
+              hash: sha256:local
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          person_has_reached_age_16
+          and person_has_not_reached_age_20
+          and (current_day_is_before_first_september_following_16th_birthday or continued_education_or_training_qualifying_condition)
+          and not person_is_receiving_universal_credit
+          and not person_is_receiving_employment_and_support_allowance
+          and not person_is_receiving_jobseekers_allowance

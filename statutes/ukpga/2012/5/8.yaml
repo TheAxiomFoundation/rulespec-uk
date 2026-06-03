@@ -1,0 +1,69 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/statute/ukpga/2012/5/8
+  summary: |-
+    The amount of an award of universal credit is the maximum amount less the amounts to be deducted. The maximum amount totals amounts included under sections 9, 10, 11 and 12. Deductions are amounts in respect of earned and unearned income calculated in the prescribed manner.
+rules:
+  - name: universal_credit_maximum_amount
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Welfare Reform Act 2012 s.8(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/8
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          amount_included_under_section_9_standard_allowance
+          + amount_included_under_section_10_responsibility_for_children_and_young_persons
+          + amount_included_under_section_11_housing_costs
+          + amount_included_under_section_12_other_particular_needs_or_circumstances
+
+  - name: universal_credit_amounts_to_be_deducted
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Welfare Reform Act 2012 s.8(3)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/8
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          earned_income_deduction_calculated_in_prescribed_manner
+          + unearned_income_deduction_calculated_in_prescribed_manner
+
+  - name: universal_credit_award_amount
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Welfare Reform Act 2012 s.8(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/8
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          max(0, universal_credit_maximum_amount - universal_credit_amounts_to_be_deducted)

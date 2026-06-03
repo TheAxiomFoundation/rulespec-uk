@@ -1,0 +1,70 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2013/376/48
+  summary: |-
+    Any capital specified in Schedule 10 is disregarded from a person's capital calculation; a 6 month period specified in that Schedule may be extended where reasonable.
+rules:
+  - name: schedule_10_specified_period_month_count
+    kind: parameter
+    dtype: Count
+    source: regulation 48, second sentence
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/48
+              excerpt: "Where a period of 6 months is specified in that Schedule"
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          6
+
+  - name: capital_specified_in_schedule_10_disregarded_amount
+    kind: derived
+    entity: Asset
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: regulation 48, first sentence
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/48
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          if capital_is_specified_in_schedule_10: asset_capital_amount else: 0
+
+  - name: schedule_10_six_month_period_extension_available
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Month
+    source: regulation 48, second sentence
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/48
+              excerpt: "that period may be extended by the Secretary of State where it is reasonable"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2013/376/48#schedule_10_specified_period_month_count
+              output: schedule_10_specified_period_month_count
+              hash: sha256:local
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          schedule_10_period_is_specified_as_month_count == schedule_10_specified_period_month_count
+          and secretary_of_state_considers_extension_reasonable_in_circumstances

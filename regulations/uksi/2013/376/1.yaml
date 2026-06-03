@@ -1,0 +1,30 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2013/376/1
+  summary: |-
+    These Regulations may be cited as the Universal Credit Regulations 2013 and come into force on 29th April 2013.
+rules:
+  - name: short_title
+    kind: parameter
+    dtype: String
+    source: regulation 1
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/1
+              excerpt: "may be cited as the Universal Credit Regulations 2013"
+          - path: versions[0].effective_from
+            kind: effective_period
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/1
+              excerpt: "come into force on 29th April 2013"
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          "Universal Credit Regulations 2013"

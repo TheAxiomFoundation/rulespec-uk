@@ -1,0 +1,67 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2013/376/47
+  summary: |-
+    In the absence of evidence to the contrary, persons sharing a beneficial interest in a capital asset are treated as each entitled to an equal share.
+rules:
+  - name: capital_asset_beneficial_interest_holders
+    kind: data_relation
+    data_relation:
+      predicate: person_has_beneficial_interest_in_capital_asset
+      arity: 2
+      arguments:
+        - Person
+        - Asset
+    source: Universal Credit Regulations 2013, regulation 47
+
+  - name: equal_share_presumption_applies_to_capital_asset_beneficial_interest
+    kind: derived
+    entity: Asset
+    dtype: Judgment
+    period: Year
+    source: Universal Credit Regulations 2013, regulation 47
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/47
+              excerpt: "a person and one or more other persons have a beneficial interest in a capital asset"
+          - path: versions[0].formula
+            kind: exception
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/47
+              excerpt: "in the absence of evidence to the contrary"
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          len(capital_asset_beneficial_interest_holders) > 1
+          and not evidence_to_contrary_of_equal_shares
+
+  - name: presumed_equal_share_of_capital_asset_beneficial_interest
+    kind: derived
+    entity: Asset
+    dtype: Rate
+    period: Year
+    source: Universal Credit Regulations 2013, regulation 47
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/47
+              excerpt: "each entitled to an equal share"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/47
+              excerpt: "in the absence of evidence to the contrary"
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          if equal_share_presumption_applies_to_capital_asset_beneficial_interest: 1 / len(capital_asset_beneficial_interest_holders) else: 0

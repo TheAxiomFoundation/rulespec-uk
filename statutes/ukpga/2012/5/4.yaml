@@ -1,0 +1,71 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/statute/ukpga/2012/5/4
+  summary: |-
+    For the purposes of section 3, a person meets the basic conditions who is at least 18 years old, has not reached the qualifying age for state pension credit, is in Great Britain, is not receiving education, and has accepted a claimant commitment. Regulations may provide for exceptions to the requirement to meet any of the basic conditions.
+rules:
+  - name: person_meets_basic_conditions_for_section_3
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Day
+    source: Welfare Reform Act 2012, section 4
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/4
+              excerpt: "is at least 18 years old"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/4
+              excerpt: "has not reached the qualifying age for state pension credit"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/4
+              excerpt: "is in Great Britain"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/4
+              excerpt: "is not receiving education"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/4
+              excerpt: "has accepted a claimant commitment"
+          - path: versions[0].formula
+            kind: exception
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/4
+              excerpt: "Regulations may provide for exceptions to the requirement to meet any of the basic conditions"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          (
+            person_is_at_least_18_years_old
+            or minimum_age_requirement_exception_applies_by_regulations
+          )
+          and (
+            person_has_not_reached_qualifying_age_for_state_pension_credit
+            or state_pension_credit_age_requirement_exception_applies_by_regulations
+          )
+          and (
+            person_is_in_great_britain_for_basic_condition
+            or great_britain_requirement_exception_applies_by_regulations
+          )
+          and (
+            (not person_is_receiving_education_for_basic_condition)
+            or education_requirement_exception_applies_by_regulations
+          )
+          and (
+            person_has_accepted_claimant_commitment
+            or claimant_commitment_requirement_exception_applies_by_regulations
+          )

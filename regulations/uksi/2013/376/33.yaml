@@ -1,0 +1,98 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2013/376/33
+  summary: |-
+    "The childcare costs condition is met" where relevant childcare charges are paid and reported, concern a responsible child or young person, and enable paid work; late reporting may be accepted.
+rules:
+  - name: childcare_charges_responsibility_requirement_met
+    kind: derived
+    entity: Family
+    dtype: Judgment
+    period: Month
+    source: Universal Credit Regulations 2013, regulation 33(1)(b)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/33
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          charges_are_in_respect_of_child_for_whom_claimant_is_responsible
+          or (
+            charges_are_in_respect_of_qualifying_young_person_for_whom_claimant_is_responsible
+            and qualifying_young_person_has_not_reached_september_following_16th_birthday
+          )
+
+  - name: childcare_arrangements_work_purpose_requirement_met
+    kind: derived
+    entity: Family
+    dtype: Judgment
+    period: Month
+    source: Universal Credit Regulations 2013, regulation 33(1)(c)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/33
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          childcare_arrangements_enable_claimant_to_take_up_or_continue_paid_work
+          or (
+            claimant_treated_as_in_paid_work_by_regulation_32_2
+            and childcare_arrangements_enable_claimant_to_maintain_arrangements_in_place_when_paid_work_ceased_or_benefits_began
+          )
+
+  - name: late_reporting_of_relevant_childcare_charges_may_be_accepted
+    kind: derived
+    entity: Family
+    dtype: Judgment
+    period: Month
+    source: Universal Credit Regulations 2013, regulation 33(2) and (3)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/33
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          late_reporting_of_charges_for_relevant_childcare
+          and late_notification_of_change_of_circumstances_may_be_accepted_under_regulation_36
+
+  - name: childcare_costs_condition_met
+    kind: derived
+    entity: Family
+    dtype: Judgment
+    period: Month
+    source: Universal Credit Regulations 2013, regulation 33
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/33
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          claimant_has_paid_charges_for_relevant_childcare_attributable_to_assessment_period
+          and (
+            childcare_charges_reported_before_end_of_assessment_period_following_paid_period
+            or (
+              late_reporting_of_relevant_childcare_charges_may_be_accepted
+              and late_reporting_of_relevant_childcare_charges_accepted
+            )
+          )
+          and childcare_charges_responsibility_requirement_met
+          and childcare_arrangements_work_purpose_requirement_met

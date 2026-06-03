@@ -1,0 +1,150 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/statute/ukpga/2012/5/27
+  summary: |-
+    "The amount of an award of universal credit is to be reduced" for a claimant failure sanctionable under this section. A failure is sanctionable if the claimant, for no good reason, fails to comply with a work-related requirement or a section 23 requirement, but not if it is also sanctionable under section 26. Regulations provide the reduction amount and period, including a fixed period not exceeding 26 weeks and cases with no reduction, termination, or suspension.
+rules:
+  - name: maximum_fixed_reduction_period_weeks_under_section_27
+    kind: parameter
+    dtype: Count
+    source: Welfare Reform Act 2012 s. 27(5)(b)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/27
+              excerpt: fixed period not exceeding 26 weeks
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          26
+
+  - name: failure_sanctionable_under_section_27
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Month
+    source: Welfare Reform Act 2012 s. 27(2)-(3)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/27
+          - path: versions[0].formula
+            kind: exception
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/27
+              excerpt: not sanctionable under this section if it is also a failure sanctionable under section 26
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          (claimant_fails_for_no_good_reason_to_comply_with_work_related_requirement
+          or claimant_fails_for_no_good_reason_to_comply_with_requirement_under_section_23)
+          and not failure_is_also_sanctionable_under_section_26
+
+  - name: section_27_compliance_condition
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Month
+    source: Welfare Reform Act 2012 s. 27(6)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/27
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          compliance_condition_is_that_failure_ceases
+          or compliance_condition_relates_to_future_compliance_with_work_related_requirement_or_requirement_under_section_23
+
+  - name: section_27_award_reduction_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Welfare Reform Act 2012 s. 27(1), (4), (9)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/27
+              excerpt: amount of an award of universal credit is to be reduced
+          - path: versions[0].formula
+            kind: exception
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/27
+              excerpt: cases in which no reduction is to be made
+          - path: versions[0].formula
+            kind: exception
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/27
+              excerpt: termination or suspension of a reduction
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/2012/5/27#failure_sanctionable_under_section_27
+              output: failure_sanctionable_under_section_27
+              hash: sha256:local
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if failure_sanctionable_under_section_27
+          and not case_in_which_no_reduction_is_to_be_made_under_section_27_by_regulations
+          and not reduction_under_section_27_is_terminated_or_suspended_by_regulations:
+            max(0, amount_of_reduction_under_section_27_provided_by_regulations)
+          else: 0
+
+  - name: section_27_fixed_reduction_period_weeks
+    kind: derived
+    entity: Person
+    dtype: Count
+    period: Month
+    source: Welfare Reform Act 2012 s. 27(5)(b), (8)-(9)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/27
+              excerpt: fixed period not exceeding 26 weeks
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/27
+              excerpt: specified in the regulations, or determined in any case by the Secretary of State
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/2012/5/27#failure_sanctionable_under_section_27
+              output: failure_sanctionable_under_section_27
+              hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/2012/5/27#maximum_fixed_reduction_period_weeks_under_section_27
+              output: maximum_fixed_reduction_period_weeks_under_section_27
+              hash: sha256:local
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if failure_sanctionable_under_section_27
+          and reduction_under_section_27_has_fixed_period_by_regulations
+          and not case_in_which_no_reduction_is_to_be_made_under_section_27_by_regulations
+          and not reduction_under_section_27_is_terminated_or_suspended_by_regulations:
+            min(max(0, fixed_period_weeks_specified_or_determined_under_section_27_by_regulations), maximum_fixed_reduction_period_weeks_under_section_27)
+          else: 0

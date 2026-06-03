@@ -1,0 +1,44 @@
+- name: responsible-carer-child-aged-1-falls-within-section
+  period: 2024-01
+  input:
+    uk:statutes/ukpga/2012/5/20#input.claimant_is_responsible_carer_for_child_who_is_aged_1: true
+    uk:statutes/ukpga/2012/5/20#input.claimant_is_of_prescribed_description_for_section_20: false
+    uk:statutes/ukpga/2012/5/20#input.other_work_related_requirement_previously_applied_to_claimant: true
+  output:
+    uk:statutes/ukpga/2012/5/20#work_focused_interview_only_group: holds
+    uk:statutes/ukpga/2012/5/20#work_focused_interview_requirement_may_be_imposed_for_work_focused_interview_only_group: holds
+    uk:statutes/ukpga/2012/5/20#other_work_related_requirement_barred_for_work_focused_interview_only_group: holds
+    uk:statutes/ukpga/2012/5/20#previous_other_work_related_requirement_ceases_for_work_focused_interview_only_group: holds
+- name: prescribed-description-falls-within-section
+  period: 2024-01
+  input:
+    uk:statutes/ukpga/2012/5/20#input.claimant_is_responsible_carer_for_child_who_is_aged_1: false
+    uk:statutes/ukpga/2012/5/20#input.claimant_is_of_prescribed_description_for_section_20: true
+    uk:statutes/ukpga/2012/5/20#input.other_work_related_requirement_previously_applied_to_claimant: true
+  output:
+    uk:statutes/ukpga/2012/5/20#work_focused_interview_only_group: holds
+    uk:statutes/ukpga/2012/5/20#work_focused_interview_requirement_may_be_imposed_for_work_focused_interview_only_group: holds
+    uk:statutes/ukpga/2012/5/20#other_work_related_requirement_barred_for_work_focused_interview_only_group: holds
+    uk:statutes/ukpga/2012/5/20#previous_other_work_related_requirement_ceases_for_work_focused_interview_only_group: holds
+- name: neither-section-condition-met
+  period: 2024-01
+  input:
+    uk:statutes/ukpga/2012/5/20#input.claimant_is_responsible_carer_for_child_who_is_aged_1: false
+    uk:statutes/ukpga/2012/5/20#input.claimant_is_of_prescribed_description_for_section_20: false
+    uk:statutes/ukpga/2012/5/20#input.other_work_related_requirement_previously_applied_to_claimant: true
+  output:
+    uk:statutes/ukpga/2012/5/20#work_focused_interview_only_group: not_holds
+    uk:statutes/ukpga/2012/5/20#work_focused_interview_requirement_may_be_imposed_for_work_focused_interview_only_group: not_holds
+    uk:statutes/ukpga/2012/5/20#other_work_related_requirement_barred_for_work_focused_interview_only_group: not_holds
+    uk:statutes/ukpga/2012/5/20#previous_other_work_related_requirement_ceases_for_work_focused_interview_only_group: not_holds
+- name: no-previous-other-work-related-requirement
+  period: 2024-01
+  input:
+    uk:statutes/ukpga/2012/5/20#input.claimant_is_responsible_carer_for_child_who_is_aged_1: true
+    uk:statutes/ukpga/2012/5/20#input.claimant_is_of_prescribed_description_for_section_20: false
+    uk:statutes/ukpga/2012/5/20#input.other_work_related_requirement_previously_applied_to_claimant: false
+  output:
+    uk:statutes/ukpga/2012/5/20#work_focused_interview_only_group: holds
+    uk:statutes/ukpga/2012/5/20#work_focused_interview_requirement_may_be_imposed_for_work_focused_interview_only_group: holds
+    uk:statutes/ukpga/2012/5/20#other_work_related_requirement_barred_for_work_focused_interview_only_group: holds
+    uk:statutes/ukpga/2012/5/20#previous_other_work_related_requirement_ceases_for_work_focused_interview_only_group: not_holds

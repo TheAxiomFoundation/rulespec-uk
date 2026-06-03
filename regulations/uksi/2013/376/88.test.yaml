@@ -1,0 +1,106 @@
+- name: default_expected_hours_is_35
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2013-04-29'
+    end: '2013-05-05'
+  input:
+    uk:regulations/uksi/2013/376/88#input.claimant_is_responsible_carer_of_child_who_has_not_reached_compulsory_school_age: false
+    ? uk:regulations/uksi/2013/376/88#input.claimant_is_responsible_carer_for_child_who_has_reached_compulsory_school_age_but_is_under_13
+    : false
+    uk:regulations/uksi/2013/376/88#input.claimant_is_relevant_carer: false
+    uk:regulations/uksi/2013/376/88#input.claimant_is_responsible_carer: false
+    uk:regulations/uksi/2013/376/88#input.claimant_is_responsible_foster_parent: false
+    ? uk:regulations/uksi/2013/376/88#input.secretary_of_state_satisfied_claimant_has_reasonable_prospects_of_obtaining_paid_work
+    : false
+    uk:regulations/uksi/2013/376/88#input.claimant_has_physical_or_mental_impairment: false
+    uk:regulations/uksi/2013/376/88#input.secretary_of_state_hours_compatible_with_caring_responsibilities: 20
+    uk:regulations/uksi/2013/376/88#input.secretary_of_state_hours_compatible_with_child_normal_school_hours_including_travel: 25
+    uk:regulations/uksi/2013/376/88#input.secretary_of_state_hours_reasonable_in_light_of_impairment: 18
+  output:
+    uk:regulations/uksi/2013/376/88#expected_number_of_hours_per_week_default: 35
+    uk:regulations/uksi/2013/376/88#expected_number_of_hours_per_week: 35
+- name: relevant_carer_with_reasonable_prospects_uses_caring_hours
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2013-04-29'
+    end: '2013-05-05'
+  input:
+    uk:regulations/uksi/2013/376/88#input.claimant_is_responsible_carer_of_child_who_has_not_reached_compulsory_school_age: false
+    ? uk:regulations/uksi/2013/376/88#input.claimant_is_responsible_carer_for_child_who_has_reached_compulsory_school_age_but_is_under_13
+    : false
+    uk:regulations/uksi/2013/376/88#input.claimant_is_relevant_carer: true
+    uk:regulations/uksi/2013/376/88#input.claimant_is_responsible_carer: false
+    uk:regulations/uksi/2013/376/88#input.claimant_is_responsible_foster_parent: false
+    ? uk:regulations/uksi/2013/376/88#input.secretary_of_state_satisfied_claimant_has_reasonable_prospects_of_obtaining_paid_work
+    : true
+    uk:regulations/uksi/2013/376/88#input.claimant_has_physical_or_mental_impairment: false
+    uk:regulations/uksi/2013/376/88#input.secretary_of_state_hours_compatible_with_caring_responsibilities: 20
+    uk:regulations/uksi/2013/376/88#input.secretary_of_state_hours_compatible_with_child_normal_school_hours_including_travel: 25
+    uk:regulations/uksi/2013/376/88#input.secretary_of_state_hours_reasonable_in_light_of_impairment: 18
+  output:
+    uk:regulations/uksi/2013/376/88#expected_number_of_hours_per_week: 20
+- name: responsible_carer_preschool_child_uses_caring_hours_without_reasonable_prospects
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2013-04-29'
+    end: '2013-05-05'
+  input:
+    uk:regulations/uksi/2013/376/88#input.claimant_is_responsible_carer_of_child_who_has_not_reached_compulsory_school_age: true
+    ? uk:regulations/uksi/2013/376/88#input.claimant_is_responsible_carer_for_child_who_has_reached_compulsory_school_age_but_is_under_13
+    : false
+    uk:regulations/uksi/2013/376/88#input.claimant_is_relevant_carer: false
+    uk:regulations/uksi/2013/376/88#input.claimant_is_responsible_carer: true
+    uk:regulations/uksi/2013/376/88#input.claimant_is_responsible_foster_parent: false
+    ? uk:regulations/uksi/2013/376/88#input.secretary_of_state_satisfied_claimant_has_reasonable_prospects_of_obtaining_paid_work
+    : false
+    uk:regulations/uksi/2013/376/88#input.claimant_has_physical_or_mental_impairment: false
+    uk:regulations/uksi/2013/376/88#input.secretary_of_state_hours_compatible_with_caring_responsibilities: 16
+    uk:regulations/uksi/2013/376/88#input.secretary_of_state_hours_compatible_with_child_normal_school_hours_including_travel: 25
+    uk:regulations/uksi/2013/376/88#input.secretary_of_state_hours_reasonable_in_light_of_impairment: 18
+  output:
+    uk:regulations/uksi/2013/376/88#expected_number_of_hours_per_week: 16
+- name: responsible_carer_school_age_child_under_13_uses_school_hours
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2013-04-29'
+    end: '2013-05-05'
+  input:
+    uk:regulations/uksi/2013/376/88#input.claimant_is_responsible_carer_of_child_who_has_not_reached_compulsory_school_age: false
+    ? uk:regulations/uksi/2013/376/88#input.claimant_is_responsible_carer_for_child_who_has_reached_compulsory_school_age_but_is_under_13
+    : true
+    uk:regulations/uksi/2013/376/88#input.claimant_is_relevant_carer: false
+    uk:regulations/uksi/2013/376/88#input.claimant_is_responsible_carer: true
+    uk:regulations/uksi/2013/376/88#input.claimant_is_responsible_foster_parent: false
+    ? uk:regulations/uksi/2013/376/88#input.secretary_of_state_satisfied_claimant_has_reasonable_prospects_of_obtaining_paid_work
+    : false
+    uk:regulations/uksi/2013/376/88#input.claimant_has_physical_or_mental_impairment: false
+    uk:regulations/uksi/2013/376/88#input.secretary_of_state_hours_compatible_with_caring_responsibilities: 16
+    uk:regulations/uksi/2013/376/88#input.secretary_of_state_hours_compatible_with_child_normal_school_hours_including_travel: 25
+    uk:regulations/uksi/2013/376/88#input.secretary_of_state_hours_reasonable_in_light_of_impairment: 18
+  output:
+    uk:regulations/uksi/2013/376/88#expected_number_of_hours_per_week: 25
+- name: physical_or_mental_impairment_uses_reasonable_hours
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2013-04-29'
+    end: '2013-05-05'
+  input:
+    uk:regulations/uksi/2013/376/88#input.claimant_is_responsible_carer_of_child_who_has_not_reached_compulsory_school_age: false
+    ? uk:regulations/uksi/2013/376/88#input.claimant_is_responsible_carer_for_child_who_has_reached_compulsory_school_age_but_is_under_13
+    : false
+    uk:regulations/uksi/2013/376/88#input.claimant_is_relevant_carer: false
+    uk:regulations/uksi/2013/376/88#input.claimant_is_responsible_carer: false
+    uk:regulations/uksi/2013/376/88#input.claimant_is_responsible_foster_parent: false
+    ? uk:regulations/uksi/2013/376/88#input.secretary_of_state_satisfied_claimant_has_reasonable_prospects_of_obtaining_paid_work
+    : false
+    uk:regulations/uksi/2013/376/88#input.claimant_has_physical_or_mental_impairment: true
+    uk:regulations/uksi/2013/376/88#input.secretary_of_state_hours_compatible_with_caring_responsibilities: 20
+    uk:regulations/uksi/2013/376/88#input.secretary_of_state_hours_compatible_with_child_normal_school_hours_including_travel: 25
+    uk:regulations/uksi/2013/376/88#input.secretary_of_state_hours_reasonable_in_light_of_impairment: 18
+  output:
+    uk:regulations/uksi/2013/376/88#expected_number_of_hours_per_week: 18

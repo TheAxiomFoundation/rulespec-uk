@@ -1,0 +1,72 @@
+- name: direct_liability_for_residential_great_britain_home_includes_regulated_amount
+  period: 2024-01
+  input:
+    uk:statutes/ukpga/2012/5/11#input.payments_are_in_respect_of_accommodation_for_section_11: true
+    uk:statutes/ukpga/2012/5/11#input.accommodation_is_in_great_britain: true
+    uk:statutes/ukpga/2012/5/11#input.accommodation_is_residential_accommodation: true
+    uk:statutes/ukpga/2012/5/11#input.claimant_is_liable_to_make_accommodation_payments: true
+    uk:statutes/ukpga/2012/5/11#input.claimant_is_treated_as_liable_to_make_accommodation_payments_by_regulations: false
+    uk:statutes/ukpga/2012/5/11#input.claimant_is_treated_as_not_liable_to_make_accommodation_payments_by_regulations: false
+    uk:statutes/ukpga/2012/5/11#input.claimant_occupies_accommodation_as_home: true
+    uk:statutes/ukpga/2012/5/11#input.claimant_is_treated_as_occupying_accommodation_as_home_by_regulations: false
+    uk:statutes/ukpga/2012/5/11#input.claimant_is_treated_as_not_occupying_accommodation_as_home_by_regulations: false
+    uk:statutes/ukpga/2012/5/11#input.section_11_exception_to_accommodation_amount_applies_by_regulations: false
+    uk:statutes/ukpga/2012/5/11#input.section_11_inclusion_has_ended_at_prescribed_time_by_regulations: false
+    uk:statutes/ukpga/2012/5/11#input.section_11_inclusion_has_not_started_until_prescribed_time_by_regulations: false
+    uk:statutes/ukpga/2012/5/11#input.amount_determined_or_calculated_by_regulations_under_section_11: 700
+  output:
+    uk:statutes/ukpga/2012/5/11#section_11_amount_for_accommodation_payments: 700
+- name: regulatory_treatment_as_liable_and_occupying_includes_amount
+  period: 2024-01
+  input:
+    uk:statutes/ukpga/2012/5/11#input.payments_are_in_respect_of_accommodation_for_section_11: true
+    uk:statutes/ukpga/2012/5/11#input.accommodation_is_in_great_britain: true
+    uk:statutes/ukpga/2012/5/11#input.accommodation_is_residential_accommodation: true
+    uk:statutes/ukpga/2012/5/11#input.claimant_is_liable_to_make_accommodation_payments: false
+    uk:statutes/ukpga/2012/5/11#input.claimant_is_treated_as_liable_to_make_accommodation_payments_by_regulations: true
+    uk:statutes/ukpga/2012/5/11#input.claimant_is_treated_as_not_liable_to_make_accommodation_payments_by_regulations: false
+    uk:statutes/ukpga/2012/5/11#input.claimant_occupies_accommodation_as_home: false
+    uk:statutes/ukpga/2012/5/11#input.claimant_is_treated_as_occupying_accommodation_as_home_by_regulations: true
+    uk:statutes/ukpga/2012/5/11#input.claimant_is_treated_as_not_occupying_accommodation_as_home_by_regulations: false
+    uk:statutes/ukpga/2012/5/11#input.section_11_exception_to_accommodation_amount_applies_by_regulations: false
+    uk:statutes/ukpga/2012/5/11#input.section_11_inclusion_has_ended_at_prescribed_time_by_regulations: false
+    uk:statutes/ukpga/2012/5/11#input.section_11_inclusion_has_not_started_until_prescribed_time_by_regulations: false
+    uk:statutes/ukpga/2012/5/11#input.amount_determined_or_calculated_by_regulations_under_section_11: 650
+  output:
+    uk:statutes/ukpga/2012/5/11#section_11_amount_for_accommodation_payments: 650
+- name: non_residential_accommodation_gets_no_section_11_amount
+  period: 2024-01
+  input:
+    uk:statutes/ukpga/2012/5/11#input.payments_are_in_respect_of_accommodation_for_section_11: true
+    uk:statutes/ukpga/2012/5/11#input.accommodation_is_in_great_britain: true
+    uk:statutes/ukpga/2012/5/11#input.accommodation_is_residential_accommodation: false
+    uk:statutes/ukpga/2012/5/11#input.claimant_is_liable_to_make_accommodation_payments: true
+    uk:statutes/ukpga/2012/5/11#input.claimant_is_treated_as_liable_to_make_accommodation_payments_by_regulations: false
+    uk:statutes/ukpga/2012/5/11#input.claimant_is_treated_as_not_liable_to_make_accommodation_payments_by_regulations: false
+    uk:statutes/ukpga/2012/5/11#input.claimant_occupies_accommodation_as_home: true
+    uk:statutes/ukpga/2012/5/11#input.claimant_is_treated_as_occupying_accommodation_as_home_by_regulations: false
+    uk:statutes/ukpga/2012/5/11#input.claimant_is_treated_as_not_occupying_accommodation_as_home_by_regulations: false
+    uk:statutes/ukpga/2012/5/11#input.section_11_exception_to_accommodation_amount_applies_by_regulations: false
+    uk:statutes/ukpga/2012/5/11#input.section_11_inclusion_has_ended_at_prescribed_time_by_regulations: false
+    uk:statutes/ukpga/2012/5/11#input.section_11_inclusion_has_not_started_until_prescribed_time_by_regulations: false
+    uk:statutes/ukpga/2012/5/11#input.amount_determined_or_calculated_by_regulations_under_section_11: 700
+  output:
+    uk:statutes/ukpga/2012/5/11#section_11_amount_for_accommodation_payments: 0
+- name: regulatory_exception_blocks_section_11_amount
+  period: 2024-01
+  input:
+    uk:statutes/ukpga/2012/5/11#input.payments_are_in_respect_of_accommodation_for_section_11: true
+    uk:statutes/ukpga/2012/5/11#input.accommodation_is_in_great_britain: true
+    uk:statutes/ukpga/2012/5/11#input.accommodation_is_residential_accommodation: true
+    uk:statutes/ukpga/2012/5/11#input.claimant_is_liable_to_make_accommodation_payments: true
+    uk:statutes/ukpga/2012/5/11#input.claimant_is_treated_as_liable_to_make_accommodation_payments_by_regulations: false
+    uk:statutes/ukpga/2012/5/11#input.claimant_is_treated_as_not_liable_to_make_accommodation_payments_by_regulations: false
+    uk:statutes/ukpga/2012/5/11#input.claimant_occupies_accommodation_as_home: true
+    uk:statutes/ukpga/2012/5/11#input.claimant_is_treated_as_occupying_accommodation_as_home_by_regulations: false
+    uk:statutes/ukpga/2012/5/11#input.claimant_is_treated_as_not_occupying_accommodation_as_home_by_regulations: false
+    uk:statutes/ukpga/2012/5/11#input.section_11_exception_to_accommodation_amount_applies_by_regulations: true
+    uk:statutes/ukpga/2012/5/11#input.section_11_inclusion_has_ended_at_prescribed_time_by_regulations: false
+    uk:statutes/ukpga/2012/5/11#input.section_11_inclusion_has_not_started_until_prescribed_time_by_regulations: false
+    uk:statutes/ukpga/2012/5/11#input.amount_determined_or_calculated_by_regulations_under_section_11: 700
+  output:
+    uk:statutes/ukpga/2012/5/11#section_11_amount_for_accommodation_payments: 0

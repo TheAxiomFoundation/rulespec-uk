@@ -2,40 +2,44 @@
   "applied_files": [
     {
       "path": "regulations/uksi/2013/376/36.yaml",
-      "sha256": "19216b5767d964e1e5ec5f1a8d9ad95d67967d80acd041ed82c825b66ef65dfe"
+      "sha256": "116501892639c2eed68b342a1cdc5bb01877836f4d68913141873bbc36782265"
     },
     {
       "path": "regulations/uksi/2013/376/36.test.yaml",
-      "sha256": "7aab229ca9066f9c52e40aec2d935a921bef3e2563ccbd3a0bbf2882ec54ae89"
+      "sha256": "5e961f94affe16295d1e76e34c96452476473d43d1217fab45bc176a48c89247"
+    },
+    {
+      "path": "regulations/uksi/2013/376/24.yaml",
+      "sha256": "58a919750d75982c6e18c69caccaa81794145166daba74d6154a2e18c5a7df85"
     }
   ],
   "axiom_encode_git": {
-    "commit": "858d69af996cf4502d6900f49726494da0e0a8b6",
+    "commit": "92da81292be1384748d4b75b631c1a7607f5b059",
     "dirty_tracked": false,
-    "root": "/Users/maxghenis/_axiom-worktrees/uk-pe-parity-20260529/axiom-encode-merged-858d69a",
-    "version": "0.2.427",
-    "version_commit": "858d69af996cf4502d6900f49726494da0e0a8b6"
+    "root": "/private/tmp/axiom-encode-apply-clean",
+    "version": "0.2.525",
+    "version_commit": "92da81292be1384748d4b75b631c1a7607f5b059"
   },
-  "axiom_encode_version": "0.2.427",
-  "backend": "openai",
+  "axiom_encode_version": "0.2.525",
+  "backend": "codex",
   "citation": "uk/regulation/uksi/2013/376/36",
-  "context_manifest_file": "/tmp/uk-uc-reg36-apply-merged/_eval_workspaces/openai-gpt-5.5/uk-regulation-uksi-2013-376-36/workspace/context-manifest.json",
-  "context_manifest_sha256": "97c7fa8bd7d47cc2a18485941e13b10a88bd57fb1cffd6ab62c286db12db2cea",
-  "generated_at": "2026-05-29T23:07:16.851414+00:00",
-  "generated_output_file": "/tmp/uk-uc-reg36-apply-merged/openai-gpt-5.5/regulations/uksi/2013/376/36.yaml",
-  "generated_output_root": "/tmp/uk-uc-reg36-apply-merged",
-  "generated_output_sha256": "19216b5767d964e1e5ec5f1a8d9ad95d67967d80acd041ed82c825b66ef65dfe",
-  "generation_prompt_sha256": "d92fa4fb81957b28861b55c80183b77550cce756f91a46b27bae6e406420b3ca",
+  "context_manifest_file": "/tmp/axiom-encode-uk-uc-retry/_eval_workspaces/codex-gpt-5.5/uk-regulation-uksi-2013-376-36/workspace/context-manifest.json",
+  "context_manifest_sha256": "75667c73aaf99d0fb1f02492c297b741ceea2033ba1651f4b5a2f91fcdd1aec6",
+  "generated_at": "2026-06-03T19:59:04.061138+00:00",
+  "generated_output_file": "/tmp/axiom-encode-uk-uc-retry/codex-gpt-5.5/regulations/uksi/2013/376/36.yaml",
+  "generated_output_root": "/tmp/axiom-encode-uk-uc-retry",
+  "generated_output_sha256": "116501892639c2eed68b342a1cdc5bb01877836f4d68913141873bbc36782265",
+  "generation_prompt_sha256": "1bc3ad16f3a2ed5444857b177acf96304cfe8fe45e26343066f91da94313d31b",
   "model": "gpt-5.5",
-  "run_id": "6ce01d45",
-  "runner": "openai-gpt-5.5",
+  "run_id": "82922837",
+  "runner": "codex-gpt-5.5",
   "schema_version": "axiom-encode/applied-rulespec/v1",
   "signature": {
     "algorithm": "hmac-sha256",
     "key_id": "axiom-encode-apply-v1",
-    "value": "e7ab8f41e51674c6929002dc666f0f4408bcf96b6c91e0934a350680abc1f965"
+    "value": "4309f9a7ad6c030db65810b807aaae6ec9c950f51ef1c4d4c21e807c1216abd4"
   },
   "tool": "axiom-encode encode --apply",
-  "trace_file": "/tmp/uk-uc-reg36-apply-merged/traces/openai-gpt-5.5/uk-regulation-uksi-2013-376-36.json",
-  "trace_sha256": "4c92a6ee77f602fb2bf4070833c2f27cd81e4778e16406dea9d716d008eb5795"
+  "trace_file": "/tmp/axiom-encode-uk-uc-retry/traces/codex-gpt-5.5/uk-regulation-uksi-2013-376-36.json",
+  "trace_sha256": "8a33100bc596730e114c9fa02e9e3e2f8cb877220c72b9c72f2d4f3cbd6bf330"
 }

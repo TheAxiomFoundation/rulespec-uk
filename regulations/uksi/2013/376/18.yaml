@@ -1,0 +1,101 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2013/376/18
+  summary: |-
+    The prescribed amount is £16,000 for a single claimant and £16,000 for joint claimants. Where a claimant is a member of a couple but claims as a single person, the claimant's capital includes the other member's capital.
+rules:
+  - name: prescribed_capital_limit_for_single_claimant
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 18
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/18
+              excerpt: "the prescribed amount for a single claimant is £16,000"
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          16000
+
+  - name: prescribed_capital_limit_for_joint_claimants
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 18
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/18
+              excerpt: "the prescribed amount for joint claimants is £16,000"
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          16000
+
+  - name: prescribed_capital_limit_for_claim
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Day
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 18
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/18
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          if claim_is_for_joint_claimants: prescribed_capital_limit_for_joint_claimants else: prescribed_capital_limit_for_single_claimant
+
+  - name: other_member_of_couple_capital_included_for_single_claimant
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Day
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 18
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/18
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          if claimant_is_member_of_couple and claimant_makes_claim_as_single_person: other_member_of_couple_capital else: 0
+
+  - name: claimant_capital_for_prescribed_capital_limit
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Day
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 18
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/18
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          claimant_capital + other_member_of_couple_capital_included_for_single_claimant

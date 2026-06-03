@@ -1,0 +1,124 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/statute/ukpga/2012/5/23
+  summary: |-
+    The Secretary of State may require a claimant to participate in an interview for purposes relating to imposing, verifying compliance with, or assisting compliance with a work-related requirement. The Secretary of State may specify how, when and where the interview takes place, require specified information, evidence, or confirmation for verifying compliance, and require reporting of specified relevant circumstance changes.
+rules:
+  - name: claimant_may_be_required_to_participate_in_work_related_requirement_interview
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Day
+    source: Welfare Reform Act 2012 s.23(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/23
+              excerpt: "participate in an interview for any purpose relating to"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          person_is_claimant
+          and (
+            purpose_relates_to_imposition_of_work_related_requirement
+            or purpose_relates_to_verifying_claimant_compliance_with_work_related_requirement
+            or purpose_relates_to_assisting_claimant_to_comply_with_work_related_requirement
+          )
+
+  - name: secretary_of_state_may_specify_work_related_requirement_interview_arrangements
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Day
+    source: Welfare Reform Act 2012 s.23(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/23
+              excerpt: "may specify how, when and where such an interview is to take place"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          person_is_claimant
+          and interview_specification_concerns_how_when_or_where_interview_takes_place
+          and (
+            purpose_relates_to_imposition_of_work_related_requirement
+            or purpose_relates_to_verifying_claimant_compliance_with_work_related_requirement
+            or purpose_relates_to_assisting_claimant_to_comply_with_work_related_requirement
+          )
+
+  - name: claimant_may_be_required_to_provide_information_and_evidence_for_verifying_compliance
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Day
+    source: Welfare Reform Act 2012 s.23(3)(a)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/23
+              excerpt: "provide to the Secretary of State information and evidence specified"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          person_is_claimant
+          and purpose_relates_to_verifying_claimant_compliance_with_work_related_requirement
+          and information_and_evidence_are_specified_by_secretary_of_state
+          and information_and_evidence_manner_is_specified_by_secretary_of_state
+
+  - name: claimant_may_be_required_to_confirm_compliance_for_verifying_work_related_requirement
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Day
+    source: Welfare Reform Act 2012 s.23(3)(b)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/23
+              excerpt: "confirm compliance in a manner so specified"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          person_is_claimant
+          and purpose_relates_to_verifying_claimant_compliance_with_work_related_requirement
+          and compliance_confirmation_manner_is_specified_by_secretary_of_state
+
+  - name: claimant_may_be_required_to_report_relevant_circumstance_changes
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Day
+    source: Welfare Reform Act 2012 s.23(4)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/23
+              excerpt: "report to the Secretary of State any specified changes in their circumstances"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          person_is_claimant
+          and change_in_circumstances_is_specified_by_secretary_of_state
+          and (
+            change_relevant_to_imposition_of_work_related_requirements
+            or change_relevant_to_claimant_compliance_with_work_related_requirement
+          )

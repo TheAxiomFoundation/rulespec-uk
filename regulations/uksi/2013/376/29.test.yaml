@@ -1,0 +1,78 @@
+- name: claimant_carer_element_basic_inclusion
+  period:
+    period_kind: custom
+    name: day
+    start: '2026-04-06'
+    end: '2026-04-06'
+  input:
+    ? uk:regulations/uksi/2013/376/29#input.claimant_has_regular_and_substantial_caring_responsibilities_for_severely_disabled_person
+    : true
+    uk:regulations/uksi/2013/376/29#input.claimant_is_the_only_relevant_carer_or_is_elected_or_determined_for_carer_element: true
+    uk:regulations/uksi/2013/376/29#input.contributions_and_benefits_act_section_70_does_not_displace_carer_element: true
+    uk:regulations/uksi/2013/376/29#input.claimant_has_limited_capability_for_work_and_work_related_activity: false
+    uk:regulations/uksi/2013/376/29#input.claim_is_for_joint_claimants: false
+    uk:regulations/uksi/2013/376/29#input.lcwra_element_included_in_respect_of_other_joint_claimant: false
+    ? uk:regulations/uksi/2013/376/29#input.scottish_carer_benefit_coordination_applies_for_same_day_and_same_severely_disabled_person
+    : false
+    ? uk:regulations/uksi/2013/376/29#input.claimant_and_other_person_jointly_elect_claimant_has_carer_element_and_other_person_has_no_scottish_carer_benefit_entitlement
+    : false
+    ? uk:regulations/uksi/2013/376/29#input.secretary_of_state_after_consulting_scottish_ministers_is_satisfied_claimant_has_carer_element_and_other_person_has_no_scottish_carer_benefit_entitlement
+    : false
+  output:
+    uk:regulations/uksi/2013/376/29#claimant_carer_element_included: holds
+- name: claimant_lcwra_priority_blocks_carer_element
+  period:
+    period_kind: custom
+    name: day
+    start: '2026-04-06'
+    end: '2026-04-06'
+  input:
+    ? uk:regulations/uksi/2013/376/29#input.claimant_has_regular_and_substantial_caring_responsibilities_for_severely_disabled_person
+    : true
+    uk:regulations/uksi/2013/376/29#input.claimant_is_the_only_relevant_carer_or_is_elected_or_determined_for_carer_element: true
+    uk:regulations/uksi/2013/376/29#input.contributions_and_benefits_act_section_70_does_not_displace_carer_element: true
+    uk:regulations/uksi/2013/376/29#input.claimant_has_limited_capability_for_work_and_work_related_activity: true
+    uk:regulations/uksi/2013/376/29#input.claim_is_for_joint_claimants: false
+    uk:regulations/uksi/2013/376/29#input.lcwra_element_included_in_respect_of_other_joint_claimant: false
+    ? uk:regulations/uksi/2013/376/29#input.scottish_carer_benefit_coordination_applies_for_same_day_and_same_severely_disabled_person
+    : false
+    ? uk:regulations/uksi/2013/376/29#input.claimant_and_other_person_jointly_elect_claimant_has_carer_element_and_other_person_has_no_scottish_carer_benefit_entitlement
+    : false
+    ? uk:regulations/uksi/2013/376/29#input.secretary_of_state_after_consulting_scottish_ministers_is_satisfied_claimant_has_carer_element_and_other_person_has_no_scottish_carer_benefit_entitlement
+    : false
+  output:
+    uk:regulations/uksi/2013/376/29#claimant_carer_element_included: not_holds
+- name: scottish_coordination_without_required_election_or_determination_blocks
+  period:
+    period_kind: custom
+    name: day
+    start: '2026-04-06'
+    end: '2026-04-06'
+  input:
+    ? uk:regulations/uksi/2013/376/29#input.claimant_has_regular_and_substantial_caring_responsibilities_for_severely_disabled_person
+    : true
+    uk:regulations/uksi/2013/376/29#input.claimant_is_the_only_relevant_carer_or_is_elected_or_determined_for_carer_element: true
+    uk:regulations/uksi/2013/376/29#input.contributions_and_benefits_act_section_70_does_not_displace_carer_element: true
+    uk:regulations/uksi/2013/376/29#input.claimant_has_limited_capability_for_work_and_work_related_activity: false
+    uk:regulations/uksi/2013/376/29#input.claim_is_for_joint_claimants: false
+    uk:regulations/uksi/2013/376/29#input.lcwra_element_included_in_respect_of_other_joint_claimant: false
+    ? uk:regulations/uksi/2013/376/29#input.scottish_carer_benefit_coordination_applies_for_same_day_and_same_severely_disabled_person
+    : true
+    ? uk:regulations/uksi/2013/376/29#input.claimant_and_other_person_jointly_elect_claimant_has_carer_element_and_other_person_has_no_scottish_carer_benefit_entitlement
+    : false
+    ? uk:regulations/uksi/2013/376/29#input.secretary_of_state_after_consulting_scottish_ministers_is_satisfied_claimant_has_carer_element_and_other_person_has_no_scottish_carer_benefit_entitlement
+    : false
+  output:
+    uk:regulations/uksi/2013/376/29#claimant_carer_element_included: not_holds
+- name: joint_claimants_both_included_when_not_same_disabled_person
+  period:
+    period_kind: custom
+    name: day
+    start: '2026-04-06'
+    end: '2026-04-06'
+  input:
+    uk:regulations/uksi/2013/376/29#input.claim_is_for_joint_claimants: true
+    uk:regulations/uksi/2013/376/29#input.both_joint_claimants_qualify_for_carer_element: true
+    uk:regulations/uksi/2013/376/29#input.joint_claimants_are_caring_for_the_same_severely_disabled_person: false
+  output:
+    uk:regulations/uksi/2013/376/29#both_joint_claimants_carer_elements_included: holds

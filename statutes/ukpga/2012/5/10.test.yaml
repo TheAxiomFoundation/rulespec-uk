@@ -1,0 +1,72 @@
+- name: responsible_child_without_disability_gets_subsection_1_amount_only
+  period: 2024-01
+  input:
+    uk:statutes/ukpga/2012/5/10#input.person_is_of_prescribed_description_for_qualifying_young_person: false
+    uk:statutes/ukpga/2012/5/10#input.claimant_is_responsible_for_person: true
+    uk:statutes/ukpga/2012/5/10#input.person_is_child: true
+    ? uk:statutes/ukpga/2012/5/10#input.child_or_qualifying_young_person_responsibility_exception_to_subsection_1_applies_by_regulations
+    : false
+    uk:statutes/ukpga/2012/5/10#input.amount_specified_or_calculated_by_regulations_under_subsection_3_for_subsection_1: 300
+    uk:statutes/ukpga/2012/5/10#input.person_is_disabled: false
+    ? uk:statutes/ukpga/2012/5/10#input.additional_amount_specified_or_calculated_by_regulations_under_subsection_3_for_subsection_2
+    : 100
+  output:
+    uk:statutes/ukpga/2012/5/10#qualifying_young_person: not_holds
+    uk:statutes/ukpga/2012/5/10#child_or_qualifying_young_person_for_whom_claimant_is_responsible: holds
+    uk:statutes/ukpga/2012/5/10#subsection_1_amount_for_child_or_qualifying_young_person: 300
+    uk:statutes/ukpga/2012/5/10#disabled_additional_amount_for_child_or_qualifying_young_person: 0
+    uk:statutes/ukpga/2012/5/10#section_10_amount_for_child_or_qualifying_young_person: 300
+- name: responsible_disabled_qualifying_young_person_gets_base_and_additional_amounts
+  period: 2024-01
+  input:
+    uk:statutes/ukpga/2012/5/10#input.person_is_of_prescribed_description_for_qualifying_young_person: true
+    uk:statutes/ukpga/2012/5/10#input.claimant_is_responsible_for_person: true
+    uk:statutes/ukpga/2012/5/10#input.person_is_child: false
+    ? uk:statutes/ukpga/2012/5/10#input.child_or_qualifying_young_person_responsibility_exception_to_subsection_1_applies_by_regulations
+    : false
+    uk:statutes/ukpga/2012/5/10#input.amount_specified_or_calculated_by_regulations_under_subsection_3_for_subsection_1: 300
+    uk:statutes/ukpga/2012/5/10#input.person_is_disabled: true
+    ? uk:statutes/ukpga/2012/5/10#input.additional_amount_specified_or_calculated_by_regulations_under_subsection_3_for_subsection_2
+    : 100
+  output:
+    uk:statutes/ukpga/2012/5/10#qualifying_young_person: holds
+    uk:statutes/ukpga/2012/5/10#child_or_qualifying_young_person_for_whom_claimant_is_responsible: holds
+    uk:statutes/ukpga/2012/5/10#subsection_1_amount_for_child_or_qualifying_young_person: 300
+    uk:statutes/ukpga/2012/5/10#disabled_additional_amount_for_child_or_qualifying_young_person: 100
+    uk:statutes/ukpga/2012/5/10#section_10_amount_for_child_or_qualifying_young_person: 400
+- name: person_not_claimant_responsibility_gets_no_section_10_amount
+  period: 2024-01
+  input:
+    uk:statutes/ukpga/2012/5/10#input.person_is_of_prescribed_description_for_qualifying_young_person: false
+    uk:statutes/ukpga/2012/5/10#input.claimant_is_responsible_for_person: false
+    uk:statutes/ukpga/2012/5/10#input.person_is_child: true
+    ? uk:statutes/ukpga/2012/5/10#input.child_or_qualifying_young_person_responsibility_exception_to_subsection_1_applies_by_regulations
+    : false
+    uk:statutes/ukpga/2012/5/10#input.amount_specified_or_calculated_by_regulations_under_subsection_3_for_subsection_1: 300
+    uk:statutes/ukpga/2012/5/10#input.person_is_disabled: true
+    ? uk:statutes/ukpga/2012/5/10#input.additional_amount_specified_or_calculated_by_regulations_under_subsection_3_for_subsection_2
+    : 100
+  output:
+    uk:statutes/ukpga/2012/5/10#qualifying_young_person: not_holds
+    uk:statutes/ukpga/2012/5/10#child_or_qualifying_young_person_for_whom_claimant_is_responsible: not_holds
+    uk:statutes/ukpga/2012/5/10#subsection_1_amount_for_child_or_qualifying_young_person: 0
+    uk:statutes/ukpga/2012/5/10#disabled_additional_amount_for_child_or_qualifying_young_person: 0
+    uk:statutes/ukpga/2012/5/10#section_10_amount_for_child_or_qualifying_young_person: 0
+- name: subsection_1_exception_blocks_base_amount_but_not_disabled_additional_amount
+  period: 2024-01
+  input:
+    uk:statutes/ukpga/2012/5/10#input.person_is_of_prescribed_description_for_qualifying_young_person: true
+    uk:statutes/ukpga/2012/5/10#input.claimant_is_responsible_for_person: true
+    uk:statutes/ukpga/2012/5/10#input.person_is_child: false
+    ? uk:statutes/ukpga/2012/5/10#input.child_or_qualifying_young_person_responsibility_exception_to_subsection_1_applies_by_regulations
+    : true
+    uk:statutes/ukpga/2012/5/10#input.amount_specified_or_calculated_by_regulations_under_subsection_3_for_subsection_1: 300
+    uk:statutes/ukpga/2012/5/10#input.person_is_disabled: true
+    ? uk:statutes/ukpga/2012/5/10#input.additional_amount_specified_or_calculated_by_regulations_under_subsection_3_for_subsection_2
+    : 100
+  output:
+    uk:statutes/ukpga/2012/5/10#qualifying_young_person: holds
+    uk:statutes/ukpga/2012/5/10#child_or_qualifying_young_person_for_whom_claimant_is_responsible: holds
+    uk:statutes/ukpga/2012/5/10#subsection_1_amount_for_child_or_qualifying_young_person: 0
+    uk:statutes/ukpga/2012/5/10#disabled_additional_amount_for_child_or_qualifying_young_person: 100
+    uk:statutes/ukpga/2012/5/10#section_10_amount_for_child_or_qualifying_young_person: 100

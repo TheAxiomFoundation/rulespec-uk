@@ -1,0 +1,63 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2013/376/88
+  summary: |-
+    The expected number of hours per week is 35 unless a lesser number applies for specified caring responsibilities, normal school hours for a child under 13, or a physical or mental impairment.
+rules:
+  - name: expected_number_of_hours_per_week_default
+    kind: parameter
+    dtype: Count
+    source: Universal Credit Regulations 2013, regulation 88(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: default
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/88
+              excerpt: "is 35 unless some lesser number of hours applies"
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          35
+
+  - name: expected_number_of_hours_per_week
+    kind: derived
+    entity: Person
+    dtype: Count
+    period: Week
+    source: Universal Credit Regulations 2013, regulation 88
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/88
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/88
+              excerpt: "relevant carer, a responsible carer ... or a responsible foster parent"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/88
+              excerpt: "child who has not yet reached compulsory school age"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/88
+              excerpt: "child who has reached compulsory school age but who is under the age of 13"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/88
+              excerpt: "physical or mental impairment"
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          if claimant_is_responsible_carer_of_child_who_has_not_reached_compulsory_school_age: secretary_of_state_hours_compatible_with_caring_responsibilities else: if claimant_is_responsible_carer_for_child_who_has_reached_compulsory_school_age_but_is_under_13: secretary_of_state_hours_compatible_with_child_normal_school_hours_including_travel else: if (claimant_is_relevant_carer or claimant_is_responsible_carer or claimant_is_responsible_foster_parent) and secretary_of_state_satisfied_claimant_has_reasonable_prospects_of_obtaining_paid_work: secretary_of_state_hours_compatible_with_caring_responsibilities else: if claimant_has_physical_or_mental_impairment: secretary_of_state_hours_reasonable_in_light_of_impairment else: expected_number_of_hours_per_week_default

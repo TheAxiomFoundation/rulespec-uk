@@ -1,0 +1,21 @@
+- name: requirement_holds_when_secretary_specifies_work_focused_interviews
+  period: 2024-01
+  input:
+    uk:statutes/ukpga/2012/5/15#input.secretary_of_state_specifies_claimant_must_participate_in_one_or_more_interviews: true
+    uk:statutes/ukpga/2012/5/15#input.specified_interviews_are_for_prescribed_purposes_relating_to_work_or_work_preparation: true
+  output:
+    uk:statutes/ukpga/2012/5/15#work_focused_interview_requirement: holds
+- name: requirement_not_holds_without_secretary_specification
+  period: 2024-01
+  input:
+    uk:statutes/ukpga/2012/5/15#input.secretary_of_state_specifies_claimant_must_participate_in_one_or_more_interviews: false
+    uk:statutes/ukpga/2012/5/15#input.specified_interviews_are_for_prescribed_purposes_relating_to_work_or_work_preparation: true
+  output:
+    uk:statutes/ukpga/2012/5/15#work_focused_interview_requirement: not_holds
+- name: requirement_not_holds_when_interviews_are_not_work_focused
+  period: 2024-01
+  input:
+    uk:statutes/ukpga/2012/5/15#input.secretary_of_state_specifies_claimant_must_participate_in_one_or_more_interviews: true
+    uk:statutes/ukpga/2012/5/15#input.specified_interviews_are_for_prescribed_purposes_relating_to_work_or_work_preparation: false
+  output:
+    uk:statutes/ukpga/2012/5/15#work_focused_interview_requirement: not_holds

@@ -1,0 +1,28 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/statute/ukpga/2012/5/14
+  summary: |-
+    A claimant commitment is a record of a claimant's responsibilities in relation to universal credit. For this Part, a claimant accepts it only by accepting the most up-to-date version in the prescribed manner.
+rules:
+  - name: claimant_accepts_claimant_commitment
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Month
+    source: Welfare Reform Act 2012, section 14
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/14
+              excerpt: claimant accepts the most up-to-date version of it in such manner as may be prescribed
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          claimant_accepts_most_up_to_date_version_of_claimant_commitment
+          and claimant_accepts_claimant_commitment_in_prescribed_manner

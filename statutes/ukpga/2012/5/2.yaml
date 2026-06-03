@@ -1,0 +1,39 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/statute/ukpga/2012/5/2
+  summary: |-
+    A claim may be made for universal credit by a single person or members of a couple jointly. Regulations may specify circumstances in which a member of a couple may make a claim as a single person.
+rules:
+  - name: universal_credit_claim_may_be_made
+    kind: derived
+    entity: Family
+    dtype: Judgment
+    period: Day
+    source: Welfare Reform Act 2012, section 5(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/2
+              excerpt: "a single person"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/2
+              excerpt: "members of a couple jointly"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/2
+              excerpt: "Regulations may specify circumstances in which a member of a couple may make a claim as a single person."
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          claim_is_by_single_person
+          or claim_is_by_members_of_a_couple_jointly
+          or claim_is_by_member_of_a_couple_as_single_person_in_circumstances_specified_by_regulations

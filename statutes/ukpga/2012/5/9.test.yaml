@@ -1,0 +1,30 @@
+- name: single_claimant_standard_allowance_included
+  period: 2024-01
+  input:
+    uk:statutes/ukpga/2012/5/9#input.standard_allowance_exception_applies_by_regulations: false
+    uk:statutes/ukpga/2012/5/9#input.is_single_claimant: true
+    uk:statutes/ukpga/2012/5/9#input.are_joint_claimants: false
+    uk:statutes/ukpga/2012/5/9#input.standard_allowance_amount_for_single_claimant_specified_by_regulations: 400
+    uk:statutes/ukpga/2012/5/9#input.standard_allowance_amount_for_joint_claimants_specified_by_regulations: 600
+  output:
+    uk:statutes/ukpga/2012/5/9#amount_included_under_section_9_standard_allowance: 400
+- name: joint_claimants_standard_allowance_included
+  period: 2024-01
+  input:
+    uk:statutes/ukpga/2012/5/9#input.standard_allowance_exception_applies_by_regulations: false
+    uk:statutes/ukpga/2012/5/9#input.is_single_claimant: false
+    uk:statutes/ukpga/2012/5/9#input.are_joint_claimants: true
+    uk:statutes/ukpga/2012/5/9#input.standard_allowance_amount_for_single_claimant_specified_by_regulations: 400
+    uk:statutes/ukpga/2012/5/9#input.standard_allowance_amount_for_joint_claimants_specified_by_regulations: 600
+  output:
+    uk:statutes/ukpga/2012/5/9#amount_included_under_section_9_standard_allowance: 600
+- name: regulatory_exception_displaces_standard_allowance
+  period: 2024-01
+  input:
+    uk:statutes/ukpga/2012/5/9#input.standard_allowance_exception_applies_by_regulations: true
+    uk:statutes/ukpga/2012/5/9#input.is_single_claimant: true
+    uk:statutes/ukpga/2012/5/9#input.are_joint_claimants: false
+    uk:statutes/ukpga/2012/5/9#input.standard_allowance_amount_for_single_claimant_specified_by_regulations: 400
+    uk:statutes/ukpga/2012/5/9#input.standard_allowance_amount_for_joint_claimants_specified_by_regulations: 600
+  output:
+    uk:statutes/ukpga/2012/5/9#amount_included_under_section_9_standard_allowance: 0

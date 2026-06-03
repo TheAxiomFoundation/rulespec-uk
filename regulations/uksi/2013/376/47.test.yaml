@@ -1,0 +1,41 @@
+- name: two_holders_no_contrary_evidence_equal_half_share
+  period:
+    period_kind: custom
+    name: calendar_year
+    start: '2014-01-01'
+    end: '2014-12-31'
+  input:
+    uk:regulations/uksi/2013/376/47#input.evidence_to_contrary_of_equal_shares: false
+    uk:regulations/uksi/2013/376/47#relation.capital_asset_beneficial_interest_holders:
+    - {}
+    - {}
+  output:
+    uk:regulations/uksi/2013/376/47#equal_share_presumption_applies_to_capital_asset_beneficial_interest: holds
+    uk:regulations/uksi/2013/376/47#presumed_equal_share_of_capital_asset_beneficial_interest: 0.5
+- name: contrary_evidence_displaces_equal_share_presumption
+  period:
+    period_kind: custom
+    name: calendar_year
+    start: '2014-01-01'
+    end: '2014-12-31'
+  input:
+    uk:regulations/uksi/2013/376/47#input.evidence_to_contrary_of_equal_shares: true
+    uk:regulations/uksi/2013/376/47#relation.capital_asset_beneficial_interest_holders:
+    - {}
+    - {}
+  output:
+    uk:regulations/uksi/2013/376/47#equal_share_presumption_applies_to_capital_asset_beneficial_interest: not_holds
+    uk:regulations/uksi/2013/376/47#presumed_equal_share_of_capital_asset_beneficial_interest: 0
+- name: sole_holder_no_shared_interest_presumption
+  period:
+    period_kind: custom
+    name: calendar_year
+    start: '2014-01-01'
+    end: '2014-12-31'
+  input:
+    uk:regulations/uksi/2013/376/47#input.evidence_to_contrary_of_equal_shares: false
+    uk:regulations/uksi/2013/376/47#relation.capital_asset_beneficial_interest_holders:
+    - {}
+  output:
+    uk:regulations/uksi/2013/376/47#equal_share_presumption_applies_to_capital_asset_beneficial_interest: not_holds
+    uk:regulations/uksi/2013/376/47#presumed_equal_share_of_capital_asset_beneficial_interest: 0

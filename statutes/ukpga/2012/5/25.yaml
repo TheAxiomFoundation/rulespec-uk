@@ -1,0 +1,83 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/statute/ukpga/2012/5/25
+  summary: |-
+    Regulations may make provision as to circumstances in which a claimant is to be treated as having complied or not complied with a requirement under this Part, or as having taken or not taken a particular Secretary of State-specified action in relation to such a requirement.
+rules:
+  - name: claimant_treated_as_having_complied_with_part_requirement_by_regulations
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Month
+    source: Welfare Reform Act 2012, section 25
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/25
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          claimant_is_subject_to_requirement_imposed_under_this_part
+          and regulations_treat_claimant_as_having_complied_with_requirement
+  - name: claimant_treated_as_not_having_complied_with_part_requirement_by_regulations
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Month
+    source: Welfare Reform Act 2012, section 25
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/25
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          claimant_is_subject_to_requirement_imposed_under_this_part
+          and regulations_treat_claimant_as_not_having_complied_with_requirement
+  - name: claimant_treated_as_having_taken_secretary_of_state_specified_action_by_regulations
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Month
+    source: Welfare Reform Act 2012, section 25
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/25
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          claimant_is_subject_to_requirement_imposed_under_this_part
+          and action_is_particular_action_specified_by_secretary_of_state_in_relation_to_requirement
+          and regulations_treat_claimant_as_having_taken_specified_action
+  - name: claimant_treated_as_not_having_taken_secretary_of_state_specified_action_by_regulations
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Month
+    source: Welfare Reform Act 2012, section 25
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/25
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          claimant_is_subject_to_requirement_imposed_under_this_part
+          and action_is_particular_action_specified_by_secretary_of_state_in_relation_to_requirement
+          and regulations_treat_claimant_as_not_having_taken_specified_action

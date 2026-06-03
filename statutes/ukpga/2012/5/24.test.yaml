@@ -1,0 +1,77 @@
+- name: domestic_violence_protection_applies_with_existing_requirement
+  period: 2024-01
+  input:
+    uk:statutes/ukpga/2012/5/24#input.claimant_is_treated_as_victim_of_domestic_violence_by_regulations: false
+    uk:statutes/ukpga/2012/5/24#input.domestic_violence_inflicted_or_threatened_on_or_against_claimant: true
+    uk:statutes/ukpga/2012/5/24#input.claimant_is_treated_as_not_victim_of_domestic_violence_by_regulations: false
+    uk:statutes/ukpga/2012/5/24#input.prescribed_recent_victim_period_has_not_expired_since_domestic_violence: true
+    uk:statutes/ukpga/2012/5/24#input.claimant_is_in_prescribed_circumstances_for_domestic_violence_protection: true
+    uk:statutes/ukpga/2012/5/24#input.requirement_under_this_part_has_been_imposed_on_claimant: true
+    uk:statutes/ukpga/2012/5/13#input.claimant_falls_into_work_focused_interview_requirement_only_group: true
+    uk:statutes/ukpga/2012/5/13#input.claimant_falls_into_work_focused_interview_and_work_preparation_requirements_only_group: false
+    uk:statutes/ukpga/2012/5/13#input.claimant_falls_into_all_work_related_requirements_group: false
+  output:
+    uk:statutes/ukpga/2012/5/24#domestic_violence_requirement_pause_period_weeks: 13
+    uk:statutes/ukpga/2012/5/24#claimant_is_victim_of_domestic_violence: holds
+    uk:statutes/ukpga/2012/5/24#claimant_has_recently_been_victim_of_domestic_violence: holds
+    uk:statutes/ukpga/2012/5/24#domestic_violence_protection_period_weeks: 13
+    uk:statutes/ukpga/2012/5/24#requirement_under_this_part_ceases_during_domestic_violence_period: holds
+    uk:statutes/ukpga/2012/5/24#other_requirement_under_this_part_may_not_be_imposed_during_domestic_violence_period: holds
+    uk:statutes/ukpga/2012/5/24#work_focused_interview_prescribed_matters_must_be_had_regard_to: holds
+- name: prescribed_circumstances_not_met
+  period: 2024-01
+  input:
+    uk:statutes/ukpga/2012/5/24#input.claimant_is_treated_as_victim_of_domestic_violence_by_regulations: false
+    uk:statutes/ukpga/2012/5/24#input.domestic_violence_inflicted_or_threatened_on_or_against_claimant: true
+    uk:statutes/ukpga/2012/5/24#input.claimant_is_treated_as_not_victim_of_domestic_violence_by_regulations: false
+    uk:statutes/ukpga/2012/5/24#input.prescribed_recent_victim_period_has_not_expired_since_domestic_violence: true
+    uk:statutes/ukpga/2012/5/24#input.claimant_is_in_prescribed_circumstances_for_domestic_violence_protection: false
+    uk:statutes/ukpga/2012/5/24#input.requirement_under_this_part_has_been_imposed_on_claimant: true
+    uk:statutes/ukpga/2012/5/13#input.claimant_falls_into_work_focused_interview_requirement_only_group: false
+    uk:statutes/ukpga/2012/5/13#input.claimant_falls_into_work_focused_interview_and_work_preparation_requirements_only_group: false
+    uk:statutes/ukpga/2012/5/13#input.claimant_falls_into_all_work_related_requirements_group: false
+  output:
+    uk:statutes/ukpga/2012/5/24#claimant_is_victim_of_domestic_violence: holds
+    uk:statutes/ukpga/2012/5/24#claimant_has_recently_been_victim_of_domestic_violence: holds
+    uk:statutes/ukpga/2012/5/24#domestic_violence_protection_period_weeks: 0
+    uk:statutes/ukpga/2012/5/24#requirement_under_this_part_ceases_during_domestic_violence_period: not_holds
+    uk:statutes/ukpga/2012/5/24#other_requirement_under_this_part_may_not_be_imposed_during_domestic_violence_period: not_holds
+    uk:statutes/ukpga/2012/5/24#work_focused_interview_prescribed_matters_must_be_had_regard_to: not_holds
+- name: regulations_treat_claimant_as_not_victim
+  period: 2024-01
+  input:
+    uk:statutes/ukpga/2012/5/24#input.claimant_is_treated_as_victim_of_domestic_violence_by_regulations: false
+    uk:statutes/ukpga/2012/5/24#input.domestic_violence_inflicted_or_threatened_on_or_against_claimant: true
+    uk:statutes/ukpga/2012/5/24#input.claimant_is_treated_as_not_victim_of_domestic_violence_by_regulations: true
+    uk:statutes/ukpga/2012/5/24#input.prescribed_recent_victim_period_has_not_expired_since_domestic_violence: true
+    uk:statutes/ukpga/2012/5/24#input.claimant_is_in_prescribed_circumstances_for_domestic_violence_protection: true
+    uk:statutes/ukpga/2012/5/24#input.requirement_under_this_part_has_been_imposed_on_claimant: true
+    uk:statutes/ukpga/2012/5/13#input.claimant_falls_into_work_focused_interview_requirement_only_group: true
+    uk:statutes/ukpga/2012/5/13#input.claimant_falls_into_work_focused_interview_and_work_preparation_requirements_only_group: false
+    uk:statutes/ukpga/2012/5/13#input.claimant_falls_into_all_work_related_requirements_group: false
+  output:
+    uk:statutes/ukpga/2012/5/24#claimant_is_victim_of_domestic_violence: not_holds
+    uk:statutes/ukpga/2012/5/24#claimant_has_recently_been_victim_of_domestic_violence: not_holds
+    uk:statutes/ukpga/2012/5/24#domestic_violence_protection_period_weeks: 0
+    uk:statutes/ukpga/2012/5/24#requirement_under_this_part_ceases_during_domestic_violence_period: not_holds
+    uk:statutes/ukpga/2012/5/24#other_requirement_under_this_part_may_not_be_imposed_during_domestic_violence_period: not_holds
+    uk:statutes/ukpga/2012/5/24#work_focused_interview_prescribed_matters_must_be_had_regard_to: holds
+- name: no_existing_requirement_but_new_requirements_barred
+  period: 2024-01
+  input:
+    uk:statutes/ukpga/2012/5/24#input.claimant_is_treated_as_victim_of_domestic_violence_by_regulations: false
+    uk:statutes/ukpga/2012/5/24#input.domestic_violence_inflicted_or_threatened_on_or_against_claimant: true
+    uk:statutes/ukpga/2012/5/24#input.claimant_is_treated_as_not_victim_of_domestic_violence_by_regulations: false
+    uk:statutes/ukpga/2012/5/24#input.prescribed_recent_victim_period_has_not_expired_since_domestic_violence: true
+    uk:statutes/ukpga/2012/5/24#input.claimant_is_in_prescribed_circumstances_for_domestic_violence_protection: true
+    uk:statutes/ukpga/2012/5/24#input.requirement_under_this_part_has_been_imposed_on_claimant: false
+    uk:statutes/ukpga/2012/5/13#input.claimant_falls_into_work_focused_interview_requirement_only_group: false
+    uk:statutes/ukpga/2012/5/13#input.claimant_falls_into_work_focused_interview_and_work_preparation_requirements_only_group: true
+    uk:statutes/ukpga/2012/5/13#input.claimant_falls_into_all_work_related_requirements_group: false
+  output:
+    uk:statutes/ukpga/2012/5/24#claimant_is_victim_of_domestic_violence: holds
+    uk:statutes/ukpga/2012/5/24#claimant_has_recently_been_victim_of_domestic_violence: holds
+    uk:statutes/ukpga/2012/5/24#domestic_violence_protection_period_weeks: 13
+    uk:statutes/ukpga/2012/5/24#requirement_under_this_part_ceases_during_domestic_violence_period: not_holds
+    uk:statutes/ukpga/2012/5/24#other_requirement_under_this_part_may_not_be_imposed_during_domestic_violence_period: holds
+    uk:statutes/ukpga/2012/5/24#work_focused_interview_prescribed_matters_must_be_had_regard_to: holds

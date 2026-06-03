@@ -1,0 +1,57 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/statute/ukpga/2012/5/5
+  summary: |-
+    For the purposes of section 3, financial conditions require capital or a prescribed part of it not greater than a prescribed amount, and income such that the hypothetical universal credit payable would not be less than any prescribed minimum.
+rules:
+  - name: single_claimant_meets_financial_conditions
+    kind: derived
+    entity: Family
+    dtype: Judgment
+    period: Day
+    source: Welfare Reform Act 2012, section 5(5), single claimant financial conditions
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/5
+              excerpt: "the claimant's capital, or a prescribed part of it, is not greater than a prescribed amount"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/5
+              excerpt: "the claimant's income is such that... the amount payable would not be less than any prescribed minimum"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          single_claimant_capital_or_prescribed_part_of_capital <= prescribed_capital_amount_for_single_claimant
+          and single_claimant_universal_credit_amount_payable_if_entitled >= prescribed_minimum_universal_credit_amount_for_single_claimant
+  - name: joint_claimants_meet_financial_conditions
+    kind: derived
+    entity: Family
+    dtype: Judgment
+    period: Day
+    source: Welfare Reform Act 2012, section 5(5), joint claimant financial conditions
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/5
+              excerpt: "their combined capital, or a prescribed part of it, is not greater than a prescribed amount"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/5
+              excerpt: "their combined income is such that... the amount payable would not be less than any prescribed minimum"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          joint_claimants_combined_capital_or_prescribed_part_of_combined_capital <= prescribed_capital_amount_for_joint_claimants
+          and joint_claimants_universal_credit_amount_payable_if_entitled >= prescribed_minimum_universal_credit_amount_for_joint_claimants

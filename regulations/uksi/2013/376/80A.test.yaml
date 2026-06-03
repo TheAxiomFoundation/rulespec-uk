@@ -1,0 +1,66 @@
+- name: single_greater_london_no_child_occupation_condition
+  period: 2013-05
+  input:
+    uk:regulations/uksi/2013/376/80A#input.claim_is_for_joint_claimants: false
+    uk:regulations/uksi/2013/376/80A#input.responsible_for_child_or_qualifying_young_person: false
+    uk:regulations/uksi/2013/376/80A#input.award_contains_housing_costs_element: true
+    ? uk:regulations/uksi/2013/376/80A#input.accommodation_in_respect_of_which_claimant_meets_occupation_condition_is_in_greater_london
+    : true
+    uk:regulations/uksi/2013/376/80A#input.claimant_receives_housing_benefit_for_dwelling_in_greater_london: false
+    uk:regulations/uksi/2013/376/80A#input.accommodation_normally_occupied_as_home_is_in_greater_london: false
+    uk:regulations/uksi/2013/376/80A#input.claimant_has_accommodation_normally_occupied_as_home: true
+    uk:regulations/uksi/2013/376/80A#input.jobcentre_plus_office_allocated_to_claim_is_in_greater_london: false
+  output:
+    uk:regulations/uksi/2013/376/80A#claimant_or_either_joint_claimant_resident_in_greater_london: holds
+    uk:regulations/uksi/2013/376/80A#benefit_cap_applicable_annual_limit_case: 0
+    uk:regulations/uksi/2013/376/80A#benefit_cap_applicable_annual_limit_for_claim: 16967
+- name: joint_greater_london_housing_benefit
+  period: 2013-05
+  input:
+    uk:regulations/uksi/2013/376/80A#input.claim_is_for_joint_claimants: true
+    uk:regulations/uksi/2013/376/80A#input.responsible_for_child_or_qualifying_young_person: false
+    uk:regulations/uksi/2013/376/80A#input.award_contains_housing_costs_element: true
+    ? uk:regulations/uksi/2013/376/80A#input.accommodation_in_respect_of_which_claimant_meets_occupation_condition_is_in_greater_london
+    : false
+    uk:regulations/uksi/2013/376/80A#input.claimant_receives_housing_benefit_for_dwelling_in_greater_london: true
+    uk:regulations/uksi/2013/376/80A#input.accommodation_normally_occupied_as_home_is_in_greater_london: false
+    uk:regulations/uksi/2013/376/80A#input.claimant_has_accommodation_normally_occupied_as_home: true
+    uk:regulations/uksi/2013/376/80A#input.jobcentre_plus_office_allocated_to_claim_is_in_greater_london: false
+  output:
+    uk:regulations/uksi/2013/376/80A#claimant_or_either_joint_claimant_resident_in_greater_london: holds
+    uk:regulations/uksi/2013/376/80A#benefit_cap_applicable_annual_limit_case: 1
+    uk:regulations/uksi/2013/376/80A#benefit_cap_applicable_annual_limit_for_claim: 25323
+    uk:regulations/uksi/2013/376/80A#benefit_cap_relevant_amount: 2110.25
+- name: single_not_greater_london_no_child_normal_home
+  period: 2013-05
+  input:
+    uk:regulations/uksi/2013/376/80A#input.claim_is_for_joint_claimants: false
+    uk:regulations/uksi/2013/376/80A#input.responsible_for_child_or_qualifying_young_person: false
+    uk:regulations/uksi/2013/376/80A#input.award_contains_housing_costs_element: false
+    ? uk:regulations/uksi/2013/376/80A#input.accommodation_in_respect_of_which_claimant_meets_occupation_condition_is_in_greater_london
+    : false
+    uk:regulations/uksi/2013/376/80A#input.claimant_receives_housing_benefit_for_dwelling_in_greater_london: false
+    uk:regulations/uksi/2013/376/80A#input.accommodation_normally_occupied_as_home_is_in_greater_london: false
+    uk:regulations/uksi/2013/376/80A#input.claimant_has_accommodation_normally_occupied_as_home: true
+    uk:regulations/uksi/2013/376/80A#input.jobcentre_plus_office_allocated_to_claim_is_in_greater_london: false
+  output:
+    uk:regulations/uksi/2013/376/80A#claimant_or_either_joint_claimant_resident_in_greater_london: not_holds
+    uk:regulations/uksi/2013/376/80A#benefit_cap_applicable_annual_limit_case: 2
+    uk:regulations/uksi/2013/376/80A#benefit_cap_applicable_annual_limit_for_claim: 14753
+- name: single_not_greater_london_responsible_for_child_no_home
+  period: 2013-05
+  input:
+    uk:regulations/uksi/2013/376/80A#input.claim_is_for_joint_claimants: false
+    uk:regulations/uksi/2013/376/80A#input.responsible_for_child_or_qualifying_young_person: true
+    uk:regulations/uksi/2013/376/80A#input.award_contains_housing_costs_element: false
+    ? uk:regulations/uksi/2013/376/80A#input.accommodation_in_respect_of_which_claimant_meets_occupation_condition_is_in_greater_london
+    : false
+    uk:regulations/uksi/2013/376/80A#input.claimant_receives_housing_benefit_for_dwelling_in_greater_london: false
+    uk:regulations/uksi/2013/376/80A#input.accommodation_normally_occupied_as_home_is_in_greater_london: false
+    uk:regulations/uksi/2013/376/80A#input.claimant_has_accommodation_normally_occupied_as_home: false
+    uk:regulations/uksi/2013/376/80A#input.jobcentre_plus_office_allocated_to_claim_is_in_greater_london: false
+  output:
+    uk:regulations/uksi/2013/376/80A#claimant_or_either_joint_claimant_resident_in_greater_london: not_holds
+    uk:regulations/uksi/2013/376/80A#benefit_cap_applicable_annual_limit_case: 3
+    uk:regulations/uksi/2013/376/80A#benefit_cap_applicable_annual_limit_for_claim: 22020
+    uk:regulations/uksi/2013/376/80A#benefit_cap_relevant_amount: 1835

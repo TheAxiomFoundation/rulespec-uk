@@ -1,0 +1,74 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2013/376/29
+  summary: |-
+    An award of universal credit is to include "the carer element" where a claimant has regular and substantial caring responsibilities for a severely disabled person, subject to allocation between carers, LCWRA priority, section 70, and Scottish carer benefit coordination.
+  deferred_outputs:
+    - output: uk:regulations/uksi/2013/376/29#carer_element_included_amount
+      reason: The monetary amount is specified by the table in regulation 36, but no copied RuleSpec context for that table amount was provided with this source unit; this artifact encodes the source-stated inclusion conditions.
+rules:
+  - name: claimant_carer_element_included
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Day
+    source: Universal Credit Regulations 2013, regulation 29(1)-(6)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/29
+          - path: versions[0].formula
+            kind: exception
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/29
+              excerpt: only the LCWRA element may be included in respect of the claimant
+          - path: versions[0].formula
+            kind: exception
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/29
+              excerpt: The universal credit award of B shall not include a carer element unless
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          claimant_has_regular_and_substantial_caring_responsibilities_for_severely_disabled_person
+          and claimant_is_the_only_relevant_carer_or_is_elected_or_determined_for_carer_element
+          and contributions_and_benefits_act_section_70_does_not_displace_carer_element
+          and (
+            not claimant_has_limited_capability_for_work_and_work_related_activity
+            or (
+              claim_is_for_joint_claimants
+              and lcwra_element_included_in_respect_of_other_joint_claimant
+            )
+          )
+          and (
+            not scottish_carer_benefit_coordination_applies_for_same_day_and_same_severely_disabled_person
+            or claimant_and_other_person_jointly_elect_claimant_has_carer_element_and_other_person_has_no_scottish_carer_benefit_entitlement
+            or secretary_of_state_after_consulting_scottish_ministers_is_satisfied_claimant_has_carer_element_and_other_person_has_no_scottish_carer_benefit_entitlement
+          )
+
+  - name: both_joint_claimants_carer_elements_included
+    kind: derived
+    entity: Family
+    dtype: Judgment
+    period: Day
+    source: Universal Credit Regulations 2013, regulation 29(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/29
+              excerpt: joint claimants... both qualify for it, but only if they are not caring for the same severely disabled person
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          claim_is_for_joint_claimants
+          and both_joint_claimants_qualify_for_carer_element
+          and not joint_claimants_are_caring_for_the_same_severely_disabled_person

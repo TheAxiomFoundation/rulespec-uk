@@ -1,0 +1,21 @@
+format: rulespec/v1
+module:
+  status: deferred
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/statute/ukpga/2012/5/22
+  summary: |-
+    A claimant not falling within any of sections 19 to 21 falls within this section. The Secretary of State must, except in prescribed circumstances, impose work search and work availability requirements, and may impose work-focused interview or work preparation requirements.
+  deferred_outputs:
+    - output: uk:statutes/ukpga/2012/5/22#claimant_falls_within_section_22
+      reason: The source defines the claimant group by exclusion from sections 19 to 21, but those upstream section classifications are not available in copied RuleSpec context.
+    - output: uk:statutes/ukpga/2012/5/22#section_22_work_search_requirement_must_be_imposed
+      reason: The mandatory work search requirement depends on whether the claimant falls within this section, which depends on unavailable section 19 to 21 classifications.
+    - output: uk:statutes/ukpga/2012/5/22#section_22_work_availability_requirement_must_be_imposed
+      reason: The mandatory work availability requirement depends on whether the claimant falls within this section, which depends on unavailable section 19 to 21 classifications.
+    - output: uk:statutes/ukpga/2012/5/22#section_22_work_focused_interview_requirement_may_be_imposed
+      reason: The discretionary work-focused interview requirement depends on whether the claimant falls within this section, which depends on unavailable section 19 to 21 classifications.
+    - output: uk:statutes/ukpga/2012/5/22#section_22_work_preparation_requirement_may_be_imposed
+      reason: The discretionary work preparation requirement depends on whether the claimant falls within this section, which depends on unavailable section 19 to 21 classifications.
+rules: []

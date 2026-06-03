@@ -1,0 +1,50 @@
+- name: single_claimant_member_of_couple_includes_other_member_capital
+  period:
+    period_kind: custom
+    name: day
+    start: '2013-04-29'
+    end: '2013-04-29'
+  input:
+    uk:regulations/uksi/2013/376/18#input.claim_is_for_joint_claimants: false
+    uk:regulations/uksi/2013/376/18#input.claimant_is_member_of_couple: true
+    uk:regulations/uksi/2013/376/18#input.claimant_makes_claim_as_single_person: true
+    uk:regulations/uksi/2013/376/18#input.claimant_capital: 10000
+    uk:regulations/uksi/2013/376/18#input.other_member_of_couple_capital: 7000
+  output:
+    uk:regulations/uksi/2013/376/18#prescribed_capital_limit_for_single_claimant: 16000
+    uk:regulations/uksi/2013/376/18#prescribed_capital_limit_for_joint_claimants: 16000
+    uk:regulations/uksi/2013/376/18#prescribed_capital_limit_for_claim: 16000
+    uk:regulations/uksi/2013/376/18#other_member_of_couple_capital_included_for_single_claimant: 7000
+    uk:regulations/uksi/2013/376/18#claimant_capital_for_prescribed_capital_limit: 17000
+- name: single_claimant_not_member_of_couple_does_not_include_other_capital
+  period:
+    period_kind: custom
+    name: day
+    start: '2013-04-29'
+    end: '2013-04-29'
+  input:
+    uk:regulations/uksi/2013/376/18#input.claim_is_for_joint_claimants: false
+    uk:regulations/uksi/2013/376/18#input.claimant_is_member_of_couple: false
+    uk:regulations/uksi/2013/376/18#input.claimant_makes_claim_as_single_person: true
+    uk:regulations/uksi/2013/376/18#input.claimant_capital: 10000
+    uk:regulations/uksi/2013/376/18#input.other_member_of_couple_capital: 7000
+  output:
+    uk:regulations/uksi/2013/376/18#prescribed_capital_limit_for_claim: 16000
+    uk:regulations/uksi/2013/376/18#other_member_of_couple_capital_included_for_single_claimant: 0
+    uk:regulations/uksi/2013/376/18#claimant_capital_for_prescribed_capital_limit: 10000
+- name: joint_claimants_member_of_couple_not_single_claim_does_not_use_single_claimant_inclusion
+  period:
+    period_kind: custom
+    name: day
+    start: '2013-04-29'
+    end: '2013-04-29'
+  input:
+    uk:regulations/uksi/2013/376/18#input.claim_is_for_joint_claimants: true
+    uk:regulations/uksi/2013/376/18#input.claimant_is_member_of_couple: true
+    uk:regulations/uksi/2013/376/18#input.claimant_makes_claim_as_single_person: false
+    uk:regulations/uksi/2013/376/18#input.claimant_capital: 10000
+    uk:regulations/uksi/2013/376/18#input.other_member_of_couple_capital: 7000
+  output:
+    uk:regulations/uksi/2013/376/18#prescribed_capital_limit_for_claim: 16000
+    uk:regulations/uksi/2013/376/18#other_member_of_couple_capital_included_for_single_claimant: 0
+    uk:regulations/uksi/2013/376/18#claimant_capital_for_prescribed_capital_limit: 10000

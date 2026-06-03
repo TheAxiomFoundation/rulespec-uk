@@ -1,0 +1,83 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/statute/ukpga/2012/5/20
+  summary: |-
+    A claimant falls within this section if the claimant is the responsible carer for a child aged 1, or is of a prescribed description. The Secretary of State may impose a work-focused interview requirement on such a claimant, and may not impose any other work-related requirement; any previous other work-related requirement ceases to have effect.
+rules:
+  - name: work_focused_interview_only_group
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Month
+    source: Welfare Reform Act 2012, s 20(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/20
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          claimant_is_responsible_carer_for_child_who_is_aged_1
+          or claimant_is_of_prescribed_description_for_section_20
+
+  - name: work_focused_interview_requirement_may_be_imposed_for_work_focused_interview_only_group
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Month
+    source: Welfare Reform Act 2012, s 20(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/20
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          work_focused_interview_only_group
+
+  - name: other_work_related_requirement_barred_for_work_focused_interview_only_group
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Month
+    source: Welfare Reform Act 2012, s 20(3)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/20
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          work_focused_interview_only_group
+
+  - name: previous_other_work_related_requirement_ceases_for_work_focused_interview_only_group
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Month
+    source: Welfare Reform Act 2012, s 20(3)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/20
+              excerpt: any other work-related requirement previously applying to the claimant ceases to have effect
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          work_focused_interview_only_group
+          and other_work_related_requirement_previously_applied_to_claimant

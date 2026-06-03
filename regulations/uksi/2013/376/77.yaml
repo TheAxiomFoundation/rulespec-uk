@@ -1,0 +1,201 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2013/376/77
+  summary: |-
+    Where a person stands in a position analogous to that of a sole owner or partner in relation to a company carrying on a trade or property business, the person is treated as the sole owner or partner. Where this applies, the person is treated as possessing capital equal to the value, or the person's share of the value, of the company's capital and the person's holding in the company is disregarded. Trade assets used wholly and exclusively for the trade are disregarded while the person is engaged in trade activities; company income or the person's share is treated as the person's income and calculated as self-employed earnings; main-employment trade activity makes the person treated as in gainful self-employment. The regulation does not apply for specified intermediary employed earnings derived from main-employment activities.
+rules:
+  - name: company_intermediary_employed_earnings_main_employment_exclusion_applies
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Month
+    source: Universal Credit Regulations 2013, regulation 77(5)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: exception
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/77
+              excerpt: "does not apply where the person derives income from the company that is employed earnings by virtue of Chapter 8... Chapter 9... or Chapter 10... and that income is derived from activities that are the person's main employment"
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          (
+            person_derives_company_income_that_is_employed_earnings_by_itepa_part_2_chapter_8
+            or person_derives_company_income_that_is_employed_earnings_by_itepa_part_2_chapter_9
+            or person_derives_company_income_that_is_employed_earnings_by_itepa_part_2_chapter_10
+          )
+          and intermediary_employed_earnings_derived_from_person_main_employment_activities
+
+  - name: company_analogous_owner_or_partner_treatment_applies
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Month
+    source: Universal Credit Regulations 2013, regulation 77(1) and 77(5)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: predicate
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/77
+              excerpt: "stands in a position analogous to that of a sole owner or partner in relation to a company which is carrying on a trade or a property business"
+          - path: versions[0].formula
+            kind: exception
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/77
+              excerpt: "This regulation does not apply where the person derives income from the company that is employed earnings by virtue of Chapter 8... Chapter 9... or Chapter 10"
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          person_stands_in_position_analogous_to_sole_owner_or_partner_in_relation_to_company
+          and (company_carries_on_trade or company_carries_on_property_business_within_meaning_of_corporation_tax_act_2009_section_204)
+          and
+          not company_intermediary_employed_earnings_main_employment_exclusion_applies
+
+  - name: company_trade_assets_disregarded_from_person_capital
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 77(3)(a)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/77
+              excerpt: "assets of the company that are used wholly and exclusively for the purposes of the trade are to be disregarded from the person's capital while they are engaged in activities in the course of that trade"
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          if company_analogous_owner_or_partner_treatment_applies and company_carries_on_trade and person_engaged_in_activities_in_course_of_company_trade: company_trade_asset_value_or_person_share_used_wholly_and_exclusively_for_trade else: 0
+
+  - name: person_capital_treated_as_possessed_from_company
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 77(2) and 77(3)(a)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/77
+              excerpt: "treated, subject to paragraph (3)(a), as possessing an amount of capital equal to the value, or the person's share of the value, of the capital of the company"
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          if company_analogous_owner_or_partner_treatment_applies: max(0, company_capital_value_or_person_share_value - company_trade_assets_disregarded_from_person_capital) else: 0
+
+  - name: person_company_holding_disregarded_from_capital
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 77(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/77
+              excerpt: "the value of the person's holding in the company is to be disregarded"
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          if company_analogous_owner_or_partner_treatment_applies: person_holding_value_in_company else: 0
+
+  - name: company_income_treated_as_person_self_employed_earnings
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 77(3)(b)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/77
+              excerpt: "the income of the company or the person's share of that income is to be treated as the person's income and calculated in the manner set out in regulation 57 as if it were self-employed earnings"
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          if company_analogous_owner_or_partner_treatment_applies and company_carries_on_trade: company_income_or_person_share_calculated_as_self_employed_earnings_under_regulation_57 else: 0
+
+  - name: company_earnings_counting_treated_self_employed_and_director_employee_earnings
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 77(4)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/77
+              excerpt: "Any self-employed earnings which the person is treated as having by virtue of paragraph (3)(b) are in addition to any employed earnings the person receives as a director or employee of the company"
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          if company_analogous_owner_or_partner_treatment_applies and company_carries_on_trade: company_income_treated_as_person_self_employed_earnings + person_employed_earnings_as_director_or_employee_of_company else: 0
+
+  - name: person_treated_as_gainfully_self_employed_for_company_trade
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Month
+    source: Universal Credit Regulations 2013, regulation 77(3)(c)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: predicate
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/77
+              excerpt: "where the person's activities in the course of the trade are their main employment, the person is to be treated as if they were in gainful self-employment"
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          company_analogous_owner_or_partner_treatment_applies
+          and company_carries_on_trade
+          and person_activities_in_course_of_company_trade_are_main_employment
+
+  - name: minimum_income_floor_applies_due_to_company_trade
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Month
+    source: Universal Credit Regulations 2013, regulation 77(3)(c)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/77
+              excerpt: "the person is to be treated as if they were in gainful self-employment and, accordingly, regulation 62 (minimum income floor) applies"
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          company_analogous_owner_or_partner_treatment_applies
+          and company_carries_on_trade
+          and person_activities_in_course_of_company_trade_are_main_employment
