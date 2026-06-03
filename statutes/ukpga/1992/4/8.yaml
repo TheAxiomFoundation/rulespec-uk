@@ -1,0 +1,75 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/statute/legislation.gov.uk/ukpga/1992/4/section/8
+  summary: "8 Calculation of primary Class 1 contributions.\n\n(3) Subsection (1)\
+    \ above is subject to\u2014 (a) regulations under section 6(6) above; (b) regulations\
+    \ under sections 116 to 120 below."
+rules:
+- name: main_primary_percentage
+  kind: parameter
+  dtype: Rate
+  source: Social Security Contributions and Benefits Act 1992 s.8(2)(a)
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: parameter
+        source:
+          corpus_citation_path: uk/statute/legislation.gov.uk/ukpga/1992/4/section/8
+          excerpt: the main primary percentage is 8%
+  versions:
+  - effective_from: '2024-04-06'
+    formula: '0.08'
+- name: additional_primary_percentage
+  kind: parameter
+  dtype: Rate
+  source: Social Security Contributions and Benefits Act 1992 s.8(2)(b)
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: parameter
+        source:
+          corpus_citation_path: uk/statute/legislation.gov.uk/ukpga/1992/4/section/8
+          excerpt: the additional primary percentage is 2 per cent
+  versions:
+  - effective_from: '2011-04-06'
+    formula: '0.02'
+- name: primary_class_1_contribution
+  kind: derived
+  entity: Person
+  dtype: Money
+  period: Week
+  unit: GBP
+  source: Social Security Contributions and Benefits Act 1992 s.8(1), (3)
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: uk/statute/legislation.gov.uk/ukpga/1992/4/section/8
+      - path: versions[0].formula
+        kind: condition
+        source:
+          corpus_citation_path: uk/statute/legislation.gov.uk/ukpga/1992/4/section/8
+          excerpt: Where a primary Class 1 contribution is payable as mentioned in
+            section 6(1)(a)
+      - path: versions[0].formula
+        kind: exception
+        source:
+          corpus_citation_path: uk/statute/legislation.gov.uk/ukpga/1992/4/section/8
+          excerpt: "Subsection (1) above is subject to\u2014 (a) regulations under\
+            \ section 6(6) ... (b) regulations under sections 116 to 120"
+  versions:
+  - effective_from: '2024-04-06'
+    formula: 'if primary_class_1_contribution_payable_as_mentioned_in_section_6_1_a
+      and regulations_under_section_6_6_do_not_displace_calculation and regulations_under_sections_116_to_120_do_not_displace_calculation:
+      (main_primary_percentage * min(max(0, earnings_paid_in_tax_week_in_respect_of_employment
+      - current_primary_threshold_or_prescribed_equivalent), max(0, current_upper_earnings_limit_or_prescribed_equivalent
+      - current_primary_threshold_or_prescribed_equivalent))) + (additional_primary_percentage
+      * max(0, earnings_paid_in_tax_week_in_respect_of_employment - current_upper_earnings_limit_or_prescribed_equivalent))
+      else: 0'
