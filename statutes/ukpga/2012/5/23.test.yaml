@@ -1,0 +1,96 @@
+- name: all_section_23_powers_hold_for_claimant
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:statutes/ukpga/2012/5/23#input.person_is_claimant: true
+    uk:statutes/ukpga/2012/5/23#input.purpose_relates_to_imposition_of_work_related_requirement: true
+    uk:statutes/ukpga/2012/5/23#input.purpose_relates_to_verifying_claimant_compliance_with_work_related_requirement: true
+    uk:statutes/ukpga/2012/5/23#input.purpose_relates_to_assisting_claimant_to_comply_with_work_related_requirement: true
+    uk:statutes/ukpga/2012/5/23#input.interview_specification_concerns_how_when_or_where_interview_takes_place: true
+    uk:statutes/ukpga/2012/5/23#input.information_and_evidence_are_specified_by_secretary_of_state: true
+    uk:statutes/ukpga/2012/5/23#input.information_and_evidence_manner_is_specified_by_secretary_of_state: true
+    uk:statutes/ukpga/2012/5/23#input.compliance_confirmation_manner_is_specified_by_secretary_of_state: true
+    uk:statutes/ukpga/2012/5/23#input.change_in_circumstances_is_specified_by_secretary_of_state: true
+    uk:statutes/ukpga/2012/5/23#input.change_relevant_to_imposition_of_work_related_requirements: true
+    uk:statutes/ukpga/2012/5/23#input.change_relevant_to_claimant_compliance_with_work_related_requirement: true
+  output:
+    uk:statutes/ukpga/2012/5/23#claimant_may_be_required_to_participate_in_work_related_requirement_interview: holds
+    uk:statutes/ukpga/2012/5/23#secretary_of_state_may_specify_work_related_requirement_interview_arrangements: holds
+    uk:statutes/ukpga/2012/5/23#claimant_may_be_required_to_provide_information_and_evidence_for_verifying_compliance: holds
+    uk:statutes/ukpga/2012/5/23#claimant_may_be_required_to_confirm_compliance_for_verifying_work_related_requirement: holds
+    uk:statutes/ukpga/2012/5/23#claimant_may_be_required_to_report_relevant_circumstance_changes: holds
+- name: non_claimant_is_outside_section_23_claimant_powers
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:statutes/ukpga/2012/5/23#input.person_is_claimant: false
+    uk:statutes/ukpga/2012/5/23#input.purpose_relates_to_imposition_of_work_related_requirement: true
+    uk:statutes/ukpga/2012/5/23#input.purpose_relates_to_verifying_claimant_compliance_with_work_related_requirement: true
+    uk:statutes/ukpga/2012/5/23#input.purpose_relates_to_assisting_claimant_to_comply_with_work_related_requirement: true
+    uk:statutes/ukpga/2012/5/23#input.interview_specification_concerns_how_when_or_where_interview_takes_place: true
+    uk:statutes/ukpga/2012/5/23#input.information_and_evidence_are_specified_by_secretary_of_state: true
+    uk:statutes/ukpga/2012/5/23#input.information_and_evidence_manner_is_specified_by_secretary_of_state: true
+    uk:statutes/ukpga/2012/5/23#input.compliance_confirmation_manner_is_specified_by_secretary_of_state: true
+    uk:statutes/ukpga/2012/5/23#input.change_in_circumstances_is_specified_by_secretary_of_state: true
+    uk:statutes/ukpga/2012/5/23#input.change_relevant_to_imposition_of_work_related_requirements: true
+    uk:statutes/ukpga/2012/5/23#input.change_relevant_to_claimant_compliance_with_work_related_requirement: true
+  output:
+    uk:statutes/ukpga/2012/5/23#claimant_may_be_required_to_participate_in_work_related_requirement_interview: not_holds
+    uk:statutes/ukpga/2012/5/23#secretary_of_state_may_specify_work_related_requirement_interview_arrangements: not_holds
+    uk:statutes/ukpga/2012/5/23#claimant_may_be_required_to_provide_information_and_evidence_for_verifying_compliance: not_holds
+    uk:statutes/ukpga/2012/5/23#claimant_may_be_required_to_confirm_compliance_for_verifying_work_related_requirement: not_holds
+    uk:statutes/ukpga/2012/5/23#claimant_may_be_required_to_report_relevant_circumstance_changes: not_holds
+- name: assisting_compliance_interview_and_compliance_change_reporting_hold_without_verification
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:statutes/ukpga/2012/5/23#input.person_is_claimant: true
+    uk:statutes/ukpga/2012/5/23#input.purpose_relates_to_imposition_of_work_related_requirement: false
+    uk:statutes/ukpga/2012/5/23#input.purpose_relates_to_verifying_claimant_compliance_with_work_related_requirement: false
+    uk:statutes/ukpga/2012/5/23#input.purpose_relates_to_assisting_claimant_to_comply_with_work_related_requirement: true
+    uk:statutes/ukpga/2012/5/23#input.interview_specification_concerns_how_when_or_where_interview_takes_place: true
+    uk:statutes/ukpga/2012/5/23#input.information_and_evidence_are_specified_by_secretary_of_state: true
+    uk:statutes/ukpga/2012/5/23#input.information_and_evidence_manner_is_specified_by_secretary_of_state: true
+    uk:statutes/ukpga/2012/5/23#input.compliance_confirmation_manner_is_specified_by_secretary_of_state: true
+    uk:statutes/ukpga/2012/5/23#input.change_in_circumstances_is_specified_by_secretary_of_state: true
+    uk:statutes/ukpga/2012/5/23#input.change_relevant_to_imposition_of_work_related_requirements: false
+    uk:statutes/ukpga/2012/5/23#input.change_relevant_to_claimant_compliance_with_work_related_requirement: true
+  output:
+    uk:statutes/ukpga/2012/5/23#claimant_may_be_required_to_participate_in_work_related_requirement_interview: holds
+    uk:statutes/ukpga/2012/5/23#secretary_of_state_may_specify_work_related_requirement_interview_arrangements: holds
+    uk:statutes/ukpga/2012/5/23#claimant_may_be_required_to_provide_information_and_evidence_for_verifying_compliance: not_holds
+    uk:statutes/ukpga/2012/5/23#claimant_may_be_required_to_confirm_compliance_for_verifying_work_related_requirement: not_holds
+    uk:statutes/ukpga/2012/5/23#claimant_may_be_required_to_report_relevant_circumstance_changes: holds
+- name: missing_required_specifications_block_corresponding_section_23_powers
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:statutes/ukpga/2012/5/23#input.person_is_claimant: true
+    uk:statutes/ukpga/2012/5/23#input.purpose_relates_to_imposition_of_work_related_requirement: true
+    uk:statutes/ukpga/2012/5/23#input.purpose_relates_to_verifying_claimant_compliance_with_work_related_requirement: true
+    uk:statutes/ukpga/2012/5/23#input.purpose_relates_to_assisting_claimant_to_comply_with_work_related_requirement: false
+    uk:statutes/ukpga/2012/5/23#input.interview_specification_concerns_how_when_or_where_interview_takes_place: false
+    uk:statutes/ukpga/2012/5/23#input.information_and_evidence_are_specified_by_secretary_of_state: false
+    uk:statutes/ukpga/2012/5/23#input.information_and_evidence_manner_is_specified_by_secretary_of_state: false
+    uk:statutes/ukpga/2012/5/23#input.compliance_confirmation_manner_is_specified_by_secretary_of_state: false
+    uk:statutes/ukpga/2012/5/23#input.change_in_circumstances_is_specified_by_secretary_of_state: true
+    uk:statutes/ukpga/2012/5/23#input.change_relevant_to_imposition_of_work_related_requirements: false
+    uk:statutes/ukpga/2012/5/23#input.change_relevant_to_claimant_compliance_with_work_related_requirement: false
+  output:
+    uk:statutes/ukpga/2012/5/23#claimant_may_be_required_to_participate_in_work_related_requirement_interview: holds
+    uk:statutes/ukpga/2012/5/23#secretary_of_state_may_specify_work_related_requirement_interview_arrangements: not_holds
+    uk:statutes/ukpga/2012/5/23#claimant_may_be_required_to_provide_information_and_evidence_for_verifying_compliance: not_holds
+    uk:statutes/ukpga/2012/5/23#claimant_may_be_required_to_confirm_compliance_for_verifying_work_related_requirement: not_holds
+    uk:statutes/ukpga/2012/5/23#claimant_may_be_required_to_report_relevant_circumstance_changes: not_holds

@@ -1,0 +1,179 @@
+- name: ordinary_asset_is_capital_under_regulation_46
+  period:
+    period_kind: custom
+    name: day
+    start: '2013-04-29'
+    end: '2013-04-29'
+  input: {}
+  tables:
+    Asset:
+    - uk:regulations/uksi/2013/376/46#input.asset_would_otherwise_be_persons_capital: true
+      uk:regulations/uksi/2013/376/46#input.asset_is_personal_possession: false
+  output:
+    uk:regulations/uksi/2013/376/46#asset_is_capital_under_regulation_46:
+    - holds
+- name: personal_possession_is_not_capital_under_regulation_46
+  period:
+    period_kind: custom
+    name: day
+    start: '2013-04-29'
+    end: '2013-04-29'
+  input: {}
+  tables:
+    Asset:
+    - uk:regulations/uksi/2013/376/46#input.asset_would_otherwise_be_persons_capital: true
+      uk:regulations/uksi/2013/376/46#input.asset_is_personal_possession: true
+  output:
+    uk:regulations/uksi/2013/376/46#asset_is_capital_under_regulation_46:
+    - not_holds
+- name: regular_periodic_non_instalment_payment_is_income
+  period:
+    period_kind: custom
+    name: day
+    start: '2013-04-29'
+    end: '2013-04-29'
+  input: {}
+  tables:
+    Payment:
+    - uk:regulations/uksi/2013/376/46#input.payment_amount: 100
+      uk:regulations/uksi/2013/376/46#input.payment_paid_regularly: true
+      uk:regulations/uksi/2013/376/46#input.payment_paid_by_reference_to_period: true
+      uk:regulations/uksi/2013/376/46#input.payment_is_instalment_of_capital_payable_by_instalments: false
+      uk:regulations/uksi/2013/376/46#input.capital_payable_by_instalments_amount_outstanding: 0
+      uk:regulations/uksi/2013/376/46#input.person_other_capital: 0
+      uk:regulations/uksi/2013/376/46#input.person_is_member_of_couple: false
+      uk:regulations/uksi/2013/376/46#input.other_member_of_couple_capital: 0
+  output:
+    uk:regulations/uksi/2013/376/46#capital_instalment_income_threshold: 16000
+    uk:regulations/uksi/2013/376/46#capital_payable_by_instalments_combined_capital:
+    - 0
+    uk:regulations/uksi/2013/376/46#capital_instalment_threshold_exceeded:
+    - not_holds
+    uk:regulations/uksi/2013/376/46#regular_periodic_payment_amount_treated_as_income:
+    - 100
+    uk:regulations/uksi/2013/376/46#capital_instalment_payment_amount_treated_as_income:
+    - 0
+    uk:regulations/uksi/2013/376/46#capital_instalment_payment_amount_treated_as_capital:
+    - 0
+    uk:regulations/uksi/2013/376/46#payment_amount_treated_as_income_under_regulation_46:
+    - 100
+- name: non_regular_period_referenced_payment_is_not_income_under_regular_periodic_rule
+  period:
+    period_kind: custom
+    name: day
+    start: '2013-04-29'
+    end: '2013-04-29'
+  input: {}
+  tables:
+    Payment:
+    - uk:regulations/uksi/2013/376/46#input.payment_amount: 100
+      uk:regulations/uksi/2013/376/46#input.payment_paid_regularly: false
+      uk:regulations/uksi/2013/376/46#input.payment_paid_by_reference_to_period: true
+      uk:regulations/uksi/2013/376/46#input.payment_is_instalment_of_capital_payable_by_instalments: false
+      uk:regulations/uksi/2013/376/46#input.capital_payable_by_instalments_amount_outstanding: 0
+      uk:regulations/uksi/2013/376/46#input.person_other_capital: 0
+      uk:regulations/uksi/2013/376/46#input.person_is_member_of_couple: false
+      uk:regulations/uksi/2013/376/46#input.other_member_of_couple_capital: 0
+  output:
+    uk:regulations/uksi/2013/376/46#capital_payable_by_instalments_combined_capital:
+    - 0
+    uk:regulations/uksi/2013/376/46#capital_instalment_threshold_exceeded:
+    - not_holds
+    uk:regulations/uksi/2013/376/46#regular_periodic_payment_amount_treated_as_income:
+    - 0
+    uk:regulations/uksi/2013/376/46#capital_instalment_payment_amount_treated_as_income:
+    - 0
+    uk:regulations/uksi/2013/376/46#capital_instalment_payment_amount_treated_as_capital:
+    - 0
+    uk:regulations/uksi/2013/376/46#payment_amount_treated_as_income_under_regulation_46:
+    - 0
+- name: regular_payment_not_by_reference_to_period_is_not_income_under_regular_periodic_rule
+  period:
+    period_kind: custom
+    name: day
+    start: '2013-04-29'
+    end: '2013-04-29'
+  input: {}
+  tables:
+    Payment:
+    - uk:regulations/uksi/2013/376/46#input.payment_amount: 100
+      uk:regulations/uksi/2013/376/46#input.payment_paid_regularly: true
+      uk:regulations/uksi/2013/376/46#input.payment_paid_by_reference_to_period: false
+      uk:regulations/uksi/2013/376/46#input.payment_is_instalment_of_capital_payable_by_instalments: false
+      uk:regulations/uksi/2013/376/46#input.capital_payable_by_instalments_amount_outstanding: 0
+      uk:regulations/uksi/2013/376/46#input.person_other_capital: 0
+      uk:regulations/uksi/2013/376/46#input.person_is_member_of_couple: false
+      uk:regulations/uksi/2013/376/46#input.other_member_of_couple_capital: 0
+  output:
+    uk:regulations/uksi/2013/376/46#capital_payable_by_instalments_combined_capital:
+    - 0
+    uk:regulations/uksi/2013/376/46#capital_instalment_threshold_exceeded:
+    - not_holds
+    uk:regulations/uksi/2013/376/46#regular_periodic_payment_amount_treated_as_income:
+    - 0
+    uk:regulations/uksi/2013/376/46#capital_instalment_payment_amount_treated_as_income:
+    - 0
+    uk:regulations/uksi/2013/376/46#capital_instalment_payment_amount_treated_as_capital:
+    - 0
+    uk:regulations/uksi/2013/376/46#payment_amount_treated_as_income_under_regulation_46:
+    - 0
+- name: capital_instalment_exceeding_threshold_due_to_couple_member_capital_is_income
+  period:
+    period_kind: custom
+    name: day
+    start: '2013-04-29'
+    end: '2013-04-29'
+  input: {}
+  tables:
+    Payment:
+    - uk:regulations/uksi/2013/376/46#input.payment_amount: 200
+      uk:regulations/uksi/2013/376/46#input.payment_paid_regularly: true
+      uk:regulations/uksi/2013/376/46#input.payment_paid_by_reference_to_period: true
+      uk:regulations/uksi/2013/376/46#input.payment_is_instalment_of_capital_payable_by_instalments: true
+      uk:regulations/uksi/2013/376/46#input.capital_payable_by_instalments_amount_outstanding: 10000
+      uk:regulations/uksi/2013/376/46#input.person_other_capital: 3000
+      uk:regulations/uksi/2013/376/46#input.person_is_member_of_couple: true
+      uk:regulations/uksi/2013/376/46#input.other_member_of_couple_capital: 4001
+  output:
+    uk:regulations/uksi/2013/376/46#capital_payable_by_instalments_combined_capital:
+    - 17001
+    uk:regulations/uksi/2013/376/46#capital_instalment_threshold_exceeded:
+    - holds
+    uk:regulations/uksi/2013/376/46#regular_periodic_payment_amount_treated_as_income:
+    - 0
+    uk:regulations/uksi/2013/376/46#capital_instalment_payment_amount_treated_as_income:
+    - 200
+    uk:regulations/uksi/2013/376/46#capital_instalment_payment_amount_treated_as_capital:
+    - 0
+    uk:regulations/uksi/2013/376/46#payment_amount_treated_as_income_under_regulation_46:
+    - 200
+- name: capital_instalment_not_exceeding_threshold_is_capital
+  period:
+    period_kind: custom
+    name: day
+    start: '2013-04-29'
+    end: '2013-04-29'
+  input: {}
+  tables:
+    Payment:
+    - uk:regulations/uksi/2013/376/46#input.payment_amount: 200
+      uk:regulations/uksi/2013/376/46#input.payment_paid_regularly: true
+      uk:regulations/uksi/2013/376/46#input.payment_paid_by_reference_to_period: true
+      uk:regulations/uksi/2013/376/46#input.payment_is_instalment_of_capital_payable_by_instalments: true
+      uk:regulations/uksi/2013/376/46#input.capital_payable_by_instalments_amount_outstanding: 10000
+      uk:regulations/uksi/2013/376/46#input.person_other_capital: 5000
+      uk:regulations/uksi/2013/376/46#input.person_is_member_of_couple: false
+      uk:regulations/uksi/2013/376/46#input.other_member_of_couple_capital: 10000
+  output:
+    uk:regulations/uksi/2013/376/46#capital_payable_by_instalments_combined_capital:
+    - 15000
+    uk:regulations/uksi/2013/376/46#capital_instalment_threshold_exceeded:
+    - not_holds
+    uk:regulations/uksi/2013/376/46#regular_periodic_payment_amount_treated_as_income:
+    - 0
+    uk:regulations/uksi/2013/376/46#capital_instalment_payment_amount_treated_as_income:
+    - 0
+    uk:regulations/uksi/2013/376/46#capital_instalment_payment_amount_treated_as_capital:
+    - 200
+    uk:regulations/uksi/2013/376/46#payment_amount_treated_as_income_under_regulation_46:
+    - 0

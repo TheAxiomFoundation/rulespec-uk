@@ -1,0 +1,70 @@
+- name: tariff income counts incomplete capital band
+  period: 2024-01
+  input:
+    uk:regulations/uksi/2013/376/72#input.person_capital: 6251
+    uk:regulations/uksi/2013/376/72#input.capital_is_disregarded: false
+    uk:regulations/uksi/2013/376/72#input.actual_income_from_capital_taken_into_account_under_regulation_66_1_i_annuity: false
+    uk:regulations/uksi/2013/376/72#input.actual_income_from_capital_taken_into_account_under_regulation_66_1_j_trust: false
+  output:
+    uk:regulations/uksi/2013/376/72#capital_tariff_income_lower_threshold: 6000
+    uk:regulations/uksi/2013/376/72#capital_tariff_income_band_size: 250
+    uk:regulations/uksi/2013/376/72#capital_tariff_income_monthly_amount_per_band: 4.35
+    uk:regulations/uksi/2013/376/72#capital_treated_as_yielding_income: holds
+    uk:regulations/uksi/2013/376/72#capital_tariff_monthly_income: 8.7
+- name: disregarded capital blocks tariff income
+  period: 2024-01
+  input:
+    uk:regulations/uksi/2013/376/72#input.person_capital: 6251
+    uk:regulations/uksi/2013/376/72#input.capital_is_disregarded: true
+    uk:regulations/uksi/2013/376/72#input.actual_income_from_capital_taken_into_account_under_regulation_66_1_i_annuity: false
+    uk:regulations/uksi/2013/376/72#input.actual_income_from_capital_taken_into_account_under_regulation_66_1_j_trust: false
+  output:
+    uk:regulations/uksi/2013/376/72#capital_treated_as_yielding_income: not_holds
+    uk:regulations/uksi/2013/376/72#capital_tariff_monthly_income: 0
+- name: annuity income taken into account blocks tariff income
+  period: 2024-01
+  input:
+    uk:regulations/uksi/2013/376/72#input.person_capital: 6251
+    uk:regulations/uksi/2013/376/72#input.capital_is_disregarded: false
+    uk:regulations/uksi/2013/376/72#input.actual_income_from_capital_taken_into_account_under_regulation_66_1_i_annuity: true
+    uk:regulations/uksi/2013/376/72#input.actual_income_from_capital_taken_into_account_under_regulation_66_1_j_trust: false
+  output:
+    uk:regulations/uksi/2013/376/72#capital_treated_as_yielding_income: not_holds
+    uk:regulations/uksi/2013/376/72#capital_tariff_monthly_income: 0
+- name: trust income taken into account blocks tariff income
+  period: 2024-01
+  input:
+    uk:regulations/uksi/2013/376/72#input.person_capital: 6251
+    uk:regulations/uksi/2013/376/72#input.capital_is_disregarded: false
+    uk:regulations/uksi/2013/376/72#input.actual_income_from_capital_taken_into_account_under_regulation_66_1_i_annuity: false
+    uk:regulations/uksi/2013/376/72#input.actual_income_from_capital_taken_into_account_under_regulation_66_1_j_trust: true
+  output:
+    uk:regulations/uksi/2013/376/72#capital_treated_as_yielding_income: not_holds
+    uk:regulations/uksi/2013/376/72#capital_tariff_monthly_income: 0
+- name: actual income from tariffed capital is treated as capital on due day
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:regulations/uksi/2013/376/72#input.person_capital: 6251
+    uk:regulations/uksi/2013/376/72#input.capital_is_disregarded: false
+    uk:regulations/uksi/2013/376/72#input.actual_income_from_capital_taken_into_account_under_regulation_66_1_i_annuity: false
+    uk:regulations/uksi/2013/376/72#input.actual_income_from_capital_taken_into_account_under_regulation_66_1_j_trust: false
+    uk:regulations/uksi/2013/376/72#input.actual_income_derived_from_that_capital_due_to_be_paid_to_person_on_day_amount: 100
+  output:
+    uk:regulations/uksi/2013/376/72#actual_income_from_tariffed_capital_treated_as_capital: 100
+- name: auto_zero_actual_income_from_tariffed_capital_treated_as_capital
+  period:
+    period_kind: tax_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:regulations/uksi/2013/376/72#input.actual_income_derived_from_that_capital_due_to_be_paid_to_person_on_day_amount: 0
+    uk:regulations/uksi/2013/376/72#input.actual_income_from_capital_taken_into_account_under_regulation_66_1_i_annuity: false
+    uk:regulations/uksi/2013/376/72#input.actual_income_from_capital_taken_into_account_under_regulation_66_1_j_trust: false
+    uk:regulations/uksi/2013/376/72#input.capital_is_disregarded: false
+    uk:regulations/uksi/2013/376/72#input.person_capital: 0
+  output:
+    uk:regulations/uksi/2013/376/72#actual_income_from_tariffed_capital_treated_as_capital: 0

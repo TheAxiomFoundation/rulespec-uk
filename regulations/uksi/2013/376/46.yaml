@@ -1,0 +1,168 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2013/376/46
+  summary: |-
+    "The whole of a person's capital is to be taken into account unless" it is treated as income or disregarded. "A person's personal possessions are not to be treated as capital." Regular period payments are income; capital instalments are income if combined capital exceeds £16,000, otherwise capital.
+  deferred_outputs:
+    - output: uk:regulations/uksi/2013/376/46#person_capital_taken_into_account
+      reason: The full amount of a person's capital to be taken into account depends on disregards under regulation 48, but no copied RuleSpec target for regulation 48 is available.
+rules:
+  - name: capital_instalment_income_threshold
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 46(4)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/46
+              excerpt: "exceeds £16,000"
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          16000
+
+  - name: asset_is_capital_under_regulation_46
+    kind: derived
+    entity: Asset
+    dtype: Judgment
+    period: Day
+    source: Universal Credit Regulations 2013, regulation 46(1)-(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/46
+              excerpt: "personal possessions are not to be treated as capital"
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          asset_would_otherwise_be_persons_capital
+          and not asset_is_personal_possession
+
+  - name: capital_payable_by_instalments_combined_capital
+    kind: derived
+    entity: Payment
+    dtype: Money
+    period: Day
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 46(4)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/46
+              excerpt: "amount outstanding, combined with any other capital of the person (and, if the person is a member of a couple, the other member)"
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          capital_payable_by_instalments_amount_outstanding + person_other_capital + (if person_is_member_of_couple: other_member_of_couple_capital else: 0)
+
+  - name: capital_instalment_threshold_exceeded
+    kind: derived
+    entity: Payment
+    dtype: Judgment
+    period: Day
+    source: Universal Credit Regulations 2013, regulation 46(4)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/46
+              excerpt: "exceeds £16,000"
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          payment_is_instalment_of_capital_payable_by_instalments
+          and capital_payable_by_instalments_combined_capital > capital_instalment_income_threshold
+
+  - name: regular_periodic_payment_amount_treated_as_income
+    kind: derived
+    entity: Payment
+    dtype: Money
+    period: Day
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 46(3)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/46
+              excerpt: "sums that are paid regularly and by reference to a period"
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          if payment_paid_regularly and payment_paid_by_reference_to_period and not payment_is_instalment_of_capital_payable_by_instalments: payment_amount else: 0
+
+  - name: capital_instalment_payment_amount_treated_as_income
+    kind: derived
+    entity: Payment
+    dtype: Money
+    period: Day
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 46(4)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/46
+              excerpt: "each payment of an instalment is to be treated as income if"
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          if capital_instalment_threshold_exceeded: payment_amount else: 0
+
+  - name: capital_instalment_payment_amount_treated_as_capital
+    kind: derived
+    entity: Payment
+    dtype: Money
+    period: Day
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 46(4)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/46
+              excerpt: "but otherwise such payments are to be treated as capital"
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          if payment_is_instalment_of_capital_payable_by_instalments and not capital_instalment_threshold_exceeded: payment_amount else: 0
+
+  - name: payment_amount_treated_as_income_under_regulation_46
+    kind: derived
+    entity: Payment
+    dtype: Money
+    period: Day
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 46(3)-(4)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/46
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          regular_periodic_payment_amount_treated_as_income + capital_instalment_payment_amount_treated_as_income

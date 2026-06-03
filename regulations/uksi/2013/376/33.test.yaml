@@ -1,0 +1,111 @@
+- name: timely_reported_childcare_costs_condition_met
+  period: 2013-05
+  input:
+    uk:regulations/uksi/2013/376/33#input.claimant_has_paid_charges_for_relevant_childcare_attributable_to_assessment_period: true
+    uk:regulations/uksi/2013/376/33#input.childcare_charges_reported_before_end_of_assessment_period_following_paid_period: true
+    uk:regulations/uksi/2013/376/33#input.charges_are_in_respect_of_child_for_whom_claimant_is_responsible: true
+    uk:regulations/uksi/2013/376/33#input.charges_are_in_respect_of_qualifying_young_person_for_whom_claimant_is_responsible: false
+    uk:regulations/uksi/2013/376/33#input.qualifying_young_person_has_not_reached_september_following_16th_birthday: false
+    uk:regulations/uksi/2013/376/33#input.childcare_arrangements_enable_claimant_to_take_up_or_continue_paid_work: true
+    uk:regulations/uksi/2013/376/33#input.claimant_treated_as_in_paid_work_by_regulation_32_2: false
+    ? uk:regulations/uksi/2013/376/33#input.childcare_arrangements_enable_claimant_to_maintain_arrangements_in_place_when_paid_work_ceased_or_benefits_began
+    : false
+    uk:regulations/uksi/2013/376/33#input.late_reporting_of_charges_for_relevant_childcare: false
+    uk:regulations/uksi/2013/376/33#input.late_notification_of_change_of_circumstances_may_be_accepted_under_regulation_36: false
+    uk:regulations/uksi/2013/376/33#input.late_reporting_of_relevant_childcare_charges_accepted: false
+  output:
+    uk:regulations/uksi/2013/376/33#childcare_charges_responsibility_requirement_met: holds
+    uk:regulations/uksi/2013/376/33#childcare_arrangements_work_purpose_requirement_met: holds
+    uk:regulations/uksi/2013/376/33#late_reporting_of_relevant_childcare_charges_may_be_accepted: not_holds
+    uk:regulations/uksi/2013/376/33#childcare_costs_condition_met: holds
+- name: no_paid_relevant_childcare_charges
+  period: 2013-05
+  input:
+    uk:regulations/uksi/2013/376/33#input.claimant_has_paid_charges_for_relevant_childcare_attributable_to_assessment_period: false
+    uk:regulations/uksi/2013/376/33#input.childcare_charges_reported_before_end_of_assessment_period_following_paid_period: true
+    uk:regulations/uksi/2013/376/33#input.charges_are_in_respect_of_child_for_whom_claimant_is_responsible: true
+    uk:regulations/uksi/2013/376/33#input.charges_are_in_respect_of_qualifying_young_person_for_whom_claimant_is_responsible: false
+    uk:regulations/uksi/2013/376/33#input.qualifying_young_person_has_not_reached_september_following_16th_birthday: false
+    uk:regulations/uksi/2013/376/33#input.childcare_arrangements_enable_claimant_to_take_up_or_continue_paid_work: true
+    uk:regulations/uksi/2013/376/33#input.claimant_treated_as_in_paid_work_by_regulation_32_2: false
+    ? uk:regulations/uksi/2013/376/33#input.childcare_arrangements_enable_claimant_to_maintain_arrangements_in_place_when_paid_work_ceased_or_benefits_began
+    : false
+    uk:regulations/uksi/2013/376/33#input.late_reporting_of_charges_for_relevant_childcare: false
+    uk:regulations/uksi/2013/376/33#input.late_notification_of_change_of_circumstances_may_be_accepted_under_regulation_36: false
+    uk:regulations/uksi/2013/376/33#input.late_reporting_of_relevant_childcare_charges_accepted: false
+  output:
+    uk:regulations/uksi/2013/376/33#childcare_costs_condition_met: not_holds
+- name: no_timely_report_or_accepted_late_reporting
+  period: 2013-05
+  input:
+    uk:regulations/uksi/2013/376/33#input.claimant_has_paid_charges_for_relevant_childcare_attributable_to_assessment_period: true
+    uk:regulations/uksi/2013/376/33#input.childcare_charges_reported_before_end_of_assessment_period_following_paid_period: false
+    uk:regulations/uksi/2013/376/33#input.charges_are_in_respect_of_child_for_whom_claimant_is_responsible: true
+    uk:regulations/uksi/2013/376/33#input.charges_are_in_respect_of_qualifying_young_person_for_whom_claimant_is_responsible: false
+    uk:regulations/uksi/2013/376/33#input.qualifying_young_person_has_not_reached_september_following_16th_birthday: false
+    uk:regulations/uksi/2013/376/33#input.childcare_arrangements_enable_claimant_to_take_up_or_continue_paid_work: true
+    uk:regulations/uksi/2013/376/33#input.claimant_treated_as_in_paid_work_by_regulation_32_2: false
+    ? uk:regulations/uksi/2013/376/33#input.childcare_arrangements_enable_claimant_to_maintain_arrangements_in_place_when_paid_work_ceased_or_benefits_began
+    : false
+    uk:regulations/uksi/2013/376/33#input.late_reporting_of_charges_for_relevant_childcare: true
+    uk:regulations/uksi/2013/376/33#input.late_notification_of_change_of_circumstances_may_be_accepted_under_regulation_36: false
+    uk:regulations/uksi/2013/376/33#input.late_reporting_of_relevant_childcare_charges_accepted: false
+  output:
+    uk:regulations/uksi/2013/376/33#late_reporting_of_relevant_childcare_charges_may_be_accepted: not_holds
+    uk:regulations/uksi/2013/376/33#childcare_costs_condition_met: not_holds
+- name: charges_not_for_responsible_child_or_qualifying_young_person
+  period: 2013-05
+  input:
+    uk:regulations/uksi/2013/376/33#input.claimant_has_paid_charges_for_relevant_childcare_attributable_to_assessment_period: true
+    uk:regulations/uksi/2013/376/33#input.childcare_charges_reported_before_end_of_assessment_period_following_paid_period: true
+    uk:regulations/uksi/2013/376/33#input.charges_are_in_respect_of_child_for_whom_claimant_is_responsible: false
+    uk:regulations/uksi/2013/376/33#input.charges_are_in_respect_of_qualifying_young_person_for_whom_claimant_is_responsible: false
+    uk:regulations/uksi/2013/376/33#input.qualifying_young_person_has_not_reached_september_following_16th_birthday: false
+    uk:regulations/uksi/2013/376/33#input.childcare_arrangements_enable_claimant_to_take_up_or_continue_paid_work: true
+    uk:regulations/uksi/2013/376/33#input.claimant_treated_as_in_paid_work_by_regulation_32_2: false
+    ? uk:regulations/uksi/2013/376/33#input.childcare_arrangements_enable_claimant_to_maintain_arrangements_in_place_when_paid_work_ceased_or_benefits_began
+    : false
+    uk:regulations/uksi/2013/376/33#input.late_reporting_of_charges_for_relevant_childcare: false
+    uk:regulations/uksi/2013/376/33#input.late_notification_of_change_of_circumstances_may_be_accepted_under_regulation_36: false
+    uk:regulations/uksi/2013/376/33#input.late_reporting_of_relevant_childcare_charges_accepted: false
+  output:
+    uk:regulations/uksi/2013/376/33#childcare_charges_responsibility_requirement_met: not_holds
+    uk:regulations/uksi/2013/376/33#childcare_costs_condition_met: not_holds
+- name: childcare_arrangements_do_not_have_work_purpose
+  period: 2013-05
+  input:
+    uk:regulations/uksi/2013/376/33#input.claimant_has_paid_charges_for_relevant_childcare_attributable_to_assessment_period: true
+    uk:regulations/uksi/2013/376/33#input.childcare_charges_reported_before_end_of_assessment_period_following_paid_period: true
+    uk:regulations/uksi/2013/376/33#input.charges_are_in_respect_of_child_for_whom_claimant_is_responsible: true
+    uk:regulations/uksi/2013/376/33#input.charges_are_in_respect_of_qualifying_young_person_for_whom_claimant_is_responsible: false
+    uk:regulations/uksi/2013/376/33#input.qualifying_young_person_has_not_reached_september_following_16th_birthday: false
+    uk:regulations/uksi/2013/376/33#input.childcare_arrangements_enable_claimant_to_take_up_or_continue_paid_work: false
+    uk:regulations/uksi/2013/376/33#input.claimant_treated_as_in_paid_work_by_regulation_32_2: false
+    ? uk:regulations/uksi/2013/376/33#input.childcare_arrangements_enable_claimant_to_maintain_arrangements_in_place_when_paid_work_ceased_or_benefits_began
+    : false
+    uk:regulations/uksi/2013/376/33#input.late_reporting_of_charges_for_relevant_childcare: false
+    uk:regulations/uksi/2013/376/33#input.late_notification_of_change_of_circumstances_may_be_accepted_under_regulation_36: false
+    uk:regulations/uksi/2013/376/33#input.late_reporting_of_relevant_childcare_charges_accepted: false
+  output:
+    uk:regulations/uksi/2013/376/33#childcare_arrangements_work_purpose_requirement_met: not_holds
+    uk:regulations/uksi/2013/376/33#childcare_costs_condition_met: not_holds
+- name: accepted_late_reporting_for_qualifying_young_person_and_maintained_arrangements
+  period: 2013-05
+  input:
+    uk:regulations/uksi/2013/376/33#input.claimant_has_paid_charges_for_relevant_childcare_attributable_to_assessment_period: true
+    uk:regulations/uksi/2013/376/33#input.childcare_charges_reported_before_end_of_assessment_period_following_paid_period: false
+    uk:regulations/uksi/2013/376/33#input.charges_are_in_respect_of_child_for_whom_claimant_is_responsible: false
+    uk:regulations/uksi/2013/376/33#input.charges_are_in_respect_of_qualifying_young_person_for_whom_claimant_is_responsible: true
+    uk:regulations/uksi/2013/376/33#input.qualifying_young_person_has_not_reached_september_following_16th_birthday: true
+    uk:regulations/uksi/2013/376/33#input.childcare_arrangements_enable_claimant_to_take_up_or_continue_paid_work: false
+    uk:regulations/uksi/2013/376/33#input.claimant_treated_as_in_paid_work_by_regulation_32_2: true
+    ? uk:regulations/uksi/2013/376/33#input.childcare_arrangements_enable_claimant_to_maintain_arrangements_in_place_when_paid_work_ceased_or_benefits_began
+    : true
+    uk:regulations/uksi/2013/376/33#input.late_reporting_of_charges_for_relevant_childcare: true
+    uk:regulations/uksi/2013/376/33#input.late_notification_of_change_of_circumstances_may_be_accepted_under_regulation_36: true
+    uk:regulations/uksi/2013/376/33#input.late_reporting_of_relevant_childcare_charges_accepted: true
+  output:
+    uk:regulations/uksi/2013/376/33#childcare_charges_responsibility_requirement_met: holds
+    uk:regulations/uksi/2013/376/33#childcare_arrangements_work_purpose_requirement_met: holds
+    uk:regulations/uksi/2013/376/33#late_reporting_of_relevant_childcare_charges_may_be_accepted: holds
+    uk:regulations/uksi/2013/376/33#childcare_costs_condition_met: holds

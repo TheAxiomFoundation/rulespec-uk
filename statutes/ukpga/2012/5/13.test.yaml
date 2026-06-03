@@ -1,0 +1,44 @@
+- name: no_work_related_requirements_group
+  period: 2024-01
+  input:
+    uk:statutes/ukpga/2012/5/13#input.claimant_falls_into_work_focused_interview_requirement_only_group: false
+    uk:statutes/ukpga/2012/5/13#input.claimant_falls_into_work_focused_interview_and_work_preparation_requirements_only_group: false
+    uk:statutes/ukpga/2012/5/13#input.claimant_falls_into_all_work_related_requirements_group: false
+  output:
+    uk:statutes/ukpga/2012/5/13#work_focused_interview_requirement_may_be_imposed: not_holds
+    uk:statutes/ukpga/2012/5/13#work_preparation_requirement_may_be_imposed: not_holds
+    uk:statutes/ukpga/2012/5/13#work_search_requirement_may_be_imposed: not_holds
+    uk:statutes/ukpga/2012/5/13#work_availability_requirement_may_be_imposed: not_holds
+- name: work_focused_interview_only_group
+  period: 2024-01
+  input:
+    uk:statutes/ukpga/2012/5/13#input.claimant_falls_into_work_focused_interview_requirement_only_group: true
+    uk:statutes/ukpga/2012/5/13#input.claimant_falls_into_work_focused_interview_and_work_preparation_requirements_only_group: false
+    uk:statutes/ukpga/2012/5/13#input.claimant_falls_into_all_work_related_requirements_group: false
+  output:
+    uk:statutes/ukpga/2012/5/13#work_focused_interview_requirement_may_be_imposed: holds
+    uk:statutes/ukpga/2012/5/13#work_preparation_requirement_may_be_imposed: not_holds
+    uk:statutes/ukpga/2012/5/13#work_search_requirement_may_be_imposed: not_holds
+    uk:statutes/ukpga/2012/5/13#work_availability_requirement_may_be_imposed: not_holds
+- name: work_focused_interview_and_preparation_only_group
+  period: 2024-01
+  input:
+    uk:statutes/ukpga/2012/5/13#input.claimant_falls_into_work_focused_interview_requirement_only_group: false
+    uk:statutes/ukpga/2012/5/13#input.claimant_falls_into_work_focused_interview_and_work_preparation_requirements_only_group: true
+    uk:statutes/ukpga/2012/5/13#input.claimant_falls_into_all_work_related_requirements_group: false
+  output:
+    uk:statutes/ukpga/2012/5/13#work_focused_interview_requirement_may_be_imposed: holds
+    uk:statutes/ukpga/2012/5/13#work_preparation_requirement_may_be_imposed: holds
+    uk:statutes/ukpga/2012/5/13#work_search_requirement_may_be_imposed: not_holds
+    uk:statutes/ukpga/2012/5/13#work_availability_requirement_may_be_imposed: not_holds
+- name: all_work_related_requirements_group
+  period: 2024-01
+  input:
+    uk:statutes/ukpga/2012/5/13#input.claimant_falls_into_work_focused_interview_requirement_only_group: false
+    uk:statutes/ukpga/2012/5/13#input.claimant_falls_into_work_focused_interview_and_work_preparation_requirements_only_group: false
+    uk:statutes/ukpga/2012/5/13#input.claimant_falls_into_all_work_related_requirements_group: true
+  output:
+    uk:statutes/ukpga/2012/5/13#work_focused_interview_requirement_may_be_imposed: holds
+    uk:statutes/ukpga/2012/5/13#work_preparation_requirement_may_be_imposed: holds
+    uk:statutes/ukpga/2012/5/13#work_search_requirement_may_be_imposed: holds
+    uk:statutes/ukpga/2012/5/13#work_availability_requirement_may_be_imposed: holds

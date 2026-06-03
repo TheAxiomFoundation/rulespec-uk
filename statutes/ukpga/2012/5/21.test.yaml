@@ -1,0 +1,114 @@
+- name: limited_capability_path
+  period: 2024-01
+  input:
+    uk:statutes/ukpga/2012/5/21#input.claimant_falls_within_section_19: false
+    uk:statutes/ukpga/2012/5/21#input.claimant_falls_within_section_20: false
+    uk:statutes/ukpga/2012/5/21#input.claimant_has_limited_capability_for_work: true
+    uk:statutes/ukpga/2012/5/21#input.claimant_is_responsible_carer_for_child_aged_2: false
+    uk:statutes/ukpga/2012/5/21#input.claimant_is_of_prescribed_description_for_work_focused_interview_and_preparation_group: false
+    uk:statutes/ukpga/2012/5/21#input.other_work_related_requirement_previously_applying_to_claimant: true
+  output:
+    uk:statutes/ukpga/2012/5/21#claimant_falls_into_work_focused_interview_and_work_preparation_requirements_only_group: holds
+    ? uk:statutes/ukpga/2012/5/21#work_preparation_requirement_may_be_imposed_on_work_focused_interview_and_preparation_group_claimant
+    : holds
+    ? uk:statutes/ukpga/2012/5/21#work_focused_interview_requirement_may_be_imposed_on_work_focused_interview_and_preparation_group_claimant
+    : holds
+    ? uk:statutes/ukpga/2012/5/21#other_work_related_requirement_may_not_be_imposed_on_work_focused_interview_and_preparation_group_claimant
+    : holds
+    ? uk:statutes/ukpga/2012/5/21#other_work_related_requirement_previously_applying_ceases_for_work_focused_interview_and_preparation_group_claimant
+    : holds
+- name: responsible_carer_child_aged_2_path
+  period: 2024-01
+  input:
+    uk:statutes/ukpga/2012/5/21#input.claimant_falls_within_section_19: false
+    uk:statutes/ukpga/2012/5/21#input.claimant_falls_within_section_20: false
+    uk:statutes/ukpga/2012/5/21#input.claimant_has_limited_capability_for_work: false
+    uk:statutes/ukpga/2012/5/21#input.claimant_is_responsible_carer_for_child_aged_2: true
+    uk:statutes/ukpga/2012/5/21#input.claimant_is_of_prescribed_description_for_work_focused_interview_and_preparation_group: false
+    uk:statutes/ukpga/2012/5/21#input.other_work_related_requirement_previously_applying_to_claimant: false
+  output:
+    uk:statutes/ukpga/2012/5/21#claimant_falls_into_work_focused_interview_and_work_preparation_requirements_only_group: holds
+    ? uk:statutes/ukpga/2012/5/21#work_preparation_requirement_may_be_imposed_on_work_focused_interview_and_preparation_group_claimant
+    : holds
+    ? uk:statutes/ukpga/2012/5/21#work_focused_interview_requirement_may_be_imposed_on_work_focused_interview_and_preparation_group_claimant
+    : holds
+    ? uk:statutes/ukpga/2012/5/21#other_work_related_requirement_may_not_be_imposed_on_work_focused_interview_and_preparation_group_claimant
+    : holds
+    ? uk:statutes/ukpga/2012/5/21#other_work_related_requirement_previously_applying_ceases_for_work_focused_interview_and_preparation_group_claimant
+    : not_holds
+- name: prescribed_description_path
+  period: 2024-01
+  input:
+    uk:statutes/ukpga/2012/5/21#input.claimant_falls_within_section_19: false
+    uk:statutes/ukpga/2012/5/21#input.claimant_falls_within_section_20: false
+    uk:statutes/ukpga/2012/5/21#input.claimant_has_limited_capability_for_work: false
+    uk:statutes/ukpga/2012/5/21#input.claimant_is_responsible_carer_for_child_aged_2: false
+    uk:statutes/ukpga/2012/5/21#input.claimant_is_of_prescribed_description_for_work_focused_interview_and_preparation_group: true
+    uk:statutes/ukpga/2012/5/21#input.other_work_related_requirement_previously_applying_to_claimant: true
+  output:
+    uk:statutes/ukpga/2012/5/21#claimant_falls_into_work_focused_interview_and_work_preparation_requirements_only_group: holds
+    ? uk:statutes/ukpga/2012/5/21#work_preparation_requirement_may_be_imposed_on_work_focused_interview_and_preparation_group_claimant
+    : holds
+    ? uk:statutes/ukpga/2012/5/21#work_focused_interview_requirement_may_be_imposed_on_work_focused_interview_and_preparation_group_claimant
+    : holds
+    ? uk:statutes/ukpga/2012/5/21#other_work_related_requirement_may_not_be_imposed_on_work_focused_interview_and_preparation_group_claimant
+    : holds
+    ? uk:statutes/ukpga/2012/5/21#other_work_related_requirement_previously_applying_ceases_for_work_focused_interview_and_preparation_group_claimant
+    : holds
+- name: section_19_status_blocks_group
+  period: 2024-01
+  input:
+    uk:statutes/ukpga/2012/5/21#input.claimant_falls_within_section_19: true
+    uk:statutes/ukpga/2012/5/21#input.claimant_falls_within_section_20: false
+    uk:statutes/ukpga/2012/5/21#input.claimant_has_limited_capability_for_work: true
+    uk:statutes/ukpga/2012/5/21#input.claimant_is_responsible_carer_for_child_aged_2: false
+    uk:statutes/ukpga/2012/5/21#input.claimant_is_of_prescribed_description_for_work_focused_interview_and_preparation_group: false
+    uk:statutes/ukpga/2012/5/21#input.other_work_related_requirement_previously_applying_to_claimant: true
+  output:
+    uk:statutes/ukpga/2012/5/21#claimant_falls_into_work_focused_interview_and_work_preparation_requirements_only_group: not_holds
+    ? uk:statutes/ukpga/2012/5/21#work_preparation_requirement_may_be_imposed_on_work_focused_interview_and_preparation_group_claimant
+    : not_holds
+    ? uk:statutes/ukpga/2012/5/21#work_focused_interview_requirement_may_be_imposed_on_work_focused_interview_and_preparation_group_claimant
+    : not_holds
+    ? uk:statutes/ukpga/2012/5/21#other_work_related_requirement_may_not_be_imposed_on_work_focused_interview_and_preparation_group_claimant
+    : not_holds
+    ? uk:statutes/ukpga/2012/5/21#other_work_related_requirement_previously_applying_ceases_for_work_focused_interview_and_preparation_group_claimant
+    : not_holds
+- name: section_20_status_blocks_group
+  period: 2024-01
+  input:
+    uk:statutes/ukpga/2012/5/21#input.claimant_falls_within_section_19: false
+    uk:statutes/ukpga/2012/5/21#input.claimant_falls_within_section_20: true
+    uk:statutes/ukpga/2012/5/21#input.claimant_has_limited_capability_for_work: true
+    uk:statutes/ukpga/2012/5/21#input.claimant_is_responsible_carer_for_child_aged_2: false
+    uk:statutes/ukpga/2012/5/21#input.claimant_is_of_prescribed_description_for_work_focused_interview_and_preparation_group: false
+    uk:statutes/ukpga/2012/5/21#input.other_work_related_requirement_previously_applying_to_claimant: true
+  output:
+    uk:statutes/ukpga/2012/5/21#claimant_falls_into_work_focused_interview_and_work_preparation_requirements_only_group: not_holds
+    ? uk:statutes/ukpga/2012/5/21#work_preparation_requirement_may_be_imposed_on_work_focused_interview_and_preparation_group_claimant
+    : not_holds
+    ? uk:statutes/ukpga/2012/5/21#work_focused_interview_requirement_may_be_imposed_on_work_focused_interview_and_preparation_group_claimant
+    : not_holds
+    ? uk:statutes/ukpga/2012/5/21#other_work_related_requirement_may_not_be_imposed_on_work_focused_interview_and_preparation_group_claimant
+    : not_holds
+    ? uk:statutes/ukpga/2012/5/21#other_work_related_requirement_previously_applying_ceases_for_work_focused_interview_and_preparation_group_claimant
+    : not_holds
+- name: no_qualifying_route
+  period: 2024-01
+  input:
+    uk:statutes/ukpga/2012/5/21#input.claimant_falls_within_section_19: false
+    uk:statutes/ukpga/2012/5/21#input.claimant_falls_within_section_20: false
+    uk:statutes/ukpga/2012/5/21#input.claimant_has_limited_capability_for_work: false
+    uk:statutes/ukpga/2012/5/21#input.claimant_is_responsible_carer_for_child_aged_2: false
+    uk:statutes/ukpga/2012/5/21#input.claimant_is_of_prescribed_description_for_work_focused_interview_and_preparation_group: false
+    uk:statutes/ukpga/2012/5/21#input.other_work_related_requirement_previously_applying_to_claimant: true
+  output:
+    uk:statutes/ukpga/2012/5/21#claimant_falls_into_work_focused_interview_and_work_preparation_requirements_only_group: not_holds
+    ? uk:statutes/ukpga/2012/5/21#work_preparation_requirement_may_be_imposed_on_work_focused_interview_and_preparation_group_claimant
+    : not_holds
+    ? uk:statutes/ukpga/2012/5/21#work_focused_interview_requirement_may_be_imposed_on_work_focused_interview_and_preparation_group_claimant
+    : not_holds
+    ? uk:statutes/ukpga/2012/5/21#other_work_related_requirement_may_not_be_imposed_on_work_focused_interview_and_preparation_group_claimant
+    : not_holds
+    ? uk:statutes/ukpga/2012/5/21#other_work_related_requirement_previously_applying_ceases_for_work_focused_interview_and_preparation_group_claimant
+    : not_holds

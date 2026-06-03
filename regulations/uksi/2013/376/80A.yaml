@@ -1,0 +1,136 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2013/376/80A
+  summary: |-
+    The relevant amount is determined by dividing the applicable annual limit by 12. The applicable annual limit is £16,967, £25,323, £14,753 or £22,020 according to claimant status, Greater London residence, and responsibility for a child or qualifying young person. A claimant is resident in Greater London according to the stated housing-costs, housing-benefit, home, or allocated Jobcentre Plus office tests.
+rules:
+  - name: benefit_cap_relevant_amount_annual_divisor
+    kind: parameter
+    dtype: Count
+    source: regulation 80A(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/80A
+              excerpt: "dividing the applicable annual limit by 12"
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          12
+
+  - name: benefit_cap_applicable_annual_limit_by_case
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    indexed_by: benefit_cap_applicable_annual_limit_case
+    source: regulation 80A(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].values
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/80A
+              excerpt: "£16,967 ... £25,323 ... £14,753 ... £22,020"
+    versions:
+      - effective_from: '2013-04-29'
+        values:
+          0: 16967
+          1: 25323
+          2: 14753
+          3: 22020
+
+  - name: claimant_or_either_joint_claimant_resident_in_greater_london
+    kind: derived
+    entity: Family
+    dtype: Judgment
+    period: Month
+    source: regulation 80A(3)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/80A
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          (award_contains_housing_costs_element
+          and (
+            accommodation_in_respect_of_which_claimant_meets_occupation_condition_is_in_greater_london
+            or claimant_receives_housing_benefit_for_dwelling_in_greater_london
+          ))
+          or (
+            not award_contains_housing_costs_element
+            and (
+              accommodation_normally_occupied_as_home_is_in_greater_london
+              or (
+                not claimant_has_accommodation_normally_occupied_as_home
+                and jobcentre_plus_office_allocated_to_claim_is_in_greater_london
+              )
+            )
+          )
+
+  - name: benefit_cap_applicable_annual_limit_case
+    kind: derived
+    entity: Family
+    dtype: Integer
+    period: Month
+    source: regulation 80A(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/80A
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          if claim_is_for_joint_claimants: (if claimant_or_either_joint_claimant_resident_in_greater_london: 1 else: 3) else: (if claimant_or_either_joint_claimant_resident_in_greater_london: (if responsible_for_child_or_qualifying_young_person: 1 else: 0) else: (if responsible_for_child_or_qualifying_young_person: 3 else: 2))
+
+  - name: benefit_cap_applicable_annual_limit_for_claim
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: regulation 80A(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/80A
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          benefit_cap_applicable_annual_limit_by_case[benefit_cap_applicable_annual_limit_case]
+
+  - name: benefit_cap_relevant_amount
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: regulation 80A(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/80A
+              excerpt: "The relevant amount is determined by dividing the applicable annual limit by 12."
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          benefit_cap_applicable_annual_limit_for_claim / benefit_cap_relevant_amount_annual_divisor

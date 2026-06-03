@@ -1,0 +1,72 @@
+- name: no_section_19_condition_applies
+  period: 2024-01
+  input:
+    uk:statutes/ukpga/2012/5/19#input.claimant_is_single_person_responsible_for_child: false
+    ? uk:statutes/ukpga/2012/5/19#input.claimant_is_member_of_couple_jointly_nominated_as_responsible_for_child_where_claimant_or_other_member_is_responsible_for_child
+    : false
+    uk:statutes/ukpga/2012/5/19#input.child_for_which_claimant_is_responsible_carer_is_under_age_1: false
+    uk:statutes/ukpga/2012/5/19#input.claimant_has_limited_capability_for_work_and_work_related_activity: false
+    ? uk:statutes/ukpga/2012/5/19#input.claimant_has_regular_and_substantial_caring_responsibilities_for_a_severely_disabled_person
+    : false
+    uk:statutes/ukpga/2012/5/19#input.claimant_is_of_prescribed_description_for_section_19: false
+    uk:statutes/ukpga/2012/5/19#input.work_related_requirement_previously_applied_to_claimant: true
+  output:
+    uk:statutes/ukpga/2012/5/19#claimant_is_responsible_carer_for_child: not_holds
+    uk:statutes/ukpga/2012/5/19#claimant_is_responsible_carer_for_child_under_age_1: not_holds
+    uk:statutes/ukpga/2012/5/19#claimant_falls_within_section_19: not_holds
+    uk:statutes/ukpga/2012/5/19#work_related_requirement_may_not_be_imposed_on_claimant: not_holds
+    uk:statutes/ukpga/2012/5/19#previously_applying_work_related_requirement_ceases_to_have_effect: not_holds
+- name: limited_capability_and_caring_responsibilities
+  period: 2024-01
+  input:
+    uk:statutes/ukpga/2012/5/19#input.claimant_is_single_person_responsible_for_child: false
+    ? uk:statutes/ukpga/2012/5/19#input.claimant_is_member_of_couple_jointly_nominated_as_responsible_for_child_where_claimant_or_other_member_is_responsible_for_child
+    : false
+    uk:statutes/ukpga/2012/5/19#input.child_for_which_claimant_is_responsible_carer_is_under_age_1: false
+    uk:statutes/ukpga/2012/5/19#input.claimant_has_limited_capability_for_work_and_work_related_activity: true
+    ? uk:statutes/ukpga/2012/5/19#input.claimant_has_regular_and_substantial_caring_responsibilities_for_a_severely_disabled_person
+    : true
+    uk:statutes/ukpga/2012/5/19#input.claimant_is_of_prescribed_description_for_section_19: false
+    uk:statutes/ukpga/2012/5/19#input.work_related_requirement_previously_applied_to_claimant: false
+  output:
+    uk:statutes/ukpga/2012/5/19#claimant_is_responsible_carer_for_child: not_holds
+    uk:statutes/ukpga/2012/5/19#claimant_is_responsible_carer_for_child_under_age_1: not_holds
+    uk:statutes/ukpga/2012/5/19#claimant_falls_within_section_19: holds
+    uk:statutes/ukpga/2012/5/19#work_related_requirement_may_not_be_imposed_on_claimant: holds
+    uk:statutes/ukpga/2012/5/19#previously_applying_work_related_requirement_ceases_to_have_effect: not_holds
+- name: single_responsible_carer_for_child_under_one
+  period: 2024-01
+  input:
+    uk:statutes/ukpga/2012/5/19#input.claimant_is_single_person_responsible_for_child: true
+    ? uk:statutes/ukpga/2012/5/19#input.claimant_is_member_of_couple_jointly_nominated_as_responsible_for_child_where_claimant_or_other_member_is_responsible_for_child
+    : false
+    uk:statutes/ukpga/2012/5/19#input.child_for_which_claimant_is_responsible_carer_is_under_age_1: true
+    uk:statutes/ukpga/2012/5/19#input.claimant_has_limited_capability_for_work_and_work_related_activity: false
+    ? uk:statutes/ukpga/2012/5/19#input.claimant_has_regular_and_substantial_caring_responsibilities_for_a_severely_disabled_person
+    : false
+    uk:statutes/ukpga/2012/5/19#input.claimant_is_of_prescribed_description_for_section_19: false
+    uk:statutes/ukpga/2012/5/19#input.work_related_requirement_previously_applied_to_claimant: true
+  output:
+    uk:statutes/ukpga/2012/5/19#claimant_is_responsible_carer_for_child: holds
+    uk:statutes/ukpga/2012/5/19#claimant_is_responsible_carer_for_child_under_age_1: holds
+    uk:statutes/ukpga/2012/5/19#claimant_falls_within_section_19: holds
+    uk:statutes/ukpga/2012/5/19#work_related_requirement_may_not_be_imposed_on_claimant: holds
+    uk:statutes/ukpga/2012/5/19#previously_applying_work_related_requirement_ceases_to_have_effect: holds
+- name: prescribed_description_with_couple_carer_child_not_under_one
+  period: 2024-01
+  input:
+    uk:statutes/ukpga/2012/5/19#input.claimant_is_single_person_responsible_for_child: false
+    ? uk:statutes/ukpga/2012/5/19#input.claimant_is_member_of_couple_jointly_nominated_as_responsible_for_child_where_claimant_or_other_member_is_responsible_for_child
+    : true
+    uk:statutes/ukpga/2012/5/19#input.child_for_which_claimant_is_responsible_carer_is_under_age_1: false
+    uk:statutes/ukpga/2012/5/19#input.claimant_has_limited_capability_for_work_and_work_related_activity: false
+    ? uk:statutes/ukpga/2012/5/19#input.claimant_has_regular_and_substantial_caring_responsibilities_for_a_severely_disabled_person
+    : false
+    uk:statutes/ukpga/2012/5/19#input.claimant_is_of_prescribed_description_for_section_19: true
+    uk:statutes/ukpga/2012/5/19#input.work_related_requirement_previously_applied_to_claimant: true
+  output:
+    uk:statutes/ukpga/2012/5/19#claimant_is_responsible_carer_for_child: holds
+    uk:statutes/ukpga/2012/5/19#claimant_is_responsible_carer_for_child_under_age_1: not_holds
+    uk:statutes/ukpga/2012/5/19#claimant_falls_within_section_19: holds
+    uk:statutes/ukpga/2012/5/19#work_related_requirement_may_not_be_imposed_on_claimant: holds
+    uk:statutes/ukpga/2012/5/19#previously_applying_work_related_requirement_ceases_to_have_effect: holds

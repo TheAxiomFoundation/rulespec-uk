@@ -1,0 +1,48 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/statute/ukpga/2012/5/17
+  summary: |-
+    In this Part a “work search requirement” is a requirement that a claimant take all reasonable action, and any particular action specified by the Secretary of State, for the purpose of obtaining paid work (or more paid work or better-paid work). Regulations may impose limitations on a work search requirement by reference to the work to which it relates.
+rules:
+  - name: claimant_satisfies_work_search_requirement
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Month
+    source: Welfare Reform Act 2012 s.17(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/17
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          claimant_takes_all_reasonable_action_for_purpose_of_obtaining_paid_work_more_paid_work_or_better_paid_work
+          and (
+            not secretary_of_state_specifies_particular_action_for_claimant_under_work_search_requirement
+            or claimant_takes_particular_action_specified_by_secretary_of_state_for_purpose_of_obtaining_paid_work_more_paid_work_or_better_paid_work
+          )
+  - name: work_search_requirement_has_work_reference_limitation
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Month
+    source: Welfare Reform Act 2012 s.17(4)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/17
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          regulations_impose_limitation_on_work_search_requirement_by_reference_to_work_to_which_it_relates
+          or secretary_of_state_specifies_further_limitation_on_work_search_requirement_by_reference_to_work_to_which_it_relates

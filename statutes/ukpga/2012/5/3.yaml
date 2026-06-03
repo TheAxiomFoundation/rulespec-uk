@@ -1,0 +1,69 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/statute/ukpga/2012/5/3
+  summary: |-
+    A single claimant is entitled to universal credit if the claimant meets the basic conditions and the financial conditions for a single claimant. Joint claimants are jointly entitled if each meets the basic conditions and they meet the financial conditions for joint claimants.
+rules:
+  - name: single_claimant_entitled_to_universal_credit
+    kind: derived
+    entity: Family
+    dtype: Judgment
+    period: Day
+    source: Welfare Reform Act 2012, section 5(3), single claimant entitlement
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/3
+              excerpt: "A single claimant is entitled to universal credit"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/3
+              excerpt: "the basic conditions"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/3
+              excerpt: "the financial conditions for a single claimant"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          is_single_claimant
+          and single_claimant_meets_basic_conditions
+          and single_claimant_meets_financial_conditions
+  - name: joint_claimants_jointly_entitled_to_universal_credit
+    kind: derived
+    entity: Family
+    dtype: Judgment
+    period: Day
+    source: Welfare Reform Act 2012, section 5(3), joint claimant entitlement
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/3
+              excerpt: "Joint claimants are jointly entitled to universal credit"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/3
+              excerpt: "each of them meets the basic conditions"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/3
+              excerpt: "they meet the financial conditions for joint claimants"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          are_joint_claimants
+          and each_joint_claimant_meets_basic_conditions
+          and joint_claimants_meet_financial_conditions

@@ -1,0 +1,105 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2013/376/32
+  summary: |-
+    The work condition is met in respect of an assessment period if the claimant is in paid work or has an offer of paid work due to start before the end of the next assessment period, and if the claimant is a member of a couple the other member is either in paid work or unable to provide childcare for one of the listed reasons. A claimant is to be treated as being in paid work if the claimant has recently ceased paid work or is receiving one of the listed statutory or maternity payments.
+rules:
+  - name: claimant_receiving_listed_payment_for_paid_work_treatment
+    kind: derived
+    entity: Family
+    dtype: Judgment
+    period: Month
+    source: Universal Credit Regulations 2013, regulation 32(2)(b)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/32
+              excerpt: receiving statutory sick pay, statutory maternity pay, ... statutory neonatal care pay or a maternity allowance
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          claimant_receiving_statutory_sick_pay
+          or claimant_receiving_statutory_maternity_pay
+          or claimant_receiving_statutory_paternity_pay
+          or claimant_receiving_statutory_adoption_pay
+          or claimant_receiving_statutory_shared_parental_pay
+          or claimant_receiving_statutory_parental_bereavement_pay
+          or claimant_receiving_statutory_neonatal_care_pay
+          or claimant_receiving_maternity_allowance
+
+  - name: claimant_treated_as_in_paid_work_for_work_condition
+    kind: derived
+    entity: Family
+    dtype: Judgment
+    period: Month
+    source: Universal Credit Regulations 2013, regulation 32(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/32
+              excerpt: claimant is to be treated as being in paid work if the claimant has ceased paid work... or is receiving...
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          claimant_ceased_paid_work_in_assessment_period
+          or claimant_ceased_paid_work_in_previous_assessment_period
+          or (assessment_period_is_first_or_second_assessment_period_in_relation_to_award and claimant_ceased_paid_work_in_month_immediately_preceding_award_commencement)
+          or claimant_receiving_listed_payment_for_paid_work_treatment
+
+  - name: other_member_unable_to_provide_childcare_for_work_condition
+    kind: derived
+    entity: Family
+    dtype: Judgment
+    period: Month
+    source: Universal Credit Regulations 2013, regulation 32(1)(b)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/32
+              excerpt: unable to provide childcare because that person has limited capability for work... caring responsibilities... or is temporarily absent
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          other_member_has_limited_capability_for_work
+          or other_member_has_regular_and_substantial_caring_responsibilities_for_severely_disabled_person
+          or other_member_temporarily_absent_from_claimants_household
+
+  - name: work_condition_met_for_assessment_period
+    kind: derived
+    entity: Family
+    dtype: Judgment
+    period: Month
+    source: Universal Credit Regulations 2013, regulation 32(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/32
+              excerpt: claimant is in paid work or has an offer of paid work... and if the claimant is a member of a couple...
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          (
+            claimant_in_paid_work
+            or claimant_treated_as_in_paid_work_for_work_condition
+            or claimant_has_offer_of_paid_work_due_to_start_before_end_of_next_assessment_period
+          )
+          and (
+            not claimant_is_member_of_couple
+            or other_member_in_paid_work
+            or other_member_unable_to_provide_childcare_for_work_condition
+          )

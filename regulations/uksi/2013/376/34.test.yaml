@@ -1,0 +1,69 @@
+- name: no_exclusions_percentage_below_regulation_36_maximum
+  period: 2026-04
+  input:
+    uk:regulations/uksi/2013/376/34#input.charges_paid_for_relevant_childcare_attributable_to_assessment_period: 1000
+    uk:regulations/uksi/2013/376/34#input.amount_considered_excessive_having_regard_to_paid_work_extent: 0
+    uk:regulations/uksi/2013/376/34#input.amount_met_or_reimbursed_by_employer_or_some_other_person: 0
+    ? uk:regulations/uksi/2013/376/34#input.amount_from_funds_provided_by_secretary_of_state_or_scottish_or_welsh_ministers_for_work_related_activity_or_training
+    : 0
+    ? uk:regulations/uksi/2013/376/34#input.secretary_of_state_work_transition_childcare_payment_meets_non_other_relevant_support_conditions
+    : false
+    uk:regulations/uksi/2013/376/34#input.secretary_of_state_work_transition_childcare_payment_amount: 0
+    uk:regulations/uksi/2013/376/34#input.maximum_amount_specified_in_table_in_regulation_36: 900
+  output:
+    uk:regulations/uksi/2013/376/34#childcare_costs_reimbursement_rate: 0.85
+    uk:regulations/uksi/2013/376/34#other_relevant_support_amount_left_out_of_account: 0
+    uk:regulations/uksi/2013/376/34#relevant_childcare_charges_taken_into_account: 1000
+    uk:regulations/uksi/2013/376/34#childcare_costs_element_percentage_amount: 850
+    uk:regulations/uksi/2013/376/34#childcare_costs_element_amount: 850
+- name: exclusions_and_regulation_36_cap_limit_final_amount
+  period: 2026-04
+  input:
+    uk:regulations/uksi/2013/376/34#input.charges_paid_for_relevant_childcare_attributable_to_assessment_period: 1000
+    uk:regulations/uksi/2013/376/34#input.amount_considered_excessive_having_regard_to_paid_work_extent: 100
+    uk:regulations/uksi/2013/376/34#input.amount_met_or_reimbursed_by_employer_or_some_other_person: 50
+    ? uk:regulations/uksi/2013/376/34#input.amount_from_funds_provided_by_secretary_of_state_or_scottish_or_welsh_ministers_for_work_related_activity_or_training
+    : 200
+    ? uk:regulations/uksi/2013/376/34#input.secretary_of_state_work_transition_childcare_payment_meets_non_other_relevant_support_conditions
+    : false
+    uk:regulations/uksi/2013/376/34#input.secretary_of_state_work_transition_childcare_payment_amount: 200
+    uk:regulations/uksi/2013/376/34#input.maximum_amount_specified_in_table_in_regulation_36: 500
+  output:
+    uk:regulations/uksi/2013/376/34#other_relevant_support_amount_left_out_of_account: 200
+    uk:regulations/uksi/2013/376/34#relevant_childcare_charges_taken_into_account: 650
+    uk:regulations/uksi/2013/376/34#childcare_costs_element_percentage_amount: 552.5
+    uk:regulations/uksi/2013/376/34#childcare_costs_element_amount: 500
+- name: secretary_of_state_work_transition_payment_not_other_relevant_support
+  period: 2026-04
+  input:
+    uk:regulations/uksi/2013/376/34#input.charges_paid_for_relevant_childcare_attributable_to_assessment_period: 1000
+    uk:regulations/uksi/2013/376/34#input.amount_considered_excessive_having_regard_to_paid_work_extent: 0
+    uk:regulations/uksi/2013/376/34#input.amount_met_or_reimbursed_by_employer_or_some_other_person: 0
+    ? uk:regulations/uksi/2013/376/34#input.amount_from_funds_provided_by_secretary_of_state_or_scottish_or_welsh_ministers_for_work_related_activity_or_training
+    : 200
+    ? uk:regulations/uksi/2013/376/34#input.secretary_of_state_work_transition_childcare_payment_meets_non_other_relevant_support_conditions
+    : true
+    uk:regulations/uksi/2013/376/34#input.secretary_of_state_work_transition_childcare_payment_amount: 200
+    uk:regulations/uksi/2013/376/34#input.maximum_amount_specified_in_table_in_regulation_36: 1000
+  output:
+    uk:regulations/uksi/2013/376/34#other_relevant_support_amount_left_out_of_account: 0
+    uk:regulations/uksi/2013/376/34#relevant_childcare_charges_taken_into_account: 1000
+    uk:regulations/uksi/2013/376/34#childcare_costs_element_percentage_amount: 850
+    uk:regulations/uksi/2013/376/34#childcare_costs_element_amount: 850
+- name: exclusions_cannot_make_relevant_charges_negative
+  period: 2026-04
+  input:
+    uk:regulations/uksi/2013/376/34#input.charges_paid_for_relevant_childcare_attributable_to_assessment_period: 100
+    uk:regulations/uksi/2013/376/34#input.amount_considered_excessive_having_regard_to_paid_work_extent: 80
+    uk:regulations/uksi/2013/376/34#input.amount_met_or_reimbursed_by_employer_or_some_other_person: 50
+    ? uk:regulations/uksi/2013/376/34#input.amount_from_funds_provided_by_secretary_of_state_or_scottish_or_welsh_ministers_for_work_related_activity_or_training
+    : 100
+    ? uk:regulations/uksi/2013/376/34#input.secretary_of_state_work_transition_childcare_payment_meets_non_other_relevant_support_conditions
+    : false
+    uk:regulations/uksi/2013/376/34#input.secretary_of_state_work_transition_childcare_payment_amount: 0
+    uk:regulations/uksi/2013/376/34#input.maximum_amount_specified_in_table_in_regulation_36: 1000
+  output:
+    uk:regulations/uksi/2013/376/34#other_relevant_support_amount_left_out_of_account: 100
+    uk:regulations/uksi/2013/376/34#relevant_childcare_charges_taken_into_account: 0
+    uk:regulations/uksi/2013/376/34#childcare_costs_element_percentage_amount: 0
+    uk:regulations/uksi/2013/376/34#childcare_costs_element_amount: 0

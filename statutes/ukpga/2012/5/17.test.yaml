@@ -1,0 +1,64 @@
+- name: specified_action_taken_and_no_limitation
+  period: 2026-06
+  input:
+    ? uk:statutes/ukpga/2012/5/17#input.claimant_takes_all_reasonable_action_for_purpose_of_obtaining_paid_work_more_paid_work_or_better_paid_work
+    : true
+    ? uk:statutes/ukpga/2012/5/17#input.secretary_of_state_specifies_particular_action_for_claimant_under_work_search_requirement
+    : true
+    ? uk:statutes/ukpga/2012/5/17#input.claimant_takes_particular_action_specified_by_secretary_of_state_for_purpose_of_obtaining_paid_work_more_paid_work_or_better_paid_work
+    : true
+    ? uk:statutes/ukpga/2012/5/17#input.regulations_impose_limitation_on_work_search_requirement_by_reference_to_work_to_which_it_relates
+    : false
+    ? uk:statutes/ukpga/2012/5/17#input.secretary_of_state_specifies_further_limitation_on_work_search_requirement_by_reference_to_work_to_which_it_relates
+    : false
+  output:
+    uk:statutes/ukpga/2012/5/17#claimant_satisfies_work_search_requirement: holds
+    uk:statutes/ukpga/2012/5/17#work_search_requirement_has_work_reference_limitation: not_holds
+- name: all_reasonable_action_not_taken_with_regulatory_limitation
+  period: 2026-06
+  input:
+    ? uk:statutes/ukpga/2012/5/17#input.claimant_takes_all_reasonable_action_for_purpose_of_obtaining_paid_work_more_paid_work_or_better_paid_work
+    : false
+    ? uk:statutes/ukpga/2012/5/17#input.secretary_of_state_specifies_particular_action_for_claimant_under_work_search_requirement
+    : true
+    ? uk:statutes/ukpga/2012/5/17#input.claimant_takes_particular_action_specified_by_secretary_of_state_for_purpose_of_obtaining_paid_work_more_paid_work_or_better_paid_work
+    : true
+    ? uk:statutes/ukpga/2012/5/17#input.regulations_impose_limitation_on_work_search_requirement_by_reference_to_work_to_which_it_relates
+    : true
+    ? uk:statutes/ukpga/2012/5/17#input.secretary_of_state_specifies_further_limitation_on_work_search_requirement_by_reference_to_work_to_which_it_relates
+    : false
+  output:
+    uk:statutes/ukpga/2012/5/17#claimant_satisfies_work_search_requirement: not_holds
+    uk:statutes/ukpga/2012/5/17#work_search_requirement_has_work_reference_limitation: holds
+- name: specified_action_not_taken_with_secretary_of_state_limitation
+  period: 2026-06
+  input:
+    ? uk:statutes/ukpga/2012/5/17#input.claimant_takes_all_reasonable_action_for_purpose_of_obtaining_paid_work_more_paid_work_or_better_paid_work
+    : true
+    ? uk:statutes/ukpga/2012/5/17#input.secretary_of_state_specifies_particular_action_for_claimant_under_work_search_requirement
+    : true
+    ? uk:statutes/ukpga/2012/5/17#input.claimant_takes_particular_action_specified_by_secretary_of_state_for_purpose_of_obtaining_paid_work_more_paid_work_or_better_paid_work
+    : false
+    ? uk:statutes/ukpga/2012/5/17#input.regulations_impose_limitation_on_work_search_requirement_by_reference_to_work_to_which_it_relates
+    : false
+    ? uk:statutes/ukpga/2012/5/17#input.secretary_of_state_specifies_further_limitation_on_work_search_requirement_by_reference_to_work_to_which_it_relates
+    : true
+  output:
+    uk:statutes/ukpga/2012/5/17#claimant_satisfies_work_search_requirement: not_holds
+    uk:statutes/ukpga/2012/5/17#work_search_requirement_has_work_reference_limitation: holds
+- name: no_particular_action_specified
+  period: 2026-06
+  input:
+    ? uk:statutes/ukpga/2012/5/17#input.claimant_takes_all_reasonable_action_for_purpose_of_obtaining_paid_work_more_paid_work_or_better_paid_work
+    : true
+    ? uk:statutes/ukpga/2012/5/17#input.secretary_of_state_specifies_particular_action_for_claimant_under_work_search_requirement
+    : false
+    ? uk:statutes/ukpga/2012/5/17#input.claimant_takes_particular_action_specified_by_secretary_of_state_for_purpose_of_obtaining_paid_work_more_paid_work_or_better_paid_work
+    : false
+    ? uk:statutes/ukpga/2012/5/17#input.regulations_impose_limitation_on_work_search_requirement_by_reference_to_work_to_which_it_relates
+    : false
+    ? uk:statutes/ukpga/2012/5/17#input.secretary_of_state_specifies_further_limitation_on_work_search_requirement_by_reference_to_work_to_which_it_relates
+    : false
+  output:
+    uk:statutes/ukpga/2012/5/17#claimant_satisfies_work_search_requirement: holds
+    uk:statutes/ukpga/2012/5/17#work_search_requirement_has_work_reference_limitation: not_holds

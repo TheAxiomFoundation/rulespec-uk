@@ -1,0 +1,105 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/statute/ukpga/2012/5/10
+  summary: The calculation of an award of universal credit is to include an amount
+    for each child or qualifying young person for whom a claimant is responsible.
+    Regulations may make provision for an additional amount for each such person who
+    is disabled, and are to specify or provide for calculation of the amounts.
+rules:
+- name: qualifying_young_person
+  kind: derived
+  entity: Person
+  dtype: Judgment
+  period: Month
+  source: Welfare Reform Act 2012 s. 10(5)
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: definition
+        source:
+          corpus_citation_path: uk/statute/ukpga/2012/5/10
+  versions:
+  - effective_from: '0001-01-01'
+    formula: person_is_of_prescribed_description_for_qualifying_young_person
+- name: child_or_qualifying_young_person_for_whom_claimant_is_responsible
+  kind: derived
+  entity: Person
+  dtype: Judgment
+  period: Month
+  source: Welfare Reform Act 2012 s. 10(1)
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: condition
+        source:
+          corpus_citation_path: uk/statute/ukpga/2012/5/10
+  versions:
+  - effective_from: '0001-01-01'
+    formula: 'claimant_is_responsible_for_person
+
+      and (person_is_child or qualifying_young_person)'
+- name: subsection_1_amount_for_child_or_qualifying_young_person
+  kind: derived
+  entity: Person
+  dtype: Money
+  period: Month
+  unit: GBP
+  source: Welfare Reform Act 2012 s. 10(1), (3), (4)
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: uk/statute/ukpga/2012/5/10
+      - path: versions[0].formula
+        kind: exception
+        source:
+          corpus_citation_path: uk/statute/ukpga/2012/5/10
+  versions:
+  - effective_from: '0001-01-01'
+    formula: 'if child_or_qualifying_young_person_for_whom_claimant_is_responsible
+      and not child_or_qualifying_young_person_responsibility_exception_to_subsection_1_applies_by_regulations:
+      max(0, amount_specified_or_calculated_by_regulations_under_subsection_3_for_subsection_1)
+      else: 0'
+- name: disabled_additional_amount_for_child_or_qualifying_young_person
+  kind: derived
+  entity: Person
+  dtype: Money
+  period: Month
+  unit: GBP
+  source: Welfare Reform Act 2012 s. 10(2), (3)
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: uk/statute/ukpga/2012/5/10
+  versions:
+  - effective_from: '0001-01-01'
+    formula: 'if child_or_qualifying_young_person_for_whom_claimant_is_responsible
+      and person_is_disabled: max(0, additional_amount_specified_or_calculated_by_regulations_under_subsection_3_for_subsection_2)
+      else: 0'
+- name: section_10_amount_for_child_or_qualifying_young_person
+  kind: derived
+  entity: Person
+  dtype: Money
+  period: Month
+  unit: GBP
+  source: Welfare Reform Act 2012 s. 10(1)-(3)
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: uk/statute/ukpga/2012/5/10
+  versions:
+  - effective_from: '0001-01-01'
+    formula: max(0, subsection_1_amount_for_child_or_qualifying_young_person + disabled_additional_amount_for_child_or_qualifying_young_person)

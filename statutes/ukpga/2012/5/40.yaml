@@ -1,0 +1,67 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/statute/ukpga/2012/5/40
+  summary: |-
+    In this Part, "child" means a person under the age of 16; "work-related activity", in relation to a person, means activity which makes it more likely that the person will obtain or remain in work or be able to do so. Other listed terms are defined by cross-reference, prescribed meaning, or documentary labels.
+  deferred_outputs:
+    - output: uk:statutes/ukpga/2012/5/40#assessment_period
+      reason: The source gives this term the meaning given by section 7(2), but no copied RuleSpec context provides that upstream definition.
+    - output: uk:statutes/ukpga/2012/5/40#couple
+      reason: The source gives this term the meaning given by section 39, but no copied RuleSpec context provides that upstream definition.
+    - output: uk:statutes/ukpga/2012/5/40#limited_capability_for_work
+      reason: The source directs construction in accordance with section 37(1), but no copied RuleSpec context provides that upstream definition.
+    - output: uk:statutes/ukpga/2012/5/40#limited_capability_for_work_related_activity
+      reason: The source directs construction in accordance with section 37(2), but no copied RuleSpec context provides that upstream definition.
+    - output: uk:statutes/ukpga/2012/5/40#responsible_carer
+      reason: The source gives this term the meaning given in section 19(6), but no copied RuleSpec context provides that upstream definition.
+    - output: uk:statutes/ukpga/2012/5/40#single_person
+      reason: The source directs construction in accordance with section 1(2)(a), but no copied RuleSpec context provides that upstream definition.
+    - output: uk:statutes/ukpga/2012/5/40#work_availability_requirement
+      reason: The source gives this term the meaning given by section 18(1), but no copied RuleSpec context provides that upstream definition.
+    - output: uk:statutes/ukpga/2012/5/40#work_preparation_requirement
+      reason: The source gives this term the meaning given by section 16(1), but no copied RuleSpec context provides that upstream definition.
+    - output: uk:statutes/ukpga/2012/5/40#work_search_requirement
+      reason: The source gives this term the meaning given by section 17(1), but no copied RuleSpec context provides that upstream definition.
+    - output: uk:statutes/ukpga/2012/5/40#work_focused_interview_requirement
+      reason: The source gives this term the meaning given by section 15(1), but no copied RuleSpec context provides that upstream definition.
+    - output: uk:statutes/ukpga/2012/5/40#work_related_requirement
+      reason: The source gives this term the meaning given by section 13(2), but no copied RuleSpec context provides that upstream definition.
+rules:
+  - name: child
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Day
+    source: Welfare Reform Act 2012 s.40 definition of "child"
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/40
+              excerpt: '"child" means a person under the age of 16'
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          person_is_under_age_16
+  - name: work_related_activity
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Day
+    source: Welfare Reform Act 2012 s.40 definition of "work-related activity"
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/40
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          activity_makes_it_more_likely_person_will_obtain_or_remain_in_work_or_be_able_to_do_so

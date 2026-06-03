@@ -1,0 +1,67 @@
+- name: regulations_treat_requirement_as_complied
+  period: 2024-01
+  input:
+    uk:statutes/ukpga/2012/5/25#input.claimant_is_subject_to_requirement_imposed_under_this_part: true
+    uk:statutes/ukpga/2012/5/25#input.regulations_treat_claimant_as_having_complied_with_requirement: true
+    uk:statutes/ukpga/2012/5/25#input.regulations_treat_claimant_as_not_having_complied_with_requirement: false
+    uk:statutes/ukpga/2012/5/25#input.action_is_particular_action_specified_by_secretary_of_state_in_relation_to_requirement: true
+    uk:statutes/ukpga/2012/5/25#input.regulations_treat_claimant_as_having_taken_specified_action: false
+    uk:statutes/ukpga/2012/5/25#input.regulations_treat_claimant_as_not_having_taken_specified_action: false
+  output:
+    uk:statutes/ukpga/2012/5/25#claimant_treated_as_having_complied_with_part_requirement_by_regulations: holds
+    uk:statutes/ukpga/2012/5/25#claimant_treated_as_not_having_complied_with_part_requirement_by_regulations: not_holds
+    uk:statutes/ukpga/2012/5/25#claimant_treated_as_having_taken_secretary_of_state_specified_action_by_regulations: not_holds
+    uk:statutes/ukpga/2012/5/25#claimant_treated_as_not_having_taken_secretary_of_state_specified_action_by_regulations: not_holds
+- name: regulations_treat_requirement_as_not_complied
+  period: 2024-01
+  input:
+    uk:statutes/ukpga/2012/5/25#input.claimant_is_subject_to_requirement_imposed_under_this_part: true
+    uk:statutes/ukpga/2012/5/25#input.regulations_treat_claimant_as_having_complied_with_requirement: false
+    uk:statutes/ukpga/2012/5/25#input.regulations_treat_claimant_as_not_having_complied_with_requirement: true
+    uk:statutes/ukpga/2012/5/25#input.action_is_particular_action_specified_by_secretary_of_state_in_relation_to_requirement: true
+    uk:statutes/ukpga/2012/5/25#input.regulations_treat_claimant_as_having_taken_specified_action: false
+    uk:statutes/ukpga/2012/5/25#input.regulations_treat_claimant_as_not_having_taken_specified_action: false
+  output:
+    uk:statutes/ukpga/2012/5/25#claimant_treated_as_having_complied_with_part_requirement_by_regulations: not_holds
+    uk:statutes/ukpga/2012/5/25#claimant_treated_as_not_having_complied_with_part_requirement_by_regulations: holds
+    uk:statutes/ukpga/2012/5/25#claimant_treated_as_having_taken_secretary_of_state_specified_action_by_regulations: not_holds
+    uk:statutes/ukpga/2012/5/25#claimant_treated_as_not_having_taken_secretary_of_state_specified_action_by_regulations: not_holds
+- name: regulations_treat_specified_action_as_taken
+  period: 2024-01
+  input:
+    uk:statutes/ukpga/2012/5/25#input.claimant_is_subject_to_requirement_imposed_under_this_part: true
+    uk:statutes/ukpga/2012/5/25#input.regulations_treat_claimant_as_having_complied_with_requirement: false
+    uk:statutes/ukpga/2012/5/25#input.regulations_treat_claimant_as_not_having_complied_with_requirement: false
+    uk:statutes/ukpga/2012/5/25#input.action_is_particular_action_specified_by_secretary_of_state_in_relation_to_requirement: true
+    uk:statutes/ukpga/2012/5/25#input.regulations_treat_claimant_as_having_taken_specified_action: true
+    uk:statutes/ukpga/2012/5/25#input.regulations_treat_claimant_as_not_having_taken_specified_action: false
+  output:
+    uk:statutes/ukpga/2012/5/25#claimant_treated_as_having_complied_with_part_requirement_by_regulations: not_holds
+    uk:statutes/ukpga/2012/5/25#claimant_treated_as_not_having_complied_with_part_requirement_by_regulations: not_holds
+    uk:statutes/ukpga/2012/5/25#claimant_treated_as_having_taken_secretary_of_state_specified_action_by_regulations: holds
+    uk:statutes/ukpga/2012/5/25#claimant_treated_as_not_having_taken_secretary_of_state_specified_action_by_regulations: not_holds
+- name: no_requirement_under_this_part
+  period: 2024-01
+  input:
+    uk:statutes/ukpga/2012/5/25#input.claimant_is_subject_to_requirement_imposed_under_this_part: false
+    uk:statutes/ukpga/2012/5/25#input.regulations_treat_claimant_as_having_complied_with_requirement: true
+    uk:statutes/ukpga/2012/5/25#input.regulations_treat_claimant_as_not_having_complied_with_requirement: true
+    uk:statutes/ukpga/2012/5/25#input.action_is_particular_action_specified_by_secretary_of_state_in_relation_to_requirement: true
+    uk:statutes/ukpga/2012/5/25#input.regulations_treat_claimant_as_having_taken_specified_action: true
+    uk:statutes/ukpga/2012/5/25#input.regulations_treat_claimant_as_not_having_taken_specified_action: true
+  output:
+    uk:statutes/ukpga/2012/5/25#claimant_treated_as_having_complied_with_part_requirement_by_regulations: not_holds
+    uk:statutes/ukpga/2012/5/25#claimant_treated_as_not_having_complied_with_part_requirement_by_regulations: not_holds
+    uk:statutes/ukpga/2012/5/25#claimant_treated_as_having_taken_secretary_of_state_specified_action_by_regulations: not_holds
+    uk:statutes/ukpga/2012/5/25#claimant_treated_as_not_having_taken_secretary_of_state_specified_action_by_regulations: not_holds
+- name: auto_positive_claimant_treated_as_not_having_taken_secretary_of_state_specified_action_by_regulations
+  period:
+    period_kind: tax_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:statutes/ukpga/2012/5/25#input.action_is_particular_action_specified_by_secretary_of_state_in_relation_to_requirement: true
+    uk:statutes/ukpga/2012/5/25#input.claimant_is_subject_to_requirement_imposed_under_this_part: true
+    uk:statutes/ukpga/2012/5/25#input.regulations_treat_claimant_as_not_having_taken_specified_action: true
+  output:
+    uk:statutes/ukpga/2012/5/25#claimant_treated_as_not_having_taken_secretary_of_state_specified_action_by_regulations: holds

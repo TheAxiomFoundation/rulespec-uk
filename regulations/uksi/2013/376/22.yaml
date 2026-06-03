@@ -1,0 +1,275 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2013/376/22
+  summary: |-
+    The amounts deducted from the maximum amount are all unearned income and 55% of earned income, or 55% of earned income exceeding the applicable work allowance. The higher work allowance is £710.00 and the lower work allowance is £427.00.
+rules:
+  - name: earned_income_taper_rate
+    kind: parameter
+    dtype: Rate
+    source: Universal Credit Regulations 2013, regulation 22(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/22
+              excerpt: "55% of that earned income"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          0.55
+
+  - name: higher_work_allowance_single_claimant_amount
+    kind: parameter
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 22 table, Higher work allowance, single claimant
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: table_cell
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/22
+              table:
+                header: Higher work allowance
+                row: Single claimant responsible for one or more children or qualifying young persons and/or has limited capability for work
+                column: amount
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          710.00
+
+  - name: higher_work_allowance_joint_claimants_amount
+    kind: parameter
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 22 table, Higher work allowance, joint claimants
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: table_cell
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/22
+              table:
+                header: Higher work allowance
+                row: Joint claimants responsible for one or more children or qualifying young persons and/or where one or both have limited capability for work
+                column: amount
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          710.00
+
+  - name: lower_work_allowance_single_claimant_amount
+    kind: parameter
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 22 table, Lower work allowance, single claimant
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: table_cell
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/22
+              table:
+                header: Lower work allowance
+                row: Single claimant responsible for one or more children or qualifying young persons and/or has limited capability for work
+                column: amount
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          427.00
+
+  - name: lower_work_allowance_joint_claimants_amount
+    kind: parameter
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 22 table, Lower work allowance, joint claimants
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: table_cell
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/22
+              table:
+                header: Lower work allowance
+                row: Joint claimants responsible for one or more children or qualifying young persons and/or where one or both have limited capability for work
+                column: amount
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          427.00
+
+  - name: effective_joint_claimants_for_deduction
+    kind: derived
+    entity: Family
+    dtype: Judgment
+    period: Month
+    source: Universal Credit Regulations 2013, regulation 22(3)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/22
+              excerpt: "claimant is a member of a couple, but makes a claim as a single person"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          claim_is_for_joint_claimants or (claimant_is_member_of_couple and claimant_makes_claim_as_single_person)
+
+  - name: work_allowance_specified_for_deduction
+    kind: derived
+    entity: Family
+    dtype: Judgment
+    period: Month
+    source: Universal Credit Regulations 2013, regulation 22(1)(b)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/22
+              excerpt: "where no work allowance is specified... where a single claimant does not have, or neither of joint claimants has"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          (effective_joint_claimants_for_deduction and (joint_claimants_responsible_for_child_or_qualifying_young_person or one_or_both_joint_claimants_have_limited_capability_for_work))
+          or (
+            not effective_joint_claimants_for_deduction
+            and (single_claimant_responsible_for_child_or_qualifying_young_person or single_claimant_has_limited_capability_for_work)
+          )
+
+  - name: earned_income_for_deduction
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 22(1)(b) and 22(3)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/22
+              excerpt: "claimant’s earned income (or, in the case of joint claimants, their combined earned income)"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if effective_joint_claimants_for_deduction: joint_claimants_combined_earned_income_in_assessment_period else: claimant_earned_income_in_assessment_period
+
+  - name: unearned_income_for_deduction
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 22(1)(a) and 22(3)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/22
+              excerpt: "all of the claimant's unearned income (or in the case of joint claimants all of their combined unearned income)"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if effective_joint_claimants_for_deduction: joint_claimants_combined_unearned_income_in_assessment_period else: claimant_unearned_income_in_assessment_period
+
+  - name: applicable_work_allowance_amount
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 22(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/22
+              excerpt: "if the award contains no amount for the housing costs element... higher work allowance"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if work_allowance_specified_for_deduction: if award_contains_housing_costs_element: if effective_joint_claimants_for_deduction: lower_work_allowance_joint_claimants_amount else: lower_work_allowance_single_claimant_amount else: if effective_joint_claimants_for_deduction: higher_work_allowance_joint_claimants_amount else: higher_work_allowance_single_claimant_amount else: 0
+
+  - name: earned_income_amount_subject_to_taper
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 22(1)(b)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/22
+              excerpt: "55% of the amount by which that earned income exceeds the work allowance"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if work_allowance_specified_for_deduction: max(0, earned_income_for_deduction - applicable_work_allowance_amount) else: max(0, earned_income_for_deduction)
+
+  - name: earned_income_deduction_from_maximum_amount
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 22(1)(b)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/22
+              excerpt: "55% of that earned income; or... 55% of the amount by which that earned income exceeds the work allowance"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          earned_income_taper_rate * earned_income_amount_subject_to_taper
+
+  - name: universal_credit_award_deduction_from_maximum_amount
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 22(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/22
+              excerpt: "The amounts to be deducted from the maximum amount... are all... unearned income... and... earned income"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          max(0, unearned_income_for_deduction) + earned_income_deduction_from_maximum_amount

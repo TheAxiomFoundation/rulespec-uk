@@ -1,0 +1,275 @@
+- name: responsible_normally_lives_no_exceptions
+  period:
+    period_kind: custom
+    name: day
+    start: '2013-04-29'
+    end: '2013-04-29'
+  input:
+    uk:regulations/uksi/2013/376/4#input.child_or_qualifying_young_person_normally_lives_with_person: true
+    uk:regulations/uksi/2013/376/4#input.qualifying_young_person_living_as_couple_with_person: false
+    ? uk:regulations/uksi/2013/376/4#input.child_or_qualifying_young_person_normally_lives_with_two_or_more_persons_who_are_not_a_couple
+    : false
+    uk:regulations/uksi/2013/376/4#input.person_has_main_responsibility_for_child_or_qualifying_young_person: false
+    uk:regulations/uksi/2013/376/4#input.child_or_qualifying_young_person_is_looked_after_by_local_authority: false
+    uk:regulations/uksi/2013/376/4#input.child_or_qualifying_young_person_is_prisoner: false
+    uk:regulations/uksi/2013/376/4#input.regulation_4a_displaces_no_responsibility_treatment: false
+    uk:regulations/uksi/2013/376/4#input.child_or_qualifying_young_person_temporarily_absent_from_persons_household: false
+    uk:regulations/uksi/2013/376/4#input.temporary_absence_expected_to_exceed_or_exceeds_6_months: false
+    uk:regulations/uksi/2013/376/4#input.temporary_absence_is_from_great_britain: false
+    uk:regulations/uksi/2013/376/4#input.temporary_absence_expected_to_exceed_or_exceeds_one_month: false
+    uk:regulations/uksi/2013/376/4#input.absence_longer_than_one_month_would_be_disregarded_under_regulation_11_2_or_3: false
+  output:
+    uk:regulations/uksi/2013/376/4#child_or_qualifying_young_person_treated_not_responsibility_of_any_person: not_holds
+    ? uk:regulations/uksi/2013/376/4#person_ceases_to_be_responsible_for_child_or_qualifying_young_person_due_to_temporary_absence
+    : not_holds
+    uk:regulations/uksi/2013/376/4#person_responsible_for_child_or_qualifying_young_person: holds
+- name: child_or_young_person_does_not_normally_live_with_person
+  period:
+    period_kind: custom
+    name: day
+    start: '2013-04-29'
+    end: '2013-04-29'
+  input:
+    uk:regulations/uksi/2013/376/4#input.child_or_qualifying_young_person_normally_lives_with_person: false
+    uk:regulations/uksi/2013/376/4#input.qualifying_young_person_living_as_couple_with_person: false
+    ? uk:regulations/uksi/2013/376/4#input.child_or_qualifying_young_person_normally_lives_with_two_or_more_persons_who_are_not_a_couple
+    : false
+    uk:regulations/uksi/2013/376/4#input.person_has_main_responsibility_for_child_or_qualifying_young_person: false
+    uk:regulations/uksi/2013/376/4#input.child_or_qualifying_young_person_is_looked_after_by_local_authority: false
+    uk:regulations/uksi/2013/376/4#input.child_or_qualifying_young_person_is_prisoner: false
+    uk:regulations/uksi/2013/376/4#input.regulation_4a_displaces_no_responsibility_treatment: false
+    uk:regulations/uksi/2013/376/4#input.child_or_qualifying_young_person_temporarily_absent_from_persons_household: false
+    uk:regulations/uksi/2013/376/4#input.temporary_absence_expected_to_exceed_or_exceeds_6_months: false
+    uk:regulations/uksi/2013/376/4#input.temporary_absence_is_from_great_britain: false
+    uk:regulations/uksi/2013/376/4#input.temporary_absence_expected_to_exceed_or_exceeds_one_month: false
+    uk:regulations/uksi/2013/376/4#input.absence_longer_than_one_month_would_be_disregarded_under_regulation_11_2_or_3: false
+  output:
+    uk:regulations/uksi/2013/376/4#child_or_qualifying_young_person_treated_not_responsibility_of_any_person: not_holds
+    ? uk:regulations/uksi/2013/376/4#person_ceases_to_be_responsible_for_child_or_qualifying_young_person_due_to_temporary_absence
+    : not_holds
+    uk:regulations/uksi/2013/376/4#person_responsible_for_child_or_qualifying_young_person: not_holds
+- name: qualifying_young_person_living_as_couple_not_responsible
+  period:
+    period_kind: custom
+    name: day
+    start: '2013-04-29'
+    end: '2013-04-29'
+  input:
+    uk:regulations/uksi/2013/376/4#input.child_or_qualifying_young_person_normally_lives_with_person: true
+    uk:regulations/uksi/2013/376/4#input.qualifying_young_person_living_as_couple_with_person: true
+    ? uk:regulations/uksi/2013/376/4#input.child_or_qualifying_young_person_normally_lives_with_two_or_more_persons_who_are_not_a_couple
+    : false
+    uk:regulations/uksi/2013/376/4#input.person_has_main_responsibility_for_child_or_qualifying_young_person: false
+    uk:regulations/uksi/2013/376/4#input.child_or_qualifying_young_person_is_looked_after_by_local_authority: false
+    uk:regulations/uksi/2013/376/4#input.child_or_qualifying_young_person_is_prisoner: false
+    uk:regulations/uksi/2013/376/4#input.regulation_4a_displaces_no_responsibility_treatment: false
+    uk:regulations/uksi/2013/376/4#input.child_or_qualifying_young_person_temporarily_absent_from_persons_household: false
+    uk:regulations/uksi/2013/376/4#input.temporary_absence_expected_to_exceed_or_exceeds_6_months: false
+    uk:regulations/uksi/2013/376/4#input.temporary_absence_is_from_great_britain: false
+    uk:regulations/uksi/2013/376/4#input.temporary_absence_expected_to_exceed_or_exceeds_one_month: false
+    uk:regulations/uksi/2013/376/4#input.absence_longer_than_one_month_would_be_disregarded_under_regulation_11_2_or_3: false
+  output:
+    uk:regulations/uksi/2013/376/4#child_or_qualifying_young_person_treated_not_responsibility_of_any_person: not_holds
+    ? uk:regulations/uksi/2013/376/4#person_ceases_to_be_responsible_for_child_or_qualifying_young_person_due_to_temporary_absence
+    : not_holds
+    uk:regulations/uksi/2013/376/4#person_responsible_for_child_or_qualifying_young_person: not_holds
+- name: shared_household_without_main_responsibility_not_responsible
+  period:
+    period_kind: custom
+    name: day
+    start: '2013-04-29'
+    end: '2013-04-29'
+  input:
+    uk:regulations/uksi/2013/376/4#input.child_or_qualifying_young_person_normally_lives_with_person: true
+    uk:regulations/uksi/2013/376/4#input.qualifying_young_person_living_as_couple_with_person: false
+    ? uk:regulations/uksi/2013/376/4#input.child_or_qualifying_young_person_normally_lives_with_two_or_more_persons_who_are_not_a_couple
+    : true
+    uk:regulations/uksi/2013/376/4#input.person_has_main_responsibility_for_child_or_qualifying_young_person: false
+    uk:regulations/uksi/2013/376/4#input.child_or_qualifying_young_person_is_looked_after_by_local_authority: false
+    uk:regulations/uksi/2013/376/4#input.child_or_qualifying_young_person_is_prisoner: false
+    uk:regulations/uksi/2013/376/4#input.regulation_4a_displaces_no_responsibility_treatment: false
+    uk:regulations/uksi/2013/376/4#input.child_or_qualifying_young_person_temporarily_absent_from_persons_household: false
+    uk:regulations/uksi/2013/376/4#input.temporary_absence_expected_to_exceed_or_exceeds_6_months: false
+    uk:regulations/uksi/2013/376/4#input.temporary_absence_is_from_great_britain: false
+    uk:regulations/uksi/2013/376/4#input.temporary_absence_expected_to_exceed_or_exceeds_one_month: false
+    uk:regulations/uksi/2013/376/4#input.absence_longer_than_one_month_would_be_disregarded_under_regulation_11_2_or_3: false
+  output:
+    uk:regulations/uksi/2013/376/4#child_or_qualifying_young_person_treated_not_responsibility_of_any_person: not_holds
+    ? uk:regulations/uksi/2013/376/4#person_ceases_to_be_responsible_for_child_or_qualifying_young_person_due_to_temporary_absence
+    : not_holds
+    uk:regulations/uksi/2013/376/4#person_responsible_for_child_or_qualifying_young_person: not_holds
+- name: shared_household_with_main_responsibility_responsible
+  period:
+    period_kind: custom
+    name: day
+    start: '2013-04-29'
+    end: '2013-04-29'
+  input:
+    uk:regulations/uksi/2013/376/4#input.child_or_qualifying_young_person_normally_lives_with_person: true
+    uk:regulations/uksi/2013/376/4#input.qualifying_young_person_living_as_couple_with_person: false
+    ? uk:regulations/uksi/2013/376/4#input.child_or_qualifying_young_person_normally_lives_with_two_or_more_persons_who_are_not_a_couple
+    : true
+    uk:regulations/uksi/2013/376/4#input.person_has_main_responsibility_for_child_or_qualifying_young_person: true
+    uk:regulations/uksi/2013/376/4#input.child_or_qualifying_young_person_is_looked_after_by_local_authority: false
+    uk:regulations/uksi/2013/376/4#input.child_or_qualifying_young_person_is_prisoner: false
+    uk:regulations/uksi/2013/376/4#input.regulation_4a_displaces_no_responsibility_treatment: false
+    uk:regulations/uksi/2013/376/4#input.child_or_qualifying_young_person_temporarily_absent_from_persons_household: false
+    uk:regulations/uksi/2013/376/4#input.temporary_absence_expected_to_exceed_or_exceeds_6_months: false
+    uk:regulations/uksi/2013/376/4#input.temporary_absence_is_from_great_britain: false
+    uk:regulations/uksi/2013/376/4#input.temporary_absence_expected_to_exceed_or_exceeds_one_month: false
+    uk:regulations/uksi/2013/376/4#input.absence_longer_than_one_month_would_be_disregarded_under_regulation_11_2_or_3: false
+  output:
+    uk:regulations/uksi/2013/376/4#child_or_qualifying_young_person_treated_not_responsibility_of_any_person: not_holds
+    ? uk:regulations/uksi/2013/376/4#person_ceases_to_be_responsible_for_child_or_qualifying_young_person_due_to_temporary_absence
+    : not_holds
+    uk:regulations/uksi/2013/376/4#person_responsible_for_child_or_qualifying_young_person: holds
+- name: looked_after_blocks_responsibility
+  period:
+    period_kind: custom
+    name: day
+    start: '2013-04-29'
+    end: '2013-04-29'
+  input:
+    uk:regulations/uksi/2013/376/4#input.child_or_qualifying_young_person_normally_lives_with_person: true
+    uk:regulations/uksi/2013/376/4#input.qualifying_young_person_living_as_couple_with_person: false
+    ? uk:regulations/uksi/2013/376/4#input.child_or_qualifying_young_person_normally_lives_with_two_or_more_persons_who_are_not_a_couple
+    : false
+    uk:regulations/uksi/2013/376/4#input.person_has_main_responsibility_for_child_or_qualifying_young_person: false
+    uk:regulations/uksi/2013/376/4#input.child_or_qualifying_young_person_is_looked_after_by_local_authority: true
+    uk:regulations/uksi/2013/376/4#input.child_or_qualifying_young_person_is_prisoner: false
+    uk:regulations/uksi/2013/376/4#input.regulation_4a_displaces_no_responsibility_treatment: false
+    uk:regulations/uksi/2013/376/4#input.child_or_qualifying_young_person_temporarily_absent_from_persons_household: false
+    uk:regulations/uksi/2013/376/4#input.temporary_absence_expected_to_exceed_or_exceeds_6_months: false
+    uk:regulations/uksi/2013/376/4#input.temporary_absence_is_from_great_britain: false
+    uk:regulations/uksi/2013/376/4#input.temporary_absence_expected_to_exceed_or_exceeds_one_month: false
+    uk:regulations/uksi/2013/376/4#input.absence_longer_than_one_month_would_be_disregarded_under_regulation_11_2_or_3: false
+  output:
+    uk:regulations/uksi/2013/376/4#child_or_qualifying_young_person_treated_not_responsibility_of_any_person: holds
+    ? uk:regulations/uksi/2013/376/4#person_ceases_to_be_responsible_for_child_or_qualifying_young_person_due_to_temporary_absence
+    : not_holds
+    uk:regulations/uksi/2013/376/4#person_responsible_for_child_or_qualifying_young_person: not_holds
+- name: regulation_4a_displaces_looked_after_block
+  period:
+    period_kind: custom
+    name: day
+    start: '2013-04-29'
+    end: '2013-04-29'
+  input:
+    uk:regulations/uksi/2013/376/4#input.child_or_qualifying_young_person_normally_lives_with_person: true
+    uk:regulations/uksi/2013/376/4#input.qualifying_young_person_living_as_couple_with_person: false
+    ? uk:regulations/uksi/2013/376/4#input.child_or_qualifying_young_person_normally_lives_with_two_or_more_persons_who_are_not_a_couple
+    : false
+    uk:regulations/uksi/2013/376/4#input.person_has_main_responsibility_for_child_or_qualifying_young_person: false
+    uk:regulations/uksi/2013/376/4#input.child_or_qualifying_young_person_is_looked_after_by_local_authority: true
+    uk:regulations/uksi/2013/376/4#input.child_or_qualifying_young_person_is_prisoner: false
+    uk:regulations/uksi/2013/376/4#input.regulation_4a_displaces_no_responsibility_treatment: true
+    uk:regulations/uksi/2013/376/4#input.child_or_qualifying_young_person_temporarily_absent_from_persons_household: false
+    uk:regulations/uksi/2013/376/4#input.temporary_absence_expected_to_exceed_or_exceeds_6_months: false
+    uk:regulations/uksi/2013/376/4#input.temporary_absence_is_from_great_britain: false
+    uk:regulations/uksi/2013/376/4#input.temporary_absence_expected_to_exceed_or_exceeds_one_month: false
+    uk:regulations/uksi/2013/376/4#input.absence_longer_than_one_month_would_be_disregarded_under_regulation_11_2_or_3: false
+  output:
+    uk:regulations/uksi/2013/376/4#child_or_qualifying_young_person_treated_not_responsibility_of_any_person: not_holds
+    ? uk:regulations/uksi/2013/376/4#person_ceases_to_be_responsible_for_child_or_qualifying_young_person_due_to_temporary_absence
+    : not_holds
+    uk:regulations/uksi/2013/376/4#person_responsible_for_child_or_qualifying_young_person: holds
+- name: prisoner_blocks_responsibility
+  period:
+    period_kind: custom
+    name: day
+    start: '2013-04-29'
+    end: '2013-04-29'
+  input:
+    uk:regulations/uksi/2013/376/4#input.child_or_qualifying_young_person_normally_lives_with_person: true
+    uk:regulations/uksi/2013/376/4#input.qualifying_young_person_living_as_couple_with_person: false
+    ? uk:regulations/uksi/2013/376/4#input.child_or_qualifying_young_person_normally_lives_with_two_or_more_persons_who_are_not_a_couple
+    : false
+    uk:regulations/uksi/2013/376/4#input.person_has_main_responsibility_for_child_or_qualifying_young_person: false
+    uk:regulations/uksi/2013/376/4#input.child_or_qualifying_young_person_is_looked_after_by_local_authority: false
+    uk:regulations/uksi/2013/376/4#input.child_or_qualifying_young_person_is_prisoner: true
+    uk:regulations/uksi/2013/376/4#input.regulation_4a_displaces_no_responsibility_treatment: false
+    uk:regulations/uksi/2013/376/4#input.child_or_qualifying_young_person_temporarily_absent_from_persons_household: false
+    uk:regulations/uksi/2013/376/4#input.temporary_absence_expected_to_exceed_or_exceeds_6_months: false
+    uk:regulations/uksi/2013/376/4#input.temporary_absence_is_from_great_britain: false
+    uk:regulations/uksi/2013/376/4#input.temporary_absence_expected_to_exceed_or_exceeds_one_month: false
+    uk:regulations/uksi/2013/376/4#input.absence_longer_than_one_month_would_be_disregarded_under_regulation_11_2_or_3: false
+  output:
+    uk:regulations/uksi/2013/376/4#child_or_qualifying_young_person_treated_not_responsibility_of_any_person: holds
+    ? uk:regulations/uksi/2013/376/4#person_ceases_to_be_responsible_for_child_or_qualifying_young_person_due_to_temporary_absence
+    : not_holds
+    uk:regulations/uksi/2013/376/4#person_responsible_for_child_or_qualifying_young_person: not_holds
+- name: temporary_absence_six_months_blocks_responsibility
+  period:
+    period_kind: custom
+    name: day
+    start: '2013-04-29'
+    end: '2013-04-29'
+  input:
+    uk:regulations/uksi/2013/376/4#input.child_or_qualifying_young_person_normally_lives_with_person: true
+    uk:regulations/uksi/2013/376/4#input.qualifying_young_person_living_as_couple_with_person: false
+    ? uk:regulations/uksi/2013/376/4#input.child_or_qualifying_young_person_normally_lives_with_two_or_more_persons_who_are_not_a_couple
+    : false
+    uk:regulations/uksi/2013/376/4#input.person_has_main_responsibility_for_child_or_qualifying_young_person: false
+    uk:regulations/uksi/2013/376/4#input.child_or_qualifying_young_person_is_looked_after_by_local_authority: false
+    uk:regulations/uksi/2013/376/4#input.child_or_qualifying_young_person_is_prisoner: false
+    uk:regulations/uksi/2013/376/4#input.regulation_4a_displaces_no_responsibility_treatment: false
+    uk:regulations/uksi/2013/376/4#input.child_or_qualifying_young_person_temporarily_absent_from_persons_household: true
+    uk:regulations/uksi/2013/376/4#input.temporary_absence_expected_to_exceed_or_exceeds_6_months: true
+    uk:regulations/uksi/2013/376/4#input.temporary_absence_is_from_great_britain: false
+    uk:regulations/uksi/2013/376/4#input.temporary_absence_expected_to_exceed_or_exceeds_one_month: false
+    uk:regulations/uksi/2013/376/4#input.absence_longer_than_one_month_would_be_disregarded_under_regulation_11_2_or_3: false
+  output:
+    uk:regulations/uksi/2013/376/4#child_or_qualifying_young_person_treated_not_responsibility_of_any_person: not_holds
+    ? uk:regulations/uksi/2013/376/4#person_ceases_to_be_responsible_for_child_or_qualifying_young_person_due_to_temporary_absence
+    : holds
+    uk:regulations/uksi/2013/376/4#person_responsible_for_child_or_qualifying_young_person: not_holds
+- name: temporary_absence_from_great_britain_one_month_blocks_responsibility
+  period:
+    period_kind: custom
+    name: day
+    start: '2013-04-29'
+    end: '2013-04-29'
+  input:
+    uk:regulations/uksi/2013/376/4#input.child_or_qualifying_young_person_normally_lives_with_person: true
+    uk:regulations/uksi/2013/376/4#input.qualifying_young_person_living_as_couple_with_person: false
+    ? uk:regulations/uksi/2013/376/4#input.child_or_qualifying_young_person_normally_lives_with_two_or_more_persons_who_are_not_a_couple
+    : false
+    uk:regulations/uksi/2013/376/4#input.person_has_main_responsibility_for_child_or_qualifying_young_person: false
+    uk:regulations/uksi/2013/376/4#input.child_or_qualifying_young_person_is_looked_after_by_local_authority: false
+    uk:regulations/uksi/2013/376/4#input.child_or_qualifying_young_person_is_prisoner: false
+    uk:regulations/uksi/2013/376/4#input.regulation_4a_displaces_no_responsibility_treatment: false
+    uk:regulations/uksi/2013/376/4#input.child_or_qualifying_young_person_temporarily_absent_from_persons_household: true
+    uk:regulations/uksi/2013/376/4#input.temporary_absence_expected_to_exceed_or_exceeds_6_months: false
+    uk:regulations/uksi/2013/376/4#input.temporary_absence_is_from_great_britain: true
+    uk:regulations/uksi/2013/376/4#input.temporary_absence_expected_to_exceed_or_exceeds_one_month: true
+    uk:regulations/uksi/2013/376/4#input.absence_longer_than_one_month_would_be_disregarded_under_regulation_11_2_or_3: false
+  output:
+    uk:regulations/uksi/2013/376/4#child_or_qualifying_young_person_treated_not_responsibility_of_any_person: not_holds
+    ? uk:regulations/uksi/2013/376/4#person_ceases_to_be_responsible_for_child_or_qualifying_young_person_due_to_temporary_absence
+    : holds
+    uk:regulations/uksi/2013/376/4#person_responsible_for_child_or_qualifying_young_person: not_holds
+- name: regulation_11_disregard_preserves_responsibility_for_great_britain_absence
+  period:
+    period_kind: custom
+    name: day
+    start: '2013-04-29'
+    end: '2013-04-29'
+  input:
+    uk:regulations/uksi/2013/376/4#input.child_or_qualifying_young_person_normally_lives_with_person: true
+    uk:regulations/uksi/2013/376/4#input.qualifying_young_person_living_as_couple_with_person: false
+    ? uk:regulations/uksi/2013/376/4#input.child_or_qualifying_young_person_normally_lives_with_two_or_more_persons_who_are_not_a_couple
+    : false
+    uk:regulations/uksi/2013/376/4#input.person_has_main_responsibility_for_child_or_qualifying_young_person: false
+    uk:regulations/uksi/2013/376/4#input.child_or_qualifying_young_person_is_looked_after_by_local_authority: false
+    uk:regulations/uksi/2013/376/4#input.child_or_qualifying_young_person_is_prisoner: false
+    uk:regulations/uksi/2013/376/4#input.regulation_4a_displaces_no_responsibility_treatment: false
+    uk:regulations/uksi/2013/376/4#input.child_or_qualifying_young_person_temporarily_absent_from_persons_household: true
+    uk:regulations/uksi/2013/376/4#input.temporary_absence_expected_to_exceed_or_exceeds_6_months: false
+    uk:regulations/uksi/2013/376/4#input.temporary_absence_is_from_great_britain: true
+    uk:regulations/uksi/2013/376/4#input.temporary_absence_expected_to_exceed_or_exceeds_one_month: true
+    uk:regulations/uksi/2013/376/4#input.absence_longer_than_one_month_would_be_disregarded_under_regulation_11_2_or_3: true
+  output:
+    uk:regulations/uksi/2013/376/4#child_or_qualifying_young_person_treated_not_responsibility_of_any_person: not_holds
+    ? uk:regulations/uksi/2013/376/4#person_ceases_to_be_responsible_for_child_or_qualifying_young_person_due_to_temporary_absence
+    : not_holds
+    uk:regulations/uksi/2013/376/4#person_responsible_for_child_or_qualifying_young_person: holds

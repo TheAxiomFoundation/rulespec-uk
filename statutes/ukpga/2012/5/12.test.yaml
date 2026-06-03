@@ -1,0 +1,56 @@
+- name: limited_capability_prescribed_need_gets_section_12_amount
+  period: 2024-01
+  input:
+    ? uk:statutes/ukpga/2012/5/12#input.claimant_has_limited_capability_for_work_and_work_related_activity_prescribed_under_section_12
+    : true
+    ? uk:statutes/ukpga/2012/5/12#input.claimant_has_regular_and_substantial_caring_responsibilities_for_severely_disabled_person_prescribed_under_section_12
+    : false
+    uk:statutes/ukpga/2012/5/12#input.claimant_has_other_particular_need_or_circumstance_prescribed_under_section_12: false
+    uk:statutes/ukpga/2012/5/12#input.section_12_inclusion_has_ended_at_prescribed_time_by_regulations: false
+    uk:statutes/ukpga/2012/5/12#input.section_12_inclusion_has_not_started_until_prescribed_time_by_regulations: false
+    uk:statutes/ukpga/2012/5/12#input.amount_specified_determined_or_calculated_by_regulations_under_section_12: 390
+  output:
+    uk:statutes/ukpga/2012/5/12#claimant_has_section_12_prescribed_particular_need_or_circumstance: holds
+    uk:statutes/ukpga/2012/5/12#section_12_amount_for_prescribed_particular_needs_or_circumstances: 390
+- name: no_prescribed_need_gets_no_section_12_amount
+  period: 2024-01
+  input:
+    ? uk:statutes/ukpga/2012/5/12#input.claimant_has_limited_capability_for_work_and_work_related_activity_prescribed_under_section_12
+    : false
+    ? uk:statutes/ukpga/2012/5/12#input.claimant_has_regular_and_substantial_caring_responsibilities_for_severely_disabled_person_prescribed_under_section_12
+    : false
+    uk:statutes/ukpga/2012/5/12#input.claimant_has_other_particular_need_or_circumstance_prescribed_under_section_12: false
+    uk:statutes/ukpga/2012/5/12#input.section_12_inclusion_has_ended_at_prescribed_time_by_regulations: false
+    uk:statutes/ukpga/2012/5/12#input.section_12_inclusion_has_not_started_until_prescribed_time_by_regulations: false
+    uk:statutes/ukpga/2012/5/12#input.amount_specified_determined_or_calculated_by_regulations_under_section_12: 390
+  output:
+    uk:statutes/ukpga/2012/5/12#claimant_has_section_12_prescribed_particular_need_or_circumstance: not_holds
+    uk:statutes/ukpga/2012/5/12#section_12_amount_for_prescribed_particular_needs_or_circumstances: 0
+- name: prescribed_end_time_blocks_section_12_amount
+  period: 2024-01
+  input:
+    ? uk:statutes/ukpga/2012/5/12#input.claimant_has_limited_capability_for_work_and_work_related_activity_prescribed_under_section_12
+    : true
+    ? uk:statutes/ukpga/2012/5/12#input.claimant_has_regular_and_substantial_caring_responsibilities_for_severely_disabled_person_prescribed_under_section_12
+    : false
+    uk:statutes/ukpga/2012/5/12#input.claimant_has_other_particular_need_or_circumstance_prescribed_under_section_12: false
+    uk:statutes/ukpga/2012/5/12#input.section_12_inclusion_has_ended_at_prescribed_time_by_regulations: true
+    uk:statutes/ukpga/2012/5/12#input.section_12_inclusion_has_not_started_until_prescribed_time_by_regulations: false
+    uk:statutes/ukpga/2012/5/12#input.amount_specified_determined_or_calculated_by_regulations_under_section_12: 390
+  output:
+    uk:statutes/ukpga/2012/5/12#claimant_has_section_12_prescribed_particular_need_or_circumstance: holds
+    uk:statutes/ukpga/2012/5/12#section_12_amount_for_prescribed_particular_needs_or_circumstances: 0
+- name: prescribed_start_time_blocks_section_12_amount_until_started
+  period: 2024-01
+  input:
+    ? uk:statutes/ukpga/2012/5/12#input.claimant_has_limited_capability_for_work_and_work_related_activity_prescribed_under_section_12
+    : true
+    ? uk:statutes/ukpga/2012/5/12#input.claimant_has_regular_and_substantial_caring_responsibilities_for_severely_disabled_person_prescribed_under_section_12
+    : false
+    uk:statutes/ukpga/2012/5/12#input.claimant_has_other_particular_need_or_circumstance_prescribed_under_section_12: false
+    uk:statutes/ukpga/2012/5/12#input.section_12_inclusion_has_ended_at_prescribed_time_by_regulations: false
+    uk:statutes/ukpga/2012/5/12#input.section_12_inclusion_has_not_started_until_prescribed_time_by_regulations: true
+    uk:statutes/ukpga/2012/5/12#input.amount_specified_determined_or_calculated_by_regulations_under_section_12: 390
+  output:
+    uk:statutes/ukpga/2012/5/12#claimant_has_section_12_prescribed_particular_need_or_circumstance: holds
+    uk:statutes/ukpga/2012/5/12#section_12_amount_for_prescribed_particular_needs_or_circumstances: 0

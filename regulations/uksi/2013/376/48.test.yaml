@@ -1,0 +1,29 @@
+- name: schedule 10 capital is disregarded
+  period: 2024-05
+  input:
+    uk:regulations/uksi/2013/376/48#input.capital_is_specified_in_schedule_10: true
+    uk:regulations/uksi/2013/376/48#input.asset_capital_amount: 1200
+  output:
+    uk:regulations/uksi/2013/376/48#capital_specified_in_schedule_10_disregarded_amount: 1200
+- name: capital outside schedule 10 is not disregarded by this regulation
+  period: 2024-05
+  input:
+    uk:regulations/uksi/2013/376/48#input.capital_is_specified_in_schedule_10: false
+    uk:regulations/uksi/2013/376/48#input.asset_capital_amount: 1200
+  output:
+    uk:regulations/uksi/2013/376/48#capital_specified_in_schedule_10_disregarded_amount: 0
+- name: six month schedule period may be extended where reasonable
+  period: 2024-05
+  input:
+    uk:regulations/uksi/2013/376/48#input.schedule_10_period_is_specified_as_month_count: 6
+    uk:regulations/uksi/2013/376/48#input.secretary_of_state_considers_extension_reasonable_in_circumstances: true
+  output:
+    uk:regulations/uksi/2013/376/48#schedule_10_specified_period_month_count: 6
+    uk:regulations/uksi/2013/376/48#schedule_10_six_month_period_extension_available: holds
+- name: six month schedule period extension unavailable where not reasonable
+  period: 2024-05
+  input:
+    uk:regulations/uksi/2013/376/48#input.schedule_10_period_is_specified_as_month_count: 6
+    uk:regulations/uksi/2013/376/48#input.secretary_of_state_considers_extension_reasonable_in_circumstances: false
+  output:
+    uk:regulations/uksi/2013/376/48#schedule_10_six_month_period_extension_available: not_holds

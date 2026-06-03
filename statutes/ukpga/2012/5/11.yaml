@@ -1,0 +1,85 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/statute/ukpga/2012/5/11
+  summary: The calculation of an award of universal credit is to include an amount
+    in respect of any liability of a claimant to make payments in respect of the accommodation
+    they occupy as their home. The accommodation must be in Great Britain and residential
+    accommodation. Regulations are to provide for determination or calculation of
+    the amount and may provide exceptions or prescribed start/end times.
+rules:
+- name: section_11_amount_for_accommodation_payments
+  kind: derived
+  entity: Person
+  dtype: Money
+  period: Month
+  unit: GBP
+  source: Welfare Reform Act 2012 s. 11
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: uk/statute/ukpga/2012/5/11
+          excerpt: include an amount in respect of any liability of a claimant to
+            make payments in respect of the accommodation they occupy as their home
+      - path: versions[0].formula
+        kind: condition
+        source:
+          corpus_citation_path: uk/statute/ukpga/2012/5/11
+          excerpt: the accommodation must be in Great Britain
+      - path: versions[0].formula
+        kind: condition
+        source:
+          corpus_citation_path: uk/statute/ukpga/2012/5/11
+          excerpt: the accommodation must be residential accommodation
+      - path: versions[0].formula
+        kind: definition
+        source:
+          corpus_citation_path: uk/statute/ukpga/2012/5/11
+          excerpt: what is meant by payments in respect of accommodation
+      - path: versions[0].formula
+        kind: definition
+        source:
+          corpus_citation_path: uk/statute/ukpga/2012/5/11
+          excerpt: circumstances in which a claimant is to be treated as liable or
+            not liable
+      - path: versions[0].formula
+        kind: definition
+        source:
+          corpus_citation_path: uk/statute/ukpga/2012/5/11
+          excerpt: circumstances in which a claimant is to be treated as occupying
+            or not occupying accommodation as their home
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: uk/statute/ukpga/2012/5/11
+          excerpt: Regulations are to provide for the determination or calculation
+            of any amount to be included under this section
+      - path: versions[0].formula
+        kind: exception
+        source:
+          corpus_citation_path: uk/statute/ukpga/2012/5/11
+          excerpt: Regulations may provide for exceptions to subsection (1)
+      - path: versions[0].formula
+        kind: condition
+        source:
+          corpus_citation_path: uk/statute/ukpga/2012/5/11
+          excerpt: to end at a prescribed time, or not to start until a prescribed
+            time
+  versions:
+  - effective_from: '0001-01-01'
+    formula: 'if payments_are_in_respect_of_accommodation_for_section_11 and accommodation_is_in_great_britain
+      and accommodation_is_residential_accommodation and (claimant_is_liable_to_make_accommodation_payments
+      or claimant_is_treated_as_liable_to_make_accommodation_payments_by_regulations)
+      and not claimant_is_treated_as_not_liable_to_make_accommodation_payments_by_regulations
+      and (claimant_occupies_accommodation_as_home or claimant_is_treated_as_occupying_accommodation_as_home_by_regulations)
+      and not claimant_is_treated_as_not_occupying_accommodation_as_home_by_regulations
+      and not section_11_exception_to_accommodation_amount_applies_by_regulations
+      and not section_11_inclusion_has_ended_at_prescribed_time_by_regulations and
+      not section_11_inclusion_has_not_started_until_prescribed_time_by_regulations:
+      max(0, amount_determined_or_calculated_by_regulations_under_section_11) else:
+      0'

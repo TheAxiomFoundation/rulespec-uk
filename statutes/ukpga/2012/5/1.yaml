@@ -1,0 +1,13 @@
+format: rulespec/v1
+module:
+  status: deferred
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/statute/ukpga/2012/5/1
+  summary: |-
+    A benefit known as universal credit is payable in accordance with this Part. Universal credit may, subject as follows, be awarded to a single person or members of a couple jointly, and an award is calculated by reference to listed allowance and needs components.
+  deferred_outputs:
+    - output: uk:statutes/ukpga/2012/5/1#universal_credit_award
+      reason: The source establishes the existence, potential award recipients, and component categories for universal credit, but it does not state a computable award formula, amounts, eligibility conditions, or a supported couple/joint-claim entity structure sufficient for an executable RuleSpec output.
+rules: []

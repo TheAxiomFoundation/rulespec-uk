@@ -1,0 +1,117 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/statute/ukpga/2012/5/16
+  summary: |-
+    In this Part a "work preparation requirement" is a requirement that a claimant take particular action specified by the Secretary of State for the purpose of making it more likely in the opinion of the Secretary of State that the claimant will obtain paid work (or more paid work or better-paid work). Action which may be specified includes attending a skills assessment, improving personal presentation, training, an employment programme, work experience or placement, developing a business plan, prescribed action, and, for a person with limited capability for work, taking part in a work-focused health-related assessment.
+rules:
+  - name: work_preparation_requirement
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Day
+    source: Welfare Reform Act 2012 s 16(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/16
+              excerpt: requirement that a claimant take particular action specified by the Secretary of State for the purpose of making it more likely
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          claimant_is_required_to_take_particular_action_specified_by_secretary_of_state
+          and secretary_of_state_specified_action_for_purpose_of_making_paid_work_or_more_or_better_paid_work_more_likely_in_secretary_of_state_opinion
+
+  - name: listed_work_preparation_action_may_be_specified
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Day
+    source: Welfare Reform Act 2012 s 16(3)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: predicate
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/16
+              excerpt: Action which may be specified under subsection (1) includes in particular
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          action_is_attending_skills_assessment
+          or action_is_improving_personal_presentation
+          or action_is_participating_in_training
+          or action_is_participating_in_employment_programme
+          or action_is_undertaking_work_experience_or_work_placement
+          or action_is_developing_business_plan
+          or action_is_prescribed_for_work_preparation_purpose
+
+  - name: work_focused_health_related_assessment_action_may_be_specified_for_limited_capability_for_work_claimant
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Day
+    source: Welfare Reform Act 2012 s 16(4)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: predicate
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/16
+              excerpt: In the case of a person with limited capability for work, the action which may be specified under subsection (1) includes taking part in a work-focused health-related assessment.
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          claimant_has_limited_capability_for_work
+          and action_is_taking_part_in_work_focused_health_related_assessment
+          and work_focused_health_related_assessment
+
+  - name: work_focused_health_related_assessment
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Day
+    source: Welfare Reform Act 2012 s 16(5)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/16
+              excerpt: assessment by a health care professional approved by the Secretary of State which is carried out for the purpose of assessing
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          assessment_is_by_health_care_professional_approved_by_secretary_of_state
+          and assessment_is_carried_out_to_assess_extent_capability_for_work_may_be_improved_by_physical_or_mental_condition_steps
+          and assessment_is_carried_out_to_assess_prescribed_other_physical_or_mental_condition_and_work_likelihood_matters
+
+  - name: health_care_professional
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Day
+    source: Welfare Reform Act 2012 s 16(6)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/16
+              excerpt: In subsection (5) "health care professional" means
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          person_is_registered_medical_practitioner
+          or person_is_registered_nurse
+          or person_is_occupational_therapist_or_physiotherapist_registered_with_health_act_section_60_order_body
+          or person_is_member_of_prescribed_profession_regulated_by_nhs_reform_act_section_25_3_body

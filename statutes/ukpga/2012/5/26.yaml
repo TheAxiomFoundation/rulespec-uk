@@ -1,0 +1,156 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/statute/ukpga/2012/5/26
+  summary: |-
+    "The amount of an award of universal credit is to be reduced ... in the event of a failure by a claimant which is sanctionable under this section." Sanctionable failures include failures by a claimant "falling within section 22", a section 19(3) claimant ceasing paid work or losing pay "so as to ... fall within section 22 instead", and pre-claim failures where "at the time the award is made the claimant falls within section 22"; regulations set the amount and period, "not exceeding three years".
+  deferred_outputs:
+    - output: uk:statutes/ukpga/2012/5/26#universal_credit_award_reduction_amount
+      reason: Section 26 requires regulations to provide the amount of a reduction but does not state a computable amount or formula in this source text.
+    - output: uk:statutes/ukpga/2012/5/26#universal_credit_award_reduction_period
+      reason: Section 26 requires regulations to provide the period of a reduction and states only the maximum period of three years.
+      source_values:
+        - uk:statutes/ukpga/2012/5/26#maximum_reduction_period_years
+rules:
+  - name: maximum_reduction_period_years
+    kind: parameter
+    dtype: Count
+    source: Welfare Reform Act 2012, section 26(6)(b)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/26
+              excerpt: "the period for which such a reduction has effect, not exceeding three years"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          3
+  - name: section_22_claimant_failure_sanctionable
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Month
+    source: Welfare Reform Act 2012, section 26(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/26
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          claimant_falls_within_section_22
+          and (
+            failed_to_comply_with_work_preparation_requirement_to_undertake_prescribed_work_placement_for_no_good_reason
+            or failed_to_comply_with_work_search_requirement_to_apply_for_particular_paid_work_vacancy_for_no_good_reason
+            or failed_to_comply_with_work_availability_requirement_by_not_taking_up_paid_work_offer_for_no_good_reason
+            or claimant_falling_within_section_22_ceased_paid_work_or_lost_pay_by_misconduct_or_voluntarily_for_no_good_reason
+          )
+  - name: section_19_to_22_transition_failure_sanctionable
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Month
+    source: Welfare Reform Act 2012, section 26(3)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/26
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          claimant_falls_within_section_19_by_virtue_of_subsection_3
+          and claimant_ceased_to_fall_within_section_19_and_fell_within_section_22_because_of_work_or_pay_change
+          and claimant_falling_within_section_19_ceased_paid_work_or_lost_pay_by_misconduct_or_voluntarily_for_no_good_reason
+  - name: preclaim_failure_sanctionable
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Month
+    source: Welfare Reform Act 2012, section 26(4)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/26
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          claimant_falls_within_section_22_at_time_award_made
+          and (
+            before_claim_failed_to_take_up_offer_of_paid_work_for_no_good_reason
+            or before_claim_ceased_paid_work_or_lost_pay_by_misconduct_or_voluntarily_for_no_good_reason
+          )
+  - name: claimant_has_sanctionable_failure_for_universal_credit_reduction
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Month
+    source: Welfare Reform Act 2012, section 26(2)-(4)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/26
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          section_22_claimant_failure_sanctionable
+          or section_19_to_22_transition_failure_sanctionable
+          or preclaim_failure_sanctionable
+  - name: universal_credit_award_reduction_applies
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Month
+    source: Welfare Reform Act 2012, section 26(1), (8)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/26
+          - path: versions[0].formula
+            kind: exception
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/26
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          claimant_has_award_of_universal_credit
+          and claimant_has_sanctionable_failure_for_universal_credit_reduction
+          and not no_reduction_is_to_be_made_under_section_26_by_regulations
+          and not reduction_under_section_26_is_terminated_or_suspended_by_regulations
+  - name: prescribed_reduction_period_within_maximum
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Month
+    source: Welfare Reform Act 2012, section 26(6)(b)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/26
+              excerpt: "the period for which such a reduction has effect, not exceeding three years"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          prescribed_reduction_period_years_for_failure_sanctionable_under_this_section <= maximum_reduction_period_years

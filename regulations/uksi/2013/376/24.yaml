@@ -1,0 +1,103 @@
+format: rulespec/v1
+imports:
+- uk:regulations/uksi/2013/376/36#child_element_amount
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2013/376/24
+  summary: 'The amount to be included in an award of universal credit for each child
+    or qualifying young person for whom a claimant is responsible ("the child element")
+    is given in the table in regulation 36. An additional amount as shown in that
+    table is to be included in respect of each child or qualifying young person who
+    is disabled: the lower rate for specified disability benefit entitlement unless
+    sub-paragraph (b) applies, or the higher rate for specified highest/enhanced components
+    or where the child or qualifying young person is blind.'
+  deferred_outputs:
+  - output: uk:regulations/uksi/2013/376/24#child_or_qualifying_young_person_total_included_amount
+    reason: Generated rule depends on an output that validation deferred because it
+      flattened thresholded, capped, base-limited, or cross-referenced mechanics,
+      or borrowed an unrelated same-named section term.
+  - output: uk:regulations/uksi/2013/376/24#disabled_child_addition_included_amount
+    reason: Generated rule used a thresholded, capped, base-limited, or excess-amount
+      imported rate as a flat percentage. This output is deferred until the cited
+      mechanics can be composed without flattening the imported rate.
+rules:
+- name: higher_rate_disabled_child_addition_applies
+  kind: derived
+  entity: Person
+  dtype: Judgment
+  period: Month
+  source: regulation 24(2)(b)
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: condition
+        source:
+          corpus_citation_path: uk/regulation/uksi/2013/376/24
+          excerpt: the higher rate where the child or qualifying young person is...
+            entitled to... highest rate... enhanced rate, or ... blind
+  versions:
+  - effective_from: '0001-01-01'
+    formula: 'child_or_qualifying_young_person_entitled_to_care_component_of_disability_living_allowance_at_highest_rate
+
+      or child_or_qualifying_young_person_entitled_to_care_component_of_scottish_adult_disability_living_allowance_at_highest_rate
+
+      or child_or_qualifying_young_person_entitled_to_care_component_of_child_disability_payment_at_highest_rate
+
+      or child_or_qualifying_young_person_entitled_to_daily_living_component_of_adult_disability_payment_at_enhanced_rate
+
+      or child_or_qualifying_young_person_entitled_to_daily_living_component_of_personal_independence_payment_at_enhanced_rate
+
+      or child_or_qualifying_young_person_is_blind'
+- name: lower_rate_disabled_child_addition_applies
+  kind: derived
+  entity: Person
+  dtype: Judgment
+  period: Month
+  source: regulation 24(2)(a)
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: condition
+        source:
+          corpus_citation_path: uk/regulation/uksi/2013/376/24
+          excerpt: the lower rate, where the child or qualifying young person is entitled
+            to disability living allowance... or personal independence payment (unless
+            sub-paragraph (b) applies)
+  versions:
+  - effective_from: '0001-01-01'
+    formula: "(\n  child_or_qualifying_young_person_entitled_to_disability_living_allowance\n\
+      \  or child_or_qualifying_young_person_entitled_to_scottish_adult_disability_living_allowance\n\
+      \  or child_or_qualifying_young_person_entitled_to_child_disability_payment\n\
+      \  or child_or_qualifying_young_person_entitled_to_adult_disability_payment\n\
+      \  or child_or_qualifying_young_person_entitled_to_personal_independence_payment\n\
+      )\nand\nnot higher_rate_disabled_child_addition_applies"
+- name: responsible_child_element_included_amount
+  kind: derived
+  entity: Person
+  dtype: Money
+  period: Month
+  unit: GBP
+  source: regulation 24(1)
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: uk/regulation/uksi/2013/376/24
+          excerpt: for each child or qualifying young person for whom a claimant is
+            responsible ... is given in the table in regulation 36
+      - path: versions[0].formula
+        kind: import
+        import:
+          target: uk:regulations/uksi/2013/376/36#child_element_amount
+          output: child_element_amount
+          hash: sha256:116501892639c2eed68b342a1cdc5bb01877836f4d68913141873bbc36782265
+  versions:
+  - effective_from: '0001-01-01'
+    formula: 'if claimant_responsible_for_child_or_qualifying_young_person: child_element_amount
+      else: 0'

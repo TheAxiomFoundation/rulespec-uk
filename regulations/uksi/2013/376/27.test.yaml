@@ -1,0 +1,48 @@
+- name: single_claimant_with_lcwra_includes_regulation_36_amount
+  period: 2026-04
+  input:
+    uk:regulations/uksi/2013/376/27#input.claim_is_for_joint_claimants: false
+    uk:regulations/uksi/2013/376/27#input.single_claimant_has_limited_capability_for_work_and_work_related_activity: true
+    uk:regulations/uksi/2013/376/27#input.first_joint_claimant_has_limited_capability_for_work_and_work_related_activity: false
+    uk:regulations/uksi/2013/376/27#input.second_joint_claimant_has_limited_capability_for_work_and_work_related_activity: false
+    uk:regulations/uksi/2013/376/27#input.lcwra_element_amount_given_in_regulation_36_for_single_claimant: 390.06
+    uk:regulations/uksi/2013/376/27#input.lcwra_element_amount_given_in_regulation_36_for_first_joint_claimant: 0
+    uk:regulations/uksi/2013/376/27#input.lcwra_element_amount_given_in_regulation_36_for_second_joint_claimant: 0
+  output:
+    uk:regulations/uksi/2013/376/27#universal_credit_award_lcwra_element_included_amount: 390.06
+- name: single_claimant_without_lcwra_includes_no_lcwra_element
+  period: 2026-04
+  input:
+    uk:regulations/uksi/2013/376/27#input.claim_is_for_joint_claimants: false
+    uk:regulations/uksi/2013/376/27#input.single_claimant_has_limited_capability_for_work_and_work_related_activity: false
+    uk:regulations/uksi/2013/376/27#input.first_joint_claimant_has_limited_capability_for_work_and_work_related_activity: false
+    uk:regulations/uksi/2013/376/27#input.second_joint_claimant_has_limited_capability_for_work_and_work_related_activity: false
+    uk:regulations/uksi/2013/376/27#input.lcwra_element_amount_given_in_regulation_36_for_single_claimant: 390.06
+    uk:regulations/uksi/2013/376/27#input.lcwra_element_amount_given_in_regulation_36_for_first_joint_claimant: 0
+    uk:regulations/uksi/2013/376/27#input.lcwra_element_amount_given_in_regulation_36_for_second_joint_claimant: 0
+  output:
+    uk:regulations/uksi/2013/376/27#universal_credit_award_lcwra_element_included_amount: 0
+- name: joint_claimants_both_lcwra_include_one_higher_amount
+  period: 2026-04
+  input:
+    uk:regulations/uksi/2013/376/27#input.claim_is_for_joint_claimants: true
+    uk:regulations/uksi/2013/376/27#input.single_claimant_has_limited_capability_for_work_and_work_related_activity: false
+    uk:regulations/uksi/2013/376/27#input.first_joint_claimant_has_limited_capability_for_work_and_work_related_activity: true
+    uk:regulations/uksi/2013/376/27#input.second_joint_claimant_has_limited_capability_for_work_and_work_related_activity: true
+    uk:regulations/uksi/2013/376/27#input.lcwra_element_amount_given_in_regulation_36_for_single_claimant: 0
+    uk:regulations/uksi/2013/376/27#input.lcwra_element_amount_given_in_regulation_36_for_first_joint_claimant: 390.06
+    uk:regulations/uksi/2013/376/27#input.lcwra_element_amount_given_in_regulation_36_for_second_joint_claimant: 495.0
+  output:
+    uk:regulations/uksi/2013/376/27#universal_credit_award_lcwra_element_included_amount: 495.0
+- name: joint_claimants_only_second_has_lcwra_include_second_amount
+  period: 2026-04
+  input:
+    uk:regulations/uksi/2013/376/27#input.claim_is_for_joint_claimants: true
+    uk:regulations/uksi/2013/376/27#input.single_claimant_has_limited_capability_for_work_and_work_related_activity: false
+    uk:regulations/uksi/2013/376/27#input.first_joint_claimant_has_limited_capability_for_work_and_work_related_activity: false
+    uk:regulations/uksi/2013/376/27#input.second_joint_claimant_has_limited_capability_for_work_and_work_related_activity: true
+    uk:regulations/uksi/2013/376/27#input.lcwra_element_amount_given_in_regulation_36_for_single_claimant: 0
+    uk:regulations/uksi/2013/376/27#input.lcwra_element_amount_given_in_regulation_36_for_first_joint_claimant: 390.06
+    uk:regulations/uksi/2013/376/27#input.lcwra_element_amount_given_in_regulation_36_for_second_joint_claimant: 495.0
+  output:
+    uk:regulations/uksi/2013/376/27#universal_credit_award_lcwra_element_included_amount: 495.0

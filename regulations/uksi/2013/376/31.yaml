@@ -1,0 +1,31 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2013/376/31
+  summary: |-
+    An award of universal credit is to include the childcare costs element in an assessment period in which the claimant meets both the work condition and the childcare costs condition.
+rules:
+  - name: childcare_costs_element_included
+    kind: derived
+    entity: Family
+    dtype: Judgment
+    period: Month
+    source: Universal Credit Regulations 2013, regulation 31
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/31
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/31
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          claimant_meets_work_condition_under_regulation_32
+          and claimant_meets_childcare_costs_condition_under_regulation_33

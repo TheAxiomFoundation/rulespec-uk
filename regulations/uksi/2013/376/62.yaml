@@ -1,0 +1,215 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2013/376/62
+  summary: |-
+    This regulation applies to a claimant who is in gainful self-employment and would otherwise fall within section 22. For assessment periods outside a start-up period, low earned income is treated as equal to the individual threshold, or for a couple as the individual threshold reduced so the couple threshold is not exceeded. Surplus earnings under regulation 54A are added before this regulation is applied.
+rules:
+  - name: individual_threshold_net_amount_for_self_employment_deeming
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 62(5)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/62
+              excerpt: "individual threshold... amounts set out in regulation 90(2)... converted to net ... amounts by... deducting"
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          individual_threshold_amount_set_out_in_regulation_90_2 - secretary_of_state_appropriate_tax_and_national_insurance_deduction_for_individual_threshold
+
+  - name: couple_threshold_net_amount_for_self_employment_deeming
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 62(5)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/62
+              excerpt: "couple threshold... amounts set out in regulation 90(3)... converted to net ... amounts by... deducting"
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          couple_threshold_amount_set_out_in_regulation_90_3 - secretary_of_state_appropriate_tax_and_national_insurance_deduction_for_couple_threshold
+
+  - name: assessment_period_excluded_by_start_up_period
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Month
+    source: Universal Credit Regulations 2013, regulation 62(7)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: exception
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/62
+              excerpt: "does not include an assessment period which falls wholly within a start-up period or begins or ends in a start-up period"
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          assessment_period_falls_wholly_within_start_up_period
+          or assessment_period_begins_in_start_up_period
+          or assessment_period_ends_in_start_up_period
+
+  - name: gainful_self_employment_deeming_applies
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Month
+    source: Universal Credit Regulations 2013, regulation 62(1) and 62(7)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/62
+              excerpt: "applies to a claimant who... is in gainful self-employment... and would... fall within section 22"
+          - path: versions[0].formula
+            kind: exception
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/62
+              excerpt: "does not include an assessment period which falls wholly within a start-up period or begins or ends in a start-up period"
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          claimant_is_in_gainful_self_employment_under_regulation_64
+          and claimant_would_apart_from_regulation_62_or_90_fall_within_section_22_of_the_act
+          and not assessment_period_excluded_by_start_up_period
+
+  - name: claimant_earned_income_if_surplus_added_to_claimant
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 62(3) and 62(6)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/62
+              excerpt: "the claimant is to be treated as having earned income equal to their individual threshold minus any amount"
+          - path: versions[0].formula
+            kind: ordering
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/62
+              excerpt: "surplus earnings... added to the claimant’s earned income before this regulation is applied"
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          if gainful_self_employment_deeming_applies and claimant_is_member_of_couple and claimant_earned_income_in_assessment_period + surplus_earnings_treated_as_earned_income_under_regulation_54a < individual_threshold_net_amount_for_self_employment_deeming and claimant_earned_income_in_assessment_period + surplus_earnings_treated_as_earned_income_under_regulation_54a + partner_earned_income_in_assessment_period < couple_threshold_net_amount_for_self_employment_deeming: individual_threshold_net_amount_for_self_employment_deeming - max(0, individual_threshold_net_amount_for_self_employment_deeming + partner_earned_income_in_assessment_period - couple_threshold_net_amount_for_self_employment_deeming) else: claimant_earned_income_in_assessment_period + surplus_earnings_treated_as_earned_income_under_regulation_54a
+
+  - name: claimant_earned_income_if_surplus_added_to_partner
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 62(3) and 62(6)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/62
+              excerpt: "the claimant is to be treated as having earned income equal to their individual threshold minus any amount"
+          - path: versions[0].formula
+            kind: ordering
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/62
+              excerpt: "in the case of joint claimants, it is to be added to the earned income of either member of the couple"
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          if gainful_self_employment_deeming_applies and claimant_is_member_of_couple and claimant_earned_income_in_assessment_period < individual_threshold_net_amount_for_self_employment_deeming and claimant_earned_income_in_assessment_period + partner_earned_income_in_assessment_period + surplus_earnings_treated_as_earned_income_under_regulation_54a < couple_threshold_net_amount_for_self_employment_deeming: individual_threshold_net_amount_for_self_employment_deeming - max(0, individual_threshold_net_amount_for_self_employment_deeming + partner_earned_income_in_assessment_period + surplus_earnings_treated_as_earned_income_under_regulation_54a - couple_threshold_net_amount_for_self_employment_deeming) else: claimant_earned_income_in_assessment_period
+
+  - name: couple_combined_earned_income_if_surplus_added_to_claimant
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 62(6)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/62
+              excerpt: "produce the lowest possible amount of combined earned income after this regulation is applied"
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          claimant_earned_income_if_surplus_added_to_claimant + partner_earned_income_in_assessment_period
+
+  - name: couple_combined_earned_income_if_surplus_added_to_partner
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 62(6)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/62
+              excerpt: "produce the lowest possible amount of combined earned income after this regulation is applied"
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          claimant_earned_income_if_surplus_added_to_partner + partner_earned_income_in_assessment_period + surplus_earnings_treated_as_earned_income_under_regulation_54a
+
+  - name: claimant_earned_income_after_gainful_self_employment_deeming
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 62(2), 62(3), 62(6), and 62(7)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/62
+              excerpt: "Where this regulation applies to a single claimant... treated as having earned income equal to that threshold"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/62
+              excerpt: "Where this regulation applies to a claimant who is a member of a couple..."
+          - path: versions[0].formula
+            kind: ordering
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/62
+              excerpt: "that amount is to be added... so as to produce the lowest possible amount of combined earned income"
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          if gainful_self_employment_deeming_applies and claimant_is_single_claimant: if claimant_earned_income_in_assessment_period + surplus_earnings_treated_as_earned_income_under_regulation_54a < individual_threshold_net_amount_for_self_employment_deeming: individual_threshold_net_amount_for_self_employment_deeming else: claimant_earned_income_in_assessment_period + surplus_earnings_treated_as_earned_income_under_regulation_54a else: if gainful_self_employment_deeming_applies and claimant_is_member_of_couple: if couple_combined_earned_income_if_surplus_added_to_claimant < couple_combined_earned_income_if_surplus_added_to_partner or couple_combined_earned_income_if_surplus_added_to_claimant == couple_combined_earned_income_if_surplus_added_to_partner: claimant_earned_income_if_surplus_added_to_claimant else: claimant_earned_income_if_surplus_added_to_partner else: claimant_earned_income_in_assessment_period

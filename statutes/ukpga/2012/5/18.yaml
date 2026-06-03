@@ -1,0 +1,51 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/statute/ukpga/2012/5/18
+  summary: |-
+    In this Part a “work availability requirement” is a requirement that a claimant be available for work. “Available for work” means able and willing immediately to take up paid work, or more paid work, or better-paid work.
+rules:
+  - name: available_for_work
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Day
+    source: Welfare Reform Act 2012 s.18(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/18
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          claimant_is_able_and_willing_immediately_to_take_up_paid_work
+          or claimant_is_able_and_willing_immediately_to_take_up_more_paid_work
+          or claimant_is_able_and_willing_immediately_to_take_up_better_paid_work
+  - name: work_availability_requirement
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Day
+    source: Welfare Reform Act 2012 s.18(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/18
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/2012/5/18#available_for_work
+              output: available_for_work
+              hash: sha256:local
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          available_for_work

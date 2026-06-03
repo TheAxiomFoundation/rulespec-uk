@@ -1,0 +1,52 @@
+- name: available_for_work_paid_work_path
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:statutes/ukpga/2012/5/18#input.claimant_is_able_and_willing_immediately_to_take_up_paid_work: true
+    uk:statutes/ukpga/2012/5/18#input.claimant_is_able_and_willing_immediately_to_take_up_more_paid_work: false
+    uk:statutes/ukpga/2012/5/18#input.claimant_is_able_and_willing_immediately_to_take_up_better_paid_work: false
+  output:
+    uk:statutes/ukpga/2012/5/18#available_for_work: holds
+    uk:statutes/ukpga/2012/5/18#work_availability_requirement: holds
+- name: available_for_work_more_paid_work_path
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-16'
+    end: '2024-01-16'
+  input:
+    uk:statutes/ukpga/2012/5/18#input.claimant_is_able_and_willing_immediately_to_take_up_paid_work: false
+    uk:statutes/ukpga/2012/5/18#input.claimant_is_able_and_willing_immediately_to_take_up_more_paid_work: true
+    uk:statutes/ukpga/2012/5/18#input.claimant_is_able_and_willing_immediately_to_take_up_better_paid_work: false
+  output:
+    uk:statutes/ukpga/2012/5/18#available_for_work: holds
+    uk:statutes/ukpga/2012/5/18#work_availability_requirement: holds
+- name: available_for_work_better_paid_work_path
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-17'
+    end: '2024-01-17'
+  input:
+    uk:statutes/ukpga/2012/5/18#input.claimant_is_able_and_willing_immediately_to_take_up_paid_work: false
+    uk:statutes/ukpga/2012/5/18#input.claimant_is_able_and_willing_immediately_to_take_up_more_paid_work: false
+    uk:statutes/ukpga/2012/5/18#input.claimant_is_able_and_willing_immediately_to_take_up_better_paid_work: true
+  output:
+    uk:statutes/ukpga/2012/5/18#available_for_work: holds
+    uk:statutes/ukpga/2012/5/18#work_availability_requirement: holds
+- name: available_for_work_no_path
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-18'
+    end: '2024-01-18'
+  input:
+    uk:statutes/ukpga/2012/5/18#input.claimant_is_able_and_willing_immediately_to_take_up_paid_work: false
+    uk:statutes/ukpga/2012/5/18#input.claimant_is_able_and_willing_immediately_to_take_up_more_paid_work: false
+    uk:statutes/ukpga/2012/5/18#input.claimant_is_able_and_willing_immediately_to_take_up_better_paid_work: false
+  output:
+    uk:statutes/ukpga/2012/5/18#available_for_work: not_holds
+    uk:statutes/ukpga/2012/5/18#work_availability_requirement: not_holds

@@ -1,0 +1,102 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/statute/ukpga/2012/5/21
+  summary: |-
+    "A claimant falls within this section if the claimant does not fall within section 19 or 20" and has limited capability for work, is the responsible carer for a child aged 2, or is of a prescribed description. The Secretary of State may impose work preparation and work-focused interview requirements, and may not impose any other work-related requirement.
+rules:
+  - name: claimant_falls_into_work_focused_interview_and_work_preparation_requirements_only_group
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Month
+    source: Welfare Reform Act 2012, section 21(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/21
+              excerpt: "does not fall within section 19 or 20 and ... has limited capability for work ... responsible carer for a child who is aged 2 ... prescribed description"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          not claimant_falls_within_section_19
+          and not claimant_falls_within_section_20
+          and (
+            claimant_has_limited_capability_for_work
+            or claimant_is_responsible_carer_for_child_aged_2
+            or claimant_is_of_prescribed_description_for_work_focused_interview_and_preparation_group
+          )
+  - name: work_preparation_requirement_may_be_imposed_on_work_focused_interview_and_preparation_group_claimant
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Month
+    source: Welfare Reform Act 2012, section 21(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/21
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          claimant_falls_into_work_focused_interview_and_work_preparation_requirements_only_group
+  - name: work_focused_interview_requirement_may_be_imposed_on_work_focused_interview_and_preparation_group_claimant
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Month
+    source: Welfare Reform Act 2012, section 21(3)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/21
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          claimant_falls_into_work_focused_interview_and_work_preparation_requirements_only_group
+  - name: other_work_related_requirement_may_not_be_imposed_on_work_focused_interview_and_preparation_group_claimant
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Month
+    source: Welfare Reform Act 2012, section 21(4)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: exception
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/21
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          claimant_falls_into_work_focused_interview_and_work_preparation_requirements_only_group
+  - name: other_work_related_requirement_previously_applying_ceases_for_work_focused_interview_and_preparation_group_claimant
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Month
+    source: Welfare Reform Act 2012, section 21(4)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/21
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          claimant_falls_into_work_focused_interview_and_work_preparation_requirements_only_group
+          and other_work_related_requirement_previously_applying_to_claimant

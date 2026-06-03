@@ -1,0 +1,114 @@
+- name: person_meets_basic_conditions_when_all_requirements_met
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:statutes/ukpga/2012/5/4#input.person_is_at_least_18_years_old: true
+    uk:statutes/ukpga/2012/5/4#input.minimum_age_requirement_exception_applies_by_regulations: false
+    uk:statutes/ukpga/2012/5/4#input.person_has_not_reached_qualifying_age_for_state_pension_credit: true
+    uk:statutes/ukpga/2012/5/4#input.state_pension_credit_age_requirement_exception_applies_by_regulations: false
+    uk:statutes/ukpga/2012/5/4#input.person_is_in_great_britain_for_basic_condition: true
+    uk:statutes/ukpga/2012/5/4#input.great_britain_requirement_exception_applies_by_regulations: false
+    uk:statutes/ukpga/2012/5/4#input.person_is_receiving_education_for_basic_condition: false
+    uk:statutes/ukpga/2012/5/4#input.education_requirement_exception_applies_by_regulations: false
+    uk:statutes/ukpga/2012/5/4#input.person_has_accepted_claimant_commitment: true
+    uk:statutes/ukpga/2012/5/4#input.claimant_commitment_requirement_exception_applies_by_regulations: false
+  output:
+    uk:statutes/ukpga/2012/5/4#person_meets_basic_conditions_for_section_3: holds
+- name: person_does_not_meet_basic_conditions_when_under_minimum_age_without_exception
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:statutes/ukpga/2012/5/4#input.person_is_at_least_18_years_old: false
+    uk:statutes/ukpga/2012/5/4#input.minimum_age_requirement_exception_applies_by_regulations: false
+    uk:statutes/ukpga/2012/5/4#input.person_has_not_reached_qualifying_age_for_state_pension_credit: true
+    uk:statutes/ukpga/2012/5/4#input.state_pension_credit_age_requirement_exception_applies_by_regulations: false
+    uk:statutes/ukpga/2012/5/4#input.person_is_in_great_britain_for_basic_condition: true
+    uk:statutes/ukpga/2012/5/4#input.great_britain_requirement_exception_applies_by_regulations: false
+    uk:statutes/ukpga/2012/5/4#input.person_is_receiving_education_for_basic_condition: false
+    uk:statutes/ukpga/2012/5/4#input.education_requirement_exception_applies_by_regulations: false
+    uk:statutes/ukpga/2012/5/4#input.person_has_accepted_claimant_commitment: true
+    uk:statutes/ukpga/2012/5/4#input.claimant_commitment_requirement_exception_applies_by_regulations: false
+  output:
+    uk:statutes/ukpga/2012/5/4#person_meets_basic_conditions_for_section_3: not_holds
+- name: person_does_not_meet_basic_conditions_after_reaching_state_pension_credit_qualifying_age_without_exception
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:statutes/ukpga/2012/5/4#input.person_is_at_least_18_years_old: true
+    uk:statutes/ukpga/2012/5/4#input.minimum_age_requirement_exception_applies_by_regulations: false
+    uk:statutes/ukpga/2012/5/4#input.person_has_not_reached_qualifying_age_for_state_pension_credit: false
+    uk:statutes/ukpga/2012/5/4#input.state_pension_credit_age_requirement_exception_applies_by_regulations: false
+    uk:statutes/ukpga/2012/5/4#input.person_is_in_great_britain_for_basic_condition: true
+    uk:statutes/ukpga/2012/5/4#input.great_britain_requirement_exception_applies_by_regulations: false
+    uk:statutes/ukpga/2012/5/4#input.person_is_receiving_education_for_basic_condition: false
+    uk:statutes/ukpga/2012/5/4#input.education_requirement_exception_applies_by_regulations: false
+    uk:statutes/ukpga/2012/5/4#input.person_has_accepted_claimant_commitment: true
+    uk:statutes/ukpga/2012/5/4#input.claimant_commitment_requirement_exception_applies_by_regulations: false
+  output:
+    uk:statutes/ukpga/2012/5/4#person_meets_basic_conditions_for_section_3: not_holds
+- name: person_does_not_meet_basic_conditions_when_not_in_great_britain_without_exception
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:statutes/ukpga/2012/5/4#input.person_is_at_least_18_years_old: true
+    uk:statutes/ukpga/2012/5/4#input.minimum_age_requirement_exception_applies_by_regulations: false
+    uk:statutes/ukpga/2012/5/4#input.person_has_not_reached_qualifying_age_for_state_pension_credit: true
+    uk:statutes/ukpga/2012/5/4#input.state_pension_credit_age_requirement_exception_applies_by_regulations: false
+    uk:statutes/ukpga/2012/5/4#input.person_is_in_great_britain_for_basic_condition: false
+    uk:statutes/ukpga/2012/5/4#input.great_britain_requirement_exception_applies_by_regulations: false
+    uk:statutes/ukpga/2012/5/4#input.person_is_receiving_education_for_basic_condition: false
+    uk:statutes/ukpga/2012/5/4#input.education_requirement_exception_applies_by_regulations: false
+    uk:statutes/ukpga/2012/5/4#input.person_has_accepted_claimant_commitment: true
+    uk:statutes/ukpga/2012/5/4#input.claimant_commitment_requirement_exception_applies_by_regulations: false
+  output:
+    uk:statutes/ukpga/2012/5/4#person_meets_basic_conditions_for_section_3: not_holds
+- name: person_does_not_meet_basic_conditions_when_receiving_education_without_exception
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:statutes/ukpga/2012/5/4#input.person_is_at_least_18_years_old: true
+    uk:statutes/ukpga/2012/5/4#input.minimum_age_requirement_exception_applies_by_regulations: false
+    uk:statutes/ukpga/2012/5/4#input.person_has_not_reached_qualifying_age_for_state_pension_credit: true
+    uk:statutes/ukpga/2012/5/4#input.state_pension_credit_age_requirement_exception_applies_by_regulations: false
+    uk:statutes/ukpga/2012/5/4#input.person_is_in_great_britain_for_basic_condition: true
+    uk:statutes/ukpga/2012/5/4#input.great_britain_requirement_exception_applies_by_regulations: false
+    uk:statutes/ukpga/2012/5/4#input.person_is_receiving_education_for_basic_condition: true
+    uk:statutes/ukpga/2012/5/4#input.education_requirement_exception_applies_by_regulations: false
+    uk:statutes/ukpga/2012/5/4#input.person_has_accepted_claimant_commitment: true
+    uk:statutes/ukpga/2012/5/4#input.claimant_commitment_requirement_exception_applies_by_regulations: false
+  output:
+    uk:statutes/ukpga/2012/5/4#person_meets_basic_conditions_for_section_3: not_holds
+- name: person_does_not_meet_basic_conditions_without_claimant_commitment_exception
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:statutes/ukpga/2012/5/4#input.person_is_at_least_18_years_old: true
+    uk:statutes/ukpga/2012/5/4#input.minimum_age_requirement_exception_applies_by_regulations: false
+    uk:statutes/ukpga/2012/5/4#input.person_has_not_reached_qualifying_age_for_state_pension_credit: true
+    uk:statutes/ukpga/2012/5/4#input.state_pension_credit_age_requirement_exception_applies_by_regulations: false
+    uk:statutes/ukpga/2012/5/4#input.person_is_in_great_britain_for_basic_condition: true
+    uk:statutes/ukpga/2012/5/4#input.great_britain_requirement_exception_applies_by_regulations: false
+    uk:statutes/ukpga/2012/5/4#input.person_is_receiving_education_for_basic_condition: false
+    uk:statutes/ukpga/2012/5/4#input.education_requirement_exception_applies_by_regulations: false
+    uk:statutes/ukpga/2012/5/4#input.person_has_accepted_claimant_commitment: false
+    uk:statutes/ukpga/2012/5/4#input.claimant_commitment_requirement_exception_applies_by_regulations: false
+  output:
+    uk:statutes/ukpga/2012/5/4#person_meets_basic_conditions_for_section_3: not_holds

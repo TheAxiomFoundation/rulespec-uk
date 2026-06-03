@@ -1,0 +1,108 @@
+- name: single_claimant_meets_financial_conditions_when_capital_and_payable_amount_pass
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:statutes/ukpga/2012/5/5#input.single_claimant_capital_or_prescribed_part_of_capital: 500
+    uk:statutes/ukpga/2012/5/5#input.prescribed_capital_amount_for_single_claimant: 1000
+    uk:statutes/ukpga/2012/5/5#input.single_claimant_universal_credit_amount_payable_if_entitled: 50
+    uk:statutes/ukpga/2012/5/5#input.prescribed_minimum_universal_credit_amount_for_single_claimant: 10
+    uk:statutes/ukpga/2012/5/5#input.joint_claimants_combined_capital_or_prescribed_part_of_combined_capital: 2500
+    uk:statutes/ukpga/2012/5/5#input.prescribed_capital_amount_for_joint_claimants: 2000
+    uk:statutes/ukpga/2012/5/5#input.joint_claimants_universal_credit_amount_payable_if_entitled: 10
+    uk:statutes/ukpga/2012/5/5#input.prescribed_minimum_universal_credit_amount_for_joint_claimants: 20
+  output:
+    uk:statutes/ukpga/2012/5/5#single_claimant_meets_financial_conditions: holds
+    uk:statutes/ukpga/2012/5/5#joint_claimants_meet_financial_conditions: not_holds
+- name: single_claimant_fails_financial_conditions_when_capital_exceeds_prescribed_amount
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:statutes/ukpga/2012/5/5#input.single_claimant_capital_or_prescribed_part_of_capital: 1500
+    uk:statutes/ukpga/2012/5/5#input.prescribed_capital_amount_for_single_claimant: 1000
+    uk:statutes/ukpga/2012/5/5#input.single_claimant_universal_credit_amount_payable_if_entitled: 50
+    uk:statutes/ukpga/2012/5/5#input.prescribed_minimum_universal_credit_amount_for_single_claimant: 10
+    uk:statutes/ukpga/2012/5/5#input.joint_claimants_combined_capital_or_prescribed_part_of_combined_capital: 2500
+    uk:statutes/ukpga/2012/5/5#input.prescribed_capital_amount_for_joint_claimants: 2000
+    uk:statutes/ukpga/2012/5/5#input.joint_claimants_universal_credit_amount_payable_if_entitled: 10
+    uk:statutes/ukpga/2012/5/5#input.prescribed_minimum_universal_credit_amount_for_joint_claimants: 20
+  output:
+    uk:statutes/ukpga/2012/5/5#single_claimant_meets_financial_conditions: not_holds
+    uk:statutes/ukpga/2012/5/5#joint_claimants_meet_financial_conditions: not_holds
+- name: single_claimant_fails_financial_conditions_when_payable_amount_is_below_prescribed_minimum
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:statutes/ukpga/2012/5/5#input.single_claimant_capital_or_prescribed_part_of_capital: 500
+    uk:statutes/ukpga/2012/5/5#input.prescribed_capital_amount_for_single_claimant: 1000
+    uk:statutes/ukpga/2012/5/5#input.single_claimant_universal_credit_amount_payable_if_entitled: 5
+    uk:statutes/ukpga/2012/5/5#input.prescribed_minimum_universal_credit_amount_for_single_claimant: 10
+    uk:statutes/ukpga/2012/5/5#input.joint_claimants_combined_capital_or_prescribed_part_of_combined_capital: 2500
+    uk:statutes/ukpga/2012/5/5#input.prescribed_capital_amount_for_joint_claimants: 2000
+    uk:statutes/ukpga/2012/5/5#input.joint_claimants_universal_credit_amount_payable_if_entitled: 10
+    uk:statutes/ukpga/2012/5/5#input.prescribed_minimum_universal_credit_amount_for_joint_claimants: 20
+  output:
+    uk:statutes/ukpga/2012/5/5#single_claimant_meets_financial_conditions: not_holds
+    uk:statutes/ukpga/2012/5/5#joint_claimants_meet_financial_conditions: not_holds
+- name: joint_claimants_meet_financial_conditions_when_combined_capital_and_payable_amount_pass
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:statutes/ukpga/2012/5/5#input.single_claimant_capital_or_prescribed_part_of_capital: 1500
+    uk:statutes/ukpga/2012/5/5#input.prescribed_capital_amount_for_single_claimant: 1000
+    uk:statutes/ukpga/2012/5/5#input.single_claimant_universal_credit_amount_payable_if_entitled: 5
+    uk:statutes/ukpga/2012/5/5#input.prescribed_minimum_universal_credit_amount_for_single_claimant: 10
+    uk:statutes/ukpga/2012/5/5#input.joint_claimants_combined_capital_or_prescribed_part_of_combined_capital: 1500
+    uk:statutes/ukpga/2012/5/5#input.prescribed_capital_amount_for_joint_claimants: 2000
+    uk:statutes/ukpga/2012/5/5#input.joint_claimants_universal_credit_amount_payable_if_entitled: 30
+    uk:statutes/ukpga/2012/5/5#input.prescribed_minimum_universal_credit_amount_for_joint_claimants: 20
+  output:
+    uk:statutes/ukpga/2012/5/5#single_claimant_meets_financial_conditions: not_holds
+    uk:statutes/ukpga/2012/5/5#joint_claimants_meet_financial_conditions: holds
+- name: joint_claimants_fail_financial_conditions_when_combined_capital_exceeds_prescribed_amount
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:statutes/ukpga/2012/5/5#input.single_claimant_capital_or_prescribed_part_of_capital: 1500
+    uk:statutes/ukpga/2012/5/5#input.prescribed_capital_amount_for_single_claimant: 1000
+    uk:statutes/ukpga/2012/5/5#input.single_claimant_universal_credit_amount_payable_if_entitled: 5
+    uk:statutes/ukpga/2012/5/5#input.prescribed_minimum_universal_credit_amount_for_single_claimant: 10
+    uk:statutes/ukpga/2012/5/5#input.joint_claimants_combined_capital_or_prescribed_part_of_combined_capital: 2500
+    uk:statutes/ukpga/2012/5/5#input.prescribed_capital_amount_for_joint_claimants: 2000
+    uk:statutes/ukpga/2012/5/5#input.joint_claimants_universal_credit_amount_payable_if_entitled: 30
+    uk:statutes/ukpga/2012/5/5#input.prescribed_minimum_universal_credit_amount_for_joint_claimants: 20
+  output:
+    uk:statutes/ukpga/2012/5/5#single_claimant_meets_financial_conditions: not_holds
+    uk:statutes/ukpga/2012/5/5#joint_claimants_meet_financial_conditions: not_holds
+- name: joint_claimants_fail_financial_conditions_when_payable_amount_is_below_prescribed_minimum
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:statutes/ukpga/2012/5/5#input.single_claimant_capital_or_prescribed_part_of_capital: 1500
+    uk:statutes/ukpga/2012/5/5#input.prescribed_capital_amount_for_single_claimant: 1000
+    uk:statutes/ukpga/2012/5/5#input.single_claimant_universal_credit_amount_payable_if_entitled: 5
+    uk:statutes/ukpga/2012/5/5#input.prescribed_minimum_universal_credit_amount_for_single_claimant: 10
+    uk:statutes/ukpga/2012/5/5#input.joint_claimants_combined_capital_or_prescribed_part_of_combined_capital: 1500
+    uk:statutes/ukpga/2012/5/5#input.prescribed_capital_amount_for_joint_claimants: 2000
+    uk:statutes/ukpga/2012/5/5#input.joint_claimants_universal_credit_amount_payable_if_entitled: 10
+    uk:statutes/ukpga/2012/5/5#input.prescribed_minimum_universal_credit_amount_for_joint_claimants: 20
+  output:
+    uk:statutes/ukpga/2012/5/5#single_claimant_meets_financial_conditions: not_holds
+    uk:statutes/ukpga/2012/5/5#joint_claimants_meet_financial_conditions: not_holds

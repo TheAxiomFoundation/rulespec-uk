@@ -1,0 +1,48 @@
+- name: single_person_claim_may_be_made
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:statutes/ukpga/2012/5/2#input.claim_is_by_single_person: true
+    uk:statutes/ukpga/2012/5/2#input.claim_is_by_members_of_a_couple_jointly: false
+    uk:statutes/ukpga/2012/5/2#input.claim_is_by_member_of_a_couple_as_single_person_in_circumstances_specified_by_regulations: false
+  output:
+    uk:statutes/ukpga/2012/5/2#universal_credit_claim_may_be_made: holds
+- name: couple_joint_claim_may_be_made
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:statutes/ukpga/2012/5/2#input.claim_is_by_single_person: false
+    uk:statutes/ukpga/2012/5/2#input.claim_is_by_members_of_a_couple_jointly: true
+    uk:statutes/ukpga/2012/5/2#input.claim_is_by_member_of_a_couple_as_single_person_in_circumstances_specified_by_regulations: false
+  output:
+    uk:statutes/ukpga/2012/5/2#universal_credit_claim_may_be_made: holds
+- name: member_of_couple_single_claim_under_regulations_may_be_made
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:statutes/ukpga/2012/5/2#input.claim_is_by_single_person: false
+    uk:statutes/ukpga/2012/5/2#input.claim_is_by_members_of_a_couple_jointly: false
+    uk:statutes/ukpga/2012/5/2#input.claim_is_by_member_of_a_couple_as_single_person_in_circumstances_specified_by_regulations: true
+  output:
+    uk:statutes/ukpga/2012/5/2#universal_credit_claim_may_be_made: holds
+- name: no_source_stated_claim_path
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:statutes/ukpga/2012/5/2#input.claim_is_by_single_person: false
+    uk:statutes/ukpga/2012/5/2#input.claim_is_by_members_of_a_couple_jointly: false
+    uk:statutes/ukpga/2012/5/2#input.claim_is_by_member_of_a_couple_as_single_person_in_circumstances_specified_by_regulations: false
+  output:
+    uk:statutes/ukpga/2012/5/2#universal_credit_claim_may_be_made: not_holds

@@ -1,0 +1,95 @@
+- name: work_related_failure_reduction_applies
+  period: 2024-01
+  input:
+    uk:statutes/ukpga/2012/5/27#input.claimant_fails_for_no_good_reason_to_comply_with_work_related_requirement: true
+    uk:statutes/ukpga/2012/5/27#input.claimant_fails_for_no_good_reason_to_comply_with_requirement_under_section_23: false
+    uk:statutes/ukpga/2012/5/27#input.failure_is_also_sanctionable_under_section_26: false
+    uk:statutes/ukpga/2012/5/27#input.case_in_which_no_reduction_is_to_be_made_under_section_27_by_regulations: false
+    uk:statutes/ukpga/2012/5/27#input.reduction_under_section_27_is_terminated_or_suspended_by_regulations: false
+    uk:statutes/ukpga/2012/5/27#input.amount_of_reduction_under_section_27_provided_by_regulations: 100
+    uk:statutes/ukpga/2012/5/27#input.reduction_under_section_27_has_fixed_period_by_regulations: true
+    uk:statutes/ukpga/2012/5/27#input.fixed_period_weeks_specified_or_determined_under_section_27_by_regulations: 10
+    uk:statutes/ukpga/2012/5/27#input.compliance_condition_is_that_failure_ceases: true
+    ? uk:statutes/ukpga/2012/5/27#input.compliance_condition_relates_to_future_compliance_with_work_related_requirement_or_requirement_under_section_23
+    : false
+  output:
+    uk:statutes/ukpga/2012/5/27#failure_sanctionable_under_section_27: holds
+    uk:statutes/ukpga/2012/5/27#section_27_compliance_condition: holds
+    uk:statutes/ukpga/2012/5/27#section_27_award_reduction_amount: 100
+    uk:statutes/ukpga/2012/5/27#section_27_fixed_reduction_period_weeks: 10
+- name: section_23_failure_reduction_period_capped
+  period: 2024-01
+  input:
+    uk:statutes/ukpga/2012/5/27#input.claimant_fails_for_no_good_reason_to_comply_with_work_related_requirement: false
+    uk:statutes/ukpga/2012/5/27#input.claimant_fails_for_no_good_reason_to_comply_with_requirement_under_section_23: true
+    uk:statutes/ukpga/2012/5/27#input.failure_is_also_sanctionable_under_section_26: false
+    uk:statutes/ukpga/2012/5/27#input.case_in_which_no_reduction_is_to_be_made_under_section_27_by_regulations: false
+    uk:statutes/ukpga/2012/5/27#input.reduction_under_section_27_is_terminated_or_suspended_by_regulations: false
+    uk:statutes/ukpga/2012/5/27#input.amount_of_reduction_under_section_27_provided_by_regulations: 80
+    uk:statutes/ukpga/2012/5/27#input.reduction_under_section_27_has_fixed_period_by_regulations: true
+    uk:statutes/ukpga/2012/5/27#input.fixed_period_weeks_specified_or_determined_under_section_27_by_regulations: 30
+    uk:statutes/ukpga/2012/5/27#input.compliance_condition_is_that_failure_ceases: false
+    ? uk:statutes/ukpga/2012/5/27#input.compliance_condition_relates_to_future_compliance_with_work_related_requirement_or_requirement_under_section_23
+    : true
+  output:
+    uk:statutes/ukpga/2012/5/27#failure_sanctionable_under_section_27: holds
+    uk:statutes/ukpga/2012/5/27#section_27_compliance_condition: holds
+    uk:statutes/ukpga/2012/5/27#section_27_award_reduction_amount: 80
+    uk:statutes/ukpga/2012/5/27#section_27_fixed_reduction_period_weeks: 26
+- name: section_26_sanction_exception_blocks_reduction
+  period: 2024-01
+  input:
+    uk:statutes/ukpga/2012/5/27#input.claimant_fails_for_no_good_reason_to_comply_with_work_related_requirement: true
+    uk:statutes/ukpga/2012/5/27#input.claimant_fails_for_no_good_reason_to_comply_with_requirement_under_section_23: false
+    uk:statutes/ukpga/2012/5/27#input.failure_is_also_sanctionable_under_section_26: true
+    uk:statutes/ukpga/2012/5/27#input.case_in_which_no_reduction_is_to_be_made_under_section_27_by_regulations: false
+    uk:statutes/ukpga/2012/5/27#input.reduction_under_section_27_is_terminated_or_suspended_by_regulations: false
+    uk:statutes/ukpga/2012/5/27#input.amount_of_reduction_under_section_27_provided_by_regulations: 100
+    uk:statutes/ukpga/2012/5/27#input.reduction_under_section_27_has_fixed_period_by_regulations: true
+    uk:statutes/ukpga/2012/5/27#input.fixed_period_weeks_specified_or_determined_under_section_27_by_regulations: 10
+    uk:statutes/ukpga/2012/5/27#input.compliance_condition_is_that_failure_ceases: true
+    ? uk:statutes/ukpga/2012/5/27#input.compliance_condition_relates_to_future_compliance_with_work_related_requirement_or_requirement_under_section_23
+    : false
+  output:
+    uk:statutes/ukpga/2012/5/27#failure_sanctionable_under_section_27: not_holds
+    uk:statutes/ukpga/2012/5/27#section_27_compliance_condition: holds
+    uk:statutes/ukpga/2012/5/27#section_27_award_reduction_amount: 0
+    uk:statutes/ukpga/2012/5/27#section_27_fixed_reduction_period_weeks: 0
+- name: regulations_no_reduction_case_blocks_amount
+  period: 2024-01
+  input:
+    uk:statutes/ukpga/2012/5/27#input.claimant_fails_for_no_good_reason_to_comply_with_work_related_requirement: true
+    uk:statutes/ukpga/2012/5/27#input.claimant_fails_for_no_good_reason_to_comply_with_requirement_under_section_23: false
+    uk:statutes/ukpga/2012/5/27#input.failure_is_also_sanctionable_under_section_26: false
+    uk:statutes/ukpga/2012/5/27#input.case_in_which_no_reduction_is_to_be_made_under_section_27_by_regulations: true
+    uk:statutes/ukpga/2012/5/27#input.reduction_under_section_27_is_terminated_or_suspended_by_regulations: false
+    uk:statutes/ukpga/2012/5/27#input.amount_of_reduction_under_section_27_provided_by_regulations: 100
+    uk:statutes/ukpga/2012/5/27#input.reduction_under_section_27_has_fixed_period_by_regulations: true
+    uk:statutes/ukpga/2012/5/27#input.fixed_period_weeks_specified_or_determined_under_section_27_by_regulations: 10
+    uk:statutes/ukpga/2012/5/27#input.compliance_condition_is_that_failure_ceases: false
+    ? uk:statutes/ukpga/2012/5/27#input.compliance_condition_relates_to_future_compliance_with_work_related_requirement_or_requirement_under_section_23
+    : false
+  output:
+    uk:statutes/ukpga/2012/5/27#failure_sanctionable_under_section_27: holds
+    uk:statutes/ukpga/2012/5/27#section_27_compliance_condition: not_holds
+    uk:statutes/ukpga/2012/5/27#section_27_award_reduction_amount: 0
+    uk:statutes/ukpga/2012/5/27#section_27_fixed_reduction_period_weeks: 0
+- name: terminated_or_suspended_reduction_blocks_amount
+  period: 2024-01
+  input:
+    uk:statutes/ukpga/2012/5/27#input.claimant_fails_for_no_good_reason_to_comply_with_work_related_requirement: true
+    uk:statutes/ukpga/2012/5/27#input.claimant_fails_for_no_good_reason_to_comply_with_requirement_under_section_23: false
+    uk:statutes/ukpga/2012/5/27#input.failure_is_also_sanctionable_under_section_26: false
+    uk:statutes/ukpga/2012/5/27#input.case_in_which_no_reduction_is_to_be_made_under_section_27_by_regulations: false
+    uk:statutes/ukpga/2012/5/27#input.reduction_under_section_27_is_terminated_or_suspended_by_regulations: true
+    uk:statutes/ukpga/2012/5/27#input.amount_of_reduction_under_section_27_provided_by_regulations: 100
+    uk:statutes/ukpga/2012/5/27#input.reduction_under_section_27_has_fixed_period_by_regulations: true
+    uk:statutes/ukpga/2012/5/27#input.fixed_period_weeks_specified_or_determined_under_section_27_by_regulations: 10
+    uk:statutes/ukpga/2012/5/27#input.compliance_condition_is_that_failure_ceases: true
+    ? uk:statutes/ukpga/2012/5/27#input.compliance_condition_relates_to_future_compliance_with_work_related_requirement_or_requirement_under_section_23
+    : false
+  output:
+    uk:statutes/ukpga/2012/5/27#failure_sanctionable_under_section_27: holds
+    uk:statutes/ukpga/2012/5/27#section_27_compliance_condition: holds
+    uk:statutes/ukpga/2012/5/27#section_27_award_reduction_amount: 0
+    uk:statutes/ukpga/2012/5/27#section_27_fixed_reduction_period_weeks: 0

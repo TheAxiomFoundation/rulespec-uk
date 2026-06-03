@@ -1,0 +1,21 @@
+- name: claimant_accepts_latest_version_in_prescribed_manner
+  period: 2024-01
+  input:
+    uk:statutes/ukpga/2012/5/14#input.claimant_accepts_most_up_to_date_version_of_claimant_commitment: true
+    uk:statutes/ukpga/2012/5/14#input.claimant_accepts_claimant_commitment_in_prescribed_manner: true
+  output:
+    uk:statutes/ukpga/2012/5/14#claimant_accepts_claimant_commitment: holds
+- name: claimant_does_not_accept_latest_version
+  period: 2024-01
+  input:
+    uk:statutes/ukpga/2012/5/14#input.claimant_accepts_most_up_to_date_version_of_claimant_commitment: false
+    uk:statutes/ukpga/2012/5/14#input.claimant_accepts_claimant_commitment_in_prescribed_manner: true
+  output:
+    uk:statutes/ukpga/2012/5/14#claimant_accepts_claimant_commitment: not_holds
+- name: claimant_does_not_accept_in_prescribed_manner
+  period: 2024-01
+  input:
+    uk:statutes/ukpga/2012/5/14#input.claimant_accepts_most_up_to_date_version_of_claimant_commitment: true
+    uk:statutes/ukpga/2012/5/14#input.claimant_accepts_claimant_commitment_in_prescribed_manner: false
+  output:
+    uk:statutes/ukpga/2012/5/14#claimant_accepts_claimant_commitment: not_holds

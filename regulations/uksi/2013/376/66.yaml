@@ -1,0 +1,106 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2013/376/66
+  summary: |-
+    "A person's unearned income is any of their income ... falling within the following descriptions" including retirement pension income, listed benefits, analogous foreign benefits, maintenance, foreign state retirement pension, student income, living-expense payments, insurance income-protection payments, annuity and trust income unless disregarded, yield from capital, capital treated as income, PPF periodic payments, and miscellaneous taxable income.
+  deferred_outputs:
+    - output: uk:regulations/uksi/2013/376/66#industrial_injuries_benefit_increase_exclusion_under_sections_104_or_105
+      reason: The source excludes increases in industrial injuries benefit under sections 104 or 105 of the Contributions and Benefits Act, but no copied RuleSpec source provides those cited exclusion mechanics.
+rules:
+  - name: overlapping_benefits_adjusted_amount_required_for_unearned_income
+    kind: derived
+    entity: Payment
+    dtype: Judgment
+    period: Month
+    source: Universal Credit Regulations 2013, regulation 66(1)(a)-(b)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/66
+              excerpt: "subject to any adjustment to the amount payable in accordance with regulations under section 73"
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          payment_is_retirement_pension_income_to_which_person_is_entitled
+          or payment_is_jobseekers_allowance_to_which_person_is_entitled
+          or payment_is_employment_and_support_allowance_to_which_person_is_entitled
+          or payment_is_carers_allowance_to_which_person_is_entitled
+          or payment_is_carer_support_payment_to_which_person_is_entitled
+          or payment_is_widowed_mothers_allowance_to_which_person_is_entitled
+          or payment_is_widowed_parents_allowance_to_which_person_is_entitled
+          or payment_is_widows_pension_to_which_person_is_entitled
+          or payment_is_maternity_allowance_to_which_person_is_entitled
+          or payment_is_industrial_injuries_benefit_excluding_constant_attendance_or_exceptionally_severe_disablement_increases
+
+  - name: payment_falls_within_unearned_income_description
+    kind: derived
+    entity: Payment
+    dtype: Judgment
+    period: Month
+    source: Universal Credit Regulations 2013, regulation 66(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/66
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          overlapping_benefits_adjusted_amount_required_for_unearned_income
+          or payment_is_analogous_foreign_benefit_allowance_or_other_payment
+          or payment_is_maintenance_from_spouse_civil_partner_former_spouse_or_former_civil_partner_under_order_or_agreement
+          or payment_is_foreign_state_retirement_pension
+          or payment_is_student_income
+          or payment_under_employment_training_or_enterprise_new_towns_for_universal_credit_substitute_or_living_expenses
+          or payment_by_sports_council_from_national_lottery_distribution_for_living_expenses
+          or payment_under_insurance_policy_for_loss_of_income_due_to_illness_accident_or_redundancy
+          or (
+            payment_is_annuity_income_other_than_retirement_pension_income
+            and not annuity_income_disregarded_under_regulation_75
+          )
+          or (
+            payment_is_trust_income
+            and not trust_income_disregarded_under_regulation_75
+            and not trust_income_disregarded_under_regulation_76
+          )
+          or payment_is_income_treated_as_yield_from_capital_by_regulation_72
+          or payment_is_capital_treated_as_income_by_regulation_46_3_or_4
+          or payment_is_ppf_periodic_payment
+          or payment_is_taxable_miscellaneous_income_under_part_5_ittoia_not_otherwise_listed
+
+  - name: unearned_income_amount_from_payment
+    kind: derived
+    entity: Payment
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 66(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/66
+              excerpt: "carer support payment but only up to a maximum of the amount a claimant would receive if they had an entitlement to carer’s allowance"
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          if payment_falls_within_unearned_income_description:
+            if payment_is_carer_support_payment_to_which_person_is_entitled:
+              min(max(0, payment_amount_payable_after_overlapping_benefits_adjustment), max(0, carers_allowance_amount_if_claimant_had_entitlement))
+            else:
+              if overlapping_benefits_adjusted_amount_required_for_unearned_income:
+                max(0, payment_amount_payable_after_overlapping_benefits_adjustment)
+              else:
+                max(0, payment_income_amount)
+          else:
+            0

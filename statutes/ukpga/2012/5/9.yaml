@@ -1,0 +1,32 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/statute/ukpga/2012/5/9
+  summary: |-
+    The calculation of an award of universal credit is to include an amount by way of an allowance for a single claimant or joint claimants. Regulations specify the amount and may provide exceptions.
+rules:
+  - name: amount_included_under_section_9_standard_allowance
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Welfare Reform Act 2012 s.9
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/9
+          - path: versions[0].formula
+            kind: exception
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/9
+              excerpt: "Regulations may provide for exceptions to subsection (1)."
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if standard_allowance_exception_applies_by_regulations: 0 else: if is_single_claimant: standard_allowance_amount_for_single_claimant_specified_by_regulations else: if are_joint_claimants: standard_allowance_amount_for_joint_claimants_specified_by_regulations else: 0

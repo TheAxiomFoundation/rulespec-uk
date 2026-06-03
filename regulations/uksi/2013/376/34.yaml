@@ -1,0 +1,105 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2013/376/34
+  summary: |-
+    The amount of the childcare costs element is the lesser of 85% of charges paid for relevant childcare attributable to the assessment period, or the maximum amount specified in regulation 36. In determining charges paid, amounts considered excessive, met or reimbursed by an employer or other person, or covered by other relevant support are left out; specified Secretary of State work-entry or hours-increase payments are not other relevant support.
+rules:
+  - name: childcare_costs_reimbursement_rate
+    kind: parameter
+    dtype: Rate
+    source: Universal Credit Regulations 2013, regulation 34(1)(a)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/34
+              excerpt: "85% of the charges paid for relevant childcare"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          0.85
+
+  - name: other_relevant_support_amount_left_out_of_account
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 34(2)(b) and 34(3)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: exception
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/34
+              excerpt: "covered by other relevant support... does not include payments made by the Secretary of State where"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if secretary_of_state_work_transition_childcare_payment_meets_non_other_relevant_support_conditions: max(0, amount_from_funds_provided_by_secretary_of_state_or_scottish_or_welsh_ministers_for_work_related_activity_or_training - secretary_of_state_work_transition_childcare_payment_amount) else: amount_from_funds_provided_by_secretary_of_state_or_scottish_or_welsh_ministers_for_work_related_activity_or_training
+
+  - name: relevant_childcare_charges_taken_into_account
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 34(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/34
+              excerpt: "there is to be left out of account any amount"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          max(0, charges_paid_for_relevant_childcare_attributable_to_assessment_period - amount_considered_excessive_having_regard_to_paid_work_extent - amount_met_or_reimbursed_by_employer_or_some_other_person - other_relevant_support_amount_left_out_of_account)
+
+  - name: childcare_costs_element_percentage_amount
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 34(1)(a)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/34
+              excerpt: "85% of the charges paid for relevant childcare"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          childcare_costs_reimbursement_rate * relevant_childcare_charges_taken_into_account
+
+  - name: childcare_costs_element_amount
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 34(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/34
+              excerpt: "the lesser of... 85%... or the maximum amount specified in the table in regulation 36"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          min(childcare_costs_element_percentage_amount, max(0, maximum_amount_specified_in_table_in_regulation_36))

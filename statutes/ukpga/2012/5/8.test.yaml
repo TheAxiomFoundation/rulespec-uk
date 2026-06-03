@@ -1,0 +1,26 @@
+- name: award_amount_is_maximum_less_deductions
+  period: 2024-01
+  input:
+    uk:statutes/ukpga/2012/5/8#input.amount_included_under_section_9_standard_allowance: 400
+    uk:statutes/ukpga/2012/5/8#input.amount_included_under_section_10_responsibility_for_children_and_young_persons: 200
+    uk:statutes/ukpga/2012/5/8#input.amount_included_under_section_11_housing_costs: 600
+    uk:statutes/ukpga/2012/5/8#input.amount_included_under_section_12_other_particular_needs_or_circumstances: 100
+    uk:statutes/ukpga/2012/5/8#input.earned_income_deduction_calculated_in_prescribed_manner: 250
+    uk:statutes/ukpga/2012/5/8#input.unearned_income_deduction_calculated_in_prescribed_manner: 50
+  output:
+    uk:statutes/ukpga/2012/5/8#universal_credit_maximum_amount: 1300
+    uk:statutes/ukpga/2012/5/8#universal_credit_amounts_to_be_deducted: 300
+    uk:statutes/ukpga/2012/5/8#universal_credit_award_amount: 1000
+- name: award_amount_is_not_negative_when_deductions_exceed_maximum
+  period: 2024-01
+  input:
+    uk:statutes/ukpga/2012/5/8#input.amount_included_under_section_9_standard_allowance: 300
+    uk:statutes/ukpga/2012/5/8#input.amount_included_under_section_10_responsibility_for_children_and_young_persons: 0
+    uk:statutes/ukpga/2012/5/8#input.amount_included_under_section_11_housing_costs: 200
+    uk:statutes/ukpga/2012/5/8#input.amount_included_under_section_12_other_particular_needs_or_circumstances: 0
+    uk:statutes/ukpga/2012/5/8#input.earned_income_deduction_calculated_in_prescribed_manner: 450
+    uk:statutes/ukpga/2012/5/8#input.unearned_income_deduction_calculated_in_prescribed_manner: 100
+  output:
+    uk:statutes/ukpga/2012/5/8#universal_credit_maximum_amount: 500
+    uk:statutes/ukpga/2012/5/8#universal_credit_amounts_to_be_deducted: 550
+    uk:statutes/ukpga/2012/5/8#universal_credit_award_amount: 0

@@ -1,0 +1,58 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2013/376/27
+  summary: |-
+    An award of universal credit is to include an amount for a claimant with limited capability for work and work-related activity ("the LCWRA element"). The amount is given in the regulation 36 table. For joint claimants where each has LCWRA, only one LCWRA element is included, and if their amounts differ, the higher amount is included.
+rules:
+  - name: universal_credit_award_lcwra_element_included_amount
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 27
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/27
+              excerpt: An award of universal credit is to include an amount in respect of the fact that a claimant has limited capability for work and work-related activity
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/27
+              excerpt: The amount of that element is given in the table in regulation 36
+          - path: versions[0].formula
+            kind: ordering
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/27
+              excerpt: where each of them has limited capability for work and work-related activity, the award is only to include one LCWRA element
+          - path: versions[0].formula
+            kind: ordering
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/27
+              excerpt: where the LCWRA element for each of them is a different amount, the LCWRA element to be included is the higher amount
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if claim_is_for_joint_claimants:
+            if first_joint_claimant_has_limited_capability_for_work_and_work_related_activity and second_joint_claimant_has_limited_capability_for_work_and_work_related_activity:
+              max(0, max(lcwra_element_amount_given_in_regulation_36_for_first_joint_claimant, lcwra_element_amount_given_in_regulation_36_for_second_joint_claimant))
+            else:
+              if first_joint_claimant_has_limited_capability_for_work_and_work_related_activity:
+                max(0, lcwra_element_amount_given_in_regulation_36_for_first_joint_claimant)
+              else:
+                if second_joint_claimant_has_limited_capability_for_work_and_work_related_activity:
+                  max(0, lcwra_element_amount_given_in_regulation_36_for_second_joint_claimant)
+                else:
+                  0
+          else:
+            if single_claimant_has_limited_capability_for_work_and_work_related_activity:
+              max(0, lcwra_element_amount_given_in_regulation_36_for_single_claimant)
+            else:
+              0

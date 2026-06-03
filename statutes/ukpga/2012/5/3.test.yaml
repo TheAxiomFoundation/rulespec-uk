@@ -1,0 +1,64 @@
+- name: single_claimant_entitled_when_basic_and_financial_conditions_met
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:statutes/ukpga/2012/5/3#input.is_single_claimant: true
+    uk:statutes/ukpga/2012/5/3#input.single_claimant_meets_basic_conditions: true
+    uk:statutes/ukpga/2012/5/3#input.single_claimant_meets_financial_conditions: true
+    uk:statutes/ukpga/2012/5/3#input.are_joint_claimants: false
+    uk:statutes/ukpga/2012/5/3#input.each_joint_claimant_meets_basic_conditions: false
+    uk:statutes/ukpga/2012/5/3#input.joint_claimants_meet_financial_conditions: false
+  output:
+    uk:statutes/ukpga/2012/5/3#single_claimant_entitled_to_universal_credit: holds
+    uk:statutes/ukpga/2012/5/3#joint_claimants_jointly_entitled_to_universal_credit: not_holds
+- name: single_claimant_not_entitled_without_basic_conditions
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:statutes/ukpga/2012/5/3#input.is_single_claimant: true
+    uk:statutes/ukpga/2012/5/3#input.single_claimant_meets_basic_conditions: false
+    uk:statutes/ukpga/2012/5/3#input.single_claimant_meets_financial_conditions: true
+    uk:statutes/ukpga/2012/5/3#input.are_joint_claimants: false
+    uk:statutes/ukpga/2012/5/3#input.each_joint_claimant_meets_basic_conditions: false
+    uk:statutes/ukpga/2012/5/3#input.joint_claimants_meet_financial_conditions: false
+  output:
+    uk:statutes/ukpga/2012/5/3#single_claimant_entitled_to_universal_credit: not_holds
+    uk:statutes/ukpga/2012/5/3#joint_claimants_jointly_entitled_to_universal_credit: not_holds
+- name: joint_claimants_jointly_entitled_when_basic_and_financial_conditions_met
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:statutes/ukpga/2012/5/3#input.is_single_claimant: false
+    uk:statutes/ukpga/2012/5/3#input.single_claimant_meets_basic_conditions: false
+    uk:statutes/ukpga/2012/5/3#input.single_claimant_meets_financial_conditions: false
+    uk:statutes/ukpga/2012/5/3#input.are_joint_claimants: true
+    uk:statutes/ukpga/2012/5/3#input.each_joint_claimant_meets_basic_conditions: true
+    uk:statutes/ukpga/2012/5/3#input.joint_claimants_meet_financial_conditions: true
+  output:
+    uk:statutes/ukpga/2012/5/3#single_claimant_entitled_to_universal_credit: not_holds
+    uk:statutes/ukpga/2012/5/3#joint_claimants_jointly_entitled_to_universal_credit: holds
+- name: joint_claimants_not_jointly_entitled_without_financial_conditions
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:statutes/ukpga/2012/5/3#input.is_single_claimant: false
+    uk:statutes/ukpga/2012/5/3#input.single_claimant_meets_basic_conditions: false
+    uk:statutes/ukpga/2012/5/3#input.single_claimant_meets_financial_conditions: false
+    uk:statutes/ukpga/2012/5/3#input.are_joint_claimants: true
+    uk:statutes/ukpga/2012/5/3#input.each_joint_claimant_meets_basic_conditions: true
+    uk:statutes/ukpga/2012/5/3#input.joint_claimants_meet_financial_conditions: false
+  output:
+    uk:statutes/ukpga/2012/5/3#single_claimant_entitled_to_universal_credit: not_holds
+    uk:statutes/ukpga/2012/5/3#joint_claimants_jointly_entitled_to_universal_credit: not_holds

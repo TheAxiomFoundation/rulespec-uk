@@ -1,0 +1,21 @@
+- name: childcare_costs_element_included_when_both_conditions_met
+  period: 2026-04
+  input:
+    uk:regulations/uksi/2013/376/31#input.claimant_meets_work_condition_under_regulation_32: true
+    uk:regulations/uksi/2013/376/31#input.claimant_meets_childcare_costs_condition_under_regulation_33: true
+  output:
+    uk:regulations/uksi/2013/376/31#childcare_costs_element_included: holds
+- name: childcare_costs_element_not_included_without_work_condition
+  period: 2026-04
+  input:
+    uk:regulations/uksi/2013/376/31#input.claimant_meets_work_condition_under_regulation_32: false
+    uk:regulations/uksi/2013/376/31#input.claimant_meets_childcare_costs_condition_under_regulation_33: true
+  output:
+    uk:regulations/uksi/2013/376/31#childcare_costs_element_included: not_holds
+- name: childcare_costs_element_not_included_without_childcare_costs_condition
+  period: 2026-04
+  input:
+    uk:regulations/uksi/2013/376/31#input.claimant_meets_work_condition_under_regulation_32: true
+    uk:regulations/uksi/2013/376/31#input.claimant_meets_childcare_costs_condition_under_regulation_33: false
+  output:
+    uk:regulations/uksi/2013/376/31#childcare_costs_element_included: not_holds

@@ -1,0 +1,56 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2013/376/54
+  summary: |-
+    The calculation of a person's earned income in respect of an assessment period is to be based on actual amounts received in that period. Certain Secretary of State determinations may be based on an estimate of amounts received or expected to be received.
+rules:
+  - name: earned_income_estimate_basis_available
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Month
+    source: Universal Credit Regulations 2013, regulation 54
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/54
+              excerpt: "that determination may be based on an estimate"
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          secretary_of_state_makes_determination_as_to_whether_financial_conditions_in_section_5_met_before_expiry_of_first_assessment_period_for_universal_credit_claim
+          or (
+            secretary_of_state_makes_determination_as_to_amount_of_persons_earned_income_for_assessment_period
+            and person_failed_to_report_information_in_relation_to_that_earned_income
+          )
+
+  - name: person_earned_income_for_assessment_period
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 54
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/54
+              excerpt: "based on the actual amounts received in that period"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/54
+              excerpt: "estimate of the amounts received or expected to be received"
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          if secretary_of_state_bases_determination_on_estimate and earned_income_estimate_basis_available: estimated_amounts_received_or_expected_to_be_received_in_assessment_period else: actual_amounts_received_in_assessment_period

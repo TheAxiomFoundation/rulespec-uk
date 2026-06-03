@@ -1,0 +1,127 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/statute/ukpga/2012/5/19
+  summary: |-
+    "The Secretary of State may not impose any work-related requirement on a claimant falling within this section." A claimant falls within the section if the claimant has limited capability for work and work-related activity, has regular and substantial caring responsibilities for a severely disabled person, is the responsible carer for a child under the age of 1, or is of a prescribed description. Where a claimant falls within the section, any previously applying work-related requirement ceases to have effect.
+rules:
+  - name: claimant_is_responsible_carer_for_child
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Month
+    source: Welfare Reform Act 2012, section 19(6)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/19
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          claimant_is_single_person_responsible_for_child
+          or claimant_is_member_of_couple_jointly_nominated_as_responsible_for_child_where_claimant_or_other_member_is_responsible_for_child
+  - name: claimant_is_responsible_carer_for_child_under_age_1
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Month
+    source: Welfare Reform Act 2012, section 19(2)(c) and (6)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/19
+              excerpt: responsible carer for a child under the age of 1
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/2012/5/19#claimant_is_responsible_carer_for_child
+              output: claimant_is_responsible_carer_for_child
+              hash: sha256:local
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          claimant_is_responsible_carer_for_child
+          and child_for_which_claimant_is_responsible_carer_is_under_age_1
+  - name: claimant_falls_within_section_19
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Month
+    source: Welfare Reform Act 2012, section 19(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/19
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/2012/5/19#claimant_is_responsible_carer_for_child_under_age_1
+              output: claimant_is_responsible_carer_for_child_under_age_1
+              hash: sha256:local
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          claimant_has_limited_capability_for_work_and_work_related_activity
+          or claimant_has_regular_and_substantial_caring_responsibilities_for_a_severely_disabled_person
+          or claimant_is_responsible_carer_for_child_under_age_1
+          or claimant_is_of_prescribed_description_for_section_19
+  - name: work_related_requirement_may_not_be_imposed_on_claimant
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Month
+    source: Welfare Reform Act 2012, section 19(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/19
+              excerpt: may not impose any work-related requirement
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/2012/5/19#claimant_falls_within_section_19
+              output: claimant_falls_within_section_19
+              hash: sha256:local
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          claimant_falls_within_section_19
+  - name: previously_applying_work_related_requirement_ceases_to_have_effect
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Month
+    source: Welfare Reform Act 2012, section 19(5)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/19
+              excerpt: any work-related requirement previously applying to the claimant ceases
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/2012/5/19#claimant_falls_within_section_19
+              output: claimant_falls_within_section_19
+              hash: sha256:local
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          claimant_falls_within_section_19
+          and work_related_requirement_previously_applied_to_claimant
