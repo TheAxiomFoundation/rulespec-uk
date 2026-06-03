@@ -1,0 +1,42 @@
+- name: woman_at_qualifying_age
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:statutes/ukpga/2002/16/1#input.claimant_is_woman: true
+    uk:statutes/ukpga/2002/16/1#input.pensionable_age: 66
+    uk:statutes/ukpga/2002/16/1#input.pensionable_age_for_woman_born_same_day: 65
+    uk:statutes/ukpga/2002/16/1#input.claimant_age: 66
+  output:
+    uk:statutes/ukpga/2002/16/1#qualifying_age: 66
+    uk:statutes/ukpga/2002/16/1#claimant_has_attained_qualifying_age: holds
+- name: man_uses_woman_same_birthday_age
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:statutes/ukpga/2002/16/1#input.claimant_is_woman: false
+    uk:statutes/ukpga/2002/16/1#input.pensionable_age: 66
+    uk:statutes/ukpga/2002/16/1#input.pensionable_age_for_woman_born_same_day: 65
+    uk:statutes/ukpga/2002/16/1#input.claimant_age: 65
+  output:
+    uk:statutes/ukpga/2002/16/1#qualifying_age: 65
+    uk:statutes/ukpga/2002/16/1#claimant_has_attained_qualifying_age: holds
+- name: claimant_below_qualifying_age
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:statutes/ukpga/2002/16/1#input.claimant_is_woman: false
+    uk:statutes/ukpga/2002/16/1#input.pensionable_age: 66
+    uk:statutes/ukpga/2002/16/1#input.pensionable_age_for_woman_born_same_day: 65
+    uk:statutes/ukpga/2002/16/1#input.claimant_age: 64
+  output:
+    uk:statutes/ukpga/2002/16/1#qualifying_age: 65
+    uk:statutes/ukpga/2002/16/1#claimant_has_attained_qualifying_age: not_holds
