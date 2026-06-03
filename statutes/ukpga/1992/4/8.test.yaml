@@ -1,0 +1,62 @@
+- name: contribution_uses_main_and_additional_percentages_above_upper_limit
+  period:
+    period_kind: custom
+    name: tax_week
+    start: '2024-04-08'
+    end: '2024-04-14'
+  input:
+    uk:statutes/ukpga/1992/4/8#input.primary_class_1_contribution_payable_as_mentioned_in_section_6_1_a: true
+    uk:statutes/ukpga/1992/4/8#input.regulations_under_section_6_6_do_not_displace_calculation: true
+    uk:statutes/ukpga/1992/4/8#input.regulations_under_sections_116_to_120_do_not_displace_calculation: true
+    uk:statutes/ukpga/1992/4/8#input.earnings_paid_in_tax_week_in_respect_of_employment: 1200
+    uk:statutes/ukpga/1992/4/8#input.current_primary_threshold_or_prescribed_equivalent: 200
+    uk:statutes/ukpga/1992/4/8#input.current_upper_earnings_limit_or_prescribed_equivalent: 1000
+  output:
+    uk:statutes/ukpga/1992/4/8#main_primary_percentage: 0.08
+    uk:statutes/ukpga/1992/4/8#additional_primary_percentage: 0.02
+    uk:statutes/ukpga/1992/4/8#primary_class_1_contribution: 68
+- name: no_contribution_when_section_6_1_a_payability_condition_not_met
+  period:
+    period_kind: custom
+    name: tax_week
+    start: '2024-04-08'
+    end: '2024-04-14'
+  input:
+    uk:statutes/ukpga/1992/4/8#input.primary_class_1_contribution_payable_as_mentioned_in_section_6_1_a: false
+    uk:statutes/ukpga/1992/4/8#input.regulations_under_section_6_6_do_not_displace_calculation: true
+    uk:statutes/ukpga/1992/4/8#input.regulations_under_sections_116_to_120_do_not_displace_calculation: true
+    uk:statutes/ukpga/1992/4/8#input.earnings_paid_in_tax_week_in_respect_of_employment: 1200
+    uk:statutes/ukpga/1992/4/8#input.current_primary_threshold_or_prescribed_equivalent: 200
+    uk:statutes/ukpga/1992/4/8#input.current_upper_earnings_limit_or_prescribed_equivalent: 1000
+  output:
+    uk:statutes/ukpga/1992/4/8#primary_class_1_contribution: 0
+- name: regulations_under_section_6_6_displace_local_calculation
+  period:
+    period_kind: custom
+    name: tax_week
+    start: '2024-04-08'
+    end: '2024-04-14'
+  input:
+    uk:statutes/ukpga/1992/4/8#input.primary_class_1_contribution_payable_as_mentioned_in_section_6_1_a: true
+    uk:statutes/ukpga/1992/4/8#input.regulations_under_section_6_6_do_not_displace_calculation: false
+    uk:statutes/ukpga/1992/4/8#input.regulations_under_sections_116_to_120_do_not_displace_calculation: true
+    uk:statutes/ukpga/1992/4/8#input.earnings_paid_in_tax_week_in_respect_of_employment: 1200
+    uk:statutes/ukpga/1992/4/8#input.current_primary_threshold_or_prescribed_equivalent: 200
+    uk:statutes/ukpga/1992/4/8#input.current_upper_earnings_limit_or_prescribed_equivalent: 1000
+  output:
+    uk:statutes/ukpga/1992/4/8#primary_class_1_contribution: 0
+- name: regulations_under_sections_116_to_120_displace_local_calculation
+  period:
+    period_kind: custom
+    name: tax_week
+    start: '2024-04-08'
+    end: '2024-04-14'
+  input:
+    uk:statutes/ukpga/1992/4/8#input.primary_class_1_contribution_payable_as_mentioned_in_section_6_1_a: true
+    uk:statutes/ukpga/1992/4/8#input.regulations_under_section_6_6_do_not_displace_calculation: true
+    uk:statutes/ukpga/1992/4/8#input.regulations_under_sections_116_to_120_do_not_displace_calculation: false
+    uk:statutes/ukpga/1992/4/8#input.earnings_paid_in_tax_week_in_respect_of_employment: 1200
+    uk:statutes/ukpga/1992/4/8#input.current_primary_threshold_or_prescribed_equivalent: 200
+    uk:statutes/ukpga/1992/4/8#input.current_upper_earnings_limit_or_prescribed_equivalent: 1000
+  output:
+    uk:statutes/ukpga/1992/4/8#primary_class_1_contribution: 0
