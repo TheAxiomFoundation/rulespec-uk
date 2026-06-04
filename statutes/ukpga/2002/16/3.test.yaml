@@ -1,0 +1,91 @@
+- name: phase_in_amount_below_maximum
+  period:
+    period_kind: tax_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:statutes/ukpga/2002/16/3#input.claimant_satisfies_savings_credit_first_condition: true
+    uk:statutes/ukpga/2002/16/3#input.claimant_qualifying_income: 11000
+    uk:statutes/ukpga/2002/16/3#input.claimant_income: 11000
+    uk:statutes/ukpga/2002/16/3#input.savings_credit_threshold: 10000
+    uk:statutes/ukpga/2002/16/3#input.prescribed_percentage_for_amount_a: 0.6
+    uk:statutes/ukpga/2002/16/3#input.prescribed_percentage_for_amount_b: 0.4
+    uk:statutes/ukpga/2002/16/3#input.prescribed_percentage_for_maximum_savings_credit: 0.6
+    uk:statutes/ukpga/2002/16/3#input.standard_minimum_guarantee: 13000
+    uk:statutes/ukpga/2002/16/3#input.appropriate_minimum_guarantee: 13000
+    uk:statutes/ukpga/2002/16/3#input.maximum_savings_credit_taken_as_nil_by_regulations: false
+  output:
+    uk:statutes/ukpga/2002/16/3#maximum_savings_credit: 1800
+    uk:statutes/ukpga/2002/16/3#amount_a_for_savings_credit: 600
+    uk:statutes/ukpga/2002/16/3#amount_b_for_savings_credit: 0
+    uk:statutes/ukpga/2002/16/3#savings_credit_second_condition_satisfied: holds
+    uk:statutes/ukpga/2002/16/3#savings_credit: 600
+
+- name: maximum_amount_reduced_above_appropriate_minimum_guarantee
+  period:
+    period_kind: tax_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:statutes/ukpga/2002/16/3#input.claimant_satisfies_savings_credit_first_condition: true
+    uk:statutes/ukpga/2002/16/3#input.claimant_qualifying_income: 16000
+    uk:statutes/ukpga/2002/16/3#input.claimant_income: 14000
+    uk:statutes/ukpga/2002/16/3#input.savings_credit_threshold: 10000
+    uk:statutes/ukpga/2002/16/3#input.prescribed_percentage_for_amount_a: 0.6
+    uk:statutes/ukpga/2002/16/3#input.prescribed_percentage_for_amount_b: 0.4
+    uk:statutes/ukpga/2002/16/3#input.prescribed_percentage_for_maximum_savings_credit: 0.6
+    uk:statutes/ukpga/2002/16/3#input.standard_minimum_guarantee: 13000
+    uk:statutes/ukpga/2002/16/3#input.appropriate_minimum_guarantee: 13000
+    uk:statutes/ukpga/2002/16/3#input.maximum_savings_credit_taken_as_nil_by_regulations: false
+  output:
+    uk:statutes/ukpga/2002/16/3#maximum_savings_credit: 1800
+    uk:statutes/ukpga/2002/16/3#amount_a_for_savings_credit: 1800
+    uk:statutes/ukpga/2002/16/3#amount_b_for_savings_credit: 400
+    uk:statutes/ukpga/2002/16/3#savings_credit_second_condition_satisfied: holds
+    uk:statutes/ukpga/2002/16/3#savings_credit: 1400
+
+- name: second_condition_fails_when_amount_b_not_below_amount_a
+  period:
+    period_kind: tax_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:statutes/ukpga/2002/16/3#input.claimant_satisfies_savings_credit_first_condition: true
+    uk:statutes/ukpga/2002/16/3#input.claimant_qualifying_income: 11000
+    uk:statutes/ukpga/2002/16/3#input.claimant_income: 15000
+    uk:statutes/ukpga/2002/16/3#input.savings_credit_threshold: 10000
+    uk:statutes/ukpga/2002/16/3#input.prescribed_percentage_for_amount_a: 0.6
+    uk:statutes/ukpga/2002/16/3#input.prescribed_percentage_for_amount_b: 0.4
+    uk:statutes/ukpga/2002/16/3#input.prescribed_percentage_for_maximum_savings_credit: 0.6
+    uk:statutes/ukpga/2002/16/3#input.standard_minimum_guarantee: 13000
+    uk:statutes/ukpga/2002/16/3#input.appropriate_minimum_guarantee: 13000
+    uk:statutes/ukpga/2002/16/3#input.maximum_savings_credit_taken_as_nil_by_regulations: false
+  output:
+    uk:statutes/ukpga/2002/16/3#maximum_savings_credit: 1800
+    uk:statutes/ukpga/2002/16/3#amount_a_for_savings_credit: 600
+    uk:statutes/ukpga/2002/16/3#amount_b_for_savings_credit: 800
+    uk:statutes/ukpga/2002/16/3#savings_credit_second_condition_satisfied: not_holds
+    uk:statutes/ukpga/2002/16/3#savings_credit: 0
+
+- name: first_condition_absent_or_maximum_nil
+  period:
+    period_kind: tax_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:statutes/ukpga/2002/16/3#input.claimant_satisfies_savings_credit_first_condition: false
+    uk:statutes/ukpga/2002/16/3#input.claimant_qualifying_income: 16000
+    uk:statutes/ukpga/2002/16/3#input.claimant_income: 12000
+    uk:statutes/ukpga/2002/16/3#input.savings_credit_threshold: 10000
+    uk:statutes/ukpga/2002/16/3#input.prescribed_percentage_for_amount_a: 0.6
+    uk:statutes/ukpga/2002/16/3#input.prescribed_percentage_for_amount_b: 0.4
+    uk:statutes/ukpga/2002/16/3#input.prescribed_percentage_for_maximum_savings_credit: 0.6
+    uk:statutes/ukpga/2002/16/3#input.standard_minimum_guarantee: 13000
+    uk:statutes/ukpga/2002/16/3#input.appropriate_minimum_guarantee: 13000
+    uk:statutes/ukpga/2002/16/3#input.maximum_savings_credit_taken_as_nil_by_regulations: true
+  output:
+    uk:statutes/ukpga/2002/16/3#maximum_savings_credit: 0
+    uk:statutes/ukpga/2002/16/3#amount_a_for_savings_credit: 0
+    uk:statutes/ukpga/2002/16/3#amount_b_for_savings_credit: 0
+    uk:statutes/ukpga/2002/16/3#savings_credit_second_condition_satisfied: not_holds
+    uk:statutes/ukpga/2002/16/3#savings_credit: 0
