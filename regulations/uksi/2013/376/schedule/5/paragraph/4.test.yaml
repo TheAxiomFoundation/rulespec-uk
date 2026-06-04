@@ -1,0 +1,48 @@
+- name: owner_occupier_without_earned_income_is_not_disapplied
+  period: 2026-06
+  input:
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/2#input.single_owner_occupier_within_meaning_of_paragraph_1_2: true
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/2#input.joint_owner_occupier_within_meaning_of_paragraph_1_2: false
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/4#input.owner_occupier_has_any_earned_income: false
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/4#input.owner_occupier_is_member_of_couple: false
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/4#input.either_member_of_the_couple_has_any_earned_income: false
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/4#input.claimant_falls_within_regulation_26_4_to_6_shared_ownership: false
+  output:
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/4#section_11_1_housing_costs_disapplied_by_owner_occupier_earned_income: not_holds
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/4#schedule_4_shared_ownership_amount_not_prevented_by_paragraph_4: not_holds
+- name: owner_occupier_with_earned_income_is_disapplied
+  period: 2026-06
+  input:
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/2#input.single_owner_occupier_within_meaning_of_paragraph_1_2: true
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/2#input.joint_owner_occupier_within_meaning_of_paragraph_1_2: false
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/4#input.owner_occupier_has_any_earned_income: true
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/4#input.owner_occupier_is_member_of_couple: false
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/4#input.either_member_of_the_couple_has_any_earned_income: false
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/4#input.claimant_falls_within_regulation_26_4_to_6_shared_ownership: false
+  output:
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/4#section_11_1_housing_costs_disapplied_by_owner_occupier_earned_income: holds
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/4#schedule_4_shared_ownership_amount_not_prevented_by_paragraph_4: not_holds
+- name: coupled_owner_occupier_without_couple_earned_income_is_not_disapplied
+  period: 2026-06
+  input:
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/2#input.single_owner_occupier_within_meaning_of_paragraph_1_2: true
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/2#input.joint_owner_occupier_within_meaning_of_paragraph_1_2: false
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/4#input.owner_occupier_has_any_earned_income: false
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/4#input.owner_occupier_is_member_of_couple: true
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/4#input.either_member_of_the_couple_has_any_earned_income: false
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/4#input.claimant_falls_within_regulation_26_4_to_6_shared_ownership: true
+  output:
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/4#section_11_1_housing_costs_disapplied_by_owner_occupier_earned_income: not_holds
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/4#schedule_4_shared_ownership_amount_not_prevented_by_paragraph_4: holds
+- name: coupled_owner_occupier_with_either_member_earned_income_is_disapplied
+  period: 2026-06
+  input:
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/2#input.single_owner_occupier_within_meaning_of_paragraph_1_2: true
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/2#input.joint_owner_occupier_within_meaning_of_paragraph_1_2: false
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/4#input.owner_occupier_has_any_earned_income: false
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/4#input.owner_occupier_is_member_of_couple: true
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/4#input.either_member_of_the_couple_has_any_earned_income: true
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/4#input.claimant_falls_within_regulation_26_4_to_6_shared_ownership: true
+  output:
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/4#section_11_1_housing_costs_disapplied_by_owner_occupier_earned_income: holds
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/4#schedule_4_shared_ownership_amount_not_prevented_by_paragraph_4: holds

@@ -1,0 +1,107 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/23
+  summary: |-
+    "Except where paragraph 24 applies"; determine each relevant payment under paragraph 6, determine the monthly amount in accordance with paragraph 7, add together the step 2 amounts, and the result is the renter's core rent.
+imports:
+  - uk:regulations/uksi/2013/376/schedule/4/paragraph/6#relevant_payment_description_counts_for_part_4_or_5_calculation
+  - uk:regulations/uksi/2013/376/schedule/4/paragraph/6#relevant_payment_amount_taken_into_account_for_part_4_or_5_calculation
+rules:
+  - name: renters_relevant_payments_for_core_rent
+    kind: data_relation
+    data_relation:
+      predicate: renters_relevant_payments_for_core_rent
+      arity: 2
+      arguments:
+        - Family
+        - Payment
+    source: Schedule 4 paragraph 23, steps 1 to 3
+
+  - name: paragraph_23_core_rent_calculation_applies
+    kind: derived
+    entity: Family
+    dtype: Judgment
+    period: Month
+    source: Schedule 4 paragraph 23, opening words
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: exception
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/23
+              excerpt: "Except where paragraph 24 applies"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          not paragraph_24_applies
+
+  - name: relevant_payment_amount_in_respect_of_month_for_core_rent
+    kind: derived
+    entity: Payment
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Schedule 4 paragraph 23, steps 1 and 2
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/23
+              excerpt: "Determine the amount of each relevant payment to be taken into account under paragraph 6."
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/23
+              excerpt: "in accordance with paragraph 7, determine the amount of the payment in respect of a month"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2013/376/schedule/4/paragraph/6#relevant_payment_amount_taken_into_account_for_part_4_or_5_calculation
+              output: relevant_payment_amount_taken_into_account_for_part_4_or_5_calculation
+              hash: sha256:93cfbc5c068f9aa33308c2b22e647bfd7144b75c41d3a895bacf33fa155c492d
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if relevant_payment_amount_taken_into_account_for_part_4_or_5_calculation > 0: relevant_payment_amount_in_respect_of_a_month_under_paragraph_7 else: 0
+
+  - name: renters_core_rent
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Schedule 4 paragraph 23
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: exception
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/23
+              excerpt: "Except where paragraph 24 applies"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/23
+              excerpt: "If there is more than one relevant payment, add together the amounts determined in step 2"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/23
+              excerpt: "The result is the renter's core rent."
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2013/376/schedule/4/paragraph/6#relevant_payment_description_counts_for_part_4_or_5_calculation
+              output: relevant_payment_description_counts_for_part_4_or_5_calculation
+              hash: sha256:93cfbc5c068f9aa33308c2b22e647bfd7144b75c41d3a895bacf33fa155c492d
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if paragraph_23_core_rent_calculation_applies: sum_where(renters_relevant_payments_for_core_rent, relevant_payment_amount_in_respect_of_month_for_core_rent, relevant_payment_description_counts_for_part_4_or_5_calculation) else: 0

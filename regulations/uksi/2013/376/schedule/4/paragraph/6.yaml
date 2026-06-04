@@ -1,0 +1,58 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/6
+  summary: '"Where a renter meets the payment condition, liability condition and occupation
+    condition" each relevant-payment description is taken into account for the Part
+    4 or 5 calculation; no account is taken where those conditions are not met, and
+    any particular payment is not brought into account more than once.'
+rules:
+- name: relevant_payment_description_counts_for_part_4_or_5_calculation
+  kind: derived
+  entity: Payment
+  dtype: Judgment
+  period: Month
+  source: Schedule 4 paragraph 6(1)
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: condition
+        source:
+          corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/6
+          excerpt: Where a renter meets the payment condition, liability condition
+            and occupation condition
+  versions:
+  - effective_from: '0001-01-01'
+    formula: 'renter_meets_payment_condition_in_respect_of_relevant_payment
+
+      and renter_meets_liability_condition_in_respect_of_relevant_payment
+
+      and renter_meets_occupation_condition_in_respect_of_relevant_payment'
+- name: relevant_payment_amount_taken_into_account_for_part_4_or_5_calculation
+  kind: derived
+  entity: Payment
+  dtype: Money
+  period: Month
+  unit: GBP
+  source: Schedule 4 paragraph 6(2)-(3)
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/6
+          excerpt: No account is to be taken of any amount of a relevant payment
+      - path: versions[0].formula
+        kind: ordering
+        source:
+          corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/6
+          excerpt: not to be brought into account more than once
+  versions:
+  - effective_from: '0001-01-01'
+    formula: 'if relevant_payment_description_counts_for_part_4_or_5_calculation and
+      not particular_payment_has_already_been_brought_into_account_for_same_or_different_renter:
+      relevant_payment_amount else: 0'

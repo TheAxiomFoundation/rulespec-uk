@@ -1,65 +1,64 @@
-- name: shared ownership with rent and service charges aggregates both schedule amounts
-  period: 2024-05
+- name: shared_ownership_with_rent_and_service_charges_england_wales
+  period: 2013-05
   input:
     uk:regulations/uksi/2013/376/26#input.claimant_meets_all_conditions_specified_in_regulation_25: true
     uk:regulations/uksi/2013/376/26#input.claimant_is_liable_for_rent_payments: true
     uk:regulations/uksi/2013/376/26#input.claimant_is_liable_for_service_charge_payments: true
     uk:regulations/uksi/2013/376/26#input.claimant_has_shared_ownership_tenancy_in_england_or_wales: true
     uk:regulations/uksi/2013/376/26#input.claimant_has_shared_ownership_tenancy_in_scotland: false
-    uk:regulations/uksi/2013/376/26#input.amount_calculated_under_schedule_4: 700
-    uk:regulations/uksi/2013/376/26#input.amount_calculated_under_schedule_5: 120
+    uk:regulations/uksi/2013/376/26#input.amount_calculated_under_schedule_4: 200
+    uk:regulations/uksi/2013/376/26#input.amount_calculated_under_schedule_5: 175
   output:
     uk:regulations/uksi/2013/376/26#schedule_4_has_effect_for_claimant: holds
     uk:regulations/uksi/2013/376/26#schedule_5_has_effect_for_claimant: holds
     uk:regulations/uksi/2013/376/26#shared_ownership_tenancy: holds
-    uk:regulations/uksi/2013/376/26#housing_cost_element_under_shared_ownership: 820
+    uk:regulations/uksi/2013/376/26#housing_cost_element_under_shared_ownership: 375
     uk:regulations/uksi/2013/376/26#service_charge_payments_amount_calculated_under_schedule_4_for_shared_ownership: holds
-- name: regulation 25 conditions missing prevents schedules and shared ownership aggregate
-  period: 2024-05
+- name: regulation_25_conditions_not_met_blocks_schedule_effects
+  period: 2013-05
   input:
     uk:regulations/uksi/2013/376/26#input.claimant_meets_all_conditions_specified_in_regulation_25: false
     uk:regulations/uksi/2013/376/26#input.claimant_is_liable_for_rent_payments: true
     uk:regulations/uksi/2013/376/26#input.claimant_is_liable_for_service_charge_payments: true
     uk:regulations/uksi/2013/376/26#input.claimant_has_shared_ownership_tenancy_in_england_or_wales: true
     uk:regulations/uksi/2013/376/26#input.claimant_has_shared_ownership_tenancy_in_scotland: false
-    uk:regulations/uksi/2013/376/26#input.amount_calculated_under_schedule_4: 700
-    uk:regulations/uksi/2013/376/26#input.amount_calculated_under_schedule_5: 120
+    uk:regulations/uksi/2013/376/26#input.amount_calculated_under_schedule_4: 200
+    uk:regulations/uksi/2013/376/26#input.amount_calculated_under_schedule_5: 175
   output:
     uk:regulations/uksi/2013/376/26#schedule_4_has_effect_for_claimant: not_holds
     uk:regulations/uksi/2013/376/26#schedule_5_has_effect_for_claimant: not_holds
     uk:regulations/uksi/2013/376/26#shared_ownership_tenancy: holds
     uk:regulations/uksi/2013/376/26#housing_cost_element_under_shared_ownership: 0
     uk:regulations/uksi/2013/376/26#service_charge_payments_amount_calculated_under_schedule_4_for_shared_ownership: not_holds
-- name: no rent liability prevents schedule 4 and aggregate even with service charge
-    liability
-  period: 2024-05
+- name: service_charges_without_rent_do_not_trigger_shared_ownership_aggregate
+  period: 2013-05
   input:
     uk:regulations/uksi/2013/376/26#input.claimant_meets_all_conditions_specified_in_regulation_25: true
     uk:regulations/uksi/2013/376/26#input.claimant_is_liable_for_rent_payments: false
     uk:regulations/uksi/2013/376/26#input.claimant_is_liable_for_service_charge_payments: true
     uk:regulations/uksi/2013/376/26#input.claimant_has_shared_ownership_tenancy_in_england_or_wales: false
     uk:regulations/uksi/2013/376/26#input.claimant_has_shared_ownership_tenancy_in_scotland: true
-    uk:regulations/uksi/2013/376/26#input.amount_calculated_under_schedule_4: 700
-    uk:regulations/uksi/2013/376/26#input.amount_calculated_under_schedule_5: 120
+    uk:regulations/uksi/2013/376/26#input.amount_calculated_under_schedule_4: 200
+    uk:regulations/uksi/2013/376/26#input.amount_calculated_under_schedule_5: 175
   output:
     uk:regulations/uksi/2013/376/26#schedule_4_has_effect_for_claimant: not_holds
     uk:regulations/uksi/2013/376/26#schedule_5_has_effect_for_claimant: holds
     uk:regulations/uksi/2013/376/26#shared_ownership_tenancy: holds
     uk:regulations/uksi/2013/376/26#housing_cost_element_under_shared_ownership: 0
     uk:regulations/uksi/2013/376/26#service_charge_payments_amount_calculated_under_schedule_4_for_shared_ownership: not_holds
-- name: no shared ownership prevents paragraph 4 aggregation
-  period: 2024-05
+- name: rent_without_service_charges_or_shared_ownership
+  period: 2013-05
   input:
     uk:regulations/uksi/2013/376/26#input.claimant_meets_all_conditions_specified_in_regulation_25: true
     uk:regulations/uksi/2013/376/26#input.claimant_is_liable_for_rent_payments: true
-    uk:regulations/uksi/2013/376/26#input.claimant_is_liable_for_service_charge_payments: true
+    uk:regulations/uksi/2013/376/26#input.claimant_is_liable_for_service_charge_payments: false
     uk:regulations/uksi/2013/376/26#input.claimant_has_shared_ownership_tenancy_in_england_or_wales: false
     uk:regulations/uksi/2013/376/26#input.claimant_has_shared_ownership_tenancy_in_scotland: false
-    uk:regulations/uksi/2013/376/26#input.amount_calculated_under_schedule_4: 700
-    uk:regulations/uksi/2013/376/26#input.amount_calculated_under_schedule_5: 120
+    uk:regulations/uksi/2013/376/26#input.amount_calculated_under_schedule_4: 200
+    uk:regulations/uksi/2013/376/26#input.amount_calculated_under_schedule_5: 175
   output:
     uk:regulations/uksi/2013/376/26#schedule_4_has_effect_for_claimant: holds
-    uk:regulations/uksi/2013/376/26#schedule_5_has_effect_for_claimant: holds
+    uk:regulations/uksi/2013/376/26#schedule_5_has_effect_for_claimant: not_holds
     uk:regulations/uksi/2013/376/26#shared_ownership_tenancy: not_holds
     uk:regulations/uksi/2013/376/26#housing_cost_element_under_shared_ownership: 0
     uk:regulations/uksi/2013/376/26#service_charge_payments_amount_calculated_under_schedule_4_for_shared_ownership: not_holds

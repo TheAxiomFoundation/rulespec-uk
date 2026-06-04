@@ -1,0 +1,24 @@
+- name: specified_renter_entitled_to_shared_accommodation_only
+  period: 2024-01
+  input:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/27#input.renter_is_specified_renter_within_meaning_of_paragraph_28: true
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/27#input.calculation_is_of_renters_housing_costs_element_under_paragraph_22
+    : true
+  output:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/27#specified_renter_entitled_to_shared_accommodation_only: holds
+- name: not_specified_renter_not_entitled_by_this_rule
+  period: 2024-01
+  input:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/27#input.renter_is_specified_renter_within_meaning_of_paragraph_28: false
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/27#input.calculation_is_of_renters_housing_costs_element_under_paragraph_22
+    : true
+  output:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/27#specified_renter_entitled_to_shared_accommodation_only: not_holds
+- name: different_calculation_not_entitled_by_this_rule
+  period: 2024-01
+  input:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/27#input.renter_is_specified_renter_within_meaning_of_paragraph_28: true
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/27#input.calculation_is_of_renters_housing_costs_element_under_paragraph_22
+    : false
+  output:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/27#specified_renter_entitled_to_shared_accommodation_only: not_holds

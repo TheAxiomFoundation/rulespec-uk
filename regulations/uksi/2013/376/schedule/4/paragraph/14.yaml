@@ -1,0 +1,109 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/14
+  summary: |-
+    "The amount of each housing cost contribution to be deducted under paragraph 13 is £96.55"; deductions follow all other Parts 4 and 5 calculation steps, and excess contributions reduce the Schedule amount to nil with no further award reduction.
+imports:
+  - uk:regulations/uksi/2013/376/schedule/4/paragraph/13#housing_cost_contribution_required_for_non_dependant
+rules:
+  - name: housing_cost_contribution_amount
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: Schedule 4 paragraph 14(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/14
+              excerpt: "£96.55"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          96.55
+
+  - name: housing_cost_contribution_amount_to_be_deducted_for_non_dependant
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Schedule 4 paragraph 14(1), read with paragraph 13
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/14
+              excerpt: "The amount of each housing cost contribution to be deducted under paragraph 13 is £96.55"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2013/376/schedule/4/paragraph/13#housing_cost_contribution_required_for_non_dependant
+              output: housing_cost_contribution_required_for_non_dependant
+              hash: sha256:51f4383e55f4b75b4ceb07e04d044f0e3a9e8ca42845933b1aff24185907f135
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if housing_cost_contribution_required_for_non_dependant: housing_cost_contribution_amount else: 0
+
+  - name: total_housing_cost_contributions_to_be_deducted_in_renters_case
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Schedule 4 paragraph 14(1), (3)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/14
+              excerpt: "The amount of each housing cost contribution to be deducted under paragraph 13 is £96.55"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/14
+              excerpt: "the sum of all the housing cost contributions to be deducted in the renter's case"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          housing_cost_contribution_count_required_under_paragraph_13_in_renters_case * housing_cost_contribution_amount
+
+  - name: schedule_amount_after_housing_cost_contributions
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Schedule 4 paragraph 14(2)-(3)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: ordering
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/14
+              excerpt: "Deductions are not to be made until the amount has been determined which results from all other steps"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/14
+              excerpt: "exceeds the amount referred to in sub-paragraph (2)— the amount determined under this Schedule is to be reduced to nil"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/14
+              excerpt: "no further reduction in respect of housing cost contributions is to be made from the renter's award"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          max(0, amount_resulting_from_all_other_steps_in_parts_4_and_5_calculation - total_housing_cost_contributions_to_be_deducted_in_renters_case)

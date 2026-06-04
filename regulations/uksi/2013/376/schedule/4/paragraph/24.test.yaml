@@ -1,0 +1,168 @@
+- name: qualifying_payment_monthly_amount_is_used
+  period: 2026-06
+  input:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_payment_condition_in_respect_of_relevant_payment: false
+  tables:
+    Payment:
+    - uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_payment_condition_in_respect_of_relevant_payment: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_liability_condition_in_respect_of_relevant_payment: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_occupation_condition_in_respect_of_relevant_payment: true
+      ? uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.particular_payment_has_already_been_brought_into_account_for_same_or_different_renter
+      : false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.relevant_payment_amount: 100
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/24#input.relevant_payment_amount_in_respect_of_a_month_under_paragraph_7: 120
+  output:
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/24#paragraph_24_relevant_payment_amount_in_respect_of_month_for_core_rent
+    : - 120
+- name: paragraph_24_inapplicable_when_accommodation_not_occupied_by_renter
+  period: 2026-06
+  input:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_payment_condition_in_respect_of_relevant_payment: false
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/24#input.accommodation_is_occupied_by_renter: false
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/24#input.other_persons_are_liable_for_same_description_relevant_payments_taken_into_account_under_paragraph_6
+    : true
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/24#input.total_number_of_all_persons_liable_to_make_relevant_payments: 2
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/24#input.number_of_listed_persons_liable_to_make_relevant_payments: 2
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/24#input.secretary_of_state_satisfied_unreasonable_to_allocate_under_subparagraph_4
+    : false
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/24#input.amount_allocated_as_secretary_of_state_considers_appropriate: 0
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/24#relation.paragraph_24_relevant_payments_for_core_rent: []
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/24#input.relevant_payment_amount_in_respect_of_a_month_under_paragraph_7: 0
+  output:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/24#paragraph_24_applies: not_holds
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/24#renters_core_rent_under_paragraph_24: 0
+- name: paragraph_24_inapplicable_without_other_same_description_relevant_payments
+  period: 2026-06
+  input:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_payment_condition_in_respect_of_relevant_payment: false
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/24#input.accommodation_is_occupied_by_renter: true
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/24#input.other_persons_are_liable_for_same_description_relevant_payments_taken_into_account_under_paragraph_6
+    : false
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/24#input.total_number_of_all_persons_liable_to_make_relevant_payments: 2
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/24#input.number_of_listed_persons_liable_to_make_relevant_payments: 2
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/24#input.secretary_of_state_satisfied_unreasonable_to_allocate_under_subparagraph_4
+    : false
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/24#input.amount_allocated_as_secretary_of_state_considers_appropriate: 0
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/24#relation.paragraph_24_relevant_payments_for_core_rent: []
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/24#input.relevant_payment_amount_in_respect_of_a_month_under_paragraph_7: 0
+  output:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/24#paragraph_24_applies: not_holds
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/24#renters_core_rent_under_paragraph_24: 0
+- name: only_listed_persons_receive_total_monthly_relevant_payments
+  period: 2026-06
+  input:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_payment_condition_in_respect_of_relevant_payment: false
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/24#input.accommodation_is_occupied_by_renter: true
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/24#input.other_persons_are_liable_for_same_description_relevant_payments_taken_into_account_under_paragraph_6
+    : true
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/24#input.total_number_of_all_persons_liable_to_make_relevant_payments: 2
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/24#input.number_of_listed_persons_liable_to_make_relevant_payments: 2
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/24#input.secretary_of_state_satisfied_unreasonable_to_allocate_under_subparagraph_4
+    : false
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/24#input.amount_allocated_as_secretary_of_state_considers_appropriate: 0
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/24#relation.paragraph_24_relevant_payments_for_core_rent:
+    - uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_payment_condition_in_respect_of_relevant_payment: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_liability_condition_in_respect_of_relevant_payment: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_occupation_condition_in_respect_of_relevant_payment: true
+      ? uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.particular_payment_has_already_been_brought_into_account_for_same_or_different_renter
+      : false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.relevant_payment_amount: 100
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/24#input.relevant_payment_amount_in_respect_of_a_month_under_paragraph_7: 100
+    - uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_payment_condition_in_respect_of_relevant_payment: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_liability_condition_in_respect_of_relevant_payment: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_occupation_condition_in_respect_of_relevant_payment: true
+      ? uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.particular_payment_has_already_been_brought_into_account_for_same_or_different_renter
+      : false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.relevant_payment_amount: 200
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/24#input.relevant_payment_amount_in_respect_of_a_month_under_paragraph_7: 200
+  output:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/24#paragraph_24_applies: holds
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/24#only_listed_persons_liable_to_make_relevant_payments: holds
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/24#listed_and_other_persons_liable_to_make_relevant_payments: not_holds
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/24#paragraph_24_total_monthly_relevant_payments_for_accommodation: 300
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/24#renters_core_rent_under_paragraph_24: 300
+- name: listed_and_other_persons_are_apportioned_by_formula
+  period: 2026-06
+  input:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_payment_condition_in_respect_of_relevant_payment: false
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/24#input.accommodation_is_occupied_by_renter: true
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/24#input.other_persons_are_liable_for_same_description_relevant_payments_taken_into_account_under_paragraph_6
+    : true
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/24#input.total_number_of_all_persons_liable_to_make_relevant_payments: 3
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/24#input.number_of_listed_persons_liable_to_make_relevant_payments: 2
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/24#input.secretary_of_state_satisfied_unreasonable_to_allocate_under_subparagraph_4
+    : false
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/24#input.amount_allocated_as_secretary_of_state_considers_appropriate: 0
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/24#relation.paragraph_24_relevant_payments_for_core_rent:
+    - uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_payment_condition_in_respect_of_relevant_payment: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_liability_condition_in_respect_of_relevant_payment: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_occupation_condition_in_respect_of_relevant_payment: true
+      ? uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.particular_payment_has_already_been_brought_into_account_for_same_or_different_renter
+      : false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.relevant_payment_amount: 300
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/24#input.relevant_payment_amount_in_respect_of_a_month_under_paragraph_7: 300
+  output:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/24#only_listed_persons_liable_to_make_relevant_payments: not_holds
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/24#listed_and_other_persons_liable_to_make_relevant_payments: holds
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/24#paragraph_24_total_monthly_relevant_payments_for_accommodation: 300
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/24#renters_core_rent_under_paragraph_24: 200
+- name: secretary_of_state_unreasonable_allocation_uses_appropriate_amount
+  period: 2026-06
+  input:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_payment_condition_in_respect_of_relevant_payment: false
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/24#input.accommodation_is_occupied_by_renter: true
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/24#input.other_persons_are_liable_for_same_description_relevant_payments_taken_into_account_under_paragraph_6
+    : true
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/24#input.total_number_of_all_persons_liable_to_make_relevant_payments: 3
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/24#input.number_of_listed_persons_liable_to_make_relevant_payments: 2
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/24#input.secretary_of_state_satisfied_unreasonable_to_allocate_under_subparagraph_4
+    : true
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/24#input.amount_allocated_as_secretary_of_state_considers_appropriate: 175
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/24#relation.paragraph_24_relevant_payments_for_core_rent:
+    - uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_payment_condition_in_respect_of_relevant_payment: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_liability_condition_in_respect_of_relevant_payment: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_occupation_condition_in_respect_of_relevant_payment: true
+      ? uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.particular_payment_has_already_been_brought_into_account_for_same_or_different_renter
+      : false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.relevant_payment_amount: 300
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/24#input.relevant_payment_amount_in_respect_of_a_month_under_paragraph_7: 300
+  output:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/24#listed_and_other_persons_liable_to_make_relevant_payments: holds
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/24#renters_core_rent_under_paragraph_24: 175
+- name: auto_zero_paragraph_24_relevant_payment_amount_in_respect_of_month_for_core_rent
+  period:
+    period_kind: tax_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_payment_condition_in_respect_of_relevant_payment: false
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/24#input.accommodation_is_occupied_by_renter: false
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/24#input.amount_allocated_as_secretary_of_state_considers_appropriate: 0
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/24#input.number_of_listed_persons_liable_to_make_relevant_payments: 0
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/24#input.other_persons_are_liable_for_same_description_relevant_payments_taken_into_account_under_paragraph_6
+    : false
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/24#input.relevant_payment_amount_in_respect_of_a_month_under_paragraph_7: 0
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/24#input.secretary_of_state_satisfied_unreasonable_to_allocate_under_subparagraph_4
+    : false
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/24#input.total_number_of_all_persons_liable_to_make_relevant_payments: 0
+  output:
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/24#paragraph_24_relevant_payment_amount_in_respect_of_month_for_core_rent
+    : 0
+- name: auto_zero_paragraph_24_total_monthly_relevant_payments_for_accommodation
+  period:
+    period_kind: tax_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_payment_condition_in_respect_of_relevant_payment: false
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/24#input.accommodation_is_occupied_by_renter: false
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/24#input.amount_allocated_as_secretary_of_state_considers_appropriate: 0
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/24#input.number_of_listed_persons_liable_to_make_relevant_payments: 0
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/24#input.other_persons_are_liable_for_same_description_relevant_payments_taken_into_account_under_paragraph_6
+    : false
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/24#input.relevant_payment_amount_in_respect_of_a_month_under_paragraph_7: 0
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/24#input.secretary_of_state_satisfied_unreasonable_to_allocate_under_subparagraph_4
+    : false
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/24#input.total_number_of_all_persons_liable_to_make_relevant_payments: 0
+  output:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/24#paragraph_24_total_monthly_relevant_payments_for_accommodation: 0

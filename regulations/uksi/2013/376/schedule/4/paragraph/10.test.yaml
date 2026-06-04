@@ -1,0 +1,30 @@
+- name: allotted category bedrooms without schedule additions
+  period: 2026-06
+  input:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/10#input.qualifying_young_persons_allotted_to_responsibility_description: 1
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/10#input.non_dependants_not_children_allotted_to_description: 1
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/10#input.children_under_10_allotted_to_shared_description: 2
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/10#input.children_same_sex_allotted_to_shared_description: 2
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/10#input.other_children_allotted_to_description: 1
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/10#input.additional_bedroom_count_in_accordance_with_paragraph_12: 0
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/10#input.calculation_is_under_part_4_of_schedule: false
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/10#input.additional_bedroom_count_required_under_paragraphs_26_to_29: 0
+  output:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/10#bedrooms_per_category: 1
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/10#children_per_shared_bedroom_category: 2
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/10#bedroom_entitlement_from_allotted_categories: 6
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/10#bedroom_entitlement_after_schedule_adjustments: 6
+- name: paragraph 12 and part 4 additions are included
+  period: 2026-06
+  input:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/10#input.qualifying_young_persons_allotted_to_responsibility_description: 0
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/10#input.non_dependants_not_children_allotted_to_description: 0
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/10#input.children_under_10_allotted_to_shared_description: 0
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/10#input.children_same_sex_allotted_to_shared_description: 0
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/10#input.other_children_allotted_to_description: 0
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/10#input.additional_bedroom_count_in_accordance_with_paragraph_12: 1
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/10#input.calculation_is_under_part_4_of_schedule: true
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/10#input.additional_bedroom_count_required_under_paragraphs_26_to_29: 2
+  output:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/10#bedroom_entitlement_from_allotted_categories: 1
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/10#bedroom_entitlement_after_schedule_adjustments: 4

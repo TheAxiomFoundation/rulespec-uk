@@ -1,0 +1,88 @@
+- name: new_award_waiting_period_satisfied_from_following_assessment_period
+  period: 2026-06
+  input:
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/2#input.single_owner_occupier_within_meaning_of_paragraph_1_2: true
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/2#input.joint_owner_occupier_within_meaning_of_paragraph_1_2: false
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/5#input.owner_occupier_ceases_to_qualify_before_end_of_qualifying_period: false
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/5#input.new_award: true
+    ? uk:regulations/uksi/2013/376/schedule/5/paragraph/5#input.new_award_consecutive_assessment_periods_receiving_universal_credit
+    : 9
+    ? uk:regulations/uksi/2013/376/schedule/5/paragraph/5#input.new_award_consecutive_assessment_periods_would_otherwise_qualify_for_housing_costs_element
+    : 9
+    ? uk:regulations/uksi/2013/376/schedule/5/paragraph/5#input.amount_calculated_under_schedule_has_ceased_to_be_included_in_award
+    : false
+    ? uk:regulations/uksi/2013/376/schedule/5/paragraph/5#input.after_ceased_consecutive_assessment_periods_would_otherwise_qualify_for_housing_costs_element
+    : 0
+    ? uk:regulations/uksi/2013/376/schedule/5/paragraph/5#input.current_assessment_period_is_following_or_later_assessment_period_after_qualifying_period_end
+    : true
+  output:
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/5#qualifying_period_assessment_periods: 9
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/5#qualifying_period_stops_before_end: not_holds
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/5#new_award_qualifying_period_ended: holds
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/5#requalification_after_ceased_qualifying_period_ended: not_holds
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/5#qualifying_period_ended: holds
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/5#owner_occupier_housing_costs_element_waiting_period_satisfied: holds
+- name: qualifying_period_ended_but_current_assessment_period_is_too_early
+  period: 2026-06
+  input:
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/2#input.single_owner_occupier_within_meaning_of_paragraph_1_2: true
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/2#input.joint_owner_occupier_within_meaning_of_paragraph_1_2: false
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/5#input.owner_occupier_ceases_to_qualify_before_end_of_qualifying_period: false
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/5#input.new_award: true
+    ? uk:regulations/uksi/2013/376/schedule/5/paragraph/5#input.new_award_consecutive_assessment_periods_receiving_universal_credit
+    : 9
+    ? uk:regulations/uksi/2013/376/schedule/5/paragraph/5#input.new_award_consecutive_assessment_periods_would_otherwise_qualify_for_housing_costs_element
+    : 9
+    ? uk:regulations/uksi/2013/376/schedule/5/paragraph/5#input.amount_calculated_under_schedule_has_ceased_to_be_included_in_award
+    : false
+    ? uk:regulations/uksi/2013/376/schedule/5/paragraph/5#input.after_ceased_consecutive_assessment_periods_would_otherwise_qualify_for_housing_costs_element
+    : 0
+    ? uk:regulations/uksi/2013/376/schedule/5/paragraph/5#input.current_assessment_period_is_following_or_later_assessment_period_after_qualifying_period_end
+    : false
+  output:
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/5#qualifying_period_ended: holds
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/5#owner_occupier_housing_costs_element_waiting_period_satisfied: not_holds
+- name: requalification_after_amount_ceased_satisfies_waiting_period
+  period: 2026-06
+  input:
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/2#input.single_owner_occupier_within_meaning_of_paragraph_1_2: true
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/2#input.joint_owner_occupier_within_meaning_of_paragraph_1_2: false
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/5#input.owner_occupier_ceases_to_qualify_before_end_of_qualifying_period: false
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/5#input.new_award: false
+    ? uk:regulations/uksi/2013/376/schedule/5/paragraph/5#input.new_award_consecutive_assessment_periods_receiving_universal_credit
+    : 0
+    ? uk:regulations/uksi/2013/376/schedule/5/paragraph/5#input.new_award_consecutive_assessment_periods_would_otherwise_qualify_for_housing_costs_element
+    : 0
+    ? uk:regulations/uksi/2013/376/schedule/5/paragraph/5#input.amount_calculated_under_schedule_has_ceased_to_be_included_in_award
+    : true
+    ? uk:regulations/uksi/2013/376/schedule/5/paragraph/5#input.after_ceased_consecutive_assessment_periods_would_otherwise_qualify_for_housing_costs_element
+    : 9
+    ? uk:regulations/uksi/2013/376/schedule/5/paragraph/5#input.current_assessment_period_is_following_or_later_assessment_period_after_qualifying_period_end
+    : true
+  output:
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/5#new_award_qualifying_period_ended: not_holds
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/5#requalification_after_ceased_qualifying_period_ended: holds
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/5#qualifying_period_ended: holds
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/5#owner_occupier_housing_costs_element_waiting_period_satisfied: holds
+- name: ceasing_to_qualify_before_end_stops_qualifying_period
+  period: 2026-06
+  input:
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/2#input.single_owner_occupier_within_meaning_of_paragraph_1_2: true
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/2#input.joint_owner_occupier_within_meaning_of_paragraph_1_2: false
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/5#input.owner_occupier_ceases_to_qualify_before_end_of_qualifying_period: true
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/5#input.new_award: true
+    ? uk:regulations/uksi/2013/376/schedule/5/paragraph/5#input.new_award_consecutive_assessment_periods_receiving_universal_credit
+    : 9
+    ? uk:regulations/uksi/2013/376/schedule/5/paragraph/5#input.new_award_consecutive_assessment_periods_would_otherwise_qualify_for_housing_costs_element
+    : 9
+    ? uk:regulations/uksi/2013/376/schedule/5/paragraph/5#input.amount_calculated_under_schedule_has_ceased_to_be_included_in_award
+    : false
+    ? uk:regulations/uksi/2013/376/schedule/5/paragraph/5#input.after_ceased_consecutive_assessment_periods_would_otherwise_qualify_for_housing_costs_element
+    : 0
+    ? uk:regulations/uksi/2013/376/schedule/5/paragraph/5#input.current_assessment_period_is_following_or_later_assessment_period_after_qualifying_period_end
+    : true
+  output:
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/5#qualifying_period_stops_before_end: holds
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/5#new_award_qualifying_period_ended: not_holds
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/5#qualifying_period_ended: not_holds
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/5#owner_occupier_housing_costs_element_waiting_period_satisfied: not_holds

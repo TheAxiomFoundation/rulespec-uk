@@ -1,0 +1,21 @@
+- name: single_owner_occupier_counts_as_owner_occupier
+  period: 2024-01
+  input:
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/2#input.single_owner_occupier_within_meaning_of_paragraph_1_2: true
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/2#input.joint_owner_occupier_within_meaning_of_paragraph_1_2: false
+  output:
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/2#owner_occupier_under_paragraph_2_definition: holds
+- name: joint_owner_occupier_counts_as_owner_occupier
+  period: 2024-01
+  input:
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/2#input.single_owner_occupier_within_meaning_of_paragraph_1_2: false
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/2#input.joint_owner_occupier_within_meaning_of_paragraph_1_2: true
+  output:
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/2#owner_occupier_under_paragraph_2_definition: holds
+- name: neither_owner_occupier_category_does_not_count
+  period: 2024-01
+  input:
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/2#input.single_owner_occupier_within_meaning_of_paragraph_1_2: false
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/2#input.joint_owner_occupier_within_meaning_of_paragraph_1_2: false
+  output:
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/2#owner_occupier_under_paragraph_2_definition: not_holds

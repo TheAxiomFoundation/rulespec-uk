@@ -1,0 +1,147 @@
+- name: qualifying relevant payment amount is taken into account
+  period: 2024-01
+  input: {}
+  tables:
+    Payment:
+    - ? uk:regulations/uksi/2013/376/schedule/5/paragraph/3#input.payment_is_service_charge_payment_under_schedule_5_paragraphs_7_and_8
+      : true
+      ? uk:regulations/uksi/2013/376/schedule/5/paragraph/8#input.owner_occupier_meets_payment_condition_in_respect_of_that_relevant_payment
+      : true
+      ? uk:regulations/uksi/2013/376/schedule/5/paragraph/8#input.owner_occupier_meets_liability_condition_in_respect_of_that_relevant_payment
+      : true
+      ? uk:regulations/uksi/2013/376/schedule/5/paragraph/8#input.owner_occupier_meets_occupation_condition_in_respect_of_that_relevant_payment
+      : true
+      uk:regulations/uksi/2013/376/schedule/5/paragraph/8#input.qualifying_period_has_ended: true
+      uk:regulations/uksi/2013/376/schedule/5/paragraph/8#input.particular_payment_already_brought_into_account: false
+      uk:regulations/uksi/2013/376/schedule/5/paragraph/8#input.relevant_payment_amount_for_which_conditions_are_met: 120
+  output:
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/8#relevant_payment_taken_into_account_for_calculation_under_this_part:
+    - holds
+    ? uk:regulations/uksi/2013/376/schedule/5/paragraph/8#relevant_payment_amount_taken_into_account_for_calculation_under_this_part
+    : - 120
+- name: non-relevant payment is not taken into account
+  period: 2024-01
+  input: {}
+  tables:
+    Payment:
+    - ? uk:regulations/uksi/2013/376/schedule/5/paragraph/3#input.payment_is_service_charge_payment_under_schedule_5_paragraphs_7_and_8
+      : false
+      ? uk:regulations/uksi/2013/376/schedule/5/paragraph/8#input.owner_occupier_meets_payment_condition_in_respect_of_that_relevant_payment
+      : true
+      ? uk:regulations/uksi/2013/376/schedule/5/paragraph/8#input.owner_occupier_meets_liability_condition_in_respect_of_that_relevant_payment
+      : true
+      ? uk:regulations/uksi/2013/376/schedule/5/paragraph/8#input.owner_occupier_meets_occupation_condition_in_respect_of_that_relevant_payment
+      : true
+      uk:regulations/uksi/2013/376/schedule/5/paragraph/8#input.qualifying_period_has_ended: true
+      uk:regulations/uksi/2013/376/schedule/5/paragraph/8#input.particular_payment_already_brought_into_account: false
+      uk:regulations/uksi/2013/376/schedule/5/paragraph/8#input.relevant_payment_amount_for_which_conditions_are_met: 120
+  output:
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/8#relevant_payment_taken_into_account_for_calculation_under_this_part:
+    - not_holds
+    ? uk:regulations/uksi/2013/376/schedule/5/paragraph/8#relevant_payment_amount_taken_into_account_for_calculation_under_this_part
+    : - 0
+- name: payment condition not met
+  period: 2024-01
+  input: {}
+  tables:
+    Payment:
+    - ? uk:regulations/uksi/2013/376/schedule/5/paragraph/3#input.payment_is_service_charge_payment_under_schedule_5_paragraphs_7_and_8
+      : true
+      ? uk:regulations/uksi/2013/376/schedule/5/paragraph/8#input.owner_occupier_meets_payment_condition_in_respect_of_that_relevant_payment
+      : false
+      ? uk:regulations/uksi/2013/376/schedule/5/paragraph/8#input.owner_occupier_meets_liability_condition_in_respect_of_that_relevant_payment
+      : true
+      ? uk:regulations/uksi/2013/376/schedule/5/paragraph/8#input.owner_occupier_meets_occupation_condition_in_respect_of_that_relevant_payment
+      : true
+      uk:regulations/uksi/2013/376/schedule/5/paragraph/8#input.qualifying_period_has_ended: true
+      uk:regulations/uksi/2013/376/schedule/5/paragraph/8#input.particular_payment_already_brought_into_account: false
+      uk:regulations/uksi/2013/376/schedule/5/paragraph/8#input.relevant_payment_amount_for_which_conditions_are_met: 120
+  output:
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/8#relevant_payment_taken_into_account_for_calculation_under_this_part:
+    - not_holds
+    ? uk:regulations/uksi/2013/376/schedule/5/paragraph/8#relevant_payment_amount_taken_into_account_for_calculation_under_this_part
+    : - 0
+- name: liability condition not met
+  period: 2024-01
+  input: {}
+  tables:
+    Payment:
+    - ? uk:regulations/uksi/2013/376/schedule/5/paragraph/3#input.payment_is_service_charge_payment_under_schedule_5_paragraphs_7_and_8
+      : true
+      ? uk:regulations/uksi/2013/376/schedule/5/paragraph/8#input.owner_occupier_meets_payment_condition_in_respect_of_that_relevant_payment
+      : true
+      ? uk:regulations/uksi/2013/376/schedule/5/paragraph/8#input.owner_occupier_meets_liability_condition_in_respect_of_that_relevant_payment
+      : false
+      ? uk:regulations/uksi/2013/376/schedule/5/paragraph/8#input.owner_occupier_meets_occupation_condition_in_respect_of_that_relevant_payment
+      : true
+      uk:regulations/uksi/2013/376/schedule/5/paragraph/8#input.qualifying_period_has_ended: true
+      uk:regulations/uksi/2013/376/schedule/5/paragraph/8#input.particular_payment_already_brought_into_account: false
+      uk:regulations/uksi/2013/376/schedule/5/paragraph/8#input.relevant_payment_amount_for_which_conditions_are_met: 120
+  output:
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/8#relevant_payment_taken_into_account_for_calculation_under_this_part:
+    - not_holds
+    ? uk:regulations/uksi/2013/376/schedule/5/paragraph/8#relevant_payment_amount_taken_into_account_for_calculation_under_this_part
+    : - 0
+- name: occupation condition not met
+  period: 2024-01
+  input: {}
+  tables:
+    Payment:
+    - ? uk:regulations/uksi/2013/376/schedule/5/paragraph/3#input.payment_is_service_charge_payment_under_schedule_5_paragraphs_7_and_8
+      : true
+      ? uk:regulations/uksi/2013/376/schedule/5/paragraph/8#input.owner_occupier_meets_payment_condition_in_respect_of_that_relevant_payment
+      : true
+      ? uk:regulations/uksi/2013/376/schedule/5/paragraph/8#input.owner_occupier_meets_liability_condition_in_respect_of_that_relevant_payment
+      : true
+      ? uk:regulations/uksi/2013/376/schedule/5/paragraph/8#input.owner_occupier_meets_occupation_condition_in_respect_of_that_relevant_payment
+      : false
+      uk:regulations/uksi/2013/376/schedule/5/paragraph/8#input.qualifying_period_has_ended: true
+      uk:regulations/uksi/2013/376/schedule/5/paragraph/8#input.particular_payment_already_brought_into_account: false
+      uk:regulations/uksi/2013/376/schedule/5/paragraph/8#input.relevant_payment_amount_for_which_conditions_are_met: 120
+  output:
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/8#relevant_payment_taken_into_account_for_calculation_under_this_part:
+    - not_holds
+    ? uk:regulations/uksi/2013/376/schedule/5/paragraph/8#relevant_payment_amount_taken_into_account_for_calculation_under_this_part
+    : - 0
+- name: qualifying period has not ended
+  period: 2024-01
+  input: {}
+  tables:
+    Payment:
+    - ? uk:regulations/uksi/2013/376/schedule/5/paragraph/3#input.payment_is_service_charge_payment_under_schedule_5_paragraphs_7_and_8
+      : true
+      ? uk:regulations/uksi/2013/376/schedule/5/paragraph/8#input.owner_occupier_meets_payment_condition_in_respect_of_that_relevant_payment
+      : true
+      ? uk:regulations/uksi/2013/376/schedule/5/paragraph/8#input.owner_occupier_meets_liability_condition_in_respect_of_that_relevant_payment
+      : true
+      ? uk:regulations/uksi/2013/376/schedule/5/paragraph/8#input.owner_occupier_meets_occupation_condition_in_respect_of_that_relevant_payment
+      : true
+      uk:regulations/uksi/2013/376/schedule/5/paragraph/8#input.qualifying_period_has_ended: false
+      uk:regulations/uksi/2013/376/schedule/5/paragraph/8#input.particular_payment_already_brought_into_account: false
+      uk:regulations/uksi/2013/376/schedule/5/paragraph/8#input.relevant_payment_amount_for_which_conditions_are_met: 120
+  output:
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/8#relevant_payment_taken_into_account_for_calculation_under_this_part:
+    - not_holds
+    ? uk:regulations/uksi/2013/376/schedule/5/paragraph/8#relevant_payment_amount_taken_into_account_for_calculation_under_this_part
+    : - 0
+- name: particular payment already brought into account
+  period: 2024-01
+  input: {}
+  tables:
+    Payment:
+    - ? uk:regulations/uksi/2013/376/schedule/5/paragraph/3#input.payment_is_service_charge_payment_under_schedule_5_paragraphs_7_and_8
+      : true
+      ? uk:regulations/uksi/2013/376/schedule/5/paragraph/8#input.owner_occupier_meets_payment_condition_in_respect_of_that_relevant_payment
+      : true
+      ? uk:regulations/uksi/2013/376/schedule/5/paragraph/8#input.owner_occupier_meets_liability_condition_in_respect_of_that_relevant_payment
+      : true
+      ? uk:regulations/uksi/2013/376/schedule/5/paragraph/8#input.owner_occupier_meets_occupation_condition_in_respect_of_that_relevant_payment
+      : true
+      uk:regulations/uksi/2013/376/schedule/5/paragraph/8#input.qualifying_period_has_ended: true
+      uk:regulations/uksi/2013/376/schedule/5/paragraph/8#input.particular_payment_already_brought_into_account: true
+      uk:regulations/uksi/2013/376/schedule/5/paragraph/8#input.relevant_payment_amount_for_which_conditions_are_met: 120
+  output:
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/8#relevant_payment_taken_into_account_for_calculation_under_this_part:
+    - not_holds
+    ? uk:regulations/uksi/2013/376/schedule/5/paragraph/8#relevant_payment_amount_taken_into_account_for_calculation_under_this_part
+    : - 0

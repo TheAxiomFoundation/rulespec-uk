@@ -1,0 +1,42 @@
+- name: paragraph_13_non_dependant_gets_fixed_contribution_amount
+  period: 2026-06
+  input:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/13#input.calculation_is_under_part_4_or_5_of_schedule: true
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/13#input.person_is_non_dependant: true
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/13#input.person_is_member_of_renters_extended_benefit_unit: true
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/13#input.paragraph_15_displaces_housing_cost_contribution_deduction: false
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/13#input.paragraph_16_displaces_housing_cost_contribution_deduction: false
+  output:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/14#housing_cost_contribution_amount: 96.55
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/14#housing_cost_contribution_amount_to_be_deducted_for_non_dependant: 96.55
+- name: paragraph_13_non_qualifying_person_gets_no_contribution_amount
+  period: 2026-06
+  input:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/13#input.calculation_is_under_part_4_or_5_of_schedule: true
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/13#input.person_is_non_dependant: false
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/13#input.person_is_member_of_renters_extended_benefit_unit: true
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/13#input.paragraph_15_displaces_housing_cost_contribution_deduction: false
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/13#input.paragraph_16_displaces_housing_cost_contribution_deduction: false
+  output:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/14#housing_cost_contribution_amount_to_be_deducted_for_non_dependant: 0
+- name: contributions_reduce_remaining_schedule_amount
+  period: 2026-06
+  input:
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/14#input.housing_cost_contribution_count_required_under_paragraph_13_in_renters_case
+    : 2
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/14#input.amount_resulting_from_all_other_steps_in_parts_4_and_5_calculation
+    : 300
+  output:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/14#housing_cost_contribution_amount: 96.55
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/14#total_housing_cost_contributions_to_be_deducted_in_renters_case: 193.1
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/14#schedule_amount_after_housing_cost_contributions: 106.9
+- name: excess_contributions_reduce_schedule_amount_to_nil
+  period: 2026-06
+  input:
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/14#input.housing_cost_contribution_count_required_under_paragraph_13_in_renters_case
+    : 2
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/14#input.amount_resulting_from_all_other_steps_in_parts_4_and_5_calculation
+    : 100
+  output:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/14#total_housing_cost_contributions_to_be_deducted_in_renters_case: 193.1
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/14#schedule_amount_after_housing_cost_contributions: 0

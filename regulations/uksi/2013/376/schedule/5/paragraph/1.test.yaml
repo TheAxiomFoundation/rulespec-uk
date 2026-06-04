@@ -1,0 +1,24 @@
+- name: claimant_to_whom_regulation_26_3_applies_is_owner_occupier
+  period: 2026-06
+  input:
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/1#input.regulation_26_3_applies_to_claimant: true
+  output:
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/1#owner_occupier: holds
+- name: claimant_to_whom_regulation_26_3_does_not_apply_is_not_owner_occupier
+  period: 2026-06
+  input:
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/1#input.regulation_26_3_applies_to_claimant: false
+  output:
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/1#owner_occupier: not_holds
+- name: joint_claimants_to_whom_regulation_26_3_applies_are_joint_owner_occupiers
+  period: 2026-06
+  input:
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/1#input.joint_claimants_to_whom_regulation_26_3_applies: true
+  output:
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/1#joint_owner_occupiers: holds
+- name: joint_claimants_outside_regulation_26_3_are_not_joint_owner_occupiers
+  period: 2026-06
+  input:
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/1#input.joint_claimants_to_whom_regulation_26_3_applies: false
+  output:
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/1#joint_owner_occupiers: not_holds

@@ -1,0 +1,147 @@
+format: rulespec/v1
+imports:
+  - uk:regulations/uksi/2013/376/schedule/5/paragraph/2#owner_occupier_under_paragraph_2_definition
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2013/376/schedule/5/paragraph/5
+  summary: |-
+    An owner-occupier's award is not to include any housing costs element calculated under this Schedule until the beginning of the assessment period following the assessment period in which the qualifying period ends. “Qualifying period” means 9 consecutive assessment periods; if the owner-occupier ceases to qualify before the end, that qualifying period stops.
+rules:
+  - name: qualifying_period_assessment_periods
+    kind: parameter
+    dtype: Count
+    source: Schedule 5 paragraph 5(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/5/paragraph/5
+              excerpt: "9 consecutive assessment periods"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          9
+
+  - name: qualifying_period_stops_before_end
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Month
+    source: Schedule 5 paragraph 5(3)(a)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2013/376/schedule/5/paragraph/2#owner_occupier_under_paragraph_2_definition
+              output: owner_occupier_under_paragraph_2_definition
+              hash: sha256:da182add5f364c2d3c31b78ab88f7544db29b5f0c9c6cd33a154b2bde3cee905
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/5/paragraph/5
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          owner_occupier_under_paragraph_2_definition
+          and owner_occupier_ceases_to_qualify_before_end_of_qualifying_period
+
+  - name: new_award_qualifying_period_ended
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Month
+    source: Schedule 5 paragraph 5(2)(a), read with paragraph 5(3)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2013/376/schedule/5/paragraph/2#owner_occupier_under_paragraph_2_definition
+              output: owner_occupier_under_paragraph_2_definition
+              hash: sha256:da182add5f364c2d3c31b78ab88f7544db29b5f0c9c6cd33a154b2bde3cee905
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/5/paragraph/5
+              excerpt: "in the case of a new award, 9 consecutive assessment periods"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          owner_occupier_under_paragraph_2_definition
+          and new_award
+          and new_award_consecutive_assessment_periods_receiving_universal_credit >= qualifying_period_assessment_periods
+          and new_award_consecutive_assessment_periods_would_otherwise_qualify_for_housing_costs_element >= qualifying_period_assessment_periods
+          and not qualifying_period_stops_before_end
+
+  - name: requalification_after_ceased_qualifying_period_ended
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Month
+    source: Schedule 5 paragraph 5(2)(b), read with paragraph 5(3)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2013/376/schedule/5/paragraph/2#owner_occupier_under_paragraph_2_definition
+              output: owner_occupier_under_paragraph_2_definition
+              hash: sha256:da182add5f364c2d3c31b78ab88f7544db29b5f0c9c6cd33a154b2bde3cee905
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/5/paragraph/5
+              excerpt: "where an amount calculated under this Schedule has for any reason ceased to be included in the award, 9 consecutive assessment periods"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          owner_occupier_under_paragraph_2_definition
+          and amount_calculated_under_schedule_has_ceased_to_be_included_in_award
+          and after_ceased_consecutive_assessment_periods_would_otherwise_qualify_for_housing_costs_element >= qualifying_period_assessment_periods
+          and not qualifying_period_stops_before_end
+
+  - name: qualifying_period_ended
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Month
+    source: Schedule 5 paragraph 5(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/5/paragraph/5
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          new_award_qualifying_period_ended
+          or requalification_after_ceased_qualifying_period_ended
+
+  - name: owner_occupier_housing_costs_element_waiting_period_satisfied
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Month
+    source: Schedule 5 paragraph 5(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/5/paragraph/5
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          qualifying_period_ended
+          and current_assessment_period_is_following_or_later_assessment_period_after_qualifying_period_end

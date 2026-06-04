@@ -1,0 +1,32 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2013/376/schedule/10/paragraph/1
+  summary: |-
+    Premises occupied by a person as their home. Only one set of premises may be treated as a person's home for this paragraph and paragraphs 2 to 5.
+rules:
+  - name: premises_treated_as_persons_home_for_paragraphs_1_to_5
+    kind: derived
+    entity: Asset
+    dtype: Judgment
+    period: Day
+    source: Schedule 10 paragraph 1
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/10/paragraph/1
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/10/paragraph/1
+              excerpt: "only one set of premises may be treated as a person's home"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          premises_occupied_by_person_as_their_home
+          and premises_is_the_one_set_treated_as_persons_home_for_paragraphs_1_to_5

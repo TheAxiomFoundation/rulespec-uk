@@ -1,0 +1,46 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/33
+  summary: |-
+    "The amount of the renter's housing costs element under this Part is to be calculated by reference to the formula— S - HCC"; "S" is the amount resulting from whichever of paragraph 34 or 35 applies, and "HCC" is the sum of the housing cost contributions under paragraph 13.
+imports:
+  - uk:regulations/uksi/2013/376/schedule/4/paragraph/14#total_housing_cost_contributions_to_be_deducted_in_renters_case
+rules:
+  - name: renters_housing_costs_element_from_selected_amount_less_housing_cost_contributions
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Schedule 4 paragraph 33
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/33
+              excerpt: "Formula: S - HCC"
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/33
+              excerpt: "\"S\" is the amount resulting from whichever of paragraph 34 or 35 applies"
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/33
+              excerpt: "\"HCC\" is the sum of the housing cost contributions (if any) under paragraph 13"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2013/376/schedule/4/paragraph/14#total_housing_cost_contributions_to_be_deducted_in_renters_case
+              output: total_housing_cost_contributions_to_be_deducted_in_renters_case
+              hash: sha256:cc2972ca3070dea62fcb35b08b2b0f28ea11804756b1a49dbace129cdbc0acae
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          max(0, amount_resulting_from_paragraph_34_or_35_in_renters_case - total_housing_cost_contributions_to_be_deducted_in_renters_case)

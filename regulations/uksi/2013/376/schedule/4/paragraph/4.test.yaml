@@ -1,0 +1,36 @@
+- name: renter_aged_16_or_17_care_leaver_blocks_housing_costs
+  period: 2024-01
+  input:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/4#input.person_is_renter: true
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/4#input.person_is_16_or_17_years_old: true
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/4#input.person_is_care_leaver: true
+  output:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/4#renter_aged_16_or_17_care_leaver_exception_applies: holds
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/4#section_11_1_housing_costs_applies: not_holds
+- name: non_care_leaver_renter_not_blocked
+  period: 2024-01
+  input:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/4#input.person_is_renter: true
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/4#input.person_is_16_or_17_years_old: true
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/4#input.person_is_care_leaver: false
+  output:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/4#renter_aged_16_or_17_care_leaver_exception_applies: not_holds
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/4#section_11_1_housing_costs_applies: holds
+- name: care_leaver_renter_outside_age_not_blocked
+  period: 2024-01
+  input:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/4#input.person_is_renter: true
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/4#input.person_is_16_or_17_years_old: false
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/4#input.person_is_care_leaver: true
+  output:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/4#renter_aged_16_or_17_care_leaver_exception_applies: not_holds
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/4#section_11_1_housing_costs_applies: holds
+- name: non_renter_care_leaver_not_blocked
+  period: 2024-01
+  input:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/4#input.person_is_renter: false
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/4#input.person_is_16_or_17_years_old: true
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/4#input.person_is_care_leaver: true
+  output:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/4#renter_aged_16_or_17_care_leaver_exception_applies: not_holds
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/4#section_11_1_housing_costs_applies: holds

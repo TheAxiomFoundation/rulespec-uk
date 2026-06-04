@@ -1,0 +1,30 @@
+- name: owner_occupier_housing_costs_element_equals_paragraph_13_amount
+  period: 2026-06
+  input:
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/13#relation.owner_occupier_service_charge_payments:
+    - ? uk:regulations/uksi/2013/376/schedule/5/paragraph/13#input.payment_is_relevant_service_charge_payment_taken_into_account_under_paragraph_8
+      : true
+      uk:regulations/uksi/2013/376/schedule/5/paragraph/13#input.service_charge_payment_amount: 120
+      uk:regulations/uksi/2013/376/schedule/5/paragraph/13#input.service_charge_payment_period_is_month: true
+      uk:regulations/uksi/2013/376/schedule/5/paragraph/13#input.service_charge_payment_period_is_week: false
+      uk:regulations/uksi/2013/376/schedule/5/paragraph/13#input.service_charge_payment_period_is_two_weeks: false
+      uk:regulations/uksi/2013/376/schedule/5/paragraph/13#input.service_charge_payment_period_is_four_weeks: false
+      uk:regulations/uksi/2013/376/schedule/5/paragraph/13#input.service_charge_payment_period_is_three_months: false
+      uk:regulations/uksi/2013/376/schedule/5/paragraph/13#input.service_charge_payment_period_is_annual: false
+      uk:regulations/uksi/2013/376/schedule/5/paragraph/13#input.service_charge_free_period_arrangements_apply_to_payment: false
+      uk:regulations/uksi/2013/376/schedule/5/paragraph/13#input.service_charge_free_periods_in_12_month_period: 0
+      uk:regulations/uksi/2013/376/schedule/5/paragraph/13#input.total_service_charge_payments_liable_in_12_month_period: 0
+    - ? uk:regulations/uksi/2013/376/schedule/5/paragraph/13#input.payment_is_relevant_service_charge_payment_taken_into_account_under_paragraph_8
+      : true
+      uk:regulations/uksi/2013/376/schedule/5/paragraph/13#input.service_charge_payment_amount: 240
+      uk:regulations/uksi/2013/376/schedule/5/paragraph/13#input.service_charge_payment_period_is_month: false
+      uk:regulations/uksi/2013/376/schedule/5/paragraph/13#input.service_charge_payment_period_is_week: false
+      uk:regulations/uksi/2013/376/schedule/5/paragraph/13#input.service_charge_payment_period_is_two_weeks: false
+      uk:regulations/uksi/2013/376/schedule/5/paragraph/13#input.service_charge_payment_period_is_four_weeks: false
+      uk:regulations/uksi/2013/376/schedule/5/paragraph/13#input.service_charge_payment_period_is_three_months: false
+      uk:regulations/uksi/2013/376/schedule/5/paragraph/13#input.service_charge_payment_period_is_annual: true
+      uk:regulations/uksi/2013/376/schedule/5/paragraph/13#input.service_charge_free_period_arrangements_apply_to_payment: false
+      uk:regulations/uksi/2013/376/schedule/5/paragraph/13#input.service_charge_free_periods_in_12_month_period: 0
+      uk:regulations/uksi/2013/376/schedule/5/paragraph/13#input.total_service_charge_payments_liable_in_12_month_period: 0
+  output:
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/9#owner_occupier_housing_costs_element_amount: 140

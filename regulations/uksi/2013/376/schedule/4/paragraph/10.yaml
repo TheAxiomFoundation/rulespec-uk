@@ -1,0 +1,92 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/10
+  summary: |-
+    A renter is entitled to one bedroom for each listed category in the extended benefit unit, with overlapping descriptions allotted to the description resulting in the fewest bedrooms; paragraph 11, paragraph 12, and Part 4 paragraphs 26 to 29 must also be taken into account.
+rules:
+  - name: bedrooms_per_category
+    kind: parameter
+    dtype: Count
+    source: Schedule 4 paragraph 10(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/10
+              excerpt: "entitled to one bedroom for each"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          1
+
+  - name: children_per_shared_bedroom_category
+    kind: parameter
+    dtype: Count
+    source: Schedule 4 paragraph 10(1)(d)-(e)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/10
+              excerpt: "two children who are under 10 years old; two children of the same sex"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          2
+
+  - name: bedroom_entitlement_from_allotted_categories
+    kind: derived
+    entity: Family
+    dtype: Count
+    period: Month
+    source: Schedule 4 paragraph 10(1)-(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/10
+              excerpt: "the renter (or joint renters); a qualifying young person...; a non-dependant...; two children...; any other child"
+          - path: versions[0].formula
+            kind: ordering
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/10
+              excerpt: "allotted to whichever description results in the renter being entitled to the fewest bedrooms"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          bedrooms_per_category
+          + (qualifying_young_persons_allotted_to_responsibility_description * bedrooms_per_category)
+          + (non_dependants_not_children_allotted_to_description * bedrooms_per_category)
+          + (ceil(children_under_10_allotted_to_shared_description / children_per_shared_bedroom_category) * bedrooms_per_category)
+          + (ceil(children_same_sex_allotted_to_shared_description / children_per_shared_bedroom_category) * bedrooms_per_category)
+          + (other_children_allotted_to_description * bedrooms_per_category)
+
+  - name: bedroom_entitlement_after_schedule_adjustments
+    kind: derived
+    entity: Family
+    dtype: Count
+    period: Month
+    source: Schedule 4 paragraph 10(3)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/10
+              excerpt: "paragraph 11... paragraph 12... for the purpose of any calculation under Part 4... paragraphs 26 to 29"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          bedroom_entitlement_from_allotted_categories
+          + additional_bedroom_count_in_accordance_with_paragraph_12
+          + (if calculation_is_under_part_4_of_schedule: additional_bedroom_count_required_under_paragraphs_26_to_29 else: 0)

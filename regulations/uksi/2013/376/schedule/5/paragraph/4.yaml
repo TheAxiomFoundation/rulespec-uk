@@ -1,0 +1,60 @@
+format: rulespec/v1
+imports:
+  - uk:regulations/uksi/2013/376/schedule/5/paragraph/2#owner_occupier_under_paragraph_2_definition
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2013/376/schedule/5/paragraph/4
+  summary: |-
+    Section 11(1) of the Act does not apply to any owner-occupier where the owner-occupier has any earned income, or where either member of the couple has any earned income. Nothing in this paragraph prevents a Schedule 4 amount for shared ownership claimants.
+rules:
+  - name: section_11_1_housing_costs_disapplied_by_owner_occupier_earned_income
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Month
+    source: UK SI 2013/376 Sch 5 para 4(1)-(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2013/376/schedule/5/paragraph/2#owner_occupier_under_paragraph_2_definition
+              output: owner_occupier_under_paragraph_2_definition
+              hash: sha256:da182add5f364c2d3c31b78ab88f7544db29b5f0c9c6cd33a154b2bde3cee905
+          - path: versions[0].formula
+            kind: exception
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/5/paragraph/4
+              excerpt: Section 11(1) does not apply where the owner-occupier has any earned income, or either member of the couple has any earned income.
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          owner_occupier_under_paragraph_2_definition
+          and (
+            owner_occupier_has_any_earned_income
+            or (
+              owner_occupier_is_member_of_couple
+              and either_member_of_the_couple_has_any_earned_income
+            )
+          )
+  - name: schedule_4_shared_ownership_amount_not_prevented_by_paragraph_4
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Month
+    source: UK SI 2013/376 Sch 5 para 4(3)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: exception
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/5/paragraph/4
+              excerpt: Nothing in this paragraph prevents an amount calculated under Schedule 4 from being included for regulation 26(4) to (6) shared ownership claimants.
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          claimant_falls_within_regulation_26_4_to_6_shared_ownership

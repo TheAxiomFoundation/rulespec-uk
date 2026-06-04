@@ -1,0 +1,56 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/28
+  summary: |-
+    "specified renter" means a renter for whom all conditions are met: the renter is a single person or member of a couple claiming as a single person, is under 35, is not an excepted person under paragraph 29, is not responsible for any children or qualifying young persons, and has no non-dependant in relation to the renter.
+rules:
+  - name: specified_renter
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Month
+    source: Schedule 4 paragraph 28
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/28
+              excerpt: "specified renter means a renter in respect of whom all of the following conditions are met"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/28
+              excerpt: "single person (or a member of a couple claiming as a single person)"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/28
+              excerpt: "is under 35 years old"
+          - path: versions[0].formula
+            kind: exception
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/28
+              excerpt: "is not an excepted person under paragraph 29"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/28
+              excerpt: "not responsible for any children or qualifying young persons"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/28
+              excerpt: "no person is a non-dependant in relation to the renter"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          renter_is_single_person_or_member_of_couple_claiming_as_single_person
+          and renter_is_under_35_years_old
+          and not renter_is_excepted_person_under_paragraph_29
+          and not renter_is_responsible_for_child_or_qualifying_young_person
+          and not any_person_is_non_dependant_in_relation_to_renter

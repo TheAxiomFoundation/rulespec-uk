@@ -1,0 +1,140 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/7
+  summary: |-
+    "Where any relevant payment is to be taken into account under paragraph 6, the amount of that payment is to be calculated as a monthly amount"; weekly, two-weekly, four-weekly, three-monthly and annual payments are converted to monthly equivalents, with rent free periods calculated over 12 months by reference to the total number of payments liable to be made.
+imports:
+  - uk:regulations/uksi/2013/376/schedule/4/paragraph/6#relevant_payment_amount_taken_into_account_for_part_4_or_5_calculation
+rules:
+  - name: weekly_payment_periods_in_annual_equivalent
+    kind: parameter
+    dtype: Count
+    source: Schedule 4 paragraph 7(2)(a) and 7(3A)(a)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/7
+              excerpt: weekly payments are multiplied by 52 and divided by 12
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          52
+
+  - name: two_weekly_payment_periods_in_annual_equivalent
+    kind: parameter
+    dtype: Count
+    source: Schedule 4 paragraph 7(2)(b) and 7(3A)(b)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/7
+              excerpt: two-weekly payments are multiplied by 26 and divided by 12
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          26
+
+  - name: four_weekly_payment_periods_in_annual_equivalent
+    kind: parameter
+    dtype: Count
+    source: Schedule 4 paragraph 7(2)(c) and 7(3A)(c)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/7
+              excerpt: four-weekly payments are multiplied by 13 and divided by 12
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          13
+
+  - name: three_monthly_payment_periods_in_annual_equivalent
+    kind: parameter
+    dtype: Count
+    source: Schedule 4 paragraph 7(2)(d)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/7
+              excerpt: three-monthly payments are multiplied by 4 and divided by 12
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          4
+
+  - name: monthly_equivalent_denominator_months
+    kind: parameter
+    dtype: Count
+    source: Schedule 4 paragraph 7(2)-(3)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/7
+              excerpt: calculated over 12 months
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          12
+
+  - name: relevant_payment_annual_count_after_rent_free_periods
+    kind: derived
+    entity: Payment
+    dtype: Count
+    period: Month
+    source: Schedule 4 paragraph 7(3)-(3A)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/7
+              excerpt: "Formula: 52 - RFP; Formula: 26 - RFP; Formula: 13 - RFP"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if relevant_payment_is_weekly: weekly_payment_periods_in_annual_equivalent - rent_free_period_count_in_12_month_period else: if relevant_payment_is_two_weekly: two_weekly_payment_periods_in_annual_equivalent - rent_free_period_count_in_12_month_period else: if relevant_payment_is_four_weekly: four_weekly_payment_periods_in_annual_equivalent - rent_free_period_count_in_12_month_period else: total_relevant_payment_count_renter_liable_to_make_in_12_month_period
+
+  - name: relevant_payment_monthly_equivalent_amount_for_part_4_or_5_calculation
+    kind: derived
+    entity: Payment
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Schedule 4 paragraph 7(1)-(3A)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/7
+              excerpt: the amount of that payment is to be calculated as a monthly amount
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2013/376/schedule/4/paragraph/6#relevant_payment_amount_taken_into_account_for_part_4_or_5_calculation
+              output: relevant_payment_amount_taken_into_account_for_part_4_or_5_calculation
+              hash: sha256:93cfbc5c068f9aa33308c2b22e647bfd7144b75c41d3a895bacf33fa155c492d
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if arrangements_provide_one_or_more_rent_free_periods: relevant_payment_amount_taken_into_account_for_part_4_or_5_calculation * relevant_payment_annual_count_after_rent_free_periods / monthly_equivalent_denominator_months else: if relevant_payment_is_weekly: relevant_payment_amount_taken_into_account_for_part_4_or_5_calculation * weekly_payment_periods_in_annual_equivalent / monthly_equivalent_denominator_months else: if relevant_payment_is_two_weekly: relevant_payment_amount_taken_into_account_for_part_4_or_5_calculation * two_weekly_payment_periods_in_annual_equivalent / monthly_equivalent_denominator_months else: if relevant_payment_is_four_weekly: relevant_payment_amount_taken_into_account_for_part_4_or_5_calculation * four_weekly_payment_periods_in_annual_equivalent / monthly_equivalent_denominator_months else: if relevant_payment_is_three_monthly: relevant_payment_amount_taken_into_account_for_part_4_or_5_calculation * three_monthly_payment_periods_in_annual_equivalent / monthly_equivalent_denominator_months else: if relevant_payment_is_annual: relevant_payment_amount_taken_into_account_for_part_4_or_5_calculation / monthly_equivalent_denominator_months else: relevant_payment_amount_taken_into_account_for_part_4_or_5_calculation

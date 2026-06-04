@@ -5,14 +5,14 @@ module:
   source_verification:
     corpus_citation_path: uk/regulation/uksi/2013/376/26
   summary: |-
-    This regulation provides for the amount to be included in an award where the claimant meets all the regulation 25 conditions. Schedule 4 has effect where the relevant liability is rent payments; Schedule 5 has effect where the liability is service charge payments. For shared ownership tenancies where both apply, amounts are calculated under both schedules and aggregated, but service charge payments in that case are calculated under Schedule 4.
+    Provides the housing costs element amount where regulation 25 conditions are met; Schedule 4 applies for rent payments and Schedule 5 for service charge payments, with shared ownership aggregating both schedule amounts and service charges calculated under Schedule 4.
 rules:
   - name: schedule_4_has_effect_for_claimant
     kind: derived
     entity: Person
     dtype: Judgment
     period: Month
-    source: regulation 26(2)
+    source: Universal Credit Regulations 2013, regulation 26(2)
     metadata:
       proof:
         atoms:
@@ -20,21 +20,24 @@ rules:
             kind: condition
             source:
               corpus_citation_path: uk/regulation/uksi/2013/376/26
+              excerpt: "the claimant meets all of those conditions"
           - path: versions[0].formula
-            kind: formula
+            kind: condition
             source:
               corpus_citation_path: uk/regulation/uksi/2013/376/26
+              excerpt: "rent payments"
     versions:
       - effective_from: '2013-04-29'
         formula: |-
           claimant_meets_all_conditions_specified_in_regulation_25
           and claimant_is_liable_for_rent_payments
+
   - name: schedule_5_has_effect_for_claimant
     kind: derived
     entity: Person
     dtype: Judgment
     period: Month
-    source: regulation 26(3)
+    source: Universal Credit Regulations 2013, regulation 26(3)
     metadata:
       proof:
         atoms:
@@ -42,21 +45,24 @@ rules:
             kind: condition
             source:
               corpus_citation_path: uk/regulation/uksi/2013/376/26
+              excerpt: "the claimant meets all of those conditions"
           - path: versions[0].formula
-            kind: formula
+            kind: condition
             source:
               corpus_citation_path: uk/regulation/uksi/2013/376/26
+              excerpt: "service charge payments"
     versions:
       - effective_from: '2013-04-29'
         formula: |-
           claimant_meets_all_conditions_specified_in_regulation_25
           and claimant_is_liable_for_service_charge_payments
+
   - name: shared_ownership_tenancy
     kind: derived
     entity: Person
     dtype: Judgment
     period: Month
-    source: regulation 26(6)
+    source: Universal Credit Regulations 2013, regulation 26(6)
     metadata:
       proof:
         atoms:
@@ -64,18 +70,20 @@ rules:
             kind: definition
             source:
               corpus_citation_path: uk/regulation/uksi/2013/376/26
+              excerpt: "Shared ownership tenancy means"
     versions:
       - effective_from: '2013-04-29'
         formula: |-
           claimant_has_shared_ownership_tenancy_in_england_or_wales
           or claimant_has_shared_ownership_tenancy_in_scotland
+
   - name: housing_cost_element_under_shared_ownership
     kind: derived
     entity: Person
     dtype: Money
     period: Month
     unit: GBP
-    source: regulation 26(4) and 26(5)
+    source: Universal Credit Regulations 2013, regulation 26(4)
     metadata:
       proof:
         atoms:
@@ -83,31 +91,35 @@ rules:
             kind: formula
             source:
               corpus_citation_path: uk/regulation/uksi/2013/376/26
-          - path: versions[0].formula
-            kind: condition
-            source:
-              corpus_citation_path: uk/regulation/uksi/2013/376/26
+              excerpt: "the aggregate of those amounts"
     versions:
       - effective_from: '2013-04-29'
         formula: |-
-          if shared_ownership_tenancy and schedule_4_has_effect_for_claimant and schedule_5_has_effect_for_claimant: amount_calculated_under_schedule_4 + amount_calculated_under_schedule_5 else: 0
+          if schedule_4_has_effect_for_claimant and schedule_5_has_effect_for_claimant and shared_ownership_tenancy: max(0, amount_calculated_under_schedule_4 + amount_calculated_under_schedule_5) else: 0
+
   - name: service_charge_payments_amount_calculated_under_schedule_4_for_shared_ownership
     kind: derived
     entity: Person
     dtype: Judgment
     period: Month
-    source: regulation 26(5)
+    source: Universal Credit Regulations 2013, regulation 26(5)
     metadata:
       proof:
         atoms:
           - path: versions[0].formula
-            kind: exception
+            kind: condition
             source:
               corpus_citation_path: uk/regulation/uksi/2013/376/26
+              excerpt: "where ... there is a liability for service charge payments"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/26
+              excerpt: "calculated under Schedule 4"
     versions:
       - effective_from: '2013-04-29'
         formula: |-
-          shared_ownership_tenancy
-          and schedule_4_has_effect_for_claimant
+          schedule_4_has_effect_for_claimant
           and schedule_5_has_effect_for_claimant
+          and shared_ownership_tenancy
           and claimant_is_liable_for_service_charge_payments

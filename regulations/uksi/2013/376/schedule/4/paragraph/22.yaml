@@ -1,0 +1,56 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/22
+  summary: |-
+    "identify which is the lower amount"; "Deduct the sum of the housing cost contributions (if any) under paragraph 13".
+imports:
+  - uk:regulations/uksi/2013/376/schedule/4/paragraph/14#total_housing_cost_contributions_to_be_deducted_in_renters_case
+rules:
+  - name: renters_lower_rent_amount
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Schedule 4 paragraph 22, step 1
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/22
+              excerpt: "identify which is the lower amount (if both amounts are the same, that is the identified amount)"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          min(renters_core_rent, renters_cap_rent)
+
+  - name: renters_housing_costs_element_calculated_under_this_part
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Schedule 4 paragraph 22, steps 1 to 3
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/22
+              excerpt: "Deduct the sum of the housing cost contributions (if any) under paragraph 13"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2013/376/schedule/4/paragraph/14#total_housing_cost_contributions_to_be_deducted_in_renters_case
+              output: total_housing_cost_contributions_to_be_deducted_in_renters_case
+              hash: sha256:cc2972ca3070dea62fcb35b08b2b0f28ea11804756b1a49dbace129cdbc0acae
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          max(0, renters_lower_rent_amount - total_housing_cost_contributions_to_be_deducted_in_renters_case)

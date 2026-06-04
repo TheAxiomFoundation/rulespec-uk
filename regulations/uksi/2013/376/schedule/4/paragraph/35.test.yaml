@@ -1,0 +1,167 @@
+- name: payment_monthly_amount_for_amount_s_uses_paragraph_7_amount
+  period: 2026-06
+  input:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_payment_condition_in_respect_of_relevant_payment: false
+  tables:
+    Payment:
+    - uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_payment_condition_in_respect_of_relevant_payment: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_liability_condition_in_respect_of_relevant_payment: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_occupation_condition_in_respect_of_relevant_payment: true
+      ? uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.particular_payment_has_already_been_brought_into_account_for_same_or_different_renter
+      : false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.relevant_payment_amount: 100
+      ? uk:regulations/uksi/2013/376/schedule/4/paragraph/35#input.relevant_payment_amount_in_respect_of_a_month_under_paragraph_7_after_paragraphs_31_and_32
+      : 120
+  output:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/35#relevant_payment_monthly_amount_for_amount_s:
+    - 120
+- name: only_listed_persons_subtracts_under_occupation_deduction
+  period: 2026-06
+  input:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_payment_condition_in_respect_of_relevant_payment: false
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/35#input.one_or_more_other_persons_liable_to_same_description_relevant_payments_taken_into_account_under_paragraph_6
+    : true
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/35#input.only_persons_liable_to_make_relevant_payments_are_listed_persons
+    : true
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/35#input.persons_liable_to_make_relevant_payments_include_listed_persons_and_other_persons
+    : false
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/35#input.secretary_of_state_satisfied_subparagraph_4_amount_s_determination_would_be_unreasonable
+    : false
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/35#input.under_occupation_deduction_required_by_paragraph_36: 40
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/35#input.total_number_of_persons_liable_to_make_relevant_payments: 2
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/35#input.number_of_listed_persons_liable_to_make_relevant_payments: 2
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/35#input.amount_s_determined_by_secretary_of_state_under_subparagraph_5: 0
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/35#relation.shared_accommodation_relevant_payments_for_amount_s:
+    - uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_payment_condition_in_respect_of_relevant_payment: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_liability_condition_in_respect_of_relevant_payment: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_occupation_condition_in_respect_of_relevant_payment: true
+      ? uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.particular_payment_has_already_been_brought_into_account_for_same_or_different_renter
+      : false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.relevant_payment_amount: 100
+      ? uk:regulations/uksi/2013/376/schedule/4/paragraph/35#input.relevant_payment_amount_in_respect_of_a_month_under_paragraph_7_after_paragraphs_31_and_32
+      : 110
+    - uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_payment_condition_in_respect_of_relevant_payment: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_liability_condition_in_respect_of_relevant_payment: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_occupation_condition_in_respect_of_relevant_payment: true
+      ? uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.particular_payment_has_already_been_brought_into_account_for_same_or_different_renter
+      : false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.relevant_payment_amount: 200
+      ? uk:regulations/uksi/2013/376/schedule/4/paragraph/35#input.relevant_payment_amount_in_respect_of_a_month_under_paragraph_7_after_paragraphs_31_and_32
+      : 250
+  output:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/35#shared_accommodation_total_monthly_relevant_payments: 360
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/35#amount_s_before_housing_cost_contributions: 320
+- name: listed_and_other_persons_apportions_by_formula
+  period: 2026-06
+  input:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_payment_condition_in_respect_of_relevant_payment: false
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/35#input.one_or_more_other_persons_liable_to_same_description_relevant_payments_taken_into_account_under_paragraph_6
+    : true
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/35#input.only_persons_liable_to_make_relevant_payments_are_listed_persons
+    : false
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/35#input.persons_liable_to_make_relevant_payments_include_listed_persons_and_other_persons
+    : true
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/35#input.secretary_of_state_satisfied_subparagraph_4_amount_s_determination_would_be_unreasonable
+    : false
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/35#input.under_occupation_deduction_required_by_paragraph_36: 0
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/35#input.total_number_of_persons_liable_to_make_relevant_payments: 3
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/35#input.number_of_listed_persons_liable_to_make_relevant_payments: 2
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/35#input.amount_s_determined_by_secretary_of_state_under_subparagraph_5: 0
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/35#relation.shared_accommodation_relevant_payments_for_amount_s:
+    - uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_payment_condition_in_respect_of_relevant_payment: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_liability_condition_in_respect_of_relevant_payment: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_occupation_condition_in_respect_of_relevant_payment: true
+      ? uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.particular_payment_has_already_been_brought_into_account_for_same_or_different_renter
+      : false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.relevant_payment_amount: 100
+      ? uk:regulations/uksi/2013/376/schedule/4/paragraph/35#input.relevant_payment_amount_in_respect_of_a_month_under_paragraph_7_after_paragraphs_31_and_32
+      : 110
+    - uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_payment_condition_in_respect_of_relevant_payment: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_liability_condition_in_respect_of_relevant_payment: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_occupation_condition_in_respect_of_relevant_payment: true
+      ? uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.particular_payment_has_already_been_brought_into_account_for_same_or_different_renter
+      : false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.relevant_payment_amount: 200
+      ? uk:regulations/uksi/2013/376/schedule/4/paragraph/35#input.relevant_payment_amount_in_respect_of_a_month_under_paragraph_7_after_paragraphs_31_and_32
+      : 250
+  output:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/35#amount_s_before_housing_cost_contributions: 240
+- name: secretary_of_state_unreasonable_case_uses_appropriate_amount
+  period: 2026-06
+  input:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_payment_condition_in_respect_of_relevant_payment: false
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/35#input.one_or_more_other_persons_liable_to_same_description_relevant_payments_taken_into_account_under_paragraph_6
+    : true
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/35#input.only_persons_liable_to_make_relevant_payments_are_listed_persons
+    : false
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/35#input.persons_liable_to_make_relevant_payments_include_listed_persons_and_other_persons
+    : true
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/35#input.secretary_of_state_satisfied_subparagraph_4_amount_s_determination_would_be_unreasonable
+    : true
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/35#input.under_occupation_deduction_required_by_paragraph_36: 0
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/35#input.total_number_of_persons_liable_to_make_relevant_payments: 3
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/35#input.number_of_listed_persons_liable_to_make_relevant_payments: 2
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/35#input.amount_s_determined_by_secretary_of_state_under_subparagraph_5: 210
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/35#relation.shared_accommodation_relevant_payments_for_amount_s:
+    - uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_payment_condition_in_respect_of_relevant_payment: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_liability_condition_in_respect_of_relevant_payment: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_occupation_condition_in_respect_of_relevant_payment: true
+      ? uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.particular_payment_has_already_been_brought_into_account_for_same_or_different_renter
+      : false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.relevant_payment_amount: 100
+      ? uk:regulations/uksi/2013/376/schedule/4/paragraph/35#input.relevant_payment_amount_in_respect_of_a_month_under_paragraph_7_after_paragraphs_31_and_32
+      : 110
+    - uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_payment_condition_in_respect_of_relevant_payment: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_liability_condition_in_respect_of_relevant_payment: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_occupation_condition_in_respect_of_relevant_payment: true
+      ? uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.particular_payment_has_already_been_brought_into_account_for_same_or_different_renter
+      : false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.relevant_payment_amount: 200
+      ? uk:regulations/uksi/2013/376/schedule/4/paragraph/35#input.relevant_payment_amount_in_respect_of_a_month_under_paragraph_7_after_paragraphs_31_and_32
+      : 250
+  output:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/35#amount_s_before_housing_cost_contributions: 210
+- name: paragraph_35_inapplicable_without_other_person_liability_condition
+  period: 2026-06
+  input:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_payment_condition_in_respect_of_relevant_payment: false
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/35#input.one_or_more_other_persons_liable_to_same_description_relevant_payments_taken_into_account_under_paragraph_6
+    : false
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/35#input.only_persons_liable_to_make_relevant_payments_are_listed_persons
+    : true
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/35#input.persons_liable_to_make_relevant_payments_include_listed_persons_and_other_persons
+    : false
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/35#input.secretary_of_state_satisfied_subparagraph_4_amount_s_determination_would_be_unreasonable
+    : false
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/35#input.under_occupation_deduction_required_by_paragraph_36: 40
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/35#input.total_number_of_persons_liable_to_make_relevant_payments: 2
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/35#input.number_of_listed_persons_liable_to_make_relevant_payments: 2
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/35#input.amount_s_determined_by_secretary_of_state_under_subparagraph_5: 0
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/35#relation.shared_accommodation_relevant_payments_for_amount_s: []
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/35#input.relevant_payment_amount_in_respect_of_a_month_under_paragraph_7_after_paragraphs_31_and_32
+    : 0
+  output:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/35#amount_s_before_housing_cost_contributions: 0
+- name: auto_zero_relevant_payment_monthly_amount_for_amount_s
+  period:
+    period_kind: tax_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_payment_condition_in_respect_of_relevant_payment: false
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/35#input.amount_s_determined_by_secretary_of_state_under_subparagraph_5: 0
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/35#input.number_of_listed_persons_liable_to_make_relevant_payments: 0
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/35#input.one_or_more_other_persons_liable_to_same_description_relevant_payments_taken_into_account_under_paragraph_6
+    : false
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/35#input.only_persons_liable_to_make_relevant_payments_are_listed_persons
+    : false
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/35#input.persons_liable_to_make_relevant_payments_include_listed_persons_and_other_persons
+    : false
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/35#input.relevant_payment_amount_in_respect_of_a_month_under_paragraph_7_after_paragraphs_31_and_32
+    : 0
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/35#input.secretary_of_state_satisfied_subparagraph_4_amount_s_determination_would_be_unreasonable
+    : false
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/35#input.total_number_of_persons_liable_to_make_relevant_payments: 0
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/35#input.under_occupation_deduction_required_by_paragraph_36: 0
+  output:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/35#relevant_payment_monthly_amount_for_amount_s: 0

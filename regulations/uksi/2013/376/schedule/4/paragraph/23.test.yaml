@@ -1,0 +1,74 @@
+- name: qualifying_payment_monthly_amount_is_used
+  period: 2026-06
+  input: {}
+  tables:
+    Payment:
+    - uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_payment_condition_in_respect_of_relevant_payment: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_liability_condition_in_respect_of_relevant_payment: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_occupation_condition_in_respect_of_relevant_payment: true
+      ? uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.particular_payment_has_already_been_brought_into_account_for_same_or_different_renter
+      : false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.relevant_payment_amount: 100
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/23#input.relevant_payment_amount_in_respect_of_a_month_under_paragraph_7: 120
+  output:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/23#relevant_payment_amount_in_respect_of_month_for_core_rent:
+    - 120
+- name: paragraph_6_excluded_payment_has_no_monthly_amount
+  period: 2026-06
+  input: {}
+  tables:
+    Payment:
+    - uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_payment_condition_in_respect_of_relevant_payment: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_liability_condition_in_respect_of_relevant_payment: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_occupation_condition_in_respect_of_relevant_payment: true
+      ? uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.particular_payment_has_already_been_brought_into_account_for_same_or_different_renter
+      : true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.relevant_payment_amount: 100
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/23#input.relevant_payment_amount_in_respect_of_a_month_under_paragraph_7: 120
+  output:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/23#relevant_payment_amount_in_respect_of_month_for_core_rent:
+    - 0
+- name: multiple_relevant_payments_are_added
+  period: 2026-06
+  input:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/23#input.paragraph_24_applies: false
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/23#relation.renters_relevant_payments_for_core_rent:
+    - uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_payment_condition_in_respect_of_relevant_payment: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_liability_condition_in_respect_of_relevant_payment: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_occupation_condition_in_respect_of_relevant_payment: true
+      ? uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.particular_payment_has_already_been_brought_into_account_for_same_or_different_renter
+      : false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.relevant_payment_amount: 100
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/23#input.relevant_payment_amount_in_respect_of_a_month_under_paragraph_7: 110
+    - uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_payment_condition_in_respect_of_relevant_payment: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_liability_condition_in_respect_of_relevant_payment: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_occupation_condition_in_respect_of_relevant_payment: true
+      ? uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.particular_payment_has_already_been_brought_into_account_for_same_or_different_renter
+      : false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.relevant_payment_amount: 200
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/23#input.relevant_payment_amount_in_respect_of_a_month_under_paragraph_7: 250
+  output:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/23#paragraph_23_core_rent_calculation_applies: holds
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/23#renters_core_rent: 360
+- name: paragraph_24_displaces_paragraph_23_core_rent_calculation
+  period: 2026-06
+  input:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/23#input.paragraph_24_applies: true
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/23#relation.renters_relevant_payments_for_core_rent:
+    - uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_payment_condition_in_respect_of_relevant_payment: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_liability_condition_in_respect_of_relevant_payment: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_occupation_condition_in_respect_of_relevant_payment: true
+      ? uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.particular_payment_has_already_been_brought_into_account_for_same_or_different_renter
+      : false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.relevant_payment_amount: 100
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/23#input.relevant_payment_amount_in_respect_of_a_month_under_paragraph_7: 110
+    - uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_payment_condition_in_respect_of_relevant_payment: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_liability_condition_in_respect_of_relevant_payment: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_occupation_condition_in_respect_of_relevant_payment: true
+      ? uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.particular_payment_has_already_been_brought_into_account_for_same_or_different_renter
+      : false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.relevant_payment_amount: 200
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/23#input.relevant_payment_amount_in_respect_of_a_month_under_paragraph_7: 250
+  output:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/23#paragraph_23_core_rent_calculation_applies: not_holds
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/23#renters_core_rent: 0
