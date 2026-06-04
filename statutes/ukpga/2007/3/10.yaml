@@ -1,0 +1,214 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/statute/legislation.gov.uk/ukpga/2007/3/section/10
+  summary: |-
+    Income tax on an individual's income is charged at the basic rate up to the basic rate limit, at the higher rate above the basic rate limit and up to the higher rate limit, and at the additional rate above the higher rate limit. This section is subject to other provisions including Scottish, Welsh, default, property, savings, and dividend income rate rules; the basic and higher rate limits can also be increased by gift aid and pension-contribution provisions.
+rules:
+  - name: income_charged_at_basic_rate
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.10(2), (5), (6)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/legislation.gov.uk/ukpga/2007/3/section/10
+              excerpt: "Income tax on an individual's income up to the basic rate limit is charged at the basic rate"
+          - path: versions[0].formula
+            kind: exception
+            source:
+              corpus_citation_path: uk/statute/legislation.gov.uk/ukpga/2007/3/section/10
+              excerpt: "The basic rate limit and higher rate limit are increased in some circumstances"
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          min(max(0, income_charged_under_section_10), max(0, basic_rate_limit))
+
+  - name: income_charged_at_higher_rate
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.10(3), (5), (5A), (6)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/legislation.gov.uk/ukpga/2007/3/section/10
+              excerpt: "above the basic rate limit and up to the higher rate limit"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/legislation.gov.uk/ukpga/2007/3/section/10
+              excerpt: "The higher rate limit for a tax year is equal to"
+          - path: versions[0].formula
+            kind: exception
+            source:
+              corpus_citation_path: uk/statute/legislation.gov.uk/ukpga/2007/3/section/10
+              excerpt: "The basic rate limit and higher rate limit are increased in some circumstances"
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          min(max(0, income_charged_under_section_10 - basic_rate_limit), max(0, higher_rate_limit - basic_rate_limit))
+
+  - name: income_charged_at_additional_rate
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.10(3A), (5A)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/legislation.gov.uk/ukpga/2007/3/section/10
+              excerpt: "Income tax is charged at the additional rate on an individual's income above the higher rate limit"
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          max(0, income_charged_under_section_10 - higher_rate_limit)
+
+  - name: tax_on_income_charged_at_basic_rate
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.10(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/legislation.gov.uk/ukpga/2007/3/section/10
+              excerpt: "Income tax on an individual's income up to the basic rate limit is charged at the basic rate"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/2007/3/10#income_charged_at_basic_rate
+              output: income_charged_at_basic_rate
+              hash: sha256:local
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          income_charged_at_basic_rate * basic_rate
+
+  - name: tax_on_income_charged_at_higher_rate
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.10(3)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/legislation.gov.uk/ukpga/2007/3/section/10
+              excerpt: "Income tax is charged at the higher rate on an individual's income above the basic rate limit"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/2007/3/10#income_charged_at_higher_rate
+              output: income_charged_at_higher_rate
+              hash: sha256:local
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          income_charged_at_higher_rate * higher_rate
+
+  - name: tax_on_income_charged_at_additional_rate
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.10(3A)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/legislation.gov.uk/ukpga/2007/3/section/10
+              excerpt: "Income tax is charged at the additional rate on an individual's income above the higher rate limit"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/2007/3/10#income_charged_at_additional_rate
+              output: income_charged_at_additional_rate
+              hash: sha256:local
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          income_charged_at_additional_rate * additional_rate
+
+  - name: income_tax_on_section_10_income
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.10(2), (3), (3A), (4)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/legislation.gov.uk/ukpga/2007/3/section/10
+              excerpt: "charged at the basic rate"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/legislation.gov.uk/ukpga/2007/3/section/10
+              excerpt: "charged at the higher rate"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/legislation.gov.uk/ukpga/2007/3/section/10
+              excerpt: "charged at the additional rate"
+          - path: versions[0].formula
+            kind: exception
+            source:
+              corpus_citation_path: uk/statute/legislation.gov.uk/ukpga/2007/3/section/10
+              excerpt: "This section is subject to"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/2007/3/10#tax_on_income_charged_at_basic_rate
+              output: tax_on_income_charged_at_basic_rate
+              hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/2007/3/10#tax_on_income_charged_at_higher_rate
+              output: tax_on_income_charged_at_higher_rate
+              hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/2007/3/10#tax_on_income_charged_at_additional_rate
+              output: tax_on_income_charged_at_additional_rate
+              hash: sha256:local
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          tax_on_income_charged_at_basic_rate + tax_on_income_charged_at_higher_rate + tax_on_income_charged_at_additional_rate
