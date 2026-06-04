@@ -3,7 +3,7 @@ module:
   proof_validation:
     required: true
   source_verification:
-    corpus_citation_path: uk/statute/legislation.gov.uk/ukpga/2007/3/section/10
+    corpus_citation_path: uk/statute/ukpga/2007/3/10
   summary: |-
     Income tax on an individual's income is charged at the basic rate up to the basic rate limit, at the higher rate above the basic rate limit and up to the higher rate limit, and at the additional rate above the higher rate limit. This section is subject to other provisions including Scottish, Welsh, default, property, savings, and dividend income rate rules; the basic and higher rate limits can also be increased by gift aid and pension-contribution provisions.
 rules:
@@ -20,12 +20,12 @@ rules:
           - path: versions[0].formula
             kind: formula
             source:
-              corpus_citation_path: uk/statute/legislation.gov.uk/ukpga/2007/3/section/10
+              corpus_citation_path: uk/statute/ukpga/2007/3/10
               excerpt: "Income tax on an individual's income up to the basic rate limit is charged at the basic rate"
           - path: versions[0].formula
             kind: exception
             source:
-              corpus_citation_path: uk/statute/legislation.gov.uk/ukpga/2007/3/section/10
+              corpus_citation_path: uk/statute/ukpga/2007/3/10
               excerpt: "The basic rate limit and higher rate limit are increased in some circumstances"
     versions:
       - effective_from: '2024-04-06'
@@ -45,17 +45,17 @@ rules:
           - path: versions[0].formula
             kind: formula
             source:
-              corpus_citation_path: uk/statute/legislation.gov.uk/ukpga/2007/3/section/10
+              corpus_citation_path: uk/statute/ukpga/2007/3/10
               excerpt: "above the basic rate limit and up to the higher rate limit"
           - path: versions[0].formula
             kind: formula
             source:
-              corpus_citation_path: uk/statute/legislation.gov.uk/ukpga/2007/3/section/10
+              corpus_citation_path: uk/statute/ukpga/2007/3/10
               excerpt: "The higher rate limit for a tax year is equal to"
           - path: versions[0].formula
             kind: exception
             source:
-              corpus_citation_path: uk/statute/legislation.gov.uk/ukpga/2007/3/section/10
+              corpus_citation_path: uk/statute/ukpga/2007/3/10
               excerpt: "The basic rate limit and higher rate limit are increased in some circumstances"
     versions:
       - effective_from: '2024-04-06'
@@ -75,7 +75,7 @@ rules:
           - path: versions[0].formula
             kind: formula
             source:
-              corpus_citation_path: uk/statute/legislation.gov.uk/ukpga/2007/3/section/10
+              corpus_citation_path: uk/statute/ukpga/2007/3/10
               excerpt: "Income tax is charged at the additional rate on an individual's income above the higher rate limit"
     versions:
       - effective_from: '2024-04-06'
@@ -95,7 +95,7 @@ rules:
           - path: versions[0].formula
             kind: formula
             source:
-              corpus_citation_path: uk/statute/legislation.gov.uk/ukpga/2007/3/section/10
+              corpus_citation_path: uk/statute/ukpga/2007/3/10
               excerpt: "Income tax on an individual's income up to the basic rate limit is charged at the basic rate"
           - path: versions[0].formula
             kind: import
@@ -121,7 +121,7 @@ rules:
           - path: versions[0].formula
             kind: formula
             source:
-              corpus_citation_path: uk/statute/legislation.gov.uk/ukpga/2007/3/section/10
+              corpus_citation_path: uk/statute/ukpga/2007/3/10
               excerpt: "Income tax is charged at the higher rate on an individual's income above the basic rate limit"
           - path: versions[0].formula
             kind: import
@@ -147,7 +147,7 @@ rules:
           - path: versions[0].formula
             kind: formula
             source:
-              corpus_citation_path: uk/statute/legislation.gov.uk/ukpga/2007/3/section/10
+              corpus_citation_path: uk/statute/ukpga/2007/3/10
               excerpt: "Income tax is charged at the additional rate on an individual's income above the higher rate limit"
           - path: versions[0].formula
             kind: import
@@ -173,22 +173,22 @@ rules:
           - path: versions[0].formula
             kind: formula
             source:
-              corpus_citation_path: uk/statute/legislation.gov.uk/ukpga/2007/3/section/10
+              corpus_citation_path: uk/statute/ukpga/2007/3/10
               excerpt: "charged at the basic rate"
           - path: versions[0].formula
             kind: formula
             source:
-              corpus_citation_path: uk/statute/legislation.gov.uk/ukpga/2007/3/section/10
+              corpus_citation_path: uk/statute/ukpga/2007/3/10
               excerpt: "charged at the higher rate"
           - path: versions[0].formula
             kind: formula
             source:
-              corpus_citation_path: uk/statute/legislation.gov.uk/ukpga/2007/3/section/10
+              corpus_citation_path: uk/statute/ukpga/2007/3/10
               excerpt: "charged at the additional rate"
           - path: versions[0].formula
             kind: exception
             source:
-              corpus_citation_path: uk/statute/legislation.gov.uk/ukpga/2007/3/section/10
+              corpus_citation_path: uk/statute/ukpga/2007/3/10
               excerpt: "This section is subject to"
           - path: versions[0].formula
             kind: import
