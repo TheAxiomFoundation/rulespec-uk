@@ -1,0 +1,88 @@
+- name: dividend_income_only_in_ordinary_rate_band
+  period:
+    period_kind: tax_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:statutes/ukpga/2007/3/13#input.income_already_charged_before_section_13_dividend_income: 20000
+    uk:statutes/ukpga/2007/3/13#input.dividend_income_subject_to_section_13_rates: 2000
+    uk:statutes/ukpga/2007/3/13#input.basic_rate_limit: 37700
+    uk:statutes/ukpga/2007/3/13#input.higher_rate_limit: 125140
+    uk:statutes/ukpga/2007/3/13#input.dividend_ordinary_rate: 0.1075
+    uk:statutes/ukpga/2007/3/13#input.dividend_upper_rate: 0.3575
+    uk:statutes/ukpga/2007/3/13#input.dividend_additional_rate: 0.3935
+  output:
+    uk:statutes/ukpga/2007/3/13#dividend_income_charged_at_dividend_ordinary_rate: 2000
+    uk:statutes/ukpga/2007/3/13#dividend_income_charged_at_dividend_upper_rate: 0
+    uk:statutes/ukpga/2007/3/13#dividend_income_charged_at_dividend_additional_rate: 0
+    uk:statutes/ukpga/2007/3/13#dividend_income_charged_under_section_13: 2000
+    uk:statutes/ukpga/2007/3/13#tax_on_dividend_income_charged_at_dividend_ordinary_rate: 215
+    uk:statutes/ukpga/2007/3/13#tax_on_dividend_income_charged_at_dividend_upper_rate: 0
+    uk:statutes/ukpga/2007/3/13#tax_on_dividend_income_charged_at_dividend_additional_rate: 0
+    uk:statutes/ukpga/2007/3/13#income_tax_on_section_13_dividend_income: 215
+- name: dividend_income_split_between_ordinary_and_upper_bands
+  period:
+    period_kind: tax_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:statutes/ukpga/2007/3/13#input.income_already_charged_before_section_13_dividend_income: 37000
+    uk:statutes/ukpga/2007/3/13#input.dividend_income_subject_to_section_13_rates: 2000
+    uk:statutes/ukpga/2007/3/13#input.basic_rate_limit: 37700
+    uk:statutes/ukpga/2007/3/13#input.higher_rate_limit: 125140
+    uk:statutes/ukpga/2007/3/13#input.dividend_ordinary_rate: 0.1075
+    uk:statutes/ukpga/2007/3/13#input.dividend_upper_rate: 0.3575
+    uk:statutes/ukpga/2007/3/13#input.dividend_additional_rate: 0.3935
+  output:
+    uk:statutes/ukpga/2007/3/13#dividend_income_charged_at_dividend_ordinary_rate: 700
+    uk:statutes/ukpga/2007/3/13#dividend_income_charged_at_dividend_upper_rate: 1300
+    uk:statutes/ukpga/2007/3/13#dividend_income_charged_at_dividend_additional_rate: 0
+    uk:statutes/ukpga/2007/3/13#dividend_income_charged_under_section_13: 2000
+    uk:statutes/ukpga/2007/3/13#tax_on_dividend_income_charged_at_dividend_ordinary_rate: 75.25
+    uk:statutes/ukpga/2007/3/13#tax_on_dividend_income_charged_at_dividend_upper_rate: 464.75
+    uk:statutes/ukpga/2007/3/13#tax_on_dividend_income_charged_at_dividend_additional_rate: 0
+    uk:statutes/ukpga/2007/3/13#income_tax_on_section_13_dividend_income: 540
+- name: dividend_income_split_between_upper_and_additional_bands
+  period:
+    period_kind: tax_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:statutes/ukpga/2007/3/13#input.income_already_charged_before_section_13_dividend_income: 124000
+    uk:statutes/ukpga/2007/3/13#input.dividend_income_subject_to_section_13_rates: 3000
+    uk:statutes/ukpga/2007/3/13#input.basic_rate_limit: 37700
+    uk:statutes/ukpga/2007/3/13#input.higher_rate_limit: 125140
+    uk:statutes/ukpga/2007/3/13#input.dividend_ordinary_rate: 0.1075
+    uk:statutes/ukpga/2007/3/13#input.dividend_upper_rate: 0.3575
+    uk:statutes/ukpga/2007/3/13#input.dividend_additional_rate: 0.3935
+  output:
+    uk:statutes/ukpga/2007/3/13#dividend_income_charged_at_dividend_ordinary_rate: 0
+    uk:statutes/ukpga/2007/3/13#dividend_income_charged_at_dividend_upper_rate: 1140
+    uk:statutes/ukpga/2007/3/13#dividend_income_charged_at_dividend_additional_rate: 1860
+    uk:statutes/ukpga/2007/3/13#dividend_income_charged_under_section_13: 3000
+    uk:statutes/ukpga/2007/3/13#tax_on_dividend_income_charged_at_dividend_ordinary_rate: 0
+    uk:statutes/ukpga/2007/3/13#tax_on_dividend_income_charged_at_dividend_upper_rate: 407.55
+    uk:statutes/ukpga/2007/3/13#tax_on_dividend_income_charged_at_dividend_additional_rate: 731.91
+    uk:statutes/ukpga/2007/3/13#income_tax_on_section_13_dividend_income: 1139.46
+- name: no_positive_section_13_dividend_income
+  period:
+    period_kind: tax_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:statutes/ukpga/2007/3/13#input.income_already_charged_before_section_13_dividend_income: 50000
+    uk:statutes/ukpga/2007/3/13#input.dividend_income_subject_to_section_13_rates: -500
+    uk:statutes/ukpga/2007/3/13#input.basic_rate_limit: 37700
+    uk:statutes/ukpga/2007/3/13#input.higher_rate_limit: 125140
+    uk:statutes/ukpga/2007/3/13#input.dividend_ordinary_rate: 0.1075
+    uk:statutes/ukpga/2007/3/13#input.dividend_upper_rate: 0.3575
+    uk:statutes/ukpga/2007/3/13#input.dividend_additional_rate: 0.3935
+  output:
+    uk:statutes/ukpga/2007/3/13#dividend_income_charged_at_dividend_ordinary_rate: 0
+    uk:statutes/ukpga/2007/3/13#dividend_income_charged_at_dividend_upper_rate: 0
+    uk:statutes/ukpga/2007/3/13#dividend_income_charged_at_dividend_additional_rate: 0
+    uk:statutes/ukpga/2007/3/13#dividend_income_charged_under_section_13: 0
+    uk:statutes/ukpga/2007/3/13#tax_on_dividend_income_charged_at_dividend_ordinary_rate: 0
+    uk:statutes/ukpga/2007/3/13#tax_on_dividend_income_charged_at_dividend_upper_rate: 0
+    uk:statutes/ukpga/2007/3/13#tax_on_dividend_income_charged_at_dividend_additional_rate: 0
+    uk:statutes/ukpga/2007/3/13#income_tax_on_section_13_dividend_income: 0
