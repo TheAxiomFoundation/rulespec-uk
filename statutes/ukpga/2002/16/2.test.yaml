@@ -1,0 +1,59 @@
+- name: no_income_receives_appropriate_minimum_guarantee
+  period:
+    period_kind: tax_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:statutes/ukpga/2002/16/2#input.claimant_income: 0
+    uk:statutes/ukpga/2002/16/2#input.standard_minimum_guarantee: 12000
+    uk:statutes/ukpga/2002/16/2#input.prescribed_additional_amounts_applicable: 1000
+    uk:statutes/ukpga/2002/16/2#input.claimant_is_entitled_to_guarantee_credit: true
+  output:
+    uk:statutes/ukpga/2002/16/2#appropriate_minimum_guarantee: 13000
+    uk:statutes/ukpga/2002/16/2#guarantee_credit_condition_satisfied: holds
+    uk:statutes/ukpga/2002/16/2#guarantee_credit: 13000
+
+- name: income_below_minimum_receives_difference
+  period:
+    period_kind: tax_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:statutes/ukpga/2002/16/2#input.claimant_income: 10000
+    uk:statutes/ukpga/2002/16/2#input.standard_minimum_guarantee: 12000
+    uk:statutes/ukpga/2002/16/2#input.prescribed_additional_amounts_applicable: 1000
+    uk:statutes/ukpga/2002/16/2#input.claimant_is_entitled_to_guarantee_credit: true
+  output:
+    uk:statutes/ukpga/2002/16/2#appropriate_minimum_guarantee: 13000
+    uk:statutes/ukpga/2002/16/2#guarantee_credit_condition_satisfied: holds
+    uk:statutes/ukpga/2002/16/2#guarantee_credit: 3000
+
+- name: income_above_minimum_fails_condition
+  period:
+    period_kind: tax_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:statutes/ukpga/2002/16/2#input.claimant_income: 14000
+    uk:statutes/ukpga/2002/16/2#input.standard_minimum_guarantee: 12000
+    uk:statutes/ukpga/2002/16/2#input.prescribed_additional_amounts_applicable: 1000
+    uk:statutes/ukpga/2002/16/2#input.claimant_is_entitled_to_guarantee_credit: false
+  output:
+    uk:statutes/ukpga/2002/16/2#appropriate_minimum_guarantee: 13000
+    uk:statutes/ukpga/2002/16/2#guarantee_credit_condition_satisfied: not_holds
+    uk:statutes/ukpga/2002/16/2#guarantee_credit: 0
+
+- name: entitlement_gate_blocks_amount_even_when_income_condition_holds
+  period:
+    period_kind: tax_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:statutes/ukpga/2002/16/2#input.claimant_income: 10000
+    uk:statutes/ukpga/2002/16/2#input.standard_minimum_guarantee: 12000
+    uk:statutes/ukpga/2002/16/2#input.prescribed_additional_amounts_applicable: 1000
+    uk:statutes/ukpga/2002/16/2#input.claimant_is_entitled_to_guarantee_credit: false
+  output:
+    uk:statutes/ukpga/2002/16/2#appropriate_minimum_guarantee: 13000
+    uk:statutes/ukpga/2002/16/2#guarantee_credit_condition_satisfied: holds
+    uk:statutes/ukpga/2002/16/2#guarantee_credit: 0
