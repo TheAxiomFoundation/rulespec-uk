@@ -1,0 +1,264 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/statute/ukpga/2007/3/13
+  summary: |-
+    Dividend income is charged at the dividend ordinary, upper, or additional rate according to the rate band at which that income would otherwise be charged. Section 16 determines the ordinary-rate band placement, and Scottish taxpayers are tested as if they were not Scottish taxpayers for this dividend-rate allocation.
+rules:
+  - name: dividend_income_charged_at_dividend_ordinary_rate
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.13(1), (3), (4), (5)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/13
+              excerpt: "Income tax is charged at the dividend ordinary rate"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/13
+              excerpt: "would otherwise be charged at the ... basic rate"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/13
+              excerpt: "Section 16 has effect for determining the extent"
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          max(0, min(max(0, income_already_charged_before_section_13_dividend_income + dividend_income_subject_to_section_13_rates), max(0, basic_rate_limit)) - min(max(0, income_already_charged_before_section_13_dividend_income), max(0, basic_rate_limit)))
+
+  - name: dividend_income_charged_at_dividend_upper_rate
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.13(2), (3), (4), (5)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/13
+              excerpt: "Income tax is charged at the dividend upper rate"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/13
+              excerpt: "would otherwise be charged at the higher rate"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/13
+              excerpt: "Section 16 has effect for determining the extent"
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          max(0, min(max(0, income_already_charged_before_section_13_dividend_income + dividend_income_subject_to_section_13_rates - basic_rate_limit), max(0, higher_rate_limit - basic_rate_limit)) - min(max(0, income_already_charged_before_section_13_dividend_income - basic_rate_limit), max(0, higher_rate_limit - basic_rate_limit)))
+
+  - name: dividend_income_charged_at_dividend_additional_rate
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.13(2A), (3), (4), (5)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/13
+              excerpt: "Income tax is charged at the dividend additional rate"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/13
+              excerpt: "would otherwise be charged at the additional rate"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/13
+              excerpt: "Section 16 has effect for determining the extent"
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          max(0, max(0, income_already_charged_before_section_13_dividend_income + dividend_income_subject_to_section_13_rates - higher_rate_limit) - max(0, income_already_charged_before_section_13_dividend_income - higher_rate_limit))
+
+  - name: dividend_income_charged_under_section_13
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.13(1)-(2A)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/13
+              excerpt: "is dividend income"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/2007/3/13#dividend_income_charged_at_dividend_ordinary_rate
+              output: dividend_income_charged_at_dividend_ordinary_rate
+              hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/2007/3/13#dividend_income_charged_at_dividend_upper_rate
+              output: dividend_income_charged_at_dividend_upper_rate
+              hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/2007/3/13#dividend_income_charged_at_dividend_additional_rate
+              output: dividend_income_charged_at_dividend_additional_rate
+              hash: sha256:local
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          dividend_income_charged_at_dividend_ordinary_rate + dividend_income_charged_at_dividend_upper_rate + dividend_income_charged_at_dividend_additional_rate
+
+  - name: tax_on_dividend_income_charged_at_dividend_ordinary_rate
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.13(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/13
+              excerpt: "Income tax is charged at the dividend ordinary rate"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/2007/3/13#dividend_income_charged_at_dividend_ordinary_rate
+              output: dividend_income_charged_at_dividend_ordinary_rate
+              hash: sha256:local
+    versions:
+      - effective_from: '2024-04-06'
+        formula: dividend_income_charged_at_dividend_ordinary_rate * dividend_ordinary_rate
+
+  - name: tax_on_dividend_income_charged_at_dividend_upper_rate
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.13(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/13
+              excerpt: "Income tax is charged at the dividend upper rate"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/2007/3/13#dividend_income_charged_at_dividend_upper_rate
+              output: dividend_income_charged_at_dividend_upper_rate
+              hash: sha256:local
+    versions:
+      - effective_from: '2024-04-06'
+        formula: dividend_income_charged_at_dividend_upper_rate * dividend_upper_rate
+
+  - name: tax_on_dividend_income_charged_at_dividend_additional_rate
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.13(2A)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/13
+              excerpt: "Income tax is charged at the dividend additional rate"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/2007/3/13#dividend_income_charged_at_dividend_additional_rate
+              output: dividend_income_charged_at_dividend_additional_rate
+              hash: sha256:local
+    versions:
+      - effective_from: '2024-04-06'
+        formula: dividend_income_charged_at_dividend_additional_rate * dividend_additional_rate
+
+  - name: income_tax_on_section_13_dividend_income
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.13(1)-(3)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/13
+              excerpt: "Income tax is charged at the dividend ordinary rate"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/13
+              excerpt: "Income tax is charged at the dividend upper rate"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/13
+              excerpt: "Income tax is charged at the dividend additional rate"
+          - path: versions[0].formula
+            kind: exception
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/13
+              excerpt: "are subject to any provisions of the Income Tax Acts"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/2007/3/13#tax_on_dividend_income_charged_at_dividend_ordinary_rate
+              output: tax_on_dividend_income_charged_at_dividend_ordinary_rate
+              hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/2007/3/13#tax_on_dividend_income_charged_at_dividend_upper_rate
+              output: tax_on_dividend_income_charged_at_dividend_upper_rate
+              hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/2007/3/13#tax_on_dividend_income_charged_at_dividend_additional_rate
+              output: tax_on_dividend_income_charged_at_dividend_additional_rate
+              hash: sha256:local
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          tax_on_dividend_income_charged_at_dividend_ordinary_rate + tax_on_dividend_income_charged_at_dividend_upper_rate + tax_on_dividend_income_charged_at_dividend_additional_rate
