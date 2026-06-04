@@ -3,147 +3,122 @@ module:
   proof_validation:
     required: true
   source_verification:
-    corpus_citation_path: uk/statute/legislation.gov.uk/ukpga/1992/4/section/8
-  summary: "8 Calculation of primary Class 1 contributions.\n\n(3) Subsection (1)\
-    \ above is subject to\u2014 (a) regulations under section 6(6) above; (b) regulations\
-    \ under sections 116 to 120 below."
+    corpus_citation_path: uk/statute/ukpga/1992/4/8
+  summary: |-
+    Where a primary Class 1 contribution is payable as mentioned in section 6(1)(a), its amount is the aggregate of the main primary percentage of earnings above the primary threshold up to the upper earnings limit and the additional primary percentage of earnings above the upper earnings limit. The main primary percentage is 8%; the additional primary percentage is 2 per cent. Subsection (1) is subject to regulations under section 6(6) and sections 116 to 120.
 rules:
-- name: main_primary_percentage
-  kind: parameter
-  dtype: Rate
-  source: Social Security Contributions and Benefits Act 1992 s.8(2)(a)
-  metadata:
-    proof:
-      atoms:
-      - path: versions[0].formula
-        kind: parameter
-        source:
-          corpus_citation_path: uk/statute/legislation.gov.uk/ukpga/1992/4/section/8
-          excerpt: the main primary percentage is 8%
-  versions:
-  - effective_from: '2024-04-06'
-    formula: '0.08'
-- name: additional_primary_percentage
-  kind: parameter
-  dtype: Rate
-  source: Social Security Contributions and Benefits Act 1992 s.8(2)(b)
-  metadata:
-    proof:
-      atoms:
-      - path: versions[0].formula
-        kind: parameter
-        source:
-          corpus_citation_path: uk/statute/legislation.gov.uk/ukpga/1992/4/section/8
-          excerpt: the additional primary percentage is 2 per cent
-  versions:
-  - effective_from: '2011-04-06'
-    formula: '0.02'
+  - name: main_primary_percentage
+    kind: parameter
+    dtype: Rate
+    source: Social Security Contributions and Benefits Act 1992 s.8(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/8
+              excerpt: "the main primary percentage is 8%"
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          0.08
 
-- name: main_primary_class_1_contribution
-  kind: derived
-  entity: Person
-  dtype: Money
-  period: Week
-  unit: GBP
-  source: Social Security Contributions and Benefits Act 1992 s.8(1)(a), (3)
-  metadata:
-    proof:
-      atoms:
-      - path: versions[0].formula
-        kind: formula
-        source:
-          corpus_citation_path: uk/statute/legislation.gov.uk/ukpga/1992/4/section/8
-      - path: versions[0].formula
-        kind: condition
-        source:
-          corpus_citation_path: uk/statute/legislation.gov.uk/ukpga/1992/4/section/8
-          excerpt: Where a primary Class 1 contribution is payable as mentioned in
-            section 6(1)(a)
-      - path: versions[0].formula
-        kind: exception
-        source:
-          corpus_citation_path: uk/statute/legislation.gov.uk/ukpga/1992/4/section/8
-          excerpt: "Subsection (1) above is subject to\u2014 (a) regulations under\
-            \ section 6(6) ... (b) regulations under sections 116 to 120"
-  versions:
-  - effective_from: '2024-04-06'
-    formula: 'if primary_class_1_contribution_payable_as_mentioned_in_section_6_1_a
-      and regulations_under_section_6_6_do_not_displace_calculation and regulations_under_sections_116_to_120_do_not_displace_calculation:
-      main_primary_percentage * min(max(0, earnings_paid_in_tax_week_in_respect_of_employment
-      - current_primary_threshold_or_prescribed_equivalent), max(0, current_upper_earnings_limit_or_prescribed_equivalent
-      - current_primary_threshold_or_prescribed_equivalent)) else: 0'
+  - name: additional_primary_percentage
+    kind: parameter
+    dtype: Rate
+    source: Social Security Contributions and Benefits Act 1992 s.8(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/8
+              excerpt: "the additional primary percentage is 2 per cent"
+    versions:
+      - effective_from: '2011-04-06'
+        formula: |-
+          0.02
 
-- name: additional_primary_class_1_contribution
-  kind: derived
-  entity: Person
-  dtype: Money
-  period: Week
-  unit: GBP
-  source: Social Security Contributions and Benefits Act 1992 s.8(1)(b), (3)
-  metadata:
-    proof:
-      atoms:
-      - path: versions[0].formula
-        kind: formula
-        source:
-          corpus_citation_path: uk/statute/legislation.gov.uk/ukpga/1992/4/section/8
-      - path: versions[0].formula
-        kind: condition
-        source:
-          corpus_citation_path: uk/statute/legislation.gov.uk/ukpga/1992/4/section/8
-          excerpt: Where a primary Class 1 contribution is payable as mentioned in
-            section 6(1)(a)
-      - path: versions[0].formula
-        kind: exception
-        source:
-          corpus_citation_path: uk/statute/legislation.gov.uk/ukpga/1992/4/section/8
-          excerpt: "Subsection (1) above is subject to\u2014 (a) regulations under\
-            \ section 6(6) ... (b) regulations under sections 116 to 120"
-  versions:
-  - effective_from: '2024-04-06'
-    formula: 'if primary_class_1_contribution_payable_as_mentioned_in_section_6_1_a
-      and regulations_under_section_6_6_do_not_displace_calculation and regulations_under_sections_116_to_120_do_not_displace_calculation:
-      additional_primary_percentage * max(0, earnings_paid_in_tax_week_in_respect_of_employment
-      - current_upper_earnings_limit_or_prescribed_equivalent) else: 0'
+  - name: main_primary_class_1_contribution
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Social Security Contributions and Benefits Act 1992 s.8(1)(a), (3)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/8
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/1992/4/8#main_primary_percentage
+              output: main_primary_percentage
+              hash: sha256:local
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          if primary_class_1_contribution_payable_as_mentioned_in_section_6_1_a and regulations_under_section_6_6_do_not_displace_calculation and regulations_under_sections_116_to_120_do_not_displace_calculation: main_primary_percentage * max(0, min(earnings_paid_in_tax_week_in_respect_of_employment, current_upper_earnings_limit_or_prescribed_equivalent) - current_primary_threshold_or_prescribed_equivalent) else: 0
 
-- name: primary_class_1_contribution
-  kind: derived
-  entity: Person
-  dtype: Money
-  period: Week
-  unit: GBP
-  source: Social Security Contributions and Benefits Act 1992 s.8(1), (3)
-  metadata:
-    proof:
-      atoms:
-      - path: versions[0].formula
-        kind: formula
-        source:
-          corpus_citation_path: uk/statute/legislation.gov.uk/ukpga/1992/4/section/8
-      - path: versions[0].formula
-        kind: condition
-        source:
-          corpus_citation_path: uk/statute/legislation.gov.uk/ukpga/1992/4/section/8
-          excerpt: Where a primary Class 1 contribution is payable as mentioned in
-            section 6(1)(a)
-      - path: versions[0].formula
-        kind: exception
-        source:
-          corpus_citation_path: uk/statute/legislation.gov.uk/ukpga/1992/4/section/8
-          excerpt: "Subsection (1) above is subject to\u2014 (a) regulations under\
-            \ section 6(6) ... (b) regulations under sections 116 to 120"
-      - path: versions[0].formula
-        kind: import
-        import:
-          target: uk:statutes/ukpga/1992/4/8#main_primary_class_1_contribution
-          output: main_primary_class_1_contribution
-          hash: sha256:local
-      - path: versions[0].formula
-        kind: import
-        import:
-          target: uk:statutes/ukpga/1992/4/8#additional_primary_class_1_contribution
-          output: additional_primary_class_1_contribution
-          hash: sha256:local
-  versions:
-  - effective_from: '2024-04-06'
-    formula: main_primary_class_1_contribution + additional_primary_class_1_contribution
+  - name: additional_primary_class_1_contribution
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Social Security Contributions and Benefits Act 1992 s.8(1)(b), (3)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/8
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/1992/4/8#additional_primary_percentage
+              output: additional_primary_percentage
+              hash: sha256:local
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          if primary_class_1_contribution_payable_as_mentioned_in_section_6_1_a and regulations_under_section_6_6_do_not_displace_calculation and regulations_under_sections_116_to_120_do_not_displace_calculation: additional_primary_percentage * max(0, earnings_paid_in_tax_week_in_respect_of_employment - current_upper_earnings_limit_or_prescribed_equivalent) else: 0
+
+  - name: primary_class_1_contribution
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Social Security Contributions and Benefits Act 1992 s.8(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/8
+              excerpt: "the amount of that contribution is the aggregate of"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/1992/4/8#main_primary_class_1_contribution
+              output: main_primary_class_1_contribution
+              hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/1992/4/8#additional_primary_class_1_contribution
+              output: additional_primary_class_1_contribution
+              hash: sha256:local
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          main_primary_class_1_contribution + additional_primary_class_1_contribution
