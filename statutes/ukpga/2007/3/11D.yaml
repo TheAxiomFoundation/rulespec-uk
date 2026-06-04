@@ -1,0 +1,254 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/statute/ukpga/2007/3/11D
+  summary: |-
+    Savings income that remains after the starting rate for savings and savings nil rate is charged at the savings basic, higher, or additional rate according to the rate band at which that income would otherwise be charged. Section 16 determines the ordinary-rate band placement, and Scottish taxpayers are tested as if they were not Scottish taxpayers for this savings-rate allocation.
+rules:
+  - name: savings_income_charged_at_savings_basic_rate
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.11D(1), (4), (5), (6)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/11D
+              excerpt: "Income tax is charged at the savings basic rate on an individual’s income"
+          - path: versions[0].formula
+            kind: exception
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/11D
+              excerpt: "have effect after sections 12 and 12A have been applied"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/11D
+              excerpt: "Section 16 has effect for determining the extent to which an individual’s savings income"
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          max(0, min(max(0, income_already_charged_before_section_11d_savings_income + savings_income_remaining_after_sections_12_and_12a), max(0, basic_rate_limit)) - min(max(0, income_already_charged_before_section_11d_savings_income), max(0, basic_rate_limit)))
+
+  - name: savings_income_charged_at_savings_higher_rate
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.11D(2), (4), (5), (6)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/11D
+              excerpt: "Income tax is charged at the savings higher rate"
+          - path: versions[0].formula
+            kind: exception
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/11D
+              excerpt: "have effect after sections 12 and 12A have been applied"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/11D
+              excerpt: "would otherwise be charged at the higher rate or the default higher rate"
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          max(0, min(max(0, income_already_charged_before_section_11d_savings_income + savings_income_remaining_after_sections_12_and_12a - basic_rate_limit), max(0, higher_rate_limit - basic_rate_limit)) - min(max(0, income_already_charged_before_section_11d_savings_income - basic_rate_limit), max(0, higher_rate_limit - basic_rate_limit)))
+
+  - name: savings_income_charged_at_savings_additional_rate
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.11D(3), (4), (5), (6)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/11D
+              excerpt: "Income tax is charged at the savings additional rate"
+          - path: versions[0].formula
+            kind: exception
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/11D
+              excerpt: "have effect after sections 12 and 12A have been applied"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/11D
+              excerpt: "would otherwise be charged at the additional rate or the default additional rate"
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          max(0, max(0, income_already_charged_before_section_11d_savings_income + savings_income_remaining_after_sections_12_and_12a - higher_rate_limit) - max(0, income_already_charged_before_section_11d_savings_income - higher_rate_limit))
+
+  - name: savings_income_charged_under_section_11d
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.11D(1)-(3)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/2007/3/11D#savings_income_charged_at_savings_basic_rate
+              output: savings_income_charged_at_savings_basic_rate
+              hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/2007/3/11D#savings_income_charged_at_savings_higher_rate
+              output: savings_income_charged_at_savings_higher_rate
+              hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/2007/3/11D#savings_income_charged_at_savings_additional_rate
+              output: savings_income_charged_at_savings_additional_rate
+              hash: sha256:local
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          savings_income_charged_at_savings_basic_rate + savings_income_charged_at_savings_higher_rate + savings_income_charged_at_savings_additional_rate
+
+  - name: tax_on_savings_income_charged_at_savings_basic_rate
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.11D(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/11D
+              excerpt: "Income tax is charged at the savings basic rate"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/2007/3/11D#savings_income_charged_at_savings_basic_rate
+              output: savings_income_charged_at_savings_basic_rate
+              hash: sha256:local
+    versions:
+      - effective_from: '2024-04-06'
+        formula: savings_income_charged_at_savings_basic_rate * savings_basic_rate
+
+  - name: tax_on_savings_income_charged_at_savings_higher_rate
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.11D(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/11D
+              excerpt: "Income tax is charged at the savings higher rate"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/2007/3/11D#savings_income_charged_at_savings_higher_rate
+              output: savings_income_charged_at_savings_higher_rate
+              hash: sha256:local
+    versions:
+      - effective_from: '2024-04-06'
+        formula: savings_income_charged_at_savings_higher_rate * savings_higher_rate
+
+  - name: tax_on_savings_income_charged_at_savings_additional_rate
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.11D(3)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/11D
+              excerpt: "Income tax is charged at the savings additional rate"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/2007/3/11D#savings_income_charged_at_savings_additional_rate
+              output: savings_income_charged_at_savings_additional_rate
+              hash: sha256:local
+    versions:
+      - effective_from: '2024-04-06'
+        formula: savings_income_charged_at_savings_additional_rate * savings_additional_rate
+
+  - name: income_tax_on_section_11d_savings_income
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.11D(1)-(4)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/11D
+              excerpt: "Income tax is charged at the savings basic rate"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/11D
+              excerpt: "Income tax is charged at the savings higher rate"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/11D
+              excerpt: "Income tax is charged at the savings additional rate"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/2007/3/11D#tax_on_savings_income_charged_at_savings_basic_rate
+              output: tax_on_savings_income_charged_at_savings_basic_rate
+              hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/2007/3/11D#tax_on_savings_income_charged_at_savings_higher_rate
+              output: tax_on_savings_income_charged_at_savings_higher_rate
+              hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/2007/3/11D#tax_on_savings_income_charged_at_savings_additional_rate
+              output: tax_on_savings_income_charged_at_savings_additional_rate
+              hash: sha256:local
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          tax_on_savings_income_charged_at_savings_basic_rate + tax_on_savings_income_charged_at_savings_higher_rate + tax_on_savings_income_charged_at_savings_additional_rate
