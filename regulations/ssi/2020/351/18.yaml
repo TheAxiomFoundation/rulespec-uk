@@ -1,0 +1,27 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/ssi/2020/351/18
+  summary: |-
+    Regulation 18 of the Scottish Child Payment Regulations 2020 includes a child-age eligibility condition requiring the child to be under 16 on the day the application is made.
+rules:
+  - name: scottish_child_payment_maximum_child_age
+    kind: parameter
+    dtype: Count
+    period: Year
+    unit: year
+    source: Scottish Child Payment Regulations 2020 reg. 18(b)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/ssi/2020/351/18
+              excerpt: "the child is under 16 years of age on the day the application is made"
+    versions:
+      - effective_from: '2022-11-14'
+        formula: |-
+          16
