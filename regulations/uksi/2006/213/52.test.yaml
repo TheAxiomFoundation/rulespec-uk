@@ -1,0 +1,45 @@
+- name: ordinary_case_counts_incomplete_capital_band
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2026-04-06'
+    end: '2026-04-12'
+  input:
+    uk:regulations/uksi/2006/213/52#input.claimant_capital: 6251
+    uk:regulations/uksi/2006/213/52#input.claimant_in_prescribed_circumstances_under_regulation_52_4: false
+  output:
+    uk:regulations/uksi/2006/213/52#ordinary_capital_tariff_income_lower_threshold: 6000
+    uk:regulations/uksi/2006/213/52#capital_tariff_income_upper_limit: 16000
+    uk:regulations/uksi/2006/213/52#capital_tariff_income_band_size: 250
+    uk:regulations/uksi/2006/213/52#capital_tariff_income_weekly_amount_per_band: 1
+    uk:regulations/uksi/2006/213/52#applicable_capital_tariff_income_lower_threshold: 6000
+    uk:regulations/uksi/2006/213/52#capital_treated_as_yielding_weekly_tariff_income: holds
+    uk:regulations/uksi/2006/213/52#capital_tariff_weekly_income: 2
+
+- name: prescribed_circumstances_use_higher_threshold
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2026-04-06'
+    end: '2026-04-12'
+  input:
+    uk:regulations/uksi/2006/213/52#input.claimant_capital: 10251
+    uk:regulations/uksi/2006/213/52#input.claimant_in_prescribed_circumstances_under_regulation_52_4: true
+  output:
+    uk:regulations/uksi/2006/213/52#prescribed_circumstances_capital_tariff_income_lower_threshold: 10000
+    uk:regulations/uksi/2006/213/52#applicable_capital_tariff_income_lower_threshold: 10000
+    uk:regulations/uksi/2006/213/52#capital_treated_as_yielding_weekly_tariff_income: holds
+    uk:regulations/uksi/2006/213/52#capital_tariff_weekly_income: 2
+
+- name: capital_above_upper_limit_yields_no_tariff_income_under_regulation
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2026-04-06'
+    end: '2026-04-12'
+  input:
+    uk:regulations/uksi/2006/213/52#input.claimant_capital: 16001
+    uk:regulations/uksi/2006/213/52#input.claimant_in_prescribed_circumstances_under_regulation_52_4: false
+  output:
+    uk:regulations/uksi/2006/213/52#capital_treated_as_yielding_weekly_tariff_income: not_holds
+    uk:regulations/uksi/2006/213/52#capital_tariff_weekly_income: 0

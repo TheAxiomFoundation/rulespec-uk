@@ -1,0 +1,173 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/1987/1967/53
+  summary: |-
+    Income Support capital between the applicable lower threshold and GBP 16,000 is treated as weekly income of GBP 1 for each complete or incomplete GBP 250 above that threshold. The ordinary lower threshold is GBP 6,000, with a GBP 10,000 lower threshold for claimants to whom paragraph (1B) applies.
+rules:
+  - name: ordinary_capital_tariff_income_lower_threshold
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: Income Support (General) Regulations 1987, regulation 53(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/1987/1967/53
+              excerpt: "exceeds £6,000"
+    versions:
+      - effective_from: '1988-04-11'
+        formula: |-
+          6000
+
+  - name: prescribed_accommodation_capital_tariff_income_lower_threshold
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: Income Support (General) Regulations 1987, regulation 53(1A)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/1987/1967/53
+              excerpt: "exceeds £10,000"
+    versions:
+      - effective_from: '1988-04-11'
+        formula: |-
+          10000
+
+  - name: capital_tariff_income_upper_limit
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: Income Support (General) Regulations 1987, regulation 53(1), (1A)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/1987/1967/53
+              excerpt: "but not exceeding £16,000"
+    versions:
+      - effective_from: '1988-04-11'
+        formula: |-
+          16000
+
+  - name: capital_tariff_income_band_size
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: Income Support (General) Regulations 1987, regulation 53(1), (2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/1987/1967/53
+              excerpt: "for each complete £250"
+    versions:
+      - effective_from: '1988-04-11'
+        formula: |-
+          250
+
+  - name: capital_tariff_income_weekly_amount_per_band
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Income Support (General) Regulations 1987, regulation 53(1), (2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/1987/1967/53
+              excerpt: "weekly income of £1"
+    versions:
+      - effective_from: '1988-04-11'
+        formula: |-
+          1
+
+  - name: applicable_capital_tariff_income_lower_threshold
+    kind: derived
+    entity: Person
+    dtype: Money
+    unit: GBP
+    source: Income Support (General) Regulations 1987, regulation 53(1)-(1B)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/1987/1967/53
+              excerpt: "Except where the circumstances prescribed in paragraph"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/1987/1967/53
+              excerpt: "circumstances prescribed in paragraph (1B) apply"
+    versions:
+      - effective_from: '1988-04-11'
+        formula: |-
+          if claimant_in_prescribed_accommodation_under_regulation_53_1B: prescribed_accommodation_capital_tariff_income_lower_threshold else: ordinary_capital_tariff_income_lower_threshold
+
+  - name: capital_treated_as_yielding_weekly_income
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Week
+    source: Income Support (General) Regulations 1987, regulation 53(1), (1A)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/1987/1967/53
+              excerpt: "it shall be treated as equivalent to a weekly income"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/1987/1967/53
+              excerpt: "but not exceeding £16,000"
+    versions:
+      - effective_from: '1988-04-11'
+        formula: |-
+          claimant_capital > applicable_capital_tariff_income_lower_threshold
+          and claimant_capital <= capital_tariff_income_upper_limit
+
+  - name: capital_tariff_weekly_income
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Income Support (General) Regulations 1987, regulation 53(1), (1A), (2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/1987/1967/53
+              excerpt: "£1 for each complete £250"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/1987/1967/53
+              excerpt: "not a complete £250"
+    versions:
+      - effective_from: '1988-04-11'
+        formula: |-
+          if capital_treated_as_yielding_weekly_income: capital_tariff_income_weekly_amount_per_band * ceil((claimant_capital - applicable_capital_tariff_income_lower_threshold) / capital_tariff_income_band_size) else: 0
