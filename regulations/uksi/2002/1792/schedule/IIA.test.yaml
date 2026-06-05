@@ -1,0 +1,57 @@
+- name: no_responsible_child_no_additional_amount
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2026-04-06'
+    end: '2026-04-12'
+  input:
+    uk:regulations/uksi/2002/1792/schedule/IIA#input.claimant_responsible_child_or_qualifying_young_person_count: 0
+    uk:regulations/uksi/2002/1792/schedule/IIA#input.claimant_responsible_disabled_not_severely_disabled_child_or_qualifying_young_person_count: 0
+    uk:regulations/uksi/2002/1792/schedule/IIA#input.claimant_responsible_severely_disabled_child_or_qualifying_young_person_count: 0
+    uk:regulations/uksi/2002/1792/schedule/IIA#input.eldest_child_or_qualifying_young_person_born_before_6_april_2017: false
+  output:
+    uk:regulations/uksi/2002/1792/schedule/IIA#child_or_qualifying_young_person_weekly_amount: 69.98
+    uk:regulations/uksi/2002/1792/schedule/IIA#disabled_child_or_qualifying_young_person_further_weekly_amount: 37.93
+    uk:regulations/uksi/2002/1792/schedule/IIA#severely_disabled_child_or_qualifying_young_person_further_weekly_amount: 118.46
+    uk:regulations/uksi/2002/1792/schedule/IIA#first_child_or_qualifying_young_person_born_before_6_april_2017_weekly_amount: 81.07
+    uk:regulations/uksi/2002/1792/schedule/IIA#schedule_applies_to_claimant: not_holds
+    uk:regulations/uksi/2002/1792/schedule/IIA#child_or_qualifying_young_person_basic_additional_amount: 0
+    uk:regulations/uksi/2002/1792/schedule/IIA#disabled_child_or_qualifying_young_person_further_amount: 0
+    uk:regulations/uksi/2002/1792/schedule/IIA#severely_disabled_child_or_qualifying_young_person_further_amount: 0
+    uk:regulations/uksi/2002/1792/schedule/IIA#additional_amount_applicable: 0
+- name: post_2017_child_has_no_eldest_child_increase
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2026-04-06'
+    end: '2026-04-12'
+  input:
+    uk:regulations/uksi/2002/1792/schedule/IIA#input.claimant_responsible_child_or_qualifying_young_person_count: 1
+    uk:regulations/uksi/2002/1792/schedule/IIA#input.claimant_responsible_disabled_not_severely_disabled_child_or_qualifying_young_person_count: 0
+    uk:regulations/uksi/2002/1792/schedule/IIA#input.claimant_responsible_severely_disabled_child_or_qualifying_young_person_count: 0
+    uk:regulations/uksi/2002/1792/schedule/IIA#input.eldest_child_or_qualifying_young_person_born_before_6_april_2017: false
+  output:
+    uk:regulations/uksi/2002/1792/schedule/IIA#schedule_applies_to_claimant: holds
+    uk:regulations/uksi/2002/1792/schedule/IIA#eldest_child_before_6_april_2017_increase_amount: 0
+    uk:regulations/uksi/2002/1792/schedule/IIA#child_or_qualifying_young_person_basic_additional_amount: 69.98
+    uk:regulations/uksi/2002/1792/schedule/IIA#disabled_child_or_qualifying_young_person_further_amount: 0
+    uk:regulations/uksi/2002/1792/schedule/IIA#severely_disabled_child_or_qualifying_young_person_further_amount: 0
+    uk:regulations/uksi/2002/1792/schedule/IIA#additional_amount_applicable: 69.98
+- name: mixed_children_with_pre_2017_disabled_and_severely_disabled_amounts
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2026-04-06'
+    end: '2026-04-12'
+  input:
+    uk:regulations/uksi/2002/1792/schedule/IIA#input.claimant_responsible_child_or_qualifying_young_person_count: 2
+    uk:regulations/uksi/2002/1792/schedule/IIA#input.claimant_responsible_disabled_not_severely_disabled_child_or_qualifying_young_person_count: 1
+    uk:regulations/uksi/2002/1792/schedule/IIA#input.claimant_responsible_severely_disabled_child_or_qualifying_young_person_count: 1
+    uk:regulations/uksi/2002/1792/schedule/IIA#input.eldest_child_or_qualifying_young_person_born_before_6_april_2017: true
+  output:
+    uk:regulations/uksi/2002/1792/schedule/IIA#schedule_applies_to_claimant: holds
+    uk:regulations/uksi/2002/1792/schedule/IIA#eldest_child_before_6_april_2017_increase_amount: 11.09
+    uk:regulations/uksi/2002/1792/schedule/IIA#child_or_qualifying_young_person_basic_additional_amount: 151.05
+    uk:regulations/uksi/2002/1792/schedule/IIA#disabled_child_or_qualifying_young_person_further_amount: 37.93
+    uk:regulations/uksi/2002/1792/schedule/IIA#severely_disabled_child_or_qualifying_young_person_further_amount: 118.46
+    uk:regulations/uksi/2002/1792/schedule/IIA#additional_amount_applicable: 307.44

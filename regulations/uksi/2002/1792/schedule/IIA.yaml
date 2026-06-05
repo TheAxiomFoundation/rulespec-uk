@@ -1,0 +1,252 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2002/1792/schedule/IIA
+  summary: |-
+    Schedule IIA applies where a claimant is responsible for a child or qualifying young person. The weekly amount is GBP 69.98 for each child or qualifying young person, with GBP 81.07 replacing that amount for the eldest such person born before 6 April 2017. Further weekly amounts of GBP 37.93 or GBP 118.46 apply for disabled or severely disabled children or qualifying young people.
+rules:
+  - name: child_or_qualifying_young_person_weekly_amount
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Schedule IIA paragraph 9(1)(a)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2002/1792/schedule/IIA
+              excerpt: "£69.98 for each child or qualifying young person"
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          69.98
+
+  - name: disabled_child_or_qualifying_young_person_further_weekly_amount
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Schedule IIA paragraph 9(1)(b)(i)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2002/1792/schedule/IIA
+              excerpt: "£37.93 where sub-paragraph (2) applies"
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          37.93
+
+  - name: severely_disabled_child_or_qualifying_young_person_further_weekly_amount
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Schedule IIA paragraph 9(1)(b)(ii)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2002/1792/schedule/IIA
+              excerpt: "£118.46 where sub-paragraph (3) applies"
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          118.46
+
+  - name: first_child_or_qualifying_young_person_born_before_6_april_2017_weekly_amount
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Schedule IIA paragraph 10
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2002/1792/schedule/IIA
+              excerpt: "born before 6th April 2017, the amount prescribed in paragraph 9(1)(a) in respect of that child or qualifying young person is £81.07"
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          81.07
+
+  - name: schedule_applies_to_claimant
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Week
+    source: Schedule IIA paragraph 1
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2002/1792/schedule/IIA
+              excerpt: "This Schedule applies to a claimant who is responsible for a child or qualifying young person."
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          claimant_responsible_child_or_qualifying_young_person_count > 0
+
+  - name: eldest_child_before_6_april_2017_increase_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Schedule IIA paragraph 10
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2002/1792/schedule/IIA
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2002/1792/schedule/IIA#child_or_qualifying_young_person_weekly_amount
+              output: child_or_qualifying_young_person_weekly_amount
+              hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2002/1792/schedule/IIA#first_child_or_qualifying_young_person_born_before_6_april_2017_weekly_amount
+              output: first_child_or_qualifying_young_person_born_before_6_april_2017_weekly_amount
+              hash: sha256:local
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          if eldest_child_or_qualifying_young_person_born_before_6_april_2017: first_child_or_qualifying_young_person_born_before_6_april_2017_weekly_amount - child_or_qualifying_young_person_weekly_amount else: 0
+
+  - name: child_or_qualifying_young_person_basic_additional_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Schedule IIA paragraphs 9(1)(a) and 10
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2002/1792/schedule/IIA
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2002/1792/schedule/IIA#child_or_qualifying_young_person_weekly_amount
+              output: child_or_qualifying_young_person_weekly_amount
+              hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2002/1792/schedule/IIA#eldest_child_before_6_april_2017_increase_amount
+              output: eldest_child_before_6_april_2017_increase_amount
+              hash: sha256:local
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          if schedule_applies_to_claimant: claimant_responsible_child_or_qualifying_young_person_count * child_or_qualifying_young_person_weekly_amount + eldest_child_before_6_april_2017_increase_amount else: 0
+
+  - name: disabled_child_or_qualifying_young_person_further_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Schedule IIA paragraph 9(1)(b)(i) and 9(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2002/1792/schedule/IIA
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2002/1792/schedule/IIA#disabled_child_or_qualifying_young_person_further_weekly_amount
+              output: disabled_child_or_qualifying_young_person_further_weekly_amount
+              hash: sha256:local
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          if schedule_applies_to_claimant: claimant_responsible_disabled_not_severely_disabled_child_or_qualifying_young_person_count * disabled_child_or_qualifying_young_person_further_weekly_amount else: 0
+
+  - name: severely_disabled_child_or_qualifying_young_person_further_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Schedule IIA paragraph 9(1)(b)(ii) and 9(3)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2002/1792/schedule/IIA
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2002/1792/schedule/IIA#severely_disabled_child_or_qualifying_young_person_further_weekly_amount
+              output: severely_disabled_child_or_qualifying_young_person_further_weekly_amount
+              hash: sha256:local
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          if schedule_applies_to_claimant: claimant_responsible_severely_disabled_child_or_qualifying_young_person_count * severely_disabled_child_or_qualifying_young_person_further_weekly_amount else: 0
+
+  - name: additional_amount_applicable
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Schedule IIA paragraph 9 and paragraph 10
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2002/1792/schedule/IIA
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2002/1792/schedule/IIA#child_or_qualifying_young_person_basic_additional_amount
+              output: child_or_qualifying_young_person_basic_additional_amount
+              hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2002/1792/schedule/IIA#disabled_child_or_qualifying_young_person_further_amount
+              output: disabled_child_or_qualifying_young_person_further_amount
+              hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2002/1792/schedule/IIA#severely_disabled_child_or_qualifying_young_person_further_amount
+              output: severely_disabled_child_or_qualifying_young_person_further_amount
+              hash: sha256:local
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          if schedule_applies_to_claimant: child_or_qualifying_young_person_basic_additional_amount + disabled_child_or_qualifying_young_person_further_amount + severely_disabled_child_or_qualifying_young_person_further_amount else: 0
