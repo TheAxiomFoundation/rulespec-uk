@@ -1,0 +1,17 @@
+- name: winter_fuel_payment_2025_regulation_3_amounts
+  period:
+    period_kind: custom
+    name: calendar_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input: {}
+  output:
+    uk:regulations/uksi/2025/969/3#winter_fuel_payment_under_80_standard_amount: 200
+    uk:regulations/uksi/2025/969/3#winter_fuel_payment_under_80_shared_or_residential_care_amount: 100
+    uk:regulations/uksi/2025/969/3#winter_fuel_payment_under_80_partner_80_relevant_benefit_amount: 300
+    uk:regulations/uksi/2025/969/3#winter_fuel_payment_age_80_standard_amount: 300
+    uk:regulations/uksi/2025/969/3#winter_fuel_payment_age_80_shared_under_80_amount: 200
+    uk:regulations/uksi/2025/969/3#winter_fuel_payment_age_80_shared_80_or_residential_care_amount: 150
+    uk:regulations/uksi/2025/969/3#winter_fuel_payment_higher_age_requirement: 80
+    uk:regulations/uksi/2025/969/3#winter_fuel_payment_lower_amount: 200
+    uk:regulations/uksi/2025/969/3#winter_fuel_payment_higher_amount: 300

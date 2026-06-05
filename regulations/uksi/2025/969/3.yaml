@@ -1,0 +1,179 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2025/969/3
+  summary: |-
+    Regulation 3 of the Social Fund Winter Fuel Payment Regulations 2025 sets the annual Winter Fuel Payment amounts for England and Wales. The ordinary amount is GBP 200 where the person has not reached age 80 by the qualifying week and GBP 300 where the person has reached age 80, with smaller GBP 100, GBP 200, or GBP 150 branch amounts for specified shared-household or residential-care cases.
+rules:
+  - name: winter_fuel_payment_under_80_standard_amount
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Regulation 3(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2025/969/3
+              excerpt: "has not reached the age of 80 ... £200"
+    versions:
+      - effective_from: '2025-09-15'
+        formula: |-
+          200
+
+  - name: winter_fuel_payment_under_80_shared_or_residential_care_amount
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Regulation 3(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2025/969/3
+              excerpt: "has not reached the age of 80 ... £100"
+    versions:
+      - effective_from: '2025-09-15'
+        formula: |-
+          100
+
+  - name: winter_fuel_payment_under_80_partner_80_relevant_benefit_amount
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Regulation 3(3)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2025/969/3
+              excerpt: "has not reached the age of 80 ... £300"
+    versions:
+      - effective_from: '2025-09-15'
+        formula: |-
+          300
+
+  - name: winter_fuel_payment_age_80_standard_amount
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Regulation 3(4)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2025/969/3
+              excerpt: "has reached the age of 80 ... £300"
+    versions:
+      - effective_from: '2025-09-15'
+        formula: |-
+          300
+
+  - name: winter_fuel_payment_age_80_shared_under_80_amount
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Regulation 3(5)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2025/969/3
+              excerpt: "has reached the age of 80 ... £200"
+    versions:
+      - effective_from: '2025-09-15'
+        formula: |-
+          200
+
+  - name: winter_fuel_payment_age_80_shared_80_or_residential_care_amount
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Regulation 3(6)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2025/969/3
+              excerpt: "has reached the age of 80 ... £150"
+    versions:
+      - effective_from: '2025-09-15'
+        formula: |-
+          150
+
+  - name: winter_fuel_payment_higher_age_requirement
+    kind: parameter
+    dtype: Count
+    period: Year
+    unit: year
+    source: Regulation 3(4)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2025/969/3
+              excerpt: "has reached the age of 80"
+    versions:
+      - effective_from: '2025-09-15'
+        formula: |-
+          80
+
+  - name: winter_fuel_payment_lower_amount
+    kind: derived
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Regulation 3(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2025/969/3
+              excerpt: "has not reached the age of 80 ... £200"
+    versions:
+      - effective_from: '2025-09-15'
+        formula: |-
+          winter_fuel_payment_under_80_standard_amount
+
+  - name: winter_fuel_payment_higher_amount
+    kind: derived
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Regulation 3(4)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2025/969/3
+              excerpt: "has reached the age of 80 ... £300"
+    versions:
+      - effective_from: '2025-09-15'
+        formula: |-
+          winter_fuel_payment_age_80_standard_amount
