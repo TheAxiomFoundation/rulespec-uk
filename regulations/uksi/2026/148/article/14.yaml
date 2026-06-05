@@ -1,0 +1,198 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2026/148/article/14
+  summary: |-
+    Article 14 of the Social Security Benefits Up-rating Order 2026 amends regulation 4 of the Social Security (Disability Living Allowance) Regulations 1991 to set the weekly Disability Living Allowance rates from 6 April 2026. The self-care component is GBP 114.60 at the higher rate, GBP 76.70 at the middle rate, and GBP 30.30 at the lower rate. The mobility component is GBP 80.00 at the higher rate and GBP 30.30 at the lower rate.
+rules:
+  - name: dla_self_care_higher_substituted_amount
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Article 14(a)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2026/148/article/14
+              excerpt: "in paragraph (1)(a) for \"£110.40\" substitute \"£114.60\""
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          114.60
+
+  - name: dla_self_care_middle_substituted_amount
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Article 14(b)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2026/148/article/14
+              excerpt: "in paragraph (1)(b) for \"£73.90\" substitute \"£76.70\""
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          76.70
+
+  - name: dla_self_care_lower_substituted_amount
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Article 14(c)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2026/148/article/14
+              excerpt: "in paragraph (1)(c) for \"£29.20\" substitute \"£30.30\""
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          30.30
+
+  - name: dla_mobility_higher_substituted_amount
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Article 14(d)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2026/148/article/14
+              excerpt: "in paragraph (2)(a) for \"£77.05\" substitute \"£80.00\""
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          80.00
+
+  - name: dla_mobility_lower_substituted_amount
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Article 14(e)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2026/148/article/14
+              excerpt: "in paragraph (2)(b) for \"£29.20\" substitute \"£30.30\""
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          30.30
+
+  - name: dla_self_care_higher_weekly_rate
+    kind: derived
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Article 14(a), applied to regulation 4(1)(a)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2026/148/article/14
+              excerpt: "in paragraph (1)(a) for \"£110.40\" substitute \"£114.60\""
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          dla_self_care_higher_substituted_amount
+
+  - name: dla_self_care_middle_weekly_rate
+    kind: derived
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Article 14(b), applied to regulation 4(1)(b)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2026/148/article/14
+              excerpt: "in paragraph (1)(b) for \"£73.90\" substitute \"£76.70\""
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          dla_self_care_middle_substituted_amount
+
+  - name: dla_self_care_lower_weekly_rate
+    kind: derived
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Article 14(c), applied to regulation 4(1)(c)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2026/148/article/14
+              excerpt: "in paragraph (1)(c) for \"£29.20\" substitute \"£30.30\""
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          dla_self_care_lower_substituted_amount
+
+  - name: dla_mobility_higher_weekly_rate
+    kind: derived
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Article 14(d), applied to regulation 4(2)(a)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2026/148/article/14
+              excerpt: "in paragraph (2)(a) for \"£77.05\" substitute \"£80.00\""
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          dla_mobility_higher_substituted_amount
+
+  - name: dla_mobility_lower_weekly_rate
+    kind: derived
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Article 14(e), applied to regulation 4(2)(b)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2026/148/article/14
+              excerpt: "in paragraph (2)(b) for \"£29.20\" substitute \"£30.30\""
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          dla_mobility_lower_substituted_amount
