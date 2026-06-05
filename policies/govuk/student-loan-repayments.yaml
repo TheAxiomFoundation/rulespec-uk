@@ -3,7 +3,7 @@ module:
   proof_validation:
     required: true
   source_verification:
-    corpus_citation_path: uk/guidance/govuk/student-loan-repayments
+    corpus_citation_path: uk/guidance/govuk/student-loan-repayments/what-you-pay
   summary: |-
     GOV.UK student loan repayment guidance sets yearly income thresholds of GBP 26900 for Plan 1, GBP 29385 for Plan 2, GBP 33795 for Plan 4, GBP 25000 for Plan 5, and GBP 21000 for Postgraduate Loans. A borrower repays 9% of income over the threshold for Plan 1, Plan 2, Plan 4, or Plan 5, and 6% of income over the threshold for a Postgraduate Loan plan.
 rules:
@@ -19,8 +19,8 @@ rules:
           - path: versions[0].formula
             kind: amount
             source:
-              corpus_citation_path: uk/guidance/govuk/student-loan-repayments
-              excerpt: "Plan 1, GBP 26900"
+              corpus_citation_path: uk/guidance/govuk/student-loan-repayments/what-you-pay
+              excerpt: "Plan 1, £26,900"
     versions:
       - effective_from: '2026-04-06'
         formula: |-
@@ -38,8 +38,8 @@ rules:
           - path: versions[0].formula
             kind: amount
             source:
-              corpus_citation_path: uk/guidance/govuk/student-loan-repayments
-              excerpt: "Plan 2, GBP 29385"
+              corpus_citation_path: uk/guidance/govuk/student-loan-repayments/what-you-pay
+              excerpt: "Plan 2, £29,385"
     versions:
       - effective_from: '2026-04-06'
         formula: |-
@@ -57,8 +57,8 @@ rules:
           - path: versions[0].formula
             kind: amount
             source:
-              corpus_citation_path: uk/guidance/govuk/student-loan-repayments
-              excerpt: "Plan 4, GBP 33795"
+              corpus_citation_path: uk/guidance/govuk/student-loan-repayments/what-you-pay
+              excerpt: "Plan 4, £33,795"
     versions:
       - effective_from: '2026-04-06'
         formula: |-
@@ -76,8 +76,8 @@ rules:
           - path: versions[0].formula
             kind: amount
             source:
-              corpus_citation_path: uk/guidance/govuk/student-loan-repayments
-              excerpt: "Plan 5, GBP 25000"
+              corpus_citation_path: uk/guidance/govuk/student-loan-repayments/what-you-pay
+              excerpt: "Plan 5, £25,000"
     versions:
       - effective_from: '2026-04-06'
         formula: |-
@@ -95,8 +95,8 @@ rules:
           - path: versions[0].formula
             kind: amount
             source:
-              corpus_citation_path: uk/guidance/govuk/student-loan-repayments
-              excerpt: "Postgraduate Loan, GBP 21000"
+              corpus_citation_path: uk/guidance/govuk/student-loan-repayments/what-you-pay
+              excerpt: "Postgraduate Loan, £21,000"
     versions:
       - effective_from: '2026-04-06'
         formula: |-
@@ -112,7 +112,7 @@ rules:
           - path: versions[0].formula
             kind: parameter
             source:
-              corpus_citation_path: uk/guidance/govuk/student-loan-repayments
+              corpus_citation_path: uk/guidance/govuk/student-loan-repayments/what-you-pay
               excerpt: "You repay 9% of your income over the threshold if you are on Plan 1, Plan 2, Plan 4, or Plan 5."
     versions:
       - effective_from: '2026-04-06'
@@ -129,7 +129,7 @@ rules:
           - path: versions[0].formula
             kind: parameter
             source:
-              corpus_citation_path: uk/guidance/govuk/student-loan-repayments
+              corpus_citation_path: uk/guidance/govuk/student-loan-repayments/what-you-pay
               excerpt: "You repay 6% of your income over the threshold if you are on a Postgraduate Loan plan."
     versions:
       - effective_from: '2026-04-06'
@@ -148,12 +148,12 @@ rules:
           - path: versions[0].formula
             kind: condition
             source:
-              corpus_citation_path: uk/guidance/govuk/student-loan-repayments
+              corpus_citation_path: uk/guidance/govuk/student-loan-repayments/what-you-pay
               excerpt: "Plan 1, Plan 2, Plan 4, or Plan 5"
           - path: versions[0].formula
             kind: condition
             source:
-              corpus_citation_path: uk/guidance/govuk/student-loan-repayments
+              corpus_citation_path: uk/guidance/govuk/student-loan-repayments/what-you-pay
               excerpt: "Postgraduate Loan plan"
     versions:
       - effective_from: '2026-04-06'
@@ -177,8 +177,8 @@ rules:
           - path: versions[0].formula
             kind: formula
             source:
-              corpus_citation_path: uk/guidance/govuk/student-loan-repayments
-              excerpt: "The yearly income thresholds are: Plan 1, GBP 26900; Plan 2, GBP 29385; Plan 4, GBP 33795; Plan 5, GBP 25000; Postgraduate Loan, GBP 21000."
+              corpus_citation_path: uk/guidance/govuk/student-loan-repayments/what-you-pay
+              excerpt: "The yearly income thresholds are: Plan 1, £26,900; Plan 2, £29,385; Plan 4, £33,795; Plan 5, £25,000; Postgraduate Loan, £21,000."
           - path: versions[0].formula
             kind: import
             import:
@@ -226,7 +226,7 @@ rules:
           - path: versions[0].formula
             kind: formula
             source:
-              corpus_citation_path: uk/guidance/govuk/student-loan-repayments
+              corpus_citation_path: uk/guidance/govuk/student-loan-repayments/what-you-pay
               excerpt: "You repay 9% of your income over the threshold if you are on Plan 1, Plan 2, Plan 4, or Plan 5. You repay 6% of your income over the threshold if you are on a Postgraduate Loan plan."
           - path: versions[0].formula
             kind: import
@@ -258,7 +258,7 @@ rules:
           - path: versions[0].formula
             kind: formula
             source:
-              corpus_citation_path: uk/guidance/govuk/student-loan-repayments
+              corpus_citation_path: uk/guidance/govuk/student-loan-repayments/what-you-pay
               excerpt: "You repay a percentage of your income over the income threshold for your type of loan."
           - path: versions[0].formula
             kind: import
@@ -290,7 +290,7 @@ rules:
           - path: versions[0].formula
             kind: formula
             source:
-              corpus_citation_path: uk/guidance/govuk/student-loan-repayments
+              corpus_citation_path: uk/guidance/govuk/student-loan-repayments/what-you-pay
               excerpt: "How much you repay depends on your income"
           - path: versions[0].formula
             kind: import
