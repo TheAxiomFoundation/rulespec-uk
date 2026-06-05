@@ -1,0 +1,46 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2026/148/article/4
+  summary: |-
+    Article 4(2)(b) of the Social Security Benefits Up-rating Order 2026 amends section 44(4) of the Contributions and Benefits Act to set the weekly basic pension in a Category A retirement pension from 6 April 2026. It substitutes GBP 184.90 for GBP 176.45.
+rules:
+  - name: category_a_basic_retirement_pension_substituted_amount
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Article 4(2)(b)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2026/148/article/4
+              excerpt: "for \"£176.45\" substitute \"£184.90\""
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          184.90
+
+  - name: category_a_basic_retirement_pension_weekly_rate
+    kind: derived
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Article 4(2)(b), applied to section 44(4)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2026/148/article/4
+              excerpt: "for \"£176.45\" substitute \"£184.90\""
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          category_a_basic_retirement_pension_substituted_amount
