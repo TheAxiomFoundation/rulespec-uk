@@ -1,0 +1,41 @@
+{
+  "applied_files": [
+    {
+      "path": "policies/govuk/student-loan-repayments.yaml",
+      "sha256": "29493123a001dfd16150a3988c915f77c1cd09267c8b3b634baf6b29e7fcad1d"
+    },
+    {
+      "path": "policies/govuk/student-loan-repayments.test.yaml",
+      "sha256": "5a0c991acdc41ff7fb8c6b60b29ac343c12f6b783277f5c1712f714f339e5350"
+    }
+  ],
+  "axiom_encode_git": {
+    "commit": "7383bd81e862872b79fc66aa6538d31bfc4b6999",
+    "dirty_tracked": false,
+    "root": "/Users/maxghenis/_axiom-worktrees/axiom-encode-uk-student-loan-20260605",
+    "version": "0.2.601",
+    "version_commit": "3f32e7d359dec56c08860eb48c3b562843e43c5b"
+  },
+  "axiom_encode_version": "0.2.601",
+  "backend": "openai",
+  "citation": "uk/guidance/govuk/student-loan-repayments",
+  "context_manifest_file": "/tmp/axiom-encode-uk-student-loan-20260605-rerun/_eval_workspaces/openai-gpt-5.5/uk-guidance-govuk-student-loan-repayments/workspace/context-manifest.json",
+  "context_manifest_sha256": "115ab3293abbf4467b8cdb570a90761abee5be1c9d2557f146f08b71c3f729da",
+  "generated_at": "2026-06-05T22:26:24.885148+00:00",
+  "generated_output_file": "/tmp/axiom-encode-uk-student-loan-repaired/openai-gpt-5.5/policies/govuk/student-loan-repayments.yaml",
+  "generated_output_root": "/tmp/axiom-encode-uk-student-loan-repaired",
+  "generated_output_sha256": "29493123a001dfd16150a3988c915f77c1cd09267c8b3b634baf6b29e7fcad1d",
+  "generation_prompt_sha256": null,
+  "model": "gpt-5.5",
+  "run_id": "student-loan-repayment-deterministic-repair",
+  "runner": "openai-gpt-5.5",
+  "schema_version": "axiom-encode/applied-rulespec/v1",
+  "signature": {
+    "algorithm": "hmac-sha256",
+    "key_id": "axiom-encode-apply-v1",
+    "value": "b8a35fd7700320a611f2b8704196cbf283ace12949031d5673062d413cf06b6e"
+  },
+  "tool": "axiom-encode encode --apply deterministic repair",
+  "trace_file": "/tmp/axiom-encode-uk-student-loan-20260605-rerun/traces/openai-gpt-5.5/uk-guidance-govuk-student-loan-repayments.json",
+  "trace_sha256": "d956f7ae097cc61a9d96f4b9b38a74469380c6de00e38052cf52b33755929738"
+}
