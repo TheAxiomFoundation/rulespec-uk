@@ -1,0 +1,27 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/ssi/2020/351/20
+  summary: |-
+    Regulation 20 of the Scottish Child Payment Regulations 2020 sets the value of a Scottish child payment in respect of a child at GBP 28.20 per week.
+rules:
+  - name: scottish_child_payment_weekly_amount
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Scottish Child Payment Regulations 2020 reg. 20(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/ssi/2020/351/20
+              excerpt: "The value of a Scottish child payment in respect of a child is £28.20 per week."
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          28.20
