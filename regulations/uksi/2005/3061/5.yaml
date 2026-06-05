@@ -1,0 +1,27 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2005/3061/5
+  summary: |-
+    Regulation 5 of the Social Fund Maternity and Funeral Expenses (General) Regulations 2005 provides for a GBP 500 Sure Start Maternity Grant to meet maternity expenses where the regulation's conditions are satisfied.
+rules:
+  - name: sure_start_maternity_grant_amount
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Social Fund Maternity and Funeral Expenses (General) Regulations 2005 reg. 5(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2005/3061/5
+              excerpt: "a payment of £500 to meet maternity expenses"
+    versions:
+      - effective_from: '2005-12-05'
+        formula: |-
+          500
