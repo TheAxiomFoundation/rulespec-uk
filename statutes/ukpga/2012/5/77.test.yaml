@@ -1,0 +1,31 @@
+- name: both_components_are_added
+  period:
+    period_kind: benefit_week
+    start: '2026-04-06'
+    end: '2026-04-12'
+  input:
+    uk:statutes/ukpga/2012/5/77#input.pip_daily_living_component_weekly_amount: 114.60
+    uk:statutes/ukpga/2012/5/77#input.pip_mobility_component_weekly_amount: 30.30
+  oracle_inputs:
+    policyengine:
+      pip_daily_living_enhanced_rate_entitlement: true
+      pip_mobility_standard_rate_entitlement: true
+  output:
+    uk:statutes/ukpga/2012/5/77#personal_independence_payment_weekly_amount: 144.90
+
+- name: no_components_pay_zero
+  period:
+    period_kind: benefit_week
+    start: '2026-04-13'
+    end: '2026-04-19'
+  input:
+    uk:statutes/ukpga/2012/5/77#input.pip_daily_living_component_weekly_amount: 0
+    uk:statutes/ukpga/2012/5/77#input.pip_mobility_component_weekly_amount: 0
+  oracle_inputs:
+    policyengine:
+      pip_daily_living_standard_rate_entitlement: false
+      pip_daily_living_enhanced_rate_entitlement: false
+      pip_mobility_standard_rate_entitlement: false
+      pip_mobility_enhanced_rate_entitlement: false
+  output:
+    uk:statutes/ukpga/2012/5/77#personal_independence_payment_weekly_amount: 0

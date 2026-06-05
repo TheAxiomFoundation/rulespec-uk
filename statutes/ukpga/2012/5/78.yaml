@@ -1,0 +1,92 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/statute/ukpga/2012/5/78
+  summary: |-
+    Section 78 provides standard-rate daily living component entitlement where daily living activities are limited by a physical or mental condition and the required period condition is met, and enhanced-rate entitlement where those activities are severely limited and the required period condition is met. The standard and enhanced rates are prescribed weekly rates.
+rules:
+  - name: pip_daily_living_standard_rate_entitlement
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Week
+    source: Welfare Reform Act 2012 s.78(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/78
+              excerpt: "the person's ability to carry out daily living activities is limited by the person's physical or mental condition; and the person meets the required period condition"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          ability_to_carry_out_daily_living_activities_is_limited_by_physical_or_mental_condition
+          and required_period_condition_met_for_daily_living_component
+
+  - name: pip_daily_living_enhanced_rate_entitlement
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Week
+    source: Welfare Reform Act 2012 s.78(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/78
+              excerpt: "the person's ability to carry out daily living activities is severely limited by the person's physical or mental condition; and the person meets the required period condition"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          ability_to_carry_out_daily_living_activities_is_severely_limited_by_physical_or_mental_condition
+          and required_period_condition_met_for_daily_living_component
+
+  - name: pip_daily_living_component_weekly_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Welfare Reform Act 2012 s.78(1) to (3); PIP Regulations 2013 reg. 24
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/78
+              excerpt: "the standard rate means such weekly rate as may be prescribed; the enhanced rate means such weekly rate as may be prescribed"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/2012/5/78#pip_daily_living_standard_rate_entitlement
+              output: pip_daily_living_standard_rate_entitlement
+              hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/2012/5/78#pip_daily_living_enhanced_rate_entitlement
+              output: pip_daily_living_enhanced_rate_entitlement
+              hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2013/377/24#pip_daily_living_standard_weekly_rate
+              output: pip_daily_living_standard_weekly_rate
+              hash: sha256:e066c2af154a794a52429c189e6d4b739f7cf4fe9725e568c87ed3f3e614921f
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2013/377/24#pip_daily_living_enhanced_weekly_rate
+              output: pip_daily_living_enhanced_weekly_rate
+              hash: sha256:e066c2af154a794a52429c189e6d4b739f7cf4fe9725e568c87ed3f3e614921f
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if pip_daily_living_enhanced_rate_entitlement: pip_daily_living_enhanced_weekly_rate else: if pip_daily_living_standard_rate_entitlement: pip_daily_living_standard_weekly_rate else: 0

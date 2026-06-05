@@ -1,0 +1,94 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/statute/ukpga/2012/5/79
+  summary: |-
+    Section 79 provides standard-rate mobility component entitlement where the person is of or over the prescribed age, mobility activities are limited by a physical or mental condition, and the required period condition is met, and enhanced-rate entitlement where those activities are severely limited and the required period condition is met. The standard and enhanced rates are prescribed weekly rates.
+rules:
+  - name: pip_mobility_standard_rate_entitlement
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Week
+    source: Welfare Reform Act 2012 s.79(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/79
+              excerpt: "the person is of or over the age prescribed for the purposes of this subsection; the person's ability to carry out mobility activities is limited by the person's physical or mental condition; and the person meets the required period condition"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          person_is_of_or_over_age_prescribed_for_mobility_component
+          and ability_to_carry_out_mobility_activities_is_limited_by_physical_or_mental_condition
+          and required_period_condition_met_for_mobility_component
+
+  - name: pip_mobility_enhanced_rate_entitlement
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Week
+    source: Welfare Reform Act 2012 s.79(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/79
+              excerpt: "the person is of or over the age prescribed for the purposes of this subsection; the person's ability to carry out mobility activities is severely limited by the person's physical or mental condition; and the person meets the required period condition"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          person_is_of_or_over_age_prescribed_for_mobility_component
+          and ability_to_carry_out_mobility_activities_is_severely_limited_by_physical_or_mental_condition
+          and required_period_condition_met_for_mobility_component
+
+  - name: pip_mobility_component_weekly_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Welfare Reform Act 2012 s.79(1) to (3); PIP Regulations 2013 reg. 24
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/79
+              excerpt: "the standard rate means such weekly rate as may be prescribed; the enhanced rate means such weekly rate as may be prescribed"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/2012/5/79#pip_mobility_standard_rate_entitlement
+              output: pip_mobility_standard_rate_entitlement
+              hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/2012/5/79#pip_mobility_enhanced_rate_entitlement
+              output: pip_mobility_enhanced_rate_entitlement
+              hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2013/377/24#pip_mobility_standard_weekly_rate
+              output: pip_mobility_standard_weekly_rate
+              hash: sha256:e066c2af154a794a52429c189e6d4b739f7cf4fe9725e568c87ed3f3e614921f
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2013/377/24#pip_mobility_enhanced_weekly_rate
+              output: pip_mobility_enhanced_weekly_rate
+              hash: sha256:e066c2af154a794a52429c189e6d4b739f7cf4fe9725e568c87ed3f3e614921f
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if pip_mobility_enhanced_rate_entitlement: pip_mobility_enhanced_weekly_rate else: if pip_mobility_standard_rate_entitlement: pip_mobility_standard_weekly_rate else: 0
