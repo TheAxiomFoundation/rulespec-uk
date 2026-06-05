@@ -1,0 +1,27 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/ssi/2023/302/5
+  summary: |-
+    Regulation 5 of the Carer's Assistance (Carer Support Payment) (Scotland) Regulations 2023 requires the carer to provide at least 35 hours of care in an award week.
+rules:
+  - name: carer_support_payment_minimum_weekly_care_hours
+    kind: parameter
+    dtype: Count
+    period: Week
+    unit: hour
+    source: The Carer's Assistance (Carer Support Payment) (Scotland) Regulations 2023 reg. 5(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/ssi/2023/302/5
+              excerpt: "A carer must provide care for at least 35 hours in an award week"
+    versions:
+      - effective_from: '2024-11-01'
+        formula: |-
+          35
