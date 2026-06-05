@@ -1,0 +1,165 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2026/148/schedule/1
+  summary: |-
+    Schedule 1 Part III of the Social Security Benefits Up-rating Order 2026 sets weekly non-contributory benefit rates from 6 April 2026. It sets Attendance Allowance at GBP 114.60 for the higher rate and GBP 76.70 for the lower rate, Severe Disablement Allowance at GBP 103.85 with age-related additions of GBP 15.50 or GBP 8.60, and Carer's Allowance at GBP 86.45.
+rules:
+  - name: attendance_allowance_higher_weekly_rate
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Schedule 1 Part III, row 1(a)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2026/148/schedule/1
+              excerpt: "Attendance allowance: (a) higher rate, £114.60"
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          114.60
+
+  - name: attendance_allowance_lower_weekly_rate
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Schedule 1 Part III, row 1(b)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2026/148/schedule/1
+              excerpt: "(b) lower rate, £76.70"
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          76.70
+
+  - name: severe_disablement_allowance_basic_weekly_rate
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Schedule 1 Part III, row 2
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2026/148/schedule/1
+              excerpt: "Severe disablement allowance, £103.85"
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          103.85
+
+  - name: sda_age_related_addition_higher_weekly_rate
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Schedule 1 Part III, row 3(a)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2026/148/schedule/1
+              excerpt: "Age related addition: (a) higher rate, £15.50"
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          15.50
+
+  - name: sda_age_related_addition_middle_weekly_rate
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Schedule 1 Part III, row 3(b)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2026/148/schedule/1
+              excerpt: "(b) middle rate, £8.60"
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          8.60
+
+  - name: sda_age_related_addition_lower_weekly_rate
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Schedule 1 Part III, row 3(c)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2026/148/schedule/1
+              excerpt: "(c) lower rate, £8.60"
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          8.60
+
+  - name: severe_disablement_allowance_maximum_weekly_rate
+    kind: derived
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Schedule 1 Part III, rows 2 and 3(a)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2026/148/schedule/1
+              excerpt: "Severe disablement allowance, £103.85"
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2026/148/schedule/1
+              excerpt: "Age related addition: (a) higher rate, £15.50"
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          severe_disablement_allowance_basic_weekly_rate + sda_age_related_addition_higher_weekly_rate
+
+  - name: carers_allowance_weekly_rate
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Schedule 1 Part III, row 4
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2026/148/schedule/1
+              excerpt: "Carer’s allowance, £86.45"
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          86.45
