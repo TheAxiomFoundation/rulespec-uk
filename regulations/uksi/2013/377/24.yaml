@@ -1,0 +1,84 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2013/377/24
+  summary: |-
+    Regulation 24 prescribes the weekly rates of Personal Independence Payment. For the 2026 uprating period, the daily living component is GBP 76.70 at the standard rate and GBP 114.60 at the enhanced rate, and the mobility component is GBP 30.30 at the standard rate and GBP 80.00 at the enhanced rate.
+rules:
+  - name: pip_daily_living_standard_weekly_rate
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Regulation 24(1)(a)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/377/24
+              excerpt: "the standard rate, £76.70"
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          76.70
+
+  - name: pip_daily_living_enhanced_weekly_rate
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Regulation 24(1)(b)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/377/24
+              excerpt: "the enhanced rate, £114.60"
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          114.60
+
+  - name: pip_mobility_standard_weekly_rate
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Regulation 24(2)(a)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/377/24
+              excerpt: "the standard rate, £30.30"
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          30.30
+
+  - name: pip_mobility_enhanced_weekly_rate
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Regulation 24(2)(b)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/377/24
+              excerpt: "the enhanced rate, £80.00"
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          80.00
