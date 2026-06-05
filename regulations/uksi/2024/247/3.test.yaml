@@ -1,0 +1,14 @@
+- name: child_tax_credit_2024_uprating_amounts
+  period:
+    period_kind: tax_year
+    start: '2024-04-06'
+    end: '2025-04-05'
+  input: {}
+  output:
+    uk:regulations/uksi/2024/247/3#ctc_individual_element_substituted_amount: 3455
+    uk:regulations/uksi/2024/247/3#ctc_disabled_child_element_substituted_amount: 4170
+    uk:regulations/uksi/2024/247/3#ctc_severely_disabled_child_rate_substituted_amount: 5850
+    uk:regulations/uksi/2024/247/3#ctc_individual_element_amount: 3455
+    uk:regulations/uksi/2024/247/3#ctc_disabled_child_element_amount: 4170
+    uk:regulations/uksi/2024/247/3#ctc_severely_disabled_child_rate_amount: 5850
+    uk:regulations/uksi/2024/247/3#ctc_severely_disabled_child_additional_amount: 1680

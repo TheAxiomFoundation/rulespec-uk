@@ -1,0 +1,146 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2024/247/3
+  summary: |-
+    Regulation 3 of the Tax Credits, Child Benefit and Guardian's Allowance Up-rating Regulations 2024 amends Child Tax Credit Regulation 7 by substituting GBP 3,455 for the individual child and qualifying young person element, GBP 4,170 for the disabled-child rate, and GBP 5,850 for the severely-disabled-child rate.
+rules:
+  - name: ctc_individual_element_substituted_amount
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Regulation 3(a)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2024/247/3
+              excerpt: "for “£3,235” substitute “£3,455”"
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          3455
+
+  - name: ctc_disabled_child_element_substituted_amount
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Regulation 3(b)(i)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2024/247/3
+              excerpt: "for “£3,905” substitute “£4,170”"
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          4170
+
+  - name: ctc_severely_disabled_child_rate_substituted_amount
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Regulation 3(b)(ii)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2024/247/3
+              excerpt: "for “£5,480” substitute “£5,850”"
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          5850
+
+  - name: ctc_individual_element_amount
+    kind: derived
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Regulation 3(a), applied to Child Tax Credit Regulation 7(4)(c) and 7(4)(f)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2024/247/3
+              excerpt: "for “£3,235” substitute “£3,455”"
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          ctc_individual_element_substituted_amount
+
+  - name: ctc_disabled_child_element_amount
+    kind: derived
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Regulation 3(b)(i), applied to Child Tax Credit Regulation 7(5)(a)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2024/247/3
+              excerpt: "for “£3,905” substitute “£4,170”"
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          ctc_disabled_child_element_substituted_amount
+
+  - name: ctc_severely_disabled_child_rate_amount
+    kind: derived
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Regulation 3(b)(ii), applied to Child Tax Credit Regulation 7(5)(b)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2024/247/3
+              excerpt: "for “£5,480” substitute “£5,850”"
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          ctc_severely_disabled_child_rate_substituted_amount
+
+  - name: ctc_severely_disabled_child_additional_amount
+    kind: derived
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Regulation 3(b)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2024/247/3
+              excerpt: "for “£3,905” substitute “£4,170”"
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2024/247/3
+              excerpt: "for “£5,480” substitute “£5,850”"
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          ctc_severely_disabled_child_rate_amount - ctc_disabled_child_element_amount

@@ -1,0 +1,28 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2002/2007/7
+  summary: |-
+    Regulation 7 determines the maximum rate at which a claimant or joint claimants may be entitled to Child Tax Credit. The family element applies where the claimant or either joint claimant is responsible for a child or qualifying young person born before 6 April 2017, and the family element amount is GBP 545.
+rules:
+  - name: ctc_family_element_amount
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Regulation 7(3)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2002/2007/7
+              excerpt: "The family element of child tax credit is £545."
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          545
+
