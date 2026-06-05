@@ -1,0 +1,27 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/statute/ukpga/2023/7/5
+  summary: |-
+    Section 5 of the Social Security (Additional Payments) Act 2023 requires a disability additional payment of GBP 150 for each qualifying individual.
+rules:
+  - name: disability_additional_payment_amount
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Social Security (Additional Payments) Act 2023 s.5(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2023/7/5
+              excerpt: "a single payment of £150"
+    versions:
+      - effective_from: '2023-01-01'
+        formula: |-
+          150
