@@ -1,0 +1,41 @@
+- name: capital_deemed_income_counts_incomplete_band
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2026-04-06'
+    end: '2026-04-12'
+  input:
+    uk:regulations/uksi/2002/1792/15#input.claimant_capital: 10501
+    uk:regulations/uksi/2002/1792/15#input.capital_disregarded_under_regulation_17_8: false
+  output:
+    uk:regulations/uksi/2002/1792/15#capital_deemed_income_lower_threshold: 10000
+    uk:regulations/uksi/2002/1792/15#capital_deemed_income_band_size: 500
+    uk:regulations/uksi/2002/1792/15#capital_deemed_income_weekly_amount_per_band: 1
+    uk:regulations/uksi/2002/1792/15#capital_treated_as_yielding_weekly_income: holds
+    uk:regulations/uksi/2002/1792/15#capital_deemed_weekly_income: 2
+
+- name: threshold_capital_yields_no_deemed_income
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2026-04-06'
+    end: '2026-04-12'
+  input:
+    uk:regulations/uksi/2002/1792/15#input.claimant_capital: 10000
+    uk:regulations/uksi/2002/1792/15#input.capital_disregarded_under_regulation_17_8: false
+  output:
+    uk:regulations/uksi/2002/1792/15#capital_treated_as_yielding_weekly_income: not_holds
+    uk:regulations/uksi/2002/1792/15#capital_deemed_weekly_income: 0
+
+- name: disregarded_capital_blocks_deemed_income
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2026-04-06'
+    end: '2026-04-12'
+  input:
+    uk:regulations/uksi/2002/1792/15#input.claimant_capital: 11000
+    uk:regulations/uksi/2002/1792/15#input.capital_disregarded_under_regulation_17_8: true
+  output:
+    uk:regulations/uksi/2002/1792/15#capital_treated_as_yielding_weekly_income: not_holds
+    uk:regulations/uksi/2002/1792/15#capital_deemed_weekly_income: 0
