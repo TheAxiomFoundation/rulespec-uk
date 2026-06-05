@@ -1,0 +1,40 @@
+- name: class_4_main_and_additional_contributions_apply
+  period:
+    period_kind: tax_year
+    start: '2026-04-06'
+    end: '2027-04-05'
+  input:
+    uk:statutes/ukpga/1992/4/15#input.class_4_contributions_payable_under_section_15: true
+    uk:statutes/ukpga/1992/4/15#input.profits_chargeable_to_class_4_contributions: 60000
+  output:
+    uk:statutes/ukpga/1992/4/15#lower_profits_limit: 12570
+    uk:statutes/ukpga/1992/4/15#upper_profits_limit: 50270
+    uk:statutes/ukpga/1992/4/15#main_class_4_percentage: 0.06
+    uk:statutes/ukpga/1992/4/15#additional_class_4_percentage: 0.02
+    uk:statutes/ukpga/1992/4/15#main_class_4_contribution: 2262
+    uk:statutes/ukpga/1992/4/15#additional_class_4_contribution: 194.6
+    uk:statutes/ukpga/1992/4/15#class_4_contribution_before_annual_maximum: 2456.6
+- name: no_class_4_contribution_below_lower_profits_limit
+  period:
+    period_kind: tax_year
+    start: '2026-04-06'
+    end: '2027-04-05'
+  input:
+    uk:statutes/ukpga/1992/4/15#input.class_4_contributions_payable_under_section_15: true
+    uk:statutes/ukpga/1992/4/15#input.profits_chargeable_to_class_4_contributions: 12000
+  output:
+    uk:statutes/ukpga/1992/4/15#main_class_4_contribution: 0
+    uk:statutes/ukpga/1992/4/15#additional_class_4_contribution: 0
+    uk:statutes/ukpga/1992/4/15#class_4_contribution_before_annual_maximum: 0
+- name: class_4_not_payable
+  period:
+    period_kind: tax_year
+    start: '2026-04-06'
+    end: '2027-04-05'
+  input:
+    uk:statutes/ukpga/1992/4/15#input.class_4_contributions_payable_under_section_15: false
+    uk:statutes/ukpga/1992/4/15#input.profits_chargeable_to_class_4_contributions: 60000
+  output:
+    uk:statutes/ukpga/1992/4/15#main_class_4_contribution: 0
+    uk:statutes/ukpga/1992/4/15#additional_class_4_contribution: 0
+    uk:statutes/ukpga/1992/4/15#class_4_contribution_before_annual_maximum: 0

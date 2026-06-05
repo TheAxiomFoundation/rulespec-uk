@@ -1,0 +1,178 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/statute/ukpga/1992/4/15
+  summary: |-
+    Class 4 National Insurance contributions are payable for a tax year on profits immediately derived from carrying on a trade, profession, or vocation in the United Kingdom and charged to income tax as trading income. The contribution amount is the aggregate of the main Class 4 percentage on profits above the lower profits limit and up to the upper profits limit, plus the additional Class 4 percentage on profits above the upper profits limit. For 2026-27, the lower and upper profits limits are GBP 12,570 and GBP 50,270, the main Class 4 percentage is 6%, and the additional Class 4 percentage is 2%.
+rules:
+  - name: lower_profits_limit
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: Social Security Contributions and Benefits Act 1992 s.15(3)(a)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/15
+              excerpt: "exceeds £12,570"
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          12570
+
+  - name: upper_profits_limit
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: Social Security Contributions and Benefits Act 1992 s.15(3)(a), (b)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/15
+              excerpt: "does not exceed £50,270"
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          50270
+
+  - name: main_class_4_percentage
+    kind: parameter
+    dtype: Rate
+    source: Social Security Contributions and Benefits Act 1992 s.15(3ZA)(a)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/15
+              excerpt: "the main Class 4 percentage is 6%"
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          0.06
+
+  - name: additional_class_4_percentage
+    kind: parameter
+    dtype: Rate
+    source: Social Security Contributions and Benefits Act 1992 s.15(3ZA)(b)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/15
+              excerpt: "the additional Class 4 percentage is 2 per cent"
+    versions:
+      - effective_from: '2011-04-06'
+        formula: |-
+          0.02
+
+  - name: main_class_4_contribution
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Social Security Contributions and Benefits Act 1992 s.15(3)(a)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/15
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/1992/4/15#main_class_4_percentage
+              output: main_class_4_percentage
+              hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/1992/4/15#lower_profits_limit
+              output: lower_profits_limit
+              hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/1992/4/15#upper_profits_limit
+              output: upper_profits_limit
+              hash: sha256:local
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          if class_4_contributions_payable_under_section_15: main_class_4_percentage * max(0, min(profits_chargeable_to_class_4_contributions, upper_profits_limit) - lower_profits_limit) else: 0
+
+  - name: additional_class_4_contribution
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Social Security Contributions and Benefits Act 1992 s.15(3)(b)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/15
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/1992/4/15#additional_class_4_percentage
+              output: additional_class_4_percentage
+              hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/1992/4/15#upper_profits_limit
+              output: upper_profits_limit
+              hash: sha256:local
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          if class_4_contributions_payable_under_section_15: additional_class_4_percentage * max(0, profits_chargeable_to_class_4_contributions - upper_profits_limit) else: 0
+
+  - name: class_4_contribution_before_annual_maximum
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Social Security Contributions and Benefits Act 1992 s.15(3)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/15
+              excerpt: "is equal to the aggregate of"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/1992/4/15#main_class_4_contribution
+              output: main_class_4_contribution
+              hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/1992/4/15#additional_class_4_contribution
+              output: additional_class_4_contribution
+              hash: sha256:local
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          main_class_4_contribution + additional_class_4_contribution
