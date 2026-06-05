@@ -1,0 +1,46 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/ssi/2023/302/16
+  summary: |-
+    Regulation 16 of the Carer's Assistance (Carer Support Payment) (Scotland) Regulations 2023 sets the weekly Carer Support Payment amount at GBP 86.45 and the weekly Scottish Carer Supplement amount at GBP 11.70.
+rules:
+  - name: carer_support_payment_weekly_rate
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: The Carer's Assistance (Carer Support Payment) (Scotland) Regulations 2023 reg. 16(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/ssi/2023/302/16
+              excerpt: "The weekly amount of Carer Support Payment is £86.45."
+    versions:
+      - effective_from: '2026-04-05'
+        formula: |-
+          86.45
+
+  - name: scottish_carer_supplement_weekly_rate
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: The Carer's Assistance (Carer Support Payment) (Scotland) Regulations 2023 reg. 16(1A)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/ssi/2023/302/16
+              excerpt: "The weekly amount of Scottish Carer Supplement is £11.70."
+    versions:
+      - effective_from: '2026-04-05'
+        formula: |-
+          11.70
