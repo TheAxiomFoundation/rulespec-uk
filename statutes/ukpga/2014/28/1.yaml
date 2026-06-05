@@ -1,0 +1,26 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/statute/ukpga/2014/28/1
+  summary: |-
+    Section 1 of the Childcare Payments Act 2014 entitles eligible account-holders to top-up payments for qualifying childcare. Subsection (4) sets the amount of the top-up payment at 25% of the qualifying payment.
+rules:
+  - name: tax_free_childcare_top_up_payment_rate
+    kind: parameter
+    dtype: Rate
+    period: Year
+    source: Childcare Payments Act 2014 s.1(4)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/statute/ukpga/2014/28/1
+              excerpt: "The amount of the top-up payment is 25% of the amount of the qualifying payment"
+    versions:
+      - effective_from: '2017-04-21'
+        formula: |-
+          0.25

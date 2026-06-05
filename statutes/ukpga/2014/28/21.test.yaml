@@ -1,0 +1,10 @@
+- name: tax_free_childcare_top_up_element_rate_is_20_percent
+  period:
+    period_kind: custom
+    name: calendar_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input: {}
+  output:
+    uk:statutes/ukpga/2014/28/1#tax_free_childcare_top_up_payment_rate: 0.25
+    uk:statutes/ukpga/2014/28/21#tax_free_childcare_top_up_element_rate: 0.2

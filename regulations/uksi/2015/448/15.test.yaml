@@ -1,0 +1,9 @@
+- name: tax_free_childcare_income_limit_is_100000
+  period:
+    period_kind: custom
+    name: calendar_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input: {}
+  output:
+    uk:regulations/uksi/2015/448/15#tax_free_childcare_maximum_adjusted_net_income: 100000
