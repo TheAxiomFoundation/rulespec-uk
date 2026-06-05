@@ -1,0 +1,111 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/statute/ukpga/2002/16/2
+  summary: |-
+    The guarantee credit condition is that the claimant has no income or has income which does not exceed the appropriate minimum guarantee. The appropriate minimum guarantee is the total of the standard minimum guarantee and any applicable prescribed additional amounts. Where the claimant is entitled to guarantee credit, the amount is the appropriate minimum guarantee if the claimant has no income, or the difference between the appropriate minimum guarantee and income if the claimant has income.
+rules:
+  - name: appropriate_minimum_guarantee
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: State Pension Credit Act 2002 s 2(3)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2002/16/2
+              excerpt: "The appropriate minimum guarantee shall be the total of"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2002/16/2
+              excerpt: "the standard minimum guarantee"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2002/16/2
+              excerpt: "such prescribed additional amounts as may be applicable"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          standard_minimum_guarantee + prescribed_additional_amounts_applicable
+
+  - name: guarantee_credit_condition_satisfied
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Year
+    source: State Pension Credit Act 2002 s 2(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2002/16/2
+              excerpt: "has no income"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2002/16/2
+              excerpt: "has income which does not exceed the appropriate minimum guarantee"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/2002/16/2#appropriate_minimum_guarantee
+              output: appropriate_minimum_guarantee
+              hash: sha256:local
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          claimant_income == 0
+          or claimant_income <= appropriate_minimum_guarantee
+
+  - name: guarantee_credit
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: State Pension Credit Act 2002 s 2(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2002/16/2
+              excerpt: "Where the claimant is entitled to a guarantee credit"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2002/16/2
+              excerpt: "if he has no income, the guarantee credit shall be the appropriate minimum guarantee"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2002/16/2
+              excerpt: "if he has income, the guarantee credit shall be the difference between the appropriate minimum guarantee and his income"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/2002/16/2#appropriate_minimum_guarantee
+              output: appropriate_minimum_guarantee
+              hash: sha256:local
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if claimant_is_entitled_to_guarantee_credit:
+            if claimant_income == 0:
+              appropriate_minimum_guarantee
+            else:
+              appropriate_minimum_guarantee - claimant_income
+          else:
+            0
