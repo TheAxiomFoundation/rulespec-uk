@@ -1,0 +1,10 @@
+- name: means_tested_additional_payment_total_2022
+  period:
+    period_kind: tax_year
+    start: '2022-01-01'
+    end: '2022-12-31'
+  input: {}
+  output:
+    uk:statutes/ukpga/2022/38/1#first_means_tested_additional_payment_amount: 326
+    uk:statutes/ukpga/2022/38/1#second_means_tested_additional_payment_amount: 324
+    uk:statutes/ukpga/2022/38/1#means_tested_additional_payment_total: 650

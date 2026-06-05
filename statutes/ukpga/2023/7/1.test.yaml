@@ -1,0 +1,11 @@
+- name: means_tested_additional_payment_total_2023
+  period:
+    period_kind: tax_year
+    start: '2023-01-01'
+    end: '2023-12-31'
+  input: {}
+  output:
+    uk:statutes/ukpga/2023/7/1#first_means_tested_additional_payment_amount: 301
+    uk:statutes/ukpga/2023/7/1#second_means_tested_additional_payment_amount: 300
+    uk:statutes/ukpga/2023/7/1#third_means_tested_additional_payment_amount: 299
+    uk:statutes/ukpga/2023/7/1#means_tested_additional_payment_total: 900

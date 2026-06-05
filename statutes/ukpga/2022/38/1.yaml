@@ -1,0 +1,72 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/statute/ukpga/2022/38/1
+  summary: |-
+    Section 1 of the Social Security (Additional Payments) Act 2022 requires means-tested additional payments of GBP 326 for the first qualifying day and GBP 324 for the second qualifying day.
+rules:
+  - name: first_means_tested_additional_payment_amount
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Social Security (Additional Payments) Act 2022 s.1(1), (2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2022/38/1
+              excerpt: "a single payment of £326"
+    versions:
+      - effective_from: '2022-01-01'
+        formula: |-
+          326
+
+  - name: second_means_tested_additional_payment_amount
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Social Security (Additional Payments) Act 2022 s.1(1), (2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2022/38/1
+              excerpt: "a single payment of £324"
+    versions:
+      - effective_from: '2022-01-01'
+        formula: |-
+          324
+
+  - name: means_tested_additional_payment_total
+    kind: derived
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Social Security (Additional Payments) Act 2022 s.1(1), (2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/2022/38/1#first_means_tested_additional_payment_amount
+              output: first_means_tested_additional_payment_amount
+              hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/2022/38/1#second_means_tested_additional_payment_amount
+              output: second_means_tested_additional_payment_amount
+              hash: sha256:local
+    versions:
+      - effective_from: '2022-01-01'
+        formula: |-
+          first_means_tested_additional_payment_amount + second_means_tested_additional_payment_amount
