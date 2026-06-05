@@ -1,0 +1,40 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/statute/ukpga/2012/5/77
+  summary: |-
+    Section 77 establishes Personal Independence Payment and provides that entitlement may be to the daily living component, the mobility component, or both components.
+rules:
+  - name: personal_independence_payment_weekly_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Welfare Reform Act 2012 s.77(1), (2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/77
+              excerpt: "the daily living component (see section 78); the mobility component (see section 79); or both those components"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/2012/5/78#pip_daily_living_component_weekly_amount
+              output: pip_daily_living_component_weekly_amount
+              hash: sha256:b7598f60948fb0d3897e1143de4876c47e8b3797b1d3291bc8d0a7043184514c
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/2012/5/79#pip_mobility_component_weekly_amount
+              output: pip_mobility_component_weekly_amount
+              hash: sha256:1c84745c7a444b4628b2bf7942fe48d90db76bada0aa5ff368877adabc317e8c
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          pip_daily_living_component_weekly_amount + pip_mobility_component_weekly_amount

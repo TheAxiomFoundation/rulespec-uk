@@ -1,0 +1,50 @@
+- name: mobility_enhanced_rate
+  period:
+    period_kind: benefit_week
+    start: '2026-04-06'
+    end: '2026-04-12'
+  input:
+    uk:statutes/ukpga/2012/5/79#input.person_is_of_or_over_age_prescribed_for_mobility_component: true
+    uk:statutes/ukpga/2012/5/79#input.ability_to_carry_out_mobility_activities_is_limited_by_physical_or_mental_condition: false
+    uk:statutes/ukpga/2012/5/79#input.ability_to_carry_out_mobility_activities_is_severely_limited_by_physical_or_mental_condition: true
+    uk:statutes/ukpga/2012/5/79#input.required_period_condition_met_for_mobility_component: true
+    uk:statutes/ukpga/2012/5/79#input.pip_mobility_standard_weekly_rate: 30.30
+    uk:statutes/ukpga/2012/5/79#input.pip_mobility_enhanced_weekly_rate: 80.00
+  output:
+    uk:statutes/ukpga/2012/5/79#pip_mobility_standard_rate_entitlement: not_holds
+    uk:statutes/ukpga/2012/5/79#pip_mobility_enhanced_rate_entitlement: holds
+    uk:statutes/ukpga/2012/5/79#pip_mobility_component_weekly_amount: 80.00
+
+- name: mobility_standard_rate
+  period:
+    period_kind: benefit_week
+    start: '2026-04-13'
+    end: '2026-04-19'
+  input:
+    uk:statutes/ukpga/2012/5/79#input.person_is_of_or_over_age_prescribed_for_mobility_component: true
+    uk:statutes/ukpga/2012/5/79#input.ability_to_carry_out_mobility_activities_is_limited_by_physical_or_mental_condition: true
+    uk:statutes/ukpga/2012/5/79#input.ability_to_carry_out_mobility_activities_is_severely_limited_by_physical_or_mental_condition: false
+    uk:statutes/ukpga/2012/5/79#input.required_period_condition_met_for_mobility_component: true
+    uk:statutes/ukpga/2012/5/79#input.pip_mobility_standard_weekly_rate: 30.30
+    uk:statutes/ukpga/2012/5/79#input.pip_mobility_enhanced_weekly_rate: 80.00
+  output:
+    uk:statutes/ukpga/2012/5/79#pip_mobility_standard_rate_entitlement: holds
+    uk:statutes/ukpga/2012/5/79#pip_mobility_enhanced_rate_entitlement: not_holds
+    uk:statutes/ukpga/2012/5/79#pip_mobility_component_weekly_amount: 30.30
+
+- name: mobility_age_condition_not_met
+  period:
+    period_kind: benefit_week
+    start: '2026-04-20'
+    end: '2026-04-26'
+  input:
+    uk:statutes/ukpga/2012/5/79#input.person_is_of_or_over_age_prescribed_for_mobility_component: false
+    uk:statutes/ukpga/2012/5/79#input.ability_to_carry_out_mobility_activities_is_limited_by_physical_or_mental_condition: true
+    uk:statutes/ukpga/2012/5/79#input.ability_to_carry_out_mobility_activities_is_severely_limited_by_physical_or_mental_condition: true
+    uk:statutes/ukpga/2012/5/79#input.required_period_condition_met_for_mobility_component: true
+    uk:statutes/ukpga/2012/5/79#input.pip_mobility_standard_weekly_rate: 30.30
+    uk:statutes/ukpga/2012/5/79#input.pip_mobility_enhanced_weekly_rate: 80.00
+  output:
+    uk:statutes/ukpga/2012/5/79#pip_mobility_standard_rate_entitlement: not_holds
+    uk:statutes/ukpga/2012/5/79#pip_mobility_enhanced_rate_entitlement: not_holds
+    uk:statutes/ukpga/2012/5/79#pip_mobility_component_weekly_amount: 0
