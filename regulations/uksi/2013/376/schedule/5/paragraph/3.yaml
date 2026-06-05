@@ -1,0 +1,26 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2013/376/schedule/5/paragraph/3
+  summary: |-
+    "Relevant payments" means one or more payments which are service charge payments; "Service charge payments" is understood in accordance with paragraphs 7 and 8 of that Schedule.
+rules:
+  - name: relevant_payment
+    kind: derived
+    entity: Payment
+    dtype: Judgment
+    period: Month
+    source: Schedule 5 paragraph 3
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/5/paragraph/3
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          payment_is_service_charge_payment_under_schedule_5_paragraphs_7_and_8

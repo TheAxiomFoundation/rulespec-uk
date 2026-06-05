@@ -1,0 +1,180 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/24
+  summary: |-
+    This paragraph applies where others are liable for same-description relevant payments taken into account under paragraph 6. The renter's core rent is the monthly total allocated in full to listed persons, apportioned by A/B x C for listed and other persons, or otherwise as the Secretary of State considers appropriate.
+imports:
+  - uk:regulations/uksi/2013/376/schedule/4/paragraph/6#relevant_payment_description_counts_for_part_4_or_5_calculation
+  - uk:regulations/uksi/2013/376/schedule/4/paragraph/6#relevant_payment_amount_taken_into_account_for_part_4_or_5_calculation
+rules:
+  - name: paragraph_24_relevant_payments_for_core_rent
+    kind: data_relation
+    data_relation:
+      predicate: paragraph_24_relevant_payments_for_core_rent
+      arity: 2
+      arguments:
+        - Family
+        - Payment
+    source: Schedule 4 paragraph 24(1)-(2)
+
+  - name: paragraph_24_applies
+    kind: derived
+    entity: Family
+    dtype: Judgment
+    period: Month
+    source: Schedule 4 paragraph 24(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/24
+              excerpt: "This paragraph applies where, in respect of the accommodation occupied by the renter"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/24
+              excerpt: "one or more persons other than the renter are liable"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          accommodation_is_occupied_by_renter
+          and other_persons_are_liable_for_same_description_relevant_payments_taken_into_account_under_paragraph_6
+
+  - name: only_listed_persons_liable_to_make_relevant_payments
+    kind: derived
+    entity: Family
+    dtype: Judgment
+    period: Month
+    source: Schedule 4 paragraph 24(3)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/24
+              excerpt: "Where the only persons liable to make relevant payments are listed persons"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          number_of_listed_persons_liable_to_make_relevant_payments > 0
+          and total_number_of_all_persons_liable_to_make_relevant_payments == number_of_listed_persons_liable_to_make_relevant_payments
+
+  - name: listed_and_other_persons_liable_to_make_relevant_payments
+    kind: derived
+    entity: Family
+    dtype: Judgment
+    period: Month
+    source: Schedule 4 paragraph 24(4)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/24
+              excerpt: "one or more listed persons and one or more other persons"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          number_of_listed_persons_liable_to_make_relevant_payments > 0
+          and total_number_of_all_persons_liable_to_make_relevant_payments > number_of_listed_persons_liable_to_make_relevant_payments
+
+  - name: paragraph_24_relevant_payment_amount_in_respect_of_month_for_core_rent
+    kind: derived
+    entity: Payment
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Schedule 4 paragraph 24(2), steps 1 and 2
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/24
+              excerpt: "determine the amount of the payment in respect of a month"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2013/376/schedule/4/paragraph/6#relevant_payment_amount_taken_into_account_for_part_4_or_5_calculation
+              output: relevant_payment_amount_taken_into_account_for_part_4_or_5_calculation
+              hash: sha256:93cfbc5c068f9aa33308c2b22e647bfd7144b75c41d3a895bacf33fa155c492d
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if relevant_payment_amount_taken_into_account_for_part_4_or_5_calculation > 0: relevant_payment_amount_in_respect_of_a_month_under_paragraph_7 else: 0
+
+  - name: paragraph_24_total_monthly_relevant_payments_for_accommodation
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Schedule 4 paragraph 24(2), steps 1 to 3
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/24
+              excerpt: "Add together all of the amounts determined in step 2"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2013/376/schedule/4/paragraph/6#relevant_payment_description_counts_for_part_4_or_5_calculation
+              output: relevant_payment_description_counts_for_part_4_or_5_calculation
+              hash: sha256:93cfbc5c068f9aa33308c2b22e647bfd7144b75c41d3a895bacf33fa155c492d
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if paragraph_24_applies: sum_where(paragraph_24_relevant_payments_for_core_rent, paragraph_24_relevant_payment_amount_in_respect_of_month_for_core_rent, relevant_payment_description_counts_for_part_4_or_5_calculation) else: 0
+
+  - name: renters_core_rent_under_paragraph_24
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Schedule 4 paragraph 24(2)-(5)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/24
+              excerpt: "Find the allocated amount"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/24
+              excerpt: "Formula: ( A B ) x C"
+          - path: versions[0].formula
+            kind: exception
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/24
+              excerpt: "If the Secretary of State is satisfied that it would be unreasonable"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if paragraph_24_applies:
+            if listed_and_other_persons_liable_to_make_relevant_payments and secretary_of_state_satisfied_unreasonable_to_allocate_under_subparagraph_4:
+              amount_allocated_as_secretary_of_state_considers_appropriate
+            else:
+              if only_listed_persons_liable_to_make_relevant_payments:
+                paragraph_24_total_monthly_relevant_payments_for_accommodation
+              else:
+                if listed_and_other_persons_liable_to_make_relevant_payments:
+                  (paragraph_24_total_monthly_relevant_payments_for_accommodation / total_number_of_all_persons_liable_to_make_relevant_payments) * number_of_listed_persons_liable_to_make_relevant_payments
+                else:
+                  0
+          else:
+            0

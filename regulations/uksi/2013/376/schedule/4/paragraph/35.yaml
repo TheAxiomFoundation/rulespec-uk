@@ -1,0 +1,130 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/35
+  summary: |-
+    "This paragraph applies where" one or more persons other than the renter is liable for same-description relevant payments taken into account under paragraph 6. Amount S is found by adding monthly relevant payments for the accommodation as a whole, then applying sub-paragraph (3), (4), or (5).
+imports:
+  - uk:regulations/uksi/2013/376/schedule/4/paragraph/6#relevant_payment_description_counts_for_part_4_or_5_calculation
+  - uk:regulations/uksi/2013/376/schedule/4/paragraph/6#relevant_payment_amount_taken_into_account_for_part_4_or_5_calculation
+rules:
+  - name: shared_accommodation_relevant_payments_for_amount_s
+    kind: data_relation
+    data_relation:
+      predicate: shared_accommodation_relevant_payments_for_amount_s
+      arity: 2
+      arguments:
+        - Family
+        - Payment
+    source: Schedule 4 paragraph 35(1)-(2)
+
+  - name: relevant_payment_monthly_amount_for_amount_s
+    kind: derived
+    entity: Payment
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Schedule 4 paragraph 35(2), steps 1 and 2
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/35
+              excerpt: "applying paragraphs 31 and 32(3) and (4) as necessary"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/35
+              excerpt: "in accordance with paragraph 7, determine the amount of the payment in respect of a month"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2013/376/schedule/4/paragraph/6#relevant_payment_amount_taken_into_account_for_part_4_or_5_calculation
+              output: relevant_payment_amount_taken_into_account_for_part_4_or_5_calculation
+              hash: sha256:93cfbc5c068f9aa33308c2b22e647bfd7144b75c41d3a895bacf33fa155c492d
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if relevant_payment_amount_taken_into_account_for_part_4_or_5_calculation > 0: relevant_payment_amount_in_respect_of_a_month_under_paragraph_7_after_paragraphs_31_and_32 else: 0
+
+  - name: shared_accommodation_total_monthly_relevant_payments
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Schedule 4 paragraph 35(2), steps 1 to 3
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/35
+              excerpt: "Add together all of the amounts determined in step 2 in relation to all relevant payments."
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2013/376/schedule/4/paragraph/6#relevant_payment_description_counts_for_part_4_or_5_calculation
+              output: relevant_payment_description_counts_for_part_4_or_5_calculation
+              hash: sha256:93cfbc5c068f9aa33308c2b22e647bfd7144b75c41d3a895bacf33fa155c492d
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2013/376/schedule/4/paragraph/35#relevant_payment_monthly_amount_for_amount_s
+              output: relevant_payment_monthly_amount_for_amount_s
+              hash: sha256:local
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          sum_where(shared_accommodation_relevant_payments_for_amount_s, relevant_payment_monthly_amount_for_amount_s, relevant_payment_description_counts_for_part_4_or_5_calculation)
+
+  - name: amount_s_before_housing_cost_contributions
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Schedule 4 paragraph 35(2)-(5)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/35
+              excerpt: "one or more persons other than the renter is liable to make relevant payments"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/35
+              excerpt: "Where the only persons liable to make relevant payments are listed persons"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/35
+              excerpt: "less the amount of the under-occupation deduction (if any) required by paragraph 36"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/35
+              excerpt: "Formula: ( A B ) x C"
+          - path: versions[0].formula
+            kind: exception
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/35
+              excerpt: "If the Secretary of State is satisfied that it would be unreasonable"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2013/376/schedule/4/paragraph/35#shared_accommodation_total_monthly_relevant_payments
+              output: shared_accommodation_total_monthly_relevant_payments
+              hash: sha256:local
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if one_or_more_other_persons_liable_to_same_description_relevant_payments_taken_into_account_under_paragraph_6: if only_persons_liable_to_make_relevant_payments_are_listed_persons: max(0, shared_accommodation_total_monthly_relevant_payments - under_occupation_deduction_required_by_paragraph_36) else: if persons_liable_to_make_relevant_payments_include_listed_persons_and_other_persons: if secretary_of_state_satisfied_subparagraph_4_amount_s_determination_would_be_unreasonable: amount_s_determined_by_secretary_of_state_under_subparagraph_5 else: (shared_accommodation_total_monthly_relevant_payments / total_number_of_persons_liable_to_make_relevant_payments) * number_of_listed_persons_liable_to_make_relevant_payments else: 0 else: 0

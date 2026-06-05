@@ -1,0 +1,183 @@
+- name: one excess bedroom produces 14 percent deduction
+  period: 2026-06
+  input:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/10#input.qualifying_young_persons_allotted_to_responsibility_description: 0
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/10#input.non_dependants_not_children_allotted_to_description: 0
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/10#input.children_under_10_allotted_to_shared_description: 0
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/10#input.children_same_sex_allotted_to_shared_description: 0
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/10#input.other_children_allotted_to_description: 0
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/10#input.additional_bedroom_count_in_accordance_with_paragraph_12: 1
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/10#input.calculation_is_under_part_4_of_schedule: false
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/10#input.additional_bedroom_count_required_under_paragraphs_26_to_29: 0
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/36#input.accommodation_bedroom_count: 3
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/36#input.under_occupancy_deduction_base_amount: 500
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/36#input.shared_ownership_under_regulation_26_4_to_6_applies: false
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/36#input.domestic_violence_inflicted_or_threatened_against_victim_by_partner_former_partner_or_relative
+    : false
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/36#input.victim_not_living_at_same_address_as_person_who_inflicted_or_threatened_domestic_violence
+    : false
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/36#input.person_who_inflicted_or_threatened_domestic_violence_is_qualifying_young_person_and_dependant_of_extended_benefit_unit_member
+    : false
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/36#input.claimant_provides_official_evidence_demonstrating_property_adapted_under_sanctuary_scheme
+    : false
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/36#input.victim_circumstances_consistent_with_domestic_violence_inflicted_or_threatened
+    : false
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/36#input.victim_made_contact_with_official_in_relation_to_incident: false
+  output:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/36#one_excess_bedroom_threshold: 1
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/36#two_or_more_excess_bedrooms_threshold: 2
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/36#one_excess_bedroom_relevant_percentage: 0.14
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/36#two_or_more_excess_bedrooms_relevant_percentage: 0.25
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/36#under_occupancy_excess_bedroom_count: 1
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/36#under_occupancy_relevant_percentage: 0.14
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/36#sanctuary_scheme_domestic_violence_under_occupation_exception_applies: not_holds
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/36#under_occupancy_deduction_to_be_made: holds
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/36#under_occupancy_deduction_amount: 70
+- name: two excess bedrooms produce 25 percent deduction
+  period: 2026-06
+  input:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/10#input.qualifying_young_persons_allotted_to_responsibility_description: 0
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/10#input.non_dependants_not_children_allotted_to_description: 0
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/10#input.children_under_10_allotted_to_shared_description: 0
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/10#input.children_same_sex_allotted_to_shared_description: 0
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/10#input.other_children_allotted_to_description: 0
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/10#input.additional_bedroom_count_in_accordance_with_paragraph_12: 1
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/10#input.calculation_is_under_part_4_of_schedule: false
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/10#input.additional_bedroom_count_required_under_paragraphs_26_to_29: 0
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/36#input.accommodation_bedroom_count: 4
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/36#input.under_occupancy_deduction_base_amount: 500
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/36#input.shared_ownership_under_regulation_26_4_to_6_applies: false
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/36#input.domestic_violence_inflicted_or_threatened_against_victim_by_partner_former_partner_or_relative
+    : false
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/36#input.victim_not_living_at_same_address_as_person_who_inflicted_or_threatened_domestic_violence
+    : false
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/36#input.person_who_inflicted_or_threatened_domestic_violence_is_qualifying_young_person_and_dependant_of_extended_benefit_unit_member
+    : false
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/36#input.claimant_provides_official_evidence_demonstrating_property_adapted_under_sanctuary_scheme
+    : false
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/36#input.victim_circumstances_consistent_with_domestic_violence_inflicted_or_threatened
+    : false
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/36#input.victim_made_contact_with_official_in_relation_to_incident: false
+  output:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/36#under_occupancy_excess_bedroom_count: 2
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/36#under_occupancy_relevant_percentage: 0.25
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/36#under_occupancy_deduction_to_be_made: holds
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/36#under_occupancy_deduction_amount: 125
+- name: no excess bedroom means no under occupancy deduction
+  period: 2026-06
+  input:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/10#input.qualifying_young_persons_allotted_to_responsibility_description: 0
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/10#input.non_dependants_not_children_allotted_to_description: 0
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/10#input.children_under_10_allotted_to_shared_description: 0
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/10#input.children_same_sex_allotted_to_shared_description: 0
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/10#input.other_children_allotted_to_description: 0
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/10#input.additional_bedroom_count_in_accordance_with_paragraph_12: 1
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/10#input.calculation_is_under_part_4_of_schedule: false
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/10#input.additional_bedroom_count_required_under_paragraphs_26_to_29: 0
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/36#input.accommodation_bedroom_count: 2
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/36#input.under_occupancy_deduction_base_amount: 500
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/36#input.shared_ownership_under_regulation_26_4_to_6_applies: false
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/36#input.domestic_violence_inflicted_or_threatened_against_victim_by_partner_former_partner_or_relative
+    : false
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/36#input.victim_not_living_at_same_address_as_person_who_inflicted_or_threatened_domestic_violence
+    : false
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/36#input.person_who_inflicted_or_threatened_domestic_violence_is_qualifying_young_person_and_dependant_of_extended_benefit_unit_member
+    : false
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/36#input.claimant_provides_official_evidence_demonstrating_property_adapted_under_sanctuary_scheme
+    : false
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/36#input.victim_circumstances_consistent_with_domestic_violence_inflicted_or_threatened
+    : false
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/36#input.victim_made_contact_with_official_in_relation_to_incident: false
+  output:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/36#under_occupancy_excess_bedroom_count: 0
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/36#under_occupancy_relevant_percentage: 0
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/36#under_occupancy_deduction_to_be_made: not_holds
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/36#under_occupancy_deduction_amount: 0
+- name: shared ownership blocks under occupancy deduction
+  period: 2026-06
+  input:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/10#input.qualifying_young_persons_allotted_to_responsibility_description: 0
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/10#input.non_dependants_not_children_allotted_to_description: 0
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/10#input.children_under_10_allotted_to_shared_description: 0
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/10#input.children_same_sex_allotted_to_shared_description: 0
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/10#input.other_children_allotted_to_description: 0
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/10#input.additional_bedroom_count_in_accordance_with_paragraph_12: 1
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/10#input.calculation_is_under_part_4_of_schedule: false
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/10#input.additional_bedroom_count_required_under_paragraphs_26_to_29: 0
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/36#input.accommodation_bedroom_count: 3
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/36#input.under_occupancy_deduction_base_amount: 500
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/36#input.shared_ownership_under_regulation_26_4_to_6_applies: true
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/36#input.domestic_violence_inflicted_or_threatened_against_victim_by_partner_former_partner_or_relative
+    : false
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/36#input.victim_not_living_at_same_address_as_person_who_inflicted_or_threatened_domestic_violence
+    : false
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/36#input.person_who_inflicted_or_threatened_domestic_violence_is_qualifying_young_person_and_dependant_of_extended_benefit_unit_member
+    : false
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/36#input.claimant_provides_official_evidence_demonstrating_property_adapted_under_sanctuary_scheme
+    : false
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/36#input.victim_circumstances_consistent_with_domestic_violence_inflicted_or_threatened
+    : false
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/36#input.victim_made_contact_with_official_in_relation_to_incident: false
+  output:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/36#under_occupancy_excess_bedroom_count: 1
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/36#under_occupancy_deduction_to_be_made: not_holds
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/36#under_occupancy_deduction_amount: 0
+- name: sanctuary scheme domestic violence exception blocks deduction
+  period: 2026-06
+  input:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/10#input.qualifying_young_persons_allotted_to_responsibility_description: 0
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/10#input.non_dependants_not_children_allotted_to_description: 0
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/10#input.children_under_10_allotted_to_shared_description: 0
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/10#input.children_same_sex_allotted_to_shared_description: 0
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/10#input.other_children_allotted_to_description: 0
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/10#input.additional_bedroom_count_in_accordance_with_paragraph_12: 1
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/10#input.calculation_is_under_part_4_of_schedule: false
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/10#input.additional_bedroom_count_required_under_paragraphs_26_to_29: 0
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/36#input.accommodation_bedroom_count: 3
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/36#input.under_occupancy_deduction_base_amount: 500
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/36#input.shared_ownership_under_regulation_26_4_to_6_applies: false
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/36#input.domestic_violence_inflicted_or_threatened_against_victim_by_partner_former_partner_or_relative
+    : true
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/36#input.victim_not_living_at_same_address_as_person_who_inflicted_or_threatened_domestic_violence
+    : true
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/36#input.person_who_inflicted_or_threatened_domestic_violence_is_qualifying_young_person_and_dependant_of_extended_benefit_unit_member
+    : false
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/36#input.claimant_provides_official_evidence_demonstrating_property_adapted_under_sanctuary_scheme
+    : true
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/36#input.victim_circumstances_consistent_with_domestic_violence_inflicted_or_threatened
+    : true
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/36#input.victim_made_contact_with_official_in_relation_to_incident: true
+  output:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/36#sanctuary_scheme_domestic_violence_under_occupation_exception_applies: holds
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/36#under_occupancy_deduction_to_be_made: not_holds
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/36#under_occupancy_deduction_amount: 0
+- name: qualifying young person dependant address exception can satisfy sanctuary
+    route
+  period: 2026-06
+  input:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/10#input.qualifying_young_persons_allotted_to_responsibility_description: 0
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/10#input.non_dependants_not_children_allotted_to_description: 0
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/10#input.children_under_10_allotted_to_shared_description: 0
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/10#input.children_same_sex_allotted_to_shared_description: 0
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/10#input.other_children_allotted_to_description: 0
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/10#input.additional_bedroom_count_in_accordance_with_paragraph_12: 1
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/10#input.calculation_is_under_part_4_of_schedule: false
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/10#input.additional_bedroom_count_required_under_paragraphs_26_to_29: 0
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/36#input.accommodation_bedroom_count: 3
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/36#input.under_occupancy_deduction_base_amount: 500
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/36#input.shared_ownership_under_regulation_26_4_to_6_applies: false
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/36#input.domestic_violence_inflicted_or_threatened_against_victim_by_partner_former_partner_or_relative
+    : true
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/36#input.victim_not_living_at_same_address_as_person_who_inflicted_or_threatened_domestic_violence
+    : false
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/36#input.person_who_inflicted_or_threatened_domestic_violence_is_qualifying_young_person_and_dependant_of_extended_benefit_unit_member
+    : true
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/36#input.claimant_provides_official_evidence_demonstrating_property_adapted_under_sanctuary_scheme
+    : true
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/36#input.victim_circumstances_consistent_with_domestic_violence_inflicted_or_threatened
+    : true
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/36#input.victim_made_contact_with_official_in_relation_to_incident: true
+  output:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/36#sanctuary_scheme_domestic_violence_under_occupation_exception_applies: holds
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/36#under_occupancy_deduction_to_be_made: not_holds
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/36#under_occupancy_deduction_amount: 0

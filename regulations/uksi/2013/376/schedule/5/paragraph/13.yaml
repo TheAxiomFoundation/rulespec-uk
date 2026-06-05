@@ -1,0 +1,223 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2013/376/schedule/5/paragraph/13
+  summary: |-
+    The amount in respect of service charge payments is calculated by determining each service charge payment, determining the period for which it is payable and its monthly amount, and adding the amounts. Non-monthly payments are converted to monthly equivalents, with special 12-month free-period formulas for weekly, two-weekly, and four-weekly payments.
+rules:
+  - name: months_in_service_charge_annual_equivalent_period
+    kind: parameter
+    dtype: Count
+    period: Month
+    source: Schedule 5 paragraph 13(3)-(4A)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/5/paragraph/13
+              excerpt: "divided by 12"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          12
+
+  - name: weekly_service_charge_payments_in_12_month_period
+    kind: parameter
+    dtype: Count
+    period: Month
+    source: Schedule 5 paragraph 13(3) and (4A)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/5/paragraph/13
+              excerpt: "weekly payments are multiplied by 52"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          52
+
+  - name: two_weekly_service_charge_payments_in_12_month_period
+    kind: parameter
+    dtype: Count
+    period: Month
+    source: Schedule 5 paragraph 13(3) and (4A)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/5/paragraph/13
+              excerpt: "two-weekly payments are multiplied by 26"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          26
+
+  - name: four_weekly_service_charge_payments_in_12_month_period
+    kind: parameter
+    dtype: Count
+    period: Month
+    source: Schedule 5 paragraph 13(3) and (4A)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/5/paragraph/13
+              excerpt: "four-weekly payments are multiplied by 13"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          13
+
+  - name: three_monthly_service_charge_payments_in_12_month_period
+    kind: parameter
+    dtype: Count
+    period: Month
+    source: Schedule 5 paragraph 13(3)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/5/paragraph/13
+              excerpt: "three-monthly payments are multiplied by 4"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          4
+
+  - name: owner_occupier_service_charge_payments
+    kind: data_relation
+    data_relation:
+      predicate: owner_occupier_service_charge_payments
+      arity: 2
+      arguments: [Family, Payment]
+    source: Schedule 5 paragraph 13(1)-(2)
+
+  - name: service_charge_payment_count_for_free_period_arrangement
+    kind: derived
+    entity: Payment
+    dtype: Count
+    period: Month
+    source: Schedule 5 paragraph 13(4)-(4A)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/5/paragraph/13
+              excerpt: "Formula: 52 - SCFP"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/5/paragraph/13
+              excerpt: "Formula: 26 - SCFP"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/5/paragraph/13
+              excerpt: "Formula: 13 - SCFP"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if service_charge_payment_period_is_week:
+            weekly_service_charge_payments_in_12_month_period - service_charge_free_periods_in_12_month_period
+          else:
+            if service_charge_payment_period_is_two_weeks:
+              two_weekly_service_charge_payments_in_12_month_period - service_charge_free_periods_in_12_month_period
+            else:
+              if service_charge_payment_period_is_four_weeks:
+                four_weekly_service_charge_payments_in_12_month_period - service_charge_free_periods_in_12_month_period
+              else:
+                total_service_charge_payments_liable_in_12_month_period
+
+  - name: service_charge_payment_monthly_equivalent
+    kind: derived
+    entity: Payment
+    dtype: Money
+    unit: GBP
+    period: Month
+    source: Schedule 5 paragraph 13(2)-(4A)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/5/paragraph/13
+              excerpt: "Determine the period ... and determine the amount of the payment in respect of a month"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/5/paragraph/13
+              excerpt: "weekly payments are multiplied by 52 and divided by 12"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/5/paragraph/13
+              excerpt: "annual payments are divided by 12"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/5/paragraph/13
+              excerpt: "monthly equivalent is to be calculated over 12 months"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if not payment_is_relevant_service_charge_payment_taken_into_account_under_paragraph_8:
+            0
+          else:
+            if service_charge_payment_period_is_month:
+              service_charge_payment_amount
+            else:
+              if service_charge_free_period_arrangements_apply_to_payment:
+                service_charge_payment_amount * service_charge_payment_count_for_free_period_arrangement / months_in_service_charge_annual_equivalent_period
+              else:
+                if service_charge_payment_period_is_week:
+                  service_charge_payment_amount * weekly_service_charge_payments_in_12_month_period / months_in_service_charge_annual_equivalent_period
+                else:
+                  if service_charge_payment_period_is_two_weeks:
+                    service_charge_payment_amount * two_weekly_service_charge_payments_in_12_month_period / months_in_service_charge_annual_equivalent_period
+                  else:
+                    if service_charge_payment_period_is_four_weeks:
+                      service_charge_payment_amount * four_weekly_service_charge_payments_in_12_month_period / months_in_service_charge_annual_equivalent_period
+                    else:
+                      if service_charge_payment_period_is_three_months:
+                        service_charge_payment_amount * three_monthly_service_charge_payments_in_12_month_period / months_in_service_charge_annual_equivalent_period
+                      else:
+                        if service_charge_payment_period_is_annual:
+                          service_charge_payment_amount / months_in_service_charge_annual_equivalent_period
+                        else:
+                          0
+
+  - name: owner_occupier_service_charge_payments_amount
+    kind: derived
+    entity: Family
+    dtype: Money
+    unit: GBP
+    period: Month
+    source: Schedule 5 paragraph 13(1)-(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/5/paragraph/13
+              excerpt: "If there is more than one service charge payment, add together the amounts determined in step 2."
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          sum_where(owner_occupier_service_charge_payments, service_charge_payment_monthly_equivalent, payment_is_relevant_service_charge_payment_taken_into_account_under_paragraph_8)

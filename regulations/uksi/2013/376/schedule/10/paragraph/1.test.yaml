@@ -1,0 +1,36 @@
+- name: occupied premises selected as the one home set
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:regulations/uksi/2013/376/schedule/10/paragraph/1#input.premises_occupied_by_person_as_their_home: true
+    ? uk:regulations/uksi/2013/376/schedule/10/paragraph/1#input.premises_is_the_one_set_treated_as_persons_home_for_paragraphs_1_to_5
+    : true
+  output:
+    uk:regulations/uksi/2013/376/schedule/10/paragraph/1#premises_treated_as_persons_home_for_paragraphs_1_to_5: holds
+- name: occupied premises not selected because only one set may be treated as home
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:regulations/uksi/2013/376/schedule/10/paragraph/1#input.premises_occupied_by_person_as_their_home: true
+    ? uk:regulations/uksi/2013/376/schedule/10/paragraph/1#input.premises_is_the_one_set_treated_as_persons_home_for_paragraphs_1_to_5
+    : false
+  output:
+    uk:regulations/uksi/2013/376/schedule/10/paragraph/1#premises_treated_as_persons_home_for_paragraphs_1_to_5: not_holds
+- name: premises not occupied as the person's home
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:regulations/uksi/2013/376/schedule/10/paragraph/1#input.premises_occupied_by_person_as_their_home: false
+    ? uk:regulations/uksi/2013/376/schedule/10/paragraph/1#input.premises_is_the_one_set_treated_as_persons_home_for_paragraphs_1_to_5
+    : true
+  output:
+    uk:regulations/uksi/2013/376/schedule/10/paragraph/1#premises_treated_as_persons_home_for_paragraphs_1_to_5: not_holds

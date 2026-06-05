@@ -1,0 +1,184 @@
+- name: standard_payment_periods_convert_to_monthly_equivalent
+  period: 2024-01
+  input: {}
+  tables:
+    Payment:
+    - uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_payment_condition_in_respect_of_relevant_payment: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_liability_condition_in_respect_of_relevant_payment: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_occupation_condition_in_respect_of_relevant_payment: true
+      ? uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.particular_payment_has_already_been_brought_into_account_for_same_or_different_renter
+      : false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.relevant_payment_amount: 120
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.arrangements_provide_one_or_more_rent_free_periods: false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.relevant_payment_is_weekly: false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.relevant_payment_is_two_weekly: false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.relevant_payment_is_four_weekly: false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.relevant_payment_is_three_monthly: false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.relevant_payment_is_annual: false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.rent_free_period_count_in_12_month_period: 0
+      ? uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.total_relevant_payment_count_renter_liable_to_make_in_12_month_period
+      : 0
+    - uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_payment_condition_in_respect_of_relevant_payment: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_liability_condition_in_respect_of_relevant_payment: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_occupation_condition_in_respect_of_relevant_payment: true
+      ? uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.particular_payment_has_already_been_brought_into_account_for_same_or_different_renter
+      : false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.relevant_payment_amount: 120
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.arrangements_provide_one_or_more_rent_free_periods: false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.relevant_payment_is_weekly: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.relevant_payment_is_two_weekly: false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.relevant_payment_is_four_weekly: false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.relevant_payment_is_three_monthly: false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.relevant_payment_is_annual: false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.rent_free_period_count_in_12_month_period: 0
+      ? uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.total_relevant_payment_count_renter_liable_to_make_in_12_month_period
+      : 0
+    - uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_payment_condition_in_respect_of_relevant_payment: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_liability_condition_in_respect_of_relevant_payment: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_occupation_condition_in_respect_of_relevant_payment: true
+      ? uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.particular_payment_has_already_been_brought_into_account_for_same_or_different_renter
+      : false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.relevant_payment_amount: 240
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.arrangements_provide_one_or_more_rent_free_periods: false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.relevant_payment_is_weekly: false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.relevant_payment_is_two_weekly: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.relevant_payment_is_four_weekly: false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.relevant_payment_is_three_monthly: false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.relevant_payment_is_annual: false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.rent_free_period_count_in_12_month_period: 0
+      ? uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.total_relevant_payment_count_renter_liable_to_make_in_12_month_period
+      : 0
+    - uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_payment_condition_in_respect_of_relevant_payment: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_liability_condition_in_respect_of_relevant_payment: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_occupation_condition_in_respect_of_relevant_payment: true
+      ? uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.particular_payment_has_already_been_brought_into_account_for_same_or_different_renter
+      : false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.relevant_payment_amount: 480
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.arrangements_provide_one_or_more_rent_free_periods: false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.relevant_payment_is_weekly: false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.relevant_payment_is_two_weekly: false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.relevant_payment_is_four_weekly: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.relevant_payment_is_three_monthly: false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.relevant_payment_is_annual: false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.rent_free_period_count_in_12_month_period: 0
+      ? uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.total_relevant_payment_count_renter_liable_to_make_in_12_month_period
+      : 0
+    - uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_payment_condition_in_respect_of_relevant_payment: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_liability_condition_in_respect_of_relevant_payment: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_occupation_condition_in_respect_of_relevant_payment: true
+      ? uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.particular_payment_has_already_been_brought_into_account_for_same_or_different_renter
+      : false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.relevant_payment_amount: 300
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.arrangements_provide_one_or_more_rent_free_periods: false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.relevant_payment_is_weekly: false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.relevant_payment_is_two_weekly: false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.relevant_payment_is_four_weekly: false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.relevant_payment_is_three_monthly: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.relevant_payment_is_annual: false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.rent_free_period_count_in_12_month_period: 0
+      ? uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.total_relevant_payment_count_renter_liable_to_make_in_12_month_period
+      : 0
+    - uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_payment_condition_in_respect_of_relevant_payment: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_liability_condition_in_respect_of_relevant_payment: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_occupation_condition_in_respect_of_relevant_payment: true
+      ? uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.particular_payment_has_already_been_brought_into_account_for_same_or_different_renter
+      : false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.relevant_payment_amount: 1200
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.arrangements_provide_one_or_more_rent_free_periods: false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.relevant_payment_is_weekly: false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.relevant_payment_is_two_weekly: false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.relevant_payment_is_four_weekly: false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.relevant_payment_is_three_monthly: false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.relevant_payment_is_annual: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.rent_free_period_count_in_12_month_period: 0
+      ? uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.total_relevant_payment_count_renter_liable_to_make_in_12_month_period
+      : 0
+  output:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/7#weekly_payment_periods_in_annual_equivalent: 52
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/7#two_weekly_payment_periods_in_annual_equivalent: 26
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/7#four_weekly_payment_periods_in_annual_equivalent: 13
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/7#three_monthly_payment_periods_in_annual_equivalent: 4
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/7#monthly_equivalent_denominator_months: 12
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/7#relevant_payment_monthly_equivalent_amount_for_part_4_or_5_calculation:
+    - 120
+    - 520
+    - 520
+    - 520
+    - 100
+    - 100
+- name: rent_free_periods_reduce_annual_payment_count
+  period: 2024-01
+  input: {}
+  tables:
+    Payment:
+    - uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_payment_condition_in_respect_of_relevant_payment: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_liability_condition_in_respect_of_relevant_payment: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_occupation_condition_in_respect_of_relevant_payment: true
+      ? uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.particular_payment_has_already_been_brought_into_account_for_same_or_different_renter
+      : false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.relevant_payment_amount: 120
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.arrangements_provide_one_or_more_rent_free_periods: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.relevant_payment_is_weekly: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.relevant_payment_is_two_weekly: false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.relevant_payment_is_four_weekly: false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.relevant_payment_is_three_monthly: false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.relevant_payment_is_annual: false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.rent_free_period_count_in_12_month_period: 4
+      ? uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.total_relevant_payment_count_renter_liable_to_make_in_12_month_period
+      : 0
+    - uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_payment_condition_in_respect_of_relevant_payment: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_liability_condition_in_respect_of_relevant_payment: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_occupation_condition_in_respect_of_relevant_payment: true
+      ? uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.particular_payment_has_already_been_brought_into_account_for_same_or_different_renter
+      : false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.relevant_payment_amount: 120
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.arrangements_provide_one_or_more_rent_free_periods: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.relevant_payment_is_weekly: false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.relevant_payment_is_two_weekly: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.relevant_payment_is_four_weekly: false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.relevant_payment_is_three_monthly: false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.relevant_payment_is_annual: false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.rent_free_period_count_in_12_month_period: 2
+      ? uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.total_relevant_payment_count_renter_liable_to_make_in_12_month_period
+      : 0
+    - uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_payment_condition_in_respect_of_relevant_payment: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_liability_condition_in_respect_of_relevant_payment: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_occupation_condition_in_respect_of_relevant_payment: true
+      ? uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.particular_payment_has_already_been_brought_into_account_for_same_or_different_renter
+      : false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.relevant_payment_amount: 120
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.arrangements_provide_one_or_more_rent_free_periods: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.relevant_payment_is_weekly: false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.relevant_payment_is_two_weekly: false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.relevant_payment_is_four_weekly: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.relevant_payment_is_three_monthly: false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.relevant_payment_is_annual: false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.rent_free_period_count_in_12_month_period: 1
+      ? uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.total_relevant_payment_count_renter_liable_to_make_in_12_month_period
+      : 0
+    - uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_payment_condition_in_respect_of_relevant_payment: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_liability_condition_in_respect_of_relevant_payment: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_occupation_condition_in_respect_of_relevant_payment: true
+      ? uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.particular_payment_has_already_been_brought_into_account_for_same_or_different_renter
+      : false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.relevant_payment_amount: 120
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.arrangements_provide_one_or_more_rent_free_periods: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.relevant_payment_is_weekly: false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.relevant_payment_is_two_weekly: false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.relevant_payment_is_four_weekly: false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.relevant_payment_is_three_monthly: false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.relevant_payment_is_annual: false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.rent_free_period_count_in_12_month_period: 0
+      ? uk:regulations/uksi/2013/376/schedule/4/paragraph/7#input.total_relevant_payment_count_renter_liable_to_make_in_12_month_period
+      : 10
+  output:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/7#relevant_payment_annual_count_after_rent_free_periods:
+    - 48
+    - 24
+    - 12
+    - 10
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/7#relevant_payment_monthly_equivalent_amount_for_part_4_or_5_calculation:
+    - 480
+    - 240
+    - 120
+    - 100

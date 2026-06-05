@@ -1,0 +1,75 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/25
+  summary: |-
+    "The renter's cap rent is to be determined as follows"; determine the category of accommodation, determine the maximum allowable amount under sub-paragraph (2) or (4), and "The result is the renter's cap rent."
+rules:
+  - name: subparagraph_4_maximum_allowable_amount_condition_applies
+    kind: derived
+    entity: Family
+    dtype: Judgment
+    period: Month
+    source: Schedule 4 paragraph 25(3)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/25
+              excerpt: "paragraph 4 of Schedule 3 ... applies to the renter"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/25
+              excerpt: "the maximum allowable amount ... in relation to accommodation A and ... accommodation B are different"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/25
+              excerpt: "a single calculation is to be made ... under paragraph 17"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          schedule_3_paragraph_4_applies_to_renter
+          and not (maximum_allowable_amount_for_accommodation_a_under_subparagraph_2_when_current_pair_first_calculated == maximum_allowable_amount_for_accommodation_b_under_subparagraph_2_when_current_pair_first_calculated)
+          and single_calculation_to_be_made_under_paragraph_17
+
+  - name: renters_cap_rent
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Schedule 4 paragraph 25(1)-(4)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/25
+              excerpt: "The result is the renter's cap rent."
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/25
+              excerpt: "the maximum allowable amount ... is the local housing allowance"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/25
+              excerpt: "determined by reference to the accommodation for which ... is lower when the calculation is first made"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2013/376/schedule/4/paragraph/25#subparagraph_4_maximum_allowable_amount_condition_applies
+              output: subparagraph_4_maximum_allowable_amount_condition_applies
+              hash: sha256:local
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if subparagraph_4_maximum_allowable_amount_condition_applies: if maximum_allowable_amount_for_accommodation_a_under_subparagraph_2_when_current_pair_first_calculated < maximum_allowable_amount_for_accommodation_b_under_subparagraph_2_when_current_pair_first_calculated: local_housing_allowance_for_accommodation_a_broad_rental_market_area_and_entitled_category else: local_housing_allowance_for_accommodation_b_broad_rental_market_area_and_entitled_category else: local_housing_allowance_for_renters_broad_rental_market_area_and_entitled_category

@@ -1,0 +1,88 @@
+- name: weekly_payment_without_free_periods
+  period: 2026-06
+  input:
+    ? uk:regulations/uksi/2013/376/schedule/5/paragraph/13#input.payment_is_relevant_service_charge_payment_taken_into_account_under_paragraph_8
+    : true
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/13#input.service_charge_payment_amount: 120
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/13#input.service_charge_payment_period_is_month: false
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/13#input.service_charge_payment_period_is_week: true
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/13#input.service_charge_payment_period_is_two_weeks: false
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/13#input.service_charge_payment_period_is_four_weeks: false
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/13#input.service_charge_payment_period_is_three_months: false
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/13#input.service_charge_payment_period_is_annual: false
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/13#input.service_charge_free_period_arrangements_apply_to_payment: false
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/13#input.service_charge_free_periods_in_12_month_period: 0
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/13#input.total_service_charge_payments_liable_in_12_month_period: 0
+  output:
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/13#months_in_service_charge_annual_equivalent_period: 12
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/13#weekly_service_charge_payments_in_12_month_period: 52
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/13#two_weekly_service_charge_payments_in_12_month_period: 26
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/13#four_weekly_service_charge_payments_in_12_month_period: 13
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/13#three_monthly_service_charge_payments_in_12_month_period: 4
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/13#service_charge_payment_count_for_free_period_arrangement: 52
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/13#service_charge_payment_monthly_equivalent: 520
+- name: two_weekly_payment_with_service_charge_free_periods
+  period: 2026-06
+  input:
+    ? uk:regulations/uksi/2013/376/schedule/5/paragraph/13#input.payment_is_relevant_service_charge_payment_taken_into_account_under_paragraph_8
+    : true
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/13#input.service_charge_payment_amount: 60
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/13#input.service_charge_payment_period_is_month: false
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/13#input.service_charge_payment_period_is_week: false
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/13#input.service_charge_payment_period_is_two_weeks: true
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/13#input.service_charge_payment_period_is_four_weeks: false
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/13#input.service_charge_payment_period_is_three_months: false
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/13#input.service_charge_payment_period_is_annual: false
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/13#input.service_charge_free_period_arrangements_apply_to_payment: true
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/13#input.service_charge_free_periods_in_12_month_period: 2
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/13#input.total_service_charge_payments_liable_in_12_month_period: 0
+  output:
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/13#service_charge_payment_count_for_free_period_arrangement: 24
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/13#service_charge_payment_monthly_equivalent: 120
+- name: non_service_charge_payment_not_included
+  period: 2026-06
+  input:
+    ? uk:regulations/uksi/2013/376/schedule/5/paragraph/13#input.payment_is_relevant_service_charge_payment_taken_into_account_under_paragraph_8
+    : false
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/13#input.service_charge_payment_amount: 1200
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/13#input.service_charge_payment_period_is_month: false
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/13#input.service_charge_payment_period_is_week: false
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/13#input.service_charge_payment_period_is_two_weeks: false
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/13#input.service_charge_payment_period_is_four_weeks: false
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/13#input.service_charge_payment_period_is_three_months: false
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/13#input.service_charge_payment_period_is_annual: true
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/13#input.service_charge_free_period_arrangements_apply_to_payment: false
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/13#input.service_charge_free_periods_in_12_month_period: 0
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/13#input.total_service_charge_payments_liable_in_12_month_period: 0
+  output:
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/13#service_charge_payment_monthly_equivalent: 0
+- name: add_multiple_service_charge_payment_monthly_equivalents
+  period: 2026-06
+  input:
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/13#relation.owner_occupier_service_charge_payments:
+    - ? uk:regulations/uksi/2013/376/schedule/5/paragraph/13#input.payment_is_relevant_service_charge_payment_taken_into_account_under_paragraph_8
+      : true
+      uk:regulations/uksi/2013/376/schedule/5/paragraph/13#input.service_charge_payment_amount: 120
+      uk:regulations/uksi/2013/376/schedule/5/paragraph/13#input.service_charge_payment_period_is_month: true
+      uk:regulations/uksi/2013/376/schedule/5/paragraph/13#input.service_charge_payment_period_is_week: false
+      uk:regulations/uksi/2013/376/schedule/5/paragraph/13#input.service_charge_payment_period_is_two_weeks: false
+      uk:regulations/uksi/2013/376/schedule/5/paragraph/13#input.service_charge_payment_period_is_four_weeks: false
+      uk:regulations/uksi/2013/376/schedule/5/paragraph/13#input.service_charge_payment_period_is_three_months: false
+      uk:regulations/uksi/2013/376/schedule/5/paragraph/13#input.service_charge_payment_period_is_annual: false
+      uk:regulations/uksi/2013/376/schedule/5/paragraph/13#input.service_charge_free_period_arrangements_apply_to_payment: false
+      uk:regulations/uksi/2013/376/schedule/5/paragraph/13#input.service_charge_free_periods_in_12_month_period: 0
+      uk:regulations/uksi/2013/376/schedule/5/paragraph/13#input.total_service_charge_payments_liable_in_12_month_period: 0
+    - ? uk:regulations/uksi/2013/376/schedule/5/paragraph/13#input.payment_is_relevant_service_charge_payment_taken_into_account_under_paragraph_8
+      : true
+      uk:regulations/uksi/2013/376/schedule/5/paragraph/13#input.service_charge_payment_amount: 240
+      uk:regulations/uksi/2013/376/schedule/5/paragraph/13#input.service_charge_payment_period_is_month: false
+      uk:regulations/uksi/2013/376/schedule/5/paragraph/13#input.service_charge_payment_period_is_week: false
+      uk:regulations/uksi/2013/376/schedule/5/paragraph/13#input.service_charge_payment_period_is_two_weeks: false
+      uk:regulations/uksi/2013/376/schedule/5/paragraph/13#input.service_charge_payment_period_is_four_weeks: false
+      uk:regulations/uksi/2013/376/schedule/5/paragraph/13#input.service_charge_payment_period_is_three_months: false
+      uk:regulations/uksi/2013/376/schedule/5/paragraph/13#input.service_charge_payment_period_is_annual: true
+      uk:regulations/uksi/2013/376/schedule/5/paragraph/13#input.service_charge_free_period_arrangements_apply_to_payment: false
+      uk:regulations/uksi/2013/376/schedule/5/paragraph/13#input.service_charge_free_periods_in_12_month_period: 0
+      uk:regulations/uksi/2013/376/schedule/5/paragraph/13#input.total_service_charge_payments_liable_in_12_month_period: 0
+  output:
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/13#owner_occupier_service_charge_payments_amount: 140

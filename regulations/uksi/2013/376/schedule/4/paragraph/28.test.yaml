@@ -1,0 +1,66 @@
+- name: renter_meets_all_specified_renter_conditions
+  period: 2026-06
+  input:
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/28#input.renter_is_single_person_or_member_of_couple_claiming_as_single_person
+    : true
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/28#input.renter_is_under_35_years_old: true
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/28#input.renter_is_excepted_person_under_paragraph_29: false
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/28#input.renter_is_responsible_for_child_or_qualifying_young_person: false
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/28#input.any_person_is_non_dependant_in_relation_to_renter: false
+  output:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/28#specified_renter: holds
+- name: renter_not_single_or_claiming_as_single
+  period: 2026-06
+  input:
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/28#input.renter_is_single_person_or_member_of_couple_claiming_as_single_person
+    : false
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/28#input.renter_is_under_35_years_old: true
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/28#input.renter_is_excepted_person_under_paragraph_29: false
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/28#input.renter_is_responsible_for_child_or_qualifying_young_person: false
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/28#input.any_person_is_non_dependant_in_relation_to_renter: false
+  output:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/28#specified_renter: not_holds
+- name: renter_not_under_35
+  period: 2026-06
+  input:
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/28#input.renter_is_single_person_or_member_of_couple_claiming_as_single_person
+    : true
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/28#input.renter_is_under_35_years_old: false
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/28#input.renter_is_excepted_person_under_paragraph_29: false
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/28#input.renter_is_responsible_for_child_or_qualifying_young_person: false
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/28#input.any_person_is_non_dependant_in_relation_to_renter: false
+  output:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/28#specified_renter: not_holds
+- name: renter_excepted_under_paragraph_29
+  period: 2026-06
+  input:
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/28#input.renter_is_single_person_or_member_of_couple_claiming_as_single_person
+    : true
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/28#input.renter_is_under_35_years_old: true
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/28#input.renter_is_excepted_person_under_paragraph_29: true
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/28#input.renter_is_responsible_for_child_or_qualifying_young_person: false
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/28#input.any_person_is_non_dependant_in_relation_to_renter: false
+  output:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/28#specified_renter: not_holds
+- name: renter_responsible_for_child_or_qualifying_young_person
+  period: 2026-06
+  input:
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/28#input.renter_is_single_person_or_member_of_couple_claiming_as_single_person
+    : true
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/28#input.renter_is_under_35_years_old: true
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/28#input.renter_is_excepted_person_under_paragraph_29: false
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/28#input.renter_is_responsible_for_child_or_qualifying_young_person: true
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/28#input.any_person_is_non_dependant_in_relation_to_renter: false
+  output:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/28#specified_renter: not_holds
+- name: non_dependant_in_relation_to_renter
+  period: 2026-06
+  input:
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/28#input.renter_is_single_person_or_member_of_couple_claiming_as_single_person
+    : true
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/28#input.renter_is_under_35_years_old: true
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/28#input.renter_is_excepted_person_under_paragraph_29: false
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/28#input.renter_is_responsible_for_child_or_qualifying_young_person: false
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/28#input.any_person_is_non_dependant_in_relation_to_renter: true
+  output:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/28#specified_renter: not_holds

@@ -1,0 +1,60 @@
+- name: housing_cost_contribution_required_for_qualifying_non_dependant
+  period: 2026-06
+  input:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/13#input.calculation_is_under_part_4_or_5_of_schedule: true
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/13#input.person_is_non_dependant: true
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/13#input.person_is_member_of_renters_extended_benefit_unit: true
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/13#input.paragraph_15_displaces_housing_cost_contribution_deduction: false
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/13#input.paragraph_16_displaces_housing_cost_contribution_deduction: false
+  output:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/13#housing_cost_contribution_required_for_non_dependant: holds
+- name: no_contribution_outside_part_4_or_5_calculation
+  period: 2026-06
+  input:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/13#input.calculation_is_under_part_4_or_5_of_schedule: false
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/13#input.person_is_non_dependant: true
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/13#input.person_is_member_of_renters_extended_benefit_unit: true
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/13#input.paragraph_15_displaces_housing_cost_contribution_deduction: false
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/13#input.paragraph_16_displaces_housing_cost_contribution_deduction: false
+  output:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/13#housing_cost_contribution_required_for_non_dependant: not_holds
+- name: dependant_person_does_not_trigger_contribution
+  period: 2026-06
+  input:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/13#input.calculation_is_under_part_4_or_5_of_schedule: true
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/13#input.person_is_non_dependant: false
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/13#input.person_is_member_of_renters_extended_benefit_unit: true
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/13#input.paragraph_15_displaces_housing_cost_contribution_deduction: false
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/13#input.paragraph_16_displaces_housing_cost_contribution_deduction: false
+  output:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/13#housing_cost_contribution_required_for_non_dependant: not_holds
+- name: non_member_does_not_trigger_contribution
+  period: 2026-06
+  input:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/13#input.calculation_is_under_part_4_or_5_of_schedule: true
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/13#input.person_is_non_dependant: true
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/13#input.person_is_member_of_renters_extended_benefit_unit: false
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/13#input.paragraph_15_displaces_housing_cost_contribution_deduction: false
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/13#input.paragraph_16_displaces_housing_cost_contribution_deduction: false
+  output:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/13#housing_cost_contribution_required_for_non_dependant: not_holds
+- name: paragraph_15_displaces_contribution_deduction
+  period: 2026-06
+  input:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/13#input.calculation_is_under_part_4_or_5_of_schedule: true
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/13#input.person_is_non_dependant: true
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/13#input.person_is_member_of_renters_extended_benefit_unit: true
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/13#input.paragraph_15_displaces_housing_cost_contribution_deduction: true
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/13#input.paragraph_16_displaces_housing_cost_contribution_deduction: false
+  output:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/13#housing_cost_contribution_required_for_non_dependant: not_holds
+- name: paragraph_16_displaces_contribution_deduction
+  period: 2026-06
+  input:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/13#input.calculation_is_under_part_4_or_5_of_schedule: true
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/13#input.person_is_non_dependant: true
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/13#input.person_is_member_of_renters_extended_benefit_unit: true
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/13#input.paragraph_15_displaces_housing_cost_contribution_deduction: false
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/13#input.paragraph_16_displaces_housing_cost_contribution_deduction: true
+  output:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/13#housing_cost_contribution_required_for_non_dependant: not_holds

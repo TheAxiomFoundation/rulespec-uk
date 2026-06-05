@@ -1,0 +1,66 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2013/376/schedule/5/paragraph/7
+  summary: |-
+    This paragraph applies where a universal credit award to joint owner-occupiers is terminated because they cease to be a couple, a further award is made to one or each of them, and the occupation condition is met for the same accommodation. Assessment periods that would have counted for the terminated award are carried forward, but if a housing costs element was already included immediately before termination, no paragraph 5 qualifying period applies to the further award.
+rules:
+  - name: paragraph_7_joint_owner_occupier_transition_applies
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Month
+    source: Schedule 5 paragraph 7(1), Universal Credit Regulations 2013
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/5/paragraph/7
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          joint_owner_occupiers_award_terminated_because_they_ceased_to_be_a_couple
+          and further_award_made_to_owner_occupier
+          and occupation_condition_met_for_same_accommodation_in_further_award
+
+  - name: terminated_award_assessment_period_carried_forward_for_further_award
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Month
+    source: Schedule 5 paragraph 7(2), Universal Credit Regulations 2013
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/5/paragraph/7
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          paragraph_7_joint_owner_occupier_transition_applies
+          and whole_or_part_of_assessment_period_would_have_counted_for_terminated_award
+
+  - name: paragraph_5_qualifying_period_disapplied_for_further_award_commencement
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Month
+    source: Schedule 5 paragraph 7(3), Universal Credit Regulations 2013
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: exception
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/5/paragraph/7
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          paragraph_7_joint_owner_occupier_transition_applies
+          and housing_costs_element_calculated_under_schedule_included_immediately_before_termination

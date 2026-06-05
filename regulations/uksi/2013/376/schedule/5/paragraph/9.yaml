@@ -1,0 +1,35 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2013/376/schedule/5/paragraph/9
+  summary: |-
+    The owner-occupier's housing costs element is the amount resulting from paragraph 13 for all relevant payments taken into account under paragraph 8.
+imports:
+  - uk:regulations/uksi/2013/376/schedule/5/paragraph/13#owner_occupier_service_charge_payments_amount
+rules:
+  - name: owner_occupier_housing_costs_element_amount
+    kind: derived
+    entity: Family
+    dtype: Money
+    unit: GBP
+    period: Month
+    source: Schedule 5 paragraph 9
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/5/paragraph/9
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2013/376/schedule/5/paragraph/13#owner_occupier_service_charge_payments_amount
+              output: owner_occupier_service_charge_payments_amount
+              hash: sha256:8098afe8f9188eb306f4575230d745497e6501055dc110933a3a215892729cb1
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          owner_occupier_service_charge_payments_amount

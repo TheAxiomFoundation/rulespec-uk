@@ -1,0 +1,80 @@
+- name: qualifying_payment_amount_counts_once
+  period: 2024-01
+  input: {}
+  tables:
+    Payment:
+    - uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_payment_condition_in_respect_of_relevant_payment: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_liability_condition_in_respect_of_relevant_payment: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_occupation_condition_in_respect_of_relevant_payment: true
+      ? uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.particular_payment_has_already_been_brought_into_account_for_same_or_different_renter
+      : false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.relevant_payment_amount: 100
+  output:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/6#relevant_payment_description_counts_for_part_4_or_5_calculation:
+    - holds
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/6#relevant_payment_amount_taken_into_account_for_part_4_or_5_calculation:
+    - 100
+- name: payment_condition_missing_blocks_amount
+  period: 2024-01
+  input: {}
+  tables:
+    Payment:
+    - uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_payment_condition_in_respect_of_relevant_payment: false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_liability_condition_in_respect_of_relevant_payment: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_occupation_condition_in_respect_of_relevant_payment: true
+      ? uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.particular_payment_has_already_been_brought_into_account_for_same_or_different_renter
+      : false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.relevant_payment_amount: 100
+  output:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/6#relevant_payment_description_counts_for_part_4_or_5_calculation:
+    - not_holds
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/6#relevant_payment_amount_taken_into_account_for_part_4_or_5_calculation:
+    - 0
+- name: liability_condition_missing_blocks_amount
+  period: 2024-01
+  input: {}
+  tables:
+    Payment:
+    - uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_payment_condition_in_respect_of_relevant_payment: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_liability_condition_in_respect_of_relevant_payment: false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_occupation_condition_in_respect_of_relevant_payment: true
+      ? uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.particular_payment_has_already_been_brought_into_account_for_same_or_different_renter
+      : false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.relevant_payment_amount: 100
+  output:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/6#relevant_payment_description_counts_for_part_4_or_5_calculation:
+    - not_holds
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/6#relevant_payment_amount_taken_into_account_for_part_4_or_5_calculation:
+    - 0
+- name: occupation_condition_missing_blocks_amount
+  period: 2024-01
+  input: {}
+  tables:
+    Payment:
+    - uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_payment_condition_in_respect_of_relevant_payment: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_liability_condition_in_respect_of_relevant_payment: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_occupation_condition_in_respect_of_relevant_payment: false
+      ? uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.particular_payment_has_already_been_brought_into_account_for_same_or_different_renter
+      : false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.relevant_payment_amount: 100
+  output:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/6#relevant_payment_description_counts_for_part_4_or_5_calculation:
+    - not_holds
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/6#relevant_payment_amount_taken_into_account_for_part_4_or_5_calculation:
+    - 0
+- name: already_counted_particular_payment_not_counted_again
+  period: 2024-01
+  input: {}
+  tables:
+    Payment:
+    - uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_payment_condition_in_respect_of_relevant_payment: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_liability_condition_in_respect_of_relevant_payment: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_occupation_condition_in_respect_of_relevant_payment: true
+      ? uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.particular_payment_has_already_been_brought_into_account_for_same_or_different_renter
+      : true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.relevant_payment_amount: 100
+  output:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/6#relevant_payment_description_counts_for_part_4_or_5_calculation:
+    - holds
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/6#relevant_payment_amount_taken_into_account_for_part_4_or_5_calculation:
+    - 0

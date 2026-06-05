@@ -1,0 +1,106 @@
+- name: qualifying_payment_monthly_amount_is_used_for_amount_s
+  period: 2026-06
+  input:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_payment_condition_in_respect_of_relevant_payment: false
+  tables:
+    Payment:
+    - uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_payment_condition_in_respect_of_relevant_payment: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_liability_condition_in_respect_of_relevant_payment: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_occupation_condition_in_respect_of_relevant_payment: true
+      ? uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.particular_payment_has_already_been_brought_into_account_for_same_or_different_renter
+      : false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.relevant_payment_amount: 100
+      ? uk:regulations/uksi/2013/376/schedule/4/paragraph/34#input.relevant_payment_amount_in_respect_of_a_month_under_paragraph_7_for_amount_s
+      : 120
+  output:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/34#relevant_payment_amount_in_respect_of_month_for_amount_s:
+    - 120
+- name: multiple_relevant_payments_are_added_without_under_occupation_deduction
+  period: 2026-06
+  input:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_payment_condition_in_respect_of_relevant_payment: false
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/34#input.paragraph_35_applies: false
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/34#input.under_occupation_deduction_is_to_be_made_under_paragraph_36_1: false
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/34#input.under_occupation_deduction_amount_under_paragraph_36_2: 0
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/34#relation.amount_s_relevant_payments:
+    - uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_payment_condition_in_respect_of_relevant_payment: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_liability_condition_in_respect_of_relevant_payment: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_occupation_condition_in_respect_of_relevant_payment: true
+      ? uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.particular_payment_has_already_been_brought_into_account_for_same_or_different_renter
+      : false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.relevant_payment_amount: 100
+      ? uk:regulations/uksi/2013/376/schedule/4/paragraph/34#input.relevant_payment_amount_in_respect_of_a_month_under_paragraph_7_for_amount_s
+      : 110
+    - uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_payment_condition_in_respect_of_relevant_payment: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_liability_condition_in_respect_of_relevant_payment: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_occupation_condition_in_respect_of_relevant_payment: true
+      ? uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.particular_payment_has_already_been_brought_into_account_for_same_or_different_renter
+      : false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.relevant_payment_amount: 200
+      ? uk:regulations/uksi/2013/376/schedule/4/paragraph/34#input.relevant_payment_amount_in_respect_of_a_month_under_paragraph_7_for_amount_s
+      : 250
+  output:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/34#paragraph_34_amount_s_calculation_applies: holds
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/34#amount_s_before_under_occupation_deduction: 360
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/34#amount_s: 360
+- name: under_occupation_deduction_is_deducted_from_amount_s
+  period: 2026-06
+  input:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_payment_condition_in_respect_of_relevant_payment: false
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/34#input.paragraph_35_applies: false
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/34#input.under_occupation_deduction_is_to_be_made_under_paragraph_36_1: true
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/34#input.under_occupation_deduction_amount_under_paragraph_36_2: 80
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/34#relation.amount_s_relevant_payments:
+    - uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_payment_condition_in_respect_of_relevant_payment: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_liability_condition_in_respect_of_relevant_payment: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_occupation_condition_in_respect_of_relevant_payment: true
+      ? uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.particular_payment_has_already_been_brought_into_account_for_same_or_different_renter
+      : false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.relevant_payment_amount: 300
+      ? uk:regulations/uksi/2013/376/schedule/4/paragraph/34#input.relevant_payment_amount_in_respect_of_a_month_under_paragraph_7_for_amount_s
+      : 300
+  output:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/34#amount_s_before_under_occupation_deduction: 300
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/34#amount_s: 220
+- name: paragraph_35_displaces_paragraph_34_amount_s_calculation
+  period: 2026-06
+  input:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_payment_condition_in_respect_of_relevant_payment: false
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/34#input.paragraph_35_applies: true
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/34#input.under_occupation_deduction_is_to_be_made_under_paragraph_36_1: false
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/34#input.under_occupation_deduction_amount_under_paragraph_36_2: 0
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/34#relation.amount_s_relevant_payments:
+    - uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_payment_condition_in_respect_of_relevant_payment: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_liability_condition_in_respect_of_relevant_payment: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_occupation_condition_in_respect_of_relevant_payment: true
+      ? uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.particular_payment_has_already_been_brought_into_account_for_same_or_different_renter
+      : false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.relevant_payment_amount: 100
+      ? uk:regulations/uksi/2013/376/schedule/4/paragraph/34#input.relevant_payment_amount_in_respect_of_a_month_under_paragraph_7_for_amount_s
+      : 110
+    - uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_payment_condition_in_respect_of_relevant_payment: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_liability_condition_in_respect_of_relevant_payment: true
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_occupation_condition_in_respect_of_relevant_payment: true
+      ? uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.particular_payment_has_already_been_brought_into_account_for_same_or_different_renter
+      : false
+      uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.relevant_payment_amount: 200
+      ? uk:regulations/uksi/2013/376/schedule/4/paragraph/34#input.relevant_payment_amount_in_respect_of_a_month_under_paragraph_7_for_amount_s
+      : 250
+  output:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/34#paragraph_34_amount_s_calculation_applies: not_holds
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/34#amount_s_before_under_occupation_deduction: 0
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/34#amount_s: 0
+- name: auto_zero_relevant_payment_amount_in_respect_of_month_for_amount_s
+  period:
+    period_kind: tax_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/6#input.renter_meets_payment_condition_in_respect_of_relevant_payment: false
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/34#input.paragraph_35_applies: false
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/34#input.relevant_payment_amount_in_respect_of_a_month_under_paragraph_7_for_amount_s
+    : 0
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/34#input.under_occupation_deduction_amount_under_paragraph_36_2: 0
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/34#input.under_occupation_deduction_is_to_be_made_under_paragraph_36_1: false
+  output:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/34#relevant_payment_amount_in_respect_of_month_for_amount_s: 0

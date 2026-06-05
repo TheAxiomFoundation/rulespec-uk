@@ -1,0 +1,211 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/36
+  summary: |-
+    A deduction for under-occupancy is made where accommodation bedrooms exceed the bedrooms to which the renter is entitled under paragraphs 8 to 12. The amount is A x B; B is 14% for one excess bedroom and 25% for two or more excess bedrooms. No deduction is made for shared ownership cases under regulation 26(4) to (6), or for the stated domestic-violence sanctuary-scheme cases.
+imports:
+  - uk:regulations/uksi/2013/376/schedule/4/paragraph/10#bedroom_entitlement_after_schedule_adjustments
+rules:
+  - name: one_excess_bedroom_threshold
+    kind: parameter
+    dtype: Count
+    source: Schedule 4 paragraph 36
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/36
+              excerpt: "one excess bedroom"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          1
+
+  - name: two_or_more_excess_bedrooms_threshold
+    kind: parameter
+    dtype: Count
+    source: Schedule 4 paragraph 36
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/36
+              excerpt: "two or more excess bedrooms"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          2
+
+  - name: one_excess_bedroom_relevant_percentage
+    kind: parameter
+    dtype: Rate
+    source: Schedule 4 paragraph 36
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/36
+              excerpt: "14% in the case of one excess bedroom"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          0.14
+
+  - name: two_or_more_excess_bedrooms_relevant_percentage
+    kind: parameter
+    dtype: Rate
+    source: Schedule 4 paragraph 36
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/36
+              excerpt: "25% in the case of two or more excess bedrooms"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          0.25
+
+  - name: under_occupancy_excess_bedroom_count
+    kind: derived
+    entity: Family
+    dtype: Count
+    period: Month
+    source: Schedule 4 paragraph 36
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/36
+              excerpt: "number of bedrooms in the accommodation exceeds the number of bedrooms to which the renter is entitled"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2013/376/schedule/4/paragraph/10#bedroom_entitlement_after_schedule_adjustments
+              output: bedroom_entitlement_after_schedule_adjustments
+              hash: sha256:ecf7f4383db61132206fe464c5cb9e7d6cf721e1c7a43f91aa58c9586ca24997
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          max(0, accommodation_bedroom_count - bedroom_entitlement_after_schedule_adjustments)
+
+  - name: under_occupancy_relevant_percentage
+    kind: derived
+    entity: Family
+    dtype: Rate
+    period: Month
+    source: Schedule 4 paragraph 36
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/36
+              excerpt: "B is the relevant percentage"
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/36
+              excerpt: "14%... one excess bedroom... 25%... two or more excess bedrooms"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if under_occupancy_excess_bedroom_count == one_excess_bedroom_threshold: one_excess_bedroom_relevant_percentage else: if under_occupancy_excess_bedroom_count >= two_or_more_excess_bedrooms_threshold: two_or_more_excess_bedrooms_relevant_percentage else: 0
+
+  - name: sanctuary_scheme_domestic_violence_under_occupation_exception_applies
+    kind: derived
+    entity: Family
+    dtype: Judgment
+    period: Month
+    source: Schedule 4 paragraph 36
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: exception
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/36
+              excerpt: "No deduction for under occupation is to be made... where"
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/36
+              excerpt: "domestic violence has been inflicted upon or threatened against"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          domestic_violence_inflicted_or_threatened_against_victim_by_partner_former_partner_or_relative
+          and (victim_not_living_at_same_address_as_person_who_inflicted_or_threatened_domestic_violence or person_who_inflicted_or_threatened_domestic_violence_is_qualifying_young_person_and_dependant_of_extended_benefit_unit_member)
+          and claimant_provides_official_evidence_demonstrating_property_adapted_under_sanctuary_scheme
+          and victim_circumstances_consistent_with_domestic_violence_inflicted_or_threatened
+          and victim_made_contact_with_official_in_relation_to_incident
+
+  - name: under_occupancy_deduction_to_be_made
+    kind: derived
+    entity: Family
+    dtype: Judgment
+    period: Month
+    source: Schedule 4 paragraph 36
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/36
+              excerpt: "where the number of bedrooms in the accommodation exceeds"
+          - path: versions[0].formula
+            kind: exception
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/36
+              excerpt: "No deduction... shared ownership"
+          - path: versions[0].formula
+            kind: exception
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/36
+              excerpt: "No deduction for under occupation is to be made"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          under_occupancy_excess_bedroom_count > 0
+          and not shared_ownership_under_regulation_26_4_to_6_applies
+          and not sanctuary_scheme_domestic_violence_under_occupation_exception_applies
+
+  - name: under_occupancy_deduction_amount
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Schedule 4 paragraph 36
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/36
+              excerpt: "the amount of the deduction is to be determined by the formula— A x B"
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/36
+              excerpt: "A... amount resulting from step 2 or 3... B is the relevant percentage"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if under_occupancy_deduction_to_be_made: max(0, under_occupancy_deduction_base_amount * under_occupancy_relevant_percentage) else: 0

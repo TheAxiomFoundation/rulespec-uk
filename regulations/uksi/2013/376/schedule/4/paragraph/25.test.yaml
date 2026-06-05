@@ -1,0 +1,72 @@
+- name: ordinary_local_housing_allowance_sets_cap_rent
+  period: 2026-06
+  input:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/25#input.schedule_3_paragraph_4_applies_to_renter: false
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/25#input.single_calculation_to_be_made_under_paragraph_17: true
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/25#input.maximum_allowable_amount_for_accommodation_a_under_subparagraph_2_when_current_pair_first_calculated
+    : 500
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/25#input.maximum_allowable_amount_for_accommodation_b_under_subparagraph_2_when_current_pair_first_calculated
+    : 600
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/25#input.local_housing_allowance_for_renters_broad_rental_market_area_and_entitled_category
+    : 700
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/25#input.local_housing_allowance_for_accommodation_a_broad_rental_market_area_and_entitled_category
+    : 550
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/25#input.local_housing_allowance_for_accommodation_b_broad_rental_market_area_and_entitled_category
+    : 650
+  output:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/25#subparagraph_4_maximum_allowable_amount_condition_applies: not_holds
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/25#renters_cap_rent: 700
+- name: subparagraph_4_selects_accommodation_a_when_a_was_lower
+  period: 2026-06
+  input:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/25#input.schedule_3_paragraph_4_applies_to_renter: true
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/25#input.single_calculation_to_be_made_under_paragraph_17: true
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/25#input.maximum_allowable_amount_for_accommodation_a_under_subparagraph_2_when_current_pair_first_calculated
+    : 500
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/25#input.maximum_allowable_amount_for_accommodation_b_under_subparagraph_2_when_current_pair_first_calculated
+    : 600
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/25#input.local_housing_allowance_for_renters_broad_rental_market_area_and_entitled_category
+    : 700
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/25#input.local_housing_allowance_for_accommodation_a_broad_rental_market_area_and_entitled_category
+    : 550
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/25#input.local_housing_allowance_for_accommodation_b_broad_rental_market_area_and_entitled_category
+    : 650
+  output:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/25#subparagraph_4_maximum_allowable_amount_condition_applies: holds
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/25#renters_cap_rent: 550
+- name: subparagraph_4_selects_accommodation_b_when_b_was_lower
+  period: 2026-06
+  input:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/25#input.schedule_3_paragraph_4_applies_to_renter: true
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/25#input.single_calculation_to_be_made_under_paragraph_17: true
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/25#input.maximum_allowable_amount_for_accommodation_a_under_subparagraph_2_when_current_pair_first_calculated
+    : 700
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/25#input.maximum_allowable_amount_for_accommodation_b_under_subparagraph_2_when_current_pair_first_calculated
+    : 600
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/25#input.local_housing_allowance_for_renters_broad_rental_market_area_and_entitled_category
+    : 900
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/25#input.local_housing_allowance_for_accommodation_a_broad_rental_market_area_and_entitled_category
+    : 800
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/25#input.local_housing_allowance_for_accommodation_b_broad_rental_market_area_and_entitled_category
+    : 620
+  output:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/25#subparagraph_4_maximum_allowable_amount_condition_applies: holds
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/25#renters_cap_rent: 620
+- name: subparagraph_4_not_used_without_single_calculation_or_different_amounts
+  period: 2026-06
+  input:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/25#input.schedule_3_paragraph_4_applies_to_renter: true
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/25#input.single_calculation_to_be_made_under_paragraph_17: false
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/25#input.maximum_allowable_amount_for_accommodation_a_under_subparagraph_2_when_current_pair_first_calculated
+    : 600
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/25#input.maximum_allowable_amount_for_accommodation_b_under_subparagraph_2_when_current_pair_first_calculated
+    : 600
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/25#input.local_housing_allowance_for_renters_broad_rental_market_area_and_entitled_category
+    : 700
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/25#input.local_housing_allowance_for_accommodation_a_broad_rental_market_area_and_entitled_category
+    : 610
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/25#input.local_housing_allowance_for_accommodation_b_broad_rental_market_area_and_entitled_category
+    : 650
+  output:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/25#subparagraph_4_maximum_allowable_amount_condition_applies: not_holds
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/25#renters_cap_rent: 700

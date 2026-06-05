@@ -1,0 +1,30 @@
+- name: core_rent_is_lower_with_no_contributions
+  period: 2026-06
+  input:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/22#input.renters_core_rent: 500
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/22#input.renters_cap_rent: 600
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/14#input.housing_cost_contribution_count_required_under_paragraph_13_in_renters_case
+    : 0
+  output:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/22#renters_lower_rent_amount: 500
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/22#renters_housing_costs_element_calculated_under_this_part: 500
+- name: cap_rent_is_lower_and_contributions_are_deducted
+  period: 2026-06
+  input:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/22#input.renters_core_rent: 500
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/22#input.renters_cap_rent: 450
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/14#input.housing_cost_contribution_count_required_under_paragraph_13_in_renters_case
+    : 2
+  output:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/22#renters_lower_rent_amount: 450
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/22#renters_housing_costs_element_calculated_under_this_part: 256.9
+- name: equal_rents_are_identified_and_excess_contributions_floor_at_nil
+  period: 2026-06
+  input:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/22#input.renters_core_rent: 100
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/22#input.renters_cap_rent: 100
+    ? uk:regulations/uksi/2013/376/schedule/4/paragraph/14#input.housing_cost_contribution_count_required_under_paragraph_13_in_renters_case
+    : 2
+  output:
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/22#renters_lower_rent_amount: 100
+    uk:regulations/uksi/2013/376/schedule/4/paragraph/22#renters_housing_costs_element_calculated_under_this_part: 0

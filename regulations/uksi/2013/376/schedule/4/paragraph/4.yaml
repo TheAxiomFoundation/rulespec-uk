@@ -1,0 +1,45 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/4
+  summary: |-
+    Section 11(1) of the Act (housing costs) does not apply to any renter who is 16 or 17 years old and is a care leaver.
+rules:
+  - name: renter_aged_16_or_17_care_leaver_exception_applies
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Month
+    source: Schedule 4 paragraph 4
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: exception
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/4
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          person_is_renter
+          and person_is_16_or_17_years_old
+          and person_is_care_leaver
+  - name: section_11_1_housing_costs_applies
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Month
+    source: Schedule 4 paragraph 4
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: exception
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/4
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          not renter_aged_16_or_17_care_leaver_exception_applies

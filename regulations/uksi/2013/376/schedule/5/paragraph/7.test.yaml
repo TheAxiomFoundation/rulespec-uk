@@ -1,0 +1,64 @@
+- name: transition_applies_with_carry_forward_and_no_new_qualifying_period
+  period: 2026-06
+  input:
+    ? uk:regulations/uksi/2013/376/schedule/5/paragraph/7#input.joint_owner_occupiers_award_terminated_because_they_ceased_to_be_a_couple
+    : true
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/7#input.further_award_made_to_owner_occupier: true
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/7#input.occupation_condition_met_for_same_accommodation_in_further_award: true
+    ? uk:regulations/uksi/2013/376/schedule/5/paragraph/7#input.whole_or_part_of_assessment_period_would_have_counted_for_terminated_award
+    : true
+    ? uk:regulations/uksi/2013/376/schedule/5/paragraph/7#input.housing_costs_element_calculated_under_schedule_included_immediately_before_termination
+    : true
+  output:
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/7#paragraph_7_joint_owner_occupier_transition_applies: holds
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/7#terminated_award_assessment_period_carried_forward_for_further_award: holds
+    ? uk:regulations/uksi/2013/376/schedule/5/paragraph/7#paragraph_5_qualifying_period_disapplied_for_further_award_commencement
+    : holds
+- name: no_prior_housing_costs_element_means_qualifying_period_not_disapplied
+  period: 2026-06
+  input:
+    ? uk:regulations/uksi/2013/376/schedule/5/paragraph/7#input.joint_owner_occupiers_award_terminated_because_they_ceased_to_be_a_couple
+    : true
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/7#input.further_award_made_to_owner_occupier: true
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/7#input.occupation_condition_met_for_same_accommodation_in_further_award: true
+    ? uk:regulations/uksi/2013/376/schedule/5/paragraph/7#input.whole_or_part_of_assessment_period_would_have_counted_for_terminated_award
+    : true
+    ? uk:regulations/uksi/2013/376/schedule/5/paragraph/7#input.housing_costs_element_calculated_under_schedule_included_immediately_before_termination
+    : false
+  output:
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/7#paragraph_7_joint_owner_occupier_transition_applies: holds
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/7#terminated_award_assessment_period_carried_forward_for_further_award: holds
+    ? uk:regulations/uksi/2013/376/schedule/5/paragraph/7#paragraph_5_qualifying_period_disapplied_for_further_award_commencement
+    : not_holds
+- name: no_further_award_blocks_paragraph_7_transition
+  period: 2026-06
+  input:
+    ? uk:regulations/uksi/2013/376/schedule/5/paragraph/7#input.joint_owner_occupiers_award_terminated_because_they_ceased_to_be_a_couple
+    : true
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/7#input.further_award_made_to_owner_occupier: false
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/7#input.occupation_condition_met_for_same_accommodation_in_further_award: true
+    ? uk:regulations/uksi/2013/376/schedule/5/paragraph/7#input.whole_or_part_of_assessment_period_would_have_counted_for_terminated_award
+    : true
+    ? uk:regulations/uksi/2013/376/schedule/5/paragraph/7#input.housing_costs_element_calculated_under_schedule_included_immediately_before_termination
+    : true
+  output:
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/7#paragraph_7_joint_owner_occupier_transition_applies: not_holds
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/7#terminated_award_assessment_period_carried_forward_for_further_award: not_holds
+    ? uk:regulations/uksi/2013/376/schedule/5/paragraph/7#paragraph_5_qualifying_period_disapplied_for_further_award_commencement
+    : not_holds
+- name: different_accommodation_blocks_paragraph_7_transition
+  period: 2026-06
+  input:
+    ? uk:regulations/uksi/2013/376/schedule/5/paragraph/7#input.joint_owner_occupiers_award_terminated_because_they_ceased_to_be_a_couple
+    : true
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/7#input.further_award_made_to_owner_occupier: true
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/7#input.occupation_condition_met_for_same_accommodation_in_further_award: false
+    ? uk:regulations/uksi/2013/376/schedule/5/paragraph/7#input.whole_or_part_of_assessment_period_would_have_counted_for_terminated_award
+    : true
+    ? uk:regulations/uksi/2013/376/schedule/5/paragraph/7#input.housing_costs_element_calculated_under_schedule_included_immediately_before_termination
+    : true
+  output:
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/7#paragraph_7_joint_owner_occupier_transition_applies: not_holds
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/7#terminated_award_assessment_period_carried_forward_for_further_award: not_holds
+    ? uk:regulations/uksi/2013/376/schedule/5/paragraph/7#paragraph_5_qualifying_period_disapplied_for_further_award_commencement
+    : not_holds

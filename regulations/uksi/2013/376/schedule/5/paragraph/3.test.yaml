@@ -1,0 +1,14 @@
+- name: service_charge_payment_is_relevant_payment
+  period: 2026-06
+  input:
+    ? uk:regulations/uksi/2013/376/schedule/5/paragraph/3#input.payment_is_service_charge_payment_under_schedule_5_paragraphs_7_and_8
+    : true
+  output:
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/3#relevant_payment: holds
+- name: non_service_charge_payment_is_not_relevant_payment
+  period: 2026-06
+  input:
+    ? uk:regulations/uksi/2013/376/schedule/5/paragraph/3#input.payment_is_service_charge_payment_under_schedule_5_paragraphs_7_and_8
+    : false
+  output:
+    uk:regulations/uksi/2013/376/schedule/5/paragraph/3#relevant_payment: not_holds
