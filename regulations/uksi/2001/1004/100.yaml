@@ -1,0 +1,451 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2001/1004/100
+  summary: |-
+    Regulation 100 limits an earner's Class 4 National Insurance liability where Class 4 contributions under section 15 and primary Class 1 contributions are payable for the year. The annual maximum starts from the difference between the upper and lower profits limits at 6%, subtracts primary Class 1 contributions paid at the main primary percentage, applies the three Step Four cases, and where Case 2 or Case 3 applies adds the additional-rate amounts from Steps Eight and Nine. The final Class 4 contribution is capped at that annual maximum when Class 4 contributions are payable for the year.
+rules:
+  - name: class_4_annual_maximum_step_one
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Social Security (Contributions) Regulations 2001 reg. 100(3), Step One
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2001/1004/100
+              excerpt: "Subtract the lower profits limit from the upper profits limit"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/1992/4/15#lower_profits_limit
+              output: lower_profits_limit
+              hash: sha256:b52eb7fe9493059ce41a744bee95fb07e1a5c5539a1e88a768fecb94d649a06e
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/1992/4/15#upper_profits_limit
+              output: upper_profits_limit
+              hash: sha256:b52eb7fe9493059ce41a744bee95fb07e1a5c5539a1e88a768fecb94d649a06e
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          upper_profits_limit - lower_profits_limit
+
+  - name: class_4_annual_maximum_step_two
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Social Security (Contributions) Regulations 2001 reg. 100(3), Step Two
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2001/1004/100
+              excerpt: "Multiply the result of Step One by 6%"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/1992/4/15#main_class_4_percentage
+              output: main_class_4_percentage
+              hash: sha256:b52eb7fe9493059ce41a744bee95fb07e1a5c5539a1e88a768fecb94d649a06e
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2001/1004/100#class_4_annual_maximum_step_one
+              output: class_4_annual_maximum_step_one
+              hash: sha256:local
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          class_4_annual_maximum_step_one * main_class_4_percentage
+
+  - name: class_4_annual_maximum_step_four_value
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Social Security (Contributions) Regulations 2001 reg. 100(3), Step Four
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2001/1004/100
+              excerpt: "Subtract from the result of Step Two the aggregate amount of"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2001/1004/100#class_4_annual_maximum_step_two
+              output: class_4_annual_maximum_step_two
+              hash: sha256:local
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          class_4_annual_maximum_step_two - primary_class_1_contributions_paid_at_main_primary_percentage
+
+  - name: class_4_annual_maximum_step_four_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Social Security (Contributions) Regulations 2001 reg. 100(3), Step Four Case 3
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: exception
+            source:
+              corpus_citation_path: uk/regulation/uksi/2001/1004/100
+              excerpt: "the result of this step is treated as nil"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2001/1004/100#class_4_annual_maximum_step_four_value
+              output: class_4_annual_maximum_step_four_value
+              hash: sha256:local
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          max(0, class_4_annual_maximum_step_four_value)
+
+  - name: class_4_annual_maximum_case_1_applies
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Year
+    source: Social Security (Contributions) Regulations 2001 reg. 100(3), Step Four Case 1
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2001/1004/100
+              excerpt: "If the result of this step is a positive value, and exceeds the aggregate"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2001/1004/100#class_4_annual_maximum_step_four_value
+              output: class_4_annual_maximum_step_four_value
+              hash: sha256:local
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          class_4_annual_maximum_step_four_value > 0
+          and class_4_annual_maximum_step_four_value > primary_class_1_contributions_payable_at_main_primary_percentage + class_4_contributions_payable_at_main_class_4_percentage
+
+  - name: class_4_annual_maximum_case_2_applies
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Year
+    source: Social Security (Contributions) Regulations 2001 reg. 100(3), Step Four Case 2
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2001/1004/100
+              excerpt: "If the result of this step is a positive value, but does not exceed the aggregate"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2001/1004/100#class_4_annual_maximum_step_four_value
+              output: class_4_annual_maximum_step_four_value
+              hash: sha256:local
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          class_4_annual_maximum_step_four_value > 0
+          and class_4_annual_maximum_step_four_value <= primary_class_1_contributions_payable_at_main_primary_percentage + class_4_contributions_payable_at_main_class_4_percentage
+
+  - name: class_4_annual_maximum_case_3_applies
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Year
+    source: Social Security (Contributions) Regulations 2001 reg. 100(3), Step Four Case 3
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2001/1004/100
+              excerpt: "If the result of this step is a negative value"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2001/1004/100#class_4_annual_maximum_step_four_value
+              output: class_4_annual_maximum_step_four_value
+              hash: sha256:local
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          class_4_annual_maximum_step_four_value < 0
+
+  - name: class_4_annual_maximum_step_five
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Social Security (Contributions) Regulations 2001 reg. 100(3), Step Five
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2001/1004/100
+              excerpt: "Multiply the result of Step Four by 100/6"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2001/1004/100#class_4_annual_maximum_step_four_amount
+              output: class_4_annual_maximum_step_four_amount
+              hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/1992/4/15#main_class_4_percentage
+              output: main_class_4_percentage
+              hash: sha256:b52eb7fe9493059ce41a744bee95fb07e1a5c5539a1e88a768fecb94d649a06e
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          class_4_annual_maximum_step_four_amount / main_class_4_percentage
+
+  - name: class_4_annual_maximum_step_six
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Social Security (Contributions) Regulations 2001 reg. 100(3), Step Six
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2001/1004/100
+              excerpt: "Subtract the lower profits limit from the lesser of the upper profits limit and the amount of profits for the year"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/1992/4/15#lower_profits_limit
+              output: lower_profits_limit
+              hash: sha256:b52eb7fe9493059ce41a744bee95fb07e1a5c5539a1e88a768fecb94d649a06e
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/1992/4/15#upper_profits_limit
+              output: upper_profits_limit
+              hash: sha256:b52eb7fe9493059ce41a744bee95fb07e1a5c5539a1e88a768fecb94d649a06e
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          min(upper_profits_limit, profits_and_gains_for_year) - lower_profits_limit
+
+  - name: class_4_annual_maximum_step_seven
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Social Security (Contributions) Regulations 2001 reg. 100(3), Step Seven
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2001/1004/100
+              excerpt: "Subtract the result of Step Five from the result of Step Six"
+          - path: versions[0].formula
+            kind: exception
+            source:
+              corpus_citation_path: uk/regulation/uksi/2001/1004/100
+              excerpt: "If the result of this step is a negative value, it is treated as nil"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2001/1004/100#class_4_annual_maximum_step_five
+              output: class_4_annual_maximum_step_five
+              hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2001/1004/100#class_4_annual_maximum_step_six
+              output: class_4_annual_maximum_step_six
+              hash: sha256:local
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          max(0, class_4_annual_maximum_step_six - class_4_annual_maximum_step_five)
+
+  - name: class_4_annual_maximum_step_eight
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Social Security (Contributions) Regulations 2001 reg. 100(3), Step Eight
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2001/1004/100
+              excerpt: "Multiply the result of Step Seven by 2 per cent"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/1992/4/15#additional_class_4_percentage
+              output: additional_class_4_percentage
+              hash: sha256:b52eb7fe9493059ce41a744bee95fb07e1a5c5539a1e88a768fecb94d649a06e
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2001/1004/100#class_4_annual_maximum_step_seven
+              output: class_4_annual_maximum_step_seven
+              hash: sha256:local
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          class_4_annual_maximum_step_seven * additional_class_4_percentage
+
+  - name: class_4_annual_maximum_step_nine
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Social Security (Contributions) Regulations 2001 reg. 100(3), Step Nine
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2001/1004/100
+              excerpt: "Multiply the amount by which the profits and gains for the year exceed the upper profits limit for the year by 2 per cent"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/1992/4/15#additional_class_4_percentage
+              output: additional_class_4_percentage
+              hash: sha256:b52eb7fe9493059ce41a744bee95fb07e1a5c5539a1e88a768fecb94d649a06e
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/1992/4/15#upper_profits_limit
+              output: upper_profits_limit
+              hash: sha256:b52eb7fe9493059ce41a744bee95fb07e1a5c5539a1e88a768fecb94d649a06e
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          max(0, profits_and_gains_for_year - upper_profits_limit) * additional_class_4_percentage
+
+  - name: class_4_annual_maximum
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Social Security (Contributions) Regulations 2001 reg. 100(3)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2001/1004/100
+              excerpt: "where Case 1 of Step Four applies, the result of that step"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2001/1004/100
+              excerpt: "where Case 2 or Case 3 of Step Four applies, the amount produced by adding together the results of Steps Four, Eight and Nine"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2001/1004/100#class_4_annual_maximum_case_1_applies
+              output: class_4_annual_maximum_case_1_applies
+              hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2001/1004/100#class_4_annual_maximum_step_four_amount
+              output: class_4_annual_maximum_step_four_amount
+              hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2001/1004/100#class_4_annual_maximum_step_eight
+              output: class_4_annual_maximum_step_eight
+              hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2001/1004/100#class_4_annual_maximum_step_nine
+              output: class_4_annual_maximum_step_nine
+              hash: sha256:local
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          if class_4_annual_maximum_case_1_applies: class_4_annual_maximum_step_four_amount else: class_4_annual_maximum_step_four_amount + class_4_annual_maximum_step_eight + class_4_annual_maximum_step_nine
+
+  - name: class_4_contribution_after_annual_maximum
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Social Security (Contributions) Regulations 2001 reg. 100(2), (6)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2001/1004/100
+              excerpt: "the earner's liability for Class 4 contributions shall not exceed the maximum"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2001/1004/100
+              excerpt: "If, in respect of any year, there are payable by or in respect of an earner Class 4 contributions under section 15"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2001/1004/100
+              excerpt: "an earner shall be liable, in the first instance, for the full amount of the contributions"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2001/1004/100#class_4_annual_maximum
+              output: class_4_annual_maximum
+              hash: sha256:local
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          if class_4_contributions_payable_under_section_15_for_year: min(class_4_contribution_before_annual_maximum, class_4_annual_maximum) else: 0
