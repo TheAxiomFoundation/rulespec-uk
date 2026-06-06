@@ -1,0 +1,102 @@
+- name: basic_type_below_data_year_ceiling
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2026-04-06'
+    end: '2026-04-12'
+  input:
+    uk:policies/govuk/state-pension#input.current_state_pension_type_is_basic: true
+    uk:policies/govuk/state-pension#input.current_state_pension_type_is_new: false
+    uk:policies/govuk/state-pension#input.data_year_state_pension_type_is_basic: true
+    uk:policies/govuk/state-pension#input.data_year_state_pension_type_is_new: false
+    uk:policies/govuk/state-pension#input.reported_state_pension_weekly_amount_in_data_year: 100
+    uk:policies/govuk/state-pension#input.data_year_basic_state_pension_weekly_rate: 184.90
+    uk:policies/govuk/state-pension#input.data_year_full_new_state_pension_weekly_rate: 241.30
+    uk:policies/govuk/state-pension#input.state_pension_abolished_by_policy: false
+    uk:policies/govuk/state-pension#input.state_pension_policy_uprating_factor: 1
+  output:
+    uk:policies/govuk/state-pension#current_state_pension_flat_weekly_amount: 100
+    uk:policies/govuk/state-pension#additional_state_pension_weekly_amount: 0
+    uk:policies/govuk/state-pension#state_pension_weekly_amount: 100
+
+- name: basic_type_above_data_year_ceiling
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2026-04-06'
+    end: '2026-04-12'
+  input:
+    uk:policies/govuk/state-pension#input.current_state_pension_type_is_basic: true
+    uk:policies/govuk/state-pension#input.current_state_pension_type_is_new: false
+    uk:policies/govuk/state-pension#input.data_year_state_pension_type_is_basic: true
+    uk:policies/govuk/state-pension#input.data_year_state_pension_type_is_new: false
+    uk:policies/govuk/state-pension#input.reported_state_pension_weekly_amount_in_data_year: 200
+    uk:policies/govuk/state-pension#input.data_year_basic_state_pension_weekly_rate: 184.90
+    uk:policies/govuk/state-pension#input.data_year_full_new_state_pension_weekly_rate: 241.30
+    uk:policies/govuk/state-pension#input.state_pension_abolished_by_policy: false
+    uk:policies/govuk/state-pension#input.state_pension_policy_uprating_factor: 1
+  output:
+    uk:policies/govuk/state-pension#current_state_pension_flat_weekly_amount: 184.90
+    uk:policies/govuk/state-pension#additional_state_pension_weekly_amount: 15.10
+    uk:policies/govuk/state-pension#state_pension_weekly_amount: 200
+
+- name: current_new_type_with_data_year_basic_protected_amount
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2026-04-06'
+    end: '2026-04-12'
+  input:
+    uk:policies/govuk/state-pension#input.current_state_pension_type_is_basic: false
+    uk:policies/govuk/state-pension#input.current_state_pension_type_is_new: true
+    uk:policies/govuk/state-pension#input.data_year_state_pension_type_is_basic: true
+    uk:policies/govuk/state-pension#input.data_year_state_pension_type_is_new: false
+    uk:policies/govuk/state-pension#input.reported_state_pension_weekly_amount_in_data_year: 200
+    uk:policies/govuk/state-pension#input.data_year_basic_state_pension_weekly_rate: 184.90
+    uk:policies/govuk/state-pension#input.data_year_full_new_state_pension_weekly_rate: 241.30
+    uk:policies/govuk/state-pension#input.state_pension_abolished_by_policy: false
+    uk:policies/govuk/state-pension#input.state_pension_policy_uprating_factor: 1
+  output:
+    uk:policies/govuk/state-pension#current_state_pension_flat_weekly_amount: 200
+    uk:policies/govuk/state-pension#additional_state_pension_weekly_amount: 15.10
+    uk:policies/govuk/state-pension#state_pension_weekly_amount: 215.10
+
+- name: abolished_policy_returns_zero
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2026-04-06'
+    end: '2026-04-12'
+  input:
+    uk:policies/govuk/state-pension#input.current_state_pension_type_is_basic: true
+    uk:policies/govuk/state-pension#input.current_state_pension_type_is_new: false
+    uk:policies/govuk/state-pension#input.data_year_state_pension_type_is_basic: true
+    uk:policies/govuk/state-pension#input.data_year_state_pension_type_is_new: false
+    uk:policies/govuk/state-pension#input.reported_state_pension_weekly_amount_in_data_year: 200
+    uk:policies/govuk/state-pension#input.data_year_basic_state_pension_weekly_rate: 184.90
+    uk:policies/govuk/state-pension#input.data_year_full_new_state_pension_weekly_rate: 241.30
+    uk:policies/govuk/state-pension#input.state_pension_abolished_by_policy: true
+    uk:policies/govuk/state-pension#input.state_pension_policy_uprating_factor: 1
+  output:
+    uk:policies/govuk/state-pension#state_pension_weekly_amount: 0
+
+- name: no_state_pension_type_returns_zero
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2026-04-06'
+    end: '2026-04-12'
+  input:
+    uk:policies/govuk/state-pension#input.current_state_pension_type_is_basic: false
+    uk:policies/govuk/state-pension#input.current_state_pension_type_is_new: false
+    uk:policies/govuk/state-pension#input.data_year_state_pension_type_is_basic: false
+    uk:policies/govuk/state-pension#input.data_year_state_pension_type_is_new: false
+    uk:policies/govuk/state-pension#input.reported_state_pension_weekly_amount_in_data_year: 200
+    uk:policies/govuk/state-pension#input.data_year_basic_state_pension_weekly_rate: 184.90
+    uk:policies/govuk/state-pension#input.data_year_full_new_state_pension_weekly_rate: 241.30
+    uk:policies/govuk/state-pension#input.state_pension_abolished_by_policy: false
+    uk:policies/govuk/state-pension#input.state_pension_policy_uprating_factor: 1
+  output:
+    uk:policies/govuk/state-pension#current_state_pension_flat_weekly_amount: 0
+    uk:policies/govuk/state-pension#additional_state_pension_weekly_amount: 0
+    uk:policies/govuk/state-pension#state_pension_weekly_amount: 0
