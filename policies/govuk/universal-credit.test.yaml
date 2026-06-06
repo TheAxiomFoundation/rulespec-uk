@@ -1,0 +1,32 @@
+- name: annual_pre_cap_amount_reduced_by_benefit_cap
+  period:
+    period_kind: tax_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:policies/govuk/universal-credit#input.universal_credit_pre_benefit_cap_for_year: 12000
+    uk:policies/govuk/universal-credit#input.benefit_cap_reduction_for_year: 1250
+  output:
+    uk:policies/govuk/universal-credit#universal_credit_annual_amount: 10750
+
+- name: benefit_cap_reduction_cannot_make_final_amount_negative
+  period:
+    period_kind: tax_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:policies/govuk/universal-credit#input.universal_credit_pre_benefit_cap_for_year: 3000
+    uk:policies/govuk/universal-credit#input.benefit_cap_reduction_for_year: 3600
+  output:
+    uk:policies/govuk/universal-credit#universal_credit_annual_amount: 0
+
+- name: no_award_remains_zero
+  period:
+    period_kind: tax_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:policies/govuk/universal-credit#input.universal_credit_pre_benefit_cap_for_year: 0
+    uk:policies/govuk/universal-credit#input.benefit_cap_reduction_for_year: 0
+  output:
+    uk:policies/govuk/universal-credit#universal_credit_annual_amount: 0
