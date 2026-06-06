@@ -1,0 +1,84 @@
+- name: responsible_child_proxy_uses_imported_weekly_rate
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2025-04-07'
+    end: '2025-04-13'
+  input: {}
+  tables:
+    Person:
+    - uk:statutes/ukpga/1992/4/141#input.is_child_or_qualifying_young_person_for_child_benefit: true
+      uk:regulations/uksi/2006/965/2#input.during_subsistence_of_marriage_any_party_married_to_more_than_one_person: false
+      uk:regulations/uksi/2006/965/2#input.marriage_ceremony_took_place_under_law_permitting_polygamy: false
+      uk:regulations/uksi/2006/965/2#input.specified_benefit_allowance_or_increase_paid_for_week_to_person: false
+      ? uk:regulations/uksi/2006/965/2#input.specified_benefit_is_in_respect_of_only_elder_or_eldest_child_for_child_benefit_entitlement
+      : false
+      uk:regulations/uksi/2006/965/2#input.child_or_qualifying_young_person_is_only_elder_or_eldest_for_payee: true
+      uk:regulations/uksi/2006/965/2#input.paragraph_2_relationship_coordination_applies: false
+      uk:regulations/uksi/2006/965/2#input.child_or_qualifying_young_person_is_elder_or_eldest_among_paragraph_2_children: true
+      uk:regulations/uksi/2006/965/2#input.payee_is_voluntary_organisation: false
+      uk:regulations/uksi/2006/965/2#input.payee_resides_with_parent_otherwise_than_paragraph_2_a: false
+    - uk:statutes/ukpga/1992/4/141#input.is_child_or_qualifying_young_person_for_child_benefit: true
+      uk:regulations/uksi/2006/965/2#input.during_subsistence_of_marriage_any_party_married_to_more_than_one_person: false
+      uk:regulations/uksi/2006/965/2#input.marriage_ceremony_took_place_under_law_permitting_polygamy: false
+      uk:regulations/uksi/2006/965/2#input.specified_benefit_allowance_or_increase_paid_for_week_to_person: false
+      ? uk:regulations/uksi/2006/965/2#input.specified_benefit_is_in_respect_of_only_elder_or_eldest_child_for_child_benefit_entitlement
+      : false
+      uk:regulations/uksi/2006/965/2#input.child_or_qualifying_young_person_is_only_elder_or_eldest_for_payee: false
+      uk:regulations/uksi/2006/965/2#input.paragraph_2_relationship_coordination_applies: false
+      uk:regulations/uksi/2006/965/2#input.child_or_qualifying_young_person_is_elder_or_eldest_among_paragraph_2_children: false
+      uk:regulations/uksi/2006/965/2#input.payee_is_voluntary_organisation: false
+      uk:regulations/uksi/2006/965/2#input.payee_resides_with_parent_otherwise_than_paragraph_2_a: false
+  output:
+    uk:statutes/ukpga/1992/4/141#child_benefit_weekly_rate_for_responsible_child_or_qualifying_young_person:
+    - 27.05
+    - 17.9
+    uk:statutes/ukpga/1992/4/141#child_or_qualifying_young_person_counts_for_child_benefit_weekly_entitlement:
+    - holds
+    - holds
+- name: responsible_for_two_children_gets_sum_of_weekly_rates
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2025-04-07'
+    end: '2025-04-13'
+  input:
+    uk:statutes/ukpga/1992/4/141#relation.child_benefit_children_or_qualifying_young_persons_for_whom_person_responsible:
+    - uk:statutes/ukpga/1992/4/141#input.is_child_or_qualifying_young_person_for_child_benefit: true
+      uk:regulations/uksi/2006/965/2#input.during_subsistence_of_marriage_any_party_married_to_more_than_one_person: false
+      uk:regulations/uksi/2006/965/2#input.marriage_ceremony_took_place_under_law_permitting_polygamy: false
+      uk:regulations/uksi/2006/965/2#input.specified_benefit_allowance_or_increase_paid_for_week_to_person: false
+      ? uk:regulations/uksi/2006/965/2#input.specified_benefit_is_in_respect_of_only_elder_or_eldest_child_for_child_benefit_entitlement
+      : false
+      uk:regulations/uksi/2006/965/2#input.child_or_qualifying_young_person_is_only_elder_or_eldest_for_payee: true
+      uk:regulations/uksi/2006/965/2#input.paragraph_2_relationship_coordination_applies: false
+      uk:regulations/uksi/2006/965/2#input.child_or_qualifying_young_person_is_elder_or_eldest_among_paragraph_2_children: true
+      uk:regulations/uksi/2006/965/2#input.payee_is_voluntary_organisation: false
+      uk:regulations/uksi/2006/965/2#input.payee_resides_with_parent_otherwise_than_paragraph_2_a: false
+    - uk:statutes/ukpga/1992/4/141#input.is_child_or_qualifying_young_person_for_child_benefit: true
+      uk:regulations/uksi/2006/965/2#input.during_subsistence_of_marriage_any_party_married_to_more_than_one_person: false
+      uk:regulations/uksi/2006/965/2#input.marriage_ceremony_took_place_under_law_permitting_polygamy: false
+      uk:regulations/uksi/2006/965/2#input.specified_benefit_allowance_or_increase_paid_for_week_to_person: false
+      ? uk:regulations/uksi/2006/965/2#input.specified_benefit_is_in_respect_of_only_elder_or_eldest_child_for_child_benefit_entitlement
+      : false
+      uk:regulations/uksi/2006/965/2#input.child_or_qualifying_young_person_is_only_elder_or_eldest_for_payee: false
+      uk:regulations/uksi/2006/965/2#input.paragraph_2_relationship_coordination_applies: false
+      uk:regulations/uksi/2006/965/2#input.child_or_qualifying_young_person_is_elder_or_eldest_among_paragraph_2_children: false
+      uk:regulations/uksi/2006/965/2#input.payee_is_voluntary_organisation: false
+      uk:regulations/uksi/2006/965/2#input.payee_resides_with_parent_otherwise_than_paragraph_2_a: false
+  output:
+    uk:statutes/ukpga/1992/4/141#entitled_to_child_benefit_for_week: holds
+    uk:statutes/ukpga/1992/4/141#child_benefit_weekly_entitlement: 44.95
+- name: no_responsible_child_or_qualifying_young_person_has_no_entitlement
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2025-04-14'
+    end: '2025-04-20'
+  input: {}
+  tables:
+    Person:
+    - uk:statutes/ukpga/1992/4/141#input.is_child_or_qualifying_young_person_for_child_benefit: false
+  output:
+    uk:statutes/ukpga/1992/4/141#entitled_to_child_benefit_for_week: not_holds
+    uk:statutes/ukpga/1992/4/141#child_benefit_weekly_entitlement: 0
