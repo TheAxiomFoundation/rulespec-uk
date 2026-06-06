@@ -1,0 +1,43 @@
+- name: pension credit with guarantee and savings credit
+  period:
+    period_kind: tax_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:policies/govuk/pension-credit#input.pension_credit_entitlement_for_year: 3400.00
+    uk:policies/govuk/pension-credit#input.person_or_partner_would_claim_pension_credit: true
+  output:
+    uk:policies/govuk/pension-credit#pension_credit_annual_amount: 3400.00
+
+- name: pension credit not claimed
+  period:
+    period_kind: tax_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:policies/govuk/pension-credit#input.pension_credit_entitlement_for_year: 3400.00
+    uk:policies/govuk/pension-credit#input.person_or_partner_would_claim_pension_credit: false
+  output:
+    uk:policies/govuk/pension-credit#pension_credit_annual_amount: 0.00
+
+- name: pension credit entitlement positive
+  period:
+    period_kind: tax_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:policies/govuk/pension-credit#input.pension_credit_entitlement_for_year: 2500.00
+    uk:policies/govuk/pension-credit#input.person_or_partner_would_claim_pension_credit: true
+  output:
+    uk:policies/govuk/pension-credit#pension_credit_annual_amount: 2500.00
+
+- name: pension credit zero entitlement
+  period:
+    period_kind: tax_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:policies/govuk/pension-credit#input.pension_credit_entitlement_for_year: 0.00
+    uk:policies/govuk/pension-credit#input.person_or_partner_would_claim_pension_credit: true
+  output:
+    uk:policies/govuk/pension-credit#pension_credit_annual_amount: 0.00

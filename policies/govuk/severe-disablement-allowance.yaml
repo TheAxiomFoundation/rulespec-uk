@@ -1,0 +1,62 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_paths:
+      - uk/regulation/uksi/2026/148/schedule/1
+      - uk/regulation/uksi/2013/376/schedule/4/paragraph/7
+  summary: |-
+    This PolicyEngine-alignment surface returns the annual Severe Disablement Allowance amount used by PolicyEngine UK and HBAI: the maximum weekly Severe Disablement Allowance rate, annualized for people with reported SDA receipt, and nil otherwise.
+imports:
+  - uk:regulations/uksi/2026/148/schedule/1#severe_disablement_allowance_maximum_weekly_rate
+rules:
+  - name: severe_disablement_allowance_weeks_in_year
+    kind: parameter
+    entity: Person
+    dtype: Count
+    period: Year
+    source: Social Security (Claims and Payments) Regulations 1987 weekly-benefit annualization rule
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/7
+              excerpt: "weekly payments are multiplied by 52"
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          52
+
+  - name: severe_disablement_allowance_annual_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine UK sda final receipt wrapper over the Social Security Benefits Up-rating Order 2026 Schedule 1 maximum SDA rate
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2026/148/schedule/1#severe_disablement_allowance_maximum_weekly_rate
+              output: severe_disablement_allowance_maximum_weekly_rate
+              hash: sha256:01b4050f255edf055e9c04e2b267c7a899f3f862b6e80e3e5bf54e18e29ddb88
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2026/148/schedule/1
+              excerpt: "Severe disablement allowance, GBP 103.85"
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2026/148/schedule/1
+              excerpt: "Age related addition: (a) higher rate, GBP 15.50"
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          if reported_severe_disablement_allowance_for_year > 0: severe_disablement_allowance_maximum_weekly_rate * severe_disablement_allowance_weeks_in_year else: 0
