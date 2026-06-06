@@ -1,0 +1,38 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2008/794/118
+  summary: |-
+    This PolicyEngine-alignment surface returns the annual income-related Employment and Support Allowance amount used by PolicyEngine UK and HBAI: reported income-related ESA reduced by annual tariff income when the benefit unit passes PolicyEngine's income-related ESA eligibility gate, and nil otherwise.
+rules:
+  - name: income_related_esa_annual_amount
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine UK esa_income final receipt wrapper over Employment and Support Allowance Regulations 2008 regulation 118 tariff income
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2008/794/118
+              excerpt: "it is to be treated as equivalent to a weekly income"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2008/794/118
+              excerpt: "£1 for each complete £250"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2008/794/118
+              excerpt: "where any part of the excess is not a complete £250"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if income_related_esa_eligible: max(0, reported_income_related_esa_for_year - income_related_esa_tariff_income_for_year) else: 0
