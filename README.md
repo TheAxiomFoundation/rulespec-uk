@@ -6,6 +6,7 @@ Kingston upon Thames RuleSpec encodings.
 
 - `policies/`: local policy RuleSpec YAML.
 - `data/corpus/`: scoped generated corpus artifacts when needed for source verification.
+- `.axiom/corpus-manifests/`: source manifests used by the corpus ingester.
 - `.axiom/ingest-manifests/`: signed manifests for generated corpus artifacts.
 - `.github/workflows/`: wrapper around the shared RuleSpec validation workflow.
 
