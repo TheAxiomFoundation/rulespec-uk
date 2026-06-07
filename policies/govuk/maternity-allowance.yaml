@@ -1,0 +1,29 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_paths:
+      - uk/guidance/policyengine-uk/pre-ctr-parameters/v2.88.56
+  summary: |-
+    This PolicyEngine-alignment surface returns the annual Maternity Allowance amount exposed by PolicyEngine UK 2.88.56. PolicyEngine delegates this variable to reported EFRS maternity allowance receipt, so this RuleSpec intentionally preserves that reported amount exactly.
+rules:
+  - name: maternity_allowance_annual_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine-UK 2.88.56 maternity_allowance wrapper
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/pre-ctr-parameters/v2.88.56
+              excerpt: "maternity_allowance delegates to maternity_allowance_reported"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          reported_maternity_allowance_for_year

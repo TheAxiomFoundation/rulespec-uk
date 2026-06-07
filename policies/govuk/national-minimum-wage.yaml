@@ -1,0 +1,147 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_paths:
+      - uk/guidance/policyengine-uk/pre-ctr-parameters/v2.88.56
+  summary: |-
+    This PolicyEngine-alignment surface returns the National Minimum Wage hourly rate exposed by PolicyEngine UK 2.88.56 for the 2026 model year. It applies the apprentice override, then selects the non-apprentice hourly rate by age.
+rules:
+  - name: national_minimum_wage_apprentice_hourly_rate
+    kind: parameter
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine-UK 2.88.56 minimum-wage snapshot
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/pre-ctr-parameters/v2.88.56
+              excerpt: "apprentice 8.00"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          8
+
+  - name: national_minimum_wage_under_18_hourly_rate
+    kind: parameter
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine-UK 2.88.56 minimum-wage snapshot
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/pre-ctr-parameters/v2.88.56
+              excerpt: "under 18 8.00"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          8
+
+  - name: national_minimum_wage_18_to_20_hourly_rate
+    kind: parameter
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine-UK 2.88.56 minimum-wage snapshot
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/pre-ctr-parameters/v2.88.56
+              excerpt: "ages 18 to 20 10.85"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          10.85
+
+  - name: national_minimum_wage_21_and_over_hourly_rate
+    kind: parameter
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine-UK 2.88.56 minimum-wage snapshot
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/pre-ctr-parameters/v2.88.56
+              excerpt: "ages 21 and over 12.71"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          12.71
+
+  - name: national_minimum_wage_18_threshold
+    kind: parameter
+    entity: Person
+    dtype: Count
+    period: Year
+    source: PolicyEngine-UK 2.88.56 minimum-wage age-band formula
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/pre-ctr-parameters/v2.88.56
+              excerpt: "ages 18 to 20"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          18
+
+  - name: national_minimum_wage_21_threshold
+    kind: parameter
+    entity: Person
+    dtype: Count
+    period: Year
+    source: PolicyEngine-UK 2.88.56 minimum-wage age-band formula
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/pre-ctr-parameters/v2.88.56
+              excerpt: "ages 21 and over"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          21
+
+  - name: national_minimum_wage_hourly_rate
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine-UK 2.88.56 minimum_wage formula
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/pre-ctr-parameters/v2.88.56
+              excerpt: "National Minimum Wage hourly rates are apprentice 8.00, under 18 8.00, ages 18 to 20 10.85, and ages 21 and over 12.71"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          if minimum_wage_is_apprentice: national_minimum_wage_apprentice_hourly_rate else: if minimum_wage_age >= national_minimum_wage_21_threshold: national_minimum_wage_21_and_over_hourly_rate else: if minimum_wage_age >= national_minimum_wage_18_threshold: national_minimum_wage_18_to_20_hourly_rate else: national_minimum_wage_under_18_hourly_rate

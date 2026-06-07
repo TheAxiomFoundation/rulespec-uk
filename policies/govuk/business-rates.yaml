@@ -1,0 +1,49 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_paths:
+      - uk/guidance/policyengine-uk/pre-ctr-parameters/v2.88.56
+  summary: |-
+    This PolicyEngine-alignment surface returns the annual household Business Rates incidence amount exposed by PolicyEngine UK 2.88.56. PolicyEngine models it as household shareholding multiplied by the aggregate active business-rates revenue statistics for England, Scotland, Wales, and Northern Ireland.
+rules:
+  - name: business_rates_aggregate_revenue
+    kind: parameter
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine-UK 2.88.56 business-rates revenue snapshot
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/pre-ctr-parameters/v2.88.56
+              excerpt: "for total 31732499000"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          31732499000
+
+  - name: business_rates_annual_amount
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine-UK 2.88.56 business_rates formula
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/pre-ctr-parameters/v2.88.56
+              excerpt: "Business rates revenue parameters are England 27222000000, Scotland 2123000000, Wales 1053499000, and Northern Ireland 1334000000"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          business_rates_shareholding * business_rates_aggregate_revenue
