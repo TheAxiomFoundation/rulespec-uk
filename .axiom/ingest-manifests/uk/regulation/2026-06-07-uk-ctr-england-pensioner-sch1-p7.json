@@ -1,0 +1,49 @@
+{
+  "applied_files": [
+    {
+      "path": "data/corpus/coverage/uk/regulation/2026-06-07-uk-ctr-england-pensioner-sch1-p7.json",
+      "sha256": "b805d1d83f15781ff642cf28daa9e5237574a2192b6d491fe0a748c97ad4b4c8"
+    },
+    {
+      "path": "data/corpus/inventory/uk/regulation/2026-06-07-uk-ctr-england-pensioner-sch1-p7.json",
+      "sha256": "5a79cdf788d02de0cca617e73187e62d6d30ca0a0ec1fd93d45feda8912fed36"
+    },
+    {
+      "path": "data/corpus/provisions/uk/regulation/2026-06-07-uk-ctr-england-pensioner-sch1-p7.jsonl",
+      "sha256": "f07ec29d144407c2f0c8778be57c6a49e67050d1786c69b6a50721f10360872f"
+    },
+    {
+      "path": "data/corpus/sources/uk/regulation/2026-06-07-uk-ctr-england-pensioner-sch1-p7/uksi/2012/2885/schedule-1-paragraph-7.xml",
+      "sha256": "de6739aa6ba81cdd7c4a24f45000e9650e4eaa50e5a467140947c38278989d07"
+    }
+  ],
+  "axiom_corpus_git": {
+    "commit": "33bdaf4a8b1f47b2559253ce11f6ab2167488f88",
+    "dirty_tracked": true,
+    "root": "/Users/maxghenis/_axiom-worktrees/rulespec-uk-ctr-20260607"
+  },
+  "axiom_corpus_version": "0.1.0",
+  "command": {
+    "text": "axiom-corpus extract-uk-legislation --base data/corpus --version 2026-06-07-uk-ctr-england-pensioner-sch1-p7 --citation uksi/2012/2885/schedule/1/paragraph/7"
+  },
+  "coverage": {
+    "complete": true,
+    "extra_count": 0,
+    "matched_count": 1,
+    "missing_count": 0,
+    "provision_count": 1,
+    "source_count": 1
+  },
+  "document_class": "regulation",
+  "generated_at": "2026-06-07T19:50:45.530196+00:00",
+  "jurisdiction": "uk",
+  "reasoning_logs": [],
+  "schema_version": "axiom-corpus/ingest-manifest/v1",
+  "signature": {
+    "algorithm": "ed25519",
+    "key_id": "axiom-corpus-ingest-v1",
+    "value": "ztA0a/Jvm9fqDfQs18LGn0q/2lBK0xn+gW4ZKI8kis2mtK1TsSYya3ZLR9MkFH7ZOrFamac7fnzY9JHxie6mBg=="
+  },
+  "tool": "axiom-corpus-ingest signed ingest manifest",
+  "version": "2026-06-07-uk-ctr-england-pensioner-sch1-p7"
+}
