@@ -1,0 +1,53 @@
+{
+  "applied_files": [
+    {
+      "path": "data/corpus/coverage/uk/statute/2026-06-07-uk-council-tax-reduction.json",
+      "sha256": "e18f90f4008820a5efe20363ee8ef3153d29107bbd2934a7844fa308b456f166"
+    },
+    {
+      "path": "data/corpus/inventory/uk/statute/2026-06-07-uk-council-tax-reduction.json",
+      "sha256": "47a8b41058f7960e7c2b9ec3e9ab459e03a1a832124add4901102eac43dc5bc6"
+    },
+    {
+      "path": "data/corpus/provisions/uk/statute/2026-06-07-uk-council-tax-reduction.jsonl",
+      "sha256": "198f6278fef74d8aa3ebe94318823fc152c1634a7941200be99bb361bcdf1a46"
+    },
+    {
+      "path": "data/corpus/sources/uk/statute/2026-06-07-uk-council-tax-reduction/ukpga/1992/14/schedule-1A.xml",
+      "sha256": "89b0b37c7093786ff8f79302935834d26ced02309b0b588fd74d495cf018f73a"
+    },
+    {
+      "path": "data/corpus/sources/uk/statute/2026-06-07-uk-council-tax-reduction/ukpga/1992/14/section-13A.xml",
+      "sha256": "fbc31f525bc19a5bff892379ede7c4844a4a2af23858a95dc366c259636788a6"
+    }
+  ],
+  "axiom_corpus_git": {
+    "commit": "33bdaf4a8b1f47b2559253ce11f6ab2167488f88",
+    "dirty_tracked": true,
+    "root": "/Users/maxghenis/_axiom-worktrees/rulespec-uk-ctr-20260607"
+  },
+  "axiom_corpus_version": "0.1.0",
+  "command": {
+    "text": "axiom-corpus extract-uk-legislation --base data/corpus --version 2026-06-07-uk-council-tax-reduction --citation ukpga/1992/14/section/13A && axiom-corpus extract-uk-legislation --base data/corpus --version 2026-06-07-uk-council-tax-reduction --citation ukpga/1992/14/schedule/1A"
+  },
+  "coverage": {
+    "complete": true,
+    "extra_count": 0,
+    "matched_count": 2,
+    "missing_count": 0,
+    "provision_count": 2,
+    "source_count": 2
+  },
+  "document_class": "statute",
+  "generated_at": "2026-06-07T18:42:29.790003+00:00",
+  "jurisdiction": "uk",
+  "reasoning_logs": [],
+  "schema_version": "axiom-corpus/ingest-manifest/v1",
+  "signature": {
+    "algorithm": "ed25519",
+    "key_id": "axiom-corpus-ingest-v1",
+    "value": "UxbPoR+PV4laO9Km+irsbOWko9+wCypd7sJIRCgp8+mONaBWZZj6pp9ZVLXDtIJiAX11qPho1IBlF73VAuQ0DQ=="
+  },
+  "tool": "axiom-corpus-ingest signed ingest manifest",
+  "version": "2026-06-07-uk-council-tax-reduction"
+}
