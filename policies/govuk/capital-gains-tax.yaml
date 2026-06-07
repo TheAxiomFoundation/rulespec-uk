@@ -1,0 +1,388 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_paths:
+      - uk/statute/ukpga/1992/12/1K
+      - uk/statute/ukpga/1992/12/1H
+      - uk/statute/ukpga/2025/8/7
+  summary: |-
+    This PolicyEngine-alignment surface returns the annual person-level Capital Gains Tax amount. It deducts the annual exempt amount from positive capital gains, allocates remaining gains across the unused income-tax basic and higher-rate bands after Gift Aid and pension band extensions, and applies the current main CGT rates.
+rules:
+  - name: cgt_annual_exempt_amount
+    kind: parameter
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Taxation of Chargeable Gains Act 1992 s.1K
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/12/1K
+              excerpt: "The annual exempt amount for a tax year is £3,000"
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          3000
+
+  - name: cgt_basic_rate
+    kind: parameter
+    entity: Person
+    dtype: Rate
+    period: Year
+    source: TCGA 1992 s.1H as amended by Finance Act 2025 s.7
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/12/1H
+              excerpt: "charged to capital gains tax at a rate of 18% or 24%"
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2025/8/7
+              excerpt: "for “10%” substitute “18%”"
+    versions:
+      - effective_from: '2024-10-30'
+        formula: |-
+          0.18
+
+  - name: cgt_higher_rate
+    kind: parameter
+    entity: Person
+    dtype: Rate
+    period: Year
+    source: TCGA 1992 s.1H as amended by Finance Act 2025 s.7
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/12/1H
+              excerpt: "charged to capital gains tax at a rate of 18% or 24%"
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2025/8/7
+              excerpt: "for “20%” substitute “24%”"
+    versions:
+      - effective_from: '2024-10-30'
+        formula: |-
+          0.24
+
+  - name: cgt_additional_rate
+    kind: parameter
+    entity: Person
+    dtype: Rate
+    period: Year
+    source: TCGA 1992 s.1H as amended by Finance Act 2025 s.7
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/12/1H
+              excerpt: "charged to capital gains tax at a rate of 18% or 24%"
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2025/8/7
+              excerpt: "for “20%” substitute “24%”"
+    versions:
+      - effective_from: '2024-10-30'
+        formula: |-
+          0.24
+
+  - name: personal_pension_band_extension_for_cgt
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine UK Capital Gains Tax income-tax-band extension alignment
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/12/1H
+              excerpt: "which of the rates applies to the gains concerned is determined by section 1I"
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          min(personal_pension_contributions_for_year, pension_contributions_relief_for_year)
+
+  - name: basic_rate_band_extension_for_cgt
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine UK Capital Gains Tax income-tax-band extension alignment
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/12/1H
+              excerpt: "which of the rates applies to the gains concerned is determined by section 1I"
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          gift_aid_grossed_up_for_year + personal_pension_band_extension_for_cgt
+
+  - name: allowances_for_cgt_income
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine UK Capital Gains Tax income-tax-band extension alignment
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/12/1H
+              excerpt: "which of the rates applies to the gains concerned is determined by section 1I"
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          max(0, allowances_for_year - gift_aid_for_year - personal_pension_band_extension_for_cgt)
+
+  - name: taxable_income_for_cgt
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine UK Capital Gains Tax income-tax-band allocation alignment
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/12/1H
+              excerpt: "which of the rates applies to the gains concerned is determined by section 1I"
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          max(0, adjusted_net_income_for_year - allowances_for_cgt_income)
+
+  - name: positive_capital_gains_for_year
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Taxation of Chargeable Gains Act 1992 s.1K
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/12/1K
+              excerpt: "deducted from those gains (but no further than necessary to eliminate them)"
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          max(0, capital_gains_for_year)
+
+  - name: capital_gains_less_annual_exempt_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Taxation of Chargeable Gains Act 1992 s.1K
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/12/1K
+              excerpt: "annual exempt amount for the year is to be deducted from those gains"
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          max(0, positive_capital_gains_for_year - cgt_annual_exempt_amount)
+
+  - name: cgt_basic_rate_limit_with_extension
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine UK Capital Gains Tax income-tax-band extension alignment
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/12/1H
+              excerpt: "which of the rates applies to the gains concerned is determined by section 1I"
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          income_tax_basic_rate_limit_for_year + basic_rate_band_extension_for_cgt
+
+  - name: cgt_higher_rate_limit_with_extension
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine UK Capital Gains Tax income-tax-band extension alignment
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/12/1H
+              excerpt: "which of the rates applies to the gains concerned is determined by section 1I"
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          income_tax_higher_rate_limit_for_year + basic_rate_band_extension_for_cgt
+
+  - name: cgt_remaining_basic_rate_band
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: TCGA 1992 s.1H and PolicyEngine UK band allocation alignment
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/12/1H
+              excerpt: "which of the rates applies to the gains concerned is determined by section 1I"
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          max(0, cgt_basic_rate_limit_with_extension - taxable_income_for_cgt)
+
+  - name: capital_gains_charged_at_basic_rate
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: TCGA 1992 s.1H and PolicyEngine UK band allocation alignment
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/12/1H
+              excerpt: "charged to capital gains tax at a rate of 18% or 24%"
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          min(capital_gains_less_annual_exempt_amount, cgt_remaining_basic_rate_band)
+
+  - name: capital_gains_above_basic_rate_band
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: TCGA 1992 s.1H and PolicyEngine UK band allocation alignment
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/12/1H
+              excerpt: "charged to capital gains tax at a rate of 18% or 24%"
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          max(0, capital_gains_less_annual_exempt_amount - cgt_remaining_basic_rate_band)
+
+  - name: capital_gains_charged_at_higher_rate
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: TCGA 1992 s.1H and PolicyEngine UK band allocation alignment
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/12/1H
+              excerpt: "charged to capital gains tax at a rate of 18% or 24%"
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          min(capital_gains_above_basic_rate_band, cgt_higher_rate_limit_with_extension - cgt_basic_rate_limit_with_extension)
+
+  - name: capital_gains_charged_at_additional_rate
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: TCGA 1992 s.1H and PolicyEngine UK band allocation alignment
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/12/1H
+              excerpt: "charged to capital gains tax at a rate of 18% or 24%"
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          max(0, capital_gains_above_basic_rate_band - capital_gains_charged_at_higher_rate)
+
+  - name: capital_gains_tax_annual_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: TCGA 1992 ss.1H and 1K as amended by Finance Act 2025 s.7
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/12/1K
+              excerpt: "annual exempt amount for the year is to be deducted from those gains"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/12/1H
+              excerpt: "charged to capital gains tax at a rate of 18% or 24%"
+    versions:
+      - effective_from: '2024-10-30'
+        formula: |-
+          capital_gains_charged_at_basic_rate * cgt_basic_rate + capital_gains_charged_at_higher_rate * cgt_higher_rate + capital_gains_charged_at_additional_rate * cgt_additional_rate

@@ -1,0 +1,49 @@
+{
+  "applied_files": [
+    {
+      "path": "data/corpus/coverage/uk/statute/2026-06-07-uk-fuel-duty-hoda-section-6.json",
+      "sha256": "8aabc7e6719259ac79f691b8f3ec964e840354110251f191a197529e6aefae71"
+    },
+    {
+      "path": "data/corpus/inventory/uk/statute/2026-06-07-uk-fuel-duty-hoda-section-6.json",
+      "sha256": "dc23de2a1894b6351a5347db3286c024a1a17ff210a4a48e4067c498314516b9"
+    },
+    {
+      "path": "data/corpus/provisions/uk/statute/2026-06-07-uk-fuel-duty-hoda-section-6.jsonl",
+      "sha256": "2c430f74ec09a78126ec6ae428beaca4b52099ed0e69d0bad4885f2dd59ca3e2"
+    },
+    {
+      "path": "data/corpus/sources/uk/statute/2026-06-07-uk-fuel-duty-hoda-section-6/ukpga/1979/5/section-6.xml",
+      "sha256": "346d25e5fd00a4f3849f0a6ee66f61f2339c7e998376d54abc39d8ccbf518d49"
+    }
+  ],
+  "axiom_corpus_git": {
+    "commit": "de9b2eb9bcd03356cc8d5855216f2c83e7a085ab",
+    "dirty_tracked": true,
+    "root": "/Users/maxghenis/_axiom-worktrees/axiom-corpus-uk-tfc-20260607"
+  },
+  "axiom_corpus_version": "0.1.0",
+  "command": {
+    "text": "uv run --extra dev axiom-corpus-ingest extract-uk-legislation --base data/corpus --version 2026-06-07-uk-fuel-duty-hoda-section-6 --source clml --citation ukpga/1979/5/section/6 --source-as-of 2026-06-07 --expression-date 2026-06-07"
+  },
+  "coverage": {
+    "complete": true,
+    "extra_count": 0,
+    "matched_count": 1,
+    "missing_count": 0,
+    "provision_count": 1,
+    "source_count": 1
+  },
+  "document_class": "statute",
+  "generated_at": "2026-06-07T09:43:13.156457+00:00",
+  "jurisdiction": "uk",
+  "reasoning_logs": [],
+  "schema_version": "axiom-corpus/ingest-manifest/v1",
+  "signature": {
+    "algorithm": "ed25519",
+    "key_id": "axiom-corpus-ingest-v1",
+    "value": "WBsaXZudEqZGexiIpKDokb5aHlJMLl8AGa4O1/+4FeJqGd/NSeVNg/uxuJgWfI6Zj0f1MWxKbrGUXVGh0THMAQ=="
+  },
+  "tool": "axiom-corpus-ingest signed ingest manifest",
+  "version": "2026-06-07-uk-fuel-duty-hoda-section-6"
+}

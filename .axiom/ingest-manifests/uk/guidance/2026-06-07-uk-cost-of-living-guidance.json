@@ -1,0 +1,53 @@
+{
+  "applied_files": [
+    {
+      "path": "data/corpus/coverage/uk/guidance/2026-06-07-uk-cost-of-living-guidance.json",
+      "sha256": "7adb3b162b8f10186f4d0b7501e80174f54c07f01c669eb40b07c424d9d293a7"
+    },
+    {
+      "path": "data/corpus/inventory/uk/guidance/2026-06-07-uk-cost-of-living-guidance.json",
+      "sha256": "b925a12e43ca6dd1f096400f43b54fb8b7e8eb38f972316422a02440f1feeee4"
+    },
+    {
+      "path": "data/corpus/provisions/uk/guidance/2026-06-07-uk-cost-of-living-guidance.jsonl",
+      "sha256": "798f15d330dd647ef4674e77c00ab3a38d5c43f9969bdff22000a3818753ad84"
+    },
+    {
+      "path": "data/corpus/sources/uk/guidance/2026-06-07-uk-cost-of-living-guidance/official-documents/uk-cost-of-living-payments-2022-to-2024.html",
+      "sha256": "82205eaf1ba015e3317918953f959e08de03460b7b4726d95a68c368c9c51741"
+    },
+    {
+      "path": "data/corpus/sources/uk/guidance/2026-06-07-uk-cost-of-living-guidance/official-documents/uk-cost-of-living-support-package-2022.html",
+      "sha256": "c5cbeaefdc4f8180e226ee90e486eb9568c0d34498d68b5719dc3b29c2247c98"
+    }
+  ],
+  "axiom_corpus_git": {
+    "commit": "de9b2eb9bcd03356cc8d5855216f2c83e7a085ab",
+    "dirty_tracked": true,
+    "root": "/Users/maxghenis/_axiom-worktrees/axiom-corpus-uk-tfc-20260607"
+  },
+  "axiom_corpus_version": "0.1.0",
+  "command": {
+    "text": "uv run axiom-corpus-ingest extract-official-documents --base data/corpus --version 2026-06-07-uk-cost-of-living-guidance --manifest manifests/uk-cost-of-living-support-guidance.yaml --source-as-of 2026-06-07 --expression-date 2024-01-01"
+  },
+  "coverage": {
+    "complete": true,
+    "extra_count": 0,
+    "matched_count": 21,
+    "missing_count": 0,
+    "provision_count": 21,
+    "source_count": 21
+  },
+  "document_class": "guidance",
+  "generated_at": "2026-06-07T04:47:33.097947+00:00",
+  "jurisdiction": "uk",
+  "reasoning_logs": [],
+  "schema_version": "axiom-corpus/ingest-manifest/v1",
+  "signature": {
+    "algorithm": "ed25519",
+    "key_id": "axiom-corpus-ingest-v1",
+    "value": "bpBHlrhxCaWUIIg07cTooF2KUtiNAXVnwCIxmkn6iyVri9+p3HKypiAxnWlHXFNYpLJVuhlT9tH+y+UokE1aBw=="
+  },
+  "tool": "axiom-corpus-ingest signed ingest manifest",
+  "version": "2026-06-07-uk-cost-of-living-guidance"
+}

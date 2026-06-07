@@ -1,0 +1,49 @@
+{
+  "applied_files": [
+    {
+      "path": "data/corpus/coverage/uk/statute/2026-06-07-uk-sdlt-finance-act-2003-schedule-6ZA.json",
+      "sha256": "c166a3a7ea20f5e2891d1db0c71e364abce488f0d96254dba97aa2258d24a0c7"
+    },
+    {
+      "path": "data/corpus/inventory/uk/statute/2026-06-07-uk-sdlt-finance-act-2003-schedule-6ZA.json",
+      "sha256": "7d1f58321f026a2bdecb8e1c19693506ea5923c910839af15a875847398d2e16"
+    },
+    {
+      "path": "data/corpus/provisions/uk/statute/2026-06-07-uk-sdlt-finance-act-2003-schedule-6ZA.jsonl",
+      "sha256": "be9ccd2dc7c454a9837a9d71e512f5961acc55bc37b7b8d365492f5e74e45169"
+    },
+    {
+      "path": "data/corpus/sources/uk/statute/2026-06-07-uk-sdlt-finance-act-2003-schedule-6ZA/ukpga/2003/14/schedule-6ZA.xml",
+      "sha256": "1ae9549537804fa88a54b0c88ba33a8f6bc1dc580a196b76b41ca27a8501fcc9"
+    }
+  ],
+  "axiom_corpus_git": {
+    "commit": "de9b2eb9bcd03356cc8d5855216f2c83e7a085ab",
+    "dirty_tracked": true,
+    "root": "/Users/maxghenis/_axiom-worktrees/axiom-corpus-uk-tfc-20260607"
+  },
+  "axiom_corpus_version": "0.1.0",
+  "command": {
+    "text": "uv run --extra dev axiom-corpus-ingest extract-uk-legislation --base data/corpus --version 2026-06-07-uk-sdlt-finance-act-2003-schedule-6ZA --source clml --citation ukpga/2003/14/schedule/6ZA --source-as-of 2026-06-07 --expression-date 2026-06-07"
+  },
+  "coverage": {
+    "complete": true,
+    "extra_count": 0,
+    "matched_count": 1,
+    "missing_count": 0,
+    "provision_count": 1,
+    "source_count": 1
+  },
+  "document_class": "statute",
+  "generated_at": "2026-06-07T15:23:24.124516+00:00",
+  "jurisdiction": "uk",
+  "reasoning_logs": [],
+  "schema_version": "axiom-corpus/ingest-manifest/v1",
+  "signature": {
+    "algorithm": "ed25519",
+    "key_id": "axiom-corpus-ingest-v1",
+    "value": "m25dUb7W2QrSWR3jO3+vHv2QF2RN0i1f8pR6oir+gb3JI5A85SbYvxBzOwR5AxAwq57wlJ1xkKN2ZcWfm6sZDA=="
+  },
+  "tool": "axiom-corpus-ingest signed ingest manifest",
+  "version": "2026-06-07-uk-sdlt-finance-act-2003-schedule-6ZA"
+}

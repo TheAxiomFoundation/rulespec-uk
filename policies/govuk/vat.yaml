@@ -1,0 +1,99 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_paths:
+      - uk/statute/ukpga/1994/23/2
+      - uk/statute/ukpga/1994/23/29A
+      - uk/guidance/hmrc/vat-rates-goods-services
+  summary: |-
+    This PolicyEngine-alignment surface returns the annual household VAT amount for full-rate and reduced-rate consumption. The statutory standard and reduced VAT rates are encoded as legal parameters; consumption allocation and microdata coverage are projected model inputs for PE-UK comparison.
+rules:
+  - name: vat_standard_rate
+    kind: parameter
+    entity: Household
+    dtype: Rate
+    period: Year
+    source: Value Added Tax Act 1994 s.2
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/1994/23/2
+              excerpt: "VAT shall be charged at the rate of 20 per cent"
+    versions:
+      - effective_from: '2011-01-04'
+        formula: |-
+          0.20
+
+  - name: vat_reduced_rate
+    kind: parameter
+    entity: Household
+    dtype: Rate
+    period: Year
+    source: Value Added Tax Act 1994 s.29A
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/1994/23/29A
+              excerpt: "shall be charged at the rate of 5 per cent"
+    versions:
+      - effective_from: '1994-04-01'
+        formula: |-
+          0.05
+
+  - name: vat_raw_annual_amount
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Value Added Tax Act 1994 ss.2 and 29A
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1994/23/2
+              excerpt: "by reference to the value of the supply"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1994/23/29A
+              excerpt: "any supply that is of a description for the time being specified in Schedule 7A"
+    versions:
+      - effective_from: '1994-04-01'
+        formula: |-
+          max(0, full_rate_vat_consumption_for_year) * vat_standard_rate + max(0, reduced_rate_vat_consumption_for_year) * vat_reduced_rate
+
+  - name: vat_annual_amount
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine UK VAT final household wrapper over Value Added Tax Act 1994 rates and PE-UK microdata coverage calibration
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1994/23/2
+              excerpt: "VAT shall be charged at the rate of 20 per cent"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1994/23/29A
+              excerpt: "shall be charged at the rate of 5 per cent"
+    versions:
+      - effective_from: '1994-04-01'
+        formula: |-
+          if microdata_vat_coverage_fraction > 0: vat_raw_annual_amount / microdata_vat_coverage_fraction else: 0

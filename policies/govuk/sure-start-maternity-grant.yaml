@@ -1,0 +1,36 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2005/3061/5
+  summary: |-
+    This PolicyEngine-alignment surface returns the annual Sure Start Maternity Grant amount used by PolicyEngine UK and HBAI. PolicyEngine gates the statutory GBP 500 grant by reported receipt, so the upstream qualifying-benefit, pregnancy or child, claim-time, and England-or-Wales conditions are projected as a reported-receipt leaf input.
+imports:
+  - uk:regulations/uksi/2005/3061/5#sure_start_maternity_grant_amount
+rules:
+  - name: sure_start_maternity_grant_annual_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine UK Sure Start Maternity Grant final wrapper over the Social Fund Maternity and Funeral Expenses (General) Regulations 2005 reg. 5 amount
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2005/3061/5#sure_start_maternity_grant_amount
+              output: sure_start_maternity_grant_amount
+              hash: sha256:f49fdd7a99e349337f79b30622d5de6584a21468e89efc350e9e3a3470a0c555
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2005/3061/5
+              excerpt: "a payment of £500 to meet maternity expenses"
+    versions:
+      - effective_from: '2005-12-05'
+        formula: |-
+          if reported_sure_start_maternity_grant_for_year > 0: sure_start_maternity_grant_amount else: 0

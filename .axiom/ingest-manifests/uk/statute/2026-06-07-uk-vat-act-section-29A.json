@@ -1,0 +1,49 @@
+{
+  "applied_files": [
+    {
+      "path": "data/corpus/coverage/uk/statute/2026-06-07-uk-vat-act-section-29A.json",
+      "sha256": "e1a53a0f0de38513e8bd48c1fd8b714010dd088fef6963bfd3e7e78aef910381"
+    },
+    {
+      "path": "data/corpus/inventory/uk/statute/2026-06-07-uk-vat-act-section-29A.json",
+      "sha256": "bbd0f36192bde8bc06f2e59b7c4e8577fac0cd3dabd9e8d31482212bb61980e4"
+    },
+    {
+      "path": "data/corpus/provisions/uk/statute/2026-06-07-uk-vat-act-section-29A.jsonl",
+      "sha256": "fd2855b5dd647d612bea645e5e76bc615491cd2e212dec264f411c64c5cd1c20"
+    },
+    {
+      "path": "data/corpus/sources/uk/statute/2026-06-07-uk-vat-act-section-29A/ukpga/1994/23/section-29A.xml",
+      "sha256": "437c22e767f43bad32eea4c2419630fc33f1a0067cedce3ffab4276dc765ae64"
+    }
+  ],
+  "axiom_corpus_git": {
+    "commit": "de9b2eb9bcd03356cc8d5855216f2c83e7a085ab",
+    "dirty_tracked": true,
+    "root": "/Users/maxghenis/_axiom-worktrees/axiom-corpus-uk-tfc-20260607"
+  },
+  "axiom_corpus_version": "0.1.0",
+  "command": {
+    "text": "uv run --extra dev axiom-corpus-ingest extract-uk-legislation --base data/corpus --version 2026-06-07-uk-vat-act-section-29A --source clml --citation ukpga/1994/23/section/29A --source-as-of 2026-06-07 --expression-date 2026-06-07"
+  },
+  "coverage": {
+    "complete": true,
+    "extra_count": 0,
+    "matched_count": 1,
+    "missing_count": 0,
+    "provision_count": 1,
+    "source_count": 1
+  },
+  "document_class": "statute",
+  "generated_at": "2026-06-07T13:20:41.950438+00:00",
+  "jurisdiction": "uk",
+  "reasoning_logs": [],
+  "schema_version": "axiom-corpus/ingest-manifest/v1",
+  "signature": {
+    "algorithm": "ed25519",
+    "key_id": "axiom-corpus-ingest-v1",
+    "value": "A+TILdr90SzisZiflUjNBndHSyoV30TgSj8e2H5qwR0+O3T9SOtEhTmaRpvqpZsJOUfkWHLYBA9TlDm79MITCA=="
+  },
+  "tool": "axiom-corpus-ingest signed ingest manifest",
+  "version": "2026-06-07-uk-vat-act-section-29A"
+}

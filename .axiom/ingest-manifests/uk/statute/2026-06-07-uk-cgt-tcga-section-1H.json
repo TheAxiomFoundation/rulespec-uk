@@ -1,0 +1,49 @@
+{
+  "applied_files": [
+    {
+      "path": "data/corpus/coverage/uk/statute/2026-06-07-uk-cgt-tcga-section-1H.json",
+      "sha256": "f90e8a9a1c45711a098e13aaf10fca104650a3d3c0045cf2619f41b142eeebea"
+    },
+    {
+      "path": "data/corpus/inventory/uk/statute/2026-06-07-uk-cgt-tcga-section-1H.json",
+      "sha256": "23d9b1d841de9c782907d4ded9bf5e2e843c0f247e0ae7ee61ddc6092461c119"
+    },
+    {
+      "path": "data/corpus/provisions/uk/statute/2026-06-07-uk-cgt-tcga-section-1H.jsonl",
+      "sha256": "2e2a84370d49db388f3ca4c0550e72f11ec712671ba4b57e4c7dc9d0eb628564"
+    },
+    {
+      "path": "data/corpus/sources/uk/statute/2026-06-07-uk-cgt-tcga-section-1H/ukpga/1992/12/section-1H.xml",
+      "sha256": "c461a5b428461c2263930d78bf1cac17fb4c3151c85f2ae77a96c08e994f5ff0"
+    }
+  ],
+  "axiom_corpus_git": {
+    "commit": "de9b2eb9bcd03356cc8d5855216f2c83e7a085ab",
+    "dirty_tracked": true,
+    "root": "/Users/maxghenis/_axiom-worktrees/axiom-corpus-uk-tfc-20260607"
+  },
+  "axiom_corpus_version": "0.1.0",
+  "command": {
+    "text": "uv run --extra dev axiom-corpus-ingest extract-uk-legislation --base data/corpus --version 2026-06-07-uk-cgt-tcga-section-1H --source clml --citation ukpga/1992/12/section/1H --source-as-of 2026-06-07 --expression-date 2026-06-07"
+  },
+  "coverage": {
+    "complete": true,
+    "extra_count": 0,
+    "matched_count": 1,
+    "missing_count": 0,
+    "provision_count": 1,
+    "source_count": 1
+  },
+  "document_class": "statute",
+  "generated_at": "2026-06-07T15:08:32.755889+00:00",
+  "jurisdiction": "uk",
+  "reasoning_logs": [],
+  "schema_version": "axiom-corpus/ingest-manifest/v1",
+  "signature": {
+    "algorithm": "ed25519",
+    "key_id": "axiom-corpus-ingest-v1",
+    "value": "3SMJ5cM2CCvhqf0Se9y8WhzsIpMGZqnScogrOnWHzIW7+Fsq3oPLPKJxG6LZZYbq8a0PXuVYM4itukYp5nHwDQ=="
+  },
+  "tool": "axiom-corpus-ingest signed ingest manifest",
+  "version": "2026-06-07-uk-cgt-tcga-section-1H"
+}

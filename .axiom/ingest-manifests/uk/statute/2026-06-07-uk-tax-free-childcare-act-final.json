@@ -1,0 +1,73 @@
+{
+  "applied_files": [
+    {
+      "path": "data/corpus/coverage/uk/statute/2026-06-07-uk-tax-free-childcare-act-final.json",
+      "sha256": "b35afa04382deab45e20bdedca2ee1f3c95f86550d3a5ac1c02e16180eb86d56"
+    },
+    {
+      "path": "data/corpus/inventory/uk/statute/2026-06-07-uk-tax-free-childcare-act-final.json",
+      "sha256": "d6eb8a44a2792d050291c45d87868f11241940a9109e82f65e5d9648b742c76d"
+    },
+    {
+      "path": "data/corpus/provisions/uk/statute/2026-06-07-uk-tax-free-childcare-act-final.jsonl",
+      "sha256": "03bddcefdcf7b32d897e72f1f4fdba92ba60f4d8ebf0d0cb0f6590fb12d94c00"
+    },
+    {
+      "path": "data/corpus/sources/uk/statute/2026-06-07-uk-tax-free-childcare-act-final/ukpga/2014/28/section-1.xml",
+      "sha256": "b88aa821e7c90f79c75b14b59de32102d3a5b24a0df59b20eddfa0bae11f260e"
+    },
+    {
+      "path": "data/corpus/sources/uk/statute/2026-06-07-uk-tax-free-childcare-act-final/ukpga/2014/28/section-10.xml",
+      "sha256": "6908bc2df7ceacd02374d42ef978d575e4bcea39c1ca737d2dd38ef4690163b1"
+    },
+    {
+      "path": "data/corpus/sources/uk/statute/2026-06-07-uk-tax-free-childcare-act-final/ukpga/2014/28/section-11.xml",
+      "sha256": "1daf3178e210f6559c29e737d56fa809affce78f2291a22108efb62c33a3cb96"
+    },
+    {
+      "path": "data/corpus/sources/uk/statute/2026-06-07-uk-tax-free-childcare-act-final/ukpga/2014/28/section-14.xml",
+      "sha256": "f5d422eb8c92ff49b272c6e03197d33e542c05efaf735f4b3c966215f7e18753"
+    },
+    {
+      "path": "data/corpus/sources/uk/statute/2026-06-07-uk-tax-free-childcare-act-final/ukpga/2014/28/section-19.xml",
+      "sha256": "792ef884db764c808f916d27924fbcb7f8ac27fe3bee049ecd1907848a22cde5"
+    },
+    {
+      "path": "data/corpus/sources/uk/statute/2026-06-07-uk-tax-free-childcare-act-final/ukpga/2014/28/section-21.xml",
+      "sha256": "f891485bfc348840cd4d561b5c6cab5b17e6141dd37cd5f118bd7fee25369d3f"
+    },
+    {
+      "path": "data/corpus/sources/uk/statute/2026-06-07-uk-tax-free-childcare-act-final/ukpga/2014/28/section-30.xml",
+      "sha256": "84d0f1fda204b6ec0fd76a5b239de97ca8db6660929ea78a8de55b92a63124c6"
+    }
+  ],
+  "axiom_corpus_git": {
+    "commit": "de9b2eb9bcd03356cc8d5855216f2c83e7a085ab",
+    "dirty_tracked": false,
+    "root": "/Users/maxghenis/_axiom-worktrees/axiom-corpus-uk-tfc-20260607"
+  },
+  "axiom_corpus_version": "0.1.0",
+  "command": {
+    "text": "uv run --extra dev axiom-corpus-ingest extract-uk-legislation --base data/corpus --version 2026-06-07-uk-tax-free-childcare-act-final --source clml --citation ukpga/2014/28/section/1 --citation ukpga/2014/28/section/10 --citation ukpga/2014/28/section/11 --citation ukpga/2014/28/section/14 --citation ukpga/2014/28/section/19 --citation ukpga/2014/28/section/21 --citation ukpga/2014/28/section/30 --source-as-of 2026-06-07 --expression-date 2026-04-06"
+  },
+  "coverage": {
+    "complete": true,
+    "extra_count": 0,
+    "matched_count": 7,
+    "missing_count": 0,
+    "provision_count": 7,
+    "source_count": 7
+  },
+  "document_class": "statute",
+  "generated_at": "2026-06-07T04:04:14.997653+00:00",
+  "jurisdiction": "uk",
+  "reasoning_logs": [],
+  "schema_version": "axiom-corpus/ingest-manifest/v1",
+  "signature": {
+    "algorithm": "ed25519",
+    "key_id": "axiom-corpus-ingest-v1",
+    "value": "zpJSoM60FyUC3cOCKXmSubgtQRuN08FJyf8sdM5qsLlX60EP9Rd8hMfPLnZO4d9eb4ehbTWA7goJPTdGoxRWDw=="
+  },
+  "tool": "axiom-corpus-ingest signed ingest manifest",
+  "version": "2026-06-07-uk-tax-free-childcare-act-final"
+}

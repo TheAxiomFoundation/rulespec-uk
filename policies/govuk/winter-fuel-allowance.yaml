@@ -1,0 +1,55 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2025/969/3
+  summary: |-
+    This PolicyEngine-alignment surface returns the annual Winter Fuel Allowance amount used by PolicyEngine UK and HBAI: the ordinary lower or higher Winter Fuel Payment amount after the PolicyEngine household-level eligibility predicates.
+imports:
+  - uk:regulations/uksi/2025/969/3#winter_fuel_payment_lower_amount
+  - uk:regulations/uksi/2025/969/3#winter_fuel_payment_higher_amount
+  - uk:regulations/uksi/2025/969/3#winter_fuel_payment_higher_age_requirement
+rules:
+  - name: winter_fuel_allowance_annual_amount
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine UK winter_fuel_allowance final household wrapper over Social Fund Winter Fuel Payment Regulations 2025 Regulation 3
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2025/969/3#winter_fuel_payment_lower_amount
+              output: winter_fuel_payment_lower_amount
+              hash: sha256:d0dccc97df685055f317995311973f4cefa5f3478d4e7c1a870004048047c2d8
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2025/969/3#winter_fuel_payment_higher_amount
+              output: winter_fuel_payment_higher_amount
+              hash: sha256:d0dccc97df685055f317995311973f4cefa5f3478d4e7c1a870004048047c2d8
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2025/969/3#winter_fuel_payment_higher_age_requirement
+              output: winter_fuel_payment_higher_age_requirement
+              hash: sha256:d0dccc97df685055f317995311973f4cefa5f3478d4e7c1a870004048047c2d8
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2025/969/3
+              excerpt: "has not reached the age of 80 ... £200"
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2025/969/3
+              excerpt: "has reached the age of 80 ... £300"
+    versions:
+      - effective_from: '2025-09-15'
+        formula: |-
+          if household_is_in_scotland: 0 else: if (household_receives_relevant_means_tested_benefit or not winter_fuel_payment_means_tested_benefits_required or household_meets_winter_fuel_payment_income_passport) and (household_has_state_pension_age_person or not winter_fuel_payment_state_pension_age_required): if oldest_household_member_age >= winter_fuel_payment_higher_age_requirement: winter_fuel_payment_higher_amount else: winter_fuel_payment_lower_amount else: 0

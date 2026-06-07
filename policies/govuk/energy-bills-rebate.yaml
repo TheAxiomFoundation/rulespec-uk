@@ -1,0 +1,127 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_paths:
+      - uk/guidance/hmt-dwp/cost-of-living-support-package-2022/block-1
+      - uk/guidance/policyengine-uk/energy-support-parameters/v2.88.56
+  summary: |-
+    This PolicyEngine-alignment surface returns the current annual household Energy Bills Rebate used by PolicyEngine UK. GOV.UK's 2022 cost-of-living package announced the temporary energy-bills discount and council-tax rebate. PolicyEngine UK 2.88.56 sets both active 2026 Energy Bills Rebate component parameters to zero.
+rules:
+  - name: current_energy_bills_rebate_council_tax_rebate_amount
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine UK 2.88.56 Energy Bills Rebate council-tax-rebate amount parameter
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/hmt-dwp/cost-of-living-support-package-2022/block-1
+              excerpt: "£150 council tax rebate"
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/energy-support-parameters/v2.88.56
+              excerpt: "council_tax_rebate.amount is 0"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0
+
+  - name: current_energy_bills_rebate_energy_bills_credit_amount
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine UK 2.88.56 Energy Bills Rebate energy-bills-credit amount parameter
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/hmt-dwp/cost-of-living-support-package-2022/block-1
+              excerpt: "households will receive a £400 discount on their energy bills"
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/energy-support-parameters/v2.88.56
+              excerpt: "energy_bills_credit is 0"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0
+
+  - name: energy_bills_rebate_council_tax_rebate
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine UK ebr_council_tax_rebate wrapper over the current Energy Bills Rebate council-tax-rebate parameter
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:policies/govuk/energy-bills-rebate#current_energy_bills_rebate_council_tax_rebate_amount
+              output: current_energy_bills_rebate_council_tax_rebate_amount
+              hash: sha256:local
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          current_energy_bills_rebate_council_tax_rebate_amount
+
+  - name: energy_bills_rebate_energy_bills_credit
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine UK ebr_energy_bills_credit wrapper over the current Energy Bills Rebate energy-bills-credit parameter
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:policies/govuk/energy-bills-rebate#current_energy_bills_rebate_energy_bills_credit_amount
+              output: current_energy_bills_rebate_energy_bills_credit_amount
+              hash: sha256:local
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          current_energy_bills_rebate_energy_bills_credit_amount
+
+  - name: energy_bills_rebate_annual_amount
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine UK energy_bills_rebate aggregate over council-tax rebate and energy-bills credit components
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:policies/govuk/energy-bills-rebate#energy_bills_rebate_council_tax_rebate
+              output: energy_bills_rebate_council_tax_rebate
+              hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:policies/govuk/energy-bills-rebate#energy_bills_rebate_energy_bills_credit
+              output: energy_bills_rebate_energy_bills_credit
+              hash: sha256:local
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          energy_bills_rebate_council_tax_rebate + energy_bills_rebate_energy_bills_credit

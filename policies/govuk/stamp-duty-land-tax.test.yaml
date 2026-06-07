@@ -1,0 +1,110 @@
+- name: first_time_buyer_relief
+  period:
+    period_kind: custom
+    name: calendar_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:policies/govuk/stamp-duty-land-tax#input.household_is_sdlt_liable: true
+    uk:policies/govuk/stamp-duty-land-tax#input.main_residential_property_purchased_for_year: 445000
+    uk:policies/govuk/stamp-duty-land-tax#input.main_residential_property_purchased_is_first_home: true
+    uk:policies/govuk/stamp-duty-land-tax#input.additional_residential_property_purchased_for_year: 0
+    uk:policies/govuk/stamp-duty-land-tax#input.non_residential_property_purchased_for_year: 0
+    uk:policies/govuk/stamp-duty-land-tax#input.cumulative_residential_rent_for_year: 0
+    uk:policies/govuk/stamp-duty-land-tax#input.residential_rent_for_year: 0
+    uk:policies/govuk/stamp-duty-land-tax#input.cumulative_non_residential_rent_for_year: 0
+    uk:policies/govuk/stamp-duty-land-tax#input.non_residential_rent_for_year: 0
+  output:
+    uk:policies/govuk/stamp-duty-land-tax#taxable_additional_residential_property_purchase_amount: 0
+    uk:policies/govuk/stamp-duty-land-tax#sdlt_on_additional_residential_property_purchase: 0
+    uk:policies/govuk/stamp-duty-land-tax#sdlt_on_main_residential_purchase_as_first_home: 7250
+    uk:policies/govuk/stamp-duty-land-tax#sdlt_on_main_residential_purchase_as_subsequent_home: 12250
+    uk:policies/govuk/stamp-duty-land-tax#sdlt_on_main_residential_purchase: 7250
+    uk:policies/govuk/stamp-duty-land-tax#sdlt_on_residential_property_transactions: 7250
+    uk:policies/govuk/stamp-duty-land-tax#sdlt_on_transactions: 7250
+    uk:policies/govuk/stamp-duty-land-tax#stamp_duty_land_tax_annual_amount: 7250
+
+- name: additional_residential_property
+  period:
+    period_kind: custom
+    name: calendar_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:policies/govuk/stamp-duty-land-tax#input.household_is_sdlt_liable: true
+    uk:policies/govuk/stamp-duty-land-tax#input.main_residential_property_purchased_for_year: 0
+    uk:policies/govuk/stamp-duty-land-tax#input.main_residential_property_purchased_is_first_home: false
+    uk:policies/govuk/stamp-duty-land-tax#input.additional_residential_property_purchased_for_year: 350000
+    uk:policies/govuk/stamp-duty-land-tax#input.non_residential_property_purchased_for_year: 0
+    uk:policies/govuk/stamp-duty-land-tax#input.cumulative_residential_rent_for_year: 0
+    uk:policies/govuk/stamp-duty-land-tax#input.residential_rent_for_year: 0
+    uk:policies/govuk/stamp-duty-land-tax#input.cumulative_non_residential_rent_for_year: 0
+    uk:policies/govuk/stamp-duty-land-tax#input.non_residential_rent_for_year: 0
+  output:
+    uk:policies/govuk/stamp-duty-land-tax#taxable_additional_residential_property_purchase_amount: 350000
+    uk:policies/govuk/stamp-duty-land-tax#sdlt_on_additional_residential_property_purchase: 18000
+    uk:policies/govuk/stamp-duty-land-tax#sdlt_on_residential_property_transactions: 18000
+    uk:policies/govuk/stamp-duty-land-tax#stamp_duty_land_tax_annual_amount: 18000
+
+- name: non_residential_purchase_and_rent
+  period:
+    period_kind: custom
+    name: calendar_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:policies/govuk/stamp-duty-land-tax#input.household_is_sdlt_liable: true
+    uk:policies/govuk/stamp-duty-land-tax#input.main_residential_property_purchased_for_year: 0
+    uk:policies/govuk/stamp-duty-land-tax#input.main_residential_property_purchased_is_first_home: false
+    uk:policies/govuk/stamp-duty-land-tax#input.additional_residential_property_purchased_for_year: 0
+    uk:policies/govuk/stamp-duty-land-tax#input.non_residential_property_purchased_for_year: 300000
+    uk:policies/govuk/stamp-duty-land-tax#input.cumulative_residential_rent_for_year: 0
+    uk:policies/govuk/stamp-duty-land-tax#input.residential_rent_for_year: 0
+    uk:policies/govuk/stamp-duty-land-tax#input.cumulative_non_residential_rent_for_year: 100000
+    uk:policies/govuk/stamp-duty-land-tax#input.non_residential_rent_for_year: 200000
+  output:
+    uk:policies/govuk/stamp-duty-land-tax#sdlt_on_non_residential_property_transactions: 4500
+    uk:policies/govuk/stamp-duty-land-tax#sdlt_on_non_residential_property_rent: 1500
+    uk:policies/govuk/stamp-duty-land-tax#sdlt_on_rent: 1500
+    uk:policies/govuk/stamp-duty-land-tax#stamp_duty_land_tax_annual_amount: 6000
+
+- name: residential_rent
+  period:
+    period_kind: custom
+    name: calendar_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:policies/govuk/stamp-duty-land-tax#input.household_is_sdlt_liable: true
+    uk:policies/govuk/stamp-duty-land-tax#input.main_residential_property_purchased_for_year: 0
+    uk:policies/govuk/stamp-duty-land-tax#input.main_residential_property_purchased_is_first_home: false
+    uk:policies/govuk/stamp-duty-land-tax#input.additional_residential_property_purchased_for_year: 0
+    uk:policies/govuk/stamp-duty-land-tax#input.non_residential_property_purchased_for_year: 0
+    uk:policies/govuk/stamp-duty-land-tax#input.cumulative_residential_rent_for_year: 100000
+    uk:policies/govuk/stamp-duty-land-tax#input.residential_rent_for_year: 50000
+    uk:policies/govuk/stamp-duty-land-tax#input.cumulative_non_residential_rent_for_year: 0
+    uk:policies/govuk/stamp-duty-land-tax#input.non_residential_rent_for_year: 0
+  output:
+    uk:policies/govuk/stamp-duty-land-tax#sdlt_on_residential_property_rent: 250
+    uk:policies/govuk/stamp-duty-land-tax#sdlt_on_rent: 250
+    uk:policies/govuk/stamp-duty-land-tax#stamp_duty_land_tax_annual_amount: 250
+
+- name: not_liable_outside_england_or_northern_ireland
+  period:
+    period_kind: custom
+    name: calendar_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:policies/govuk/stamp-duty-land-tax#input.household_is_sdlt_liable: false
+    uk:policies/govuk/stamp-duty-land-tax#input.main_residential_property_purchased_for_year: 2300000
+    uk:policies/govuk/stamp-duty-land-tax#input.main_residential_property_purchased_is_first_home: false
+    uk:policies/govuk/stamp-duty-land-tax#input.additional_residential_property_purchased_for_year: 0
+    uk:policies/govuk/stamp-duty-land-tax#input.non_residential_property_purchased_for_year: 0
+    uk:policies/govuk/stamp-duty-land-tax#input.cumulative_residential_rent_for_year: 0
+    uk:policies/govuk/stamp-duty-land-tax#input.residential_rent_for_year: 0
+    uk:policies/govuk/stamp-duty-land-tax#input.cumulative_non_residential_rent_for_year: 0
+    uk:policies/govuk/stamp-duty-land-tax#input.non_residential_rent_for_year: 0
+  output:
+    uk:policies/govuk/stamp-duty-land-tax#sdlt_on_main_residential_purchase_as_subsequent_home: 189750
+    uk:policies/govuk/stamp-duty-land-tax#stamp_duty_land_tax_annual_amount: 0

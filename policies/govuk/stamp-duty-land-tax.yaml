@@ -1,0 +1,789 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_paths:
+      - uk/statute/ukpga/2003/14/55
+      - uk/statute/ukpga/2003/14/schedule/4ZA
+      - uk/statute/ukpga/2003/14/schedule/5
+      - uk/statute/ukpga/2003/14/schedule/6ZA
+      - uk/guidance/policyengine-uk/sdlt-additional-residential-rate/v2.88.56
+  summary: |-
+    This PolicyEngine-alignment surface returns the annual household Stamp Duty Land Tax amount for England and Northern Ireland. It applies current residential purchase bands, first-time buyer relief, PolicyEngine-UK 2.88.56 additional-dwelling higher rates, non-residential purchase bands, and residential/non-residential lease rent bands, then gates the result to households liable for SDLT.
+rules:
+  - name: sdlt_first_time_buyer_relief_threshold
+    kind: parameter
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Finance Act 2003 Schedule 6ZA
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/14/schedule/6ZA
+              excerpt: "for Table A there were substituted"
+    versions:
+      - effective_from: '2021-03-31'
+        formula: |-
+          300000
+
+  - name: sdlt_first_time_buyer_relief_maximum_price
+    kind: parameter
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Finance Act 2003 Schedule 6ZA
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/14/schedule/6ZA
+              excerpt: "not more than £500,000"
+    versions:
+      - effective_from: '2021-03-31'
+        formula: |-
+          500000
+
+  - name: sdlt_residential_band_1_threshold
+    kind: parameter
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Finance Act 2003 s.55 Table A
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/14/55
+              excerpt: "So much as does not exceed £125,000"
+    versions:
+      - effective_from: '2021-03-31'
+        formula: |-
+          125000
+
+  - name: sdlt_residential_band_2_threshold
+    kind: parameter
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Finance Act 2003 s.55 Table A
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/14/55
+              excerpt: "exceeds £125,000 but does not exceed £250,000"
+    versions:
+      - effective_from: '2021-03-31'
+        formula: |-
+          250000
+
+  - name: sdlt_residential_band_3_threshold
+    kind: parameter
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Finance Act 2003 s.55 Table A
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/14/55
+              excerpt: "Apply the rates specified in the second column"
+    versions:
+      - effective_from: '2021-03-31'
+        formula: |-
+          925000
+
+  - name: sdlt_residential_band_4_threshold
+    kind: parameter
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Finance Act 2003 s.55 Table A
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/14/55
+              excerpt: "Apply the rates specified in the second column"
+    versions:
+      - effective_from: '2021-03-31'
+        formula: |-
+          1500000
+
+  - name: sdlt_residential_band_2_rate
+    kind: parameter
+    entity: Household
+    dtype: Rate
+    period: Year
+    source: Finance Act 2003 s.55 Table A
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/14/55
+              excerpt: "exceeds £125,000 but does not exceed £250,000 | 2%"
+    versions:
+      - effective_from: '2021-03-31'
+        formula: |-
+          0.02
+
+  - name: sdlt_residential_band_3_rate
+    kind: parameter
+    entity: Household
+    dtype: Rate
+    period: Year
+    source: Finance Act 2003 s.55 Table A
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/14/55
+              excerpt: "Apply the rates specified in the second column"
+    versions:
+      - effective_from: '2021-03-31'
+        formula: |-
+          0.05
+
+  - name: sdlt_residential_band_4_rate
+    kind: parameter
+    entity: Household
+    dtype: Rate
+    period: Year
+    source: Finance Act 2003 s.55 Table A
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/14/55
+              excerpt: "Apply the rates specified in the second column"
+    versions:
+      - effective_from: '2021-03-31'
+        formula: |-
+          0.10
+
+  - name: sdlt_residential_band_5_rate
+    kind: parameter
+    entity: Household
+    dtype: Rate
+    period: Year
+    source: Finance Act 2003 s.55 Table A
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/14/55
+              excerpt: "Apply the rates specified in the second column"
+    versions:
+      - effective_from: '2021-03-31'
+        formula: |-
+          0.12
+
+  - name: sdlt_additional_property_minimum_price
+    kind: parameter
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Finance Act 2003 Schedule 4ZA condition A
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/14/schedule/4ZA
+              excerpt: "Condition A is that the chargeable consideration for the transaction is £40,000 or more"
+    versions:
+      - effective_from: '2016-09-15'
+        formula: |-
+          40000
+
+  - name: sdlt_additional_property_band_1_rate
+    kind: parameter
+    entity: Household
+    dtype: Rate
+    period: Year
+    source: PolicyEngine-UK 2.88.56 parameter snapshot
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/sdlt-additional-residential-rate/v2.88.56
+              excerpt: "PolicyEngine-UK sets additional residential purchase SDLT rates as 3%, 5%, 8%, 13%, and 15%"
+    versions:
+      - effective_from: '2016-09-15'
+        formula: |-
+          0.03
+
+  - name: sdlt_additional_property_band_2_rate
+    kind: parameter
+    entity: Household
+    dtype: Rate
+    period: Year
+    source: PolicyEngine-UK 2.88.56 parameter snapshot
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/sdlt-additional-residential-rate/v2.88.56
+              excerpt: "PolicyEngine-UK sets additional residential purchase SDLT rates as 3%, 5%, 8%, 13%, and 15%"
+    versions:
+      - effective_from: '2016-09-15'
+        formula: |-
+          0.05
+
+  - name: sdlt_additional_property_band_3_rate
+    kind: parameter
+    entity: Household
+    dtype: Rate
+    period: Year
+    source: PolicyEngine-UK 2.88.56 parameter snapshot
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/sdlt-additional-residential-rate/v2.88.56
+              excerpt: "PolicyEngine-UK sets additional residential purchase SDLT rates as 3%, 5%, 8%, 13%, and 15%"
+    versions:
+      - effective_from: '2016-09-15'
+        formula: |-
+          0.08
+
+  - name: sdlt_additional_property_band_4_rate
+    kind: parameter
+    entity: Household
+    dtype: Rate
+    period: Year
+    source: PolicyEngine-UK 2.88.56 parameter snapshot
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/sdlt-additional-residential-rate/v2.88.56
+              excerpt: "PolicyEngine-UK sets additional residential purchase SDLT rates as 3%, 5%, 8%, 13%, and 15%"
+    versions:
+      - effective_from: '2016-09-15'
+        formula: |-
+          0.13
+
+  - name: sdlt_additional_property_band_5_rate
+    kind: parameter
+    entity: Household
+    dtype: Rate
+    period: Year
+    source: PolicyEngine-UK 2.88.56 parameter snapshot
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/sdlt-additional-residential-rate/v2.88.56
+              excerpt: "PolicyEngine-UK sets additional residential purchase SDLT rates as 3%, 5%, 8%, 13%, and 15%"
+    versions:
+      - effective_from: '2016-09-15'
+        formula: |-
+          0.15
+
+  - name: sdlt_non_residential_band_1_threshold
+    kind: parameter
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Finance Act 2003 s.55 Table B
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/14/55
+              excerpt: "Table B, if the relevant land consists of or includes land that is not residential property"
+    versions:
+      - effective_from: '2016-09-15'
+        formula: |-
+          150000
+
+  - name: sdlt_non_residential_band_2_threshold
+    kind: parameter
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Finance Act 2003 s.55 Table B
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/14/55
+              excerpt: "Table B, if the relevant land consists of or includes land that is not residential property"
+    versions:
+      - effective_from: '2016-09-15'
+        formula: |-
+          250000
+
+  - name: sdlt_non_residential_band_2_rate
+    kind: parameter
+    entity: Household
+    dtype: Rate
+    period: Year
+    source: Finance Act 2003 s.55 Table B
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/14/55
+              excerpt: "Table B, if the relevant land consists of or includes land that is not residential property"
+    versions:
+      - effective_from: '2016-09-15'
+        formula: |-
+          0.02
+
+  - name: sdlt_non_residential_band_3_rate
+    kind: parameter
+    entity: Household
+    dtype: Rate
+    period: Year
+    source: Finance Act 2003 s.55 Table B
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/14/55
+              excerpt: "Table B, if the relevant land consists of or includes land that is not residential property"
+    versions:
+      - effective_from: '2016-09-15'
+        formula: |-
+          0.05
+
+  - name: sdlt_residential_rent_threshold
+    kind: parameter
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Finance Act 2003 Schedule 5
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/14/schedule/5
+              excerpt: "the relevant percentage of so much of the relevant rental value as falls within each rate band"
+    versions:
+      - effective_from: '2021-03-31'
+        formula: |-
+          125000
+
+  - name: sdlt_residential_rent_rate
+    kind: parameter
+    entity: Household
+    dtype: Rate
+    period: Year
+    source: Finance Act 2003 Schedule 5
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/14/schedule/5
+              excerpt: "the relevant percentage of so much of the relevant rental value as falls within each rate band"
+    versions:
+      - effective_from: '2021-03-31'
+        formula: |-
+          0.01
+
+  - name: sdlt_non_residential_rent_band_1_threshold
+    kind: parameter
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Finance Act 2003 Schedule 5
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/14/schedule/5
+              excerpt: "consists of or includes land that is not residential property"
+    versions:
+      - effective_from: '2016-09-15'
+        formula: |-
+          150000
+
+  - name: sdlt_non_residential_rent_band_2_threshold
+    kind: parameter
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Finance Act 2003 Schedule 5
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/14/schedule/5
+              excerpt: "consists of or includes land that is not residential property"
+    versions:
+      - effective_from: '2016-09-15'
+        formula: |-
+          5000000
+
+  - name: sdlt_non_residential_rent_band_2_rate
+    kind: parameter
+    entity: Household
+    dtype: Rate
+    period: Year
+    source: Finance Act 2003 Schedule 5
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/14/schedule/5
+              excerpt: "consists of or includes land that is not residential property"
+    versions:
+      - effective_from: '2016-09-15'
+        formula: |-
+          0.01
+
+  - name: sdlt_non_residential_rent_band_3_rate
+    kind: parameter
+    entity: Household
+    dtype: Rate
+    period: Year
+    source: Finance Act 2003 Schedule 5
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/14/schedule/5
+              excerpt: "consists of or includes land that is not residential property"
+    versions:
+      - effective_from: '2016-09-15'
+        formula: |-
+          0.02
+
+  - name: sdlt_on_main_residential_purchase_as_first_home
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Finance Act 2003 s.55 and Schedule 6ZA first-time buyer relief
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/14/schedule/6ZA
+              excerpt: "not more than £500,000"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/14/55
+              excerpt: "Apply the rates specified in the second column"
+    versions:
+      - effective_from: '2021-03-31'
+        formula: |-
+          max(0, main_residential_property_purchased_for_year - sdlt_first_time_buyer_relief_threshold) * sdlt_residential_band_3_rate
+
+  - name: sdlt_on_main_residential_purchase_as_subsequent_home
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Finance Act 2003 s.55 Table A
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/14/55
+              excerpt: "Apply the rates specified in the second column"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/14/55
+              excerpt: "Table A, if the relevant land consists entirely of residential property"
+    versions:
+      - effective_from: '2021-03-31'
+        formula: |-
+          max(0, min(main_residential_property_purchased_for_year, sdlt_residential_band_2_threshold) - sdlt_residential_band_1_threshold) * sdlt_residential_band_2_rate + max(0, min(main_residential_property_purchased_for_year, sdlt_residential_band_3_threshold) - sdlt_residential_band_2_threshold) * sdlt_residential_band_3_rate + max(0, min(main_residential_property_purchased_for_year, sdlt_residential_band_4_threshold) - sdlt_residential_band_3_threshold) * sdlt_residential_band_4_rate + max(0, main_residential_property_purchased_for_year - sdlt_residential_band_4_threshold) * sdlt_residential_band_5_rate
+
+  - name: sdlt_on_main_residential_purchase
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Finance Act 2003 s.55 and Schedule 6ZA
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/14/schedule/6ZA
+              excerpt: "each of the purchasers, is a first-time buyer"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/14/schedule/6ZA
+              excerpt: "not more than £500,000"
+    versions:
+      - effective_from: '2021-03-31'
+        formula: |-
+          if main_residential_property_purchased_is_first_home and main_residential_property_purchased_for_year < sdlt_first_time_buyer_relief_maximum_price: sdlt_on_main_residential_purchase_as_first_home else: sdlt_on_main_residential_purchase_as_subsequent_home
+
+  - name: taxable_additional_residential_property_purchase_amount
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Finance Act 2003 Schedule 4ZA condition A
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/14/schedule/4ZA
+              excerpt: "Condition A is that the chargeable consideration for the transaction is £40,000 or more"
+    versions:
+      - effective_from: '2016-09-15'
+        formula: |-
+          if additional_residential_property_purchased_for_year < sdlt_additional_property_minimum_price: 0 else: additional_residential_property_purchased_for_year
+
+  - name: sdlt_on_additional_residential_property_purchase
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Finance Act 2003 Schedule 4ZA higher rates for additional dwellings
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/14/schedule/4ZA
+              excerpt: "for Table A substitute"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/14/schedule/4ZA
+              excerpt: "Condition A is that the chargeable consideration for the transaction is £40,000 or more"
+    versions:
+      - effective_from: '2016-09-15'
+        formula: |-
+          max(0, min(taxable_additional_residential_property_purchase_amount, sdlt_residential_band_1_threshold)) * sdlt_additional_property_band_1_rate + max(0, min(taxable_additional_residential_property_purchase_amount, sdlt_residential_band_2_threshold) - sdlt_residential_band_1_threshold) * sdlt_additional_property_band_2_rate + max(0, min(taxable_additional_residential_property_purchase_amount, sdlt_residential_band_3_threshold) - sdlt_residential_band_2_threshold) * sdlt_additional_property_band_3_rate + max(0, min(taxable_additional_residential_property_purchase_amount, sdlt_residential_band_4_threshold) - sdlt_residential_band_3_threshold) * sdlt_additional_property_band_4_rate + max(0, taxable_additional_residential_property_purchase_amount - sdlt_residential_band_4_threshold) * sdlt_additional_property_band_5_rate
+
+  - name: sdlt_on_residential_property_transactions
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Finance Act 2003 s.55 and Schedule 4ZA
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/14/55
+              excerpt: "Add together the amounts calculated at Step 1"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/14/schedule/4ZA
+              excerpt: "higher rates transaction"
+    versions:
+      - effective_from: '2016-09-15'
+        formula: |-
+          sdlt_on_main_residential_purchase + sdlt_on_additional_residential_property_purchase
+
+  - name: sdlt_on_non_residential_property_transactions
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Finance Act 2003 s.55 Table B
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/14/55
+              excerpt: "Table B, if the relevant land consists of or includes land that is not residential property"
+    versions:
+      - effective_from: '2016-09-15'
+        formula: |-
+          max(0, min(non_residential_property_purchased_for_year, sdlt_non_residential_band_2_threshold) - sdlt_non_residential_band_1_threshold) * sdlt_non_residential_band_2_rate + max(0, non_residential_property_purchased_for_year - sdlt_non_residential_band_2_threshold) * sdlt_non_residential_band_3_rate
+
+  - name: sdlt_on_transactions
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Finance Act 2003 s.55
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/14/55
+              excerpt: "Add together the amounts calculated at Step 1"
+    versions:
+      - effective_from: '2003-07-10'
+        formula: |-
+          sdlt_on_residential_property_transactions + sdlt_on_non_residential_property_transactions
+
+  - name: sdlt_on_residential_property_rent
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Finance Act 2003 Schedule 5 residential rent bands
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/14/schedule/5
+              excerpt: "the relevant percentage of so much of the relevant rental value as falls within each rate band"
+    versions:
+      - effective_from: '2021-03-31'
+        formula: |-
+          max(0, cumulative_residential_rent_for_year + residential_rent_for_year - sdlt_residential_rent_threshold) * sdlt_residential_rent_rate - max(0, cumulative_residential_rent_for_year - sdlt_residential_rent_threshold) * sdlt_residential_rent_rate
+
+  - name: sdlt_on_non_residential_property_rent
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Finance Act 2003 Schedule 5 non-residential rent bands
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/14/schedule/5
+              excerpt: "consists of or includes land that is not residential property"
+    versions:
+      - effective_from: '2016-09-15'
+        formula: |-
+          (max(0, min(cumulative_non_residential_rent_for_year + non_residential_rent_for_year, sdlt_non_residential_rent_band_2_threshold) - sdlt_non_residential_rent_band_1_threshold) * sdlt_non_residential_rent_band_2_rate + max(0, cumulative_non_residential_rent_for_year + non_residential_rent_for_year - sdlt_non_residential_rent_band_2_threshold) * sdlt_non_residential_rent_band_3_rate) - (max(0, min(cumulative_non_residential_rent_for_year, sdlt_non_residential_rent_band_2_threshold) - sdlt_non_residential_rent_band_1_threshold) * sdlt_non_residential_rent_band_2_rate + max(0, cumulative_non_residential_rent_for_year - sdlt_non_residential_rent_band_2_threshold) * sdlt_non_residential_rent_band_3_rate)
+
+  - name: sdlt_on_rent
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Finance Act 2003 Schedule 5
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/14/schedule/5
+              excerpt: "Tax is chargeable under this Schedule in respect of so much of the chargeable consideration as consists of rent"
+    versions:
+      - effective_from: '2003-07-10'
+        formula: |-
+          sdlt_on_residential_property_rent + sdlt_on_non_residential_property_rent
+
+  - name: stamp_duty_land_tax_annual_amount
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Finance Act 2003 s.55 and Schedule 5
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/14/55
+              excerpt: "The amount of tax chargeable in respect of a chargeable transaction"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/14/schedule/5
+              excerpt: "Tax is chargeable under this Schedule"
+    versions:
+      - effective_from: '2003-07-10'
+        formula: |-
+          if household_is_sdlt_liable: sdlt_on_transactions + sdlt_on_rent else: 0

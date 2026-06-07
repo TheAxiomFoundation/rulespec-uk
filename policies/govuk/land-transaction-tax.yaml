@@ -1,0 +1,29 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_paths:
+      - uk/statute/anaw/2017/1/2
+  summary: |-
+    This PolicyEngine-alignment surface returns Wales's annual household Land Transaction Tax amount used by PolicyEngine UK. It gates the annual transaction and rent components to households liable for LTT.
+rules:
+  - name: land_transaction_tax_annual_amount
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Land Transaction Tax and Anti-avoidance of Devolved Taxes (Wales) Act 2017 section 2, aligned to PolicyEngine UK's final LTT aggregate
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/anaw/2017/1/2
+              excerpt: "land transaction tax"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          if household_is_ltt_liable: ltt_on_transactions_for_year + ltt_on_rent_for_year else: 0

@@ -1,0 +1,80 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_paths:
+      - uk/guidance/hmt-dwp/cost-of-living-support-package-2022/block-1
+      - uk/guidance/policyengine-uk/energy-support-parameters/v2.88.56
+  summary: |-
+    This PolicyEngine-alignment surface returns the current annual household Energy Price Guarantee subsidy used by PolicyEngine UK. GOV.UK's 2022 cost-of-living package announced energy-bill support. PolicyEngine UK 2.88.56 sets the 2026 Ofgem price guarantee above the 2026 price cap, so ordinary positive consumption receives no subsidy while PE's arithmetic is preserved for imputed negative consumption rows.
+rules:
+  - name: current_energy_price_cap_level
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine UK 2.88.56 Ofgem energy price cap parameter
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/energy-support-parameters/v2.88.56
+              excerpt: "energy_price_cap is 1,641"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          1641
+
+  - name: current_energy_price_guarantee_level
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine UK 2.88.56 Ofgem energy price guarantee parameter
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/energy-support-parameters/v2.88.56
+              excerpt: "energy_price_guarantee is 3,000"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          3000
+
+  - name: energy_price_guarantee_subsidy_annual_amount
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine UK Energy Price Guarantee subsidy wrapper over annual domestic energy consumption and Ofgem cap/guarantee parameters
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/hmt-dwp/cost-of-living-support-package-2022/block-1
+              excerpt: "There is now more certainty that households will need further support"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:policies/govuk/energy-price-guarantee#current_energy_price_cap_level
+              output: current_energy_price_cap_level
+              hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:policies/govuk/energy-price-guarantee#current_energy_price_guarantee_level
+              output: current_energy_price_guarantee_level
+              hash: sha256:local
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, domestic_energy_consumption_for_year - (domestic_energy_consumption_for_year * current_energy_price_guarantee_level / current_energy_price_cap_level))

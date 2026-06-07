@@ -1,0 +1,218 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_paths:
+      - uk/statute/ukpga/2014/28/1
+      - uk/statute/ukpga/2014/28/14
+      - uk/statute/ukpga/2014/28/19
+      - uk/regulation/uksi/2015/448/5
+      - uk/regulation/uksi/2015/448/9
+      - uk/regulation/uksi/2015/448/15
+  summary: |-
+    This PolicyEngine-alignment surface returns the annual Tax-Free Childcare amount used by PolicyEngine UK and HBAI: the top-up payment on qualifying childcare payments, capped by the statutory per-entitlement-period qualifying-payment maximums and scaled by eligible declaration periods.
+imports:
+  - uk:statutes/ukpga/2014/28/1#tax_free_childcare_top_up_payment_rate
+rules:
+  - name: tax_free_childcare_standard_qualifying_payment_limit_per_entitlement_period
+    kind: parameter
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Childcare Payments Act 2014 s.19(5)(b)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2014/28/19
+              excerpt: "in the case of any other child, £2,000"
+    versions:
+      - effective_from: '2015-01-01'
+        formula: |-
+          2000
+
+  - name: tax_free_childcare_disabled_qualifying_payment_limit_per_entitlement_period
+    kind: parameter
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Childcare Payments Act 2014 s.19(5)(a)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2014/28/19
+              excerpt: "in the case of a disabled child, £4,000"
+    versions:
+      - effective_from: '2015-01-01'
+        formula: |-
+          4000
+
+  - name: tax_free_childcare_declaration_periods_per_year
+    kind: parameter
+    entity: Person
+    dtype: Count
+    period: Year
+    source: Childcare Payments (Eligibility) Regulations 2015 reg. 9
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2015/448/9
+              excerpt: "period of 3 months beginning with the date of the declaration of eligibility"
+    versions:
+      - effective_from: '2015-01-01'
+        formula: |-
+          4
+
+  - name: tax_free_childcare_standard_child_yearly_top_up_limit
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Childcare Payments Act 2014 s.1(4) and s.19(5)(b)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/2014/28/1#tax_free_childcare_top_up_payment_rate
+              output: tax_free_childcare_top_up_payment_rate
+              hash: sha256:3d5a6d9b99c933ec7a2cc0435a76318b6e0e5787a03870b58221569480617186
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2014/28/19
+              excerpt: "in the case of any other child, £2,000"
+    versions:
+      - effective_from: '2015-01-01'
+        formula: |-
+          tax_free_childcare_standard_qualifying_payment_limit_per_entitlement_period * tax_free_childcare_top_up_payment_rate * tax_free_childcare_declaration_periods_per_year
+
+  - name: tax_free_childcare_disabled_child_yearly_top_up_limit
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Childcare Payments Act 2014 s.1(4) and s.19(5)(a)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/2014/28/1#tax_free_childcare_top_up_payment_rate
+              output: tax_free_childcare_top_up_payment_rate
+              hash: sha256:3d5a6d9b99c933ec7a2cc0435a76318b6e0e5787a03870b58221569480617186
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2014/28/19
+              excerpt: "in the case of a disabled child, £4,000"
+    versions:
+      - effective_from: '2015-01-01'
+        formula: |-
+          tax_free_childcare_disabled_qualifying_payment_limit_per_entitlement_period * tax_free_childcare_top_up_payment_rate * tax_free_childcare_declaration_periods_per_year
+
+  - name: tax_free_childcare_selected_child_yearly_top_up_limit
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Childcare Payments Act 2014 s.19(5) and Childcare Payments (Eligibility) Regulations 2015 reg. 5
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2015/448/5
+              excerpt: "For the purposes of paragraphs (2) and (4), “disabled child” means"
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2014/28/19
+              excerpt: "in the case of a disabled child, £4,000"
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2014/28/19
+              excerpt: "in the case of any other child, £2,000"
+    versions:
+      - effective_from: '2015-01-01'
+        formula: |-
+          if tax_free_childcare_child_is_disabled_or_blind: tax_free_childcare_disabled_child_yearly_top_up_limit else: tax_free_childcare_standard_child_yearly_top_up_limit
+
+  - name: tax_free_childcare_annual_top_up_limit_for_eligible_periods
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Childcare Payments Act 2014 s.19 and PolicyEngine UK declaration-period scaling
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2014/28/19
+              excerpt: "sum of any qualifying payments made into a childcare account in an entitlement period must not exceed the relevant maximum"
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2015/448/9
+              excerpt: "period of 3 months beginning with the date of the declaration of eligibility"
+    versions:
+      - effective_from: '2015-01-01'
+        formula: |-
+          tax_free_childcare_selected_child_yearly_top_up_limit * min(max(0, tax_free_childcare_eligible_declaration_period_count), tax_free_childcare_declaration_periods_per_year) / tax_free_childcare_declaration_periods_per_year
+
+  - name: tax_free_childcare_annual_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine UK tax_free_childcare final person wrapper over Childcare Payments Act 2014 top-up and cap provisions
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/2014/28/1#tax_free_childcare_top_up_payment_rate
+              output: tax_free_childcare_top_up_payment_rate
+              hash: sha256:3d5a6d9b99c933ec7a2cc0435a76318b6e0e5787a03870b58221569480617186
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2014/28/1
+              excerpt: "The amount of the top-up payment is 25% of the amount of the qualifying payment"
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2014/28/1
+              excerpt: "the child is a qualifying child"
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2014/28/19
+              excerpt: "the child in respect of whom the account is held is a qualifying child at the time of the payment"
+    versions:
+      - effective_from: '2015-01-01'
+        formula: |-
+          if tax_free_childcare_benefit_unit_is_eligible and tax_free_childcare_child_is_qualifying_child and tax_free_childcare_uses_qualifying_provider: min(tax_free_childcare_qualifying_childcare_payment_annual_amount * tax_free_childcare_top_up_payment_rate, tax_free_childcare_annual_top_up_limit_for_eligible_periods) else: 0

@@ -1,0 +1,46 @@
+- name: petrol_and_diesel_without_rural_relief
+  period:
+    period_kind: custom
+    name: calendar_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:policies/govuk/fuel-duty#input.petrol_litres_for_year: 600
+    uk:policies/govuk/fuel-duty#input.diesel_litres_for_year: 400
+    uk:policies/govuk/fuel-duty#input.petrol_and_diesel_fuel_duty_rate_per_litre: 0.5295
+    uk:policies/govuk/fuel-duty#input.fuel_is_purchased_in_rural_fuel_duty_relief_area: false
+  output:
+    uk:policies/govuk/fuel-duty#rural_fuel_duty_relief_rate_per_litre: 0.05
+    uk:policies/govuk/fuel-duty#fuel_duty_petrol_and_diesel_litres_for_year: 1000
+    uk:policies/govuk/fuel-duty#fuel_duty_effective_rate_per_litre: 0.5295
+    uk:policies/govuk/fuel-duty#fuel_duty_annual_amount: 529.5
+
+- name: rural_relief_reduces_petrol_and_diesel_rate
+  period:
+    period_kind: custom
+    name: calendar_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:policies/govuk/fuel-duty#input.petrol_litres_for_year: 600
+    uk:policies/govuk/fuel-duty#input.diesel_litres_for_year: 400
+    uk:policies/govuk/fuel-duty#input.petrol_and_diesel_fuel_duty_rate_per_litre: 0.5295
+    uk:policies/govuk/fuel-duty#input.fuel_is_purchased_in_rural_fuel_duty_relief_area: true
+  output:
+    uk:policies/govuk/fuel-duty#fuel_duty_effective_rate_per_litre: 0.4795
+    uk:policies/govuk/fuel-duty#fuel_duty_annual_amount: 479.5
+
+- name: zero_litres_gets_zero_fuel_duty
+  period:
+    period_kind: custom
+    name: calendar_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:policies/govuk/fuel-duty#input.petrol_litres_for_year: 0
+    uk:policies/govuk/fuel-duty#input.diesel_litres_for_year: 0
+    uk:policies/govuk/fuel-duty#input.petrol_and_diesel_fuel_duty_rate_per_litre: 0.5295
+    uk:policies/govuk/fuel-duty#input.fuel_is_purchased_in_rural_fuel_duty_relief_area: false
+  output:
+    uk:policies/govuk/fuel-duty#fuel_duty_petrol_and_diesel_litres_for_year: 0
+    uk:policies/govuk/fuel-duty#fuel_duty_annual_amount: 0

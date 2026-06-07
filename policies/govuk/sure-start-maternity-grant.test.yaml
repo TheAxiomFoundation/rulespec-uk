@@ -1,0 +1,21 @@
+- name: reported_receipt_gets_grant_amount
+  period:
+    period_kind: custom
+    name: calendar_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:policies/govuk/sure-start-maternity-grant#input.reported_sure_start_maternity_grant_for_year: 500
+  output:
+    uk:policies/govuk/sure-start-maternity-grant#sure_start_maternity_grant_annual_amount: 500
+
+- name: no_reported_receipt_gets_nil
+  period:
+    period_kind: custom
+    name: calendar_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:policies/govuk/sure-start-maternity-grant#input.reported_sure_start_maternity_grant_for_year: 0
+  output:
+    uk:policies/govuk/sure-start-maternity-grant#sure_start_maternity_grant_annual_amount: 0

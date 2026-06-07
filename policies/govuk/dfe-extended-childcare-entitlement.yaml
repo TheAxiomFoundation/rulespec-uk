@@ -1,0 +1,282 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_paths:
+      - uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+  summary: |-
+    This PolicyEngine-alignment surface returns the annual benefit-unit extended childcare entitlement exposed by PolicyEngine UK 2.88.56. It sums child-level weekly subsidies over the DfE childcare weeks after applying PE's child age bands, free-hours usage, maximum extended-hours usage, and benefit-unit eligibility gate.
+rules:
+  - name: extended_childcare_entitlement_children
+    kind: data_relation
+    data_relation:
+      predicate: extended_childcare_entitlement_children
+      arity: 2
+      arguments:
+        - Family
+        - Person
+    source: PolicyEngine-UK 2.88.56 extended_childcare_entitlement child membership relation
+
+  - name: extended_childcare_weeks_per_year
+    kind: parameter
+    dtype: Count
+    period: Year
+    source: PolicyEngine-UK 2.88.56 DfE parameter snapshot
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "DfE weeks_per_year to 38"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          38
+
+  - name: extended_childcare_funding_rate_under_age_2
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine-UK 2.88.56 DfE childcare funding rate
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "11.891513647969255 from age 0"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          11.891513647969255
+
+  - name: extended_childcare_funding_rate_age_2_threshold
+    kind: parameter
+    dtype: Count
+    period: Year
+    source: PolicyEngine-UK 2.88.56 DfE childcare funding rate threshold
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "8.775555526308862 from age 2"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          2
+
+  - name: extended_childcare_funding_rate_age_2
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine-UK 2.88.56 DfE childcare funding rate
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "8.775555526308862 from age 2"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          8.775555526308862
+
+  - name: extended_childcare_funding_rate_age_3_threshold
+    kind: parameter
+    dtype: Count
+    period: Year
+    source: PolicyEngine-UK 2.88.56 DfE childcare funding rate threshold
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "6.231916243320786 from age 3"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          3
+
+  - name: extended_childcare_funding_rate_age_3_and_over
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine-UK 2.88.56 DfE childcare funding rate
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "6.231916243320786 from age 3"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          6.231916243320786
+
+  - name: extended_childcare_minimum_age
+    kind: parameter
+    dtype: Count
+    period: Year
+    source: PolicyEngine-UK 2.88.56 extended childcare age-hours threshold
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "30 from age 0.75"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.75
+
+  - name: extended_childcare_upper_age
+    kind: parameter
+    dtype: Count
+    period: Year
+    source: PolicyEngine-UK 2.88.56 extended childcare age-hours threshold
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "0 from age 5"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          5
+
+  - name: extended_childcare_weekly_hours
+    kind: parameter
+    dtype: Count
+    period: Year
+    source: PolicyEngine-UK 2.88.56 extended childcare weekly hours parameter
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "30 from age 0.75"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          30
+
+  - name: extended_childcare_weekly_hours_entitlement_for_child
+    kind: derived
+    entity: Person
+    dtype: Count
+    period: Year
+    source: PolicyEngine-UK 2.88.56 extended childcare age-hours lookup
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "Extended childcare weekly hours are 0 from age 0, 30 from age 0.75, 30 from age 2, 30 from age 3, 30 from age 4, and 0 from age 5"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          if child_age >= extended_childcare_minimum_age and child_age < extended_childcare_upper_age: extended_childcare_weekly_hours else: 0
+
+  - name: extended_childcare_funding_hourly_rate_for_child
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine-UK 2.88.56 childcare funding rate lookup
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "Childcare funding rates are 11.891513647969255 from age 0, 8.775555526308862 from age 2, and 6.231916243320786 from age 3"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          if child_age >= extended_childcare_funding_rate_age_3_threshold: extended_childcare_funding_rate_age_3_and_over else: if child_age >= extended_childcare_funding_rate_age_2_threshold: extended_childcare_funding_rate_age_2 else: extended_childcare_funding_rate_under_age_2
+
+  - name: extended_childcare_weekly_hours_used_for_child
+    kind: derived
+    entity: Person
+    dtype: Count
+    period: Year
+    source: PolicyEngine-UK 2.88.56 extended childcare hours-used formula
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "Extended childcare weekly hours are 0 from age 0, 30 from age 0.75"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          min(max_free_entitlement_hours_used, min(extended_childcare_weekly_hours_entitlement_for_child, maximum_extended_childcare_hours_usage_for_family))
+
+  - name: extended_childcare_weekly_subsidy_for_child
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine-UK 2.88.56 extended childcare child subsidy formula
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "Childcare funding rates are 11.891513647969255 from age 0, 8.775555526308862 from age 2, and 6.231916243320786 from age 3"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          extended_childcare_weekly_hours_used_for_child * extended_childcare_funding_hourly_rate_for_child
+
+  - name: extended_childcare_entitlement_annual_amount
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine-UK 2.88.56 extended_childcare_entitlement final formula
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "DfE weeks_per_year to 38"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          if extended_childcare_entitlement_is_eligible: sum_where(extended_childcare_entitlement_children, extended_childcare_weekly_subsidy_for_child, extended_childcare_child_counts_for_entitlement) * extended_childcare_weeks_per_year else: 0

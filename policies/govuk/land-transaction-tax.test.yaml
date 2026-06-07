@@ -1,0 +1,25 @@
+- name: ltt_final_amount_sums_components_when_liable
+  period:
+    period_kind: custom
+    name: calendar_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:policies/govuk/land-transaction-tax#input.household_is_ltt_liable: true
+    uk:policies/govuk/land-transaction-tax#input.ltt_on_transactions_for_year: 2500
+    uk:policies/govuk/land-transaction-tax#input.ltt_on_rent_for_year: 90
+  output:
+    uk:policies/govuk/land-transaction-tax#land_transaction_tax_annual_amount: 2590
+
+- name: ltt_final_amount_zero_when_not_liable
+  period:
+    period_kind: custom
+    name: calendar_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:policies/govuk/land-transaction-tax#input.household_is_ltt_liable: false
+    uk:policies/govuk/land-transaction-tax#input.ltt_on_transactions_for_year: 2500
+    uk:policies/govuk/land-transaction-tax#input.ltt_on_rent_for_year: 90
+  output:
+    uk:policies/govuk/land-transaction-tax#land_transaction_tax_annual_amount: 0

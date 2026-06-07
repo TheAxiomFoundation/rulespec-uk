@@ -1,0 +1,69 @@
+- name: free_tv_licence_value_full_discount
+  period:
+    period_kind: custom
+    name: licence_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk:policies/govuk/tv-licence#input.household_owns_tv: true
+    uk:policies/govuk/tv-licence#input.household_would_evade_tv_licence_fee: false
+    uk:policies/govuk/tv-licence#input.tv_licence_discount_fraction: 1
+  output:
+    uk:policies/govuk/tv-licence#free_tv_licence_value: 180
+    uk:policies/govuk/tv-licence#tv_licence_annual_amount: 0
+
+- name: free_tv_licence_value_blind_discount
+  period:
+    period_kind: custom
+    name: licence_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk:policies/govuk/tv-licence#input.household_owns_tv: true
+    uk:policies/govuk/tv-licence#input.household_would_evade_tv_licence_fee: false
+    uk:policies/govuk/tv-licence#input.tv_licence_discount_fraction: 0.5
+  output:
+    uk:policies/govuk/tv-licence#free_tv_licence_value: 90
+    uk:policies/govuk/tv-licence#tv_licence_annual_amount: 90
+
+- name: free_tv_licence_value_no_tv
+  period:
+    period_kind: custom
+    name: licence_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk:policies/govuk/tv-licence#input.household_owns_tv: false
+    uk:policies/govuk/tv-licence#input.household_would_evade_tv_licence_fee: false
+    uk:policies/govuk/tv-licence#input.tv_licence_discount_fraction: 1
+  output:
+    uk:policies/govuk/tv-licence#free_tv_licence_value: 0
+    uk:policies/govuk/tv-licence#tv_licence_annual_amount: 0
+
+- name: free_tv_licence_value_evader
+  period:
+    period_kind: custom
+    name: licence_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk:policies/govuk/tv-licence#input.household_owns_tv: true
+    uk:policies/govuk/tv-licence#input.household_would_evade_tv_licence_fee: true
+    uk:policies/govuk/tv-licence#input.tv_licence_discount_fraction: 1
+  output:
+    uk:policies/govuk/tv-licence#free_tv_licence_value: 0
+    uk:policies/govuk/tv-licence#tv_licence_annual_amount: 0
+
+- name: tv_licence_annual_amount_full_payer
+  period:
+    period_kind: custom
+    name: licence_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk:policies/govuk/tv-licence#input.household_owns_tv: true
+    uk:policies/govuk/tv-licence#input.household_would_evade_tv_licence_fee: false
+    uk:policies/govuk/tv-licence#input.tv_licence_discount_fraction: 0
+  output:
+    uk:policies/govuk/tv-licence#free_tv_licence_value: 0
+    uk:policies/govuk/tv-licence#tv_licence_annual_amount: 180

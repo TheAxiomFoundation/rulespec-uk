@@ -1,0 +1,1447 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_paths:
+      - uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+  summary: |-
+    This PolicyEngine-alignment surface returns the person-level England DfE cash outputs exposed by PolicyEngine UK 2.88.56: universal and targeted childcare entitlements, Student Finance England student-support grants, Care to Learn, maintenance loans, and 16 to 19 Bursary Fund support. Eligibility, expenses, living arrangement, and use of free childcare hours are projected as leaf inputs from PolicyEngine's EFRS simulation.
+rules:
+  - name: dfe_childcare_weeks_per_year
+    kind: parameter
+    dtype: Count
+    period: Year
+    source: PolicyEngine-UK 2.88.56 DfE parameter snapshot
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "DfE weeks_per_year to 38"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          38
+
+  - name: dfe_weeks_in_year
+    kind: parameter
+    dtype: Count
+    period: Year
+    source: PolicyEngine-UK 2.88.56 model API constant
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "uses 52 weeks in WEEKS_IN_YEAR"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          52
+
+  - name: dfe_childcare_funding_rate_under_age_2
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine-UK 2.88.56 DfE childcare funding rate
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "11.891513647969255 from age 0"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          11.891513647969255
+
+  - name: dfe_childcare_funding_rate_age_2_threshold
+    kind: parameter
+    dtype: Count
+    period: Year
+    source: PolicyEngine-UK 2.88.56 DfE childcare funding rate threshold
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "8.775555526308862 from age 2"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          2
+
+  - name: dfe_childcare_funding_rate_age_2
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine-UK 2.88.56 DfE childcare funding rate
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "8.775555526308862 from age 2"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          8.775555526308862
+
+  - name: dfe_childcare_funding_rate_age_3_threshold
+    kind: parameter
+    dtype: Count
+    period: Year
+    source: PolicyEngine-UK 2.88.56 DfE childcare funding rate threshold
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "6.231916243320786 from age 3"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          3
+
+  - name: dfe_childcare_funding_rate_age_3_and_over
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine-UK 2.88.56 DfE childcare funding rate
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "6.231916243320786 from age 3"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          6.231916243320786
+
+  - name: universal_childcare_entitlement_hours_per_year
+    kind: parameter
+    dtype: Count
+    period: Year
+    source: PolicyEngine-UK 2.88.56 DfE universal childcare parameter
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "Universal childcare entitlement hours are 570 per year"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          570
+
+  - name: targeted_childcare_entitlement_hours_per_year
+    kind: parameter
+    dtype: Count
+    period: Year
+    source: PolicyEngine-UK 2.88.56 DfE targeted childcare parameter
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "Targeted childcare entitlement hours are 570 per year"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          570
+
+  - name: targeted_childcare_entitlement_minimum_age
+    kind: parameter
+    dtype: Count
+    period: Year
+    source: PolicyEngine-UK 2.88.56 targeted childcare age eligibility threshold
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "true from age 2"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          2
+
+  - name: targeted_childcare_entitlement_upper_age
+    kind: parameter
+    dtype: Count
+    period: Year
+    source: PolicyEngine-UK 2.88.56 targeted childcare age eligibility threshold
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "false from age 3"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          3
+
+  - name: childcare_grant_coverage_rate
+    kind: parameter
+    dtype: Rate
+    period: Year
+    source: PolicyEngine-UK 2.88.56 Childcare Grant parameter
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "Childcare Grant covers 85% of childcare expenses"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.85
+
+  - name: childcare_grant_one_child_count
+    kind: parameter
+    dtype: Count
+    period: Year
+    source: PolicyEngine-UK 2.88.56 Childcare Grant child-count switch
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "capped weekly at 199.62 for one child"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          1
+
+  - name: childcare_grant_weekly_maximum_one_child
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine-UK 2.88.56 Childcare Grant parameter
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "capped weekly at 199.62 for one child"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          199.62
+
+  - name: childcare_grant_weekly_maximum_two_or_more_children
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine-UK 2.88.56 Childcare Grant parameter
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "342.24 for two or more children"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          342.24
+
+  - name: parents_learning_allowance_maximum
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine-UK 2.88.56 Parents' Learning Allowance parameter
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "Parents' Learning Allowance maximum is 2,024"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          2024
+
+  - name: adult_dependants_grant_maximum
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine-UK 2.88.56 Adult Dependants' Grant parameter
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "Adult Dependants' Grant maximum is 3,545"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          3545
+
+  - name: travel_grant_initial_contribution
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine-UK 2.88.56 Travel Grant parameter
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "Travel Grant subtracts an initial contribution of 303"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          303
+
+  - name: travel_grant_income_reduction_threshold
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine-UK 2.88.56 Travel Grant parameter
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "household income 39,796"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          39796
+
+  - name: travel_grant_income_reduction_rate
+    kind: parameter
+    dtype: Rate
+    period: Year
+    source: PolicyEngine-UK 2.88.56 Travel Grant parameter
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "rate 0.1145475372279496"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.1145475372279496
+
+  - name: disabled_students_allowance_maximum
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine-UK 2.88.56 Disabled Students' Allowance parameter
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "Disabled Students' Allowance maximum is 27,783"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          27783
+
+  - name: care_to_learn_weekly_amount_in_london
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine-UK 2.88.56 Care to Learn parameter
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "Care to Learn weekly maximum is 195 in London"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          195
+
+  - name: care_to_learn_weekly_amount_outside_london
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine-UK 2.88.56 Care to Learn parameter
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "180 outside London"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          180
+
+  - name: bursary_fund_16_to_19_vulnerable_group_maximum
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine-UK 2.88.56 16 to 19 Bursary Fund parameter
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "16 to 19 Bursary vulnerable-group maximum is 1,200"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          1200
+
+  - name: maintenance_loan_household_income_threshold
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine-UK 2.88.56 maintenance loan parameter
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "threshold is 25,000"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          25000
+
+  - name: maintenance_loan_household_income_higher_threshold
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine-UK 2.88.56 maintenance loan parameter
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "higher threshold is 42,875"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          42875
+
+  - name: maintenance_loan_full_time_maximum_living_with_parents
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine-UK 2.88.56 maintenance loan parameter
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "9,118 living with parents"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          9118
+
+  - name: maintenance_loan_full_time_maximum_away_in_london
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine-UK 2.88.56 maintenance loan parameter
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "14,135 away in London"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          14135
+
+  - name: maintenance_loan_full_time_maximum_away_outside_london
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine-UK 2.88.56 maintenance loan parameter
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "10,830 away outside London"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          10830
+
+  - name: maintenance_loan_benefits_maximum_living_with_parents
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine-UK 2.88.56 maintenance loan parameter
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "10,757 living with parents"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          10757
+
+  - name: maintenance_loan_benefits_maximum_away_in_london
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine-UK 2.88.56 maintenance loan parameter
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "15,415 away in London"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          15415
+
+  - name: maintenance_loan_benefits_maximum_away_outside_london
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine-UK 2.88.56 maintenance loan parameter
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "12,345 away outside London"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          12345
+
+  - name: maintenance_loan_taper_not_entitled_living_with_parents
+    kind: parameter
+    dtype: Rate
+    period: Year
+    source: PolicyEngine-UK 2.88.56 maintenance loan parameter
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "6.54 living with parents"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          6.54
+
+  - name: maintenance_loan_taper_not_entitled_away_in_london
+    kind: parameter
+    dtype: Rate
+    period: Year
+    source: PolicyEngine-UK 2.88.56 maintenance loan parameter
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "6.36 away in London"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          6.36
+
+  - name: maintenance_loan_taper_not_entitled_away_outside_london
+    kind: parameter
+    dtype: Rate
+    period: Year
+    source: PolicyEngine-UK 2.88.56 maintenance loan parameter
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "6.47 away outside London"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          6.47
+
+  - name: maintenance_loan_taper_benefits_first_stage_living_with_parents
+    kind: parameter
+    dtype: Rate
+    period: Year
+    source: PolicyEngine-UK 2.88.56 maintenance loan parameter
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "4.088 living with parents"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          4.088
+
+  - name: maintenance_loan_taper_benefits_first_stage_away_in_london
+    kind: parameter
+    dtype: Rate
+    period: Year
+    source: PolicyEngine-UK 2.88.56 maintenance loan parameter
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "4.37 away in London"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          4.37
+
+  - name: maintenance_loan_taper_benefits_first_stage_away_outside_london
+    kind: parameter
+    dtype: Rate
+    period: Year
+    source: PolicyEngine-UK 2.88.56 maintenance loan parameter
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "4.179 away outside London"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          4.179
+
+  - name: maintenance_loan_minimum_rate_not_entitled_living_with_parents
+    kind: parameter
+    dtype: Rate
+    period: Year
+    source: PolicyEngine-UK 2.88.56 maintenance loan parameter
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "0.44 living with parents"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.44
+
+  - name: maintenance_loan_minimum_rate_not_entitled_away_in_london
+    kind: parameter
+    dtype: Rate
+    period: Year
+    source: PolicyEngine-UK 2.88.56 maintenance loan parameter
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "0.498 away in London"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.498
+
+  - name: maintenance_loan_minimum_rate_not_entitled_away_outside_london
+    kind: parameter
+    dtype: Rate
+    period: Year
+    source: PolicyEngine-UK 2.88.56 maintenance loan parameter
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "0.466 away outside London"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.466
+
+  - name: maintenance_loan_minimum_rate_benefits_living_with_parents
+    kind: parameter
+    dtype: Rate
+    period: Year
+    source: PolicyEngine-UK 2.88.56 maintenance loan parameter
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "0.373 living with parents"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.373
+
+  - name: maintenance_loan_minimum_rate_benefits_away_in_london
+    kind: parameter
+    dtype: Rate
+    period: Year
+    source: PolicyEngine-UK 2.88.56 maintenance loan parameter
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "0.457 away in London"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.457
+
+  - name: maintenance_loan_minimum_rate_benefits_away_outside_london
+    kind: parameter
+    dtype: Rate
+    period: Year
+    source: PolicyEngine-UK 2.88.56 maintenance loan parameter
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "0.409 away outside London"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.409
+
+  - name: maintenance_loan_over_60_reduction_per_pound
+    kind: parameter
+    dtype: Rate
+    period: Year
+    source: PolicyEngine-UK 2.88.56 maintenance loan over-60 parameter
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "reduction_per_pound 4.16"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          4.16
+
+  - name: maintenance_loan_over_60_maximum_income
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine-UK 2.88.56 maintenance loan over-60 parameter
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "maximum_income 43,835"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          43835
+
+  - name: maintenance_loan_over_60_minimum_amount
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine-UK 2.88.56 maintenance loan over-60 parameter
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "minimum_amount 50"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          50
+
+  - name: maintenance_loan_over_60_max_amount
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine-UK 2.88.56 maintenance loan over-60 parameter
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "max_amount 4,582"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          4582
+
+  - name: maintenance_loan_over_60_age_threshold
+    kind: parameter
+    dtype: Count
+    period: Year
+    source: PolicyEngine-UK 2.88.56 maintenance loan over-60 schedule threshold
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "The maintenance loan over-60 schedule applies from age 60"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          60
+
+  - name: maintenance_loan_nearest_pound_rounding_offset
+    kind: parameter
+    dtype: Rate
+    period: Year
+    source: PolicyEngine-UK 2.88.56 maintenance loan nearest-pound rounding alignment
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "threshold is 25,000"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.5
+
+  - name: dfe_childcare_funding_hourly_rate_for_person
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine-UK 2.88.56 childcare funding rate lookup
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "Childcare funding rates are 11.891513647969255 from age 0, 8.775555526308862 from age 2, and 6.231916243320786 from age 3"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          if person_age >= dfe_childcare_funding_rate_age_3_threshold: dfe_childcare_funding_rate_age_3_and_over else: if person_age >= dfe_childcare_funding_rate_age_2_threshold: dfe_childcare_funding_rate_age_2 else: dfe_childcare_funding_rate_under_age_2
+
+  - name: universal_childcare_entitlement_annual_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine-UK 2.88.56 universal_childcare_entitlement final formula
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "Universal childcare entitlement hours are 570 per year"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          if universal_childcare_entitlement_is_eligible: min(max_free_entitlement_hours_used * dfe_childcare_weeks_per_year, universal_childcare_entitlement_hours_per_year) * dfe_childcare_funding_hourly_rate_for_person else: 0
+
+  - name: targeted_childcare_entitlement_available_hours_per_year
+    kind: derived
+    entity: Person
+    dtype: Count
+    period: Year
+    source: PolicyEngine-UK 2.88.56 targeted childcare age eligibility lookup
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "targeted age eligibility is false from age 0, true from age 2, and false from age 3"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          if person_age >= targeted_childcare_entitlement_minimum_age and person_age < targeted_childcare_entitlement_upper_age: targeted_childcare_entitlement_hours_per_year else: 0
+
+  - name: targeted_childcare_entitlement_annual_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine-UK 2.88.56 targeted_childcare_entitlement final formula
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "Targeted childcare entitlement hours are 570 per year"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          if targeted_childcare_entitlement_is_eligible: min(max_free_entitlement_hours_used * dfe_childcare_weeks_per_year, targeted_childcare_entitlement_available_hours_per_year) * dfe_childcare_funding_hourly_rate_for_person else: 0
+
+  - name: childcare_grant_annual_cap
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine-UK 2.88.56 Childcare Grant weekly caps
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "capped weekly at 199.62 for one child and 342.24 for two or more children"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          (if childcare_grant_eligible_child_count == childcare_grant_one_child_count: childcare_grant_weekly_maximum_one_child else: childcare_grant_weekly_maximum_two_or_more_children) * dfe_weeks_in_year
+
+  - name: childcare_grant_annual_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine-UK 2.88.56 childcare_grant final formula
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "Childcare Grant covers 85% of childcare expenses"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          if childcare_grant_is_eligible: min(childcare_expenses_for_year * childcare_grant_coverage_rate, childcare_grant_annual_cap) else: 0
+
+  - name: parents_learning_allowance_annual_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine-UK 2.88.56 parents_learning_allowance final formula
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "Parents' Learning Allowance maximum is 2,024"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          if parents_learning_allowance_is_eligible: parents_learning_allowance_maximum else: 0
+
+  - name: adult_dependants_grant_annual_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine-UK 2.88.56 adult_dependants_grant final formula
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "Adult Dependants' Grant maximum is 3,545"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          if adult_dependants_grant_is_eligible: adult_dependants_grant_maximum else: 0
+
+  - name: travel_grant_income_reduction
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine-UK 2.88.56 Travel Grant income reduction
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "rate 0.1145475372279496"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, travel_grant_household_income_for_year - travel_grant_income_reduction_threshold) * travel_grant_income_reduction_rate
+
+  - name: travel_grant_annual_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine-UK 2.88.56 travel_grant final formula
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "Travel Grant subtracts an initial contribution of 303"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          if travel_grant_is_eligible: max(0, travel_grant_eligible_expenses_for_year - travel_grant_initial_contribution - travel_grant_income_reduction) else: 0
+
+  - name: disabled_students_allowance_annual_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine-UK 2.88.56 disabled_students_allowance final formula
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "Disabled Students' Allowance maximum is 27,783"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          if disabled_students_allowance_is_eligible: min(disabled_students_allowance_eligible_expenses_for_year, disabled_students_allowance_maximum) else: 0
+
+  - name: care_to_learn_annual_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine-UK 2.88.56 care_to_learn final formula
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "Care to Learn weekly maximum is 195 in London and 180 outside London"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          if care_to_learn_is_eligible: (if household_region_is_london: care_to_learn_weekly_amount_in_london else: care_to_learn_weekly_amount_outside_london) * dfe_weeks_in_year else: 0
+
+  - name: maintenance_loan_standard_maximum_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine-UK 2.88.56 maintenance loan living-arrangement maximum
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "Maintenance loan standard maximums are 9,118 living with parents, 14,135 away in London, and 10,830 away outside London"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          if maintenance_loan_living_with_parents: maintenance_loan_full_time_maximum_living_with_parents else: if maintenance_loan_away_in_london: maintenance_loan_full_time_maximum_away_in_london else: maintenance_loan_full_time_maximum_away_outside_london
+
+  - name: maintenance_loan_benefits_maximum_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine-UK 2.88.56 maintenance loan benefits maximum
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "Maintenance loan benefits maximums are 10,757 living with parents, 15,415 away in London, and 12,345 away outside London"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          if maintenance_loan_living_with_parents: maintenance_loan_benefits_maximum_living_with_parents else: if maintenance_loan_away_in_london: maintenance_loan_benefits_maximum_away_in_london else: maintenance_loan_benefits_maximum_away_outside_london
+
+  - name: maintenance_loan_one_stage_taper
+    kind: derived
+    entity: Person
+    dtype: Rate
+    period: Year
+    source: PolicyEngine-UK 2.88.56 maintenance loan one-stage taper
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "Maintenance loan one-stage tapers are 6.54 living with parents, 6.36 away in London, and 6.47 away outside London"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          if maintenance_loan_living_with_parents: maintenance_loan_taper_not_entitled_living_with_parents else: if maintenance_loan_away_in_london: maintenance_loan_taper_not_entitled_away_in_london else: maintenance_loan_taper_not_entitled_away_outside_london
+
+  - name: maintenance_loan_one_stage_floor_rate
+    kind: derived
+    entity: Person
+    dtype: Rate
+    period: Year
+    source: PolicyEngine-UK 2.88.56 maintenance loan standard floor rates
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "Maintenance loan standard floor rates are 0.44 living with parents, 0.498 away in London, and 0.466 away outside London"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          if maintenance_loan_living_with_parents: maintenance_loan_minimum_rate_not_entitled_living_with_parents else: if maintenance_loan_away_in_london: maintenance_loan_minimum_rate_not_entitled_away_in_london else: maintenance_loan_minimum_rate_not_entitled_away_outside_london
+
+  - name: maintenance_loan_first_stage_taper
+    kind: derived
+    entity: Person
+    dtype: Rate
+    period: Year
+    source: PolicyEngine-UK 2.88.56 maintenance loan first-stage benefits taper
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "Maintenance loan first-stage benefits tapers are 4.088 living with parents, 4.37 away in London, and 4.179 away outside London"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          if maintenance_loan_living_with_parents: maintenance_loan_taper_benefits_first_stage_living_with_parents else: if maintenance_loan_away_in_london: maintenance_loan_taper_benefits_first_stage_away_in_london else: maintenance_loan_taper_benefits_first_stage_away_outside_london
+
+  - name: maintenance_loan_second_stage_taper
+    kind: derived
+    entity: Person
+    dtype: Rate
+    period: Year
+    source: PolicyEngine-UK 2.88.56 maintenance loan second-stage benefits taper
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "Maintenance loan second-stage benefits tapers are 6.54 living with parents, 6.36 away in London, and 6.47 away outside London"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          if maintenance_loan_living_with_parents: maintenance_loan_taper_not_entitled_living_with_parents else: if maintenance_loan_away_in_london: maintenance_loan_taper_not_entitled_away_in_london else: maintenance_loan_taper_not_entitled_away_outside_london
+
+  - name: maintenance_loan_two_stage_floor_rate
+    kind: derived
+    entity: Person
+    dtype: Rate
+    period: Year
+    source: PolicyEngine-UK 2.88.56 maintenance loan benefits floor rates
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "Maintenance loan benefits floor rates are 0.373 living with parents, 0.457 away in London, and 0.409 away outside London"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          if maintenance_loan_living_with_parents: maintenance_loan_minimum_rate_benefits_living_with_parents else: if maintenance_loan_away_in_london: maintenance_loan_minimum_rate_benefits_away_in_london else: maintenance_loan_minimum_rate_benefits_away_outside_london
+
+  - name: maintenance_loan_one_stage_reduction
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine-UK 2.88.56 maintenance loan standard income taper
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "threshold is 25,000"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, maintenance_loan_household_income_for_year - maintenance_loan_household_income_threshold) / maintenance_loan_one_stage_taper
+
+  - name: maintenance_loan_two_stage_reduction
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine-UK 2.88.56 maintenance loan benefits income taper
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "higher threshold is 42,875"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, min(maintenance_loan_household_income_for_year, maintenance_loan_household_income_higher_threshold) - maintenance_loan_household_income_threshold) / maintenance_loan_first_stage_taper + max(0, maintenance_loan_household_income_for_year - maintenance_loan_household_income_higher_threshold) / maintenance_loan_second_stage_taper
+
+  - name: maintenance_loan_standard_or_benefits_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine-UK 2.88.56 maintenance_loan standard and benefits schedule formula
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "Maintenance loan benefits maximums are 10,757 living with parents, 15,415 away in London, and 12,345 away outside London"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          if maintenance_loan_entitled_to_benefits: max(maintenance_loan_two_stage_floor_rate * maintenance_loan_benefits_maximum_amount, maintenance_loan_benefits_maximum_amount - maintenance_loan_two_stage_reduction) else: max(maintenance_loan_one_stage_floor_rate * maintenance_loan_standard_maximum_amount, maintenance_loan_standard_maximum_amount - maintenance_loan_one_stage_reduction)
+
+  - name: maintenance_loan_over_60_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine-UK 2.88.56 maintenance_loan over-60 schedule formula
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "Maintenance loan over-60 schedule uses reduction_per_pound 4.16, maximum_income 43,835, minimum_amount 50, and max_amount 4,582"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          if maintenance_loan_household_income_for_year > maintenance_loan_over_60_maximum_income: 0 else: max(maintenance_loan_over_60_minimum_amount, maintenance_loan_over_60_max_amount - max(0, maintenance_loan_household_income_for_year - maintenance_loan_household_income_threshold) / maintenance_loan_over_60_reduction_per_pound)
+
+  - name: maintenance_loan_unrounded_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine-UK 2.88.56 maintenance_loan age schedule selector
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "Maintenance loan over-60 schedule uses reduction_per_pound 4.16"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          if person_age >= maintenance_loan_over_60_age_threshold: maintenance_loan_over_60_amount else: maintenance_loan_standard_or_benefits_amount
+
+  - name: maintenance_loan_annual_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine-UK 2.88.56 maintenance_loan final formula, using floor(x + 0.5) to mirror PE's nearest-pound rounding for nonnegative awards
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "nearest-pound rounding offset 0.5"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          if maintenance_loan_is_eligible: floor(maintenance_loan_unrounded_amount + maintenance_loan_nearest_pound_rounding_offset) else: 0
+
+  - name: bursary_fund_16_to_19_annual_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine-UK 2.88.56 bursary_fund_16_to_19 final formula
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/guidance/policyengine-uk/dfe-program-parameters/v2.88.56
+              excerpt: "16 to 19 Bursary vulnerable-group maximum is 1,200"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          if bursary_fund_16_to_19_vulnerable_group_is_eligible: min(bursary_fund_16_to_19_participation_costs_for_year, bursary_fund_16_to_19_vulnerable_group_maximum) else: 0

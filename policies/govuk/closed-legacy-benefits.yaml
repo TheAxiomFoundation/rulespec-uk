@@ -1,0 +1,202 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_paths:
+      - uk/guidance/dwp/historical-benefits-closure/block-1
+      - uk/guidance/dwp/historical-benefits-closure/block-3
+      - uk/guidance/hmrc-dwp/tax-credits-have-ended/block-1
+      - uk/guidance/hmrc-dwp/tax-credits-have-ended/block-2
+  summary: |-
+    Current-law legacy benefit closures make ongoing Income Support, income-based Jobseeker's Allowance, Working Tax Credit, Child Tax Credit, and aggregate Tax Credits final awards nil for the 2026 tax year. DWP states that Income Support and income-related Jobseeker's Allowance claimants moved to Universal Credit and that those two benefits will close. GOV.UK states that Child Tax Credit and Working Tax Credit cannot be newly claimed, and annual reviews finalise tax credit awards paid up to 5 April 2025. PolicyEngine's aggregate Jobseeker's Allowance and Employment and Support Allowance variables add the modeled income-related amount to fixed reported contribution-based receipt.
+rules:
+  - name: income_support
+    kind: derived
+    entity: BenUnit
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: DWP legacy-benefit closure guidance
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/guidance/dwp/historical-benefits-closure/block-1
+              excerpt: "Income Support and income-related Jobseeker"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/guidance/dwp/historical-benefits-closure/block-1
+              excerpt: "those two benefits will close"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          0
+
+  - name: jsa_income
+    kind: derived
+    entity: BenUnit
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: DWP legacy-benefit closure guidance
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/guidance/dwp/historical-benefits-closure/block-1
+              excerpt: "Income Support and income-related Jobseeker"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/guidance/dwp/historical-benefits-closure/block-1
+              excerpt: "those two benefits will close"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          0
+
+  - name: working_tax_credit
+    kind: derived
+    entity: BenUnit
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: GOV.UK tax credits closure guidance
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/guidance/hmrc-dwp/tax-credits-have-ended/block-1
+              excerpt: "You cannot make a new claim for Child Tax Credit or Working Tax Credit."
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/guidance/hmrc-dwp/tax-credits-have-ended/block-2
+              excerpt: "tax credits award ends"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/guidance/hmrc-dwp/tax-credits-have-ended/block-2
+              excerpt: "paid up to 5 April 2025"
+    versions:
+      - effective_from: '2025-04-06'
+        formula: |-
+          0
+
+  - name: child_tax_credit
+    kind: derived
+    entity: BenUnit
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: GOV.UK tax credits closure guidance
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/guidance/hmrc-dwp/tax-credits-have-ended/block-1
+              excerpt: "You cannot make a new claim for Child Tax Credit or Working Tax Credit."
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/guidance/hmrc-dwp/tax-credits-have-ended/block-2
+              excerpt: "tax credits award ends"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/guidance/hmrc-dwp/tax-credits-have-ended/block-2
+              excerpt: "paid up to 5 April 2025"
+    versions:
+      - effective_from: '2025-04-06'
+        formula: |-
+          0
+
+  - name: tax_credits
+    kind: derived
+    entity: BenUnit
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: GOV.UK tax credits closure guidance
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/guidance/hmrc-dwp/tax-credits-have-ended/block-1
+              excerpt: "You cannot make a new claim for Child Tax Credit or Working Tax Credit."
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/guidance/hmrc-dwp/tax-credits-have-ended/block-2
+              excerpt: "tax credits award ends"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/guidance/hmrc-dwp/tax-credits-have-ended/block-2
+              excerpt: "paid up to 5 April 2025"
+    versions:
+      - effective_from: '2025-04-06'
+        formula: |-
+          0
+
+  - name: jsa
+    kind: derived
+    entity: BenUnit
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine UK aggregate Jobseeker's Allowance wrapper over income-based JSA closure and reported contribution-based JSA
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/guidance/dwp/historical-benefits-closure/block-1
+              excerpt: "Income Support and income-related Jobseeker"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/guidance/dwp/historical-benefits-closure/block-1
+              excerpt: "those two benefits will close"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          jsa_income + contribution_based_jobseekers_allowance_reported_for_year
+
+  - name: esa
+    kind: derived
+    entity: BenUnit
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine UK aggregate Employment and Support Allowance wrapper over income-related ESA closure and reported contribution-based ESA
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/guidance/dwp/historical-benefits-closure/block-3
+              excerpt: "Employment and Support Allowance audience"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/guidance/dwp/historical-benefits-closure/block-3
+              excerpt: "Move to UC campaign"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          income_related_employment_and_support_allowance_for_year + contribution_based_employment_and_support_allowance_reported_for_year

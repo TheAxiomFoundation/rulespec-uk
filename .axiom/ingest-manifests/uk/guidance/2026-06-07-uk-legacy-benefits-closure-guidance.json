@@ -1,0 +1,53 @@
+{
+  "applied_files": [
+    {
+      "path": "data/corpus/coverage/uk/guidance/2026-06-07-uk-legacy-benefits-closure-guidance.json",
+      "sha256": "607d0166d79d9bab03767b21df5cad52acdedb3b780df91926ce77888f08d354"
+    },
+    {
+      "path": "data/corpus/inventory/uk/guidance/2026-06-07-uk-legacy-benefits-closure-guidance.json",
+      "sha256": "e67e1f3ab4aa21649850f69b91ed613aa63f2855886423fb655ba44fd63fd4f1"
+    },
+    {
+      "path": "data/corpus/provisions/uk/guidance/2026-06-07-uk-legacy-benefits-closure-guidance.jsonl",
+      "sha256": "184b8c920a59166fdf2405ad0d3ec166c6a50ffb202fa3c329b7829bfa899966"
+    },
+    {
+      "path": "data/corpus/sources/uk/guidance/2026-06-07-uk-legacy-benefits-closure-guidance/official-documents/dwp-historical-benefits-closure.html",
+      "sha256": "bc5627564bcd30e9d1987d5e00d82ec077cb344d42ac3b7190715b85727d4c45"
+    },
+    {
+      "path": "data/corpus/sources/uk/guidance/2026-06-07-uk-legacy-benefits-closure-guidance/official-documents/hmrc-dwp-tax-credits-ended.html",
+      "sha256": "42f992c3caa3d50599190b5f4e991556ad17e3dca205550eadeba4729fb1e194"
+    }
+  ],
+  "axiom_corpus_git": {
+    "commit": "de9b2eb9bcd03356cc8d5855216f2c83e7a085ab",
+    "dirty_tracked": true,
+    "root": "/Users/maxghenis/_axiom-worktrees/axiom-corpus-uk-tfc-20260607"
+  },
+  "axiom_corpus_version": "0.1.0",
+  "command": {
+    "text": "uv run axiom-corpus-ingest extract-official-documents --base data/corpus --version 2026-06-07-uk-legacy-benefits-closure-guidance --manifest manifests/uk-legacy-benefits-closure-guidance.yaml --source-as-of 2026-06-07"
+  },
+  "coverage": {
+    "complete": true,
+    "extra_count": 0,
+    "matched_count": 10,
+    "missing_count": 0,
+    "provision_count": 10,
+    "source_count": 10
+  },
+  "document_class": "guidance",
+  "generated_at": "2026-06-07T05:30:15.589486+00:00",
+  "jurisdiction": "uk",
+  "reasoning_logs": [],
+  "schema_version": "axiom-corpus/ingest-manifest/v1",
+  "signature": {
+    "algorithm": "ed25519",
+    "key_id": "axiom-corpus-ingest-v1",
+    "value": "dxas/jcknM7rRs18hJf0aVld439qTyU00U1jgQRV2vPjWweztDjLzlsUPrn2nejr3x6fzPTH6QzqeXbp0/mWBA=="
+  },
+  "tool": "axiom-corpus-ingest signed ingest manifest",
+  "version": "2026-06-07-uk-legacy-benefits-closure-guidance"
+}

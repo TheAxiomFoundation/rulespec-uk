@@ -1,0 +1,80 @@
+- name: standard_child_top_up_is_capped_at_annual_limit
+  period:
+    period_kind: tax_year
+    start: '2026-04-06'
+    end: '2027-04-05'
+  input:
+    uk:policies/govuk/tax-free-childcare#input.tax_free_childcare_benefit_unit_is_eligible: true
+    uk:policies/govuk/tax-free-childcare#input.tax_free_childcare_child_is_qualifying_child: true
+    uk:policies/govuk/tax-free-childcare#input.tax_free_childcare_child_is_disabled_or_blind: false
+    uk:policies/govuk/tax-free-childcare#input.tax_free_childcare_uses_qualifying_provider: true
+    uk:policies/govuk/tax-free-childcare#input.tax_free_childcare_eligible_declaration_period_count: 4
+    uk:policies/govuk/tax-free-childcare#input.tax_free_childcare_qualifying_childcare_payment_annual_amount: 9000
+  output:
+    uk:policies/govuk/tax-free-childcare#tax_free_childcare_declaration_periods_per_year: 4
+    uk:policies/govuk/tax-free-childcare#tax_free_childcare_standard_child_yearly_top_up_limit: 2000
+    uk:policies/govuk/tax-free-childcare#tax_free_childcare_selected_child_yearly_top_up_limit: 2000
+    uk:policies/govuk/tax-free-childcare#tax_free_childcare_annual_amount: 2000
+
+- name: disabled_child_top_up_is_capped_at_higher_annual_limit
+  period:
+    period_kind: tax_year
+    start: '2026-04-06'
+    end: '2027-04-05'
+  input:
+    uk:policies/govuk/tax-free-childcare#input.tax_free_childcare_benefit_unit_is_eligible: true
+    uk:policies/govuk/tax-free-childcare#input.tax_free_childcare_child_is_qualifying_child: true
+    uk:policies/govuk/tax-free-childcare#input.tax_free_childcare_child_is_disabled_or_blind: true
+    uk:policies/govuk/tax-free-childcare#input.tax_free_childcare_uses_qualifying_provider: true
+    uk:policies/govuk/tax-free-childcare#input.tax_free_childcare_eligible_declaration_period_count: 4
+    uk:policies/govuk/tax-free-childcare#input.tax_free_childcare_qualifying_childcare_payment_annual_amount: 20000
+  output:
+    uk:policies/govuk/tax-free-childcare#tax_free_childcare_disabled_child_yearly_top_up_limit: 4000
+    uk:policies/govuk/tax-free-childcare#tax_free_childcare_selected_child_yearly_top_up_limit: 4000
+    uk:policies/govuk/tax-free-childcare#tax_free_childcare_annual_amount: 4000
+
+- name: eligible_declaration_periods_scale_the_cap
+  period:
+    period_kind: tax_year
+    start: '2026-04-06'
+    end: '2027-04-05'
+  input:
+    uk:policies/govuk/tax-free-childcare#input.tax_free_childcare_benefit_unit_is_eligible: true
+    uk:policies/govuk/tax-free-childcare#input.tax_free_childcare_child_is_qualifying_child: true
+    uk:policies/govuk/tax-free-childcare#input.tax_free_childcare_child_is_disabled_or_blind: false
+    uk:policies/govuk/tax-free-childcare#input.tax_free_childcare_uses_qualifying_provider: true
+    uk:policies/govuk/tax-free-childcare#input.tax_free_childcare_eligible_declaration_period_count: 1
+    uk:policies/govuk/tax-free-childcare#input.tax_free_childcare_qualifying_childcare_payment_annual_amount: 9000
+  output:
+    uk:policies/govuk/tax-free-childcare#tax_free_childcare_annual_top_up_limit_for_eligible_periods: 500
+    uk:policies/govuk/tax-free-childcare#tax_free_childcare_annual_amount: 500
+
+- name: ineligible_benefit_unit_gets_nil
+  period:
+    period_kind: tax_year
+    start: '2026-04-06'
+    end: '2027-04-05'
+  input:
+    uk:policies/govuk/tax-free-childcare#input.tax_free_childcare_benefit_unit_is_eligible: false
+    uk:policies/govuk/tax-free-childcare#input.tax_free_childcare_child_is_qualifying_child: true
+    uk:policies/govuk/tax-free-childcare#input.tax_free_childcare_child_is_disabled_or_blind: false
+    uk:policies/govuk/tax-free-childcare#input.tax_free_childcare_uses_qualifying_provider: true
+    uk:policies/govuk/tax-free-childcare#input.tax_free_childcare_eligible_declaration_period_count: 4
+    uk:policies/govuk/tax-free-childcare#input.tax_free_childcare_qualifying_childcare_payment_annual_amount: 9000
+  output:
+    uk:policies/govuk/tax-free-childcare#tax_free_childcare_annual_amount: 0
+
+- name: non_qualifying_provider_gets_nil
+  period:
+    period_kind: tax_year
+    start: '2026-04-06'
+    end: '2027-04-05'
+  input:
+    uk:policies/govuk/tax-free-childcare#input.tax_free_childcare_benefit_unit_is_eligible: true
+    uk:policies/govuk/tax-free-childcare#input.tax_free_childcare_child_is_qualifying_child: true
+    uk:policies/govuk/tax-free-childcare#input.tax_free_childcare_child_is_disabled_or_blind: false
+    uk:policies/govuk/tax-free-childcare#input.tax_free_childcare_uses_qualifying_provider: false
+    uk:policies/govuk/tax-free-childcare#input.tax_free_childcare_eligible_declaration_period_count: 4
+    uk:policies/govuk/tax-free-childcare#input.tax_free_childcare_qualifying_childcare_payment_annual_amount: 9000
+  output:
+    uk:policies/govuk/tax-free-childcare#tax_free_childcare_annual_amount: 0

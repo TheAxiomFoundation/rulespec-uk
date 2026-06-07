@@ -1,0 +1,42 @@
+- name: 2022_cost_of_living_historical_amounts_are_source_backed
+  period:
+    period_kind: custom
+    name: calendar_year
+    start: '2022-01-01'
+    end: '2022-12-31'
+  input: {}
+  output:
+    uk:policies/govuk/cost-of-living-support-payment#means_tested_cost_of_living_payment_2022_amount: 650
+    uk:policies/govuk/cost-of-living-support-payment#pensioner_cost_of_living_payment_2022_amount: 300
+    uk:policies/govuk/cost-of-living-support-payment#disability_cost_of_living_payment_2022_amount: 150
+
+- name: 2023_cost_of_living_historical_amounts_are_source_backed
+  period:
+    period_kind: custom
+    name: calendar_year
+    start: '2023-01-01'
+    end: '2023-12-31'
+  input: {}
+  output:
+    uk:policies/govuk/cost-of-living-support-payment#means_tested_cost_of_living_payment_2023_amount: 900
+    uk:policies/govuk/cost-of-living-support-payment#pensioner_cost_of_living_payment_2023_amount: 300
+    uk:policies/govuk/cost-of-living-support-payment#disability_cost_of_living_payment_2023_amount: 150
+
+- name: current_period_has_zero_amounts_even_with_qualifying_benefit_inputs
+  period:
+    period_kind: custom
+    name: calendar_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:policies/govuk/cost-of-living-support-payment#input.household_receives_qualifying_means_tested_benefit_for_cost_of_living_payment: true
+    uk:policies/govuk/cost-of-living-support-payment#input.household_receives_winter_fuel_payment_for_cost_of_living_payment: true
+    uk:policies/govuk/cost-of-living-support-payment#input.household_receives_qualifying_disability_benefit_for_cost_of_living_payment: true
+  output:
+    uk:policies/govuk/cost-of-living-support-payment#current_means_tested_cost_of_living_payment_amount: 0
+    uk:policies/govuk/cost-of-living-support-payment#current_pensioner_cost_of_living_payment_amount: 0
+    uk:policies/govuk/cost-of-living-support-payment#current_disability_cost_of_living_payment_amount: 0
+    uk:policies/govuk/cost-of-living-support-payment#means_tested_cost_of_living_payment_for_household: 0
+    uk:policies/govuk/cost-of-living-support-payment#pensioner_cost_of_living_payment_for_household: 0
+    uk:policies/govuk/cost-of-living-support-payment#disability_cost_of_living_payment_for_household: 0
+    uk:policies/govuk/cost-of-living-support-payment#cost_of_living_support_payment_annual_amount: 0

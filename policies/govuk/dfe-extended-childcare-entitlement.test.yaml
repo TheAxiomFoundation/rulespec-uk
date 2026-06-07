@@ -1,0 +1,60 @@
+- name: extended_childcare_entitlement_sums_child_subsidy_when_eligible
+  period:
+    period_kind: custom
+    name: calendar_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:policies/govuk/dfe-extended-childcare-entitlement#input.extended_childcare_entitlement_is_eligible: true
+    uk:policies/govuk/dfe-extended-childcare-entitlement#relation.extended_childcare_entitlement_children:
+      - uk:policies/govuk/dfe-extended-childcare-entitlement#input.child_age: 3
+        uk:policies/govuk/dfe-extended-childcare-entitlement#input.max_free_entitlement_hours_used: 0
+        uk:policies/govuk/dfe-extended-childcare-entitlement#input.maximum_extended_childcare_hours_usage_for_family: 15
+        uk:policies/govuk/dfe-extended-childcare-entitlement#input.extended_childcare_child_counts_for_entitlement: true
+  output:
+    uk:policies/govuk/dfe-extended-childcare-entitlement#extended_childcare_entitlement_annual_amount: 0
+
+- name: extended_childcare_child_helpers_apply_age_rate_and_usage_caps
+  period:
+    period_kind: custom
+    name: calendar_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input: {}
+  tables:
+    Person:
+      - uk:policies/govuk/dfe-extended-childcare-entitlement#input.child_age: 3
+        uk:policies/govuk/dfe-extended-childcare-entitlement#input.max_free_entitlement_hours_used: 30
+        uk:policies/govuk/dfe-extended-childcare-entitlement#input.maximum_extended_childcare_hours_usage_for_family: 15
+      - uk:policies/govuk/dfe-extended-childcare-entitlement#input.child_age: 5
+        uk:policies/govuk/dfe-extended-childcare-entitlement#input.max_free_entitlement_hours_used: 30
+        uk:policies/govuk/dfe-extended-childcare-entitlement#input.maximum_extended_childcare_hours_usage_for_family: 15
+  output:
+    uk:policies/govuk/dfe-extended-childcare-entitlement#extended_childcare_weekly_hours_entitlement_for_child:
+      - 30
+      - 0
+    uk:policies/govuk/dfe-extended-childcare-entitlement#extended_childcare_funding_hourly_rate_for_child:
+      - 6.231916243320786
+      - 6.231916243320786
+    uk:policies/govuk/dfe-extended-childcare-entitlement#extended_childcare_weekly_hours_used_for_child:
+      - 15
+      - 0
+    uk:policies/govuk/dfe-extended-childcare-entitlement#extended_childcare_weekly_subsidy_for_child:
+      - 93.47874364981179
+      - 0
+
+- name: extended_childcare_entitlement_zero_when_not_eligible
+  period:
+    period_kind: custom
+    name: calendar_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:policies/govuk/dfe-extended-childcare-entitlement#input.extended_childcare_entitlement_is_eligible: false
+    uk:policies/govuk/dfe-extended-childcare-entitlement#relation.extended_childcare_entitlement_children:
+      - uk:policies/govuk/dfe-extended-childcare-entitlement#input.child_age: 3
+        uk:policies/govuk/dfe-extended-childcare-entitlement#input.max_free_entitlement_hours_used: 30
+        uk:policies/govuk/dfe-extended-childcare-entitlement#input.maximum_extended_childcare_hours_usage_for_family: 15
+        uk:policies/govuk/dfe-extended-childcare-entitlement#input.extended_childcare_child_counts_for_entitlement: true
+  output:
+    uk:policies/govuk/dfe-extended-childcare-entitlement#extended_childcare_entitlement_annual_amount: 0

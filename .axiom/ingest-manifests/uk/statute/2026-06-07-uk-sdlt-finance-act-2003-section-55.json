@@ -1,0 +1,49 @@
+{
+  "applied_files": [
+    {
+      "path": "data/corpus/coverage/uk/statute/2026-06-07-uk-sdlt-finance-act-2003-section-55.json",
+      "sha256": "ead20a50f09a84251055f6aec4eef937b20ab389e57fa197953a9b64209dcca8"
+    },
+    {
+      "path": "data/corpus/inventory/uk/statute/2026-06-07-uk-sdlt-finance-act-2003-section-55.json",
+      "sha256": "b427ad6cb80366d64acb0aa98c8944b982029bffc9d54291f55c1e93cbb4192e"
+    },
+    {
+      "path": "data/corpus/provisions/uk/statute/2026-06-07-uk-sdlt-finance-act-2003-section-55.jsonl",
+      "sha256": "e3d29cba839f165ce8a90e21128f9f91dbdb3ef215cc32c0097b8ada3b4d934f"
+    },
+    {
+      "path": "data/corpus/sources/uk/statute/2026-06-07-uk-sdlt-finance-act-2003-section-55/ukpga/2003/14/section-55.xml",
+      "sha256": "850a4595dc0954f5b2d6274de466c76bf3807df5b70b80c169bfdcda2497029b"
+    }
+  ],
+  "axiom_corpus_git": {
+    "commit": "de9b2eb9bcd03356cc8d5855216f2c83e7a085ab",
+    "dirty_tracked": true,
+    "root": "/Users/maxghenis/_axiom-worktrees/axiom-corpus-uk-tfc-20260607"
+  },
+  "axiom_corpus_version": "0.1.0",
+  "command": {
+    "text": "uv run --extra dev axiom-corpus-ingest extract-uk-legislation --base data/corpus --version 2026-06-07-uk-sdlt-finance-act-2003-section-55 --source clml --citation ukpga/2003/14/section/55 --source-as-of 2026-06-07 --expression-date 2026-06-07"
+  },
+  "coverage": {
+    "complete": true,
+    "extra_count": 0,
+    "matched_count": 1,
+    "missing_count": 0,
+    "provision_count": 1,
+    "source_count": 1
+  },
+  "document_class": "statute",
+  "generated_at": "2026-06-07T15:23:23.949718+00:00",
+  "jurisdiction": "uk",
+  "reasoning_logs": [],
+  "schema_version": "axiom-corpus/ingest-manifest/v1",
+  "signature": {
+    "algorithm": "ed25519",
+    "key_id": "axiom-corpus-ingest-v1",
+    "value": "BRbfuP9G9rIOkhFytMMuivip59Cg9+MZWgbC9LZLBuMqHmBwSPhC54QByu4xbnFxweliFFhrC9a4CRcv3eLIDg=="
+  },
+  "tool": "axiom-corpus-ingest signed ingest manifest",
+  "version": "2026-06-07-uk-sdlt-finance-act-2003-section-55"
+}

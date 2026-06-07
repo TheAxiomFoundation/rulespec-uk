@@ -1,0 +1,57 @@
+{
+  "applied_files": [
+    {
+      "path": "data/corpus/coverage/uk/guidance/2026-06-07-uk-student-loan-repayments-guidance.json",
+      "sha256": "fe185cfaa5509b19439079f0090d101fedad1bb6e797249efb7db3c6365ce00e"
+    },
+    {
+      "path": "data/corpus/inventory/uk/guidance/2026-06-07-uk-student-loan-repayments-guidance.json",
+      "sha256": "cbddbf0e0eb97688e631ca501c9eb3b5bcb1ea209187ec516f2bc9e59ed34fb4"
+    },
+    {
+      "path": "data/corpus/provisions/uk/guidance/2026-06-07-uk-student-loan-repayments-guidance.jsonl",
+      "sha256": "09cc06ef5b66e189e4d7eaaf0ce0b5ea0deaf6fbc9ae80d2c39d4e5576249ac9"
+    },
+    {
+      "path": "data/corpus/sources/uk/guidance/2026-06-07-uk-student-loan-repayments-guidance/official-documents/govuk-student-loan-repayments-getting-a-refund.html",
+      "sha256": "66696b8b01f419d6cc04867351745ca75f1cdcf4b7260ae700eef53e8d9d7b62"
+    },
+    {
+      "path": "data/corpus/sources/uk/guidance/2026-06-07-uk-student-loan-repayments-guidance/official-documents/govuk-student-loan-repayments-what-you-pay.html",
+      "sha256": "39c16e6af09ad782a7d6a5e159934dadfcf6369a60a3f16b7298fb111c8ba0a5"
+    },
+    {
+      "path": "data/corpus/sources/uk/guidance/2026-06-07-uk-student-loan-repayments-guidance/official-documents/govuk-student-loan-repayments.html",
+      "sha256": "e202cefd1bf4fd31227699fbfae488ebc4e6dd63729b56089f299256004ed0ec"
+    }
+  ],
+  "axiom_corpus_git": {
+    "commit": "de9b2eb9bcd03356cc8d5855216f2c83e7a085ab",
+    "dirty_tracked": true,
+    "root": "/Users/maxghenis/_axiom-worktrees/axiom-corpus-uk-tfc-20260607"
+  },
+  "axiom_corpus_version": "0.1.0",
+  "command": {
+    "text": "uv run axiom-corpus-ingest extract-official-documents --base data/corpus --version 2026-06-07-uk-student-loan-repayments-guidance --manifest manifests/uk-student-loan-repayments-guidance.yaml --source-as-of 2026-06-07 --expression-date 2026-04-06"
+  },
+  "coverage": {
+    "complete": true,
+    "extra_count": 0,
+    "matched_count": 30,
+    "missing_count": 0,
+    "provision_count": 30,
+    "source_count": 30
+  },
+  "document_class": "guidance",
+  "generated_at": "2026-06-07T05:16:03.436647+00:00",
+  "jurisdiction": "uk",
+  "reasoning_logs": [],
+  "schema_version": "axiom-corpus/ingest-manifest/v1",
+  "signature": {
+    "algorithm": "ed25519",
+    "key_id": "axiom-corpus-ingest-v1",
+    "value": "/ryYg1RXK2oU4FeS5WJZZcfyHBcJNLWZJtMxMXir9HeIdmn0AiMNQUoTDCqQXzLoegMjSz9XEQdL3pSnWtF4Ag=="
+  },
+  "tool": "axiom-corpus-ingest signed ingest manifest",
+  "version": "2026-06-07-uk-student-loan-repayments-guidance"
+}

@@ -1,0 +1,62 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2004/692/schedule/1
+  summary: |-
+    This PolicyEngine-alignment surface returns the annual household TV licence tax and the free TV licence value used in HBAI. It applies the statutory colour TV licence General Form fee to households that own a TV, would not evade the licence fee, and receive a free or discounted licence fraction.
+imports:
+  - uk:regulations/uksi/2004/692/schedule/1#colour_tv_licence_general_form_issue_fee
+rules:
+  - name: free_tv_licence_value
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine UK free TV licence value wrapper over the Communications (Television Licensing) Regulations 2004 Schedule 1 colour licence fee
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2004/692/schedule/1#colour_tv_licence_general_form_issue_fee
+              output: colour_tv_licence_general_form_issue_fee
+              hash: sha256:9a5f18eb196c701548436fac0349763c1417a3a7e7bae9339186e6baa47f28b4
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2004/692/schedule/1
+              excerpt: "TV licence (including colour) General Form | £180.00"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          if household_owns_tv and not household_would_evade_tv_licence_fee: colour_tv_licence_general_form_issue_fee * tv_licence_discount_fraction else: 0
+
+  - name: tv_licence_annual_amount
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine UK TV licence wrapper over the Communications (Television Licensing) Regulations 2004 Schedule 1 colour licence fee
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2004/692/schedule/1#colour_tv_licence_general_form_issue_fee
+              output: colour_tv_licence_general_form_issue_fee
+              hash: sha256:9a5f18eb196c701548436fac0349763c1417a3a7e7bae9339186e6baa47f28b4
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2004/692/schedule/1
+              excerpt: "TV licence (including colour) General Form | £180.00"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          if household_owns_tv and not household_would_evade_tv_licence_fee: colour_tv_licence_general_form_issue_fee - free_tv_licence_value else: 0

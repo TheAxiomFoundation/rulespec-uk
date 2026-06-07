@@ -1,0 +1,49 @@
+{
+  "applied_files": [
+    {
+      "path": "data/corpus/coverage/uk/statute/2026-06-07-uk-ltt-act-section-2.json",
+      "sha256": "a678c7b488fe456006f2cbf40e65e255d479a63c37f7d813827f018a4f252512"
+    },
+    {
+      "path": "data/corpus/inventory/uk/statute/2026-06-07-uk-ltt-act-section-2.json",
+      "sha256": "2b95a532936233babc6ae1b34b333ed3e073365f6be295bae69cfddbc590bab4"
+    },
+    {
+      "path": "data/corpus/provisions/uk/statute/2026-06-07-uk-ltt-act-section-2.jsonl",
+      "sha256": "a3fb54f870a0866c7c3f473ea905f259d550b2de81645063f3124daea1325940"
+    },
+    {
+      "path": "data/corpus/sources/uk/statute/2026-06-07-uk-ltt-act-section-2/anaw/2017/1/section-2.xml",
+      "sha256": "010e2370bfbd3e8cfffa0e2316ba61fc21b777ee2445721557ac3bf4192d8381"
+    }
+  ],
+  "axiom_corpus_git": {
+    "commit": "de9b2eb9bcd03356cc8d5855216f2c83e7a085ab",
+    "dirty_tracked": true,
+    "root": "/Users/maxghenis/_axiom-worktrees/axiom-corpus-uk-tfc-20260607"
+  },
+  "axiom_corpus_version": "0.1.0",
+  "command": {
+    "text": "uv run axiom-corpus-ingest extract-uk-legislation --base /Users/maxghenis/_axiom-worktrees/axiom-corpus-uk-tfc-20260607/data/corpus --version 2026-06-07-uk-ltt-act-section-2 --citation anaw/2017/1/section/2 --source-as-of 2026-06-07 --expression-date 2026-06-07"
+  },
+  "coverage": {
+    "complete": true,
+    "extra_count": 0,
+    "matched_count": 1,
+    "missing_count": 0,
+    "provision_count": 1,
+    "source_count": 1
+  },
+  "document_class": "statute",
+  "generated_at": "2026-06-07T16:40:39.128558+00:00",
+  "jurisdiction": "uk",
+  "reasoning_logs": [],
+  "schema_version": "axiom-corpus/ingest-manifest/v1",
+  "signature": {
+    "algorithm": "ed25519",
+    "key_id": "axiom-corpus-ingest-v1",
+    "value": "ePrHm0I2ED3Tb+zcdlcCo+Pv1cKCg67lBxKFtPvn5uac5iI0vlnOnq8FkAMPukgE8weRRZSI+T7vh+z8ThWBDA=="
+  },
+  "tool": "axiom-corpus-ingest signed ingest manifest",
+  "version": "2026-06-07-uk-ltt-act-section-2"
+}

@@ -1,0 +1,29 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_paths:
+      - uk/statute/asp/2013/11/1
+  summary: |-
+    This PolicyEngine-alignment surface returns Scotland's annual household Land and Buildings Transaction Tax amount used by PolicyEngine UK. It gates the annual transaction and rent components to households liable for LBTT.
+rules:
+  - name: land_and_buildings_transaction_tax_annual_amount
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Land and Buildings Transaction Tax (Scotland) Act 2013 section 1, aligned to PolicyEngine UK's final LBTT aggregate
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/asp/2013/11/1
+              excerpt: "land and buildings transaction tax"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          if household_is_lbtt_liable: lbtt_on_transactions_for_year + lbtt_on_rent_for_year else: 0

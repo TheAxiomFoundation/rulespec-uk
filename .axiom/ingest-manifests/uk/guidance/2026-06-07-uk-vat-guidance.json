@@ -1,0 +1,49 @@
+{
+  "applied_files": [
+    {
+      "path": "data/corpus/coverage/uk/guidance/2026-06-07-uk-vat-guidance.json",
+      "sha256": "634a9e7c9c1782c0142e5a94f23ac5bd091854d368c0d504c9b4f2c18b28acda"
+    },
+    {
+      "path": "data/corpus/inventory/uk/guidance/2026-06-07-uk-vat-guidance.json",
+      "sha256": "c774d52aa5eaed0478fd25fdd017ab70d8b77eeea8e2e80b21f3398baf788010"
+    },
+    {
+      "path": "data/corpus/provisions/uk/guidance/2026-06-07-uk-vat-guidance.jsonl",
+      "sha256": "532ddeab189479f8dc60c5d44f9b1c5e4af75b2d441b917ad1798af10584e320"
+    },
+    {
+      "path": "data/corpus/sources/uk/guidance/2026-06-07-uk-vat-guidance/official-documents/govuk-vat-rates-goods-services.html",
+      "sha256": "1ae6927ec6accbaf5b1fd97fd77b1186df5305d7c15c9e21bafb1e206faf7291"
+    }
+  ],
+  "axiom_corpus_git": {
+    "commit": "de9b2eb9bcd03356cc8d5855216f2c83e7a085ab",
+    "dirty_tracked": true,
+    "root": "/Users/maxghenis/_axiom-worktrees/axiom-corpus-uk-tfc-20260607"
+  },
+  "axiom_corpus_version": "0.1.0",
+  "command": {
+    "text": "uv run axiom-corpus-ingest extract-official-documents --base data/corpus --version 2026-06-07-uk-vat-guidance --manifest manifests/uk-vat-guidance.yaml --source-as-of 2026-06-07 --expression-date 2026-06-07"
+  },
+  "coverage": {
+    "complete": true,
+    "extra_count": 0,
+    "matched_count": 32,
+    "missing_count": 0,
+    "provision_count": 32,
+    "source_count": 32
+  },
+  "document_class": "guidance",
+  "generated_at": "2026-06-07T13:20:42.118546+00:00",
+  "jurisdiction": "uk",
+  "reasoning_logs": [],
+  "schema_version": "axiom-corpus/ingest-manifest/v1",
+  "signature": {
+    "algorithm": "ed25519",
+    "key_id": "axiom-corpus-ingest-v1",
+    "value": "QaNdyWmdLRHzlGD0ZktUjoadXfG6BhVp2WKZLjypMU24PBolr/irJSZWwR0F/SeV/3i7yKgUjMI8741kbmAmCA=="
+  },
+  "tool": "axiom-corpus-ingest signed ingest manifest",
+  "version": "2026-06-07-uk-vat-guidance"
+}

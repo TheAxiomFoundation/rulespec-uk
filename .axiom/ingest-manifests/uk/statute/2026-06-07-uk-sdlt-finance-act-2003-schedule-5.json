@@ -1,0 +1,49 @@
+{
+  "applied_files": [
+    {
+      "path": "data/corpus/coverage/uk/statute/2026-06-07-uk-sdlt-finance-act-2003-schedule-5.json",
+      "sha256": "8436c7cb3ae2eaf02fadc7e13fb5b0bcca3230d653dc49dab7fc388f96e01b9f"
+    },
+    {
+      "path": "data/corpus/inventory/uk/statute/2026-06-07-uk-sdlt-finance-act-2003-schedule-5.json",
+      "sha256": "1c81a4c86c0d3e2e9db0ae59f4dcc816d9c56e02f056706c7696f607c275c842"
+    },
+    {
+      "path": "data/corpus/provisions/uk/statute/2026-06-07-uk-sdlt-finance-act-2003-schedule-5.jsonl",
+      "sha256": "2910efd5318f6d012ece07208e36bef210d5e5291224fa3127999f6eba580243"
+    },
+    {
+      "path": "data/corpus/sources/uk/statute/2026-06-07-uk-sdlt-finance-act-2003-schedule-5/ukpga/2003/14/schedule-5.xml",
+      "sha256": "013f842012bd90f9feed1d62afafce02f6141259760dfd2f7191f727d770a712"
+    }
+  ],
+  "axiom_corpus_git": {
+    "commit": "de9b2eb9bcd03356cc8d5855216f2c83e7a085ab",
+    "dirty_tracked": true,
+    "root": "/Users/maxghenis/_axiom-worktrees/axiom-corpus-uk-tfc-20260607"
+  },
+  "axiom_corpus_version": "0.1.0",
+  "command": {
+    "text": "uv run --extra dev axiom-corpus-ingest extract-uk-legislation --base data/corpus --version 2026-06-07-uk-sdlt-finance-act-2003-schedule-5 --source clml --citation ukpga/2003/14/schedule/5 --source-as-of 2026-06-07 --expression-date 2026-06-07"
+  },
+  "coverage": {
+    "complete": true,
+    "extra_count": 0,
+    "matched_count": 1,
+    "missing_count": 0,
+    "provision_count": 1,
+    "source_count": 1
+  },
+  "document_class": "statute",
+  "generated_at": "2026-06-07T15:23:24.075071+00:00",
+  "jurisdiction": "uk",
+  "reasoning_logs": [],
+  "schema_version": "axiom-corpus/ingest-manifest/v1",
+  "signature": {
+    "algorithm": "ed25519",
+    "key_id": "axiom-corpus-ingest-v1",
+    "value": "0WfNOo5y42u000EiOrfcA+Aw/ppaCrQxuWlsaMuY2N8BwgogykEOELhrJrH4whYKh/npOtHpp7Fkvkwva651BQ=="
+  },
+  "tool": "axiom-corpus-ingest signed ingest manifest",
+  "version": "2026-06-07-uk-sdlt-finance-act-2003-schedule-5"
+}

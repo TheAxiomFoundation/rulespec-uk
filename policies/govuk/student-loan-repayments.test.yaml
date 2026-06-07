@@ -10,6 +10,7 @@
     uk:policies/govuk/student-loan-repayments#input.loan_plan_is_plan_5: false
     uk:policies/govuk/student-loan-repayments#input.loan_plan_is_postgraduate: false
     uk:policies/govuk/student-loan-repayments#input.annual_income_before_tax_and_other_deductions: 40000
+    uk:policies/govuk/student-loan-repayments#input.outstanding_student_loan_balance: 0
   output:
     uk:policies/govuk/student-loan-repayments#plan_1_annual_income_threshold: 26900
     uk:policies/govuk/student-loan-repayments#plan_2_annual_income_threshold: 29385
@@ -21,6 +22,7 @@
     uk:policies/govuk/student-loan-repayments#listed_student_loan_plan_applies: holds
     uk:policies/govuk/student-loan-repayments#student_loan_annual_income_threshold: 26900
     uk:policies/govuk/student-loan-repayments#student_loan_repayment_rate: 0.09
+    uk:policies/govuk/student-loan-repayments#uncapped_student_loan_repayment: 1179
     uk:policies/govuk/student-loan-repayments#student_loan_repayment: 1179
     uk:policies/govuk/student-loan-repayments#student_loan_repayments: 1179
 
@@ -36,9 +38,11 @@
     uk:policies/govuk/student-loan-repayments#input.loan_plan_is_plan_5: false
     uk:policies/govuk/student-loan-repayments#input.loan_plan_is_postgraduate: false
     uk:policies/govuk/student-loan-repayments#input.annual_income_before_tax_and_other_deductions: 40000
+    uk:policies/govuk/student-loan-repayments#input.outstanding_student_loan_balance: 0
   output:
     uk:policies/govuk/student-loan-repayments#student_loan_annual_income_threshold: 33795
     uk:policies/govuk/student-loan-repayments#student_loan_repayment_rate: 0.09
+    uk:policies/govuk/student-loan-repayments#uncapped_student_loan_repayment: 558.45
     uk:policies/govuk/student-loan-repayments#student_loan_repayment: 558.45
     uk:policies/govuk/student-loan-repayments#student_loan_repayments: 558.45
 
@@ -54,11 +58,33 @@
     uk:policies/govuk/student-loan-repayments#input.loan_plan_is_plan_5: false
     uk:policies/govuk/student-loan-repayments#input.loan_plan_is_postgraduate: true
     uk:policies/govuk/student-loan-repayments#input.annual_income_before_tax_and_other_deductions: 30000
+    uk:policies/govuk/student-loan-repayments#input.outstanding_student_loan_balance: 0
   output:
     uk:policies/govuk/student-loan-repayments#student_loan_annual_income_threshold: 21000
     uk:policies/govuk/student-loan-repayments#student_loan_repayment_rate: 0.06
+    uk:policies/govuk/student-loan-repayments#uncapped_student_loan_repayment: 540
     uk:policies/govuk/student-loan-repayments#student_loan_repayment: 540
     uk:policies/govuk/student-loan-repayments#student_loan_repayments: 540
+
+- name: plan_2_repayment_capped_by_outstanding_balance
+  period:
+    period_kind: tax_year
+    start: '2026-04-06'
+    end: '2027-04-05'
+  input:
+    uk:policies/govuk/student-loan-repayments#input.loan_plan_is_plan_1: false
+    uk:policies/govuk/student-loan-repayments#input.loan_plan_is_plan_2: true
+    uk:policies/govuk/student-loan-repayments#input.loan_plan_is_plan_4: false
+    uk:policies/govuk/student-loan-repayments#input.loan_plan_is_plan_5: false
+    uk:policies/govuk/student-loan-repayments#input.loan_plan_is_postgraduate: false
+    uk:policies/govuk/student-loan-repayments#input.annual_income_before_tax_and_other_deductions: 80000
+    uk:policies/govuk/student-loan-repayments#input.outstanding_student_loan_balance: 1000
+  output:
+    uk:policies/govuk/student-loan-repayments#student_loan_annual_income_threshold: 29385
+    uk:policies/govuk/student-loan-repayments#student_loan_repayment_rate: 0.09
+    uk:policies/govuk/student-loan-repayments#uncapped_student_loan_repayment: 4555.35
+    uk:policies/govuk/student-loan-repayments#student_loan_repayment: 1000
+    uk:policies/govuk/student-loan-repayments#student_loan_repayments: 1000
 
 - name: no_listed_plan_has_no_repayment
   period:
@@ -72,9 +98,11 @@
     uk:policies/govuk/student-loan-repayments#input.loan_plan_is_plan_5: false
     uk:policies/govuk/student-loan-repayments#input.loan_plan_is_postgraduate: false
     uk:policies/govuk/student-loan-repayments#input.annual_income_before_tax_and_other_deductions: 100000
+    uk:policies/govuk/student-loan-repayments#input.outstanding_student_loan_balance: 0
   output:
     uk:policies/govuk/student-loan-repayments#listed_student_loan_plan_applies: not_holds
     uk:policies/govuk/student-loan-repayments#student_loan_annual_income_threshold: 0
     uk:policies/govuk/student-loan-repayments#student_loan_repayment_rate: 0
+    uk:policies/govuk/student-loan-repayments#uncapped_student_loan_repayment: 0
     uk:policies/govuk/student-loan-repayments#student_loan_repayment: 0
     uk:policies/govuk/student-loan-repayments#student_loan_repayments: 0

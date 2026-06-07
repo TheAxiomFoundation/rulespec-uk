@@ -1,0 +1,57 @@
+{
+  "applied_files": [
+    {
+      "path": "data/corpus/coverage/uk/guidance/2026-06-07-uk-fuel-duty-guidance.json",
+      "sha256": "2be67f05d3e8b0fa624cf22277e208f6b2af11b83aea9eac8a084b1702ca5b92"
+    },
+    {
+      "path": "data/corpus/inventory/uk/guidance/2026-06-07-uk-fuel-duty-guidance.json",
+      "sha256": "60166fae92a16a0ff854ea14e7d34f2a968514d003bbb1a1088b8055d94c73fd"
+    },
+    {
+      "path": "data/corpus/provisions/uk/guidance/2026-06-07-uk-fuel-duty-guidance.jsonl",
+      "sha256": "d95f62e2fc43915d4515e95f94822815778329649c635ac1e7bc8c1191300563"
+    },
+    {
+      "path": "data/corpus/sources/uk/guidance/2026-06-07-uk-fuel-duty-guidance/official-documents/govuk-agent-update-issue-143-fuel-duty.html",
+      "sha256": "4b4548d2c9dad3ca94bb4ff69ac3f368c896b0de42d213e20918d7c80e6da134"
+    },
+    {
+      "path": "data/corpus/sources/uk/guidance/2026-06-07-uk-fuel-duty-guidance/official-documents/govuk-fuel-duty-rates-2026-to-2027.html",
+      "sha256": "0c9677c635260c49947cb8d68d9ecfaf7cb2710390af0310e3fab4394d714553"
+    },
+    {
+      "path": "data/corpus/sources/uk/guidance/2026-06-07-uk-fuel-duty-guidance/official-documents/govuk-rural-fuel-duty-relief-notice-2001.html",
+      "sha256": "3315f9f57ccb86f181fd9c89f1f61c70234f527453b6051f98f27701181a1d8b"
+    }
+  ],
+  "axiom_corpus_git": {
+    "commit": "de9b2eb9bcd03356cc8d5855216f2c83e7a085ab",
+    "dirty_tracked": true,
+    "root": "/Users/maxghenis/_axiom-worktrees/axiom-corpus-uk-tfc-20260607"
+  },
+  "axiom_corpus_version": "0.1.0",
+  "command": {
+    "text": "uv run axiom-corpus-ingest extract-official-documents --base data/corpus --version 2026-06-07-uk-fuel-duty-guidance --manifest manifests/uk-fuel-duty-guidance.yaml --source-as-of 2026-06-07 --expression-date 2026-06-07"
+  },
+  "coverage": {
+    "complete": true,
+    "extra_count": 0,
+    "matched_count": 114,
+    "missing_count": 0,
+    "provision_count": 114,
+    "source_count": 114
+  },
+  "document_class": "guidance",
+  "generated_at": "2026-06-07T09:43:13.708191+00:00",
+  "jurisdiction": "uk",
+  "reasoning_logs": [],
+  "schema_version": "axiom-corpus/ingest-manifest/v1",
+  "signature": {
+    "algorithm": "ed25519",
+    "key_id": "axiom-corpus-ingest-v1",
+    "value": "cQiR3hgYvXJSGc/rkb+umhnydHM4p5H85Q3Yx/wblWnJwoR+TkyfiT2qXkp8LdFuNvIsu73SK91IlSYkcxhSCw=="
+  },
+  "tool": "axiom-corpus-ingest signed ingest manifest",
+  "version": "2026-06-07-uk-fuel-duty-guidance"
+}

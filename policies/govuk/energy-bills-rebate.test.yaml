@@ -1,0 +1,13 @@
+- name: current_energy_bills_rebate_is_zero_in_2026
+  period:
+    period_kind: custom
+    name: calendar_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input: {}
+  output:
+    uk:policies/govuk/energy-bills-rebate#current_energy_bills_rebate_council_tax_rebate_amount: 0
+    uk:policies/govuk/energy-bills-rebate#current_energy_bills_rebate_energy_bills_credit_amount: 0
+    uk:policies/govuk/energy-bills-rebate#energy_bills_rebate_council_tax_rebate: 0
+    uk:policies/govuk/energy-bills-rebate#energy_bills_rebate_energy_bills_credit: 0
+    uk:policies/govuk/energy-bills-rebate#energy_bills_rebate_annual_amount: 0

@@ -1,0 +1,25 @@
+- name: lbtt_final_amount_sums_components_when_liable
+  period:
+    period_kind: custom
+    name: calendar_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:policies/govuk/land-and-buildings-transaction-tax#input.household_is_lbtt_liable: true
+    uk:policies/govuk/land-and-buildings-transaction-tax#input.lbtt_on_transactions_for_year: 3000
+    uk:policies/govuk/land-and-buildings-transaction-tax#input.lbtt_on_rent_for_year: 120
+  output:
+    uk:policies/govuk/land-and-buildings-transaction-tax#land_and_buildings_transaction_tax_annual_amount: 3120
+
+- name: lbtt_final_amount_zero_when_not_liable
+  period:
+    period_kind: custom
+    name: calendar_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:policies/govuk/land-and-buildings-transaction-tax#input.household_is_lbtt_liable: false
+    uk:policies/govuk/land-and-buildings-transaction-tax#input.lbtt_on_transactions_for_year: 3000
+    uk:policies/govuk/land-and-buildings-transaction-tax#input.lbtt_on_rent_for_year: 120
+  output:
+    uk:policies/govuk/land-and-buildings-transaction-tax#land_and_buildings_transaction_tax_annual_amount: 0

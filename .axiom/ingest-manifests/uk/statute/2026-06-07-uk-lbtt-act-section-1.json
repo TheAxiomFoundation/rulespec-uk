@@ -1,0 +1,49 @@
+{
+  "applied_files": [
+    {
+      "path": "data/corpus/coverage/uk/statute/2026-06-07-uk-lbtt-act-section-1.json",
+      "sha256": "7a822ce980851f3b11fd61424ff2c63e3b4ea5266a5dd728c4dec5f81e6ea8ad"
+    },
+    {
+      "path": "data/corpus/inventory/uk/statute/2026-06-07-uk-lbtt-act-section-1.json",
+      "sha256": "72103445feecf1d4c358bb218ff7d83409ff4990fbc89f3c1683bda87c9e7a31"
+    },
+    {
+      "path": "data/corpus/provisions/uk/statute/2026-06-07-uk-lbtt-act-section-1.jsonl",
+      "sha256": "24c019d93f184b461ee4758e45908e3e9f39ccf4136b279ea3cb15a7410b7b86"
+    },
+    {
+      "path": "data/corpus/sources/uk/statute/2026-06-07-uk-lbtt-act-section-1/asp/2013/11/section-1.xml",
+      "sha256": "836f6d5a596e1813f0b666e97caae31a32da7d5de05417f82b708b016528a0e7"
+    }
+  ],
+  "axiom_corpus_git": {
+    "commit": "de9b2eb9bcd03356cc8d5855216f2c83e7a085ab",
+    "dirty_tracked": true,
+    "root": "/Users/maxghenis/_axiom-worktrees/axiom-corpus-uk-tfc-20260607"
+  },
+  "axiom_corpus_version": "0.1.0",
+  "command": {
+    "text": "uv run axiom-corpus-ingest extract-uk-legislation --base /Users/maxghenis/_axiom-worktrees/axiom-corpus-uk-tfc-20260607/data/corpus --version 2026-06-07-uk-lbtt-act-section-1 --citation asp/2013/11/section/1 --source-as-of 2026-06-07 --expression-date 2026-06-07"
+  },
+  "coverage": {
+    "complete": true,
+    "extra_count": 0,
+    "matched_count": 1,
+    "missing_count": 0,
+    "provision_count": 1,
+    "source_count": 1
+  },
+  "document_class": "statute",
+  "generated_at": "2026-06-07T16:40:38.709522+00:00",
+  "jurisdiction": "uk",
+  "reasoning_logs": [],
+  "schema_version": "axiom-corpus/ingest-manifest/v1",
+  "signature": {
+    "algorithm": "ed25519",
+    "key_id": "axiom-corpus-ingest-v1",
+    "value": "EqVcGAScGiI8Ot9YhgVYRGuLh2s8kU1zF0I7OTt6liYefzTsLUI4H9wbzujdLZJZ67MVApwpyB8PEl/iyoO7CQ=="
+  },
+  "tool": "axiom-corpus-ingest signed ingest manifest",
+  "version": "2026-06-07-uk-lbtt-act-section-1"
+}

@@ -1,0 +1,130 @@
+- name: no_positive_capital_gains
+  period:
+    period_kind: custom
+    name: calendar_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:policies/govuk/capital-gains-tax#input.capital_gains_for_year: -1000
+    uk:policies/govuk/capital-gains-tax#input.adjusted_net_income_for_year: 0
+    uk:policies/govuk/capital-gains-tax#input.allowances_for_year: 12570
+    uk:policies/govuk/capital-gains-tax#input.gift_aid_for_year: 0
+    uk:policies/govuk/capital-gains-tax#input.gift_aid_grossed_up_for_year: 0
+    uk:policies/govuk/capital-gains-tax#input.personal_pension_contributions_for_year: 0
+    uk:policies/govuk/capital-gains-tax#input.pension_contributions_relief_for_year: 0
+    uk:policies/govuk/capital-gains-tax#input.income_tax_basic_rate_limit_for_year: 37700
+    uk:policies/govuk/capital-gains-tax#input.income_tax_higher_rate_limit_for_year: 125140
+  output:
+    uk:policies/govuk/capital-gains-tax#positive_capital_gains_for_year: 0
+    uk:policies/govuk/capital-gains-tax#capital_gains_tax_annual_amount: 0
+
+- name: below_annual_exempt_amount
+  period:
+    period_kind: custom
+    name: calendar_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:policies/govuk/capital-gains-tax#input.capital_gains_for_year: 2000
+    uk:policies/govuk/capital-gains-tax#input.adjusted_net_income_for_year: 0
+    uk:policies/govuk/capital-gains-tax#input.allowances_for_year: 12570
+    uk:policies/govuk/capital-gains-tax#input.gift_aid_for_year: 0
+    uk:policies/govuk/capital-gains-tax#input.gift_aid_grossed_up_for_year: 0
+    uk:policies/govuk/capital-gains-tax#input.personal_pension_contributions_for_year: 0
+    uk:policies/govuk/capital-gains-tax#input.pension_contributions_relief_for_year: 0
+    uk:policies/govuk/capital-gains-tax#input.income_tax_basic_rate_limit_for_year: 37700
+    uk:policies/govuk/capital-gains-tax#input.income_tax_higher_rate_limit_for_year: 125140
+  output:
+    uk:policies/govuk/capital-gains-tax#cgt_annual_exempt_amount: 3000
+    uk:policies/govuk/capital-gains-tax#capital_gains_less_annual_exempt_amount: 0
+    uk:policies/govuk/capital-gains-tax#capital_gains_tax_annual_amount: 0
+
+- name: basic_rate_capital_gains_tax
+  period:
+    period_kind: custom
+    name: calendar_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:policies/govuk/capital-gains-tax#input.capital_gains_for_year: 23000
+    uk:policies/govuk/capital-gains-tax#input.adjusted_net_income_for_year: 20000
+    uk:policies/govuk/capital-gains-tax#input.allowances_for_year: 12570
+    uk:policies/govuk/capital-gains-tax#input.gift_aid_for_year: 0
+    uk:policies/govuk/capital-gains-tax#input.gift_aid_grossed_up_for_year: 0
+    uk:policies/govuk/capital-gains-tax#input.personal_pension_contributions_for_year: 0
+    uk:policies/govuk/capital-gains-tax#input.pension_contributions_relief_for_year: 0
+    uk:policies/govuk/capital-gains-tax#input.income_tax_basic_rate_limit_for_year: 37700
+    uk:policies/govuk/capital-gains-tax#input.income_tax_higher_rate_limit_for_year: 125140
+  output:
+    uk:policies/govuk/capital-gains-tax#allowances_for_cgt_income: 12570
+    uk:policies/govuk/capital-gains-tax#taxable_income_for_cgt: 7430
+    uk:policies/govuk/capital-gains-tax#cgt_basic_rate_limit_with_extension: 37700
+    uk:policies/govuk/capital-gains-tax#cgt_higher_rate_limit_with_extension: 125140
+    uk:policies/govuk/capital-gains-tax#capital_gains_charged_at_basic_rate: 20000
+    uk:policies/govuk/capital-gains-tax#capital_gains_tax_annual_amount: 3600
+
+- name: higher_rate_capital_gains_tax
+  period:
+    period_kind: custom
+    name: calendar_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:policies/govuk/capital-gains-tax#input.capital_gains_for_year: 50000
+    uk:policies/govuk/capital-gains-tax#input.adjusted_net_income_for_year: 50000
+    uk:policies/govuk/capital-gains-tax#input.allowances_for_year: 12570
+    uk:policies/govuk/capital-gains-tax#input.gift_aid_for_year: 0
+    uk:policies/govuk/capital-gains-tax#input.gift_aid_grossed_up_for_year: 0
+    uk:policies/govuk/capital-gains-tax#input.personal_pension_contributions_for_year: 0
+    uk:policies/govuk/capital-gains-tax#input.pension_contributions_relief_for_year: 0
+    uk:policies/govuk/capital-gains-tax#input.income_tax_basic_rate_limit_for_year: 37700
+    uk:policies/govuk/capital-gains-tax#input.income_tax_higher_rate_limit_for_year: 125140
+  output:
+    uk:policies/govuk/capital-gains-tax#cgt_remaining_basic_rate_band: 270
+    uk:policies/govuk/capital-gains-tax#capital_gains_charged_at_basic_rate: 270
+    uk:policies/govuk/capital-gains-tax#capital_gains_above_basic_rate_band: 46730
+    uk:policies/govuk/capital-gains-tax#capital_gains_charged_at_higher_rate: 46730
+    uk:policies/govuk/capital-gains-tax#capital_gains_tax_annual_amount: 11263.8
+
+- name: additional_rate_capital_gains_tax
+  period:
+    period_kind: custom
+    name: calendar_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:policies/govuk/capital-gains-tax#input.capital_gains_for_year: 100000
+    uk:policies/govuk/capital-gains-tax#input.adjusted_net_income_for_year: 150000
+    uk:policies/govuk/capital-gains-tax#input.allowances_for_year: 0
+    uk:policies/govuk/capital-gains-tax#input.gift_aid_for_year: 0
+    uk:policies/govuk/capital-gains-tax#input.gift_aid_grossed_up_for_year: 0
+    uk:policies/govuk/capital-gains-tax#input.personal_pension_contributions_for_year: 0
+    uk:policies/govuk/capital-gains-tax#input.pension_contributions_relief_for_year: 0
+    uk:policies/govuk/capital-gains-tax#input.income_tax_basic_rate_limit_for_year: 37700
+    uk:policies/govuk/capital-gains-tax#input.income_tax_higher_rate_limit_for_year: 125140
+  output:
+    uk:policies/govuk/capital-gains-tax#capital_gains_charged_at_higher_rate: 87440
+    uk:policies/govuk/capital-gains-tax#capital_gains_charged_at_additional_rate: 9560
+    uk:policies/govuk/capital-gains-tax#capital_gains_tax_annual_amount: 23280
+
+- name: pension_contributions_extend_basic_rate_band
+  period:
+    period_kind: custom
+    name: calendar_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:policies/govuk/capital-gains-tax#input.capital_gains_for_year: 30000
+    uk:policies/govuk/capital-gains-tax#input.adjusted_net_income_for_year: 42570
+    uk:policies/govuk/capital-gains-tax#input.allowances_for_year: 12570
+    uk:policies/govuk/capital-gains-tax#input.gift_aid_for_year: 0
+    uk:policies/govuk/capital-gains-tax#input.gift_aid_grossed_up_for_year: 0
+    uk:policies/govuk/capital-gains-tax#input.personal_pension_contributions_for_year: 10000
+    uk:policies/govuk/capital-gains-tax#input.pension_contributions_relief_for_year: 10000
+    uk:policies/govuk/capital-gains-tax#input.income_tax_basic_rate_limit_for_year: 37700
+    uk:policies/govuk/capital-gains-tax#input.income_tax_higher_rate_limit_for_year: 125140
+  output:
+    uk:policies/govuk/capital-gains-tax#personal_pension_band_extension_for_cgt: 10000
+    uk:policies/govuk/capital-gains-tax#basic_rate_band_extension_for_cgt: 10000
+    uk:policies/govuk/capital-gains-tax#cgt_remaining_basic_rate_band: 7700
+    uk:policies/govuk/capital-gains-tax#capital_gains_tax_annual_amount: 6018

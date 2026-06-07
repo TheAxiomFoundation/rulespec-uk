@@ -1,0 +1,30 @@
+{
+  "applied_files": [
+    {
+      "path": "data/corpus/provisions/uk/guidance/2026-06-07-policyengine-uk-sdlt-parameters-v2-88-56.jsonl",
+      "sha256": "a75627db9e42870b3b215419160c5cfb122881207eccbafb5efb02044f046a4b"
+    }
+  ],
+  "axiom_corpus_git": {
+    "commit": "de9b2eb9bcd03356cc8d5855216f2c83e7a085ab",
+    "dirty_tracked": true,
+    "root": "/Users/maxghenis/_axiom-worktrees/axiom-corpus-uk-tfc-20260607"
+  },
+  "axiom_corpus_version": "0.1.0",
+  "command": {
+    "text": "uv run --with policyengine-uk==2.88.56 python scripts/generated-policyengine-uk-sdlt-parameter-snapshot.py --version 2026-06-07-policyengine-uk-sdlt-parameters-v2-88-56 --include non-residential-rent --words-for-large-thresholds"
+  },
+  "coverage": null,
+  "document_class": "guidance",
+  "generated_at": "2026-06-07T15:40:16.005555+00:00",
+  "jurisdiction": "uk",
+  "reasoning_logs": [],
+  "schema_version": "axiom-corpus/ingest-manifest/v1",
+  "signature": {
+    "algorithm": "ed25519",
+    "key_id": "axiom-corpus-ingest-v1",
+    "value": "zFWQC2qD4igG78MjShZGlzyq1FlKx9tzG9MwZgCgJKmVu9lgGV/ZH12N45Uyo0oaAWknyvGMPyuSbUJjDbUWDA=="
+  },
+  "tool": "axiom-corpus-ingest signed ingest manifest",
+  "version": "2026-06-07-policyengine-uk-sdlt-parameters-v2-88-56"
+}

@@ -1,0 +1,132 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/statute/ukpga/1979/5/6
+    corpus_citation_paths:
+      - uk/statute/ukpga/1979/5/6
+      - uk/guidance/hmrc/fuel-duty-rates-2026-to-2027/block-4
+      - uk/guidance/hmrc/fuel-duty-rates-2026-to-2027/block-5
+      - uk/guidance/hmrc/rural-fuel-duty-relief-notice-2001/block-6
+      - uk/guidance/hmrc/rural-fuel-duty-relief-notice-2001/block-11
+      - uk/guidance/hmrc/agent-update-issue-143/fuel-duty/block-9
+  summary: |-
+    This PolicyEngine-alignment surface returns the annual household fuel duty amount for petrol and diesel: annual litres multiplied by the applicable main petrol/diesel duty rate, net of rural fuel duty relief where the fuel purchase is in an eligible rural relief area.
+rules:
+  - name: rural_fuel_duty_relief_rate_per_litre
+    kind: parameter
+    entity: Household
+    dtype: Decimal
+    period: Year
+    source: Rural Fuel Duty Relief Scheme Notice 2001
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/hmrc/rural-fuel-duty-relief-notice-2001/block-6
+              excerpt: "claim 5 pence per litre relief on fuel"
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/hmrc/rural-fuel-duty-relief-notice-2001/block-11
+              excerpt: "unleaded petrol you purchased x 5 pence"
+    versions:
+      - effective_from: '2011-01-01'
+        formula: |-
+          0.05
+
+  - name: fuel_duty_petrol_and_diesel_litres_for_year
+    kind: derived
+    entity: Household
+    dtype: Count
+    period: Year
+    source: Hydrocarbon Oil Duties Act 1979 s.6 and Rural Fuel Duty Relief Scheme Notice 2001
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1979/5/6
+              excerpt: "in the case of unleaded petrol"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1979/5/6
+              excerpt: "in the case of heavy oil"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/guidance/hmrc/rural-fuel-duty-relief-notice-2001/block-11
+              excerpt: "Add A and B together"
+    versions:
+      - effective_from: '1979-01-01'
+        formula: |-
+          max(0, petrol_litres_for_year) + max(0, diesel_litres_for_year)
+
+  - name: fuel_duty_effective_rate_per_litre
+    kind: derived
+    entity: Household
+    dtype: Decimal
+    period: Year
+    source: Hydrocarbon Oil Duties Act 1979 s.6, GOV.UK fuel duty rates, and Rural Fuel Duty Relief Scheme Notice 2001
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/1979/5/6
+              excerpt: "a duty of excise at the rates specified"
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/hmrc/fuel-duty-rates-2026-to-2027/block-4
+              excerpt: "Unleaded petrol 0.5795 0.5295"
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/hmrc/fuel-duty-rates-2026-to-2027/block-5
+              excerpt: "Heavy oil (diesel) 0.5795 0.5295"
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/hmrc/agent-update-issue-143/fuel-duty/block-9
+              excerpt: "the main rate of Fuel Duty will remain at 52.95p per litre"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/guidance/hmrc/rural-fuel-duty-relief-notice-2001/block-6
+              excerpt: "claim 5 pence per litre relief"
+    versions:
+      - effective_from: '1979-01-01'
+        formula: |-
+          if fuel_is_purchased_in_rural_fuel_duty_relief_area: max(0, petrol_and_diesel_fuel_duty_rate_per_litre - rural_fuel_duty_relief_rate_per_litre) else: petrol_and_diesel_fuel_duty_rate_per_litre
+
+  - name: fuel_duty_annual_amount
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: PolicyEngine UK fuel_duty final household wrapper over Hydrocarbon Oil Duties Act 1979 s.6 and HMRC fuel duty rate guidance
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1979/5/6
+              excerpt: "a duty of excise at the rates specified"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/guidance/hmrc/rural-fuel-duty-relief-notice-2001/block-11
+              excerpt: "work out the amount you can claim of volume in litres"
+    versions:
+      - effective_from: '1979-01-01'
+        formula: |-
+          fuel_duty_petrol_and_diesel_litres_for_year * fuel_duty_effective_rate_per_litre

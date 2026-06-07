@@ -1,0 +1,43 @@
+- name: full_and_reduced_rate_consumption
+  period:
+    period_kind: custom
+    name: calendar_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:policies/govuk/vat#input.full_rate_vat_consumption_for_year: 1000
+    uk:policies/govuk/vat#input.reduced_rate_vat_consumption_for_year: 400
+    uk:policies/govuk/vat#input.microdata_vat_coverage_fraction: 1
+  output:
+    uk:policies/govuk/vat#vat_standard_rate: 0.2
+    uk:policies/govuk/vat#vat_reduced_rate: 0.05
+    uk:policies/govuk/vat#vat_raw_annual_amount: 220
+    uk:policies/govuk/vat#vat_annual_amount: 220
+
+- name: microdata_coverage_scales_vat
+  period:
+    period_kind: custom
+    name: calendar_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:policies/govuk/vat#input.full_rate_vat_consumption_for_year: 1000
+    uk:policies/govuk/vat#input.reduced_rate_vat_consumption_for_year: 400
+    uk:policies/govuk/vat#input.microdata_vat_coverage_fraction: 0.5
+  output:
+    uk:policies/govuk/vat#vat_raw_annual_amount: 220
+    uk:policies/govuk/vat#vat_annual_amount: 440
+
+- name: nonpositive_inputs_are_floored_or_guarded
+  period:
+    period_kind: custom
+    name: calendar_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:policies/govuk/vat#input.full_rate_vat_consumption_for_year: -1000
+    uk:policies/govuk/vat#input.reduced_rate_vat_consumption_for_year: -400
+    uk:policies/govuk/vat#input.microdata_vat_coverage_fraction: 0
+  output:
+    uk:policies/govuk/vat#vat_raw_annual_amount: 0
+    uk:policies/govuk/vat#vat_annual_amount: 0

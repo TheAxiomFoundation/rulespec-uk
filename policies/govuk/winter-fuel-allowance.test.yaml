@@ -1,0 +1,84 @@
+- name: pensioner_household_gets_lower_amount
+  period:
+    period_kind: custom
+    name: calendar_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:policies/govuk/winter-fuel-allowance#input.household_is_in_scotland: false
+    uk:policies/govuk/winter-fuel-allowance#input.household_receives_relevant_means_tested_benefit: true
+    uk:policies/govuk/winter-fuel-allowance#input.winter_fuel_payment_means_tested_benefits_required: true
+    uk:policies/govuk/winter-fuel-allowance#input.household_meets_winter_fuel_payment_income_passport: false
+    uk:policies/govuk/winter-fuel-allowance#input.household_has_state_pension_age_person: true
+    uk:policies/govuk/winter-fuel-allowance#input.winter_fuel_payment_state_pension_age_required: true
+    uk:policies/govuk/winter-fuel-allowance#input.oldest_household_member_age: 67
+  output:
+    uk:policies/govuk/winter-fuel-allowance#winter_fuel_allowance_annual_amount: 200
+
+- name: age_80_household_gets_higher_amount
+  period:
+    period_kind: custom
+    name: calendar_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:policies/govuk/winter-fuel-allowance#input.household_is_in_scotland: false
+    uk:policies/govuk/winter-fuel-allowance#input.household_receives_relevant_means_tested_benefit: true
+    uk:policies/govuk/winter-fuel-allowance#input.winter_fuel_payment_means_tested_benefits_required: true
+    uk:policies/govuk/winter-fuel-allowance#input.household_meets_winter_fuel_payment_income_passport: false
+    uk:policies/govuk/winter-fuel-allowance#input.household_has_state_pension_age_person: true
+    uk:policies/govuk/winter-fuel-allowance#input.winter_fuel_payment_state_pension_age_required: true
+    uk:policies/govuk/winter-fuel-allowance#input.oldest_household_member_age: 82
+  output:
+    uk:policies/govuk/winter-fuel-allowance#winter_fuel_allowance_annual_amount: 300
+
+- name: scotland_household_gets_nil
+  period:
+    period_kind: custom
+    name: calendar_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:policies/govuk/winter-fuel-allowance#input.household_is_in_scotland: true
+    uk:policies/govuk/winter-fuel-allowance#input.household_receives_relevant_means_tested_benefit: true
+    uk:policies/govuk/winter-fuel-allowance#input.winter_fuel_payment_means_tested_benefits_required: true
+    uk:policies/govuk/winter-fuel-allowance#input.household_meets_winter_fuel_payment_income_passport: true
+    uk:policies/govuk/winter-fuel-allowance#input.household_has_state_pension_age_person: true
+    uk:policies/govuk/winter-fuel-allowance#input.winter_fuel_payment_state_pension_age_required: true
+    uk:policies/govuk/winter-fuel-allowance#input.oldest_household_member_age: 82
+  output:
+    uk:policies/govuk/winter-fuel-allowance#winter_fuel_allowance_annual_amount: 0
+
+- name: income_passport_can_satisfy_means_tested_benefit_requirement
+  period:
+    period_kind: custom
+    name: calendar_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:policies/govuk/winter-fuel-allowance#input.household_is_in_scotland: false
+    uk:policies/govuk/winter-fuel-allowance#input.household_receives_relevant_means_tested_benefit: false
+    uk:policies/govuk/winter-fuel-allowance#input.winter_fuel_payment_means_tested_benefits_required: true
+    uk:policies/govuk/winter-fuel-allowance#input.household_meets_winter_fuel_payment_income_passport: true
+    uk:policies/govuk/winter-fuel-allowance#input.household_has_state_pension_age_person: true
+    uk:policies/govuk/winter-fuel-allowance#input.winter_fuel_payment_state_pension_age_required: true
+    uk:policies/govuk/winter-fuel-allowance#input.oldest_household_member_age: 67
+  output:
+    uk:policies/govuk/winter-fuel-allowance#winter_fuel_allowance_annual_amount: 200
+
+- name: household_without_benefit_or_income_passport_gets_nil
+  period:
+    period_kind: custom
+    name: calendar_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:policies/govuk/winter-fuel-allowance#input.household_is_in_scotland: false
+    uk:policies/govuk/winter-fuel-allowance#input.household_receives_relevant_means_tested_benefit: false
+    uk:policies/govuk/winter-fuel-allowance#input.winter_fuel_payment_means_tested_benefits_required: true
+    uk:policies/govuk/winter-fuel-allowance#input.household_meets_winter_fuel_payment_income_passport: false
+    uk:policies/govuk/winter-fuel-allowance#input.household_has_state_pension_age_person: true
+    uk:policies/govuk/winter-fuel-allowance#input.winter_fuel_payment_state_pension_age_required: true
+    uk:policies/govuk/winter-fuel-allowance#input.oldest_household_member_age: 67
+  output:
+    uk:policies/govuk/winter-fuel-allowance#winter_fuel_allowance_annual_amount: 0

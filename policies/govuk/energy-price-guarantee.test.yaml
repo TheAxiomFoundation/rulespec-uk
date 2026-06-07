@@ -1,0 +1,23 @@
+- name: current_energy_price_guarantee_subsidy_floors_to_zero_in_2026
+  period:
+    period_kind: custom
+    name: calendar_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:policies/govuk/energy-price-guarantee#input.domestic_energy_consumption_for_year: 2000
+  output:
+    uk:policies/govuk/energy-price-guarantee#current_energy_price_cap_level: 1641
+    uk:policies/govuk/energy-price-guarantee#current_energy_price_guarantee_level: 3000
+    uk:policies/govuk/energy-price-guarantee#energy_price_guarantee_subsidy_annual_amount: 0
+
+- name: current_energy_price_guarantee_preserves_pe_arithmetic_for_negative_consumption
+  period:
+    period_kind: custom
+    name: calendar_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:policies/govuk/energy-price-guarantee#input.domestic_energy_consumption_for_year: -1641
+  output:
+    uk:policies/govuk/energy-price-guarantee#energy_price_guarantee_subsidy_annual_amount: 1359
