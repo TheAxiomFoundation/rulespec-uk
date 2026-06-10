@@ -1,41 +1,25 @@
 {
+  "schema_version": "axiom-encode/applied-rulespec/v1",
+  "tool": "axiom-encode retire",
+  "reason": "PolicyEngine model wrappers retired from the rules registry: survey/take-up constructs are consumer concerns; legal content lives in the statute and regulation modules",
+  "axiom_encode_git": {
+    "root": "/private/tmp/axiom-encode",
+    "commit": "3b414a2ed14eecee4fd99e6aa92c0dcc9651f1a8",
+    "dirty_tracked": false
+  },
   "applied_files": [
     {
       "path": "policies/govuk/universal-credit.yaml",
-      "sha256": "094dd7e05089f6d70e0d9b3a4975eb72c530fa723700ad036f2ea68f68650e7a"
+      "deleted": true
     },
     {
       "path": "policies/govuk/universal-credit.test.yaml",
-      "sha256": "01cd5595fc256095e068c381be6f12d599cb3c7d536e33dd010af391d25c6d45"
+      "deleted": true
     }
   ],
-  "axiom_encode_git": {
-    "commit": "df6a5d8e060fc1c79e5a514ec00f0a04be553164",
-    "dirty_tracked": false,
-    "root": "/Users/maxghenis/_axiom-worktrees/axiom-encode-uk-uc-final-20260606",
-    "version": "0.2.615",
-    "version_commit": "df6a5d8e060fc1c79e5a514ec00f0a04be553164"
-  },
-  "axiom_encode_version": "0.2.615",
-  "backend": "local-validation",
-  "citation": "uk:policies/govuk/universal-credit",
-  "context_manifest_file": null,
-  "context_manifest_sha256": null,
-  "generated_at": "2026-06-06T08:29:09.848333+00:00",
-  "generated_output_file": "/Users/maxghenis/_axiom-worktrees/rulespec-uk-uc-final-20260606/policies/govuk/universal-credit.yaml",
-  "generated_output_root": "/Users/maxghenis/_axiom-worktrees/rulespec-uk-uc-final-20260606",
-  "generated_output_sha256": "094dd7e05089f6d70e0d9b3a4975eb72c530fa723700ad036f2ea68f68650e7a",
-  "generation_prompt_sha256": null,
-  "model": "gpt-5",
-  "run_id": "uk-universal-credit-final-validated",
-  "runner": "codex",
-  "schema_version": "axiom-encode/applied-rulespec/v1",
   "signature": {
     "algorithm": "hmac-sha256",
     "key_id": "axiom-encode-apply-v1",
-    "value": "815cc7b14e7772d7b254e7d84d529389e6a16afe7d40133499d8ab337b6ee44b"
-  },
-  "tool": "axiom-encode signed manifest for locally validated RuleSpec",
-  "trace_file": null,
-  "trace_sha256": null
+    "value": "81df849f41200113b945c45b9e16275d36fd410e052e058f9b78ce2d7164b615"
+  }
 }
