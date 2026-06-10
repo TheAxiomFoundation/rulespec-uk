@@ -6,10 +6,6 @@
   input:
     uk:statutes/ukpga/2012/5/77#input.pip_daily_living_component_weekly_amount: 114.60
     uk:statutes/ukpga/2012/5/77#input.pip_mobility_component_weekly_amount: 30.30
-  oracle_inputs:
-    policyengine:
-      pip_daily_living_enhanced_rate_entitlement: true
-      pip_mobility_standard_rate_entitlement: true
   output:
     uk:statutes/ukpga/2012/5/77#personal_independence_payment_weekly_amount: 144.90
 
@@ -21,11 +17,5 @@
   input:
     uk:statutes/ukpga/2012/5/77#input.pip_daily_living_component_weekly_amount: 0
     uk:statutes/ukpga/2012/5/77#input.pip_mobility_component_weekly_amount: 0
-  oracle_inputs:
-    policyengine:
-      pip_daily_living_standard_rate_entitlement: false
-      pip_daily_living_enhanced_rate_entitlement: false
-      pip_mobility_standard_rate_entitlement: false
-      pip_mobility_enhanced_rate_entitlement: false
   output:
     uk:statutes/ukpga/2012/5/77#personal_independence_payment_weekly_amount: 0

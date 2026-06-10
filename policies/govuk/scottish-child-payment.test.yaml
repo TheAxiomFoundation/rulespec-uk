@@ -1,33 +1,27 @@
-- name: eligible_child_claimed
+- name: qualifying_child_in_scotland_receives_weekly_amount
   period:
     period_kind: tax_year
     start: '2026-04-06'
     end: '2027-04-05'
   input:
-    uk:policies/govuk/scottish-child-payment#input.is_scottish_child_payment_eligible: true
-    uk:policies/govuk/scottish-child-payment#input.would_claim_scottish_child_payment: true
+    uk:policies/govuk/scottish-child-payment#input.person_lives_in_scotland: true
+    uk:policies/govuk/scottish-child-payment#input.child_age: 7
+    uk:policies/govuk/scottish-child-payment#input.applicant_or_partner_receives_qualifying_benefit: true
   output:
-    uk:policies/govuk/scottish-child-payment#scottish_child_payment_weeks_in_year: 52
+    uk:policies/govuk/scottish-child-payment#entitled_to_scottish_child_payment_for_child: holds
+    uk:policies/govuk/scottish-child-payment#scottish_child_payment_weekly_amount_for_child: 28.20
     uk:policies/govuk/scottish-child-payment#scottish_child_payment_annual_amount: 1466.40
 
-- name: eligible_child_not_claimed
+- name: child_aged_16_receives_nil
   period:
     period_kind: tax_year
     start: '2026-04-06'
     end: '2027-04-05'
   input:
-    uk:policies/govuk/scottish-child-payment#input.is_scottish_child_payment_eligible: true
-    uk:policies/govuk/scottish-child-payment#input.would_claim_scottish_child_payment: false
+    uk:policies/govuk/scottish-child-payment#input.person_lives_in_scotland: true
+    uk:policies/govuk/scottish-child-payment#input.child_age: 16
+    uk:policies/govuk/scottish-child-payment#input.applicant_or_partner_receives_qualifying_benefit: true
   output:
-    uk:policies/govuk/scottish-child-payment#scottish_child_payment_annual_amount: 0
-
-- name: ineligible_child_claimed
-  period:
-    period_kind: tax_year
-    start: '2026-04-06'
-    end: '2027-04-05'
-  input:
-    uk:policies/govuk/scottish-child-payment#input.is_scottish_child_payment_eligible: false
-    uk:policies/govuk/scottish-child-payment#input.would_claim_scottish_child_payment: true
-  output:
+    uk:policies/govuk/scottish-child-payment#entitled_to_scottish_child_payment_for_child: not_holds
+    uk:policies/govuk/scottish-child-payment#scottish_child_payment_weekly_amount_for_child: 0
     uk:policies/govuk/scottish-child-payment#scottish_child_payment_annual_amount: 0
