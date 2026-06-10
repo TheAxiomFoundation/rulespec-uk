@@ -3,36 +3,81 @@ module:
   proof_validation:
     required: true
   source_verification:
-    corpus_citation_path: uk/statute/ukpga/2002/16/1
+    corpus_citation_path: uk/guidance/govuk/pension-credit/what-youll-get
   summary: |-
-    This PolicyEngine-alignment surface returns the annual Pension Credit amount used by PolicyEngine UK and HBAI: the annual Pension Credit entitlement when the benefit unit would claim Pension Credit, and nil otherwise.
+    Pension credit guarantee credit as described by GOV.UK guidance: tops up
+    weekly income to the standard minimum guarantee for a person who has
+    reached state pension age, using the single or couple amount from the
+    State Pension Credit Regulations 2002. Savings credit (for people who
+    reached state pension age before 6 April 2016) is calculated by sections
+    2 and 3 of the State Pension Credit Act 2002.
+imports:
+  - uk:regulations/uksi/2002/1792/6#standard_minimum_guarantee
 rules:
-  - name: pension_credit_annual_amount
-    kind: derived
-    entity: Family
-    dtype: Money
-    period: Year
-    unit: GBP
-    source: PolicyEngine UK pension_credit final receipt wrapper over State Pension Credit Act 2002 s.1 entitlement
+  - name: pension_credit_weeks_in_year
+    kind: parameter
+    dtype: Count
+    source: GOV.UK, Pension Credit (weekly top up annualised over the year)
     metadata:
       proof:
         atoms:
           - path: versions[0].formula
-            kind: condition
+            kind: amount
             source:
-              corpus_citation_path: uk/statute/ukpga/2002/16/1
-              excerpt: "A claimant is entitled to state pension credit if"
-          - path: versions[0].formula
-            kind: formula
-            source:
-              corpus_citation_path: uk/statute/ukpga/2002/16/1
-              excerpt: "entitled to a guarantee credit"
-          - path: versions[0].formula
-            kind: formula
-            source:
-              corpus_citation_path: uk/statute/ukpga/2002/16/1
-              excerpt: "to both, if the claimant satisfies both"
+              corpus_citation_path: uk/guidance/govuk/pension-credit/what-youll-get
+              excerpt: "tops up: your weekly income"
     versions:
       - effective_from: '0001-01-01'
         formula: |-
-          if person_or_partner_would_claim_pension_credit: pension_credit_entitlement_for_year else: 0
+          52
+
+  - name: guarantee_credit_weekly_top_up
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: GOV.UK, Pension Credit, "What you'll get"
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/guidance/govuk/pension-credit/what-youll-get
+              excerpt: "tops up: your weekly income to £238 if you're single"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/guidance/govuk/pension-credit/eligibility
+              excerpt: "you've reached State Pension age"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2002/1792/6#standard_minimum_guarantee
+              output: standard_minimum_guarantee
+              hash: sha256:local
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if person_has_reached_state_pension_age: max(0, standard_minimum_guarantee - weekly_income_for_pension_credit) else: 0
+
+  - name: guarantee_credit_annual_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: GOV.UK, Pension Credit (weekly top up annualised over the year)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/guidance/govuk/pension-credit/what-youll-get
+              excerpt: "The top up and extra amounts are known as 'Guarantee Credit'"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          guarantee_credit_weekly_top_up * pension_credit_weeks_in_year

@@ -1,150 +1,44 @@
-- name: supported_national_ctr_full_liability_award
+- name: full_reduction_when_income_below_applicable_amount
   period:
     period_kind: tax_year
-    start: '2026-01-01'
-    end: '2026-12-31'
+    start: '2026-04-06'
+    end: '2027-04-05'
   input:
-    uk:policies/govuk/council-tax-reduction#input.council_tax_reduction_scheme_supported: true
-    uk:policies/govuk/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk:policies/govuk/council-tax-reduction#input.household_capital: 5000
     uk:policies/govuk/council-tax-reduction#input.liable_person_subject_to_immigration_control: false
-    uk:policies/govuk/council-tax-reduction#input.council_tax_reduction_assessed_capital: 0
-    uk:policies/govuk/council-tax-reduction#input.council_tax_reduction_maximum_eligible_liability_for_year: 1800
-    uk:policies/govuk/council-tax-reduction#input.council_tax_reduction_applicable_income_for_year: 0
-    uk:policies/govuk/council-tax-reduction#input.council_tax_reduction_applicable_amount_for_year: 0
-    uk:policies/govuk/council-tax-reduction#input.council_tax_reduction_withdrawal_rate: 0.20
-    uk:policies/govuk/council-tax-reduction#input.council_tax_reduction_non_dependant_deductions_for_year: 0
-    uk:policies/govuk/council-tax-reduction#input.reported_council_tax_reduction_for_year: 500
+    uk:policies/govuk/council-tax-reduction#input.council_tax_liability_for_year: 1800
+    uk:policies/govuk/council-tax-reduction#input.non_dependant_deductions_for_year: 0
+    uk:policies/govuk/council-tax-reduction#input.income_for_year: 10000
+    uk:policies/govuk/council-tax-reduction#input.applicable_amount_for_year: 12000
   output:
-    uk:policies/govuk/council-tax-reduction#council_tax_reduction_maximum_support_rate: 1
-    uk:policies/govuk/council-tax-reduction#council_tax_reduction_capital_limit: 16000
-    uk:policies/govuk/council-tax-reduction#council_tax_reduction_capital_eligible: holds
-    uk:policies/govuk/council-tax-reduction#council_tax_reduction_excess_income_for_year: 0
-    uk:policies/govuk/council-tax-reduction#council_tax_reduction_income_taper_deduction_for_year: 0
-    uk:policies/govuk/council-tax-reduction#simulated_council_tax_reduction_annual_amount: 1800
     uk:policies/govuk/council-tax-reduction#council_tax_reduction_annual_amount: 1800
 
-- name: supported_national_ctr_tapers_excess_income_and_non_dependant_deductions
+- name: reduction_tapers_at_20_per_cent_of_excess_income
   period:
     period_kind: tax_year
-    start: '2026-01-01'
-    end: '2026-12-31'
+    start: '2026-04-06'
+    end: '2027-04-05'
   input:
-    uk:policies/govuk/council-tax-reduction#input.council_tax_reduction_scheme_supported: true
-    uk:policies/govuk/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk:policies/govuk/council-tax-reduction#input.household_capital: 5000
     uk:policies/govuk/council-tax-reduction#input.liable_person_subject_to_immigration_control: false
-    uk:policies/govuk/council-tax-reduction#input.council_tax_reduction_assessed_capital: 12000
-    uk:policies/govuk/council-tax-reduction#input.council_tax_reduction_maximum_eligible_liability_for_year: 1800
-    uk:policies/govuk/council-tax-reduction#input.council_tax_reduction_applicable_income_for_year: 6000
-    uk:policies/govuk/council-tax-reduction#input.council_tax_reduction_applicable_amount_for_year: 5000
-    uk:policies/govuk/council-tax-reduction#input.council_tax_reduction_withdrawal_rate: 0.20
-    uk:policies/govuk/council-tax-reduction#input.council_tax_reduction_non_dependant_deductions_for_year: 100
-    uk:policies/govuk/council-tax-reduction#input.reported_council_tax_reduction_for_year: 0
+    uk:policies/govuk/council-tax-reduction#input.council_tax_liability_for_year: 1800
+    uk:policies/govuk/council-tax-reduction#input.non_dependant_deductions_for_year: 0
+    uk:policies/govuk/council-tax-reduction#input.income_for_year: 16000
+    uk:policies/govuk/council-tax-reduction#input.applicable_amount_for_year: 12000
   output:
-    uk:policies/govuk/council-tax-reduction#council_tax_reduction_capital_eligible: holds
-    uk:policies/govuk/council-tax-reduction#council_tax_reduction_excess_income_for_year: 1000
-    uk:policies/govuk/council-tax-reduction#council_tax_reduction_income_taper_deduction_for_year: 200
-    uk:policies/govuk/council-tax-reduction#simulated_council_tax_reduction_annual_amount: 1500
-    uk:policies/govuk/council-tax-reduction#council_tax_reduction_annual_amount: 1500
+    uk:policies/govuk/council-tax-reduction#council_tax_reduction_annual_amount: 1000
 
-- name: supported_national_ctr_not_claimed_is_nil
+- name: capital_above_limit_excluded_from_scheme
   period:
     period_kind: tax_year
-    start: '2026-01-01'
-    end: '2026-12-31'
+    start: '2026-04-06'
+    end: '2027-04-05'
   input:
-    uk:policies/govuk/council-tax-reduction#input.council_tax_reduction_scheme_supported: true
-    uk:policies/govuk/council-tax-reduction#input.would_claim_council_tax_reduction: false
+    uk:policies/govuk/council-tax-reduction#input.household_capital: 20000
     uk:policies/govuk/council-tax-reduction#input.liable_person_subject_to_immigration_control: false
-    uk:policies/govuk/council-tax-reduction#input.council_tax_reduction_assessed_capital: 0
-    uk:policies/govuk/council-tax-reduction#input.council_tax_reduction_maximum_eligible_liability_for_year: 1800
-    uk:policies/govuk/council-tax-reduction#input.council_tax_reduction_applicable_income_for_year: 0
-    uk:policies/govuk/council-tax-reduction#input.council_tax_reduction_applicable_amount_for_year: 0
-    uk:policies/govuk/council-tax-reduction#input.council_tax_reduction_withdrawal_rate: 0.20
-    uk:policies/govuk/council-tax-reduction#input.council_tax_reduction_non_dependant_deductions_for_year: 0
-    uk:policies/govuk/council-tax-reduction#input.reported_council_tax_reduction_for_year: 500
+    uk:policies/govuk/council-tax-reduction#input.council_tax_liability_for_year: 1800
+    uk:policies/govuk/council-tax-reduction#input.non_dependant_deductions_for_year: 0
+    uk:policies/govuk/council-tax-reduction#input.income_for_year: 10000
+    uk:policies/govuk/council-tax-reduction#input.applicable_amount_for_year: 12000
   output:
-    uk:policies/govuk/council-tax-reduction#simulated_council_tax_reduction_annual_amount: 0
     uk:policies/govuk/council-tax-reduction#council_tax_reduction_annual_amount: 0
-
-- name: supported_national_ctr_capital_over_limit_is_nil
-  period:
-    period_kind: tax_year
-    start: '2026-01-01'
-    end: '2026-12-31'
-  input:
-    uk:policies/govuk/council-tax-reduction#input.council_tax_reduction_scheme_supported: true
-    uk:policies/govuk/council-tax-reduction#input.would_claim_council_tax_reduction: true
-    uk:policies/govuk/council-tax-reduction#input.liable_person_subject_to_immigration_control: false
-    uk:policies/govuk/council-tax-reduction#input.council_tax_reduction_assessed_capital: 16001
-    uk:policies/govuk/council-tax-reduction#input.council_tax_reduction_maximum_eligible_liability_for_year: 1800
-    uk:policies/govuk/council-tax-reduction#input.council_tax_reduction_applicable_income_for_year: 0
-    uk:policies/govuk/council-tax-reduction#input.council_tax_reduction_applicable_amount_for_year: 0
-    uk:policies/govuk/council-tax-reduction#input.council_tax_reduction_withdrawal_rate: 0.20
-    uk:policies/govuk/council-tax-reduction#input.council_tax_reduction_non_dependant_deductions_for_year: 0
-    uk:policies/govuk/council-tax-reduction#input.reported_council_tax_reduction_for_year: 500
-  output:
-    uk:policies/govuk/council-tax-reduction#council_tax_reduction_capital_eligible: not_holds
-    uk:policies/govuk/council-tax-reduction#simulated_council_tax_reduction_annual_amount: 0
-    uk:policies/govuk/council-tax-reduction#council_tax_reduction_annual_amount: 0
-
-- name: supported_national_ctr_immigration_exclusion_is_nil
-  period:
-    period_kind: tax_year
-    start: '2026-01-01'
-    end: '2026-12-31'
-  input:
-    uk:policies/govuk/council-tax-reduction#input.council_tax_reduction_scheme_supported: true
-    uk:policies/govuk/council-tax-reduction#input.would_claim_council_tax_reduction: true
-    uk:policies/govuk/council-tax-reduction#input.liable_person_subject_to_immigration_control: true
-    uk:policies/govuk/council-tax-reduction#input.council_tax_reduction_assessed_capital: 0
-    uk:policies/govuk/council-tax-reduction#input.council_tax_reduction_maximum_eligible_liability_for_year: 1800
-    uk:policies/govuk/council-tax-reduction#input.council_tax_reduction_applicable_income_for_year: 0
-    uk:policies/govuk/council-tax-reduction#input.council_tax_reduction_applicable_amount_for_year: 0
-    uk:policies/govuk/council-tax-reduction#input.council_tax_reduction_withdrawal_rate: 0.20
-    uk:policies/govuk/council-tax-reduction#input.council_tax_reduction_non_dependant_deductions_for_year: 0
-    uk:policies/govuk/council-tax-reduction#input.reported_council_tax_reduction_for_year: 500
-  output:
-    uk:policies/govuk/council-tax-reduction#simulated_council_tax_reduction_annual_amount: 0
-    uk:policies/govuk/council-tax-reduction#council_tax_reduction_annual_amount: 0
-
-- name: supported_national_ctr_floors_preliminary_award_at_nil
-  period:
-    period_kind: tax_year
-    start: '2026-01-01'
-    end: '2026-12-31'
-  input:
-    uk:policies/govuk/council-tax-reduction#input.council_tax_reduction_scheme_supported: true
-    uk:policies/govuk/council-tax-reduction#input.would_claim_council_tax_reduction: true
-    uk:policies/govuk/council-tax-reduction#input.liable_person_subject_to_immigration_control: false
-    uk:policies/govuk/council-tax-reduction#input.council_tax_reduction_assessed_capital: 0
-    uk:policies/govuk/council-tax-reduction#input.council_tax_reduction_maximum_eligible_liability_for_year: 500
-    uk:policies/govuk/council-tax-reduction#input.council_tax_reduction_applicable_income_for_year: 10000
-    uk:policies/govuk/council-tax-reduction#input.council_tax_reduction_applicable_amount_for_year: 0
-    uk:policies/govuk/council-tax-reduction#input.council_tax_reduction_withdrawal_rate: 0.20
-    uk:policies/govuk/council-tax-reduction#input.council_tax_reduction_non_dependant_deductions_for_year: 0
-    uk:policies/govuk/council-tax-reduction#input.reported_council_tax_reduction_for_year: 500
-  output:
-    uk:policies/govuk/council-tax-reduction#council_tax_reduction_excess_income_for_year: 10000
-    uk:policies/govuk/council-tax-reduction#council_tax_reduction_income_taper_deduction_for_year: 2000
-    uk:policies/govuk/council-tax-reduction#simulated_council_tax_reduction_annual_amount: 0
-    uk:policies/govuk/council-tax-reduction#council_tax_reduction_annual_amount: 0
-
-- name: unsupported_scheme_uses_reported_council_tax_benefit
-  period:
-    period_kind: tax_year
-    start: '2026-01-01'
-    end: '2026-12-31'
-  input:
-    uk:policies/govuk/council-tax-reduction#input.council_tax_reduction_scheme_supported: false
-    uk:policies/govuk/council-tax-reduction#input.would_claim_council_tax_reduction: true
-    uk:policies/govuk/council-tax-reduction#input.liable_person_subject_to_immigration_control: false
-    uk:policies/govuk/council-tax-reduction#input.council_tax_reduction_assessed_capital: 0
-    uk:policies/govuk/council-tax-reduction#input.council_tax_reduction_maximum_eligible_liability_for_year: 1800
-    uk:policies/govuk/council-tax-reduction#input.council_tax_reduction_applicable_income_for_year: 0
-    uk:policies/govuk/council-tax-reduction#input.council_tax_reduction_applicable_amount_for_year: 0
-    uk:policies/govuk/council-tax-reduction#input.council_tax_reduction_withdrawal_rate: 0.20
-    uk:policies/govuk/council-tax-reduction#input.council_tax_reduction_non_dependant_deductions_for_year: 0
-    uk:policies/govuk/council-tax-reduction#input.reported_council_tax_reduction_for_year: 500
-  output:
-    uk:policies/govuk/council-tax-reduction#simulated_council_tax_reduction_annual_amount: 0
-    uk:policies/govuk/council-tax-reduction#council_tax_reduction_annual_amount: 500

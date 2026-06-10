@@ -1,0 +1,28 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2015/621/4
+  summary: |-
+    Regulation 4 of the National Minimum Wage Regulations 2015 sets the
+    national living wage rate. The rate in force from 1 April 2026 is
+    GBP 12.71 an hour.
+rules:
+  - name: national_living_wage_hourly_rate
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: National Minimum Wage Regulations 2015, regulation 4
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2015/621/4
+              excerpt: "the national living wage rate"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          12.71

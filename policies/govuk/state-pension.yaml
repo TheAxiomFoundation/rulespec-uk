@@ -3,76 +3,132 @@ module:
   proof_validation:
     required: true
   source_verification:
-    corpus_citation_path: uk/regulation/uksi/2026/148/article/4
+    corpus_citation_path: uk/guidance/govuk/new-state-pension/what-youll-get
   summary: |-
-    This PolicyEngine-alignment surface returns the weekly State Pension amount used by PolicyEngine UK: the person's reported dataset-year State Pension prorated by current basic or new State Pension flat-rate ceilings, plus any additional or protected amount above the dataset-year ceiling.
+    State pension amounts as described by GOV.UK guidance. A person who reached
+    state pension age on or after 6 April 2016 gets the new state pension: the
+    full weekly rate with 35 qualifying years, a proportion of it with at least
+    10 qualifying years, and nothing below 10. A person who reached state
+    pension age before 6 April 2016 gets the basic state pension: the full
+    basic weekly rate with 30 qualifying years, and a proportion below that.
+    Weekly rates are those set by the Social Security Benefits Up-rating Order
+    2026.
 imports:
   - uk:regulations/uksi/2026/148/article/4#category_a_basic_retirement_pension_weekly_rate
   - uk:regulations/uksi/2026/148/article/6#full_new_state_pension_weekly_rate
 rules:
-  - name: current_state_pension_flat_weekly_amount
-    kind: derived
-    entity: Person
-    dtype: Money
-    period: Week
-    unit: GBP
-    source: PolicyEngine UK basic_state_pension and new_state_pension final receipt wrapper
+  - name: new_state_pension_full_rate_qualifying_years
+    kind: parameter
+    dtype: Count
+    source: GOV.UK, The new State Pension, "What you'll get"
     metadata:
       proof:
         atoms:
           - path: versions[0].formula
-            kind: formula
+            kind: amount
             source:
-              corpus_citation_path: uk/regulation/uksi/2026/148/article/4
-              excerpt: "Category A basic retirement pension"
-          - path: versions[0].formula
-            kind: import
-            import:
-              target: uk:regulations/uksi/2026/148/article/4#category_a_basic_retirement_pension_weekly_rate
-              output: category_a_basic_retirement_pension_weekly_rate
-              hash: sha256:5223b6927443b93929f06f977737d9b2706cd34bd3563fcd708b5fedd759281c
-          - path: versions[0].formula
-            kind: import
-            import:
-              target: uk:regulations/uksi/2026/148/article/6#full_new_state_pension_weekly_rate
-              output: full_new_state_pension_weekly_rate
-              hash: sha256:9381dd12c2807a4abf0cf6e77cad270217a53c786daf70cc9d118fd6f014c976
+              corpus_citation_path: uk/guidance/govuk/new-state-pension/what-youll-get
+              excerpt: "you will need 35 qualifying years to get the full rate"
     versions:
-      - effective_from: '2026-04-06'
+      - effective_from: '2016-04-06'
         formula: |-
-          if current_state_pension_type_is_basic: min(reported_state_pension_weekly_amount_in_data_year, data_year_basic_state_pension_weekly_rate) * category_a_basic_retirement_pension_weekly_rate / data_year_basic_state_pension_weekly_rate else: if current_state_pension_type_is_new: min(reported_state_pension_weekly_amount_in_data_year, data_year_full_new_state_pension_weekly_rate) * full_new_state_pension_weekly_rate / data_year_full_new_state_pension_weekly_rate else: 0
+          35
 
-  - name: additional_state_pension_weekly_amount
+  - name: new_state_pension_minimum_qualifying_years
+    kind: parameter
+    dtype: Count
+    source: GOV.UK, The new State Pension, "Eligibility"
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/govuk/new-state-pension/eligibility
+              excerpt: "10 qualifying years on your National Insurance record to get any new State Pension"
+    versions:
+      - effective_from: '2016-04-06'
+        formula: |-
+          10
+
+  - name: basic_state_pension_full_rate_qualifying_years
+    kind: parameter
+    dtype: Count
+    source: GOV.UK, The basic State Pension, "How much you get"
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/govuk/state-pension/how-much-you-get
+              excerpt: "30 qualifying years if you were born between 1945 and 1951"
+    versions:
+      - effective_from: '2010-04-06'
+        formula: |-
+          30
+
+  - name: new_state_pension_weekly_amount
     kind: derived
     entity: Person
     dtype: Money
     period: Week
     unit: GBP
-    source: PolicyEngine UK additional_state_pension final receipt wrapper
+    source: GOV.UK, The new State Pension, "What you'll get"
     metadata:
       proof:
         atoms:
           - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/govuk/new-state-pension/what-youll-get
+              excerpt: "The full rate of new State Pension is £241.30 a week"
+          - path: versions[0].formula
             kind: formula
             source:
-              corpus_citation_path: uk/regulation/uksi/2026/148/article/4
-              excerpt: "Category A basic retirement pension"
-          - path: versions[0].formula
-            kind: import
-            import:
-              target: uk:regulations/uksi/2026/148/article/4#category_a_basic_retirement_pension_weekly_rate
-              output: category_a_basic_retirement_pension_weekly_rate
-              hash: sha256:5223b6927443b93929f06f977737d9b2706cd34bd3563fcd708b5fedd759281c
+              corpus_citation_path: uk/statute/ukpga/2014/19/3
+              excerpt: "the following proportion of the full rate— 1/35 × the person's number of qualifying years"
           - path: versions[0].formula
             kind: import
             import:
               target: uk:regulations/uksi/2026/148/article/6#full_new_state_pension_weekly_rate
               output: full_new_state_pension_weekly_rate
-              hash: sha256:9381dd12c2807a4abf0cf6e77cad270217a53c786daf70cc9d118fd6f014c976
+              hash: sha256:local
     versions:
-      - effective_from: '2026-04-06'
+      - effective_from: '2016-04-06'
         formula: |-
-          if data_year_state_pension_type_is_basic: max(0, reported_state_pension_weekly_amount_in_data_year - data_year_basic_state_pension_weekly_rate) * category_a_basic_retirement_pension_weekly_rate / data_year_basic_state_pension_weekly_rate else: if data_year_state_pension_type_is_new: max(0, reported_state_pension_weekly_amount_in_data_year - data_year_full_new_state_pension_weekly_rate) * full_new_state_pension_weekly_rate / data_year_full_new_state_pension_weekly_rate else: 0
+          if not reached_state_pension_age_before_6_april_2016 and state_pension_qualifying_years >= new_state_pension_minimum_qualifying_years: full_new_state_pension_weekly_rate * min(1, state_pension_qualifying_years / new_state_pension_full_rate_qualifying_years) else: 0
+
+  - name: basic_state_pension_weekly_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: GOV.UK, The basic State Pension, "How much you get"
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/govuk/state-pension/how-much-you-get
+              excerpt: "The full basic State Pension is £184.90 per week"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/guidance/govuk/state-pension/how-much-you-get
+              excerpt: "your basic State Pension will be less than £184.90 per week"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2026/148/article/4#category_a_basic_retirement_pension_weekly_rate
+              output: category_a_basic_retirement_pension_weekly_rate
+              hash: sha256:local
+    versions:
+      - effective_from: '2010-04-06'
+        formula: |-
+          if reached_state_pension_age_before_6_april_2016: category_a_basic_retirement_pension_weekly_rate * min(1, state_pension_qualifying_years / basic_state_pension_full_rate_qualifying_years) else: 0
 
   - name: state_pension_weekly_amount
     kind: derived
@@ -80,23 +136,16 @@ rules:
     dtype: Money
     period: Week
     unit: GBP
-    source: PolicyEngine UK state_pension final receipt wrapper
+    source: GOV.UK state pension guidance (new and basic state pension)
     metadata:
       proof:
         atoms:
           - path: versions[0].formula
-            kind: import
-            import:
-              target: uk:policies/govuk/state-pension#current_state_pension_flat_weekly_amount
-              output: current_state_pension_flat_weekly_amount
-              hash: sha256:local
-          - path: versions[0].formula
-            kind: import
-            import:
-              target: uk:policies/govuk/state-pension#additional_state_pension_weekly_amount
-              output: additional_state_pension_weekly_amount
-              hash: sha256:local
+            kind: formula
+            source:
+              corpus_citation_path: uk/guidance/govuk/state-pension/how-much-you-get
+              excerpt: "you'll get the new State Pension instead"
     versions:
-      - effective_from: '2026-04-06'
+      - effective_from: '2016-04-06'
         formula: |-
-          if state_pension_abolished_by_policy: 0 else: (current_state_pension_flat_weekly_amount + additional_state_pension_weekly_amount) * state_pension_policy_uprating_factor
+          new_state_pension_weekly_amount + basic_state_pension_weekly_amount

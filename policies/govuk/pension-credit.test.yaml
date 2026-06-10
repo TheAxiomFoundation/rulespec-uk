@@ -1,43 +1,23 @@
-- name: pension credit with guarantee and savings credit
+- name: single_pensioner_topped_up_to_standard_minimum_guarantee
   period:
-    period_kind: tax_year
-    start: '2026-01-01'
-    end: '2026-12-31'
+    period_kind: benefit_week
+    start: '2026-04-06'
+    end: '2026-04-12'
   input:
-    uk:policies/govuk/pension-credit#input.pension_credit_entitlement_for_year: 3400.00
-    uk:policies/govuk/pension-credit#input.person_or_partner_would_claim_pension_credit: true
+    uk:policies/govuk/pension-credit#input.person_has_reached_state_pension_age: true
+    uk:regulations/uksi/2002/1792/6#input.claimant_has_partner: false
+    uk:policies/govuk/pension-credit#input.weekly_income_for_pension_credit: 200
   output:
-    uk:policies/govuk/pension-credit#pension_credit_annual_amount: 3400.00
+    uk:policies/govuk/pension-credit#guarantee_credit_weekly_top_up: 38.00
 
-- name: pension credit not claimed
+- name: income_above_guarantee_receives_nil
   period:
-    period_kind: tax_year
-    start: '2026-01-01'
-    end: '2026-12-31'
+    period_kind: benefit_week
+    start: '2026-04-06'
+    end: '2026-04-12'
   input:
-    uk:policies/govuk/pension-credit#input.pension_credit_entitlement_for_year: 3400.00
-    uk:policies/govuk/pension-credit#input.person_or_partner_would_claim_pension_credit: false
+    uk:policies/govuk/pension-credit#input.person_has_reached_state_pension_age: true
+    uk:regulations/uksi/2002/1792/6#input.claimant_has_partner: false
+    uk:policies/govuk/pension-credit#input.weekly_income_for_pension_credit: 300
   output:
-    uk:policies/govuk/pension-credit#pension_credit_annual_amount: 0.00
-
-- name: pension credit entitlement positive
-  period:
-    period_kind: tax_year
-    start: '2026-01-01'
-    end: '2026-12-31'
-  input:
-    uk:policies/govuk/pension-credit#input.pension_credit_entitlement_for_year: 2500.00
-    uk:policies/govuk/pension-credit#input.person_or_partner_would_claim_pension_credit: true
-  output:
-    uk:policies/govuk/pension-credit#pension_credit_annual_amount: 2500.00
-
-- name: pension credit zero entitlement
-  period:
-    period_kind: tax_year
-    start: '2026-01-01'
-    end: '2026-12-31'
-  input:
-    uk:policies/govuk/pension-credit#input.pension_credit_entitlement_for_year: 0.00
-    uk:policies/govuk/pension-credit#input.person_or_partner_would_claim_pension_credit: true
-  output:
-    uk:policies/govuk/pension-credit#pension_credit_annual_amount: 0.00
+    uk:policies/govuk/pension-credit#guarantee_credit_weekly_top_up: 0
