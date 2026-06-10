@@ -1,0 +1,65 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2013/376/81
+  summary: |-
+    Reduction of universal credit. (1) Where the benefit cap applies in relation to an assessment period for an award of universal credit, the amount of the award for that period is to be reduced by (a) the excess; minus (b) any amount included in the award for the childcare costs element in relation to that assessment period. (2) But no reduction is to be applied where the amount of the childcare costs element is greater than the excess. (3) The excess is the total amount of welfare benefits that the single person or the couple are entitled to in the reference period, minus the relevant amount determined under regulation 80A.
+rules:
+  - name: benefit_cap_excess
+    kind: derived
+    entity: Family
+    dtype: Money
+    unit: GBP
+    period: Month
+    source: SI 2013/376 reg. 81(3)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/81
+              excerpt: >-
+                The excess is the total amount of welfare benefits that the
+                single person or the couple are entitled to in the reference
+                period, minus the relevant amount determined under regulation
+                80A.
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          total_welfare_benefits_entitled_in_reference_period - relevant_amount_under_regulation_80A
+  - name: universal_credit_award_benefit_cap_reduction
+    kind: derived
+    entity: Family
+    dtype: Money
+    unit: GBP
+    period: Month
+    source: SI 2013/376 reg. 81(1), (2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/81
+              excerpt: >-
+                the amount of the award for that period is to be reduced by
+                (a) the excess; minus (b) any amount included in the award for
+                the childcare costs element in relation to that assessment
+                period.
+          - path: versions[0].formula
+            kind: exception
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/81
+              excerpt: >-
+                But no reduction is to be applied where the amount of the
+                childcare costs element is greater than the excess.
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          if benefit_cap_applies_to_assessment_period:
+            (if childcare_costs_element_amount_in_award > benefit_cap_excess: 0
+             else: benefit_cap_excess - childcare_costs_element_amount_in_award)
+          else: 0

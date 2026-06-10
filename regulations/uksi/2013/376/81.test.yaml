@@ -1,0 +1,39 @@
+- name: cap applies and excess exceeds childcare costs element
+  period: 2024-05
+  input:
+    uk:regulations/uksi/2013/376/81#input.benefit_cap_applies_to_assessment_period: true
+    uk:regulations/uksi/2013/376/81#input.total_welfare_benefits_entitled_in_reference_period: 2700
+    uk:regulations/uksi/2013/376/81#input.relevant_amount_under_regulation_80A: 2500
+    uk:regulations/uksi/2013/376/81#input.childcare_costs_element_amount_in_award: 50
+  output:
+    uk:regulations/uksi/2013/376/81#benefit_cap_excess: 200
+    uk:regulations/uksi/2013/376/81#universal_credit_award_benefit_cap_reduction: 150
+- name: childcare costs element greater than excess so no reduction applies
+  period: 2024-05
+  input:
+    uk:regulations/uksi/2013/376/81#input.benefit_cap_applies_to_assessment_period: true
+    uk:regulations/uksi/2013/376/81#input.total_welfare_benefits_entitled_in_reference_period: 2600
+    uk:regulations/uksi/2013/376/81#input.relevant_amount_under_regulation_80A: 2500
+    uk:regulations/uksi/2013/376/81#input.childcare_costs_element_amount_in_award: 150
+  output:
+    uk:regulations/uksi/2013/376/81#benefit_cap_excess: 100
+    uk:regulations/uksi/2013/376/81#universal_credit_award_benefit_cap_reduction: 0
+- name: cap applies with no childcare costs element in award
+  period: 2024-05
+  input:
+    uk:regulations/uksi/2013/376/81#input.benefit_cap_applies_to_assessment_period: true
+    uk:regulations/uksi/2013/376/81#input.total_welfare_benefits_entitled_in_reference_period: 2800
+    uk:regulations/uksi/2013/376/81#input.relevant_amount_under_regulation_80A: 2500
+    uk:regulations/uksi/2013/376/81#input.childcare_costs_element_amount_in_award: 0
+  output:
+    uk:regulations/uksi/2013/376/81#benefit_cap_excess: 300
+    uk:regulations/uksi/2013/376/81#universal_credit_award_benefit_cap_reduction: 300
+- name: benefit cap does not apply to the assessment period
+  period: 2024-05
+  input:
+    uk:regulations/uksi/2013/376/81#input.benefit_cap_applies_to_assessment_period: false
+    uk:regulations/uksi/2013/376/81#input.total_welfare_benefits_entitled_in_reference_period: 2700
+    uk:regulations/uksi/2013/376/81#input.relevant_amount_under_regulation_80A: 2500
+    uk:regulations/uksi/2013/376/81#input.childcare_costs_element_amount_in_award: 50
+  output:
+    uk:regulations/uksi/2013/376/81#universal_credit_award_benefit_cap_reduction: 0
