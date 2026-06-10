@@ -1,41 +1,25 @@
 {
+  "schema_version": "axiom-encode/applied-rulespec/v1",
+  "tool": "axiom-encode retire",
+  "reason": "PolicyEngine model wrappers retired from the rules registry: survey/take-up constructs are consumer concerns; legal content lives in the statute and regulation modules",
+  "axiom_encode_git": {
+    "root": "/private/tmp/axiom-encode",
+    "commit": "3b414a2ed14eecee4fd99e6aa92c0dcc9651f1a8",
+    "dirty_tracked": false
+  },
   "applied_files": [
     {
       "path": "policies/govuk/severe-disablement-allowance.yaml",
-      "sha256": "8b864dd7c3b10426c9dc90eb73424a6cd726e96be42cd21325cefd0e585137ad"
+      "deleted": true
     },
     {
       "path": "policies/govuk/severe-disablement-allowance.test.yaml",
-      "sha256": "2dd459e2af9d373efc0d7ba71901146fb13461b2381d652e9f584d7c32dd4881"
+      "deleted": true
     }
   ],
-  "axiom_encode_git": {
-    "commit": "e72db0dead5575f288001aeaf6f6a9b217e03ad5",
-    "dirty_tracked": false,
-    "root": "/Users/maxghenis/_axiom-worktrees/axiom-encode-merged-hbai-final-20260606",
-    "version": "0.2.619",
-    "version_commit": "e72db0dead5575f288001aeaf6f6a9b217e03ad5"
-  },
-  "axiom_encode_version": "0.2.619",
-  "backend": "local-validation",
-  "citation": "uk:policies/govuk/severe-disablement-allowance",
-  "context_manifest_file": null,
-  "context_manifest_sha256": null,
-  "generated_at": "2026-06-06T16:18:21.833965+00:00",
-  "generated_output_file": "/Users/maxghenis/_axiom-worktrees/rulespec-uk-pension-credit-final-20260606/policies/govuk/severe-disablement-allowance.yaml",
-  "generated_output_root": "/Users/maxghenis/_axiom-worktrees/rulespec-uk-pension-credit-final-20260606",
-  "generated_output_sha256": "8b864dd7c3b10426c9dc90eb73424a6cd726e96be42cd21325cefd0e585137ad",
-  "generation_prompt_sha256": null,
-  "model": "gpt-5",
-  "run_id": "uk-severe-disablement-allowance-final-validated",
-  "runner": "codex",
-  "schema_version": "axiom-encode/applied-rulespec/v1",
   "signature": {
     "algorithm": "hmac-sha256",
     "key_id": "axiom-encode-apply-v1",
-    "value": "8ba0fbb86ae936698387329164436402442f656770391bdf32f314be85777c10"
-  },
-  "tool": "axiom-encode signed manifest for locally validated RuleSpec",
-  "trace_file": null,
-  "trace_sha256": null
+    "value": "1865ee0e508b7440e01c296eff01e96c946d18bbddc0463f959f5ee617f203fc"
+  }
 }

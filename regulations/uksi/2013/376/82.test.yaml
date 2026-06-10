@@ -1,0 +1,65 @@
+- name: single_claimant_earned_income_at_least_threshold_exempts_award_from_benefit_cap
+  period: 2026-04
+  input:
+    uk:regulations/uksi/2013/376/82#input.national_minimum_wage_hourly_rate: 12.0
+    uk:regulations/uksi/2013/376/82#input.claimant_is_member_of_couple: false
+    uk:regulations/uksi/2013/376/82#input.claimant_earned_income_excluding_minimum_income_floor: 900
+    uk:regulations/uksi/2013/376/82#input.couple_combined_earned_income_excluding_minimum_income_floor: 0
+    uk:regulations/uksi/2013/376/82#input.assessment_period_falls_within_grace_period: false
+    uk:regulations/uksi/2013/376/82#input.grace_period_begins_in_assessment_period: false
+    uk:regulations/uksi/2013/376/82#input.grace_period_ends_in_assessment_period: false
+  output:
+    uk:regulations/uksi/2013/376/82#earnings_exception_weekly_hours: 16
+    uk:regulations/uksi/2013/376/82#monthly_conversion_weeks_multiplier: 52
+    uk:regulations/uksi/2013/376/82#monthly_conversion_months_divisor: 12
+    uk:regulations/uksi/2013/376/82#earnings_exception_monthly_threshold: 832
+    uk:regulations/uksi/2013/376/82#earned_income_for_earnings_exception: 900
+    uk:regulations/uksi/2013/376/82#earned_income_meets_earnings_exception_threshold: holds
+    uk:regulations/uksi/2013/376/82#grace_period_exception_applies: not_holds
+    uk:regulations/uksi/2013/376/82#benefit_cap_earnings_exception_applies: holds
+- name: couple_combined_earned_income_at_least_threshold_exempts_award_from_benefit_cap
+  period: 2026-04
+  input:
+    uk:regulations/uksi/2013/376/82#input.national_minimum_wage_hourly_rate: 12.0
+    uk:regulations/uksi/2013/376/82#input.claimant_is_member_of_couple: true
+    uk:regulations/uksi/2013/376/82#input.claimant_earned_income_excluding_minimum_income_floor: 200
+    uk:regulations/uksi/2013/376/82#input.couple_combined_earned_income_excluding_minimum_income_floor: 850
+    uk:regulations/uksi/2013/376/82#input.assessment_period_falls_within_grace_period: false
+    uk:regulations/uksi/2013/376/82#input.grace_period_begins_in_assessment_period: false
+    uk:regulations/uksi/2013/376/82#input.grace_period_ends_in_assessment_period: false
+  output:
+    uk:regulations/uksi/2013/376/82#earnings_exception_monthly_threshold: 832
+    uk:regulations/uksi/2013/376/82#earned_income_for_earnings_exception: 850
+    uk:regulations/uksi/2013/376/82#earned_income_meets_earnings_exception_threshold: holds
+    uk:regulations/uksi/2013/376/82#grace_period_exception_applies: not_holds
+    uk:regulations/uksi/2013/376/82#benefit_cap_earnings_exception_applies: holds
+- name: assessment_period_within_grace_period_exempts_award_despite_low_earned_income
+  period: 2026-04
+  input:
+    uk:regulations/uksi/2013/376/82#input.national_minimum_wage_hourly_rate: 12.0
+    uk:regulations/uksi/2013/376/82#input.claimant_is_member_of_couple: false
+    uk:regulations/uksi/2013/376/82#input.claimant_earned_income_excluding_minimum_income_floor: 500
+    uk:regulations/uksi/2013/376/82#input.couple_combined_earned_income_excluding_minimum_income_floor: 0
+    uk:regulations/uksi/2013/376/82#input.assessment_period_falls_within_grace_period: true
+    uk:regulations/uksi/2013/376/82#input.grace_period_begins_in_assessment_period: false
+    uk:regulations/uksi/2013/376/82#input.grace_period_ends_in_assessment_period: false
+  output:
+    uk:regulations/uksi/2013/376/82#earned_income_for_earnings_exception: 500
+    uk:regulations/uksi/2013/376/82#earned_income_meets_earnings_exception_threshold: not_holds
+    uk:regulations/uksi/2013/376/82#grace_period_exception_applies: holds
+    uk:regulations/uksi/2013/376/82#benefit_cap_earnings_exception_applies: holds
+- name: low_earned_income_and_no_grace_period_means_exception_does_not_apply
+  period: 2026-04
+  input:
+    uk:regulations/uksi/2013/376/82#input.national_minimum_wage_hourly_rate: 12.0
+    uk:regulations/uksi/2013/376/82#input.claimant_is_member_of_couple: false
+    uk:regulations/uksi/2013/376/82#input.claimant_earned_income_excluding_minimum_income_floor: 500
+    uk:regulations/uksi/2013/376/82#input.couple_combined_earned_income_excluding_minimum_income_floor: 0
+    uk:regulations/uksi/2013/376/82#input.assessment_period_falls_within_grace_period: false
+    uk:regulations/uksi/2013/376/82#input.grace_period_begins_in_assessment_period: false
+    uk:regulations/uksi/2013/376/82#input.grace_period_ends_in_assessment_period: false
+  output:
+    uk:regulations/uksi/2013/376/82#earned_income_for_earnings_exception: 500
+    uk:regulations/uksi/2013/376/82#earned_income_meets_earnings_exception_threshold: not_holds
+    uk:regulations/uksi/2013/376/82#grace_period_exception_applies: not_holds
+    uk:regulations/uksi/2013/376/82#benefit_cap_earnings_exception_applies: not_holds

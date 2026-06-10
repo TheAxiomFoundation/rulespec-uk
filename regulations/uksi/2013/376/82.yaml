@@ -1,0 +1,180 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2013/376/82
+  summary: |-
+    Exceptions - earnings. The benefit cap does not apply to an award of universal credit in relation to an assessment period where (a) the claimant's earned income or, if the claimant is a member of a couple, the couple's combined earned income, is equal to or exceeds the amount of earnings that a person would be paid at the hourly rate set out in regulation 4 of the National Minimum Wage Regulations for 16 hours per week, converted to a monthly amount by multiplying by 52 and dividing by 12; or (b) the assessment period falls within a grace period or is an assessment period in which a grace period begins or ends. A grace period is a period of 9 consecutive months that begins on the most recent of the days specified in paragraph (2) in respect of which the condition in paragraph (3) is met, namely that in each of the 12 months immediately preceding that day the claimant's earned income (or the couple's combined earned income) was equal to or exceeded the amount calculated in accordance with paragraph (1)(a). "Earned income" for the purposes of this regulation does not include income a person is treated as having by virtue of regulation 62 (minimum income floor). The reference to regulation 4 of the National Minimum Wage Regulations is a reference to regulation 4 as in force at the beginning of the assessment period or month for which the amount is calculated.
+  deferred_outputs:
+    - output: uk:regulations/uksi/2013/376/82#grace_period_start_day_determination
+      reason: >-
+        Paragraphs (2) and (3) determine the day on which a grace period of 9
+        consecutive months begins, by selecting the most recent qualifying day
+        within or before the current period of entitlement and testing earned
+        income in each of the 12 months immediately preceding that day. This
+        requires day-level date arithmetic over entitlement and earnings
+        history that the supported schema cannot represent, so whether an
+        assessment period falls within a grace period, or is one in which a
+        grace period begins or ends, is taken as factual inputs to the
+        paragraph (1)(b) exception.
+rules:
+  - name: earnings_exception_weekly_hours
+    kind: parameter
+    dtype: Count
+    source: Universal Credit Regulations 2013, regulation 82(1)(a)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/82
+              excerpt: "for 16 hours per week"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          16
+
+  - name: monthly_conversion_weeks_multiplier
+    kind: parameter
+    dtype: Count
+    source: Universal Credit Regulations 2013, regulation 82(1)(a)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/82
+              excerpt: "converted to a monthly amount by multiplying by 52"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          52
+
+  - name: monthly_conversion_months_divisor
+    kind: parameter
+    dtype: Count
+    source: Universal Credit Regulations 2013, regulation 82(1)(a)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/82
+              excerpt: "multiplying by 52 and dividing by 12"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          12
+
+  - name: earnings_exception_monthly_threshold
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 82(1)(a) and 82(5)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/82
+              excerpt: "the amount of earnings that a person would be paid at the hourly rate set out in regulation 4 of the National Minimum Wage Regulations for 16 hours per week, converted to a monthly amount by multiplying by 52 and dividing by 12"
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/82
+              excerpt: "a reference to regulation 4 as in force at the beginning of the assessment period or month for which the amount is calculated"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          national_minimum_wage_hourly_rate * earnings_exception_weekly_hours * monthly_conversion_weeks_multiplier / monthly_conversion_months_divisor
+
+  - name: earned_income_for_earnings_exception
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 82(1)(a) and 82(4)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/82
+              excerpt: "the claimant's earned income or, if the claimant is a member of a couple, the couple's combined earned income"
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/82
+              excerpt: "\u201CEarned income\u201D for the purposes of this regulation does not include income a person is treated as having by virtue of regulation 62 (minimum income floor)"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if claimant_is_member_of_couple: couple_combined_earned_income_excluding_minimum_income_floor else: claimant_earned_income_excluding_minimum_income_floor
+
+  - name: earned_income_meets_earnings_exception_threshold
+    kind: derived
+    entity: Family
+    dtype: Judgment
+    period: Month
+    source: Universal Credit Regulations 2013, regulation 82(1)(a)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/82
+              excerpt: "is equal to or exceeds the amount of earnings that a person would be paid at the hourly rate set out in regulation 4 of the National Minimum Wage Regulations"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          earned_income_for_earnings_exception >= earnings_exception_monthly_threshold
+
+  - name: grace_period_exception_applies
+    kind: derived
+    entity: Family
+    dtype: Judgment
+    period: Month
+    source: Universal Credit Regulations 2013, regulation 82(1)(b)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/82
+              excerpt: "the assessment period falls within a grace period or is an assessment period in which a grace period begins or ends"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          assessment_period_falls_within_grace_period
+          or grace_period_begins_in_assessment_period
+          or grace_period_ends_in_assessment_period
+
+  - name: benefit_cap_earnings_exception_applies
+    kind: derived
+    entity: Family
+    dtype: Judgment
+    period: Month
+    source: Universal Credit Regulations 2013, regulation 82(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: exception
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/82
+              excerpt: "The benefit cap does not apply to an award of universal credit in relation to an assessment period where"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          earned_income_meets_earnings_exception_threshold or grace_period_exception_applies
