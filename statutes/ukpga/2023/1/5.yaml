@@ -1,0 +1,61 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/statute/ukpga/2023/1/5
+  summary: |-
+    Section 5 of the Finance Act 2021 (basic rate limit and personal allowance for tax years up to 2025-26) is amended: in subsection (1) (basic rate limit in section 10(5) ITA 2007 as £37,700), in subsection (2) (personal allowance in section 35(1) ITA 2007 as £12,570), and in subsection (3) (consequential provision preventing uprating), for "and 2025-26" substitute ", 2025-26, 2026-27 and 2027-28".
+rules:
+  - name: basic_rate_limit
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: Finance Act 2021 s.5(1) as amended by Finance (No. 2) Act 2023 s.5(2); ITA 2007 s.10(5)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2023/1/5
+              excerpt: "specifies the basic rate limit in section 10(5) of the Income Tax Act 2007 as £37,700"
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          37700
+  - name: personal_allowance
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: Finance Act 2021 s.5(2) as amended by Finance (No. 2) Act 2023 s.5(3); ITA 2007 s.35(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2023/1/5
+              excerpt: "specifies the personal allowance in section 35(1) of the Income Tax Act 2007 as £12,570"
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          12570
+  - name: uprating_disapplied
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Year
+    source: Finance Act 2021 s.5(3) as amended by Finance (No. 2) Act 2023 s.5(4)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2023/1/5
+              excerpt: "makes consequential provision preventing the uprating of those amounts for the affected tax years"
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          tax_year_is_2026_27 or tax_year_is_2027_28

@@ -1,0 +1,43 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/statute/ukpga/2021/26/5
+  summary: |-
+    For the tax years 2022-23 to 2030-31, the basic rate limit specified in section 10(5) of ITA 2007 is "£37,700" and the personal allowance specified in section 35(1) of ITA 2007 is "£12,570". Indexation under sections 21 and 57 of ITA 2007 does not apply for those tax years.
+rules:
+  - name: basic_rate_limit
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: Finance Act 2021 s.5(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2021/26/5
+              excerpt: 'the amount specified in section 10(5) of ITA 2007 (basic rate limit) is  "£37,700"'
+    versions:
+      - effective_from: '2022-04-06'
+        formula: |-
+          37700
+  - name: personal_allowance
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: Finance Act 2021 s.5(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2021/26/5
+              excerpt: 'the amount specified in section 35(1) of ITA 2007 (personal allowance) is  "£12,570"'
+    versions:
+      - effective_from: '2022-04-06'
+        formula: |-
+          12570

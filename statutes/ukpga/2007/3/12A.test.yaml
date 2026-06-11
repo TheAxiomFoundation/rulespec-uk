@@ -1,0 +1,80 @@
+- name: section_applies_excess_below_allowance
+  period:
+    period_kind: tax_year
+    start: '2024-04-06'
+    end: '2025-04-05'
+  input:
+    uk:statutes/ukpga/2007/3/23#relation.income_component_of_taxpayer:
+    - uk:statutes/ukpga/2007/3/23#input.amount_charged_to_income_tax: 25000
+      uk:statutes/ukpga/2007/3/23#input.relief_deducted_under_section_24: 0
+    uk:statutes/ukpga/2007/3/23#input.net_income_taken_as_zero_under_section_24b: false
+    uk:statutes/ukpga/2007/3/23#input.other_allowances_under_chapter_2_part_3: 0
+    uk:statutes/ukpga/2007/3/35#input.individual_makes_claim: true
+    uk:statutes/ukpga/2007/3/35#input.individual_meets_requirements_under_section_56: true
+    uk:statutes/ukpga/2007/3/35#input.adjusted_net_income: 50000
+    uk:statutes/ukpga/2007/3/12A#input.savings_income_above_starting_rate_limit_for_savings: 500
+    uk:statutes/ukpga/2007/3/12A#input.savings_allowance_under_section_12b: 1000
+  output:
+    uk:statutes/ukpga/2007/3/12A#individual_income_above_starting_rate_limit_for_savings: 7430
+    uk:statutes/ukpga/2007/3/12A#savings_nil_rate_applies: holds
+    uk:statutes/ukpga/2007/3/12A#savings_income_charged_at_savings_nil_rate: 500
+- name: section_applies_excess_above_allowance
+  period:
+    period_kind: tax_year
+    start: '2024-04-06'
+    end: '2025-04-05'
+  input:
+    uk:statutes/ukpga/2007/3/23#relation.income_component_of_taxpayer:
+    - uk:statutes/ukpga/2007/3/23#input.amount_charged_to_income_tax: 25000
+      uk:statutes/ukpga/2007/3/23#input.relief_deducted_under_section_24: 0
+    uk:statutes/ukpga/2007/3/23#input.net_income_taken_as_zero_under_section_24b: false
+    uk:statutes/ukpga/2007/3/23#input.other_allowances_under_chapter_2_part_3: 0
+    uk:statutes/ukpga/2007/3/35#input.individual_makes_claim: true
+    uk:statutes/ukpga/2007/3/35#input.individual_meets_requirements_under_section_56: true
+    uk:statutes/ukpga/2007/3/35#input.adjusted_net_income: 50000
+    uk:statutes/ukpga/2007/3/12A#input.savings_income_above_starting_rate_limit_for_savings: 1500
+    uk:statutes/ukpga/2007/3/12A#input.savings_allowance_under_section_12b: 1000
+  output:
+    uk:statutes/ukpga/2007/3/12A#individual_income_above_starting_rate_limit_for_savings: 7430
+    uk:statutes/ukpga/2007/3/12A#savings_nil_rate_applies: holds
+    uk:statutes/ukpga/2007/3/12A#savings_income_charged_at_savings_nil_rate: 1000
+- name: step_3_income_at_or_below_starting_rate_limit_blocks_section
+  period:
+    period_kind: tax_year
+    start: '2024-04-06'
+    end: '2025-04-05'
+  input:
+    uk:statutes/ukpga/2007/3/23#relation.income_component_of_taxpayer:
+    - uk:statutes/ukpga/2007/3/23#input.amount_charged_to_income_tax: 15000
+      uk:statutes/ukpga/2007/3/23#input.relief_deducted_under_section_24: 0
+    uk:statutes/ukpga/2007/3/23#input.net_income_taken_as_zero_under_section_24b: false
+    uk:statutes/ukpga/2007/3/23#input.other_allowances_under_chapter_2_part_3: 0
+    uk:statutes/ukpga/2007/3/35#input.individual_makes_claim: true
+    uk:statutes/ukpga/2007/3/35#input.individual_meets_requirements_under_section_56: true
+    uk:statutes/ukpga/2007/3/35#input.adjusted_net_income: 50000
+    uk:statutes/ukpga/2007/3/12A#input.savings_income_above_starting_rate_limit_for_savings: 500
+    uk:statutes/ukpga/2007/3/12A#input.savings_allowance_under_section_12b: 1000
+  output:
+    uk:statutes/ukpga/2007/3/12A#individual_income_above_starting_rate_limit_for_savings: 0
+    uk:statutes/ukpga/2007/3/12A#savings_nil_rate_applies: not_holds
+    uk:statutes/ukpga/2007/3/12A#savings_income_charged_at_savings_nil_rate: 0
+- name: no_savings_income_in_excess_blocks_section
+  period:
+    period_kind: tax_year
+    start: '2024-04-06'
+    end: '2025-04-05'
+  input:
+    uk:statutes/ukpga/2007/3/23#relation.income_component_of_taxpayer:
+    - uk:statutes/ukpga/2007/3/23#input.amount_charged_to_income_tax: 25000
+      uk:statutes/ukpga/2007/3/23#input.relief_deducted_under_section_24: 0
+    uk:statutes/ukpga/2007/3/23#input.net_income_taken_as_zero_under_section_24b: false
+    uk:statutes/ukpga/2007/3/23#input.other_allowances_under_chapter_2_part_3: 0
+    uk:statutes/ukpga/2007/3/35#input.individual_makes_claim: true
+    uk:statutes/ukpga/2007/3/35#input.individual_meets_requirements_under_section_56: true
+    uk:statutes/ukpga/2007/3/35#input.adjusted_net_income: 50000
+    uk:statutes/ukpga/2007/3/12A#input.savings_income_above_starting_rate_limit_for_savings: 0
+    uk:statutes/ukpga/2007/3/12A#input.savings_allowance_under_section_12b: 1000
+  output:
+    uk:statutes/ukpga/2007/3/12A#individual_income_above_starting_rate_limit_for_savings: 7430
+    uk:statutes/ukpga/2007/3/12A#savings_nil_rate_applies: not_holds
+    uk:statutes/ukpga/2007/3/12A#savings_income_charged_at_savings_nil_rate: 0

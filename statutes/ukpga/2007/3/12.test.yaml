@@ -1,0 +1,48 @@
+- name: savings_income_below_starting_rate_limit_with_zero_rate
+  period:
+    period_kind: tax_year
+    start: '2024-04-06'
+    end: '2025-04-05'
+  input:
+    uk:statutes/ukpga/2007/3/12#input.savings_income_otherwise_charged_at_basic_or_default_basic_rate: 3000
+    uk:statutes/ukpga/2007/3/12#input.income_already_charged_before_section_12_savings_income: 0
+    uk:statutes/ukpga/2007/3/12#input.starting_rate_for_savings: 0
+  output:
+    uk:statutes/ukpga/2007/3/12#savings_income_charged_at_starting_rate_for_savings: 3000
+    uk:statutes/ukpga/2007/3/12#tax_on_savings_income_charged_at_starting_rate_for_savings: 0
+- name: savings_income_capped_at_starting_rate_limit
+  period:
+    period_kind: tax_year
+    start: '2024-04-06'
+    end: '2025-04-05'
+  input:
+    uk:statutes/ukpga/2007/3/12#input.savings_income_otherwise_charged_at_basic_or_default_basic_rate: 7000
+    uk:statutes/ukpga/2007/3/12#input.income_already_charged_before_section_12_savings_income: 0
+    uk:statutes/ukpga/2007/3/12#input.starting_rate_for_savings: 0
+  output:
+    uk:statutes/ukpga/2007/3/12#savings_income_charged_at_starting_rate_for_savings: 5000
+    uk:statutes/ukpga/2007/3/12#tax_on_savings_income_charged_at_starting_rate_for_savings: 0
+- name: non_savings_income_partially_uses_starting_rate_band
+  period:
+    period_kind: tax_year
+    start: '2024-04-06'
+    end: '2025-04-05'
+  input:
+    uk:statutes/ukpga/2007/3/12#input.savings_income_otherwise_charged_at_basic_or_default_basic_rate: 4000
+    uk:statutes/ukpga/2007/3/12#input.income_already_charged_before_section_12_savings_income: 2000
+    uk:statutes/ukpga/2007/3/12#input.starting_rate_for_savings: 0.1
+  output:
+    uk:statutes/ukpga/2007/3/12#savings_income_charged_at_starting_rate_for_savings: 3000
+    uk:statutes/ukpga/2007/3/12#tax_on_savings_income_charged_at_starting_rate_for_savings: 300
+- name: non_savings_income_fills_starting_rate_band
+  period:
+    period_kind: tax_year
+    start: '2024-04-06'
+    end: '2025-04-05'
+  input:
+    uk:statutes/ukpga/2007/3/12#input.savings_income_otherwise_charged_at_basic_or_default_basic_rate: 4000
+    uk:statutes/ukpga/2007/3/12#input.income_already_charged_before_section_12_savings_income: 6000
+    uk:statutes/ukpga/2007/3/12#input.starting_rate_for_savings: 0
+  output:
+    uk:statutes/ukpga/2007/3/12#savings_income_charged_at_starting_rate_for_savings: 0
+    uk:statutes/ukpga/2007/3/12#tax_on_savings_income_charged_at_starting_rate_for_savings: 0

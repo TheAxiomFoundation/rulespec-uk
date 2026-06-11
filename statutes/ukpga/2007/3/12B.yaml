@@ -1,0 +1,129 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/statute/ukpga/2007/3/12B
+  summary: |-
+    Subsections (2) to (4) determine the amount of an individual's savings allowance for a tax year. If any of the individual's income is additional-rate income, the savings allowance is nil. If any income is higher-rate income and none is additional-rate income, the savings allowance is £500. If none of the income is higher-rate income, the savings allowance is £1,000.
+rules:
+  - name: savings_allowance_additional_rate_amount
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: ITA 2007 s.12B(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/12B
+              excerpt: "the individual's savings allowance for the year is nil"
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          0
+  - name: savings_allowance_higher_rate_amount
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: ITA 2007 s.12B(3)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/12B
+              excerpt: "the individual's savings allowance for the year is £500"
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          500
+  - name: savings_allowance_basic_rate_amount
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: ITA 2007 s.12B(4)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/12B
+              excerpt: "the individual's savings allowance for the year is £1,000"
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          1000
+  - name: individual_has_additional_rate_income
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Year
+    source: ITA 2007 s.12B(2), (8)(a)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/12B
+              excerpt: "any of the individual's income for the year is additional-rate income"
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          income_charged_at_additional_rate
+          or income_charged_at_property_additional_rate
+          or income_charged_at_default_additional_rate
+          or income_charged_at_dividend_additional_rate
+          or income_would_be_charged_at_additional_rate_but_for_savings_nil_rate
+          or income_would_be_charged_at_default_additional_rate_but_for_savings_nil_rate
+          or income_would_be_charged_at_dividend_additional_rate_but_for_dividend_nil_rate
+          or scottish_or_welsh_taxpayer_income_would_be_charged_at_additional_property_or_default_additional_rate
+  - name: individual_has_higher_rate_income
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Year
+    source: ITA 2007 s.12B(3), (8)(b)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/12B
+              excerpt: "any of the individual's income for the year is higher-rate income"
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          income_charged_at_higher_rate
+          or income_charged_at_property_higher_rate
+          or income_charged_at_default_higher_rate
+          or income_charged_at_dividend_upper_rate
+          or income_would_be_charged_at_higher_rate_but_for_savings_nil_rate
+          or income_would_be_charged_at_default_higher_rate_but_for_savings_nil_rate
+          or income_would_be_charged_at_dividend_upper_rate_but_for_dividend_nil_rate
+          or scottish_or_welsh_taxpayer_income_would_be_charged_at_higher_property_or_default_higher_rate
+  - name: savings_allowance
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: ITA 2007 s.12B(1)-(4)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/12B
+              excerpt: "Subsections (2) to (4) determine the amount of an individual's savings allowance for a tax year"
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          if individual_has_additional_rate_income: savings_allowance_additional_rate_amount else: if individual_has_higher_rate_income: savings_allowance_higher_rate_amount else: savings_allowance_basic_rate_amount

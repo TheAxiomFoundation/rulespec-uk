@@ -1,0 +1,87 @@
+- name: basic_rate_taxpayer_gets_full_allowance
+  period:
+    period_kind: tax_year
+    start: '2024-04-06'
+    end: '2025-04-05'
+  input:
+    uk:statutes/ukpga/2007/3/12B#input.income_charged_at_additional_rate: false
+    uk:statutes/ukpga/2007/3/12B#input.income_charged_at_property_additional_rate: false
+    uk:statutes/ukpga/2007/3/12B#input.income_charged_at_default_additional_rate: false
+    uk:statutes/ukpga/2007/3/12B#input.income_charged_at_dividend_additional_rate: false
+    uk:statutes/ukpga/2007/3/12B#input.income_would_be_charged_at_additional_rate_but_for_savings_nil_rate: false
+    uk:statutes/ukpga/2007/3/12B#input.income_would_be_charged_at_default_additional_rate_but_for_savings_nil_rate: false
+    uk:statutes/ukpga/2007/3/12B#input.income_would_be_charged_at_dividend_additional_rate_but_for_dividend_nil_rate: false
+    ? uk:statutes/ukpga/2007/3/12B#input.scottish_or_welsh_taxpayer_income_would_be_charged_at_additional_property_or_default_additional_rate
+    : false
+    uk:statutes/ukpga/2007/3/12B#input.income_charged_at_higher_rate: false
+    uk:statutes/ukpga/2007/3/12B#input.income_charged_at_property_higher_rate: false
+    uk:statutes/ukpga/2007/3/12B#input.income_charged_at_default_higher_rate: false
+    uk:statutes/ukpga/2007/3/12B#input.income_charged_at_dividend_upper_rate: false
+    uk:statutes/ukpga/2007/3/12B#input.income_would_be_charged_at_higher_rate_but_for_savings_nil_rate: false
+    uk:statutes/ukpga/2007/3/12B#input.income_would_be_charged_at_default_higher_rate_but_for_savings_nil_rate: false
+    uk:statutes/ukpga/2007/3/12B#input.income_would_be_charged_at_dividend_upper_rate_but_for_dividend_nil_rate: false
+    ? uk:statutes/ukpga/2007/3/12B#input.scottish_or_welsh_taxpayer_income_would_be_charged_at_higher_property_or_default_higher_rate
+    : false
+  output:
+    uk:statutes/ukpga/2007/3/12B#individual_has_additional_rate_income: not_holds
+    uk:statutes/ukpga/2007/3/12B#individual_has_higher_rate_income: not_holds
+    uk:statutes/ukpga/2007/3/12B#savings_allowance_additional_rate_amount: 0
+    uk:statutes/ukpga/2007/3/12B#savings_allowance_higher_rate_amount: 500
+    uk:statutes/ukpga/2007/3/12B#savings_allowance_basic_rate_amount: 1000
+    uk:statutes/ukpga/2007/3/12B#savings_allowance: 1000
+- name: higher_rate_taxpayer_gets_500_allowance
+  period:
+    period_kind: tax_year
+    start: '2024-04-06'
+    end: '2025-04-05'
+  input:
+    uk:statutes/ukpga/2007/3/12B#input.income_charged_at_additional_rate: false
+    uk:statutes/ukpga/2007/3/12B#input.income_charged_at_property_additional_rate: false
+    uk:statutes/ukpga/2007/3/12B#input.income_charged_at_default_additional_rate: false
+    uk:statutes/ukpga/2007/3/12B#input.income_charged_at_dividend_additional_rate: false
+    uk:statutes/ukpga/2007/3/12B#input.income_would_be_charged_at_additional_rate_but_for_savings_nil_rate: false
+    uk:statutes/ukpga/2007/3/12B#input.income_would_be_charged_at_default_additional_rate_but_for_savings_nil_rate: false
+    uk:statutes/ukpga/2007/3/12B#input.income_would_be_charged_at_dividend_additional_rate_but_for_dividend_nil_rate: false
+    ? uk:statutes/ukpga/2007/3/12B#input.scottish_or_welsh_taxpayer_income_would_be_charged_at_additional_property_or_default_additional_rate
+    : false
+    uk:statutes/ukpga/2007/3/12B#input.income_charged_at_higher_rate: true
+    uk:statutes/ukpga/2007/3/12B#input.income_charged_at_property_higher_rate: false
+    uk:statutes/ukpga/2007/3/12B#input.income_charged_at_default_higher_rate: false
+    uk:statutes/ukpga/2007/3/12B#input.income_charged_at_dividend_upper_rate: false
+    uk:statutes/ukpga/2007/3/12B#input.income_would_be_charged_at_higher_rate_but_for_savings_nil_rate: false
+    uk:statutes/ukpga/2007/3/12B#input.income_would_be_charged_at_default_higher_rate_but_for_savings_nil_rate: false
+    uk:statutes/ukpga/2007/3/12B#input.income_would_be_charged_at_dividend_upper_rate_but_for_dividend_nil_rate: false
+    ? uk:statutes/ukpga/2007/3/12B#input.scottish_or_welsh_taxpayer_income_would_be_charged_at_higher_property_or_default_higher_rate
+    : false
+  output:
+    uk:statutes/ukpga/2007/3/12B#individual_has_additional_rate_income: not_holds
+    uk:statutes/ukpga/2007/3/12B#individual_has_higher_rate_income: holds
+    uk:statutes/ukpga/2007/3/12B#savings_allowance: 500
+- name: additional_rate_taxpayer_gets_nil_allowance
+  period:
+    period_kind: tax_year
+    start: '2024-04-06'
+    end: '2025-04-05'
+  input:
+    uk:statutes/ukpga/2007/3/12B#input.income_charged_at_additional_rate: true
+    uk:statutes/ukpga/2007/3/12B#input.income_charged_at_property_additional_rate: false
+    uk:statutes/ukpga/2007/3/12B#input.income_charged_at_default_additional_rate: false
+    uk:statutes/ukpga/2007/3/12B#input.income_charged_at_dividend_additional_rate: false
+    uk:statutes/ukpga/2007/3/12B#input.income_would_be_charged_at_additional_rate_but_for_savings_nil_rate: false
+    uk:statutes/ukpga/2007/3/12B#input.income_would_be_charged_at_default_additional_rate_but_for_savings_nil_rate: false
+    uk:statutes/ukpga/2007/3/12B#input.income_would_be_charged_at_dividend_additional_rate_but_for_dividend_nil_rate: false
+    ? uk:statutes/ukpga/2007/3/12B#input.scottish_or_welsh_taxpayer_income_would_be_charged_at_additional_property_or_default_additional_rate
+    : false
+    uk:statutes/ukpga/2007/3/12B#input.income_charged_at_higher_rate: true
+    uk:statutes/ukpga/2007/3/12B#input.income_charged_at_property_higher_rate: false
+    uk:statutes/ukpga/2007/3/12B#input.income_charged_at_default_higher_rate: false
+    uk:statutes/ukpga/2007/3/12B#input.income_charged_at_dividend_upper_rate: false
+    uk:statutes/ukpga/2007/3/12B#input.income_would_be_charged_at_higher_rate_but_for_savings_nil_rate: false
+    uk:statutes/ukpga/2007/3/12B#input.income_would_be_charged_at_default_higher_rate_but_for_savings_nil_rate: false
+    uk:statutes/ukpga/2007/3/12B#input.income_would_be_charged_at_dividend_upper_rate_but_for_dividend_nil_rate: false
+    ? uk:statutes/ukpga/2007/3/12B#input.scottish_or_welsh_taxpayer_income_would_be_charged_at_higher_property_or_default_higher_rate
+    : false
+  output:
+    uk:statutes/ukpga/2007/3/12B#individual_has_additional_rate_income: holds
+    uk:statutes/ukpga/2007/3/12B#individual_has_higher_rate_income: holds
+    uk:statutes/ukpga/2007/3/12B#savings_allowance: 0

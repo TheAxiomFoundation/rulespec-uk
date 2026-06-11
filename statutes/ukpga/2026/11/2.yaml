@@ -1,0 +1,57 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/statute/ukpga/2026/11/2
+  summary: |-
+    For the tax year 2026-27 the main rates of income tax are: basic rate 20%, higher rate 40%, additional rate 45%.
+rules:
+  - name: basic_rate
+    kind: parameter
+    dtype: Rate
+    source: ukpga 2026 c.11 s.2
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2026/11/2
+              excerpt: "the basic rate is 20%"
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          0.20
+  - name: higher_rate
+    kind: parameter
+    dtype: Rate
+    source: ukpga 2026 c.11 s.2
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2026/11/2
+              excerpt: "the higher rate is 40%"
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          0.40
+  - name: additional_rate
+    kind: parameter
+    dtype: Rate
+    source: ukpga 2026 c.11 s.2
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2026/11/2
+              excerpt: "the additional rate is 45%"
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          0.45

@@ -1,0 +1,73 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/statute/ukpga/2007/3/8
+  summary: |-
+    The dividend nil rate is 0%. The dividend ordinary rate is 10.75%. The dividend upper rate is 35.75%. The dividend additional rate is 39.35%.
+rules:
+  - name: dividend_nil_rate
+    kind: parameter
+    dtype: Rate
+    source: ITA 2007 s.8
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/8
+              excerpt: "The dividend nil rate is 0%."
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          0
+  - name: dividend_ordinary_rate
+    kind: parameter
+    dtype: Rate
+    source: ITA 2007 s.8
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/8
+              excerpt: "The dividend ordinary rate is 10.75%."
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          0.1075
+  - name: dividend_upper_rate
+    kind: parameter
+    dtype: Rate
+    source: ITA 2007 s.8
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/8
+              excerpt: "The dividend upper rate is 35.75%."
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          0.3575
+  - name: dividend_additional_rate
+    kind: parameter
+    dtype: Rate
+    source: ITA 2007 s.8
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/8
+              excerpt: "The dividend additional rate is 39.35%."
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          0.3935

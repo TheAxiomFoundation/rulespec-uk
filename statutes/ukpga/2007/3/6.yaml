@@ -1,0 +1,20 @@
+format: rulespec/v1
+module:
+  status: deferred
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/statute/ukpga/2007/3/6
+  summary: |-
+    The main rates at which income tax is charged are the basic rate, the higher rate and the additional rate. The basic rate, higher rate and additional rate for a tax year are the rates determined as such by Parliament for the tax year. For other rates at which income tax is charged see section 6B (Welsh basic, higher and additional rates), section 6C (default basic, higher and additional rates), section 7 (starting rate for savings and savings nil rate), section 7A (savings basic, higher and additional rates), section 8 (dividend nil rate, dividend ordinary rate, dividend upper rate and dividend additional rate), and section 9 (trust rate and dividend trust rate). See also section 80C of the Scotland Act 1998 which makes provision for the purposes of section 11A (income charged at Scottish rates).
+  deferred_outputs:
+    - output: uk:statutes/ukpga/2007/3/6#basic_rate
+      reason: |-
+        Section 6(2) states that the basic rate for a tax year is the rate determined as such by Parliament for the tax year. The source text itself does not state any numeric value; the values are delegated to annual Finance Acts (e.g. ukpga/2021/26, ukpga/2023/1), which are not provided in copied context.
+    - output: uk:statutes/ukpga/2007/3/6#higher_rate
+      reason: |-
+        Section 6(2) states that the higher rate for a tax year is the rate determined as such by Parliament for the tax year. The source text itself does not state any numeric value; the values are delegated to annual Finance Acts, which are not provided in copied context.
+    - output: uk:statutes/ukpga/2007/3/6#additional_rate
+      reason: |-
+        Section 6(2) states that the additional rate for a tax year is the rate determined as such by Parliament for the tax year. The source text itself does not state any numeric value; the values are delegated to annual Finance Acts, which are not provided in copied context.
+rules: []
