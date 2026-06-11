@@ -1,0 +1,105 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/statute/ukpga/2026/11/3
+  summary: |-
+    For the tax year 2026-27 the default rates of income tax are: default basic rate 20%, default higher rate 40%, default additional rate 45%. The savings rates of income tax are: savings basic rate 20%, savings higher rate 40%, savings additional rate 45%.
+rules:
+  - name: default_basic_rate
+    kind: parameter
+    dtype: Rate
+    source: ukpga 2026 c.11 s.3
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2026/11/3
+              excerpt: "the default basic rate is 20%"
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          0.20
+  - name: default_higher_rate
+    kind: parameter
+    dtype: Rate
+    source: ukpga 2026 c.11 s.3
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2026/11/3
+              excerpt: "the default higher rate is 40%"
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          0.40
+  - name: default_additional_rate
+    kind: parameter
+    dtype: Rate
+    source: ukpga 2026 c.11 s.3
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2026/11/3
+              excerpt: "the default additional rate is 45%"
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          0.45
+  - name: savings_basic_rate
+    kind: parameter
+    dtype: Rate
+    source: ukpga 2026 c.11 s.3
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2026/11/3
+              excerpt: "the savings basic rate is 20%"
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          0.20
+  - name: savings_higher_rate
+    kind: parameter
+    dtype: Rate
+    source: ukpga 2026 c.11 s.3
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2026/11/3
+              excerpt: "the savings higher rate is 40%"
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          0.40
+  - name: savings_additional_rate
+    kind: parameter
+    dtype: Rate
+    source: ukpga 2026 c.11 s.3
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2026/11/3
+              excerpt: "the savings additional rate is 45%"
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          0.45

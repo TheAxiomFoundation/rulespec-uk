@@ -1,0 +1,18 @@
+- name: basic_rate_limit_2022_23
+  period:
+    period_kind: tax_year
+    start: '2022-04-06'
+    end: '2023-04-05'
+  input: {}
+  output:
+    uk:statutes/ukpga/2021/26/5#basic_rate_limit: 37700
+    uk:statutes/ukpga/2021/26/5#personal_allowance: 12570
+- name: basic_rate_limit_2030_31
+  period:
+    period_kind: tax_year
+    start: '2030-04-06'
+    end: '2031-04-05'
+  input: {}
+  output:
+    uk:statutes/ukpga/2021/26/5#basic_rate_limit: 37700
+    uk:statutes/ukpga/2021/26/5#personal_allowance: 12570

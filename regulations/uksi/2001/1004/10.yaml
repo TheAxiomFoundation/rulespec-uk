@@ -1,0 +1,118 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2001/1004/10
+  summary: |-
+    For the purposes of sections 5(1), 9A and 9B of the Act (earnings limits
+    and thresholds to be specified for each tax year in respect of Class 1
+    contributions), for the tax year which begins on 6th April 2026— the lower
+    earnings limit shall be £129; the upper earnings limit shall be £967; the
+    primary threshold shall be £242; the secondary threshold shall be £96; the
+    upper secondary threshold for the Under 21 group shall be £967; and the
+    upper secondary threshold for relevant apprentices shall be £967.
+imports: []
+rules:
+  - name: lower_earnings_limit
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: regulation 10(a)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2001/1004/10
+              excerpt: "the lower earnings limit (for primary Class 1 contributions) shall be £129"
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          129
+  - name: upper_earnings_limit
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: regulation 10(b)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2001/1004/10
+              excerpt: "the upper earnings limit (for primary Class 1 contributions) shall be £967"
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          967
+  - name: primary_threshold
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: regulation 10(c)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2001/1004/10
+              excerpt: "the primary threshold (for primary Class 1 contributions) shall be £242"
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          242
+  - name: secondary_threshold
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: regulation 10(d)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2001/1004/10
+              excerpt: "the secondary threshold (for secondary Class 1 contributions) shall be £96"
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          96
+  - name: upper_secondary_threshold_under_21
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: regulation 10(e)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2001/1004/10
+              excerpt: "the upper secondary threshold for secondary Class 1 contributions in relation to the Under 21 group ... shall be £967"
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          967
+  - name: upper_secondary_threshold_relevant_apprentices
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: regulation 10(f)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2001/1004/10
+              excerpt: "the upper secondary threshold for secondary Class 1 contributions in relation to relevant apprentices ... shall be £967"
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          967

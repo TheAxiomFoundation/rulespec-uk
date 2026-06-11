@@ -1,0 +1,68 @@
+- name: savings_income_only_treated_as_highest_part
+  period:
+    period_kind: tax_year
+    start: '2024-04-06'
+    end: '2025-04-05'
+  input:
+    uk:statutes/ukpga/2007/3/16#input.savings_income: 5000
+    uk:statutes/ukpga/2007/3/16#input.dividend_income: 0
+    uk:statutes/ukpga/2007/3/16#input.dividend_income_that_is_relevant_foreign_income_charged_on_remittance_basis: 0
+  output:
+    uk:statutes/ukpga/2007/3/16#dividend_income_for_section_16_ordering: 0
+    uk:statutes/ukpga/2007/3/16#person_has_savings_income: holds
+    uk:statutes/ukpga/2007/3/16#person_has_dividend_income_for_section_16: not_holds
+    uk:statutes/ukpga/2007/3/16#savings_income_treated_as_highest_part_of_total_income: holds
+    uk:statutes/ukpga/2007/3/16#dividend_income_treated_as_highest_part_of_total_income: not_holds
+    uk:statutes/ukpga/2007/3/16#savings_and_dividend_income_together_treated_as_highest_part_of_total_income: not_holds
+    uk:statutes/ukpga/2007/3/16#dividend_income_treated_as_higher_part_of_combined_highest_part: not_holds
+- name: dividend_income_only_treated_as_highest_part
+  period:
+    period_kind: tax_year
+    start: '2024-04-06'
+    end: '2025-04-05'
+  input:
+    uk:statutes/ukpga/2007/3/16#input.savings_income: 0
+    uk:statutes/ukpga/2007/3/16#input.dividend_income: 3000
+    uk:statutes/ukpga/2007/3/16#input.dividend_income_that_is_relevant_foreign_income_charged_on_remittance_basis: 0
+  output:
+    uk:statutes/ukpga/2007/3/16#dividend_income_for_section_16_ordering: 3000
+    uk:statutes/ukpga/2007/3/16#person_has_savings_income: not_holds
+    uk:statutes/ukpga/2007/3/16#person_has_dividend_income_for_section_16: holds
+    uk:statutes/ukpga/2007/3/16#savings_income_treated_as_highest_part_of_total_income: not_holds
+    uk:statutes/ukpga/2007/3/16#dividend_income_treated_as_highest_part_of_total_income: holds
+    uk:statutes/ukpga/2007/3/16#savings_and_dividend_income_together_treated_as_highest_part_of_total_income: not_holds
+    uk:statutes/ukpga/2007/3/16#dividend_income_treated_as_higher_part_of_combined_highest_part: not_holds
+- name: both_savings_and_dividend_combined_highest_dividend_higher
+  period:
+    period_kind: tax_year
+    start: '2024-04-06'
+    end: '2025-04-05'
+  input:
+    uk:statutes/ukpga/2007/3/16#input.savings_income: 5000
+    uk:statutes/ukpga/2007/3/16#input.dividend_income: 3000
+    uk:statutes/ukpga/2007/3/16#input.dividend_income_that_is_relevant_foreign_income_charged_on_remittance_basis: 0
+  output:
+    uk:statutes/ukpga/2007/3/16#dividend_income_for_section_16_ordering: 3000
+    uk:statutes/ukpga/2007/3/16#person_has_savings_income: holds
+    uk:statutes/ukpga/2007/3/16#person_has_dividend_income_for_section_16: holds
+    uk:statutes/ukpga/2007/3/16#savings_income_treated_as_highest_part_of_total_income: not_holds
+    uk:statutes/ukpga/2007/3/16#dividend_income_treated_as_highest_part_of_total_income: not_holds
+    uk:statutes/ukpga/2007/3/16#savings_and_dividend_income_together_treated_as_highest_part_of_total_income: holds
+    uk:statutes/ukpga/2007/3/16#dividend_income_treated_as_higher_part_of_combined_highest_part: holds
+- name: remittance_basis_foreign_dividend_income_excluded_from_section_16_dividend_income
+  period:
+    period_kind: tax_year
+    start: '2024-04-06'
+    end: '2025-04-05'
+  input:
+    uk:statutes/ukpga/2007/3/16#input.savings_income: 5000
+    uk:statutes/ukpga/2007/3/16#input.dividend_income: 3000
+    uk:statutes/ukpga/2007/3/16#input.dividend_income_that_is_relevant_foreign_income_charged_on_remittance_basis: 3000
+  output:
+    uk:statutes/ukpga/2007/3/16#dividend_income_for_section_16_ordering: 0
+    uk:statutes/ukpga/2007/3/16#person_has_savings_income: holds
+    uk:statutes/ukpga/2007/3/16#person_has_dividend_income_for_section_16: not_holds
+    uk:statutes/ukpga/2007/3/16#savings_income_treated_as_highest_part_of_total_income: holds
+    uk:statutes/ukpga/2007/3/16#dividend_income_treated_as_highest_part_of_total_income: not_holds
+    uk:statutes/ukpga/2007/3/16#savings_and_dividend_income_together_treated_as_highest_part_of_total_income: not_holds
+    uk:statutes/ukpga/2007/3/16#dividend_income_treated_as_higher_part_of_combined_highest_part: not_holds

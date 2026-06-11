@@ -1,16 +1,15 @@
-- name: earned_income_within_basic_rate_limit
+- name: income_below_basic_rate_limit_only_basic_rate_applies
   period:
     period_kind: tax_year
-    start: '2026-01-01'
-    end: '2026-12-31'
+    start: '2024-04-06'
+    end: '2025-04-05'
   input:
     uk:statutes/ukpga/2007/3/10#input.income_charged_under_section_10: 20000
-    uk:statutes/ukpga/2007/3/10#input.basic_rate_limit: 37700
-    uk:statutes/ukpga/2007/3/10#input.higher_rate_limit: 125140
     uk:statutes/ukpga/2007/3/10#input.basic_rate: 0.2
     uk:statutes/ukpga/2007/3/10#input.higher_rate: 0.4
     uk:statutes/ukpga/2007/3/10#input.additional_rate: 0.45
   output:
+    uk:statutes/ukpga/2007/3/10#higher_rate_limit: 125140
     uk:statutes/ukpga/2007/3/10#income_charged_at_basic_rate: 20000
     uk:statutes/ukpga/2007/3/10#income_charged_at_higher_rate: 0
     uk:statutes/ukpga/2007/3/10#income_charged_at_additional_rate: 0
@@ -18,39 +17,37 @@
     uk:statutes/ukpga/2007/3/10#tax_on_income_charged_at_higher_rate: 0
     uk:statutes/ukpga/2007/3/10#tax_on_income_charged_at_additional_rate: 0
     uk:statutes/ukpga/2007/3/10#income_tax_on_section_10_income: 4000
-- name: earned_income_crossing_higher_rate_limit
+- name: income_between_basic_and_higher_rate_limits
   period:
     period_kind: tax_year
-    start: '2026-01-01'
-    end: '2026-12-31'
+    start: '2024-04-06'
+    end: '2025-04-05'
   input:
-    uk:statutes/ukpga/2007/3/10#input.income_charged_under_section_10: 60000
-    uk:statutes/ukpga/2007/3/10#input.basic_rate_limit: 37700
-    uk:statutes/ukpga/2007/3/10#input.higher_rate_limit: 125140
+    uk:statutes/ukpga/2007/3/10#input.income_charged_under_section_10: 50000
     uk:statutes/ukpga/2007/3/10#input.basic_rate: 0.2
     uk:statutes/ukpga/2007/3/10#input.higher_rate: 0.4
     uk:statutes/ukpga/2007/3/10#input.additional_rate: 0.45
   output:
+    uk:statutes/ukpga/2007/3/10#higher_rate_limit: 125140
     uk:statutes/ukpga/2007/3/10#income_charged_at_basic_rate: 37700
-    uk:statutes/ukpga/2007/3/10#income_charged_at_higher_rate: 22300
+    uk:statutes/ukpga/2007/3/10#income_charged_at_higher_rate: 12300
     uk:statutes/ukpga/2007/3/10#income_charged_at_additional_rate: 0
     uk:statutes/ukpga/2007/3/10#tax_on_income_charged_at_basic_rate: 7540
-    uk:statutes/ukpga/2007/3/10#tax_on_income_charged_at_higher_rate: 8920
+    uk:statutes/ukpga/2007/3/10#tax_on_income_charged_at_higher_rate: 4920
     uk:statutes/ukpga/2007/3/10#tax_on_income_charged_at_additional_rate: 0
-    uk:statutes/ukpga/2007/3/10#income_tax_on_section_10_income: 16460
-- name: earned_income_crossing_additional_rate_limit
+    uk:statutes/ukpga/2007/3/10#income_tax_on_section_10_income: 12460
+- name: income_above_higher_rate_limit_all_three_rates_apply
   period:
     period_kind: tax_year
-    start: '2026-01-01'
-    end: '2026-12-31'
+    start: '2024-04-06'
+    end: '2025-04-05'
   input:
     uk:statutes/ukpga/2007/3/10#input.income_charged_under_section_10: 150000
-    uk:statutes/ukpga/2007/3/10#input.basic_rate_limit: 37700
-    uk:statutes/ukpga/2007/3/10#input.higher_rate_limit: 125140
     uk:statutes/ukpga/2007/3/10#input.basic_rate: 0.2
     uk:statutes/ukpga/2007/3/10#input.higher_rate: 0.4
     uk:statutes/ukpga/2007/3/10#input.additional_rate: 0.45
   output:
+    uk:statutes/ukpga/2007/3/10#higher_rate_limit: 125140
     uk:statutes/ukpga/2007/3/10#income_charged_at_basic_rate: 37700
     uk:statutes/ukpga/2007/3/10#income_charged_at_higher_rate: 87440
     uk:statutes/ukpga/2007/3/10#income_charged_at_additional_rate: 24860
@@ -58,19 +55,18 @@
     uk:statutes/ukpga/2007/3/10#tax_on_income_charged_at_higher_rate: 34976
     uk:statutes/ukpga/2007/3/10#tax_on_income_charged_at_additional_rate: 11187
     uk:statutes/ukpga/2007/3/10#income_tax_on_section_10_income: 53703
-- name: no_positive_section_10_income
+- name: zero_income_yields_zero_tax
   period:
     period_kind: tax_year
-    start: '2026-01-01'
-    end: '2026-12-31'
+    start: '2024-04-06'
+    end: '2025-04-05'
   input:
-    uk:statutes/ukpga/2007/3/10#input.income_charged_under_section_10: -500
-    uk:statutes/ukpga/2007/3/10#input.basic_rate_limit: 37700
-    uk:statutes/ukpga/2007/3/10#input.higher_rate_limit: 125140
+    uk:statutes/ukpga/2007/3/10#input.income_charged_under_section_10: 0
     uk:statutes/ukpga/2007/3/10#input.basic_rate: 0.2
     uk:statutes/ukpga/2007/3/10#input.higher_rate: 0.4
     uk:statutes/ukpga/2007/3/10#input.additional_rate: 0.45
   output:
+    uk:statutes/ukpga/2007/3/10#higher_rate_limit: 125140
     uk:statutes/ukpga/2007/3/10#income_charged_at_basic_rate: 0
     uk:statutes/ukpga/2007/3/10#income_charged_at_higher_rate: 0
     uk:statutes/ukpga/2007/3/10#income_charged_at_additional_rate: 0

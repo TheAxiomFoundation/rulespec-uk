@@ -1,0 +1,32 @@
+- name: dividend_nil_rate_value
+  period:
+    period_kind: tax_year
+    start: '2024-04-06'
+    end: '2025-04-05'
+  input: {}
+  output:
+    uk:statutes/ukpga/2007/3/8#dividend_nil_rate: 0
+- name: dividend_ordinary_rate_value
+  period:
+    period_kind: tax_year
+    start: '2024-04-06'
+    end: '2025-04-05'
+  input: {}
+  output:
+    uk:statutes/ukpga/2007/3/8#dividend_ordinary_rate: 0.1075
+- name: dividend_upper_rate_value
+  period:
+    period_kind: tax_year
+    start: '2024-04-06'
+    end: '2025-04-05'
+  input: {}
+  output:
+    uk:statutes/ukpga/2007/3/8#dividend_upper_rate: 0.3575
+- name: dividend_additional_rate_value
+  period:
+    period_kind: tax_year
+    start: '2024-04-06'
+    end: '2025-04-05'
+  input: {}
+  output:
+    uk:statutes/ukpga/2007/3/8#dividend_additional_rate: 0.3935

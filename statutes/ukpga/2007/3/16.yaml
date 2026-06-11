@@ -1,0 +1,136 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/statute/ukpga/2007/3/16
+  summary: |-
+    Section 16 governs how savings income and dividend income are treated within a person's total income for income tax rate purposes. If a person has savings income but no dividend income, the savings income is treated as the highest part of total income. If dividend income but no savings income, the dividend income is treated as the highest part. If both, savings and dividend income are together treated as the highest part and the dividend income is treated as the higher part of that. References to dividend income in this section do not include dividend income which is relevant foreign income charged on the remittance basis under section 832 of ITTOIA 2005.
+rules:
+  - name: dividend_income_for_section_16_ordering
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: ITA 2007 s.16 final paragraph — references to dividend income exclude dividend income that is relevant foreign income charged under s.832 ITTOIA 2005
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/16
+              excerpt: References in this section to dividend income do not include dividend income which is relevant foreign income charged in accordance with section 832 of ITTOIA 2005 (relevant foreign income charged on the remittance basis).
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          dividend_income - dividend_income_that_is_relevant_foreign_income_charged_on_remittance_basis
+  - name: person_has_savings_income
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Year
+    source: ITA 2007 s.16 — antecedents "a person has savings income"
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: predicate
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/16
+              excerpt: If a person has savings income
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          savings_income > 0
+  - name: person_has_dividend_income_for_section_16
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Year
+    source: ITA 2007 s.16 — antecedents "a person has dividend income", read with the exclusion of remittance-basis foreign dividend income
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: predicate
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/16
+              excerpt: If a person has dividend income
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          dividend_income_for_section_16_ordering > 0
+  - name: savings_income_treated_as_highest_part_of_total_income
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Year
+    source: ITA 2007 s.16 — "If a person has savings income but no dividend income, the savings income is treated as the highest part of the person's total income."
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: predicate
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/16
+              excerpt: If a person has savings income but no dividend income, the savings income is treated as the highest part of the person's total income.
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          person_has_savings_income and not person_has_dividend_income_for_section_16
+  - name: dividend_income_treated_as_highest_part_of_total_income
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Year
+    source: ITA 2007 s.16 — "If a person has dividend income but no savings income, the dividend income is treated as the highest part of the person's total income."
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: predicate
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/16
+              excerpt: If a person has dividend income but no savings income, the dividend income is treated as the highest part of the person's total income.
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          person_has_dividend_income_for_section_16 and not person_has_savings_income
+  - name: savings_and_dividend_income_together_treated_as_highest_part_of_total_income
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Year
+    source: ITA 2007 s.16 — "the savings income and dividend income are together treated as the highest part of the person's total income"
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: predicate
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/16
+              excerpt: the savings income and dividend income are together treated as the highest part of the person's total income
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          person_has_savings_income and person_has_dividend_income_for_section_16
+  - name: dividend_income_treated_as_higher_part_of_combined_highest_part
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Year
+    source: ITA 2007 s.16 — "the dividend income is treated as the higher part of that part of the person's total income"
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: predicate
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/16
+              excerpt: the dividend income is treated as the higher part of that part of the person's total income
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          person_has_savings_income and person_has_dividend_income_for_section_16

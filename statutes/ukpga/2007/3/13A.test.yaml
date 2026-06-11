@@ -1,0 +1,60 @@
+- name: ordinary_rate_dividend_income_exceeds_allowance
+  period:
+    period_kind: tax_year
+    start: '2024-04-06'
+    end: '2025-04-05'
+  input:
+    uk:statutes/ukpga/2007/3/13#input.basic_rate_limit: 1000
+    uk:statutes/ukpga/2007/3/13#input.higher_rate_limit: 2000
+    uk:statutes/ukpga/2007/3/13#input.income_already_charged_before_section_13_dividend_income: 0
+    uk:statutes/ukpga/2007/3/13#input.dividend_income_subject_to_section_13_rates: 600
+  output:
+    uk:statutes/ukpga/2007/3/13A#dividend_ordinary_rate_amount_charged_at_dividend_nil_rate: 500
+    uk:statutes/ukpga/2007/3/13A#dividend_upper_rate_amount_charged_at_dividend_nil_rate: 0
+    uk:statutes/ukpga/2007/3/13A#dividend_additional_rate_amount_charged_at_dividend_nil_rate: 0
+    uk:statutes/ukpga/2007/3/13A#income_charged_at_dividend_nil_rate: 500
+- name: allowance_spans_ordinary_and_upper_rate_bands
+  period:
+    period_kind: tax_year
+    start: '2024-04-06'
+    end: '2025-04-05'
+  input:
+    uk:statutes/ukpga/2007/3/13#input.basic_rate_limit: 300
+    uk:statutes/ukpga/2007/3/13#input.higher_rate_limit: 1000
+    uk:statutes/ukpga/2007/3/13#input.income_already_charged_before_section_13_dividend_income: 0
+    uk:statutes/ukpga/2007/3/13#input.dividend_income_subject_to_section_13_rates: 700
+  output:
+    uk:statutes/ukpga/2007/3/13A#dividend_ordinary_rate_amount_charged_at_dividend_nil_rate: 300
+    uk:statutes/ukpga/2007/3/13A#dividend_upper_rate_amount_charged_at_dividend_nil_rate: 200
+    uk:statutes/ukpga/2007/3/13A#dividend_additional_rate_amount_charged_at_dividend_nil_rate: 0
+    uk:statutes/ukpga/2007/3/13A#income_charged_at_dividend_nil_rate: 500
+- name: allowance_spans_all_three_rate_bands
+  period:
+    period_kind: tax_year
+    start: '2024-04-06'
+    end: '2025-04-05'
+  input:
+    uk:statutes/ukpga/2007/3/13#input.basic_rate_limit: 200
+    uk:statutes/ukpga/2007/3/13#input.higher_rate_limit: 300
+    uk:statutes/ukpga/2007/3/13#input.income_already_charged_before_section_13_dividend_income: 0
+    uk:statutes/ukpga/2007/3/13#input.dividend_income_subject_to_section_13_rates: 700
+  output:
+    uk:statutes/ukpga/2007/3/13A#dividend_ordinary_rate_amount_charged_at_dividend_nil_rate: 200
+    uk:statutes/ukpga/2007/3/13A#dividend_upper_rate_amount_charged_at_dividend_nil_rate: 100
+    uk:statutes/ukpga/2007/3/13A#dividend_additional_rate_amount_charged_at_dividend_nil_rate: 200
+    uk:statutes/ukpga/2007/3/13A#income_charged_at_dividend_nil_rate: 500
+- name: total_dividend_income_below_allowance_all_three_bands
+  period:
+    period_kind: tax_year
+    start: '2024-04-06'
+    end: '2025-04-05'
+  input:
+    uk:statutes/ukpga/2007/3/13#input.basic_rate_limit: 100
+    uk:statutes/ukpga/2007/3/13#input.higher_rate_limit: 200
+    uk:statutes/ukpga/2007/3/13#input.income_already_charged_before_section_13_dividend_income: 0
+    uk:statutes/ukpga/2007/3/13#input.dividend_income_subject_to_section_13_rates: 300
+  output:
+    uk:statutes/ukpga/2007/3/13A#dividend_ordinary_rate_amount_charged_at_dividend_nil_rate: 100
+    uk:statutes/ukpga/2007/3/13A#dividend_upper_rate_amount_charged_at_dividend_nil_rate: 100
+    uk:statutes/ukpga/2007/3/13A#dividend_additional_rate_amount_charged_at_dividend_nil_rate: 100
+    uk:statutes/ukpga/2007/3/13A#income_charged_at_dividend_nil_rate: 300

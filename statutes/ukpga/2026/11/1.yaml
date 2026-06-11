@@ -1,0 +1,27 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/statute/ukpga/2026/11/1
+  summary: |-
+    Income tax is charged for the tax year 2026-27.
+rules:
+  - name: income_tax_charged
+    kind: derived
+    entity: TaxUnit
+    dtype: Judgment
+    period: Year
+    source: Finance Act 2026, s.1
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2026/11/1
+              excerpt: "Income tax is charged for the tax year 2026-27."
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          tax_year_is_2026_27

@@ -1,0 +1,113 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/statute/ukpga/2007/3/12A
+  summary: |-
+    Section 12A applies to an individual if the individual's Step 3 income is greater than the starting rate limit for savings (£L) and some or all of the individual's income above that limit consists of savings income. Where £X (the excess savings income above the starting rate limit) is less than or equal to £A (the savings allowance under section 12B), income tax is charged at the savings nil rate on the excess. Where £X is more than £A, income tax is charged at the savings nil rate on the lowest £A of the excess. An individual's "Step 3 income" is the individual's net income less allowances deducted at Step 3 of the calculation in section 23.
+
+imports:
+  - uk:statutes/ukpga/2007/3/12#starting_rate_limit_for_savings
+  - uk:statutes/ukpga/2007/3/23#income_remaining_after_allowances
+
+rules:
+  - name: individual_income_above_starting_rate_limit_for_savings
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: ITA 2007 s.12A(1)(b)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/12A
+              excerpt: "the other ('the individual's income above the starting rate limit for savings') consisting of the rest of the individual's Step 3 income"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/2007/3/23#income_remaining_after_allowances
+              output: income_remaining_after_allowances
+              hash: sha256:7f4da6e1738ff72e4d1f54bde79b326ce99cc52d033036d55d9953b3fce8b97a
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/2007/3/12#starting_rate_limit_for_savings
+              output: starting_rate_limit_for_savings
+              hash: sha256:32ab1eca7c936c595d321aa402e5d85f36f056067e8d5a0b82b002cb45e24b11
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          max(0, income_remaining_after_allowances - starting_rate_limit_for_savings)
+
+  - name: savings_nil_rate_applies
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Year
+    source: ITA 2007 s.12A(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/12A
+              excerpt: "the amount of the individual's Step 3 income is greater than £L"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/12A
+              excerpt: "some or all of the individual's income above the starting rate limit for savings consists of savings income"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/2007/3/23#income_remaining_after_allowances
+              output: income_remaining_after_allowances
+              hash: sha256:7f4da6e1738ff72e4d1f54bde79b326ce99cc52d033036d55d9953b3fce8b97a
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/2007/3/12#starting_rate_limit_for_savings
+              output: starting_rate_limit_for_savings
+              hash: sha256:32ab1eca7c936c595d321aa402e5d85f36f056067e8d5a0b82b002cb45e24b11
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          income_remaining_after_allowances > starting_rate_limit_for_savings
+          and savings_income_above_starting_rate_limit_for_savings > 0
+
+  - name: savings_income_charged_at_savings_nil_rate
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: ITA 2007 s.12A(3)-(4)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/12A
+              excerpt: "If £X is less than or equal to £A, income tax is charged at the savings nil rate ... on the excess."
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/12A
+              excerpt: "If £X is more than £A, income tax is charged at the savings nil rate ... on the lowest £A of the excess."
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/2007/3/12A#savings_nil_rate_applies
+              output: savings_nil_rate_applies
+              hash: sha256:local
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          if savings_nil_rate_applies: min(savings_income_above_starting_rate_limit_for_savings, savings_allowance_under_section_12b) else: 0

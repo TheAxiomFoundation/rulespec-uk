@@ -1,0 +1,23 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/statute/ukpga/2026/11/10
+  summary: "Amends section 5 of FA 2021 to extend the freeze of the basic rate limit\
+    \ (\xA337,700 in section 10(5) of ITA 2007) and the personal allowance (\xA312,570\
+    \ in section 35(1) of ITA 2007), and the consequential disapplication of uprating,\
+    \ from tax years up to 2027-28 to tax years up to 2030-31."
+rules:
+- name: basic_rate_limit_restatement
+  kind: source_relation
+  source_relation:
+    type: restates
+    target: uk:statutes/ukpga/2023/1/5#basic_rate_limit
+  source: FA 2026 s10(1) amending FA 2021 s5(1); ITA 2007 s10(5)
+- name: personal_allowance_restatement
+  kind: source_relation
+  source_relation:
+    type: restates
+    target: uk:statutes/ukpga/2023/1/5#personal_allowance
+  source: FA 2026 s10(2) amending FA 2021 s5(2); ITA 2007 s35(1)
