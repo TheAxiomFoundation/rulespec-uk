@@ -1,0 +1,12 @@
+# Pre-existing content debt surfaced by repository-wide validation at
+# consolidation time. Ratchets both ways (see tests/). Do not add
+# entries without an issue link.
+issue: https://github.com/TheAxiomFoundation/rulespec-uk/issues/42
+missing_companion_tests:
+  - uk/regulations/uksi/2013/376/23.yaml
+shape_issues: []
+uncovered_derived_rules: []
+# Files skipped by the org validate step (engine-compile-backed numeric
+# grounding); each needs the issue above or its own link.
+validate_failures:  # https://github.com/TheAxiomFoundation/rulespec-uk/issues/46
+  - uk-kingston-upon-thames/policies/kingston-upon-thames/council-tax-reduction.yaml

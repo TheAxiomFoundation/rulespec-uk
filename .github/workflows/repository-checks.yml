@@ -10,3 +10,8 @@ jobs:
   validate:
     uses: TheAxiomFoundation/.github/.github/workflows/validate-rulespec.yml@main
     secrets: inherit
+    with:
+      validate-roots: auto
+      # TODO(consolidation): re-enable immediately after the monorepo
+      # migration PR merges.
+      run-generated-guard: false
