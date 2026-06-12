@@ -1,6 +1,11 @@
 # rulespec-uk
 
-UK RuleSpec source registry and policy metadata.
+United Kingdom RuleSpec encodings — the country monorepo: uk/ (national),
+uk-kingston-upon-thames/ (council), and programs/ (declarative compose
+specs). Durable ids are <jurisdiction>:<path>#<rule>, identical to the
+pre-consolidation layout. Known gaps ratchet via known-validation-gaps.yaml
+(rulespec-uk#42) and known-dangling.yaml conventions; see rulespec-us for
+the full monorepo conventions.
 
 ## Contents
 
