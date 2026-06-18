@@ -1,0 +1,59 @@
+version: 1
+allowed_root_directories:
+  - .axiom
+  - .github
+  - data
+  - programs
+  - tests
+  - uk
+  - uk-kingston-upon-thames
+  - validation_baselines
+allowed_root_files:
+  - .gitignore
+  - CLAUDE.md
+  - README.md
+  - known-validation-gaps.yaml
+  - variables.toml
+path_rules:
+  - patterns:
+      - ".axiom/**"
+    allow_extensions:
+      - ".json"
+      - ".toml"
+      - ".yaml"
+  - patterns:
+      - ".github/**"
+    allow_extensions:
+      - ".yml"
+      - ".yaml"
+  - patterns:
+      - "data/**"
+    allow_extensions:
+      - ".json"
+      - ".jsonl"
+      - ".xml"
+  - patterns:
+      - "programs/**"
+    allow_extensions:
+      - ".yaml"
+  - patterns:
+      - "tests/**"
+    allow_extensions:
+      - ".py"
+  - patterns:
+      - "uk/**"
+    allow_extensions:
+      - ".yaml"
+  - patterns:
+      - "uk-*/**"
+    allow_extensions:
+      - ".json"
+      - ".jsonl"
+      - ".md"
+      - ".pdf"
+      - ".toml"
+      - ".yaml"
+  - patterns:
+      - "validation_baselines/**"
+    allow_extensions:
+      - ".json"
