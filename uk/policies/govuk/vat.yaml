@@ -1,0 +1,274 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_paths:
+      - uk/guidance/govuk/register-for-vat
+      - uk/guidance/govuk/how-vat-works
+  summary: |-
+    GOV.UK VAT guidance requires a business to register when its taxable
+    turnover for the last 12 months is over GBP 90,000. A business below the
+    threshold may register voluntarily. Registered businesses charge VAT on
+    standard-rated taxable supplies, may reclaim VAT paid on business purchases,
+    and pay or reclaim the resulting net amount.
+rules:
+  - name: vat_registration_threshold
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: GOV.UK, Register for VAT
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/govuk/register-for-vat
+              excerpt: "You must register if your total taxable turnover ... goes over £90,000."
+    versions:
+      - effective_from: '2024-04-01'
+        formula: |-
+          90000
+
+  - name: vat_deregistration_threshold
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: GOV.UK, Register for VAT
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/govuk/register-for-vat
+              excerpt: "you can ask HMRC to cancel your registration if your taxable turnover falls below £88,000"
+    versions:
+      - effective_from: '2024-04-01'
+        formula: |-
+          88000
+
+  - name: standard_vat_rate
+    kind: parameter
+    dtype: Rate
+    source: GOV.UK, How VAT works
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/govuk/how-vat-works
+              excerpt: "The standard rate of VAT is 20%."
+    versions:
+      - effective_from: '2011-01-04'
+        formula: |-
+          0.20
+
+  - name: firm_must_register_for_vat
+    kind: derived
+    entity: Firm
+    dtype: Judgment
+    period: Year
+    source: GOV.UK, Register for VAT
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/guidance/govuk/register-for-vat
+              excerpt: "You must register if your total taxable turnover ... goes over £90,000."
+    versions:
+      - effective_from: '2024-04-01'
+        formula: |-
+          rolling_12_month_taxable_turnover > vat_registration_threshold
+
+  - name: firm_may_register_voluntarily_for_vat
+    kind: derived
+    entity: Firm
+    dtype: Judgment
+    period: Year
+    source: GOV.UK, Register for VAT
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/guidance/govuk/register-for-vat
+              excerpt: "You can also register voluntarily if your turnover is less than £90,000."
+    versions:
+      - effective_from: '2024-04-01'
+        formula: |-
+          rolling_12_month_taxable_turnover < vat_registration_threshold
+
+  - name: firm_vat_registered
+    kind: derived
+    entity: Firm
+    dtype: Judgment
+    period: Year
+    source: GOV.UK, Register for VAT
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/guidance/govuk/register-for-vat
+              excerpt: "You must pay HMRC any VAT you owe from the date they register you."
+    versions:
+      - effective_from: '2024-04-01'
+        formula: |-
+          firm_has_active_vat_registration
+
+  - name: firm_treated_as_vat_registered
+    kind: derived
+    entity: Firm
+    dtype: Judgment
+    period: Year
+    source: GOV.UK, Register for VAT
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/guidance/govuk/register-for-vat
+              excerpt: "You must register if your total taxable turnover ... goes over £90,000."
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/guidance/govuk/register-for-vat
+              excerpt: "You must pay HMRC any VAT you owe from the date they register you."
+    versions:
+      - effective_from: '2024-04-01'
+        formula: |-
+          firm_vat_registered or firm_must_register_for_vat
+
+  - name: firm_may_cancel_vat_registration
+    kind: derived
+    entity: Firm
+    dtype: Judgment
+    period: Year
+    source: GOV.UK, Register for VAT
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/guidance/govuk/register-for-vat
+              excerpt: "you can ask HMRC to cancel your registration if your taxable turnover falls below £88,000"
+    versions:
+      - effective_from: '2024-04-01'
+        formula: |-
+          firm_vat_registered and rolling_12_month_taxable_turnover < vat_deregistration_threshold
+
+  - name: standard_rate_output_vat
+    kind: derived
+    entity: Firm
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: GOV.UK, How VAT works
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/guidance/govuk/how-vat-works
+              excerpt: "Most goods and services are charged at the standard rate of 20%."
+    versions:
+      - effective_from: '2024-04-01'
+        formula: |-
+          if firm_treated_as_vat_registered: standard_rated_taxable_supplies_value * standard_vat_rate else: 0
+
+  - name: recoverable_input_vat
+    kind: derived
+    entity: Firm
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: GOV.UK, How VAT works
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/guidance/govuk/how-vat-works
+              excerpt: "You can reclaim the VAT you've paid on business-related goods and services."
+    versions:
+      - effective_from: '2024-04-01'
+        formula: |-
+          if firm_treated_as_vat_registered: max(0, input_vat_on_business_purchases) else: 0
+
+  - name: net_vat_liability
+    kind: derived
+    entity: Firm
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: GOV.UK, How VAT works
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/guidance/govuk/how-vat-works
+              excerpt: "If you've charged more VAT than you've paid, you must pay the difference to HMRC."
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/guidance/govuk/how-vat-works
+              excerpt: "If you've paid more VAT than you've charged, HMRC will usually repay you the difference."
+    versions:
+      - effective_from: '2024-04-01'
+        formula: |-
+          if firm_treated_as_vat_registered: standard_rate_output_vat - recoverable_input_vat else: 0
+
+  - name: vat_due
+    kind: derived
+    entity: Firm
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: GOV.UK, How VAT works
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/guidance/govuk/how-vat-works
+              excerpt: "If you've charged more VAT than you've paid, you must pay the difference to HMRC."
+    versions:
+      - effective_from: '2024-04-01'
+        formula: |-
+          max(0, net_vat_liability)
+
+  - name: vat_repayment_due
+    kind: derived
+    entity: Firm
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: GOV.UK, How VAT works
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/guidance/govuk/how-vat-works
+              excerpt: "If you've paid more VAT than you've charged, HMRC will usually repay you the difference."
+    versions:
+      - effective_from: '2024-04-01'
+        formula: |-
+          max(0, 0 - net_vat_liability)
