@@ -8,8 +8,9 @@ module:
       - uk/guidance/govuk/how-vat-works
   summary: |-
     GOV.UK VAT guidance requires a business to register when its taxable
-    turnover for the last 12 months is over GBP 90,000. A business below the
-    threshold may register voluntarily. Registered businesses charge VAT on
+    turnover for the last 12 months is over GBP 90,000 or when it expects
+    taxable turnover to go over GBP 90,000 in the next 30 days. A business below
+    the threshold may register voluntarily. Registered businesses charge VAT on
     standard-rated taxable supplies, may reclaim VAT paid on business purchases,
     and pay or reclaim the resulting net amount.
 rules:
@@ -82,10 +83,15 @@ rules:
             source:
               corpus_citation_path: uk/guidance/govuk/register-for-vat
               excerpt: "You must register if your total taxable turnover ... goes over £90,000."
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/guidance/govuk/register-for-vat
+              excerpt: "You must also register if you expect your total taxable turnover to go over £90,000 in the next 30 days."
     versions:
       - effective_from: '2024-04-01'
         formula: |-
-          rolling_12_month_taxable_turnover > vat_registration_threshold
+          rolling_12_month_taxable_turnover > vat_registration_threshold or expected_30_day_taxable_turnover > vat_registration_threshold
 
   - name: firm_may_register_voluntarily_for_vat
     kind: derived
@@ -104,7 +110,7 @@ rules:
     versions:
       - effective_from: '2024-04-01'
         formula: |-
-          rolling_12_month_taxable_turnover < vat_registration_threshold
+          rolling_12_month_taxable_turnover < vat_registration_threshold and expected_30_day_taxable_turnover <= vat_registration_threshold
 
   - name: firm_vat_registered
     kind: derived

@@ -5,6 +5,7 @@
     end: '2027-04-05'
   input:
     uk:policies/govuk/vat#input.rolling_12_month_taxable_turnover: 100000
+    uk:policies/govuk/vat#input.expected_30_day_taxable_turnover: 10000
     uk:policies/govuk/vat#input.firm_has_active_vat_registration: false
     uk:policies/govuk/vat#input.standard_rated_taxable_supplies_value: 200000
     uk:policies/govuk/vat#input.input_vat_on_business_purchases: 15000
@@ -23,6 +24,28 @@
     uk:policies/govuk/vat#vat_due: 25000
     uk:policies/govuk/vat#vat_repayment_due: 0
 
+- name: mandatory_registration_expected_next_30_days
+  period:
+    period_kind: tax_year
+    start: '2026-04-06'
+    end: '2027-04-05'
+  input:
+    uk:policies/govuk/vat#input.rolling_12_month_taxable_turnover: 50000
+    uk:policies/govuk/vat#input.expected_30_day_taxable_turnover: 100000
+    uk:policies/govuk/vat#input.firm_has_active_vat_registration: false
+    uk:policies/govuk/vat#input.standard_rated_taxable_supplies_value: 120000
+    uk:policies/govuk/vat#input.input_vat_on_business_purchases: 6000
+  output:
+    uk:policies/govuk/vat#firm_must_register_for_vat: holds
+    uk:policies/govuk/vat#firm_may_register_voluntarily_for_vat: not_holds
+    uk:policies/govuk/vat#firm_vat_registered: not_holds
+    uk:policies/govuk/vat#firm_treated_as_vat_registered: holds
+    uk:policies/govuk/vat#standard_rate_output_vat: 24000
+    uk:policies/govuk/vat#recoverable_input_vat: 6000
+    uk:policies/govuk/vat#net_vat_liability: 18000
+    uk:policies/govuk/vat#vat_due: 18000
+    uk:policies/govuk/vat#vat_repayment_due: 0
+
 - name: below_threshold_unregistered_firm_has_no_vat
   period:
     period_kind: tax_year
@@ -30,6 +53,7 @@
     end: '2027-04-05'
   input:
     uk:policies/govuk/vat#input.rolling_12_month_taxable_turnover: 50000
+    uk:policies/govuk/vat#input.expected_30_day_taxable_turnover: 10000
     uk:policies/govuk/vat#input.firm_has_active_vat_registration: false
     uk:policies/govuk/vat#input.standard_rated_taxable_supplies_value: 80000
     uk:policies/govuk/vat#input.input_vat_on_business_purchases: 10000
@@ -52,6 +76,7 @@
     end: '2027-04-05'
   input:
     uk:policies/govuk/vat#input.rolling_12_month_taxable_turnover: 50000
+    uk:policies/govuk/vat#input.expected_30_day_taxable_turnover: 10000
     uk:policies/govuk/vat#input.firm_has_active_vat_registration: true
     uk:policies/govuk/vat#input.standard_rated_taxable_supplies_value: 30000
     uk:policies/govuk/vat#input.input_vat_on_business_purchases: 10000
@@ -74,6 +99,7 @@
     end: '2027-04-05'
   input:
     uk:policies/govuk/vat#input.rolling_12_month_taxable_turnover: 50000
+    uk:policies/govuk/vat#input.expected_30_day_taxable_turnover: 10000
     uk:policies/govuk/vat#input.firm_has_active_vat_registration: true
     uk:policies/govuk/vat#input.standard_rated_taxable_supplies_value: 10000
     uk:policies/govuk/vat#input.input_vat_on_business_purchases: 1000
