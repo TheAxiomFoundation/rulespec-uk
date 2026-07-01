@@ -1,0 +1,50 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/statute/ukpga/1994/23/25
+  summary: |-
+    A taxable person is entitled to deduct allowable input tax from output tax.
+    If allowable input-tax credit exceeds output tax, the excess is a VAT
+    credit due to the taxable person.
+imports:
+  - uk:statutes/ukpga/1994/23/24#output_tax_on_standard_rated_taxable_supplies
+  - uk:statutes/ukpga/1994/23/26#allowable_input_tax_credit
+rules:
+  - name: net_vat_liability_after_input_tax_credit
+    kind: derived
+    entity: Firm
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Value Added Tax Act 1994 s.25(2)-(3)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1994/23/25
+              excerpt: "deduct that amount from any output tax that is due from him"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1994/23/25
+              excerpt: "the amount of the credit exceeds that of the output tax"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/1994/23/24#output_tax_on_standard_rated_taxable_supplies
+              output: output_tax_on_standard_rated_taxable_supplies
+              hash: sha256:2584b95bfe14de237f2c5388d96f920595261ff1b2a7d7e9508ab108801f5e2b
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/1994/23/26#allowable_input_tax_credit
+              output: allowable_input_tax_credit
+              hash: sha256:8392713b179355463507742d90c46616dce2c86d6f4630f36dfc2036246f62e8
+    versions:
+      - effective_from: '1994-09-01'
+        formula: |-
+          output_tax_on_standard_rated_taxable_supplies - allowable_input_tax_credit

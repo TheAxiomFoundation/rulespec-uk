@@ -1,0 +1,25 @@
+- name: all_input_tax_allowable
+  period:
+    period_kind: tax_year
+    start: '2024-04-06'
+    end: '2025-04-05'
+  input:
+    uk:statutes/ukpga/1994/23/24#input.taxable_person: true
+    uk:statutes/ukpga/1994/23/24#input.standard_rated_taxable_supplies_value: 100
+    uk:statutes/ukpga/1994/23/24#input.standard_rated_deductible_business_purchase_value: 40
+    uk:statutes/ukpga/1994/23/26#input.allowable_input_tax_proportion: 1
+  output:
+    uk:statutes/ukpga/1994/23/26#allowable_input_tax_credit: 8
+
+- name: partial_input_tax_allowable
+  period:
+    period_kind: tax_year
+    start: '2024-04-06'
+    end: '2025-04-05'
+  input:
+    uk:statutes/ukpga/1994/23/24#input.taxable_person: true
+    uk:statutes/ukpga/1994/23/24#input.standard_rated_taxable_supplies_value: 100
+    uk:statutes/ukpga/1994/23/24#input.standard_rated_deductible_business_purchase_value: 40
+    uk:statutes/ukpga/1994/23/26#input.allowable_input_tax_proportion: 0.5
+  output:
+    uk:statutes/ukpga/1994/23/26#allowable_input_tax_credit: 4
