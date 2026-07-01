@@ -1,0 +1,38 @@
+- name: net_liability_deducts_input_tax_not_full_input_cost
+  period:
+    period_kind: tax_year
+    start: '2024-04-06'
+    end: '2025-04-05'
+  input:
+    uk:statutes/ukpga/1994/23/24#input.taxable_person: true
+    uk:statutes/ukpga/1994/23/24#input.standard_rated_taxable_supplies_value: 100
+    uk:statutes/ukpga/1994/23/24#input.standard_rated_deductible_business_purchase_value: 40
+    uk:statutes/ukpga/1994/23/26#input.allowable_input_tax_proportion: 1
+  output:
+    uk:statutes/ukpga/1994/23/25#net_vat_liability_after_input_tax_credit: 12
+
+- name: excess_input_tax_credit_is_negative_net_liability
+  period:
+    period_kind: tax_year
+    start: '2024-04-06'
+    end: '2025-04-05'
+  input:
+    uk:statutes/ukpga/1994/23/24#input.taxable_person: true
+    uk:statutes/ukpga/1994/23/24#input.standard_rated_taxable_supplies_value: 100
+    uk:statutes/ukpga/1994/23/24#input.standard_rated_deductible_business_purchase_value: 120
+    uk:statutes/ukpga/1994/23/26#input.allowable_input_tax_proportion: 1
+  output:
+    uk:statutes/ukpga/1994/23/25#net_vat_liability_after_input_tax_credit: -4
+
+- name: non_taxable_person_has_zero_net_liability
+  period:
+    period_kind: tax_year
+    start: '2024-04-06'
+    end: '2025-04-05'
+  input:
+    uk:statutes/ukpga/1994/23/24#input.taxable_person: false
+    uk:statutes/ukpga/1994/23/24#input.standard_rated_taxable_supplies_value: 100
+    uk:statutes/ukpga/1994/23/24#input.standard_rated_deductible_business_purchase_value: 40
+    uk:statutes/ukpga/1994/23/26#input.allowable_input_tax_proportion: 1
+  output:
+    uk:statutes/ukpga/1994/23/25#net_vat_liability_after_input_tax_credit: 0
