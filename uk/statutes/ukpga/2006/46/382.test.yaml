@@ -1,0 +1,254 @@
+- name: pre_2025_thresholds_apply_on_2025_04_05
+  period:
+    period_kind: custom
+    name: financial_year
+    start: '2025-04-05'
+    end: '2026-04-04'
+  input:
+    uk:statutes/ukpga/2006/46/382#input.company_is_in_first_financial_year: true
+    uk:statutes/ukpga/2006/46/382#input.company_turnover: 10200000
+    uk:statutes/ukpga/2006/46/382#input.company_balance_sheet_total: 5100000
+    uk:statutes/ukpga/2006/46/382#input.company_average_number_of_employees: 50
+    uk:statutes/ukpga/2006/46/382#input.financial_year_proportion_of_year: 1
+    uk:statutes/ukpga/2006/46/382#input.company_qualified_as_small_in_previous_financial_year: false
+    uk:statutes/ukpga/2006/46/382#input.small_company_qualifying_conditions_met_in_previous_financial_year: false
+  output:
+    uk:statutes/ukpga/2006/46/382#small_company_annual_turnover_threshold: 10.2
+    uk:statutes/ukpga/2006/46/382#small_company_balance_sheet_total_threshold: 5.1
+    uk:statutes/ukpga/2006/46/382#small_company_monetary_million_multiplier: 1000000
+    uk:statutes/ukpga/2006/46/382#small_company_number_of_employees_threshold: 50
+    uk:statutes/ukpga/2006/46/382#small_company_balance_sheet_total_threshold_amount: 5100000
+    uk:statutes/ukpga/2006/46/382#small_company_turnover_condition_met: holds
+    uk:statutes/ukpga/2006/46/382#small_company_balance_sheet_total_condition_met: holds
+    uk:statutes/ukpga/2006/46/382#small_company_number_of_employees_condition_met: holds
+    uk:statutes/ukpga/2006/46/382#small_company_qualifying_conditions_met: holds
+    uk:statutes/ukpga/2006/46/382#company_qualifies_as_small_in_first_financial_year: holds
+    uk:statutes/ukpga/2006/46/382#company_qualifies_as_small: holds
+
+- name: same_inputs_fail_before_2025_threshold_increase
+  period:
+    period_kind: custom
+    name: financial_year
+    start: '2025-04-05'
+    end: '2026-04-04'
+  input:
+    uk:statutes/ukpga/2006/46/382#input.company_is_in_first_financial_year: true
+    uk:statutes/ukpga/2006/46/382#input.company_turnover: 12000000
+    uk:statutes/ukpga/2006/46/382#input.company_balance_sheet_total: 6000000
+    uk:statutes/ukpga/2006/46/382#input.company_average_number_of_employees: 51
+    uk:statutes/ukpga/2006/46/382#input.financial_year_proportion_of_year: 1
+    uk:statutes/ukpga/2006/46/382#input.company_qualified_as_small_in_previous_financial_year: false
+    uk:statutes/ukpga/2006/46/382#input.small_company_qualifying_conditions_met_in_previous_financial_year: false
+  output:
+    uk:statutes/ukpga/2006/46/382#small_company_annual_turnover_threshold: 10.2
+    uk:statutes/ukpga/2006/46/382#small_company_balance_sheet_total_threshold: 5.1
+    uk:statutes/ukpga/2006/46/382#small_company_turnover_condition_met: not_holds
+    uk:statutes/ukpga/2006/46/382#small_company_balance_sheet_total_condition_met: not_holds
+    uk:statutes/ukpga/2006/46/382#small_company_number_of_employees_condition_met: not_holds
+    uk:statutes/ukpga/2006/46/382#small_company_qualifying_conditions_met: not_holds
+    uk:statutes/ukpga/2006/46/382#company_qualifies_as_small: not_holds
+
+- name: post_2025_thresholds_apply_on_2025_04_06
+  period:
+    period_kind: custom
+    name: financial_year
+    start: '2025-04-06'
+    end: '2026-04-05'
+  input:
+    uk:statutes/ukpga/2006/46/382#input.company_is_in_first_financial_year: true
+    uk:statutes/ukpga/2006/46/382#input.company_turnover: 12000000
+    uk:statutes/ukpga/2006/46/382#input.company_balance_sheet_total: 6000000
+    uk:statutes/ukpga/2006/46/382#input.company_average_number_of_employees: 51
+    uk:statutes/ukpga/2006/46/382#input.financial_year_proportion_of_year: 1
+    uk:statutes/ukpga/2006/46/382#input.company_qualified_as_small_in_previous_financial_year: false
+    uk:statutes/ukpga/2006/46/382#input.small_company_qualifying_conditions_met_in_previous_financial_year: false
+  output:
+    uk:statutes/ukpga/2006/46/382#small_company_annual_turnover_threshold: 15
+    uk:statutes/ukpga/2006/46/382#small_company_balance_sheet_total_threshold: 7.5
+    uk:statutes/ukpga/2006/46/382#small_company_number_of_employees_threshold: 50
+    uk:statutes/ukpga/2006/46/382#small_company_balance_sheet_total_threshold_amount: 7500000
+    uk:statutes/ukpga/2006/46/382#small_company_turnover_condition_met: holds
+    uk:statutes/ukpga/2006/46/382#small_company_balance_sheet_total_condition_met: holds
+    uk:statutes/ukpga/2006/46/382#small_company_number_of_employees_condition_met: not_holds
+    uk:statutes/ukpga/2006/46/382#small_company_qualifying_conditions_met: holds
+    uk:statutes/ukpga/2006/46/382#company_qualifies_as_small: holds
+
+- name: turnover_above_limit_fails_turnover_condition_but_two_other_conditions_qualify
+  period:
+    period_kind: custom
+    name: financial_year
+    start: '2025-04-06'
+    end: '2026-04-05'
+  input:
+    uk:statutes/ukpga/2006/46/382#input.company_is_in_first_financial_year: true
+    uk:statutes/ukpga/2006/46/382#input.company_turnover: 15000001
+    uk:statutes/ukpga/2006/46/382#input.company_balance_sheet_total: 7500000
+    uk:statutes/ukpga/2006/46/382#input.company_average_number_of_employees: 50
+    uk:statutes/ukpga/2006/46/382#input.financial_year_proportion_of_year: 1
+    uk:statutes/ukpga/2006/46/382#input.company_qualified_as_small_in_previous_financial_year: false
+    uk:statutes/ukpga/2006/46/382#input.small_company_qualifying_conditions_met_in_previous_financial_year: false
+  output:
+    uk:statutes/ukpga/2006/46/382#small_company_turnover_condition_met: not_holds
+    uk:statutes/ukpga/2006/46/382#small_company_balance_sheet_total_condition_met: holds
+    uk:statutes/ukpga/2006/46/382#small_company_number_of_employees_condition_met: holds
+    uk:statutes/ukpga/2006/46/382#small_company_qualifying_conditions_met: holds
+    uk:statutes/ukpga/2006/46/382#company_qualifies_as_small: holds
+
+- name: balance_sheet_above_limit_fails_balance_condition_but_two_other_conditions_qualify
+  period:
+    period_kind: custom
+    name: financial_year
+    start: '2025-04-06'
+    end: '2026-04-05'
+  input:
+    uk:statutes/ukpga/2006/46/382#input.company_is_in_first_financial_year: true
+    uk:statutes/ukpga/2006/46/382#input.company_turnover: 15000000
+    uk:statutes/ukpga/2006/46/382#input.company_balance_sheet_total: 7500001
+    uk:statutes/ukpga/2006/46/382#input.company_average_number_of_employees: 50
+    uk:statutes/ukpga/2006/46/382#input.financial_year_proportion_of_year: 1
+    uk:statutes/ukpga/2006/46/382#input.company_qualified_as_small_in_previous_financial_year: false
+    uk:statutes/ukpga/2006/46/382#input.small_company_qualifying_conditions_met_in_previous_financial_year: false
+  output:
+    uk:statutes/ukpga/2006/46/382#small_company_turnover_condition_met: holds
+    uk:statutes/ukpga/2006/46/382#small_company_balance_sheet_total_condition_met: not_holds
+    uk:statutes/ukpga/2006/46/382#small_company_number_of_employees_condition_met: holds
+    uk:statutes/ukpga/2006/46/382#small_company_qualifying_conditions_met: holds
+    uk:statutes/ukpga/2006/46/382#company_qualifies_as_small: holds
+
+- name: employees_above_limit_fails_employee_condition_but_financial_conditions_qualify
+  period:
+    period_kind: custom
+    name: financial_year
+    start: '2025-04-06'
+    end: '2026-04-05'
+  input:
+    uk:statutes/ukpga/2006/46/382#input.company_is_in_first_financial_year: true
+    uk:statutes/ukpga/2006/46/382#input.company_turnover: 15000000
+    uk:statutes/ukpga/2006/46/382#input.company_balance_sheet_total: 7500000
+    uk:statutes/ukpga/2006/46/382#input.company_average_number_of_employees: 51
+    uk:statutes/ukpga/2006/46/382#input.financial_year_proportion_of_year: 1
+    uk:statutes/ukpga/2006/46/382#input.company_qualified_as_small_in_previous_financial_year: false
+    uk:statutes/ukpga/2006/46/382#input.small_company_qualifying_conditions_met_in_previous_financial_year: false
+  output:
+    uk:statutes/ukpga/2006/46/382#small_company_turnover_condition_met: holds
+    uk:statutes/ukpga/2006/46/382#small_company_balance_sheet_total_condition_met: holds
+    uk:statutes/ukpga/2006/46/382#small_company_number_of_employees_condition_met: not_holds
+    uk:statutes/ukpga/2006/46/382#small_company_qualifying_conditions_met: holds
+    uk:statutes/ukpga/2006/46/382#company_qualifies_as_small: holds
+
+- name: only_one_condition_met_does_not_qualify
+  period:
+    period_kind: custom
+    name: financial_year
+    start: '2025-04-06'
+    end: '2026-04-05'
+  input:
+    uk:statutes/ukpga/2006/46/382#input.company_is_in_first_financial_year: true
+    uk:statutes/ukpga/2006/46/382#input.company_turnover: 15000001
+    uk:statutes/ukpga/2006/46/382#input.company_balance_sheet_total: 7500001
+    uk:statutes/ukpga/2006/46/382#input.company_average_number_of_employees: 50
+    uk:statutes/ukpga/2006/46/382#input.financial_year_proportion_of_year: 1
+    uk:statutes/ukpga/2006/46/382#input.company_qualified_as_small_in_previous_financial_year: false
+    uk:statutes/ukpga/2006/46/382#input.small_company_qualifying_conditions_met_in_previous_financial_year: false
+  output:
+    uk:statutes/ukpga/2006/46/382#small_company_turnover_condition_met: not_holds
+    uk:statutes/ukpga/2006/46/382#small_company_balance_sheet_total_condition_met: not_holds
+    uk:statutes/ukpga/2006/46/382#small_company_number_of_employees_condition_met: holds
+    uk:statutes/ukpga/2006/46/382#small_company_qualifying_conditions_met: not_holds
+    uk:statutes/ukpga/2006/46/382#company_qualifies_as_small: not_holds
+
+- name: short_financial_year_prorates_turnover_threshold
+  period:
+    period_kind: custom
+    name: financial_year
+    start: '2025-04-06'
+    end: '2025-10-05'
+  input:
+    uk:statutes/ukpga/2006/46/382#input.company_is_in_first_financial_year: true
+    uk:statutes/ukpga/2006/46/382#input.company_turnover: 7500001
+    uk:statutes/ukpga/2006/46/382#input.company_balance_sheet_total: 7500001
+    uk:statutes/ukpga/2006/46/382#input.company_average_number_of_employees: 51
+    uk:statutes/ukpga/2006/46/382#input.financial_year_proportion_of_year: 0.5
+    uk:statutes/ukpga/2006/46/382#input.company_qualified_as_small_in_previous_financial_year: false
+    uk:statutes/ukpga/2006/46/382#input.small_company_qualifying_conditions_met_in_previous_financial_year: false
+  output:
+    uk:statutes/ukpga/2006/46/382#small_company_turnover_threshold_for_financial_year: 7500000
+    uk:statutes/ukpga/2006/46/382#small_company_turnover_condition_met: not_holds
+    uk:statutes/ukpga/2006/46/382#small_company_qualifying_conditions_met: not_holds
+    uk:statutes/ukpga/2006/46/382#company_qualifies_as_small: not_holds
+
+- name: subsequent_year_first_success_after_not_small_does_not_change_status
+  period:
+    period_kind: custom
+    name: financial_year
+    start: '2025-04-06'
+    end: '2026-04-05'
+  input:
+    uk:statutes/ukpga/2006/46/382#input.company_is_in_first_financial_year: false
+    uk:statutes/ukpga/2006/46/382#input.company_turnover: 15000000
+    uk:statutes/ukpga/2006/46/382#input.company_balance_sheet_total: 7500000
+    uk:statutes/ukpga/2006/46/382#input.company_average_number_of_employees: 50
+    uk:statutes/ukpga/2006/46/382#input.financial_year_proportion_of_year: 1
+    uk:statutes/ukpga/2006/46/382#input.company_qualified_as_small_in_previous_financial_year: false
+    uk:statutes/ukpga/2006/46/382#input.small_company_qualifying_conditions_met_in_previous_financial_year: false
+  output:
+    uk:statutes/ukpga/2006/46/382#small_company_qualifying_conditions_met: holds
+    uk:statutes/ukpga/2006/46/382#company_qualifies_as_small_in_subsequent_financial_year: not_holds
+    uk:statutes/ukpga/2006/46/382#company_qualifies_as_small: not_holds
+
+- name: subsequent_year_second_success_after_not_small_qualifies
+  period:
+    period_kind: custom
+    name: financial_year
+    start: '2025-04-06'
+    end: '2026-04-05'
+  input:
+    uk:statutes/ukpga/2006/46/382#input.company_is_in_first_financial_year: false
+    uk:statutes/ukpga/2006/46/382#input.company_turnover: 15000000
+    uk:statutes/ukpga/2006/46/382#input.company_balance_sheet_total: 7500000
+    uk:statutes/ukpga/2006/46/382#input.company_average_number_of_employees: 50
+    uk:statutes/ukpga/2006/46/382#input.financial_year_proportion_of_year: 1
+    uk:statutes/ukpga/2006/46/382#input.company_qualified_as_small_in_previous_financial_year: false
+    uk:statutes/ukpga/2006/46/382#input.small_company_qualifying_conditions_met_in_previous_financial_year: true
+  output:
+    uk:statutes/ukpga/2006/46/382#small_company_qualifying_conditions_met: holds
+    uk:statutes/ukpga/2006/46/382#company_qualifies_as_small_in_subsequent_financial_year: holds
+    uk:statutes/ukpga/2006/46/382#company_qualifies_as_small: holds
+
+- name: subsequent_year_first_failure_after_small_remains_small
+  period:
+    period_kind: custom
+    name: financial_year
+    start: '2025-04-06'
+    end: '2026-04-05'
+  input:
+    uk:statutes/ukpga/2006/46/382#input.company_is_in_first_financial_year: false
+    uk:statutes/ukpga/2006/46/382#input.company_turnover: 15000001
+    uk:statutes/ukpga/2006/46/382#input.company_balance_sheet_total: 7500001
+    uk:statutes/ukpga/2006/46/382#input.company_average_number_of_employees: 51
+    uk:statutes/ukpga/2006/46/382#input.financial_year_proportion_of_year: 1
+    uk:statutes/ukpga/2006/46/382#input.company_qualified_as_small_in_previous_financial_year: true
+    uk:statutes/ukpga/2006/46/382#input.small_company_qualifying_conditions_met_in_previous_financial_year: true
+  output:
+    uk:statutes/ukpga/2006/46/382#small_company_qualifying_conditions_met: not_holds
+    uk:statutes/ukpga/2006/46/382#company_qualifies_as_small_in_subsequent_financial_year: holds
+    uk:statutes/ukpga/2006/46/382#company_qualifies_as_small: holds
+
+- name: subsequent_year_second_failure_after_small_loses_status
+  period:
+    period_kind: custom
+    name: financial_year
+    start: '2025-04-06'
+    end: '2026-04-05'
+  input:
+    uk:statutes/ukpga/2006/46/382#input.company_is_in_first_financial_year: false
+    uk:statutes/ukpga/2006/46/382#input.company_turnover: 15000001
+    uk:statutes/ukpga/2006/46/382#input.company_balance_sheet_total: 7500001
+    uk:statutes/ukpga/2006/46/382#input.company_average_number_of_employees: 51
+    uk:statutes/ukpga/2006/46/382#input.financial_year_proportion_of_year: 1
+    uk:statutes/ukpga/2006/46/382#input.company_qualified_as_small_in_previous_financial_year: true
+    uk:statutes/ukpga/2006/46/382#input.small_company_qualifying_conditions_met_in_previous_financial_year: false
+  output:
+    uk:statutes/ukpga/2006/46/382#small_company_qualifying_conditions_met: not_holds
+    uk:statutes/ukpga/2006/46/382#company_qualifies_as_small_in_subsequent_financial_year: not_holds
+    uk:statutes/ukpga/2006/46/382#company_qualifies_as_small: not_holds

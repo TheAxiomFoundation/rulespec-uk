@@ -1,0 +1,355 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_paths:
+      - uk/statute/ukpga/2006/46/382
+      - uk/regulation/uksi/2015/980/2
+      - uk/regulation/uksi/2015/980/4
+      - uk/regulation/uksi/2024/1303/3
+      - uk/regulation/uksi/2024/1303/9
+  summary: |-
+    A company qualifies as small in its first financial year if it meets the
+    qualifying conditions in that year. In later years, meeting or ceasing to
+    meet the qualifying conditions affects small-company status only after two
+    consecutive financial years. The qualifying conditions are met when at
+    least two of the turnover, balance sheet total, and average employee count
+    requirements are satisfied.
+rules:
+  - name: small_company_annual_turnover_threshold
+    kind: parameter
+    dtype: Decimal
+    source: Companies Act 2006 s.382(3), as amended by SI 2015/980 reg. 4 and SI 2024/1303 reg. 9
+    description: Source-stated annual turnover threshold in millions of pounds.
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2015/980/4
+              excerpt: "for “Not more than £6.5 million” substitute “Not more than £10.2 million”"
+          - path: versions[0].effective_from
+            kind: effective_period
+            source:
+              corpus_citation_path: uk/regulation/uksi/2015/980/2
+              excerpt: "financial years beginning on or after 1st January 2016"
+          - path: versions[1].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2024/1303/9
+              excerpt: "for “Not more than £10.2 million” substitute “Not more than £15 million”"
+          - path: versions[1].effective_from
+            kind: effective_period
+            source:
+              corpus_citation_path: uk/regulation/uksi/2024/1303/3
+              excerpt: "financial year beginning on or after 6th April 2025"
+    versions:
+      - effective_from: '2016-01-01'
+        formula: |-
+          10.2
+      - effective_from: '2025-04-06'
+        formula: |-
+          15
+
+  - name: small_company_balance_sheet_total_threshold
+    kind: parameter
+    dtype: Decimal
+    source: Companies Act 2006 s.382(3), as amended by SI 2015/980 reg. 4 and SI 2024/1303 reg. 9
+    description: Source-stated balance sheet total threshold in millions of pounds.
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2015/980/4
+              excerpt: "for “Not more than £3.26 million” substitute “Not more than £5.1 million”"
+          - path: versions[0].effective_from
+            kind: effective_period
+            source:
+              corpus_citation_path: uk/regulation/uksi/2015/980/2
+              excerpt: "financial years beginning on or after 1st January 2016"
+          - path: versions[1].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2024/1303/9
+              excerpt: "for “Not more than £5.1 million” substitute “Not more than £7.5 million”"
+          - path: versions[1].effective_from
+            kind: effective_period
+            source:
+              corpus_citation_path: uk/regulation/uksi/2024/1303/3
+              excerpt: "financial year beginning on or after 6th April 2025"
+    versions:
+      - effective_from: '2016-01-01'
+        formula: |-
+          5.1
+      - effective_from: '2025-04-06'
+        formula: |-
+          7.5
+
+  - name: small_company_monetary_million_multiplier
+    kind: parameter
+    dtype: Decimal
+    source: Companies Act 2006 s.382(3)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2006/46/382
+              excerpt: "Turnover Not more than £15 million"
+    versions:
+      - effective_from: '2016-01-01'
+        formula: |-
+          1000000
+
+  - name: small_company_number_of_employees_threshold
+    kind: parameter
+    dtype: Count
+    source: Companies Act 2006 s.382(3)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2006/46/382
+              excerpt: "Number of employees Not more than 50"
+          - path: versions[1].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2006/46/382
+              excerpt: "Number of employees Not more than 50"
+    versions:
+      - effective_from: '2016-01-01'
+        formula: |-
+          50
+      - effective_from: '2025-04-06'
+        formula: |-
+          50
+
+  - name: small_company_turnover_threshold_for_financial_year
+    kind: derived
+    entity: Firm
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Companies Act 2006 s.382(4)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2006/46/382
+              excerpt: "For a period that is a company's financial year but not in fact a year the maximum figures for turnover must be proportionately adjusted"
+    versions:
+      - effective_from: '2016-01-01'
+        formula: |-
+          small_company_annual_turnover_threshold
+          * small_company_monetary_million_multiplier
+          * financial_year_proportion_of_year
+
+  - name: small_company_turnover_condition_met
+    kind: derived
+    entity: Firm
+    dtype: Judgment
+    period: Year
+    source: Companies Act 2006 s.382(3)-(4)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2006/46/382
+              excerpt: "Turnover Not more than £15 million"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2006/46/382
+              excerpt: "the maximum figures for turnover must be proportionately adjusted"
+    versions:
+      - effective_from: '2016-01-01'
+        formula: |-
+          company_turnover <= small_company_turnover_threshold_for_financial_year
+
+  - name: small_company_balance_sheet_total_threshold_amount
+    kind: derived
+    entity: Firm
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Companies Act 2006 s.382(3), as amended by SI 2015/980 reg. 4 and SI 2024/1303 reg. 9
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2006/46/382
+              excerpt: "Balance sheet total Not more than £7.5 million"
+    versions:
+      - effective_from: '2016-01-01'
+        formula: |-
+          small_company_balance_sheet_total_threshold
+          * small_company_monetary_million_multiplier
+
+  - name: small_company_balance_sheet_total_condition_met
+    kind: derived
+    entity: Firm
+    dtype: Judgment
+    period: Year
+    source: Companies Act 2006 s.382(3), (5)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2006/46/382
+              excerpt: "Balance sheet total Not more than £7.5 million"
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2006/46/382
+              excerpt: "The balance sheet total means the aggregate of the amounts shown as assets in the company's balance sheet"
+    versions:
+      - effective_from: '2016-01-01'
+        formula: |-
+          company_balance_sheet_total <= small_company_balance_sheet_total_threshold_amount
+
+  - name: small_company_number_of_employees_condition_met
+    kind: derived
+    entity: Firm
+    dtype: Judgment
+    period: Year
+    source: Companies Act 2006 s.382(3), (6)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2006/46/382
+              excerpt: "Number of employees Not more than 50"
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2006/46/382
+              excerpt: "The number of employees means the average number of persons employed by the company in the year"
+    versions:
+      - effective_from: '2016-01-01'
+        formula: |-
+          company_average_number_of_employees <= small_company_number_of_employees_threshold
+
+  - name: small_company_qualifying_conditions_met
+    kind: derived
+    entity: Firm
+    dtype: Judgment
+    period: Year
+    source: Companies Act 2006 s.382(3)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2006/46/382
+              excerpt: "The qualifying conditions are met by a company in a year in which it satisfies two or more of the following requirements"
+    versions:
+      - effective_from: '2016-01-01'
+        formula: |-
+          (small_company_turnover_condition_met and small_company_balance_sheet_total_condition_met)
+          or (small_company_turnover_condition_met and small_company_number_of_employees_condition_met)
+          or (small_company_balance_sheet_total_condition_met and small_company_number_of_employees_condition_met)
+
+  - name: company_qualifies_as_small_in_first_financial_year
+    kind: derived
+    entity: Firm
+    dtype: Judgment
+    period: Year
+    source: Companies Act 2006 s.382(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2006/46/382
+              excerpt: "A company qualifies as small in relation to its first financial year if the qualifying conditions are met in that year"
+    versions:
+      - effective_from: '2016-01-01'
+        formula: |-
+          company_is_in_first_financial_year and small_company_qualifying_conditions_met
+
+  - name: company_qualifies_as_small_in_subsequent_financial_year
+    kind: derived
+    entity: Firm
+    dtype: Judgment
+    period: Year
+    source: Companies Act 2006 s.382(1A)-(2), SI 2024/1303 reg. 3
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2006/46/382
+              excerpt: "Subject to subsection (2), a company qualifies as small in relation to a subsequent financial year if the qualifying conditions are met in that year"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2006/46/382
+              excerpt: "that affects its qualification as a small company only if it occurs in two consecutive financial years"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2024/1303/3
+              excerpt: "financial year beginning on or after 6th April 2025"
+    versions:
+      - effective_from: '2016-01-01'
+        formula: |-
+          not company_is_in_first_financial_year
+          and (
+            (
+              small_company_qualifying_conditions_met
+              and (
+                company_qualified_as_small_in_previous_financial_year
+                or small_company_qualifying_conditions_met_in_previous_financial_year
+              )
+            )
+            or (
+              not small_company_qualifying_conditions_met
+              and company_qualified_as_small_in_previous_financial_year
+              and small_company_qualifying_conditions_met_in_previous_financial_year
+            )
+          )
+
+  - name: company_qualifies_as_small
+    kind: derived
+    entity: Firm
+    dtype: Judgment
+    period: Year
+    source: Companies Act 2006 s.382(1)-(3)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2006/46/382
+              excerpt: "A company qualifies as small in relation to its first financial year if the qualifying conditions are met in that year"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2006/46/382
+              excerpt: "a company qualifies as small in relation to a subsequent financial year if the qualifying conditions are met in that year"
+    versions:
+      - effective_from: '2016-01-01'
+        formula: |-
+          company_qualifies_as_small_in_first_financial_year
+          or company_qualifies_as_small_in_subsequent_financial_year
