@@ -1,0 +1,130 @@
+# Expected values computed by the axiom-rules-engine from the corpus-grounded
+# 2026-27 parameters and cross-checked against UKMOD UK_2026 tin_s (savings via
+# yiytx, dividends via ydvtx) in the axiom-oracles uk-income-tax-savings and
+# uk-income-tax-dividend suites. Savings-only and dividend-only cases match
+# UKMOD to the penny. The savings nil rate and dividend allowance are allocated
+# to the highest-rate slices, matching HMRC's beneficial nil-band allocation.
+# Coverage: every derived rule is asserted in at least one case.
+- name: sav_e20k_s2k
+  period: {period_kind: tax_year, start: '2026-04-06', end: '2027-04-05'}
+  input:
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#input.uk_svdv_annual_earned_income: 20000
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#input.uk_svdv_annual_savings_income: 2000
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#input.uk_svdv_annual_dividend_income: 0
+  output:
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#uk_svdv_income_tax_liability: 1686
+- name: sav_e30k_s3k
+  period: {period_kind: tax_year, start: '2026-04-06', end: '2027-04-05'}
+  input:
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#input.uk_svdv_annual_earned_income: 30000
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#input.uk_svdv_annual_savings_income: 3000
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#input.uk_svdv_annual_dividend_income: 0
+  output:
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#uk_svdv_income_tax_liability: 3886
+- name: sav_e45k_s6k
+  period: {period_kind: tax_year, start: '2026-04-06', end: '2027-04-05'}
+  input:
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#input.uk_svdv_annual_earned_income: 45000
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#input.uk_svdv_annual_savings_income: 6000
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#input.uk_svdv_annual_dividend_income: 0
+  output:
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#uk_svdv_total_income: 51000
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#uk_svdv_adjusted_net_income: 51000
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#uk_svdv_higher_rate_limit: 125140
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#uk_svdv_personal_allowance: 12570
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#uk_svdv_non_savings_income_after_allowance: 32430
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#uk_svdv_allowance_remaining_after_non_savings: 0
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#uk_svdv_savings_income_after_allowance: 6000
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#uk_svdv_allowance_remaining_after_savings: 0
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#uk_svdv_total_taxable_income: 38430
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#uk_svdv_non_savings_charged_at_basic_rate: 32430
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#uk_svdv_non_savings_charged_at_higher_rate: 0
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#uk_svdv_non_savings_charged_at_additional_rate: 0
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#uk_svdv_tax_on_non_savings_income: 6486
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#uk_svdv_savings_allowance: 500
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#uk_svdv_savings_at_starting_rate: 0
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#uk_svdv_savings_after_starting_rate: 6000
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#uk_svdv_savings_at_nil_rate: 500
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#uk_svdv_savings_taxed_at_band_rates: 5500
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#uk_svdv_savings_gross_basic_band: 5270
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#uk_svdv_savings_gross_higher_band: 730
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#uk_svdv_savings_gross_additional_band: 0
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#uk_svdv_savings_charged_at_savings_basic_rate: 5270
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#uk_svdv_savings_charged_at_savings_higher_rate: 230
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#uk_svdv_savings_charged_at_savings_additional_rate: 0
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#uk_svdv_tax_on_savings_income: 1146
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#uk_svdv_tax_on_dividend_income: 0
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#uk_svdv_income_tax_liability: 7632
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#uk_svdv_individual_has_higher_rate_income: holds
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#uk_svdv_individual_has_additional_rate_income: not_holds
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#uk_svdv_band_position_before_savings: 32430
+- name: sav_e80k_s5k
+  period: {period_kind: tax_year, start: '2026-04-06', end: '2027-04-05'}
+  input:
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#input.uk_svdv_annual_earned_income: 80000
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#input.uk_svdv_annual_savings_income: 5000
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#input.uk_svdv_annual_dividend_income: 0
+  output:
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#uk_svdv_income_tax_liability: 21232
+- name: sav_e150k_s10k
+  period: {period_kind: tax_year, start: '2026-04-06', end: '2027-04-05'}
+  input:
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#input.uk_svdv_annual_earned_income: 150000
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#input.uk_svdv_annual_savings_income: 10000
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#input.uk_svdv_annual_dividend_income: 0
+  output:
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#uk_svdv_individual_has_higher_rate_income: holds
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#uk_svdv_individual_has_additional_rate_income: holds
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#uk_svdv_savings_charged_at_savings_additional_rate: 10000
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#uk_svdv_personal_allowance: 0
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#uk_svdv_income_tax_liability: 58203
+- name: div_e20k_d2k
+  period: {period_kind: tax_year, start: '2026-04-06', end: '2027-04-05'}
+  input:
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#input.uk_svdv_annual_earned_income: 20000
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#input.uk_svdv_annual_savings_income: 0
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#input.uk_svdv_annual_dividend_income: 2000
+  output:
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#uk_svdv_income_tax_liability: 1647.25
+- name: div_e30k_d4k
+  period: {period_kind: tax_year, start: '2026-04-06', end: '2027-04-05'}
+  input:
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#input.uk_svdv_annual_earned_income: 30000
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#input.uk_svdv_annual_savings_income: 0
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#input.uk_svdv_annual_dividend_income: 4000
+  output:
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#uk_svdv_income_tax_liability: 3862.25
+- name: div_e45k_d6k
+  period: {period_kind: tax_year, start: '2026-04-06', end: '2027-04-05'}
+  input:
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#input.uk_svdv_annual_earned_income: 45000
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#input.uk_svdv_annual_savings_income: 0
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#input.uk_svdv_annual_dividend_income: 6000
+  output:
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#uk_svdv_dividend_income_after_allowance: 6000
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#uk_svdv_dividend_at_nil_rate: 500
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#uk_svdv_dividend_gross_ordinary_band: 5270
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#uk_svdv_dividend_gross_upper_band: 730
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#uk_svdv_dividend_gross_additional_band: 0
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#uk_svdv_dividend_charged_at_ordinary_rate: 5270
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#uk_svdv_dividend_charged_at_upper_rate: 230
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#uk_svdv_dividend_charged_at_additional_rate: 0
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#uk_svdv_band_position_before_dividends: 32430
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#uk_svdv_total_income: 51000
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#uk_svdv_personal_allowance: 12570
+- name: div_e130k_d10k
+  period: {period_kind: tax_year, start: '2026-04-06', end: '2027-04-05'}
+  input:
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#input.uk_svdv_annual_earned_income: 130000
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#input.uk_svdv_annual_savings_income: 0
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#input.uk_svdv_annual_dividend_income: 10000
+  output:
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#uk_svdv_income_tax_liability: 48441.25
+- name: div_e200k_d20k
+  period: {period_kind: tax_year, start: '2026-04-06', end: '2027-04-05'}
+  input:
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#input.uk_svdv_annual_earned_income: 200000
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#input.uk_svdv_annual_savings_income: 0
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#input.uk_svdv_annual_dividend_income: 20000
+  output:
+    uk:statutes/income_tax/individual/savings_dividend_oracle_pipeline#uk_svdv_income_tax_liability: 83876.25
