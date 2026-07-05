@@ -1,0 +1,236 @@
+format: rulespec/v1
+imports:
+  - uk:policies/universal_credit_composed_award_pipeline#uc_pilot_standard_allowance
+  - uk:policies/universal_credit_composed_award_pipeline#uc_pilot_child_element_total
+  - uk:policies/universal_credit_composed_award_pipeline#uc_pilot_disabled_child_addition_total
+  - uk:policies/universal_credit_composed_award_pipeline#uc_pilot_lcwra_element
+  - uk:policies/universal_credit_composed_award_pipeline#uc_pilot_carer_element_total
+  - uk:policies/universal_credit_composed_award_pipeline#uc_pilot_childcare_element
+  - uk:policies/universal_credit_composed_award_pipeline#uc_pilot_housing_costs_element
+  - uk:policies/universal_credit_composed_award_pipeline#uc_pilot_maximum_amount
+  - uk:policies/universal_credit_composed_award_pipeline#uc_pilot_earned_income_deduction
+  - uk:policies/universal_credit_composed_award_pipeline#uc_pilot_capital_tariff_income
+  - uk:policies/universal_credit_composed_award_pipeline#uc_pilot_award_before_cap
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_paths:
+      - uk/statute/ukpga/2012/5/8
+      - uk/regulation/uksi/2013/376/22
+      - uk/regulation/uksi/2013/376/72
+    upstream_source_check:
+      status: composed_from_grounded_modules
+      checked_paths:
+        - uk/statute/ukpga/2012/5/8
+        - uk/regulation/uksi/2013/376/22
+      rationale: |-
+        This module adds no new numeric literals. It imports the composed
+        Universal Credit pilot pipeline
+        (universal_credit_composed_award_pipeline) and re-expresses, over that
+        pipeline's own Welfare Reform Act 2012 section 8 elements, the
+        section 8(1) balance that the compose-spec program surface
+        (programs/uk/universal-credit/fy-2026-27.yaml, whose final output
+        universal_credit_award_amount is defined in the section 8 statute
+        atom uk/statutes/ukpga/2012/5/8) computes. Every element and every
+        deduction it references is an already-grounded pilot output; the only
+        arithmetic is the section 8(1) subtraction the statute atom itself
+        performs (max amount less the section 8(3) income deductions, floored
+        at zero) and the differences that isolate the two deliberately-scoped
+        extensions the pilot final award carries over the section 8(1)
+        balance.
+  summary: |-
+    Reconciliation guard for the two independent Universal Credit award paths
+    in rulespec-uk. rulespec-uk carries two award surfaces for 2026-27:
+
+      1. the compose-spec program programs/uk/universal-credit/fy-2026-27.yaml,
+         whose final output universal_credit_award_amount is the Welfare Reform
+         Act 2012 section 8(1) balance (maximum amount under sections 9-12 less
+         the section 8(3) earned- and unearned-income deductions, floored at
+         zero), defined in the section 8 statute atom
+         uk/statutes/ukpga/2012/5/8 and consumed by the PolicyEngine EFRS
+         comparison suite (uk-universal-credit-efrs), which compares the
+         benefit cap and the capital tariff income as separate surfaces and
+         applies the benefit cap at the higher-level universal_credit wrapper;
+         and
+
+      2. the composed pilot pipeline
+         universal_credit_composed_award_pipeline, whose final output
+         uc_pilot_award_amount is the end-to-end monthly Family award for the
+         UKMOD bsauc_s oracle: it additionally folds the regulation 72 capital
+         tariff income into the section 8(3) deduction (which regulation 66(1)
+         treats as unearned income), applies the regulation 18 capital
+         upper-limit entitlement gate, and applies the regulation 80A/81
+         benefit cap.
+
+    These are two genuinely different statutory quantities -- the mid-level
+    section 8(1) balance and the final capped award -- each matched to a
+    different oracle, so "the UC final award" is legitimately two-valued. This
+    module makes the relationship canonical and executable: the pilot's
+    pre-cap, pre-gate stage (uc_pilot_award_before_cap) is by construction the
+    section 8(1) balance re-expressed over the pilot's own elements, and this
+    module's companion test asserts they agree to the penny on every case with
+    no capital tariff and no capital-gate bite, and that where they differ the
+    difference is exactly the regulation 72 capital tariff income the pilot
+    additionally deducts. Divergence on any shared element or parameter (a rate
+    changed in one path but not the other) therefore cannot land silently.
+rules:
+  # ==========================================================================
+  # The compose-spec section 8(1) balance, re-expressed over the pilot elements
+  # ==========================================================================
+  # Section 8(2) maximum amount: the compose-spec sums the same sections 9-12
+  # elements the pilot sums, so the reconciled maximum is the pilot maximum.
+  - name: uc_reconcile_compose_maximum_amount
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Welfare Reform Act 2012 s.8(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/8
+              excerpt: "the maximum amount is the total of the amounts included under sections 9 to 12"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          uc_pilot_standard_allowance
+          + uc_pilot_child_element_total
+          + uc_pilot_disabled_child_addition_total
+          + uc_pilot_lcwra_element
+          + uc_pilot_carer_element_total
+          + uc_pilot_childcare_element
+          + uc_pilot_housing_costs_element
+
+  # Section 8(3) income deduction as the compose-spec (regulation 22) computes
+  # it: all unearned income plus tapered earned income. The compose-spec output
+  # universal_credit_award_deduction_from_maximum_amount does NOT add the
+  # regulation 72 capital tariff income (that is a separate EFRS surface), so
+  # this reconciled deduction likewise excludes it. Inputs are the pilot's own
+  # earned-income deduction and supplied unearned income.
+  - name: uc_reconcile_compose_income_deduction
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 22(1); Welfare Reform Act 2012 s.8(3)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/22
+              excerpt: "The amounts to be deducted from the maximum amount... are all... unearned income... and... earned income"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          max(0, uc_pilot_unearned_income_monthly) + uc_pilot_earned_income_deduction
+
+  # Section 8(1) balance: maximum amount less the section 8(3) deductions,
+  # floored at zero. This is exactly the formula the compose-spec's
+  # universal_credit_award_amount (section 8 statute atom) evaluates.
+  - name: uc_reconcile_compose_s8_balance
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Welfare Reform Act 2012 s.8(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/8
+              excerpt: "the amount of an award of universal credit is to be the balance of the maximum amount after deducting"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          max(0, uc_reconcile_compose_maximum_amount - uc_reconcile_compose_income_deduction)
+
+  # ==========================================================================
+  # Agreement assertions
+  # ==========================================================================
+  # The pilot's maximum amount must equal the reconciled (compose-spec)
+  # maximum amount unconditionally: both sum the identical sections 9-12
+  # elements, so any drift here is a shared-element divergence between the two
+  # paths. Asserted == 0 on the whole battery.
+  - name: uc_reconcile_maximum_amount_gap
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Welfare Reform Act 2012 s.8(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/8
+              excerpt: "the maximum amount is the total of the amounts included under sections 9 to 12"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          uc_pilot_maximum_amount - uc_reconcile_compose_maximum_amount
+
+  # The regulation 72 capital tariff income the pilot additionally folds into
+  # its section 8(3) deduction. On cases with no capital this is zero and the
+  # two award paths coincide at the section 8(1) stage; on capital cases it is
+  # the entire structural difference between them. Exposed so the companion
+  # test can pin the pre-cap delta to exactly this term.
+  - name: uc_reconcile_capital_tariff_in_pilot_deduction
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 72(1) and regulation 66(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/72
+              excerpt: "capital is to be treated as yielding a monthly income"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          uc_pilot_capital_tariff_income
+
+  # The signed difference between the pilot's pre-cap award and the compose-spec
+  # section 8(1) balance. Because the pilot's award-before-cap deducts the
+  # capital tariff income (and applies the regulation 18 gate, which returns a
+  # nil award only at/above the 16,000 upper limit), on any case below that
+  # limit this difference equals exactly minus the capital tariff income, and on
+  # any case with no capital it is zero. The companion test asserts both, so the
+  # two award paths cannot diverge on a shared element or parameter without a
+  # test failure.
+  - name: uc_reconcile_award_before_cap_delta
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Welfare Reform Act 2012 s.8(1); Universal Credit Regulations 2013, regulation 72
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/8
+              excerpt: "the amount of an award of universal credit is to be the balance of the maximum amount after deducting"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          uc_pilot_award_before_cap - uc_reconcile_compose_s8_balance
