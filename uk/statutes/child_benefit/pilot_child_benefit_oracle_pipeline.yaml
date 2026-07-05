@@ -7,11 +7,16 @@ module:
       - uk/statute/ukpga/1992/4/141
       - uk/regulation/uksi/2006/965/2
       - uk/regulation/uksi/2013/376/schedule/4/paragraph/7
+      - uk/statute/ukpga/2003/1/681B
+      - uk/statute/ukpga/2003/1/681C
+      - uk/statute/ukpga/2003/1/681H
     upstream_source_check:
       status: official_parameter_source
       checked_paths:
         - uk/regulation/uksi/2006/965/2
         - uk/regulation/uksi/2013/376/schedule/4/paragraph/7
+        - uk/statute/ukpga/2003/1/681B
+        - uk/statute/ukpga/2003/1/681C
       rationale: |-
         Every monetary parameter is grounded in an official source: the two
         Child Benefit weekly rates are imported from the Child Benefit (General)
@@ -25,18 +30,22 @@ module:
         end-to-end UKMOD bch_s comparison is queryable from the number of
         children without the caller supplying the per-child rate branch.
 
-        This pilot deliberately encodes only the section 141 entitlement (the
-        gross, pre-charge amount). The High Income Child Benefit Charge
-        (ITEPA 2003 sections 681B-681H, introduced by Finance Act 2012
-        Schedule 1) that claws Child Benefit back through the income-tax system
-        for a partner with adjusted net income over the threshold is NOT
-        encoded here: those charge provisions are not yet in the Axiom corpus,
-        so encoding the £60,000 threshold or the 1%-per-£200 taper would not be
-        corpus-grounded. The gap is tracked in rulespec-uk issue #75, and
-        the UKMOD oracle comparison therefore compares this gross entitlement
-        against UKMOD's pre-charge Child Benefit (bch_s + bchrd_s), reconstructed
-        by adding back UKMOD's separately-reported High Income Child Benefit
-        Charge clawback.
+        The pipeline now also encodes the High Income Child Benefit Charge
+        (Income Tax (Earnings and Pensions) Act 2003 Part 10 Chapter 8, sections
+        681B-681H, inserted by Finance Act 2012 Schedule 1), which claws Child
+        Benefit back through the income-tax system for a person whose adjusted
+        net income exceeds the threshold. Its money atoms are grounded in the
+        ITEPA 2003 corpus provisions: the £60,000 adjusted-net-income threshold
+        (s.681B(1)(a), "L" in s.681C(2)), the £200 taper step ("X" in s.681C(2),
+        1% per £200), the 100% appropriate-percentage cap and the round-down to
+        whole numbers (s.681C(2)-(3)); the £80,000 full-clawback point is derived
+        from that formula (£60,000 + 100 × £200), and the adjusted-net-income
+        base is the s.681H(2) cross-reference to ITA 2007 s.58. The charge amount
+        is netted off the section 141 gross entitlement to a post-charge net
+        Child Benefit output, so the UKMOD oracle comparison can compare net
+        Child Benefit against UKMOD's paid bch_s directly (UKMOD nets its
+        separately-reported clawback bchrd_s into bch_s). The gross entitlement
+        remains exposed for the pre-charge comparison. See rulespec-uk issue #75.
   summary: |-
     Composed family Child Benefit pipeline for the UKMOD oracle slice at the
     2026-27 rates. It exposes a dense-engine-friendly Family-level path from the
@@ -49,18 +58,27 @@ module:
     from the Child Benefit (General) Regulations 2006 regulation 2), and the
     annualisation of that weekly entitlement to a tax year of 52 benefit weeks.
 
-    It models the ordinary family that would claim Child Benefit for every child
-    it is responsible for, with the eldest child taking the enhanced rate. It
+    It also composes the ITEPA 2003 sections 681B-681H High Income Child Benefit
+    Charge on top of that gross entitlement, keyed to a supplied adjusted net
+    income for the liable person, and nets the charge off to a post-charge net
+    Child Benefit output for the UKMOD net-of-charge comparison. It models the
+    ordinary family that would claim Child Benefit for every child it is
+    responsible for, with the eldest child taking the enhanced rate. It
     deliberately excludes: the section 141 responsibility, presence, and
     qualifying-young-person conditions (the caller supplies the resolved child
     count); the regulation 2 enhanced-rate coordination across spouses, civil
     partners, and polygamous marriages and its voluntary-organisation and
     residing-with-a-parent exceptions (an ordinary single family takes the
-    enhanced rate for its eldest child); and the High Income Child Benefit
-    Charge, which is levied separately through income tax and is not encoded in
-    the Axiom corpus (see the module source-verification note). The 2025-26 and
-    2026-27 Child Benefit weekly rates are the same, so UKMOD UK_2025 and UK_2026
-    return the same gross entitlement here.
+    enhanced rate for its eldest child); the section 681B conditions A/B
+    partner-comparison and the section 681G partner test (the supplied adjusted
+    net income is taken to be that of the liable person, the higher-income
+    partner, so the whole entitlement is in charge); the section 681D
+    child-not-living-with-claimant extension and the section 681E special cases
+    other than the elect-out disregard; and the section 681G/681H interpretation
+    machinery beyond the adjusted-net-income base. The 2025-26 and 2026-27 Child
+    Benefit weekly rates and the £60,000 / £200 charge parameters are the same,
+    so UKMOD UK_2025 and UK_2026 return the same gross entitlement and the same
+    charge here.
 imports:
   - uk:regulations/uksi/2006/965/2#child_benefit_enhanced_weekly_rate
   - uk:regulations/uksi/2006/965/2#child_benefit_other_weekly_rate
@@ -240,3 +258,225 @@ rules:
       - effective_from: '2026-01-01'
         formula: |-
           uk_cb_pilot_weekly_entitlement * uk_cb_pilot_benefit_weeks_per_year
+
+  # ---------------------------------------------------------------------------
+  # High Income Child Benefit Charge (ITEPA 2003 Part 10 Chapter 8, ss.681B-681H,
+  # inserted by Finance Act 2012 Sch. 1). The charge is levied through income tax
+  # on a person ("P") whose adjusted net income exceeds the threshold and who (or
+  # whose partner) is entitled to Child Benefit. This slice takes the supplied
+  # adjusted net income to be P's — the higher-income partner under conditions
+  # A/B of s.681B — so the whole s.141 entitlement is the amount in charge, and
+  # nets the charge off to a post-charge net Child Benefit.
+  # ---------------------------------------------------------------------------
+  - name: uk_cb_pilot_hicbc_income_threshold
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: ITEPA 2003 s.681B(1)(a); the adjusted-net-income threshold above which the charge applies, defined as "L" in s.681C(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/1/681B
+              excerpt: "P's adjusted net income for the year exceeds £60,000"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          60000
+
+  - name: uk_cb_pilot_hicbc_taper_step
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: ITEPA 2003 s.681C(2); "X" in the appropriate-percentage formula — 1% of the entitlement is charged for each whole £200 of adjusted net income above the threshold
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/1/681C
+              excerpt: "X is £200"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          200
+
+  - name: uk_cb_pilot_hicbc_taper_rate_per_step
+    kind: parameter
+    dtype: Number
+    source: |-
+      ITEPA 2003 s.681C(2): the appropriate-percentage formula (ANI − L) / X %
+      charges one percentage point of the entitlement — a fraction of 0.01 — for
+      each whole £X = £200 step of adjusted net income above the threshold. This
+      is that per-step clawback fraction (1% expressed as 0.01).
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/1/681C
+              excerpt: "if less, the percentage determined by the formula— ANI – L X %"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.01
+
+  - name: uk_cb_pilot_adjusted_net_income
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: |-
+      ITEPA 2003 s.681H(2): adjusted net income of the liable person for the tax
+      year, as determined under Income Tax Act 2007 s.58. Supplied as an input so
+      the composed charge is queryable without the caller resolving the ITA 2007
+      s.58 adjusted-net-income build-up; taken to be the adjusted net income of
+      P, the higher-income partner under s.681B conditions A/B.
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/1/681H
+              excerpt: "“Adjusted net income” of a person for a tax year means the person's adjusted net income for that tax year as determined under section 58 of ITA 2007"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, uk_cb_pilot_supplied_adjusted_net_income)
+
+  - name: uk_cb_pilot_hicbc_appropriate_percentage_points
+    kind: derived
+    entity: Family
+    dtype: Number
+    period: Year
+    source: |-
+      ITEPA 2003 s.681C(2)(b): the tapered percentage from the formula
+      (ANI − L) / X, in whole percentage points, where L is £60,000 and X is
+      £200 — one point per whole £200 of adjusted net income above the threshold.
+      The percentage is rounded down to the nearest whole number (s.681C(3)(b)),
+      so this is floor((ANI − L) / X). When adjusted net income does not exceed
+      the threshold the excess is nil and the count is 0.
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/1/681C
+              excerpt: "if less, the percentage determined by the formula— ANI – L X %"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/1/681C
+              excerpt: "the percentage determined under subsection (2)(b) is not a whole number, it is to be rounded down to the nearest whole number"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          floor(max(0, uk_cb_pilot_adjusted_net_income - uk_cb_pilot_hicbc_income_threshold) / uk_cb_pilot_hicbc_taper_step)
+
+  - name: uk_cb_pilot_hicbc_charged_fraction
+    kind: derived
+    entity: Family
+    dtype: Number
+    period: Year
+    source: |-
+      ITEPA 2003 s.681C(2): the appropriate percentage as a fraction of the Child
+      Benefit entitlement — the tapered percentage points times the 1%-per-step
+      fraction (0.01), capped at 1 (the 100% ceiling in s.681C(2)(a)). The cap of
+      1 is reached at 100 whole £200 steps, i.e. adjusted net income of
+      £60,000 + 100 × £200 = £80,000, the full-clawback point.
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/1/681C
+              excerpt: "“The appropriate percentage” is— 100%, or if less, the percentage determined by the formula— ANI – L X %"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          min(1, uk_cb_pilot_hicbc_appropriate_percentage_points * uk_cb_pilot_hicbc_taper_rate_per_step)
+
+  - name: uk_cb_pilot_hicbc_charge
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: |-
+      ITEPA 2003 s.681C(1)-(3): the amount of the high income child benefit
+      charge is the appropriate percentage of the Child Benefit amounts in
+      charge — here the whole s.141 annual entitlement, the supplied income being
+      that of the higher-income partner — rounded down to a whole number of
+      pounds (s.681C(3)(a)).
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/1/681C
+              excerpt: "The amount of the high income child benefit charge to which a person (“P”) is liable for a tax year is the appropriate percentage of the total of—"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/1/681C
+              excerpt: "the amount of the charge determined under that subsection, is not a whole number of pounds ... it is to be rounded down to the nearest whole number"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/child_benefit/pilot_child_benefit_oracle_pipeline#uk_cb_pilot_annual_entitlement
+              output: uk_cb_pilot_annual_entitlement
+              hash: sha256:local
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          floor(uk_cb_pilot_hicbc_charged_fraction * uk_cb_pilot_annual_entitlement)
+
+  - name: uk_cb_pilot_annual_entitlement_net_of_charge
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: |-
+      Post-charge net Child Benefit: the Social Security Contributions and
+      Benefits Act 1992 s.141 gross annual entitlement less the ITEPA 2003
+      ss.681B-681C high income child benefit charge. This is the output the UKMOD
+      oracle compares against UKMOD's paid Child Benefit bch_s (UKMOD nets its
+      separately-reported clawback bchrd_s into bch_s). The charge cannot exceed
+      the gross entitlement because the appropriate percentage is capped at 100%,
+      so the net amount is non-negative.
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/1/681B
+              excerpt: "A person (“P”) is liable to a charge to income tax for a tax year"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/child_benefit/pilot_child_benefit_oracle_pipeline#uk_cb_pilot_annual_entitlement
+              output: uk_cb_pilot_annual_entitlement
+              hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/child_benefit/pilot_child_benefit_oracle_pipeline#uk_cb_pilot_hicbc_charge
+              output: uk_cb_pilot_hicbc_charge
+              hash: sha256:local
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, uk_cb_pilot_annual_entitlement - uk_cb_pilot_hicbc_charge)
