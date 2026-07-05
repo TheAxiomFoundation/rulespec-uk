@@ -1,0 +1,53 @@
+# Expected values computed by the axiom-rules-engine from the corpus-grounded
+# 2026-27 Child Benefit weekly rates (SI 2006/965 reg.2: enhanced £27.05 for the
+# only or eldest child, other £17.90 for each subsequent child) annualised over
+# 52 benefit weeks. Cross-checked against UKMOD UK_2026 pre-charge Child Benefit
+# (bch_s + bchrd_s) in the axiom-oracles uk-child-benefit suite: UKMOD returns
+# £1,410.46 (one child), £2,343.82 (two), £3,277.18 (three), which annualise the
+# same weekly rates over UKMOD's 52.14-week convention; the ~0.27% convention
+# residual is dispositioned as an explained residual in that suite. Coverage:
+# every derived rule is asserted in at least one case.
+- name: one_child_takes_the_enhanced_rate
+  period: {period_kind: tax_year, start: '2026-04-06', end: '2027-04-05'}
+  input:
+    uk:statutes/child_benefit/pilot_child_benefit_oracle_pipeline#input.uk_cb_pilot_supplied_number_of_children: 1
+  output:
+    uk:statutes/child_benefit/pilot_child_benefit_oracle_pipeline#uk_cb_pilot_enhanced_weekly_rate: 27.05
+    uk:statutes/child_benefit/pilot_child_benefit_oracle_pipeline#uk_cb_pilot_other_weekly_rate: 17.9
+    uk:statutes/child_benefit/pilot_child_benefit_oracle_pipeline#uk_cb_pilot_number_of_children: 1
+    uk:statutes/child_benefit/pilot_child_benefit_oracle_pipeline#uk_cb_pilot_number_of_other_children: 0
+    uk:statutes/child_benefit/pilot_child_benefit_oracle_pipeline#uk_cb_pilot_weekly_entitlement: 27.05
+    uk:statutes/child_benefit/pilot_child_benefit_oracle_pipeline#uk_cb_pilot_annual_entitlement: 1406.6
+- name: two_children_add_one_other_rate
+  period: {period_kind: tax_year, start: '2026-04-06', end: '2027-04-05'}
+  input:
+    uk:statutes/child_benefit/pilot_child_benefit_oracle_pipeline#input.uk_cb_pilot_supplied_number_of_children: 2
+  output:
+    uk:statutes/child_benefit/pilot_child_benefit_oracle_pipeline#uk_cb_pilot_number_of_children: 2
+    uk:statutes/child_benefit/pilot_child_benefit_oracle_pipeline#uk_cb_pilot_number_of_other_children: 1
+    uk:statutes/child_benefit/pilot_child_benefit_oracle_pipeline#uk_cb_pilot_weekly_entitlement: 44.95
+    uk:statutes/child_benefit/pilot_child_benefit_oracle_pipeline#uk_cb_pilot_annual_entitlement: 2337.4
+- name: three_children_add_two_other_rates
+  period: {period_kind: tax_year, start: '2026-04-06', end: '2027-04-05'}
+  input:
+    uk:statutes/child_benefit/pilot_child_benefit_oracle_pipeline#input.uk_cb_pilot_supplied_number_of_children: 3
+  output:
+    uk:statutes/child_benefit/pilot_child_benefit_oracle_pipeline#uk_cb_pilot_number_of_children: 3
+    uk:statutes/child_benefit/pilot_child_benefit_oracle_pipeline#uk_cb_pilot_number_of_other_children: 2
+    uk:statutes/child_benefit/pilot_child_benefit_oracle_pipeline#uk_cb_pilot_weekly_entitlement: 62.85
+    uk:statutes/child_benefit/pilot_child_benefit_oracle_pipeline#uk_cb_pilot_annual_entitlement: 3268.2
+- name: benefit_weeks_per_year_is_fifty_two
+  period: {period_kind: tax_year, start: '2026-04-06', end: '2027-04-05'}
+  input:
+    uk:statutes/child_benefit/pilot_child_benefit_oracle_pipeline#input.uk_cb_pilot_supplied_number_of_children: 1
+  output:
+    uk:statutes/child_benefit/pilot_child_benefit_oracle_pipeline#uk_cb_pilot_benefit_weeks_per_year: 52
+- name: no_children_has_no_entitlement
+  period: {period_kind: tax_year, start: '2026-04-06', end: '2027-04-05'}
+  input:
+    uk:statutes/child_benefit/pilot_child_benefit_oracle_pipeline#input.uk_cb_pilot_supplied_number_of_children: 0
+  output:
+    uk:statutes/child_benefit/pilot_child_benefit_oracle_pipeline#uk_cb_pilot_number_of_children: 0
+    uk:statutes/child_benefit/pilot_child_benefit_oracle_pipeline#uk_cb_pilot_number_of_other_children: 0
+    uk:statutes/child_benefit/pilot_child_benefit_oracle_pipeline#uk_cb_pilot_weekly_entitlement: 0
+    uk:statutes/child_benefit/pilot_child_benefit_oracle_pipeline#uk_cb_pilot_annual_entitlement: 0
