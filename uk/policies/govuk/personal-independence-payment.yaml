@@ -42,7 +42,7 @@ rules:
         formula: |-
           52
 
-  - name: pip_daily_living_component_weekly_amount
+  - name: pip_daily_living_weekly_amount
     kind: derived
     entity: Person
     dtype: Money
@@ -74,7 +74,7 @@ rules:
         formula: |-
           if daily_living_is_enhanced_rate: pip_daily_living_enhanced_weekly_rate else: if daily_living_is_standard_rate: pip_daily_living_standard_weekly_rate else: 0
 
-  - name: pip_mobility_component_weekly_amount
+  - name: pip_mobility_weekly_amount
     kind: derived
     entity: Person
     dtype: Money
@@ -106,7 +106,7 @@ rules:
         formula: |-
           if mobility_is_enhanced_rate: pip_mobility_enhanced_weekly_rate else: if mobility_is_standard_rate: pip_mobility_standard_weekly_rate else: 0
 
-  - name: personal_independence_payment_weekly_amount
+  - name: personal_independence_payment_weekly_total
     kind: derived
     entity: Person
     dtype: Money
@@ -124,7 +124,7 @@ rules:
     versions:
       - effective_from: '0001-01-01'
         formula: |-
-          pip_daily_living_component_weekly_amount + pip_mobility_component_weekly_amount
+          pip_daily_living_weekly_amount + pip_mobility_weekly_amount
 
   - name: receives_enhanced_daily_living_component
     kind: derived
@@ -163,4 +163,4 @@ rules:
     versions:
       - effective_from: '0001-01-01'
         formula: |-
-          personal_independence_payment_weekly_amount * personal_independence_payment_weeks_in_year
+          personal_independence_payment_weekly_total * personal_independence_payment_weeks_in_year
