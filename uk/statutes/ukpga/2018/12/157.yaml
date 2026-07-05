@@ -1,0 +1,274 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_paths:
+      - uk/statute/ukpga/2018/12/157
+      - uk/statute/ukpga/2018/12/157/enacted
+      - uk/regulation/uksi/2019/419/1
+      - uk/regulation/uksi/2019/419/schedule/2/64
+      - uk/statute/ukpga/2020/1/schedule/5/1
+      - uk/statute/ukpga/2020/1/39
+  summary: |-
+    Data Protection Act 2018 section 157 sets the higher and standard maximum
+    penalty amounts used for UK GDPR administrative fines when Article 83 does
+    not specify the amount. For an undertaking, each maximum is the greater of
+    the fixed statutory amount and the stated percentage of the undertaking's
+    total annual worldwide turnover in the preceding financial year. In any
+    other case, the fixed statutory amount applies. As enacted the fixed
+    amounts were 20 million Euros and 10 million Euros. SI 2019/419 substituted
+    £17,500,000 and £8,700,000 on IP completion day, defined by the 2020 Act as
+    31 December 2020 at 11.00 p.m.
+rules:
+  - name: uk_gdpr_higher_maximum_fixed_penalty_amount
+    kind: parameter
+    dtype: Money
+    source: Data Protection Act 2018 s.157(5), as amended by SI 2019/419 Sch. 2 para. 64(4)
+    description: |-
+      Fixed higher maximum amount in the statutory currency for the applicable
+      version: EUR before IP completion day, GBP from IP completion day.
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2018/12/157/enacted
+              excerpt: "20 million Euros"
+          - path: versions[0].effective_from
+            kind: effective_period
+            source:
+              corpus_citation_path: uk/statute/ukpga/2018/12/157
+              excerpt: "S. 157 in force at 25.5.2018 by S.I. 2018/625, reg. 2(1)(f)"
+          - path: versions[1].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2019/419/schedule/2/64
+              excerpt: "In subsection (5), for “20 million Euros” (in both places) substitute “£17,500,000”."
+          - path: versions[1].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2018/12/157
+              excerpt: "in any other case, £17,500,000."
+          - path: versions[1].effective_from
+            kind: effective_period
+            source:
+              corpus_citation_path: uk/regulation/uksi/2019/419/1
+              excerpt: "Subject to paragraph (3), they come into force on exit day."
+          - path: versions[1].effective_from
+            kind: effective_period
+            source:
+              corpus_citation_path: uk/statute/ukpga/2020/1/schedule/5/1
+              excerpt: "come into force immediately before IP completion day, on IP completion day or (as the case may be) at the time concerned after IP completion day."
+          - path: versions[1].effective_from
+            kind: effective_period
+            source:
+              corpus_citation_path: uk/statute/ukpga/2020/1/39
+              excerpt: "“IP completion day” means 31 December 2020 at 11.00 p.m"
+    versions:
+      - effective_from: '2018-05-25'
+        formula: |-
+          20000000
+      - effective_from: '2020-12-31'
+        formula: |-
+          17500000
+
+  - name: uk_gdpr_standard_maximum_fixed_penalty_amount
+    kind: parameter
+    dtype: Money
+    source: Data Protection Act 2018 s.157(6), as amended by SI 2019/419 Sch. 2 para. 64(5)
+    description: |-
+      Fixed standard maximum amount in the statutory currency for the applicable
+      version: EUR before IP completion day, GBP from IP completion day.
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2018/12/157/enacted
+              excerpt: "10 million Euros"
+          - path: versions[0].effective_from
+            kind: effective_period
+            source:
+              corpus_citation_path: uk/statute/ukpga/2018/12/157
+              excerpt: "S. 157 in force at 25.5.2018 by S.I. 2018/625, reg. 2(1)(f)"
+          - path: versions[1].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2019/419/schedule/2/64
+              excerpt: "In subsection (6), for “10 million Euros” (in both places) substitute “£8,700,000”."
+          - path: versions[1].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2018/12/157
+              excerpt: "in any other case, £8,700,000."
+          - path: versions[1].effective_from
+            kind: effective_period
+            source:
+              corpus_citation_path: uk/regulation/uksi/2019/419/1
+              excerpt: "Subject to paragraph (3), they come into force on exit day."
+          - path: versions[1].effective_from
+            kind: effective_period
+            source:
+              corpus_citation_path: uk/statute/ukpga/2020/1/schedule/5/1
+              excerpt: "come into force immediately before IP completion day, on IP completion day or (as the case may be) at the time concerned after IP completion day."
+          - path: versions[1].effective_from
+            kind: effective_period
+            source:
+              corpus_citation_path: uk/statute/ukpga/2020/1/39
+              excerpt: "“IP completion day” means 31 December 2020 at 11.00 p.m"
+    versions:
+      - effective_from: '2018-05-25'
+        formula: |-
+          10000000
+      - effective_from: '2020-12-31'
+        formula: |-
+          8700000
+
+  - name: uk_gdpr_higher_maximum_turnover_percentage
+    kind: parameter
+    dtype: Rate
+    source: Data Protection Act 2018 s.157(5)(a)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2018/12/157
+              excerpt: "4% of the undertaking's total annual worldwide turnover in the preceding financial year"
+          - path: versions[0].effective_from
+            kind: effective_period
+            source:
+              corpus_citation_path: uk/statute/ukpga/2018/12/157
+              excerpt: "S. 157 in force at 25.5.2018 by S.I. 2018/625, reg. 2(1)(f)"
+    versions:
+      - effective_from: '2018-05-25'
+        formula: |-
+          0.04
+
+  - name: uk_gdpr_standard_maximum_turnover_percentage
+    kind: parameter
+    dtype: Rate
+    source: Data Protection Act 2018 s.157(6)(a)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2018/12/157
+              excerpt: "2% of the undertaking's total annual worldwide turnover in the preceding financial year"
+          - path: versions[0].effective_from
+            kind: effective_period
+            source:
+              corpus_citation_path: uk/statute/ukpga/2018/12/157
+              excerpt: "S. 157 in force at 25.5.2018 by S.I. 2018/625, reg. 2(1)(f)"
+    versions:
+      - effective_from: '2018-05-25'
+        formula: |-
+          0.02
+
+  - name: uk_gdpr_higher_maximum_turnover_amount
+    kind: derived
+    entity: Firm
+    dtype: Money
+    period: Year
+    source: Data Protection Act 2018 s.157(5)(a)
+    description: Turnover limb of the higher maximum amount for an undertaking.
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2018/12/157
+              excerpt: "4% of the undertaking's total annual worldwide turnover in the preceding financial year"
+    versions:
+      - effective_from: '2018-05-25'
+        formula: |-
+          uk_gdpr_higher_maximum_turnover_percentage
+          * undertaking_total_annual_worldwide_turnover_in_preceding_financial_year
+
+  - name: uk_gdpr_standard_maximum_turnover_amount
+    kind: derived
+    entity: Firm
+    dtype: Money
+    period: Year
+    source: Data Protection Act 2018 s.157(6)(a)
+    description: Turnover limb of the standard maximum amount for an undertaking.
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2018/12/157
+              excerpt: "2% of the undertaking's total annual worldwide turnover in the preceding financial year"
+    versions:
+      - effective_from: '2018-05-25'
+        formula: |-
+          uk_gdpr_standard_maximum_turnover_percentage
+          * undertaking_total_annual_worldwide_turnover_in_preceding_financial_year
+
+  - name: uk_gdpr_higher_maximum_penalty_amount
+    kind: derived
+    entity: Firm
+    dtype: Money
+    period: Year
+    source: Data Protection Act 2018 s.157(5)
+    description: Higher maximum penalty amount for an undertaking or other recipient.
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2018/12/157
+              excerpt: "in the case of an undertaking, £17,500,000 or 4% of the undertaking's total annual worldwide turnover in the preceding financial year, whichever is higher"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2018/12/157
+              excerpt: "whichever is higher"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2018/12/157
+              excerpt: "in any other case, £17,500,000."
+    versions:
+      - effective_from: '2018-05-25'
+        formula: |-
+          if penalty_recipient_is_undertaking: max(uk_gdpr_higher_maximum_fixed_penalty_amount, uk_gdpr_higher_maximum_turnover_amount) else: uk_gdpr_higher_maximum_fixed_penalty_amount
+
+  - name: uk_gdpr_standard_maximum_penalty_amount
+    kind: derived
+    entity: Firm
+    dtype: Money
+    period: Year
+    source: Data Protection Act 2018 s.157(6)
+    description: Standard maximum penalty amount for an undertaking or other recipient.
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2018/12/157
+              excerpt: "in the case of an undertaking, £8,700,000 or 2% of the undertaking's total annual worldwide turnover in the preceding financial year, whichever is higher"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2018/12/157
+              excerpt: "whichever is higher"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2018/12/157
+              excerpt: "in any other case, £8,700,000."
+    versions:
+      - effective_from: '2018-05-25'
+        formula: |-
+          if penalty_recipient_is_undertaking: max(uk_gdpr_standard_maximum_fixed_penalty_amount, uk_gdpr_standard_maximum_turnover_amount) else: uk_gdpr_standard_maximum_fixed_penalty_amount

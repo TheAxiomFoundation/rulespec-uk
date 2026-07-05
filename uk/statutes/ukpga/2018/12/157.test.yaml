@@ -1,0 +1,98 @@
+- name: higher_maximum_undertaking_below_turnover_crossover_uses_fixed_amount
+  period:
+    period_kind: custom
+    name: financial_year
+    start: '2021-01-01'
+    end: '2021-12-31'
+  input:
+    uk:statutes/ukpga/2018/12/157#input.penalty_recipient_is_undertaking: true
+    uk:statutes/ukpga/2018/12/157#input.undertaking_total_annual_worldwide_turnover_in_preceding_financial_year: 400000000
+  output:
+    uk:statutes/ukpga/2018/12/157#uk_gdpr_higher_maximum_fixed_penalty_amount: 17500000
+    uk:statutes/ukpga/2018/12/157#uk_gdpr_higher_maximum_turnover_percentage: 0.04
+    uk:statutes/ukpga/2018/12/157#uk_gdpr_higher_maximum_turnover_amount: 16000000
+    uk:statutes/ukpga/2018/12/157#uk_gdpr_higher_maximum_penalty_amount: 17500000
+
+- name: higher_maximum_undertaking_above_turnover_crossover_uses_turnover_amount
+  period:
+    period_kind: custom
+    name: financial_year
+    start: '2021-01-01'
+    end: '2021-12-31'
+  input:
+    uk:statutes/ukpga/2018/12/157#input.penalty_recipient_is_undertaking: true
+    uk:statutes/ukpga/2018/12/157#input.undertaking_total_annual_worldwide_turnover_in_preceding_financial_year: 500000000
+  output:
+    uk:statutes/ukpga/2018/12/157#uk_gdpr_higher_maximum_turnover_amount: 20000000
+    uk:statutes/ukpga/2018/12/157#uk_gdpr_higher_maximum_penalty_amount: 20000000
+
+- name: standard_maximum_undertaking_below_turnover_crossover_uses_fixed_amount
+  period:
+    period_kind: custom
+    name: financial_year
+    start: '2021-01-01'
+    end: '2021-12-31'
+  input:
+    uk:statutes/ukpga/2018/12/157#input.penalty_recipient_is_undertaking: true
+    uk:statutes/ukpga/2018/12/157#input.undertaking_total_annual_worldwide_turnover_in_preceding_financial_year: 400000000
+  output:
+    uk:statutes/ukpga/2018/12/157#uk_gdpr_standard_maximum_fixed_penalty_amount: 8700000
+    uk:statutes/ukpga/2018/12/157#uk_gdpr_standard_maximum_turnover_percentage: 0.02
+    uk:statutes/ukpga/2018/12/157#uk_gdpr_standard_maximum_turnover_amount: 8000000
+    uk:statutes/ukpga/2018/12/157#uk_gdpr_standard_maximum_penalty_amount: 8700000
+
+- name: standard_maximum_undertaking_above_turnover_crossover_uses_turnover_amount
+  period:
+    period_kind: custom
+    name: financial_year
+    start: '2021-01-01'
+    end: '2021-12-31'
+  input:
+    uk:statutes/ukpga/2018/12/157#input.penalty_recipient_is_undertaking: true
+    uk:statutes/ukpga/2018/12/157#input.undertaking_total_annual_worldwide_turnover_in_preceding_financial_year: 500000000
+  output:
+    uk:statutes/ukpga/2018/12/157#uk_gdpr_standard_maximum_turnover_amount: 10000000
+    uk:statutes/ukpga/2018/12/157#uk_gdpr_standard_maximum_penalty_amount: 10000000
+
+- name: non_undertaking_uses_fixed_amounts_even_with_large_turnover
+  period:
+    period_kind: custom
+    name: financial_year
+    start: '2021-01-01'
+    end: '2021-12-31'
+  input:
+    uk:statutes/ukpga/2018/12/157#input.penalty_recipient_is_undertaking: false
+    uk:statutes/ukpga/2018/12/157#input.undertaking_total_annual_worldwide_turnover_in_preceding_financial_year: 1000000000
+  output:
+    uk:statutes/ukpga/2018/12/157#uk_gdpr_higher_maximum_penalty_amount: 17500000
+    uk:statutes/ukpga/2018/12/157#uk_gdpr_standard_maximum_penalty_amount: 8700000
+
+- name: pre_ip_completion_day_uses_enacted_euro_fixed_amounts
+  period:
+    period_kind: custom
+    name: penalty_day
+    start: '2020-12-30'
+    end: '2020-12-30'
+  input:
+    uk:statutes/ukpga/2018/12/157#input.penalty_recipient_is_undertaking: false
+    uk:statutes/ukpga/2018/12/157#input.undertaking_total_annual_worldwide_turnover_in_preceding_financial_year: 0
+  output:
+    uk:statutes/ukpga/2018/12/157#uk_gdpr_higher_maximum_fixed_penalty_amount: 20000000
+    uk:statutes/ukpga/2018/12/157#uk_gdpr_standard_maximum_fixed_penalty_amount: 10000000
+    uk:statutes/ukpga/2018/12/157#uk_gdpr_higher_maximum_penalty_amount: 20000000
+    uk:statutes/ukpga/2018/12/157#uk_gdpr_standard_maximum_penalty_amount: 10000000
+
+- name: ip_completion_day_uses_substituted_sterling_fixed_amounts
+  period:
+    period_kind: custom
+    name: penalty_day
+    start: '2020-12-31'
+    end: '2020-12-31'
+  input:
+    uk:statutes/ukpga/2018/12/157#input.penalty_recipient_is_undertaking: false
+    uk:statutes/ukpga/2018/12/157#input.undertaking_total_annual_worldwide_turnover_in_preceding_financial_year: 0
+  output:
+    uk:statutes/ukpga/2018/12/157#uk_gdpr_higher_maximum_fixed_penalty_amount: 17500000
+    uk:statutes/ukpga/2018/12/157#uk_gdpr_standard_maximum_fixed_penalty_amount: 8700000
+    uk:statutes/ukpga/2018/12/157#uk_gdpr_higher_maximum_penalty_amount: 17500000
+    uk:statutes/ukpga/2018/12/157#uk_gdpr_standard_maximum_penalty_amount: 8700000
