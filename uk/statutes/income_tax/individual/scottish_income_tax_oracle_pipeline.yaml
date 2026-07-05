@@ -1,0 +1,558 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_paths:
+      - uk/statute/ukpga/2007/3/11A
+      - uk/statute/ukpga/2007/3/16
+      - uk/statute/ukpga/2007/3/23
+      - uk/statute/ukpga/2007/3/35
+      - uk/statute/ukpga/1998/46/80C
+      - uk/guidance/scottish-government/scottish-rate-resolution-2026-27/draft-motion/block-1
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - uk/statute/ukpga/2007/3/11A
+        - uk/statute/ukpga/2007/3/35
+        - uk/statute/ukpga/1998/46/80C
+        - uk/guidance/scottish-government/scottish-rate-resolution-2026-27/draft-motion/block-1
+      rationale: |-
+        Every numeric parameter is grounded in an official source. The charge
+        of income tax at Scottish rates on the non-savings income of a Scottish
+        taxpayer is ITA 2007 section 11A. The power to set the Scottish rates
+        and their band limits is the Scottish rate resolution under Scotland
+        Act 1998 section 80C. The 2026-27 rates and band limits themselves --
+        the starter rate (19%, £3,967), the Scottish basic rate (20%, £16,956),
+        the intermediate rate (21%, £31,092), the higher rate (42%, £62,430),
+        the advanced rate (45%, £125,140) and the top rate (48%) -- are set by
+        the Scottish Rate Resolution 2026-27 (gov.scot draft motion agreed by
+        the Scottish Parliament on 2026-02-19). The UK-wide personal allowance
+        base (£12,570) and its £100,000 adjusted-net-income taper are ITA 2007
+        section 35. The starter/basic/intermediate/higher band limits in the
+        Resolution are measured on income above the personal allowance; the
+        £125,140 advanced-rate upper limit is a total-income figure (the point
+        at which the personal allowance is fully withdrawn), so it is applied
+        as £125,140 minus the personal allowance in the after-allowance band
+        space, reproducing the published total-income bands
+        (£12,571-£16,537 starter, £16,538-£29,526 basic, £29,527-£43,662
+        intermediate, £43,663-£75,000 higher, £75,001-£125,140 advanced,
+        over £125,140 top). The pilot models the single-individual 2026-27
+        slice at calendar-year grain so a composed Scottish non-savings
+        non-dividend income tax liability is queryable from gross earned income.
+  summary: |-
+    Composed single-individual income-tax pipeline covering the non-savings
+    non-dividend (earned) income of a Scottish taxpayer for the UKMOD oracle
+    slice at the 2026-27 tax-year parameters. It is the Scottish counterpart of
+    the rest-of-UK earned-income pilot (pilot_worker_oracle_pipeline): the
+    personal allowance and its section 35 taper are UK-wide and identical, but
+    the rate bands are the Scottish rates set by the Scottish Rate Resolution
+    2026-27 under Scotland Act 1998 section 80C for the purposes of Income Tax
+    Act 2007 section 11A. From annual gross earned income it wires: total income
+    (section 23 Step 1); the section 35 personal allowance with its 100,000
+    adjusted-net-income taper; the six Scottish bands (starter 19%, basic 20%,
+    intermediate 21%, higher 42%, advanced 45%, top 48%) applied to the income
+    remaining after the allowance; and a section 23 Step 4-7 style liability, so
+    an end-to-end tin_s comparison against UKMOD runs from the single gross
+    income input. The starter/basic/intermediate/higher band limits are the
+    Resolution's above-personal-allowance limits (£3,967 / £16,956 / £31,092 /
+    £62,430); the advanced-rate upper limit £125,140 is the Resolution's
+    total-income figure and is applied net of the personal allowance so it
+    tracks the taper. Savings and dividend income remain charged at UK rates
+    (Income Tax Act 2007 sections 11D and 13; excluded here), and the pipeline
+    excludes the starting rate for savings, blind person's allowance, marriage
+    allowance, gift-aid and pension-relief basic-rate-band extensions, section
+    26 reductions and section 30 additions, all of which are zero for the
+    ordinary Scottish employee this slice models.
+rules:
+  # ---------------------------------------------------------------------------
+  # Grounded Scottish rates (Scottish Rate Resolution 2026-27)
+  # ---------------------------------------------------------------------------
+  - name: uk_scotpit_starter_rate
+    kind: parameter
+    dtype: Rate
+    source: Scottish Rate Resolution 2026-27 (Scotland Act 1998 s.80C); starter rate
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/scottish-government/scottish-rate-resolution-2026-27/draft-motion/block-1
+              excerpt: "a starter rate of 19%"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.19
+
+  - name: uk_scotpit_basic_rate
+    kind: parameter
+    dtype: Rate
+    source: Scottish Rate Resolution 2026-27 (Scotland Act 1998 s.80C); Scottish basic rate
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/scottish-government/scottish-rate-resolution-2026-27/draft-motion/block-1
+              excerpt: "the Scottish basic rate is 20%"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.20
+
+  - name: uk_scotpit_intermediate_rate
+    kind: parameter
+    dtype: Rate
+    source: Scottish Rate Resolution 2026-27 (Scotland Act 1998 s.80C); intermediate rate
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/scottish-government/scottish-rate-resolution-2026-27/draft-motion/block-1
+              excerpt: "an intermediate rate of 21%"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.21
+
+  - name: uk_scotpit_higher_rate
+    kind: parameter
+    dtype: Rate
+    source: Scottish Rate Resolution 2026-27 (Scotland Act 1998 s.80C); higher rate
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/scottish-government/scottish-rate-resolution-2026-27/draft-motion/block-1
+              excerpt: "a higher rate of 42%"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.42
+
+  - name: uk_scotpit_advanced_rate
+    kind: parameter
+    dtype: Rate
+    source: Scottish Rate Resolution 2026-27 (Scotland Act 1998 s.80C); advanced rate
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/scottish-government/scottish-rate-resolution-2026-27/draft-motion/block-1
+              excerpt: "an advanced rate of 45%"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.45
+
+  - name: uk_scotpit_top_rate
+    kind: parameter
+    dtype: Rate
+    source: Scottish Rate Resolution 2026-27 (Scotland Act 1998 s.80C); top rate
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/scottish-government/scottish-rate-resolution-2026-27/draft-motion/block-1
+              excerpt: "a top rate of 48%"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.48
+
+  # ---------------------------------------------------------------------------
+  # Grounded Scottish band limits (measured on income above the personal
+  # allowance, per the Resolution) and the £125,140 advanced-rate upper limit
+  # (a total-income figure applied net of the personal allowance).
+  # ---------------------------------------------------------------------------
+  - name: uk_scotpit_starter_rate_limit
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: Scottish Rate Resolution 2026-27; starter-rate limit on income above the personal allowance
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/scottish-government/scottish-rate-resolution-2026-27/draft-motion/block-1
+              excerpt: "charged on income up to a limit of £3,967"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          3967
+
+  - name: uk_scotpit_basic_rate_limit
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: Scottish Rate Resolution 2026-27; Scottish basic-rate limit on income above the personal allowance
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/scottish-government/scottish-rate-resolution-2026-27/draft-motion/block-1
+              excerpt: "up to a limit of £16,956"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          16956
+
+  - name: uk_scotpit_intermediate_rate_limit
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: Scottish Rate Resolution 2026-27; intermediate-rate limit on income above the personal allowance
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/scottish-government/scottish-rate-resolution-2026-27/draft-motion/block-1
+              excerpt: "up to a limit of £31,092"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          31092
+
+  - name: uk_scotpit_higher_rate_limit
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: Scottish Rate Resolution 2026-27; higher-rate limit on income above the personal allowance
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/scottish-government/scottish-rate-resolution-2026-27/draft-motion/block-1
+              excerpt: "up to a limit of £62,430"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          62430
+
+  - name: uk_scotpit_advanced_rate_upper_total_income
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: Scottish Rate Resolution 2026-27; advanced-rate upper limit (total income at which the top rate begins)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/guidance/scottish-government/scottish-rate-resolution-2026-27/draft-motion/block-1
+              excerpt: "up to a limit of £125,140"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          125140
+
+  - name: uk_scotpit_personal_allowance_base_amount
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: Income Tax Act 2007 s.35(1); UK-wide personal allowance base
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/35
+              excerpt: "personal allowance of £12,570"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          12570
+
+  - name: uk_scotpit_personal_allowance_withdrawal_threshold
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: Income Tax Act 2007 s.35(2); adjusted-net-income withdrawal threshold
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/35
+              excerpt: "adjusted net income exceeds £100,000"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          100000
+
+  # ---------------------------------------------------------------------------
+  # Total income, adjusted net income, personal allowance (s.35 taper),
+  # taxable non-savings income after the allowance.
+  # ---------------------------------------------------------------------------
+  - name: uk_scotpit_total_income
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.23 Step 1; total income from a single earned-income source
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/23
+              excerpt: "Total income"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, uk_scotpit_annual_earned_income)
+
+  - name: uk_scotpit_adjusted_net_income
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.58; adjusted net income, equal to total income for this slice
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/35
+              excerpt: "adjusted net income exceeds £100,000"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, uk_scotpit_total_income)
+
+  - name: uk_scotpit_personal_allowance
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.35(1)-(3); UK-wide personal allowance with adjusted-net-income taper
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/35
+              excerpt: "adjusted net income exceeds £100,000"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          ceil(max(0, uk_scotpit_personal_allowance_base_amount - (max(0, uk_scotpit_adjusted_net_income - uk_scotpit_personal_allowance_withdrawal_threshold) / 2)))
+
+  - name: uk_scotpit_income_after_allowance
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.23 Step 3; non-savings income remaining after the personal allowance
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/11A
+              excerpt: "Income tax is charged at Scottish rates on the non-savings income of a Scottish taxpayer"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, uk_scotpit_total_income - uk_scotpit_personal_allowance)
+
+  # Advanced-rate upper limit in after-allowance band space: the £125,140
+  # total-income figure less the (possibly tapered) personal allowance. When the
+  # allowance is fully withdrawn (adjusted net income >= £125,140) this equals
+  # £125,140, so the top rate begins at £125,140 of taxable income.
+  - name: uk_scotpit_advanced_rate_limit
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Scottish Rate Resolution 2026-27; advanced-rate upper limit expressed in after-allowance band space
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/guidance/scottish-government/scottish-rate-resolution-2026-27/draft-motion/block-1
+              excerpt: "a top rate of 48%, charged on income above £125,140"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(uk_scotpit_higher_rate_limit, uk_scotpit_advanced_rate_upper_total_income - uk_scotpit_personal_allowance)
+
+  # ---------------------------------------------------------------------------
+  # Scottish band split of taxable non-savings income (section 11A rates via the
+  # Scottish Rate Resolution). Limits are cumulative on income above the
+  # personal allowance.
+  # ---------------------------------------------------------------------------
+  - name: uk_scotpit_income_at_starter_rate
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Scottish Rate Resolution 2026-27; income in the starter-rate band
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1998/46/80C
+              excerpt: "set limits or make other provision to enable it to be ascertained"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          min(uk_scotpit_income_after_allowance, uk_scotpit_starter_rate_limit)
+
+  - name: uk_scotpit_income_at_basic_rate
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Scottish Rate Resolution 2026-27; income in the Scottish basic-rate band
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1998/46/80C
+              excerpt: "set limits or make other provision to enable it to be ascertained"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, min(uk_scotpit_income_after_allowance, uk_scotpit_basic_rate_limit) - uk_scotpit_starter_rate_limit)
+
+  - name: uk_scotpit_income_at_intermediate_rate
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Scottish Rate Resolution 2026-27; income in the intermediate-rate band
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1998/46/80C
+              excerpt: "set limits or make other provision to enable it to be ascertained"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, min(uk_scotpit_income_after_allowance, uk_scotpit_intermediate_rate_limit) - uk_scotpit_basic_rate_limit)
+
+  - name: uk_scotpit_income_at_higher_rate
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Scottish Rate Resolution 2026-27; income in the higher-rate band
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1998/46/80C
+              excerpt: "set limits or make other provision to enable it to be ascertained"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, min(uk_scotpit_income_after_allowance, uk_scotpit_higher_rate_limit) - uk_scotpit_intermediate_rate_limit)
+
+  - name: uk_scotpit_income_at_advanced_rate
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Scottish Rate Resolution 2026-27; income in the advanced-rate band
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1998/46/80C
+              excerpt: "set limits or make other provision to enable it to be ascertained"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, min(uk_scotpit_income_after_allowance, uk_scotpit_advanced_rate_limit) - uk_scotpit_higher_rate_limit)
+
+  - name: uk_scotpit_income_at_top_rate
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Scottish Rate Resolution 2026-27; income in the top-rate band
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1998/46/80C
+              excerpt: "set limits or make other provision to enable it to be ascertained"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, uk_scotpit_income_after_allowance - uk_scotpit_advanced_rate_limit)
+
+  # ---------------------------------------------------------------------------
+  # Composed Scottish non-savings income tax liability (section 23 Step 4-7)
+  # ---------------------------------------------------------------------------
+  - name: uk_scotpit_income_tax_liability
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.11A and s.23 Steps 4 to 7; Scottish non-savings income tax at the Scottish Rate Resolution 2026-27 rates
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/11A
+              excerpt: "Income tax is charged at Scottish rates on the non-savings income of a Scottish taxpayer"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, uk_scotpit_income_at_starter_rate * uk_scotpit_starter_rate + uk_scotpit_income_at_basic_rate * uk_scotpit_basic_rate + uk_scotpit_income_at_intermediate_rate * uk_scotpit_intermediate_rate + uk_scotpit_income_at_higher_rate * uk_scotpit_higher_rate + uk_scotpit_income_at_advanced_rate * uk_scotpit_advanced_rate + uk_scotpit_income_at_top_rate * uk_scotpit_top_rate)
