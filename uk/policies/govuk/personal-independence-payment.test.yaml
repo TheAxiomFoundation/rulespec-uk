@@ -4,18 +4,16 @@
     start: '2026-04-06'
     end: '2027-04-05'
   input:
-    uk:statutes/ukpga/2012/5/78#input.ability_to_carry_out_daily_living_activities_is_limited_by_physical_or_mental_condition: true
-    uk:statutes/ukpga/2012/5/78#input.ability_to_carry_out_daily_living_activities_is_severely_limited_by_physical_or_mental_condition: true
-    uk:statutes/ukpga/2012/5/78#input.required_period_condition_met_for_daily_living_component: true
-    uk:statutes/ukpga/2012/5/79#input.person_is_of_or_over_age_prescribed_for_mobility_component: true
-    uk:statutes/ukpga/2012/5/79#input.ability_to_carry_out_mobility_activities_is_limited_by_physical_or_mental_condition: true
-    uk:statutes/ukpga/2012/5/79#input.ability_to_carry_out_mobility_activities_is_severely_limited_by_physical_or_mental_condition: true
-    uk:statutes/ukpga/2012/5/79#input.required_period_condition_met_for_mobility_component: true
+    uk:policies/govuk/personal-independence-payment#input.daily_living_is_enhanced_rate: true
+    uk:policies/govuk/personal-independence-payment#input.daily_living_is_standard_rate: false
+    uk:policies/govuk/personal-independence-payment#input.mobility_is_enhanced_rate: true
+    uk:policies/govuk/personal-independence-payment#input.mobility_is_standard_rate: false
   output:
-    uk:statutes/ukpga/2012/5/78#pip_daily_living_component_weekly_amount: 114.60
-    uk:statutes/ukpga/2012/5/79#pip_mobility_component_weekly_amount: 80.00
-    uk:statutes/ukpga/2012/5/77#personal_independence_payment_weekly_amount: 194.60
+    uk:policies/govuk/personal-independence-payment#pip_daily_living_component_weekly_amount: 114.60
+    uk:policies/govuk/personal-independence-payment#pip_mobility_component_weekly_amount: 80.00
+    uk:policies/govuk/personal-independence-payment#personal_independence_payment_weekly_amount: 194.60
     uk:policies/govuk/personal-independence-payment#personal_independence_payment_annual_amount: 10119.20
+    uk:policies/govuk/personal-independence-payment#receives_enhanced_daily_living_component: holds
 
 - name: standard_daily_living_and_standard_mobility_combine
   period:
@@ -23,34 +21,30 @@
     start: '2026-04-06'
     end: '2027-04-05'
   input:
-    uk:statutes/ukpga/2012/5/78#input.ability_to_carry_out_daily_living_activities_is_limited_by_physical_or_mental_condition: true
-    uk:statutes/ukpga/2012/5/78#input.ability_to_carry_out_daily_living_activities_is_severely_limited_by_physical_or_mental_condition: false
-    uk:statutes/ukpga/2012/5/78#input.required_period_condition_met_for_daily_living_component: true
-    uk:statutes/ukpga/2012/5/79#input.person_is_of_or_over_age_prescribed_for_mobility_component: true
-    uk:statutes/ukpga/2012/5/79#input.ability_to_carry_out_mobility_activities_is_limited_by_physical_or_mental_condition: true
-    uk:statutes/ukpga/2012/5/79#input.ability_to_carry_out_mobility_activities_is_severely_limited_by_physical_or_mental_condition: false
-    uk:statutes/ukpga/2012/5/79#input.required_period_condition_met_for_mobility_component: true
+    uk:policies/govuk/personal-independence-payment#input.daily_living_is_enhanced_rate: false
+    uk:policies/govuk/personal-independence-payment#input.daily_living_is_standard_rate: true
+    uk:policies/govuk/personal-independence-payment#input.mobility_is_enhanced_rate: false
+    uk:policies/govuk/personal-independence-payment#input.mobility_is_standard_rate: true
   output:
-    uk:statutes/ukpga/2012/5/78#pip_daily_living_component_weekly_amount: 76.70
-    uk:statutes/ukpga/2012/5/79#pip_mobility_component_weekly_amount: 30.30
-    uk:statutes/ukpga/2012/5/77#personal_independence_payment_weekly_amount: 107.00
+    uk:policies/govuk/personal-independence-payment#pip_daily_living_component_weekly_amount: 76.70
+    uk:policies/govuk/personal-independence-payment#pip_mobility_component_weekly_amount: 30.30
+    uk:policies/govuk/personal-independence-payment#personal_independence_payment_weekly_amount: 107.00
     uk:policies/govuk/personal-independence-payment#personal_independence_payment_annual_amount: 5564.00
+    uk:policies/govuk/personal-independence-payment#receives_enhanced_daily_living_component: not_holds
 
-- name: no_entitlement_yields_nil
+- name: no_award_yields_nil
   period:
     period_kind: tax_year
     start: '2026-04-06'
     end: '2027-04-05'
   input:
-    uk:statutes/ukpga/2012/5/78#input.ability_to_carry_out_daily_living_activities_is_limited_by_physical_or_mental_condition: false
-    uk:statutes/ukpga/2012/5/78#input.ability_to_carry_out_daily_living_activities_is_severely_limited_by_physical_or_mental_condition: false
-    uk:statutes/ukpga/2012/5/78#input.required_period_condition_met_for_daily_living_component: false
-    uk:statutes/ukpga/2012/5/79#input.person_is_of_or_over_age_prescribed_for_mobility_component: false
-    uk:statutes/ukpga/2012/5/79#input.ability_to_carry_out_mobility_activities_is_limited_by_physical_or_mental_condition: false
-    uk:statutes/ukpga/2012/5/79#input.ability_to_carry_out_mobility_activities_is_severely_limited_by_physical_or_mental_condition: false
-    uk:statutes/ukpga/2012/5/79#input.required_period_condition_met_for_mobility_component: false
+    uk:policies/govuk/personal-independence-payment#input.daily_living_is_enhanced_rate: false
+    uk:policies/govuk/personal-independence-payment#input.daily_living_is_standard_rate: false
+    uk:policies/govuk/personal-independence-payment#input.mobility_is_enhanced_rate: false
+    uk:policies/govuk/personal-independence-payment#input.mobility_is_standard_rate: false
   output:
-    uk:statutes/ukpga/2012/5/78#pip_daily_living_component_weekly_amount: 0
-    uk:statutes/ukpga/2012/5/79#pip_mobility_component_weekly_amount: 0
-    uk:statutes/ukpga/2012/5/77#personal_independence_payment_weekly_amount: 0
+    uk:policies/govuk/personal-independence-payment#pip_daily_living_component_weekly_amount: 0
+    uk:policies/govuk/personal-independence-payment#pip_mobility_component_weekly_amount: 0
+    uk:policies/govuk/personal-independence-payment#personal_independence_payment_weekly_amount: 0
     uk:policies/govuk/personal-independence-payment#personal_independence_payment_annual_amount: 0
+    uk:policies/govuk/personal-independence-payment#receives_enhanced_daily_living_component: not_holds
