@@ -1,0 +1,82 @@
+# Expected values computed by the axiom-rules-engine from the corpus-grounded
+# 2026-27 Scottish Rate Resolution parameters and cross-checked against UKMOD
+# UK_2026 tin_s for a Scottish taxpayer (region routed to Scotland via drgn1) in
+# the axiom-oracles uk-income-tax-scottish suite. The earnings sweep crosses
+# every Scottish band, including the £43,662 higher-rate boundary that is
+# Scotland-only (the rest of the UK has no intermediate band there). Coverage:
+# every derived rule is asserted in at least one case.
+- name: scot_e14k
+  period: {period_kind: tax_year, start: '2026-04-06', end: '2027-04-05'}
+  input:
+    uk:statutes/income_tax/individual/scottish_income_tax_oracle_pipeline#input.uk_scotpit_annual_earned_income: 14000
+  output:
+    uk:statutes/income_tax/individual/scottish_income_tax_oracle_pipeline#uk_scotpit_income_tax_liability: 271.70
+- name: scot_e20k
+  period: {period_kind: tax_year, start: '2026-04-06', end: '2027-04-05'}
+  input:
+    uk:statutes/income_tax/individual/scottish_income_tax_oracle_pipeline#input.uk_scotpit_annual_earned_income: 20000
+  output:
+    uk:statutes/income_tax/individual/scottish_income_tax_oracle_pipeline#uk_scotpit_income_tax_liability: 1446.33
+- name: scot_e30k
+  period: {period_kind: tax_year, start: '2026-04-06', end: '2027-04-05'}
+  input:
+    uk:statutes/income_tax/individual/scottish_income_tax_oracle_pipeline#input.uk_scotpit_annual_earned_income: 30000
+  output:
+    uk:statutes/income_tax/individual/scottish_income_tax_oracle_pipeline#uk_scotpit_income_tax_liability: 3451.07
+- name: scot_e45k_straddles_higher_boundary
+  period: {period_kind: tax_year, start: '2026-04-06', end: '2027-04-05'}
+  input:
+    uk:statutes/income_tax/individual/scottish_income_tax_oracle_pipeline#input.uk_scotpit_annual_earned_income: 45000
+  output:
+    uk:statutes/income_tax/individual/scottish_income_tax_oracle_pipeline#uk_scotpit_total_income: 45000
+    uk:statutes/income_tax/individual/scottish_income_tax_oracle_pipeline#uk_scotpit_adjusted_net_income: 45000
+    uk:statutes/income_tax/individual/scottish_income_tax_oracle_pipeline#uk_scotpit_personal_allowance: 12570
+    uk:statutes/income_tax/individual/scottish_income_tax_oracle_pipeline#uk_scotpit_income_after_allowance: 32430
+    uk:statutes/income_tax/individual/scottish_income_tax_oracle_pipeline#uk_scotpit_advanced_rate_limit: 112570
+    uk:statutes/income_tax/individual/scottish_income_tax_oracle_pipeline#uk_scotpit_income_at_starter_rate: 3967
+    uk:statutes/income_tax/individual/scottish_income_tax_oracle_pipeline#uk_scotpit_income_at_basic_rate: 12989
+    uk:statutes/income_tax/individual/scottish_income_tax_oracle_pipeline#uk_scotpit_income_at_intermediate_rate: 14136
+    uk:statutes/income_tax/individual/scottish_income_tax_oracle_pipeline#uk_scotpit_income_at_higher_rate: 1338
+    uk:statutes/income_tax/individual/scottish_income_tax_oracle_pipeline#uk_scotpit_income_at_advanced_rate: 0
+    uk:statutes/income_tax/individual/scottish_income_tax_oracle_pipeline#uk_scotpit_income_at_top_rate: 0
+    uk:statutes/income_tax/individual/scottish_income_tax_oracle_pipeline#uk_scotpit_income_tax_liability: 6882.05
+- name: scot_e50k
+  period: {period_kind: tax_year, start: '2026-04-06', end: '2027-04-05'}
+  input:
+    uk:statutes/income_tax/individual/scottish_income_tax_oracle_pipeline#input.uk_scotpit_annual_earned_income: 50000
+  output:
+    uk:statutes/income_tax/individual/scottish_income_tax_oracle_pipeline#uk_scotpit_income_tax_liability: 8982.05
+- name: scot_e75k_higher_band_top
+  period: {period_kind: tax_year, start: '2026-04-06', end: '2027-04-05'}
+  input:
+    uk:statutes/income_tax/individual/scottish_income_tax_oracle_pipeline#input.uk_scotpit_annual_earned_income: 75000
+  output:
+    uk:statutes/income_tax/individual/scottish_income_tax_oracle_pipeline#uk_scotpit_income_at_higher_rate: 31338
+    uk:statutes/income_tax/individual/scottish_income_tax_oracle_pipeline#uk_scotpit_income_at_advanced_rate: 0
+    uk:statutes/income_tax/individual/scottish_income_tax_oracle_pipeline#uk_scotpit_income_tax_liability: 19482.05
+- name: scot_e100k
+  period: {period_kind: tax_year, start: '2026-04-06', end: '2027-04-05'}
+  input:
+    uk:statutes/income_tax/individual/scottish_income_tax_oracle_pipeline#input.uk_scotpit_annual_earned_income: 100000
+  output:
+    uk:statutes/income_tax/individual/scottish_income_tax_oracle_pipeline#uk_scotpit_personal_allowance: 12570
+    uk:statutes/income_tax/individual/scottish_income_tax_oracle_pipeline#uk_scotpit_income_at_advanced_rate: 25000
+    uk:statutes/income_tax/individual/scottish_income_tax_oracle_pipeline#uk_scotpit_income_tax_liability: 30732.05
+- name: scot_e130k_top_rate_pa_tapered
+  period: {period_kind: tax_year, start: '2026-04-06', end: '2027-04-05'}
+  input:
+    uk:statutes/income_tax/individual/scottish_income_tax_oracle_pipeline#input.uk_scotpit_annual_earned_income: 130000
+  output:
+    uk:statutes/income_tax/individual/scottish_income_tax_oracle_pipeline#uk_scotpit_personal_allowance: 0
+    uk:statutes/income_tax/individual/scottish_income_tax_oracle_pipeline#uk_scotpit_income_after_allowance: 130000
+    uk:statutes/income_tax/individual/scottish_income_tax_oracle_pipeline#uk_scotpit_advanced_rate_limit: 125140
+    uk:statutes/income_tax/individual/scottish_income_tax_oracle_pipeline#uk_scotpit_income_at_advanced_rate: 62710
+    uk:statutes/income_tax/individual/scottish_income_tax_oracle_pipeline#uk_scotpit_income_at_top_rate: 4860
+    uk:statutes/income_tax/individual/scottish_income_tax_oracle_pipeline#uk_scotpit_income_tax_liability: 50034.35
+- name: scot_e160k
+  period: {period_kind: tax_year, start: '2026-04-06', end: '2027-04-05'}
+  input:
+    uk:statutes/income_tax/individual/scottish_income_tax_oracle_pipeline#input.uk_scotpit_annual_earned_income: 160000
+  output:
+    uk:statutes/income_tax/individual/scottish_income_tax_oracle_pipeline#uk_scotpit_income_at_top_rate: 34860
+    uk:statutes/income_tax/individual/scottish_income_tax_oracle_pipeline#uk_scotpit_income_tax_liability: 64434.35
