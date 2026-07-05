@@ -1,0 +1,68 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_paths:
+      - uk/statute/ukpga/2012/5/77
+      - uk/regulation/uksi/2013/376/schedule/4/paragraph/7
+  summary: |-
+    Personal Independence Payment compare wrapper. Composes the already-encoded
+    Welfare Reform Act 2012 sections 77 to 79 (entitlement to the daily living
+    and mobility components at the standard or enhanced rate) and the Personal
+    Independence Payment Regulations 2013 regulation 24 weekly rates into a
+    single compile root. Importing the statutory component and total outputs
+    surfaces their entitlement input leaves, so a PolicyEngine-UK oracle can
+    project its frozen daily-living and mobility category inputs into the
+    statutory standard/enhanced/nil rate selection and compare the resulting
+    weekly component amounts, the aggregate weekly Personal Independence Payment,
+    and enhanced daily-living receipt. This wrapper adds no new eligibility rule:
+    it only annualises the section 77 weekly total for a final-amount output that
+    parallels the child Disability Living Allowance wrapper.
+imports:
+  - uk:statutes/ukpga/2012/5/77#personal_independence_payment_weekly_amount
+  - uk:statutes/ukpga/2012/5/78#pip_daily_living_component_weekly_amount
+  - uk:statutes/ukpga/2012/5/78#pip_daily_living_enhanced_rate_entitlement
+  - uk:statutes/ukpga/2012/5/79#pip_mobility_component_weekly_amount
+  - uk:regulations/uksi/2013/377/24#pip_daily_living_standard_weekly_rate
+  - uk:regulations/uksi/2013/377/24#pip_daily_living_enhanced_weekly_rate
+  - uk:regulations/uksi/2013/377/24#pip_mobility_standard_weekly_rate
+  - uk:regulations/uksi/2013/377/24#pip_mobility_enhanced_weekly_rate
+rules:
+  - name: personal_independence_payment_weeks_in_year
+    kind: parameter
+    dtype: Count
+    source: Universal Credit Regulations 2013, Schedule 4 paragraph 7 (weekly amounts converted over 52 weeks)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/7
+              excerpt: "calculated as a monthly amount"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          52
+
+  - name: personal_independence_payment_annual_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Welfare Reform Act 2012 s.77 (weekly total annualised)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/2012/5/77#personal_independence_payment_weekly_amount
+              output: personal_independence_payment_weekly_amount
+              hash: sha256:local
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          personal_independence_payment_weekly_amount * personal_independence_payment_weeks_in_year
