@@ -1,0 +1,1233 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_paths:
+      - uk/statute/ukpga/2007/3/8
+      - uk/statute/ukpga/2007/3/10
+      - uk/statute/ukpga/2007/3/12
+      - uk/statute/ukpga/2007/3/12B
+      - uk/statute/ukpga/2007/3/13
+      - uk/statute/ukpga/2007/3/13A
+      - uk/statute/ukpga/2007/3/16
+      - uk/statute/ukpga/2007/3/35
+      - uk/statute/ukpga/2016/24/4
+      - uk/statute/ukpga/2026/11/2
+      - uk/statute/ukpga/2026/11/3
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - uk/statute/ukpga/2007/3/8
+        - uk/statute/ukpga/2007/3/10
+        - uk/statute/ukpga/2007/3/12
+        - uk/statute/ukpga/2007/3/12B
+        - uk/statute/ukpga/2007/3/13
+        - uk/statute/ukpga/2007/3/13A
+        - uk/statute/ukpga/2007/3/35
+        - uk/statute/ukpga/2026/11/2
+        - uk/statute/ukpga/2026/11/3
+      rationale: |-
+        Every numeric parameter is grounded in an official source: the main
+        rates (20%/40%/45%) in Finance Act 2026 (ukpga 2026 c.11 section 2);
+        the savings basic/higher/additional rates (20%/40%/45%) in section 3
+        of the same Act; the savings nil rate (0%) inserted into ITA 2007
+        section 7 by Finance Act 2016 (ukpga 2016 c.24 section 4); the savings
+        allowance amounts (nil/£500/£1,000) in ITA 2007 section 12B; the
+        starting rate limit for savings (£5,000) in ITA 2007 section 12(3);
+        the dividend nil/ordinary/upper/additional rates (0%/10.75%/35.75%/
+        39.35%) in ITA 2007 section 8; and the dividend allowance (£500) in
+        ITA 2007 section 13A. The pilot models the single-individual 2026-27
+        slice at calendar-year grain so a composed savings-and-dividend income
+        tax liability is queryable from gross earned, savings, and dividend
+        income without the caller supplying the section 10/12/12A/13/13A/16
+        stage boundaries.
+  summary: |-
+    Composed single-individual income-tax pipeline covering savings and
+    dividend income for the UKMOD oracle slice at the 2026-27 tax-year
+    parameters. It extends the earned-income pilot (pilot_worker_oracle_
+    pipeline) by stacking savings income and then dividend income on top of
+    non-savings/non-dividend income, per the Income Tax Act 2007 section 16
+    ordering that treats savings and dividend income as the highest part of
+    total income. From annual gross earned, savings, and dividend income it
+    wires: the section 35 personal allowance with its 100,000 adjusted-net-
+    income taper applied to the lowest (non-savings) slice; the section 10
+    basic/higher/additional rate bands on non-savings income; the section 12
+    starting rate for savings (0% up to the 5,000 starting rate limit, to the
+    extent not consumed by non-savings income); the section 12A/12B savings
+    nil rate on the personal savings allowance (1,000 basic-rate, 500 higher-
+    rate, nil additional-rate per section 12B); the section 11D savings basic/
+    higher/additional rates on the remaining savings income; the section 13A
+    dividend nil rate on the 500 dividend allowance; and the section 8/13
+    dividend ordinary/upper/additional rates on the remaining dividend income.
+    It composes a section 23 Step 4-7 style total liability so an end-to-end
+    tin_s comparison against UKMOD runs from the three gross income inputs.
+    It deliberately restricts to earned income at or above the 5,000 starting
+    rate limit for savings (so the starting-rate-for-savings band is zero and
+    needs no ungrounded section 7 rate literal), and excludes Scottish and
+    Welsh rates, blind person's allowance, marriage allowance, gift-aid and
+    pension-relief basic-rate-band extensions, section 26 reductions, and
+    section 30 additional-tax amounts, all of which are zero for the ordinary
+    individual this slice models. 2025-26 and 2026-27 share frozen personal
+    allowance (12,570), basic-rate limit (37,700), and main/savings/dividend
+    rates, so UKMOD UK_2025 and UK_2026 return identical values here.
+rules:
+  # ---------------------------------------------------------------------------
+  # Grounded rate and allowance parameters
+  # ---------------------------------------------------------------------------
+  - name: uk_svdv_basic_rate
+    kind: parameter
+    dtype: Rate
+    source: Finance Act, ukpga 2026 c.11 s.2; basic rate for 2026-27
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2026/11/2
+              excerpt: "the basic rate is 20%"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.20
+
+  - name: uk_svdv_higher_rate
+    kind: parameter
+    dtype: Rate
+    source: Finance Act, ukpga 2026 c.11 s.2; higher rate for 2026-27
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2026/11/2
+              excerpt: "the higher rate is 40%"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.40
+
+  - name: uk_svdv_additional_rate
+    kind: parameter
+    dtype: Rate
+    source: Finance Act, ukpga 2026 c.11 s.2; additional rate for 2026-27
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2026/11/2
+              excerpt: "the additional rate is 45%"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.45
+
+  - name: uk_svdv_savings_basic_rate
+    kind: parameter
+    dtype: Rate
+    source: Finance Act, ukpga 2026 c.11 s.3(2); savings basic rate for 2026-27
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2026/11/3
+              excerpt: "the savings basic rate is 20%"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.20
+
+  - name: uk_svdv_savings_higher_rate
+    kind: parameter
+    dtype: Rate
+    source: Finance Act, ukpga 2026 c.11 s.3(2); savings higher rate for 2026-27
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2026/11/3
+              excerpt: "the savings higher rate is 40%"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.40
+
+  - name: uk_svdv_savings_additional_rate
+    kind: parameter
+    dtype: Rate
+    source: Finance Act, ukpga 2026 c.11 s.3(2); savings additional rate for 2026-27
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2026/11/3
+              excerpt: "the savings additional rate is 45%"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.45
+
+  - name: uk_svdv_savings_nil_rate
+    kind: parameter
+    dtype: Rate
+    source: ITA 2007 s.7(2) as inserted by Finance Act 2016 c.24 s.4; savings nil rate
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2016/24/4
+              excerpt: "The savings nil rate is 0%"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0
+
+  - name: uk_svdv_dividend_nil_rate
+    kind: parameter
+    dtype: Rate
+    source: ITA 2007 s.8(A1); dividend nil rate
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/8
+              excerpt: "The dividend nil rate is 0%."
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0
+
+  - name: uk_svdv_dividend_ordinary_rate
+    kind: parameter
+    dtype: Rate
+    source: ITA 2007 s.8(1); dividend ordinary rate
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/8
+              excerpt: "The dividend ordinary rate is 10.75%."
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.1075
+
+  - name: uk_svdv_dividend_upper_rate
+    kind: parameter
+    dtype: Rate
+    source: ITA 2007 s.8(2); dividend upper rate
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/8
+              excerpt: "The dividend upper rate is 35.75%."
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.3575
+
+  - name: uk_svdv_dividend_additional_rate
+    kind: parameter
+    dtype: Rate
+    source: ITA 2007 s.8(3); dividend additional rate
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/8
+              excerpt: "The dividend additional rate is 39.35%."
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.3935
+
+  - name: uk_svdv_basic_rate_limit
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: Income Tax Act 2007 s.10(5), frozen at £37,700 to 2030-31 by Finance Act 2026 c.11 s.10
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/10
+              excerpt: "The basic rate limit is £37,700"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          37700
+
+  - name: uk_svdv_personal_allowance_base_amount
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: Income Tax Act 2007 s.35(1); personal allowance base
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/35
+              excerpt: "personal allowance of £12,570"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          12570
+
+  - name: uk_svdv_personal_allowance_withdrawal_threshold
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: Income Tax Act 2007 s.35(2); adjusted-net-income withdrawal threshold
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/35
+              excerpt: "adjusted net income exceeds £100,000"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          100000
+
+  - name: uk_svdv_starting_rate_limit_for_savings
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: Income Tax Act 2007 s.12(3), frozen at £5,000 by Finance Act 2026 c.11 s.9
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/12
+              excerpt: "The starting rate limit for savings is £5,000"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          5000
+
+  - name: uk_svdv_savings_allowance_basic_rate_amount
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: Income Tax Act 2007 s.12B(4); savings allowance where no higher-rate income
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/12B
+              excerpt: "the individual's savings allowance for the year is £1,000"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          1000
+
+  - name: uk_svdv_savings_allowance_higher_rate_amount
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: Income Tax Act 2007 s.12B(3); savings allowance where higher-rate but no additional-rate income
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/12B
+              excerpt: "the individual's savings allowance for the year is £500"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          500
+
+  - name: uk_svdv_savings_allowance_additional_rate_amount
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: Income Tax Act 2007 s.12B(2); savings allowance where additional-rate income
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/12B
+              excerpt: "the individual's savings allowance for the year is nil"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0
+
+  - name: uk_svdv_dividend_allowance
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: Income Tax Act 2007 s.13A; dividend nil-rate allowance
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/13A
+              excerpt: "the first £500"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          500
+
+  # ---------------------------------------------------------------------------
+  # Derived higher-rate limit (twice PA + withdrawal threshold, per s.10(5A))
+  # ---------------------------------------------------------------------------
+  - name: uk_svdv_higher_rate_limit
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.10(5A); higher rate limit is twice the personal allowance plus the withdrawal threshold
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/8
+              excerpt: "Rates at which income tax is charged"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          2 * uk_svdv_personal_allowance_base_amount + uk_svdv_personal_allowance_withdrawal_threshold
+
+  # ---------------------------------------------------------------------------
+  # Total, adjusted net income, personal allowance (s.35 taper), band split of
+  # the personal allowance across non-savings, savings, then dividend income.
+  # ---------------------------------------------------------------------------
+  - name: uk_svdv_total_income
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.23 Step 1; total income from earned, savings, and dividend sources
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/16
+              excerpt: "the highest part of the person's total income"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, uk_svdv_annual_earned_income) + max(0, uk_svdv_annual_savings_income) + max(0, uk_svdv_annual_dividend_income)
+
+  - name: uk_svdv_adjusted_net_income
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.58; adjusted net income, equal to total income for this slice
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/8
+              excerpt: "Income tax"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, uk_svdv_total_income)
+
+  - name: uk_svdv_personal_allowance
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.35(1)-(3); personal allowance with adjusted-net-income taper
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/8
+              excerpt: "Income tax"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          ceil(max(0, uk_svdv_personal_allowance_base_amount - (max(0, uk_svdv_adjusted_net_income - uk_svdv_personal_allowance_withdrawal_threshold) / 2)))
+
+  # Personal allowance is set against the lowest slice first: non-savings, then
+  # savings, then dividend income (HMRC's beneficial ordering follows from the
+  # section 16 rule that savings and dividend income are the highest part).
+  - name: uk_svdv_non_savings_income_after_allowance
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.23 Step 3; non-savings income remaining after the personal allowance
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/16
+              excerpt: "the savings income and dividend income are together treated as the highest part"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, max(0, uk_svdv_annual_earned_income) - uk_svdv_personal_allowance)
+
+  - name: uk_svdv_allowance_remaining_after_non_savings
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.23 Step 3; personal allowance not absorbed by non-savings income
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/16
+              excerpt: "the savings income and dividend income are together treated as the highest part"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, uk_svdv_personal_allowance - max(0, uk_svdv_annual_earned_income))
+
+  - name: uk_svdv_savings_income_after_allowance
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.23 Step 3; savings income remaining after any unused personal allowance
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/16
+              excerpt: "the savings income is treated as the highest part of the person's total income"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, max(0, uk_svdv_annual_savings_income) - uk_svdv_allowance_remaining_after_non_savings)
+
+  - name: uk_svdv_allowance_remaining_after_savings
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.23 Step 3; personal allowance not absorbed by non-savings or savings income
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/16
+              excerpt: "the dividend income is treated as the highest part of the person's total income"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, uk_svdv_allowance_remaining_after_non_savings - max(0, uk_svdv_annual_savings_income))
+
+  - name: uk_svdv_dividend_income_after_allowance
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.23 Step 3; dividend income remaining after any unused personal allowance
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/16
+              excerpt: "the dividend income is treated as the highest part of the person's total income"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, max(0, uk_svdv_annual_dividend_income) - uk_svdv_allowance_remaining_after_savings)
+
+  - name: uk_svdv_total_taxable_income
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.23 Step 3; total income remaining after the personal allowance
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/8
+              excerpt: "Income tax"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, uk_svdv_non_savings_income_after_allowance + uk_svdv_savings_income_after_allowance + uk_svdv_dividend_income_after_allowance)
+
+  # ---------------------------------------------------------------------------
+  # Non-savings income tax (section 10 bands on the bottom of the stack)
+  # ---------------------------------------------------------------------------
+  - name: uk_svdv_non_savings_charged_at_basic_rate
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.10(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/8
+              excerpt: "Income tax"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          min(uk_svdv_non_savings_income_after_allowance, uk_svdv_basic_rate_limit)
+
+  - name: uk_svdv_non_savings_charged_at_higher_rate
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.10(3)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/8
+              excerpt: "Income tax"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, min(uk_svdv_non_savings_income_after_allowance, uk_svdv_higher_rate_limit) - uk_svdv_basic_rate_limit)
+
+  - name: uk_svdv_non_savings_charged_at_additional_rate
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.10(3A)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/8
+              excerpt: "Income tax"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, uk_svdv_non_savings_income_after_allowance - uk_svdv_higher_rate_limit)
+
+  - name: uk_svdv_tax_on_non_savings_income
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.10 with the Finance Act 2026-27 main rates
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2026/11/2
+              excerpt: "the main rates of income tax"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          uk_svdv_non_savings_charged_at_basic_rate * uk_svdv_basic_rate + uk_svdv_non_savings_charged_at_higher_rate * uk_svdv_higher_rate + uk_svdv_non_savings_charged_at_additional_rate * uk_svdv_additional_rate
+
+  # ---------------------------------------------------------------------------
+  # Savings income tax (stacked above non-savings). Band membership for the PSA
+  # amount is decided by the top of total taxable income (s.12B(8)).
+  # ---------------------------------------------------------------------------
+  - name: uk_svdv_individual_has_higher_rate_income
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Year
+    source: Income Tax Act 2007 s.12B(3), (8)(b)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/12B
+              excerpt: "any of the individual's income for the year is higher-rate income"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          uk_svdv_total_taxable_income > uk_svdv_basic_rate_limit
+
+  - name: uk_svdv_individual_has_additional_rate_income
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Year
+    source: Income Tax Act 2007 s.12B(2), (8)(a)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/12B
+              excerpt: "any of the individual's income for the year is additional-rate income"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          uk_svdv_total_taxable_income > uk_svdv_higher_rate_limit
+
+  - name: uk_svdv_savings_allowance
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.12B(1)-(4); personal savings allowance
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/12B
+              excerpt: "Subsections (2) to (4) determine the amount of an individual's savings allowance for a tax year"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          if uk_svdv_individual_has_additional_rate_income: uk_svdv_savings_allowance_additional_rate_amount else: if uk_svdv_individual_has_higher_rate_income: uk_svdv_savings_allowance_higher_rate_amount else: uk_svdv_savings_allowance_basic_rate_amount
+
+  # Starting rate for savings: 0% on savings within the starting rate limit, to
+  # the extent that limit is not consumed by non-savings taxable income. This
+  # slice restricts earned income to at least the starting rate limit, so the
+  # band is zero; it is computed explicitly so the restriction is auditable.
+  - name: uk_svdv_savings_at_starting_rate
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.12(1); savings taxed at the starting rate for savings (0%)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/12
+              excerpt: "on so much of an individual's income up to the starting rate limit for savings as— (a) is savings income, and (b) would otherwise be charged at the basic rate or the default basic rate"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, min(uk_svdv_savings_income_after_allowance, uk_svdv_starting_rate_limit_for_savings - uk_svdv_non_savings_income_after_allowance))
+
+  - name: uk_svdv_savings_after_starting_rate
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.12A(7); savings income above the starting rate band
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/12
+              excerpt: "the starting rate limit for savings"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, uk_svdv_savings_income_after_allowance - uk_svdv_savings_at_starting_rate)
+
+  - name: uk_svdv_savings_at_nil_rate
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.12A(3)-(4); savings taxed at the savings nil rate on the personal savings allowance
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/16
+              excerpt: "the savings income is treated as the highest part of the person's total income"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          min(uk_svdv_savings_after_starting_rate, uk_svdv_savings_allowance)
+
+  - name: uk_svdv_savings_taxed_at_band_rates
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.11D; savings income taxed at the savings basic/higher/additional rates
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2026/11/3
+              excerpt: "the savings rates of income tax"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, uk_svdv_savings_after_starting_rate - uk_svdv_savings_at_nil_rate)
+
+  # Band position at which savings income starts = the non-savings taxable
+  # income plus the 0% starting-rate savings slice, which occupies band space
+  # below it. The savings nil rate (personal savings allowance) does NOT advance
+  # the band position: it is a 0% band charged on the savings that would
+  # otherwise sit at the highest rate, so the taxable savings occupies the same
+  # band space it would without the allowance and the allowance is credited
+  # against the top savings slices (see s.12A(3)-(4) read with the section 16
+  # highest-part ordering and HMRC's beneficial allocation of the nil-rate band).
+  - name: uk_svdv_band_position_before_savings
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.16; savings taxed above the 0% starting-rate slice
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/16
+              excerpt: "the savings income is treated as the highest part of the person's total income"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          uk_svdv_non_savings_income_after_allowance + uk_svdv_savings_at_starting_rate
+
+  # Gross band split of all savings above the starting-rate band (before the
+  # savings nil rate is credited), occupying bands from the position above.
+  - name: uk_svdv_savings_gross_basic_band
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.11D(1); savings within the basic-rate band before the savings nil rate
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/8
+              excerpt: "Income tax"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, min(uk_svdv_band_position_before_savings + uk_svdv_savings_after_starting_rate, uk_svdv_basic_rate_limit) - uk_svdv_band_position_before_savings)
+
+  - name: uk_svdv_savings_gross_higher_band
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.11D(2); savings within the higher-rate band before the savings nil rate
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/8
+              excerpt: "Income tax"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, min(uk_svdv_band_position_before_savings + uk_svdv_savings_after_starting_rate, uk_svdv_higher_rate_limit) - max(uk_svdv_band_position_before_savings, uk_svdv_basic_rate_limit))
+
+  - name: uk_svdv_savings_gross_additional_band
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.11D(3); savings within the additional-rate band before the savings nil rate
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/8
+              excerpt: "Income tax"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, (uk_svdv_band_position_before_savings + uk_svdv_savings_after_starting_rate) - max(uk_svdv_band_position_before_savings, uk_svdv_higher_rate_limit))
+
+  # The savings nil rate (personal savings allowance) is credited against the
+  # highest-rate savings slices first: additional, then higher, then basic.
+  - name: uk_svdv_savings_charged_at_savings_additional_rate
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.11D(3); savings additional-rate amount after the savings nil rate
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/8
+              excerpt: "Income tax"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, uk_svdv_savings_gross_additional_band - uk_svdv_savings_at_nil_rate)
+
+  - name: uk_svdv_savings_charged_at_savings_higher_rate
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.11D(2); savings higher-rate amount after the savings nil rate
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/8
+              excerpt: "Income tax"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, uk_svdv_savings_gross_higher_band - max(0, uk_svdv_savings_at_nil_rate - uk_svdv_savings_gross_additional_band))
+
+  - name: uk_svdv_savings_charged_at_savings_basic_rate
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.11D(1); savings basic-rate amount after the savings nil rate
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/8
+              excerpt: "Income tax"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, uk_svdv_savings_gross_basic_band - max(0, uk_svdv_savings_at_nil_rate - uk_svdv_savings_gross_additional_band - uk_svdv_savings_gross_higher_band))
+
+  - name: uk_svdv_tax_on_savings_income
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.11D with the Finance Act 2026-27 savings rates
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2026/11/3
+              excerpt: "the savings rates of income tax"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          uk_svdv_savings_charged_at_savings_basic_rate * uk_svdv_savings_basic_rate + uk_svdv_savings_charged_at_savings_higher_rate * uk_svdv_savings_higher_rate + uk_svdv_savings_charged_at_savings_additional_rate * uk_svdv_savings_additional_rate
+
+  # ---------------------------------------------------------------------------
+  # Dividend income tax (stacked at the very top). The dividend allowance is a
+  # nil-rate band that occupies band space (s.13A).
+  # ---------------------------------------------------------------------------
+  - name: uk_svdv_dividend_at_nil_rate
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.13A; dividend income within the dividend allowance (0%)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/13A
+              excerpt: "charged at the dividend nil rate"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          min(uk_svdv_dividend_income_after_allowance, uk_svdv_dividend_allowance)
+
+  # Band position at which dividend income starts = all non-dividend taxable
+  # income (non-savings plus all savings, including the 0% savings slices, which
+  # occupy band space). The dividend allowance, like the savings nil rate, does
+  # NOT advance the band position: it is a 0% band charged on the dividends that
+  # would otherwise sit at the highest rate, so the taxable dividends occupy the
+  # same band space and the allowance is credited against the top slices.
+  - name: uk_svdv_band_position_before_dividends
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.16; dividends taxed above all non-dividend income
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/16
+              excerpt: "the dividend income is treated as the highest part of the person's total income"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          uk_svdv_band_position_before_savings + uk_svdv_savings_after_starting_rate
+
+  - name: uk_svdv_dividend_gross_ordinary_band
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.13(1); dividends within the basic-rate band before the dividend allowance
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/8
+              excerpt: "dividend ordinary rate"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, min(uk_svdv_band_position_before_dividends + uk_svdv_dividend_income_after_allowance, uk_svdv_basic_rate_limit) - uk_svdv_band_position_before_dividends)
+
+  - name: uk_svdv_dividend_gross_upper_band
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.13(2); dividends within the higher-rate band before the dividend allowance
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/8
+              excerpt: "dividend upper rate"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, min(uk_svdv_band_position_before_dividends + uk_svdv_dividend_income_after_allowance, uk_svdv_higher_rate_limit) - max(uk_svdv_band_position_before_dividends, uk_svdv_basic_rate_limit))
+
+  - name: uk_svdv_dividend_gross_additional_band
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.13(2A); dividends within the additional-rate band before the dividend allowance
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/8
+              excerpt: "dividend additional"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, (uk_svdv_band_position_before_dividends + uk_svdv_dividend_income_after_allowance) - max(uk_svdv_band_position_before_dividends, uk_svdv_higher_rate_limit))
+
+  # The dividend allowance (dividend nil rate) is credited against the highest-
+  # rate dividend slices first: additional, then upper, then ordinary.
+  - name: uk_svdv_dividend_charged_at_additional_rate
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.13(2A); dividend additional-rate amount after the dividend allowance
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/8
+              excerpt: "dividend additional"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, uk_svdv_dividend_gross_additional_band - uk_svdv_dividend_at_nil_rate)
+
+  - name: uk_svdv_dividend_charged_at_upper_rate
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.13(2); dividend upper-rate amount after the dividend allowance
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/8
+              excerpt: "dividend upper rate"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, uk_svdv_dividend_gross_upper_band - max(0, uk_svdv_dividend_at_nil_rate - uk_svdv_dividend_gross_additional_band))
+
+  - name: uk_svdv_dividend_charged_at_ordinary_rate
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.13(1); dividend ordinary-rate amount after the dividend allowance
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/8
+              excerpt: "dividend ordinary rate"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, uk_svdv_dividend_gross_ordinary_band - max(0, uk_svdv_dividend_at_nil_rate - uk_svdv_dividend_gross_additional_band - uk_svdv_dividend_gross_upper_band))
+
+  - name: uk_svdv_tax_on_dividend_income
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.13 with the section 8 dividend rates
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/8
+              excerpt: "dividend ordinary rate"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          uk_svdv_dividend_charged_at_ordinary_rate * uk_svdv_dividend_ordinary_rate + uk_svdv_dividend_charged_at_upper_rate * uk_svdv_dividend_upper_rate + uk_svdv_dividend_charged_at_additional_rate * uk_svdv_dividend_additional_rate
+
+  # ---------------------------------------------------------------------------
+  # Composed total income tax liability (section 23 Step 4-7 style)
+  # ---------------------------------------------------------------------------
+  - name: uk_svdv_income_tax_liability
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.23 Steps 4 to 7; composed liability across non-savings, savings, and dividend income
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/8
+              excerpt: "Income tax"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, uk_svdv_tax_on_non_savings_income + uk_svdv_tax_on_savings_income + uk_svdv_tax_on_dividend_income)
