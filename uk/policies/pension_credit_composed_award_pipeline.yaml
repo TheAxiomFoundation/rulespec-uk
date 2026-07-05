@@ -1,0 +1,376 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_paths:
+      - uk/statute/ukpga/2002/16/1
+      - uk/statute/ukpga/2002/16/2
+      - uk/statute/ukpga/2002/16/3
+      - uk/regulation/uksi/2002/1792/6
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - uk/regulation/uksi/2002/1792/6
+      rationale: |-
+        Every monetary parameter is grounded in an official source. The
+        standard minimum guarantee amounts (238.00 per week single, 363.25 per
+        week couple) are the regulation 6(1) figures in the State Pension
+        Credit Regulations 2002 as amended for 2026-27; the severe-disability
+        additional amounts (86.05 single, 172.10 couple) are regulation 6(5)
+        and the carer addition (48.15 per qualifying partner) is regulation
+        6(8). These are the same 2026-27 weekly rates UKMOD UK_2026 applies
+        through its Pension Credit constants (verified against UKMOD
+        UKMOD_PUBLIC_B2026.03: $PCGCSing = 238#w, $PCGCCoup = 363.25#w).
+  summary: |-
+    Composed Family-level Pension Credit guarantee-credit award pipeline for
+    the 2026-27 weekly rates. It exposes a dense-engine-friendly path from raw
+    household facts (couple status, whether the claimant has reached pension
+    age, weekly assessable pension income, and the severe-disability and carer
+    additional-amount counts) into the State Pension Credit Act 2002 section 2
+    guarantee credit, so an end-to-end UKMOD boamt_s comparison does not
+    require the caller to supply the standard-minimum-guarantee, additional-
+    amount, or income-difference stage boundaries.
+
+    Period. The award is expressed weekly — the native period of the State
+    Pension Credit Regulations 2002 amounts — so every monetary value is a
+    grounded weekly statutory rate with no period-conversion arithmetic. UKMOD
+    assesses and reports Pension Credit monthly (boamt_s); the oracle adapter
+    converts that monthly amount to weekly with UKMOD's own weekly-to-monthly
+    convention (monthly = weekly * 365 / 7 / 12) so the comparison is
+    weekly-to-weekly (verified: UKMOD single full guarantee 1034.17/month =
+    238.00/week).
+
+    Scope. The award is the guarantee credit (State Pension Credit Act 2002
+    s.2): it tops the claimant's assessable income up to the appropriate
+    minimum guarantee — the standard minimum guarantee plus any applicable
+    additional amounts — for a claimant who has reached the qualifying age
+    (s.1). Savings credit (s.3) is separately encoded in
+    uk/statutes/ukpga/2002/16/3 but is not composed into this award: on the
+    registration-free UKMOD demo data savings credit (boamtxp_s) returns nil
+    across the groundable pensioner income range (the guarantee credit already
+    tops income to the minimum and the savings-credit population is closed to
+    pre-6-April-2016 pension-age reachers), so the compared UKMOD total boamt_s
+    equals its guarantee-credit component boamtmm_s on this data.
+
+    Income concept. UKMOD's Pension Credit income test assesses the state
+    pension the benefit unit receives (the boact_s output, uprated from the
+    boact00 state-pension input); the caller supplies that assessable pension
+    income weekly as pc_pilot_state_pension_income_weekly. Verified against
+    UKMOD UK_2026: state pension of 2000/year (38.36/week) reduces the single
+    guarantee credit from 238.00/week to 199.65/week, 8000/year to 84.60/week,
+    and 12000/year to 7.87/week — the guarantee credit is the appropriate
+    minimum guarantee less assessable income, floored at zero.
+rules:
+  # ==========================================================================
+  # Standard minimum guarantee (regulation 6(1)) — weekly
+  # ==========================================================================
+  - name: pc_pilot_standard_minimum_guarantee_single_weekly_amount
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: State Pension Credit Regulations 2002, regulation 6(1), claimant with no partner
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2002/1792/6
+              excerpt: "£238.00 per week in the case of a claimant who has no partner"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          238.00
+
+  - name: pc_pilot_standard_minimum_guarantee_couple_weekly_amount
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: State Pension Credit Regulations 2002, regulation 6(1), claimant with a partner
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2002/1792/6
+              excerpt: "£363.25 per week in the case of a claimant who has a partner"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          363.25
+
+  - name: pc_pilot_standard_minimum_guarantee_weekly
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: State Pension Credit Regulations 2002, regulation 6(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2002/1792/6
+              excerpt: "£363.25 per week in the case of a claimant who has a partner"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2002/1792/6
+              excerpt: "£238.00 per week in the case of a claimant who has no partner"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          if pc_pilot_is_couple: pc_pilot_standard_minimum_guarantee_couple_weekly_amount else: pc_pilot_standard_minimum_guarantee_single_weekly_amount
+
+  # ==========================================================================
+  # Additional amounts (regulation 6(5) severe disability, 6(8) carer) — weekly
+  # ==========================================================================
+  - name: pc_pilot_severe_disability_addition_single_weekly_amount
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: State Pension Credit Regulations 2002, regulation 6(5)(a)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2002/1792/6
+              excerpt: "£86.05 per week if paragraph 1(1)(a), (b) or (c) of Part I of Schedule I is satisfied"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          86.05
+
+  - name: pc_pilot_severe_disability_addition_couple_weekly_amount
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: State Pension Credit Regulations 2002, regulation 6(5)(b)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2002/1792/6
+              excerpt: "£172.10 per week if paragraph 1(1)(b) of Part I of Schedule I is satisfied"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          172.10
+
+  - name: pc_pilot_carer_addition_per_partner_weekly_amount
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: State Pension Credit Regulations 2002, regulation 6(8)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2002/1792/6
+              excerpt: "£48.15 per week"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          48.15
+
+  - name: pc_pilot_severe_disability_addition_weekly
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: State Pension Credit Regulations 2002, regulation 6(4) and 6(5)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2002/1792/6
+              excerpt: "Except in a case to which paragraph (3) applies"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          if pc_pilot_is_couple:
+            if pc_pilot_number_of_severe_disability_additions >= 2: pc_pilot_severe_disability_addition_couple_weekly_amount else: (if pc_pilot_number_of_severe_disability_additions >= 1: pc_pilot_severe_disability_addition_single_weekly_amount else: 0)
+          else:
+            if pc_pilot_number_of_severe_disability_additions >= 1: pc_pilot_severe_disability_addition_single_weekly_amount else: 0
+
+  - name: pc_pilot_carer_addition_weekly
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: State Pension Credit Regulations 2002, regulation 6(6)(a) and 6(8)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2002/1792/6
+              excerpt: "if paragraph 4 of Part II of Schedule I is satisfied"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          pc_pilot_number_of_carer_additions * pc_pilot_carer_addition_per_partner_weekly_amount
+
+  - name: pc_pilot_additional_amounts_weekly
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: State Pension Credit Regulations 2002, regulation 6(4)-(8)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2002/1792/6
+              excerpt: "such prescribed additional amounts as may be applicable"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          pc_pilot_severe_disability_addition_weekly + pc_pilot_carer_addition_weekly
+
+  # ==========================================================================
+  # Appropriate minimum guarantee (State Pension Credit Act 2002 s.2(3)) — weekly
+  # ==========================================================================
+  - name: pc_pilot_appropriate_minimum_guarantee_weekly
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: State Pension Credit Act 2002 s.2(3)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2002/16/2
+              excerpt: "The appropriate minimum guarantee shall be the total of"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2002/16/2
+              excerpt: "the standard minimum guarantee"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2002/16/2
+              excerpt: "such prescribed additional amounts as may be applicable"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          pc_pilot_standard_minimum_guarantee_weekly + pc_pilot_additional_amounts_weekly
+
+  # ==========================================================================
+  # Guarantee credit (State Pension Credit Act 2002 s.1-2) — weekly award
+  # ==========================================================================
+  - name: pc_pilot_guarantee_credit_condition_satisfied
+    kind: derived
+    entity: Family
+    dtype: Judgment
+    period: Week
+    source: State Pension Credit Act 2002 s.1(2)(a) and s.2(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2002/16/1
+              excerpt: "has attained the qualifying age"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2002/16/2
+              excerpt: "has no income"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2002/16/2
+              excerpt: "has income which does not exceed the appropriate minimum guarantee"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          pc_pilot_has_reached_pension_age and (pc_pilot_state_pension_income_weekly == 0 or pc_pilot_state_pension_income_weekly <= pc_pilot_appropriate_minimum_guarantee_weekly)
+
+  - name: pc_pilot_guarantee_credit_weekly
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: State Pension Credit Act 2002 s.2(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2002/16/2
+              excerpt: "Where the claimant is entitled to a guarantee credit"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2002/16/2
+              excerpt: "if he has no income, the guarantee credit shall be the appropriate minimum guarantee"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2002/16/2
+              excerpt: "if he has income, the guarantee credit shall be the difference between the appropriate minimum guarantee and his income"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          if pc_pilot_guarantee_credit_condition_satisfied:
+            if pc_pilot_state_pension_income_weekly == 0:
+              pc_pilot_appropriate_minimum_guarantee_weekly
+            else:
+              max(0, pc_pilot_appropriate_minimum_guarantee_weekly - pc_pilot_state_pension_income_weekly)
+          else:
+            0
+
+  # ==========================================================================
+  # Final award (guarantee credit; savings credit nil on UKMOD demo data)
+  # ==========================================================================
+  - name: pc_pilot_award_amount
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: State Pension Credit Act 2002 s.1(3) and s.2
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2002/16/1
+              excerpt: "the claimant is entitled to a guarantee credit"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          pc_pilot_guarantee_credit_weekly

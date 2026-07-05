@@ -1,0 +1,124 @@
+# Composed Pension Credit guarantee-credit award pipeline -- hand-verified
+# 2026-27 weekly cases. Every intermediate output is asserted so the arithmetic
+# is auditable. The standard minimum guarantee amounts are the State Pension
+# Credit Regulations 2002 regulation 6(1) figures (238.00/week single,
+# 363.25/week couple) and the additional amounts are regulation 6(5)/(8)
+# (86.05/172.10 severe disability, 48.15 carer per partner). All amounts are
+# weekly (the statutory native period); the oracle adapter converts UKMOD's
+# monthly boamt_s to weekly for the comparison.
+
+# Case 1: single claimant who has reached pension age, no income, no additions.
+# Guarantee credit = single standard minimum guarantee (full).
+- name: single_reached_pension_age_no_income_full_guarantee
+  period: 2026-04
+  input:
+    uk:policies/pension_credit_composed_award_pipeline#input.pc_pilot_is_couple: false
+    uk:policies/pension_credit_composed_award_pipeline#input.pc_pilot_has_reached_pension_age: true
+    uk:policies/pension_credit_composed_award_pipeline#input.pc_pilot_state_pension_income_weekly: 0
+    uk:policies/pension_credit_composed_award_pipeline#input.pc_pilot_number_of_severe_disability_additions: 0
+    uk:policies/pension_credit_composed_award_pipeline#input.pc_pilot_number_of_carer_additions: 0
+  output:
+    uk:policies/pension_credit_composed_award_pipeline#pc_pilot_standard_minimum_guarantee_weekly: 238.00
+    uk:policies/pension_credit_composed_award_pipeline#pc_pilot_additional_amounts_weekly: 0
+    uk:policies/pension_credit_composed_award_pipeline#pc_pilot_appropriate_minimum_guarantee_weekly: 238.00
+    uk:policies/pension_credit_composed_award_pipeline#pc_pilot_guarantee_credit_condition_satisfied: holds
+    uk:policies/pension_credit_composed_award_pipeline#pc_pilot_guarantee_credit_weekly: 238.00
+    uk:policies/pension_credit_composed_award_pipeline#pc_pilot_award_amount: 238.00
+
+# Case 2: single, reached pension age, weekly state pension income 38.36.
+# Guarantee credit tops income up to the minimum.
+#   guarantee_credit = 238.00 - 38.36 = 199.64
+- name: single_state_pension_income_partial_topup
+  period: 2026-04
+  input:
+    uk:policies/pension_credit_composed_award_pipeline#input.pc_pilot_is_couple: false
+    uk:policies/pension_credit_composed_award_pipeline#input.pc_pilot_has_reached_pension_age: true
+    uk:policies/pension_credit_composed_award_pipeline#input.pc_pilot_state_pension_income_weekly: 38.36
+    uk:policies/pension_credit_composed_award_pipeline#input.pc_pilot_number_of_severe_disability_additions: 0
+    uk:policies/pension_credit_composed_award_pipeline#input.pc_pilot_number_of_carer_additions: 0
+  output:
+    uk:policies/pension_credit_composed_award_pipeline#pc_pilot_appropriate_minimum_guarantee_weekly: 238.00
+    uk:policies/pension_credit_composed_award_pipeline#pc_pilot_guarantee_credit_condition_satisfied: holds
+    uk:policies/pension_credit_composed_award_pipeline#pc_pilot_guarantee_credit_weekly: 199.64
+    uk:policies/pension_credit_composed_award_pipeline#pc_pilot_award_amount: 199.64
+
+# Case 3: single, reached pension age, state pension income above the minimum.
+# Income exceeds the appropriate minimum guarantee, so guarantee credit is nil.
+#   income 250/week > 238.00 -> condition not satisfied -> award 0
+- name: single_income_above_minimum_no_guarantee
+  period: 2026-04
+  input:
+    uk:policies/pension_credit_composed_award_pipeline#input.pc_pilot_is_couple: false
+    uk:policies/pension_credit_composed_award_pipeline#input.pc_pilot_has_reached_pension_age: true
+    uk:policies/pension_credit_composed_award_pipeline#input.pc_pilot_state_pension_income_weekly: 250
+    uk:policies/pension_credit_composed_award_pipeline#input.pc_pilot_number_of_severe_disability_additions: 0
+    uk:policies/pension_credit_composed_award_pipeline#input.pc_pilot_number_of_carer_additions: 0
+  output:
+    uk:policies/pension_credit_composed_award_pipeline#pc_pilot_appropriate_minimum_guarantee_weekly: 238.00
+    uk:policies/pension_credit_composed_award_pipeline#pc_pilot_guarantee_credit_condition_satisfied: not_holds
+    uk:policies/pension_credit_composed_award_pipeline#pc_pilot_guarantee_credit_weekly: 0
+    uk:policies/pension_credit_composed_award_pipeline#pc_pilot_award_amount: 0
+
+# Case 4: below pension age -> no guarantee credit regardless of income.
+- name: below_pension_age_no_award
+  period: 2026-04
+  input:
+    uk:policies/pension_credit_composed_award_pipeline#input.pc_pilot_is_couple: false
+    uk:policies/pension_credit_composed_award_pipeline#input.pc_pilot_has_reached_pension_age: false
+    uk:policies/pension_credit_composed_award_pipeline#input.pc_pilot_state_pension_income_weekly: 0
+    uk:policies/pension_credit_composed_award_pipeline#input.pc_pilot_number_of_severe_disability_additions: 0
+    uk:policies/pension_credit_composed_award_pipeline#input.pc_pilot_number_of_carer_additions: 0
+  output:
+    uk:policies/pension_credit_composed_award_pipeline#pc_pilot_guarantee_credit_condition_satisfied: not_holds
+    uk:policies/pension_credit_composed_award_pipeline#pc_pilot_award_amount: 0
+
+# Case 5: couple, both reached pension age, no income. Full couple guarantee.
+- name: couple_no_income_full_guarantee
+  period: 2026-04
+  input:
+    uk:policies/pension_credit_composed_award_pipeline#input.pc_pilot_is_couple: true
+    uk:policies/pension_credit_composed_award_pipeline#input.pc_pilot_has_reached_pension_age: true
+    uk:policies/pension_credit_composed_award_pipeline#input.pc_pilot_state_pension_income_weekly: 0
+    uk:policies/pension_credit_composed_award_pipeline#input.pc_pilot_number_of_severe_disability_additions: 0
+    uk:policies/pension_credit_composed_award_pipeline#input.pc_pilot_number_of_carer_additions: 0
+  output:
+    uk:policies/pension_credit_composed_award_pipeline#pc_pilot_standard_minimum_guarantee_weekly: 363.25
+    uk:policies/pension_credit_composed_award_pipeline#pc_pilot_appropriate_minimum_guarantee_weekly: 363.25
+    uk:policies/pension_credit_composed_award_pipeline#pc_pilot_guarantee_credit_weekly: 363.25
+    uk:policies/pension_credit_composed_award_pipeline#pc_pilot_award_amount: 363.25
+
+# Case 6: single with one severe-disability additional amount, no income.
+#   appropriate_minimum_guarantee = 238.00 + 86.05 = 324.05
+- name: single_severe_disability_addition_full
+  period: 2026-04
+  input:
+    uk:policies/pension_credit_composed_award_pipeline#input.pc_pilot_is_couple: false
+    uk:policies/pension_credit_composed_award_pipeline#input.pc_pilot_has_reached_pension_age: true
+    uk:policies/pension_credit_composed_award_pipeline#input.pc_pilot_state_pension_income_weekly: 0
+    uk:policies/pension_credit_composed_award_pipeline#input.pc_pilot_number_of_severe_disability_additions: 1
+    uk:policies/pension_credit_composed_award_pipeline#input.pc_pilot_number_of_carer_additions: 0
+  output:
+    uk:policies/pension_credit_composed_award_pipeline#pc_pilot_standard_minimum_guarantee_weekly: 238.00
+    uk:policies/pension_credit_composed_award_pipeline#pc_pilot_severe_disability_addition_weekly: 86.05
+    uk:policies/pension_credit_composed_award_pipeline#pc_pilot_carer_addition_weekly: 0
+    uk:policies/pension_credit_composed_award_pipeline#pc_pilot_additional_amounts_weekly: 86.05
+    uk:policies/pension_credit_composed_award_pipeline#pc_pilot_appropriate_minimum_guarantee_weekly: 324.05
+    uk:policies/pension_credit_composed_award_pipeline#pc_pilot_award_amount: 324.05
+
+# Case 7: couple with one carer addition, no income.
+#   appropriate_minimum_guarantee = 363.25 + 48.15 = 411.40
+- name: couple_carer_addition_full
+  period: 2026-04
+  input:
+    uk:policies/pension_credit_composed_award_pipeline#input.pc_pilot_is_couple: true
+    uk:policies/pension_credit_composed_award_pipeline#input.pc_pilot_has_reached_pension_age: true
+    uk:policies/pension_credit_composed_award_pipeline#input.pc_pilot_state_pension_income_weekly: 0
+    uk:policies/pension_credit_composed_award_pipeline#input.pc_pilot_number_of_severe_disability_additions: 0
+    uk:policies/pension_credit_composed_award_pipeline#input.pc_pilot_number_of_carer_additions: 1
+  output:
+    uk:policies/pension_credit_composed_award_pipeline#pc_pilot_standard_minimum_guarantee_weekly: 363.25
+    uk:policies/pension_credit_composed_award_pipeline#pc_pilot_severe_disability_addition_weekly: 0
+    uk:policies/pension_credit_composed_award_pipeline#pc_pilot_carer_addition_weekly: 48.15
+    uk:policies/pension_credit_composed_award_pipeline#pc_pilot_additional_amounts_weekly: 48.15
+    uk:policies/pension_credit_composed_award_pipeline#pc_pilot_appropriate_minimum_guarantee_weekly: 411.40
+    uk:policies/pension_credit_composed_award_pipeline#pc_pilot_award_amount: 411.40
