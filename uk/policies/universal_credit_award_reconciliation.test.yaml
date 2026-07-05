@@ -1,0 +1,194 @@
+# Reconciliation guard: the composed pilot pipeline's pre-cap, pre-gate award
+# (uc_pilot_award_before_cap) is the Welfare Reform Act 2012 section 8(1)
+# balance that the compose-spec program surface's universal_credit_award_amount
+# computes, re-expressed over the pilot's own elements. These cases assert the
+# two award paths agree to the penny wherever they should, and that the only
+# divergences are the two deliberately-scoped extensions the pilot final award
+# carries over the section 8(1) balance: the regulation 72 capital tariff income
+# folded into the section 8(3) deduction, and the regulation 18 capital
+# upper-limit entitlement gate. Any drift in a shared element or parameter (a
+# rate changed in one path but not the other) breaks uc_reconcile_maximum_amount_gap
+# or uc_reconcile_award_before_cap_delta.
+#
+# All amounts are the Universal Credit Regulations 2013 regulation 36 / 22 / 34 /
+# 72 amounts for 2026-27, identical to the hand-verified pilot pipeline cases.
+
+# Case A: income-only, no capital, cap-exempt. Couple (one aged 25+), 2 children,
+# claimant has LCWRA, 900 rent, 2000 monthly earnings. The pilot pre-cap award
+# equals the compose-spec section 8(1) balance exactly (delta 0), and the
+# maximum amounts coincide (gap 0), because there is no capital tariff income.
+#   maximum        = 666.97 + 655.82 + 217.26 + 900.00 = 2440.05
+#   income ded     = 0.55 * (2000 - 427) = 865.15
+#   s8(1) balance  = 2440.05 - 865.15 = 1574.90
+- name: income_only_couple_lcwra_matches_compose_s8_balance
+  period: 2026-04
+  input:
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_is_couple: true
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_either_aged_25_or_over: true
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_number_of_responsible_children: 2
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_number_of_disabled_children_lower_rate: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_number_of_disabled_children_higher_rate: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_has_lcwra: true
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_number_of_carer_elements: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_number_of_children_in_childcare: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_childcare_charges_monthly: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_rent_monthly: 900
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_number_of_non_dependants: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_capital: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_earned_income_monthly: 2000
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_unearned_income_monthly: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_resident_in_greater_london: false
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_exempt_from_benefit_cap: true
+  output:
+    uk:policies/universal_credit_award_reconciliation#uc_reconcile_compose_maximum_amount: 2440.05
+    uk:policies/universal_credit_award_reconciliation#uc_reconcile_compose_income_deduction: 865.15
+    uk:policies/universal_credit_award_reconciliation#uc_reconcile_compose_s8_balance: 1574.90
+    uk:policies/universal_credit_award_reconciliation#uc_reconcile_maximum_amount_gap: 0
+    uk:policies/universal_credit_award_reconciliation#uc_reconcile_capital_tariff_in_pilot_deduction: 0
+    uk:policies/universal_credit_award_reconciliation#uc_reconcile_award_before_cap_delta: 0
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_maximum_amount: 2440.05
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_award_before_cap: 1574.90
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_award_amount: 1574.90
+
+# Case B: capital between the lower and upper limits, no income, cap-exempt.
+# Single 25+, 8500 capital. The compose-spec section 8(1) balance is the full
+# standard allowance (424.90) -- it does not fold capital tariff income into the
+# deduction -- while the pilot pre-cap award additionally deducts the regulation
+# 72 tariff income (43.50). The pre-cap delta is therefore exactly minus the
+# tariff income, and the maximum amounts still coincide.
+#   tariff income  = ceil((8500 - 6000) / 250) * 4.35 = 10 * 4.35 = 43.50
+#   s8(1) balance  = 424.90
+#   pilot pre-cap  = 424.90 - 43.50 = 381.40
+- name: capital_case_diverges_by_exactly_the_regulation_72_tariff
+  period: 2026-04
+  input:
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_is_couple: false
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_either_aged_25_or_over: true
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_number_of_responsible_children: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_number_of_disabled_children_lower_rate: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_number_of_disabled_children_higher_rate: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_has_lcwra: false
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_number_of_carer_elements: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_number_of_children_in_childcare: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_childcare_charges_monthly: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_rent_monthly: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_number_of_non_dependants: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_capital: 8500
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_earned_income_monthly: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_unearned_income_monthly: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_resident_in_greater_london: false
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_exempt_from_benefit_cap: true
+  output:
+    uk:policies/universal_credit_award_reconciliation#uc_reconcile_compose_maximum_amount: 424.90
+    uk:policies/universal_credit_award_reconciliation#uc_reconcile_compose_income_deduction: 0
+    uk:policies/universal_credit_award_reconciliation#uc_reconcile_compose_s8_balance: 424.90
+    uk:policies/universal_credit_award_reconciliation#uc_reconcile_maximum_amount_gap: 0
+    uk:policies/universal_credit_award_reconciliation#uc_reconcile_capital_tariff_in_pilot_deduction: 43.50
+    uk:policies/universal_credit_award_reconciliation#uc_reconcile_award_before_cap_delta: -43.50
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_award_before_cap: 381.40
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_award_amount: 381.40
+
+# Case C: benefit cap bites, no capital, NOT cap-exempt. Single 25+, 4 children,
+# 1500 rent, Greater London. The pilot pre-cap award equals the compose-spec
+# section 8(1) balance exactly (delta 0) -- the benefit cap is not part of the
+# section 8(1) balance; it is the pilot's separate regulation 80A/81 layer,
+# applied only in uc_pilot_award_amount. This case documents that the entire
+# benefit-cap difference between the two paths lives after the section 8(1)
+# stage, so the compare-spec surface and the pilot agree pre-cap.
+#   maximum        = 424.90 + (351.88 + 3*303.94) + 1500.00 = 3188.60
+#   s8(1) balance  = 3188.60 (no income, no capital)
+#   pilot pre-cap  = 3188.60; benefit cap 25323/12 = 2110.25 -> final 2110.25
+- name: benefit_cap_is_a_post_s8_layer_pre_cap_paths_agree
+  period: 2026-04
+  input:
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_is_couple: false
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_either_aged_25_or_over: true
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_number_of_responsible_children: 4
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_number_of_disabled_children_lower_rate: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_number_of_disabled_children_higher_rate: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_has_lcwra: false
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_number_of_carer_elements: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_number_of_children_in_childcare: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_childcare_charges_monthly: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_rent_monthly: 1500
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_number_of_non_dependants: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_capital: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_earned_income_monthly: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_unearned_income_monthly: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_resident_in_greater_london: true
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_exempt_from_benefit_cap: false
+  output:
+    uk:policies/universal_credit_award_reconciliation#uc_reconcile_compose_maximum_amount: 3188.60
+    uk:policies/universal_credit_award_reconciliation#uc_reconcile_compose_s8_balance: 3188.60
+    uk:policies/universal_credit_award_reconciliation#uc_reconcile_maximum_amount_gap: 0
+    uk:policies/universal_credit_award_reconciliation#uc_reconcile_capital_tariff_in_pilot_deduction: 0
+    uk:policies/universal_credit_award_reconciliation#uc_reconcile_award_before_cap_delta: 0
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_award_before_cap: 3188.60
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_award_amount: 2110.25
+
+# Case D: capital at the regulation 18 upper limit, cap-exempt. Single 25+,
+# 16000 capital. The pilot applies the regulation 18 entitlement gate (capital
+# at or above 16000 ends entitlement) and returns nil pre-cap, while the
+# compose-spec section 8(1) balance -- which encodes no capital gate -- is the
+# full standard allowance. This case pins the second deliberately-scoped
+# divergence (the capital gate) so it, too, cannot change silently.
+#   s8(1) balance  = 424.90
+#   pilot pre-cap  = 0 (regulation 18 gate)
+- name: capital_upper_limit_gate_is_a_pilot_only_extension
+  period: 2026-04
+  input:
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_is_couple: false
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_either_aged_25_or_over: true
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_number_of_responsible_children: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_number_of_disabled_children_lower_rate: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_number_of_disabled_children_higher_rate: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_has_lcwra: false
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_number_of_carer_elements: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_number_of_children_in_childcare: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_childcare_charges_monthly: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_rent_monthly: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_number_of_non_dependants: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_capital: 16000
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_earned_income_monthly: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_unearned_income_monthly: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_resident_in_greater_london: false
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_exempt_from_benefit_cap: true
+  output:
+    uk:policies/universal_credit_award_reconciliation#uc_reconcile_compose_s8_balance: 424.90
+    uk:policies/universal_credit_award_reconciliation#uc_reconcile_maximum_amount_gap: 0
+    uk:policies/universal_credit_award_reconciliation#uc_reconcile_award_before_cap_delta: -424.90
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_award_before_cap: 0
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_award_amount: 0
+
+# Case E: earnings fully taper the award away, no capital, cap-exempt. Single
+# 25+, no children, 800 monthly earnings and no work allowance (no child, no
+# LCWRA), so all earnings taper. Both the compose-spec section 8(1) balance and
+# the pilot pre-cap award floor at zero, and they agree (delta 0).
+#   income ded     = 0.55 * 800 = 440.00
+#   s8(1) balance  = max(0, 424.90 - 440.00) = 0
+- name: full_taper_floors_both_paths_to_zero
+  period: 2026-04
+  input:
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_is_couple: false
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_either_aged_25_or_over: true
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_number_of_responsible_children: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_number_of_disabled_children_lower_rate: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_number_of_disabled_children_higher_rate: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_has_lcwra: false
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_number_of_carer_elements: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_number_of_children_in_childcare: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_childcare_charges_monthly: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_rent_monthly: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_number_of_non_dependants: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_capital: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_earned_income_monthly: 800
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_unearned_income_monthly: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_resident_in_greater_london: false
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_exempt_from_benefit_cap: true
+  output:
+    uk:policies/universal_credit_award_reconciliation#uc_reconcile_compose_income_deduction: 440.00
+    uk:policies/universal_credit_award_reconciliation#uc_reconcile_compose_s8_balance: 0
+    uk:policies/universal_credit_award_reconciliation#uc_reconcile_maximum_amount_gap: 0
+    uk:policies/universal_credit_award_reconciliation#uc_reconcile_award_before_cap_delta: 0
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_award_before_cap: 0
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_award_amount: 0
