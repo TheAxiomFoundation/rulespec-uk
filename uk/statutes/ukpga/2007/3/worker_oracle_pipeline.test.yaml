@@ -1,0 +1,42 @@
+- name: worker_income_below_higher_rate_threshold
+  period:
+    period_kind: tax_year
+    start: '2025-04-06'
+    end: '2026-04-05'
+  input:
+    uk:statutes/ukpga/2007/3/worker_oracle_pipeline#input.annual_gross_employment_income: 30000
+  output:
+    uk:statutes/ukpga/2007/3/worker_oracle_pipeline#individual_makes_claim: holds
+    uk:statutes/ukpga/2007/3/worker_oracle_pipeline#individual_meets_requirements_under_section_56: holds
+    uk:statutes/ukpga/2007/3/worker_oracle_pipeline#adjusted_net_income: 30000
+    uk:statutes/ukpga/2007/3/35#personal_allowance: 12570
+    uk:statutes/ukpga/2007/3/worker_oracle_pipeline#income_after_personal_allowance: 17430
+    uk:statutes/ukpga/2007/3/worker_oracle_pipeline#income_charged_under_section_10: 17430
+    uk:statutes/ukpga/2007/3/10#income_tax_on_section_10_income: 3486
+    uk:statutes/ukpga/2007/3/worker_oracle_pipeline#tax_calculated_at_applicable_rates_on_income_remaining_after_allowances: 3486
+    uk:statutes/ukpga/2007/3/worker_oracle_pipeline#tax_reductions_listed_in_section_26: 0
+    uk:statutes/ukpga/2007/3/worker_oracle_pipeline#additional_tax_amounts_listed_in_section_30: 0
+    uk:statutes/ukpga/2007/3/worker_oracle_pipeline#income_tax_liability: 3486
+
+- name: worker_income_with_full_personal_allowance_withdrawal
+  period:
+    period_kind: tax_year
+    start: '2025-04-06'
+    end: '2026-04-05'
+  input:
+    uk:statutes/ukpga/2007/3/worker_oracle_pipeline#input.annual_gross_employment_income: 130000
+  output:
+    uk:statutes/ukpga/2007/3/35#personal_allowance: 0
+    uk:statutes/ukpga/2007/3/worker_oracle_pipeline#income_after_personal_allowance: 130000
+    uk:statutes/ukpga/2007/3/worker_oracle_pipeline#income_tax_liability: 44703
+
+- name: worker_income_deep_in_additional_rate_band
+  period:
+    period_kind: tax_year
+    start: '2025-04-06'
+    end: '2026-04-05'
+  input:
+    uk:statutes/ukpga/2007/3/worker_oracle_pipeline#input.annual_gross_employment_income: 360000
+  output:
+    uk:statutes/ukpga/2007/3/35#personal_allowance: 0
+    uk:statutes/ukpga/2007/3/worker_oracle_pipeline#income_tax_liability: 148203

@@ -1,0 +1,154 @@
+format: rulespec/v1
+imports:
+  - uk:statutes/ukpga/2007/3/35#personal_allowance
+  - uk:statutes/ukpga/2007/3/10#income_tax_on_section_10_income
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_paths:
+      - uk/statute/ukpga/2007/3/23
+      - uk/statute/ukpga/2007/3/35
+      - uk/statute/ukpga/2007/3/10
+  summary: |-
+    This composed worker-oracle module exposes a dense-engine-friendly
+    Person-level path from annual gross employment income to UK income tax
+    liability for the UKMOD single-worker comparison slice. It supplies the
+    personal-allowance claim conditions, adjusted net income, non-savings
+    section 10 rate inputs, and no section 26 reductions or section 30 added
+    tax. It excludes Scottish/Welsh rate bands, savings and dividend income,
+    reliefs, deductions beyond personal allowance, reductions, added tax,
+    marriage allowance, and multi-person cases.
+rules:
+  - name: individual_makes_claim
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Year
+    source: Income Tax Act 2007 s.35(1), worker-oracle assumption
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          true
+
+  - name: individual_meets_requirements_under_section_56
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Year
+    source: Income Tax Act 2007 s.35(1), worker-oracle assumption
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          true
+
+  - name: adjusted_net_income
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.58, worker-oracle gross-employment slice
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          annual_gross_employment_income
+
+  - name: income_after_personal_allowance
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.23 Step 3, worker-oracle personal-allowance slice
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          max(0, annual_gross_employment_income - personal_allowance)
+
+  - name: income_charged_under_section_10
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.10, worker-oracle non-savings non-dividend slice
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          income_after_personal_allowance
+
+  - name: basic_rate
+    kind: parameter
+    dtype: Rate
+    source: Income Tax Act 2007 s.6 and rates applying to the UKMOD UK_2025 worker slice
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          0.20
+
+  - name: higher_rate
+    kind: parameter
+    dtype: Rate
+    source: Income Tax Act 2007 s.6 and rates applying to the UKMOD UK_2025 worker slice
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          0.40
+
+  - name: additional_rate
+    kind: parameter
+    dtype: Rate
+    source: Income Tax Act 2007 s.6 and rates applying to the UKMOD UK_2025 worker slice
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          0.45
+
+  - name: tax_calculated_at_applicable_rates_on_income_remaining_after_allowances
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.23 Steps 4 and 5, composed through section 10
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          income_tax_on_section_10_income
+
+  - name: tax_reductions_listed_in_section_26
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.23 Step 6, worker-oracle assumption
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          0
+
+  - name: additional_tax_amounts_listed_in_section_30
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.23 Step 7, worker-oracle assumption
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          0
+
+  - name: income_tax_liability
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.23, composed worker-oracle liability
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          tax_calculated_at_applicable_rates_on_income_remaining_after_allowances - tax_reductions_listed_in_section_26 + additional_tax_amounts_listed_in_section_30

@@ -1,0 +1,113 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_paths:
+      - uk/statute/ukpga/1992/4/8
+  summary: |-
+    This composed worker-oracle module exposes a dense-engine-friendly
+    Person-level annual National Insurance path for the UKMOD single-worker
+    comparison slice. It converts annual gross employment income to weekly
+    earnings, applies the primary threshold and upper earnings limit, and
+    annualizes the main and additional primary Class 1 contribution amounts.
+    It excludes directors, multiple employments, non-standard pay periods,
+    contracted-out history, regulations displacing section 8, and sections
+    116 to 120 cases.
+rules:
+  - name: main_primary_percentage
+    kind: parameter
+    dtype: Rate
+    source: SSCBA 1992 s.8(2), main primary percentage applying to the UKMOD UK_2025 worker slice
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          0.08
+
+  - name: additional_primary_percentage
+    kind: parameter
+    dtype: Rate
+    source: SSCBA 1992 s.8(2), additional primary percentage applying to the UKMOD UK_2025 worker slice
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          0.02
+
+  - name: tax_weeks_in_year
+    kind: parameter
+    dtype: Number
+    source: Worker-oracle annualization assumption for weekly Class 1 primary contributions
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          52
+
+  - name: primary_threshold_weekly_equivalent
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: SSCBA 1992 s.8 threshold input, weekly equivalent applying to the UKMOD UK_2025 worker slice
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          242
+
+  - name: upper_earnings_limit_weekly_equivalent
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: SSCBA 1992 s.8 threshold input, weekly equivalent applying to the UKMOD UK_2025 worker slice
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          967
+
+  - name: weekly_earnings_paid_in_respect_of_employment
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: SSCBA 1992 s.8, worker-oracle annual-to-weekly earnings bridge
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          annual_gross_employment_income / tax_weeks_in_year
+
+  - name: main_primary_class_1_contribution
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: SSCBA 1992 s.8(1)(a), annualized worker-oracle slice
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          tax_weeks_in_year * main_primary_percentage * max(0, min(weekly_earnings_paid_in_respect_of_employment, upper_earnings_limit_weekly_equivalent) - primary_threshold_weekly_equivalent)
+
+  - name: additional_primary_class_1_contribution
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: SSCBA 1992 s.8(1)(b), annualized worker-oracle slice
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          tax_weeks_in_year * additional_primary_percentage * max(0, weekly_earnings_paid_in_respect_of_employment - upper_earnings_limit_weekly_equivalent)
+
+  - name: primary_class_1_contribution
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: SSCBA 1992 s.8(1), annualized worker-oracle slice
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          main_primary_class_1_contribution + additional_primary_class_1_contribution

@@ -1,0 +1,36 @@
+- name: worker_earnings_with_main_primary_contribution_only
+  period:
+    period_kind: tax_year
+    start: '2025-04-06'
+    end: '2026-04-05'
+  input:
+    uk:statutes/ukpga/1992/4/worker_oracle_pipeline#input.annual_gross_employment_income: 30000
+  output:
+    uk:statutes/ukpga/1992/4/worker_oracle_pipeline#weekly_earnings_paid_in_respect_of_employment: 576.9230769231
+    uk:statutes/ukpga/1992/4/worker_oracle_pipeline#main_primary_class_1_contribution: 1393.28
+    uk:statutes/ukpga/1992/4/worker_oracle_pipeline#additional_primary_class_1_contribution: 0
+    uk:statutes/ukpga/1992/4/worker_oracle_pipeline#primary_class_1_contribution: 1393.28
+
+- name: worker_earnings_with_main_and_additional_primary_contribution
+  period:
+    period_kind: tax_year
+    start: '2025-04-06'
+    end: '2026-04-05'
+  input:
+    uk:statutes/ukpga/1992/4/worker_oracle_pipeline#input.annual_gross_employment_income: 60000
+  output:
+    uk:statutes/ukpga/1992/4/worker_oracle_pipeline#main_primary_class_1_contribution: 3016
+    uk:statutes/ukpga/1992/4/worker_oracle_pipeline#additional_primary_class_1_contribution: 194.32
+    uk:statutes/ukpga/1992/4/worker_oracle_pipeline#primary_class_1_contribution: 3210.32
+
+- name: worker_earnings_deep_in_additional_primary_band
+  period:
+    period_kind: tax_year
+    start: '2025-04-06'
+    end: '2026-04-05'
+  input:
+    uk:statutes/ukpga/1992/4/worker_oracle_pipeline#input.annual_gross_employment_income: 360000
+  output:
+    uk:statutes/ukpga/1992/4/worker_oracle_pipeline#main_primary_class_1_contribution: 3016
+    uk:statutes/ukpga/1992/4/worker_oracle_pipeline#additional_primary_class_1_contribution: 6194.32
+    uk:statutes/ukpga/1992/4/worker_oracle_pipeline#primary_class_1_contribution: 9210.32
