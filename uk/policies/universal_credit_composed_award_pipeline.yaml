@@ -1,0 +1,1154 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_paths:
+      - uk/statute/ukpga/2012/5/8
+      - uk/regulation/uksi/2013/376/18
+      - uk/regulation/uksi/2013/376/22
+      - uk/regulation/uksi/2013/376/34
+      - uk/regulation/uksi/2013/376/36
+      - uk/regulation/uksi/2013/376/72
+      - uk/regulation/uksi/2013/376/80A
+      - uk/regulation/uksi/2013/376/schedule/4/paragraph/14
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - uk/regulation/uksi/2013/376/22
+        - uk/regulation/uksi/2013/376/34
+        - uk/regulation/uksi/2013/376/36
+        - uk/regulation/uksi/2013/376/72
+        - uk/regulation/uksi/2013/376/80A
+      rationale: |-
+        Every numeric parameter is grounded in an official source. The
+        standard-allowance, child-element, LCWRA-element, carer-element and
+        childcare-maximum amounts are the 2026-27 rates in the Universal
+        Credit Regulations 2013 regulation 36 table; the 55% taper and the
+        higher/lower work allowances are in regulation 22; the 85% childcare
+        reimbursement rate is in regulation 34; the capital tariff-income
+        thresholds (6,000 lower / 250 band / 4.35 per band) are in regulation
+        72 with the 16,000 upper limit in regulation 18; the benefit-cap
+        annual limits are in regulation 80A; and the 96.55 non-dependant
+        housing-cost contribution is in Schedule 4 paragraph 14. The pilot
+        models the monthly Family-level award so the composed amount is
+        queryable from raw household facts without the caller supplying the
+        section 8 maximum-amount / deduction stage boundaries or the
+        regulation 22 / 72 taper and tariff mechanics.
+  summary: |-
+    Composed Family-level Universal Credit award pipeline for the 2026-27
+    assessment-period parameters. It exposes a dense-engine-friendly path from
+    raw monthly household facts (ages, couple status, number of responsible
+    children, disabled-child status, limited capability for work and
+    work-related activity, carer status, rent, non-dependants, childcare
+    charges, earned and unearned income, capital) into the Welfare Reform Act
+    2012 section 8 award so an end-to-end UKMOD bsauc_s comparison does not
+    require the caller to supply the section 8 maximum-amount and deduction
+    stage boundaries or the regulation 22 / 72 taper and tariff mechanics.
+
+    It wires the section 8(2) maximum amount from the regulation 36
+    standard-allowance, child, LCWRA and carer elements plus the regulation 34
+    childcare-costs element and the Schedule 4 housing-costs element (net of
+    regulation-13/14 non-dependant contributions); then the section 8(3)
+    deductions as tariff income from capital above 6,000 (regulation 72),
+    all unearned income, and 55% of earned income above the applicable
+    (regulation 22) work allowance; then the regulation 80A/81 benefit-cap
+    reduction; and finally the section 8(1) award, floored at zero.
+
+    Deliberately excluded (all outside the composed household grid this slice
+    models, and all separately encoded): the transitional-protection element,
+    surplus-earnings and self-employment loss carry-forward mechanics, the
+    Schedule 5 owner-occupier and Schedule 4 shared-ownership housing paths,
+    the regulation-25 under-occupancy and bedroom-cap detail beyond the
+    supplied cap rent, and the minimum-income-floor deeming (regulation 62)
+    whose individual/couple thresholds sit in regulation 90, which is not in
+    the corpus slice: for gainful self-employment the pipeline reads a
+    supplied floored earned income (uc_pilot_earned_income_monthly) so the MIF
+    can be applied upstream once regulation 90 is encoded. The two-child limit
+    (former regulation 24A) is not applied: it was revoked from 6 April 2026
+    for assessment periods commencing on or after that date by the Universal
+    Credit (Removal of Two Child Limit) Act 2026 (c.13) s.1(3)(a), so every
+    responsible child draws a child element in 2026-27.
+rules:
+  # --------------------------------------------------------------------------
+  # Regulation 36 table -- standard allowance (2026-27)
+  # --------------------------------------------------------------------------
+  - name: uc_pilot_standard_allowance_single_under_25_amount
+    kind: parameter
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 36 table, Standard allowance
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/36
+              excerpt: "single claimant aged under 25 | £338.58"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          338.58
+
+  - name: uc_pilot_standard_allowance_single_25_or_over_amount
+    kind: parameter
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 36 table, Standard allowance
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/36
+              excerpt: "single claimant aged 25 or over | £424.90"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          424.90
+
+  - name: uc_pilot_standard_allowance_joint_both_under_25_amount
+    kind: parameter
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 36 table, Standard allowance
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/36
+              excerpt: "joint claimants both aged under 25 | £528.34"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          528.34
+
+  - name: uc_pilot_standard_allowance_joint_either_25_or_over_amount
+    kind: parameter
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 36 table, Standard allowance
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/36
+              excerpt: "joint claimants where either is aged 25 or over | £666.97"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          666.97
+
+  # --------------------------------------------------------------------------
+  # Regulation 36 table -- child elements (2026-27)
+  # --------------------------------------------------------------------------
+  - name: uc_pilot_first_child_element_amount
+    kind: parameter
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 36 table, Child element
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/36
+              excerpt: "first child or qualifying young person | £351.88"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          351.88
+
+  - name: uc_pilot_second_and_subsequent_child_element_amount
+    kind: parameter
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 36 table, Child element
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/36
+              excerpt: "second and each subsequent child or qualifying young person | £303.94"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          303.94
+
+  - name: uc_pilot_disabled_child_lower_rate_amount
+    kind: parameter
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 36 table, Additional amount for disabled child or qualifying young person
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/36
+              excerpt: "lower rate | £164.79"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          164.79
+
+  - name: uc_pilot_disabled_child_higher_rate_amount
+    kind: parameter
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 36 table, Additional amount for disabled child or qualifying young person
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/36
+              excerpt: "higher rate | £514.71"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          514.71
+
+  # --------------------------------------------------------------------------
+  # Regulation 36 table -- LCWRA and carer elements (2026-27)
+  # --------------------------------------------------------------------------
+  - name: uc_pilot_lcwra_ordinary_claimant_amount
+    kind: parameter
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 36 table, LCWRA element
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/36
+              excerpt: "claimant with limited capability for work and work-related activity ... | £217.26"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          217.26
+
+  - name: uc_pilot_carer_element_amount
+    kind: parameter
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 36 table, Carer element
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/36
+              excerpt: "Carer element | £209.34"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          209.34
+
+  # --------------------------------------------------------------------------
+  # Regulation 36 table -- childcare maxima; regulation 34 -- 85% rate
+  # --------------------------------------------------------------------------
+  - name: uc_pilot_childcare_one_child_maximum_amount
+    kind: parameter
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 36 table, Childcare costs element
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/36
+              excerpt: "maximum amount for one child | £1,071.09"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          1071.09
+
+  - name: uc_pilot_childcare_two_or_more_children_maximum_amount
+    kind: parameter
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 36 table, Childcare costs element
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/36
+              excerpt: "maximum amount for two or more children | £1,836.16"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          1836.16
+
+  - name: uc_pilot_childcare_reimbursement_rate
+    kind: parameter
+    dtype: Rate
+    source: Universal Credit Regulations 2013, regulation 34(1)(a)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/34
+              excerpt: "85% of the charges paid for relevant childcare"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          0.85
+
+  # --------------------------------------------------------------------------
+  # Regulation 22 -- work allowances and taper (2026-27)
+  # --------------------------------------------------------------------------
+  - name: uc_pilot_higher_work_allowance_amount
+    kind: parameter
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 22 table, Higher work allowance
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: table_cell
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/22
+              table:
+                header: Higher work allowance
+                row: Single claimant responsible for one or more children or qualifying young persons and/or has limited capability for work
+                column: amount
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          710.00
+
+  - name: uc_pilot_lower_work_allowance_amount
+    kind: parameter
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 22 table, Lower work allowance
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: table_cell
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/22
+              table:
+                header: Lower work allowance
+                row: Single claimant responsible for one or more children or qualifying young persons and/or has limited capability for work
+                column: amount
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          427.00
+
+  - name: uc_pilot_earned_income_taper_rate
+    kind: parameter
+    dtype: Rate
+    source: Universal Credit Regulations 2013, regulation 22(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/22
+              excerpt: "55% of that earned income"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          0.55
+
+  # --------------------------------------------------------------------------
+  # Regulation 72 -- capital tariff income; regulation 18 -- capital limit
+  # --------------------------------------------------------------------------
+  - name: uc_pilot_capital_tariff_lower_threshold
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 72(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/72
+              excerpt: "in excess of £6,000"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          6000
+
+  - name: uc_pilot_capital_tariff_band_size
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 72(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/72
+              excerpt: "for each £250"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          250
+
+  - name: uc_pilot_capital_tariff_amount_per_band
+    kind: parameter
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 72(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/72
+              excerpt: "monthly income of £4.35"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          4.35
+
+  - name: uc_pilot_capital_upper_limit
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 18
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/18
+              excerpt: "the prescribed amount for a single claimant is £16,000"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          16000
+
+  # --------------------------------------------------------------------------
+  # Schedule 4 paragraph 14 -- non-dependant housing cost contribution
+  # --------------------------------------------------------------------------
+  - name: uc_pilot_non_dependant_housing_cost_contribution_amount
+    kind: parameter
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Universal Credit Regulations 2013, Schedule 4 paragraph 14
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/14
+              excerpt: "The amount of each housing cost contribution to be deducted under paragraph 13 is £96.55"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          96.55
+
+  # --------------------------------------------------------------------------
+  # Regulation 80A -- benefit-cap annual limits (2026-27)
+  # --------------------------------------------------------------------------
+  - name: uc_pilot_benefit_cap_annual_limit_couple_or_single_with_child_outside_london
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 80A(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/80A
+              excerpt: "£22,020"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          22020
+
+  - name: uc_pilot_benefit_cap_annual_limit_couple_or_single_with_child_in_london
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 80A(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/80A
+              excerpt: "£25,323"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          25323
+
+  - name: uc_pilot_benefit_cap_annual_limit_single_no_child_outside_london
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 80A(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/80A
+              excerpt: "£14,753"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          14753
+
+  - name: uc_pilot_benefit_cap_annual_limit_single_no_child_in_london
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 80A(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/80A
+              excerpt: "£16,967"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          16967
+
+  - name: uc_pilot_benefit_cap_annual_divisor
+    kind: parameter
+    dtype: Count
+    source: Universal Credit Regulations 2013, regulation 80A(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/80A
+              excerpt: "dividing the applicable annual limit by 12"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          12
+
+  # ==========================================================================
+  # Section 8(2) maximum amount -- composed from the elements
+  # ==========================================================================
+  # Standard allowance (regulation 36 table, single amounts apply where a
+  # member of a couple claims as a single person). Inputs: uc_pilot_is_couple,
+  # uc_pilot_either_aged_25_or_over.
+  - name: uc_pilot_standard_allowance
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 36 table, Standard allowance
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/36
+              excerpt: "member of a couple, but claims as a single person, the amounts are those shown ... for a single claimant"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          if uc_pilot_is_couple:
+            if uc_pilot_either_aged_25_or_over: uc_pilot_standard_allowance_joint_either_25_or_over_amount else: uc_pilot_standard_allowance_joint_both_under_25_amount
+          else:
+            if uc_pilot_either_aged_25_or_over: uc_pilot_standard_allowance_single_25_or_over_amount else: uc_pilot_standard_allowance_single_under_25_amount
+
+  # Child element (regulation 24(1) and 36 table). The first responsible child
+  # draws the first-child rate; each subsequent responsible child draws the
+  # second-and-subsequent rate. The two-child limit (former regulation 24A) is
+  # revoked from 6 April 2026 (Removal of Two Child Limit Act 2026 c.13
+  # s.1(3)(a)), so no cap is applied to the number of children. Inputs:
+  # uc_pilot_number_of_responsible_children.
+  - name: uc_pilot_child_element_total
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 24(1) and 36 table, Child element
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/36
+              excerpt: "first child or qualifying young person | £351.88"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/36
+              excerpt: "second and each subsequent child or qualifying young person | £303.94"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          if uc_pilot_number_of_responsible_children >= 1:
+            uc_pilot_first_child_element_amount + max(0, uc_pilot_number_of_responsible_children - 1) * uc_pilot_second_and_subsequent_child_element_amount
+          else:
+            0
+
+  # Additional amount for disabled children (regulation 24(2) and 36 table).
+  # Inputs: uc_pilot_number_of_disabled_children_lower_rate,
+  # uc_pilot_number_of_disabled_children_higher_rate.
+  - name: uc_pilot_disabled_child_addition_total
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 24(2) and 36 table, Additional amount for disabled child
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/36
+              excerpt: "lower rate | £164.79"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/36
+              excerpt: "higher rate | £514.71"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          max(0, uc_pilot_number_of_disabled_children_lower_rate) * uc_pilot_disabled_child_lower_rate_amount
+          + max(0, uc_pilot_number_of_disabled_children_higher_rate) * uc_pilot_disabled_child_higher_rate_amount
+
+  # LCWRA element (regulation 27 and 36 table). A single LCWRA element is
+  # included where the claimant (or, for joint claimants, either) has limited
+  # capability for work and work-related activity. Input:
+  # uc_pilot_has_lcwra.
+  - name: uc_pilot_lcwra_element
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 27 and 36 table, LCWRA element
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/36
+              excerpt: "claimant with limited capability for work and work-related activity ... | £217.26"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          if uc_pilot_has_lcwra: uc_pilot_lcwra_ordinary_claimant_amount else: 0
+
+  # Carer element (regulation 29 and 36 table). One carer element per qualifying
+  # carer; for joint claimants caring for different severely disabled persons
+  # both may qualify. Input: uc_pilot_number_of_carer_elements (0, 1 or 2).
+  - name: uc_pilot_carer_element_total
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 29 and 36 table, Carer element
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/36
+              excerpt: "Carer element | £209.34"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          max(0, uc_pilot_number_of_carer_elements) * uc_pilot_carer_element_amount
+
+  # Childcare costs element (regulation 34: lesser of 85% of charges and the
+  # regulation 36 maximum for the number of children in childcare). Inputs:
+  # uc_pilot_childcare_charges_monthly, uc_pilot_number_of_children_in_childcare.
+  - name: uc_pilot_childcare_maximum
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 36 table, Childcare costs element
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/36
+              excerpt: "maximum amount for one child | £1,071.09"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/36
+              excerpt: "maximum amount for two or more children | £1,836.16"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          if uc_pilot_number_of_children_in_childcare == 1: uc_pilot_childcare_one_child_maximum_amount else: if uc_pilot_number_of_children_in_childcare >= 2: uc_pilot_childcare_two_or_more_children_maximum_amount else: 0
+
+  - name: uc_pilot_childcare_element
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 34(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/34
+              excerpt: "the lesser of... 85%... or the maximum amount specified in the table in regulation 36"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          min(uc_pilot_childcare_reimbursement_rate * max(0, uc_pilot_childcare_charges_monthly), uc_pilot_childcare_maximum)
+
+  # Housing costs element (section 11 / Schedule 4 paragraph 33: the lower of
+  # core rent and cap rent, less the non-dependant housing cost contributions
+  # under paragraph 13/14). This models the private/social rented path; the
+  # caller supplies the monthly rent taken into account (already the lower of
+  # core and cap rent) and the number of non-dependants. Inputs:
+  # uc_pilot_rent_monthly, uc_pilot_number_of_non_dependants.
+  - name: uc_pilot_non_dependant_housing_cost_contributions
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Universal Credit Regulations 2013, Schedule 4 paragraphs 13 and 14
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/14
+              excerpt: "a deduction is to be made in respect of each non-dependant"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          max(0, uc_pilot_number_of_non_dependants) * uc_pilot_non_dependant_housing_cost_contribution_amount
+
+  - name: uc_pilot_housing_costs_element
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Universal Credit Regulations 2013, Schedule 4 paragraph 33 (S - HCC)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/14
+              excerpt: "excess contributions reduce the Schedule amount to nil with no further award reduction"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          max(0, max(0, uc_pilot_rent_monthly) - uc_pilot_non_dependant_housing_cost_contributions)
+
+  # Section 8(2) maximum amount -- sum of all included elements.
+  - name: uc_pilot_maximum_amount
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Welfare Reform Act 2012 s.8(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/8
+              excerpt: "the maximum amount is the total of the amounts included under sections 9 to 12"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          uc_pilot_standard_allowance
+          + uc_pilot_child_element_total
+          + uc_pilot_disabled_child_addition_total
+          + uc_pilot_lcwra_element
+          + uc_pilot_carer_element_total
+          + uc_pilot_childcare_element
+          + uc_pilot_housing_costs_element
+
+  # ==========================================================================
+  # Section 8(3) deductions -- income and capital
+  # ==========================================================================
+  # Capital tariff income (regulation 72): 4.35 per 250, or part thereof,
+  # above 6,000. Capital at or above the 16,000 upper limit ends entitlement
+  # (regulation 18): the pipeline returns a nil award in that case via the
+  # eligibility gate below. Input: uc_pilot_capital.
+  - name: uc_pilot_capital_tariff_income
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 72(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/72
+              excerpt: "£4.35 for each £250 in excess of £6,000 and £4.35 for any excess which is not a complete £250"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          if uc_pilot_capital > uc_pilot_capital_tariff_lower_threshold:
+            uc_pilot_capital_tariff_amount_per_band * ceil((uc_pilot_capital - uc_pilot_capital_tariff_lower_threshold) / uc_pilot_capital_tariff_band_size)
+          else:
+            0
+
+  # Applicable work allowance (regulation 22(2)): the higher work allowance
+  # where the award contains no housing costs element, otherwise the lower
+  # work allowance; a work allowance applies only where the claimant is
+  # responsible for a child or has limited capability for work. Input:
+  # uc_pilot_work_allowance_applies is derived from responsibility/LCWRA.
+  - name: uc_pilot_work_allowance_applies
+    kind: derived
+    entity: Family
+    dtype: Judgment
+    period: Month
+    source: Universal Credit Regulations 2013, regulation 22(1)(b)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/22
+              excerpt: "where a single claimant does not have, or neither of joint claimants has ... no work allowance is specified"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          uc_pilot_number_of_responsible_children >= 1 or uc_pilot_has_lcwra
+
+  - name: uc_pilot_applicable_work_allowance
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 22(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/22
+              excerpt: "if the award contains no amount for the housing costs element... higher work allowance"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          if uc_pilot_work_allowance_applies:
+            if uc_pilot_housing_costs_element > 0: uc_pilot_lower_work_allowance_amount else: uc_pilot_higher_work_allowance_amount
+          else:
+            0
+
+  # Earned income for the deduction. For gainful self-employment the caller
+  # supplies uc_pilot_earned_income_monthly already floored to the regulation
+  # 62 minimum income floor (the regulation 90 thresholds are not in the
+  # corpus slice, so the floor cannot be computed here); otherwise it is the
+  # combined monthly earned income. Input: uc_pilot_earned_income_monthly.
+  - name: uc_pilot_earned_income_above_work_allowance
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 22(1)(b)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/22
+              excerpt: "55% of the amount by which that earned income exceeds the work allowance"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          max(0, max(0, uc_pilot_earned_income_monthly) - uc_pilot_applicable_work_allowance)
+
+  - name: uc_pilot_earned_income_deduction
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 22(1)(b)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/22
+              excerpt: "55% of that earned income"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          uc_pilot_earned_income_taper_rate * uc_pilot_earned_income_above_work_allowance
+
+  # Section 8(3) total deduction: all unearned income (including capital
+  # tariff income, which regulation 66 treats as unearned income) plus the
+  # tapered earned income. Input: uc_pilot_unearned_income_monthly.
+  - name: uc_pilot_total_deduction
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Welfare Reform Act 2012 s.8(3); Universal Credit Regulations 2013, regulation 22(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/22
+              excerpt: "The amounts to be deducted from the maximum amount... are all... unearned income... and... earned income"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          max(0, uc_pilot_unearned_income_monthly) + uc_pilot_capital_tariff_income + uc_pilot_earned_income_deduction
+
+  # ==========================================================================
+  # Section 8(1) award before the benefit cap
+  # ==========================================================================
+  # Capital eligibility gate (regulation 18): capital at or above the upper
+  # limit ends entitlement. Input: uc_pilot_capital.
+  - name: uc_pilot_capital_over_upper_limit
+    kind: derived
+    entity: Family
+    dtype: Judgment
+    period: Month
+    source: Universal Credit Regulations 2013, regulation 18
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/18
+              excerpt: "the prescribed amount for a single claimant is £16,000"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          uc_pilot_capital >= uc_pilot_capital_upper_limit
+
+  - name: uc_pilot_award_before_cap
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Welfare Reform Act 2012 s.8(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/8
+              excerpt: "the amount of an award of universal credit is to be the balance of the maximum amount after deducting"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          if uc_pilot_capital_over_upper_limit: 0 else: max(0, uc_pilot_maximum_amount - uc_pilot_total_deduction)
+
+  # ==========================================================================
+  # Regulation 80A/81 benefit cap
+  # ==========================================================================
+  # Applicable annual limit by case (regulation 80A(2)): single claimants with
+  # no responsible child use the lower single limits; couples and claimants
+  # with a responsible child use the higher limits; each is uprated by
+  # Greater-London residence. Inputs: uc_pilot_is_couple,
+  # uc_pilot_number_of_responsible_children, uc_pilot_resident_in_greater_london.
+  - name: uc_pilot_benefit_cap_annual_limit
+    kind: derived
+    entity: Family
+    dtype: Money
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 80A(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/80A
+              excerpt: "The applicable annual limit is £16,967, £25,323, £14,753 or £22,020"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          if uc_pilot_is_couple or uc_pilot_number_of_responsible_children >= 1:
+            if uc_pilot_resident_in_greater_london: uc_pilot_benefit_cap_annual_limit_couple_or_single_with_child_in_london else: uc_pilot_benefit_cap_annual_limit_couple_or_single_with_child_outside_london
+          else:
+            if uc_pilot_resident_in_greater_london: uc_pilot_benefit_cap_annual_limit_single_no_child_in_london else: uc_pilot_benefit_cap_annual_limit_single_no_child_outside_london
+
+  - name: uc_pilot_benefit_cap_monthly_limit
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 80A(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/80A
+              excerpt: "The relevant amount is determined by dividing the applicable annual limit by 12."
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          uc_pilot_benefit_cap_annual_limit / uc_pilot_benefit_cap_annual_divisor
+
+  # Benefit cap reduction (regulation 81 and 82). The cap does not apply where
+  # the claimant is within the earnings exception; where it applies, the award
+  # is reduced by the excess of total welfare benefits over the relevant
+  # amount, less any childcare costs element (regulation 81(1)(b)/(2)). This
+  # pipeline compares the pre-cap award (its own welfare-benefit total for the
+  # single-benefit UC household) against the monthly cap. Inputs:
+  # uc_pilot_exempt_from_benefit_cap.
+  - name: uc_pilot_benefit_cap_excess
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 81(3)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/80A
+              excerpt: "the total amount of welfare benefits... minus the relevant amount"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          max(0, uc_pilot_award_before_cap - uc_pilot_benefit_cap_monthly_limit)
+
+  - name: uc_pilot_benefit_cap_reduction
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 81(1) and 81(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/80A
+              excerpt: "the amount of the award... is to be reduced by (a) the excess; minus (b) any amount included in the award for the childcare costs element"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          if uc_pilot_exempt_from_benefit_cap:
+            0
+          else:
+            if uc_pilot_childcare_element > uc_pilot_benefit_cap_excess: 0 else: uc_pilot_benefit_cap_excess - uc_pilot_childcare_element
+
+  # ==========================================================================
+  # Final award
+  # ==========================================================================
+  - name: uc_pilot_award_amount
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Welfare Reform Act 2012 s.8(1); Universal Credit Regulations 2013, regulation 81
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/8
+              excerpt: "the amount of an award of universal credit"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          max(0, uc_pilot_award_before_cap - uc_pilot_benefit_cap_reduction)

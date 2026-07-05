@@ -1,0 +1,304 @@
+# Composed Universal Credit award pipeline -- hand-verified 2026-27 cases.
+# Every intermediate output is asserted so the arithmetic is auditable.
+# All parameter values are the Universal Credit Regulations 2013 regulation 36
+# / 22 / 34 / 72 / 80A and Schedule 4 paragraph 14 amounts for 2026-27.
+
+# Case 1: single claimant aged 25 or over, no children, no housing, no income.
+# Standard allowance only.
+#   standard_allowance = 424.90 (reg 36, single 25+)
+#   maximum_amount     = 424.90
+#   total_deduction    = 0
+#   award              = 424.90
+- name: single_over_25_no_children_standard_allowance_only
+  period: 2026-04
+  input:
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_is_couple: false
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_either_aged_25_or_over: true
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_number_of_responsible_children: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_number_of_disabled_children_lower_rate: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_number_of_disabled_children_higher_rate: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_has_lcwra: false
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_number_of_carer_elements: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_number_of_children_in_childcare: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_childcare_charges_monthly: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_rent_monthly: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_number_of_non_dependants: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_capital: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_earned_income_monthly: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_unearned_income_monthly: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_resident_in_greater_london: false
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_exempt_from_benefit_cap: true
+  output:
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_standard_allowance: 424.90
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_child_element_total: 0
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_disabled_child_addition_total: 0
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_lcwra_element: 0
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_carer_element_total: 0
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_childcare_maximum: 0
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_childcare_element: 0
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_non_dependant_housing_cost_contributions: 0
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_housing_costs_element: 0
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_capital_tariff_income: 0
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_work_allowance_applies: not_holds
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_applicable_work_allowance: 0
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_earned_income_above_work_allowance: 0
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_earned_income_deduction: 0
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_capital_over_upper_limit: not_holds
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_maximum_amount: 424.90
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_total_deduction: 0
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_benefit_cap_reduction: 0
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_award_before_cap: 424.90
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_award_amount: 424.90
+
+# Case 2: couple (one aged 25+), 2 children, 900 rent (no non-dependants),
+# claimant has LCWRA, 2000 monthly earnings, no capital, no unearned income.
+#   standard_allowance = 666.97 (reg 36, joint either 25+)
+#   child_element      = 351.88 + 303.94 = 655.82
+#   lcwra_element      = 217.26
+#   housing            = 900.00
+#   maximum_amount     = 666.97 + 655.82 + 217.26 + 900.00 = 2440.05
+#   work allowance applies (children + LCWRA); award has housing -> lower WA 427.00
+#   earned above WA    = 2000 - 427 = 1573.00
+#   earned deduction   = 0.55 * 1573.00 = 865.15
+#   total_deduction    = 865.15
+#   award before cap   = 2440.05 - 865.15 = 1574.90
+#   benefit cap (couple, outside London) = 22020 / 12 = 1835.00; award < cap -> no reduction
+#   award              = 1574.90
+- name: couple_two_children_lcwra_earnings_lower_work_allowance
+  period: 2026-04
+  input:
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_is_couple: true
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_either_aged_25_or_over: true
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_number_of_responsible_children: 2
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_number_of_disabled_children_lower_rate: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_number_of_disabled_children_higher_rate: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_has_lcwra: true
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_number_of_carer_elements: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_number_of_children_in_childcare: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_childcare_charges_monthly: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_rent_monthly: 900
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_number_of_non_dependants: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_capital: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_earned_income_monthly: 2000
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_unearned_income_monthly: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_resident_in_greater_london: false
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_exempt_from_benefit_cap: true
+  output:
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_standard_allowance: 666.97
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_child_element_total: 655.82
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_lcwra_element: 217.26
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_housing_costs_element: 900.00
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_maximum_amount: 2440.05
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_work_allowance_applies: holds
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_applicable_work_allowance: 427.00
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_earned_income_above_work_allowance: 1573.00
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_earned_income_deduction: 865.15
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_total_deduction: 865.15
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_award_before_cap: 1574.90
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_benefit_cap_monthly_limit: 1835.00
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_benefit_cap_reduction: 0
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_award_amount: 1574.90
+
+# Case 3: single 25+, no children, 8500 capital, no income. Capital tariff income.
+#   standard_allowance = 424.90
+#   capital tariff     = ceil((8500 - 6000) / 250) = 10 bands; 10 * 4.35 = 43.50
+#   total_deduction    = 43.50 (unearned via reg 66)
+#   award              = 424.90 - 43.50 = 381.40
+- name: single_capital_between_lower_and_upper_yields_tariff_income
+  period: 2026-04
+  input:
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_is_couple: false
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_either_aged_25_or_over: true
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_number_of_responsible_children: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_number_of_disabled_children_lower_rate: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_number_of_disabled_children_higher_rate: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_has_lcwra: false
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_number_of_carer_elements: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_number_of_children_in_childcare: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_childcare_charges_monthly: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_rent_monthly: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_number_of_non_dependants: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_capital: 8500
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_earned_income_monthly: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_unearned_income_monthly: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_resident_in_greater_london: false
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_exempt_from_benefit_cap: true
+  output:
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_standard_allowance: 424.90
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_capital_tariff_income: 43.50
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_total_deduction: 43.50
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_award_amount: 381.40
+
+# Case 4: single 25+, 3 children (one disabled at the higher rate), one child in
+# childcare with 1400 monthly charges, no rent, no income.
+#   standard_allowance = 424.90
+#   child_element      = 351.88 + 2 * 303.94 = 959.76
+#   disabled addition  = 514.71 (higher rate)
+#   childcare max (1 child) = 1071.09; 0.85 * 1400 = 1190.00 -> capped to 1071.09
+#   maximum_amount     = 424.90 + 959.76 + 514.71 + 1071.09 = 2970.46
+#   no income/capital  -> award = 2970.46
+- name: single_three_children_disabled_higher_and_childcare_capped
+  period: 2026-04
+  input:
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_is_couple: false
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_either_aged_25_or_over: true
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_number_of_responsible_children: 3
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_number_of_disabled_children_lower_rate: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_number_of_disabled_children_higher_rate: 1
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_has_lcwra: false
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_number_of_carer_elements: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_number_of_children_in_childcare: 1
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_childcare_charges_monthly: 1400
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_rent_monthly: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_number_of_non_dependants: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_capital: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_earned_income_monthly: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_unearned_income_monthly: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_resident_in_greater_london: false
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_exempt_from_benefit_cap: true
+  output:
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_child_element_total: 959.76
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_disabled_child_addition_total: 514.71
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_childcare_maximum: 1071.09
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_childcare_element: 1071.09
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_maximum_amount: 2970.46
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_award_amount: 2970.46
+
+# Case 5: single 25+, 4 children, 1500 rent, no income, resident in Greater
+# London. Benefit cap bites (no childcare element to offset it).
+#   standard_allowance = 424.90
+#   child_element      = 351.88 + 3 * 303.94 = 1263.70
+#   housing            = 1500.00
+#   maximum_amount     = 424.90 + 1263.70 + 1500.00 = 3188.60
+#   award before cap   = 3188.60 (no income/capital)
+#   benefit cap (single with child, London) = 25323 / 12 = 2110.25
+#   excess             = 3188.60 - 2110.25 = 1078.35
+#   childcare element  = 0, so reduction = excess = 1078.35
+#   award              = 3188.60 - 1078.35 = 2110.25
+- name: single_four_children_high_rent_london_benefit_cap_bites
+  period: 2026-04
+  input:
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_is_couple: false
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_either_aged_25_or_over: true
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_number_of_responsible_children: 4
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_number_of_disabled_children_lower_rate: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_number_of_disabled_children_higher_rate: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_has_lcwra: false
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_number_of_carer_elements: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_number_of_children_in_childcare: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_childcare_charges_monthly: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_rent_monthly: 1500
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_number_of_non_dependants: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_capital: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_earned_income_monthly: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_unearned_income_monthly: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_resident_in_greater_london: true
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_exempt_from_benefit_cap: false
+  output:
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_child_element_total: 1263.70
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_housing_costs_element: 1500.00
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_maximum_amount: 3188.60
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_award_before_cap: 3188.60
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_benefit_cap_annual_limit: 25323
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_benefit_cap_monthly_limit: 2110.25
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_benefit_cap_excess: 1078.35
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_benefit_cap_reduction: 1078.35
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_award_amount: 2110.25
+
+# Case 6: single 25+, no children, 16000 capital. Capital at/above the upper
+# limit (reg 18) ends entitlement -> nil award.
+- name: single_capital_at_upper_limit_ends_entitlement
+  period: 2026-04
+  input:
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_is_couple: false
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_either_aged_25_or_over: true
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_number_of_responsible_children: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_number_of_disabled_children_lower_rate: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_number_of_disabled_children_higher_rate: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_has_lcwra: false
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_number_of_carer_elements: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_number_of_children_in_childcare: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_childcare_charges_monthly: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_rent_monthly: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_number_of_non_dependants: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_capital: 16000
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_earned_income_monthly: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_unearned_income_monthly: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_resident_in_greater_london: false
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_exempt_from_benefit_cap: true
+  output:
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_capital_over_upper_limit: holds
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_maximum_amount: 424.90
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_award_before_cap: 0
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_award_amount: 0
+
+# Case 7: couple, one aged 25+, both carers for different severely disabled
+# persons (two carer elements), 500 rent with one non-dependant, 1200 unearned
+# income (e.g. a taxable pension), no earnings, no capital.
+#   standard_allowance = 666.97
+#   carer element      = 2 * 209.34 = 418.68
+#   housing            = 500 - 96.55 (one non-dependant) = 403.45
+#   maximum_amount     = 666.97 + 418.68 + 403.45 = 1489.10
+#   total_deduction    = 1200.00 unearned (no work allowance, no earnings)
+#   award              = 1489.10 - 1200.00 = 289.10
+- name: couple_two_carers_non_dependant_deduction_and_unearned_income
+  period: 2026-04
+  input:
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_is_couple: true
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_either_aged_25_or_over: true
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_number_of_responsible_children: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_number_of_disabled_children_lower_rate: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_number_of_disabled_children_higher_rate: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_has_lcwra: false
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_number_of_carer_elements: 2
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_number_of_children_in_childcare: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_childcare_charges_monthly: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_rent_monthly: 500
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_number_of_non_dependants: 1
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_capital: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_earned_income_monthly: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_unearned_income_monthly: 1200
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_resident_in_greater_london: false
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_exempt_from_benefit_cap: true
+  output:
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_standard_allowance: 666.97
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_carer_element_total: 418.68
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_non_dependant_housing_cost_contributions: 96.55
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_housing_costs_element: 403.45
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_maximum_amount: 1489.10
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_total_deduction: 1200.00
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_award_amount: 289.10
+
+# Case 8: single 25+, no children, higher work allowance (no housing), 800
+# monthly earnings. A single claimant without children or LCWRA has NO work
+# allowance, so all earned income is tapered.
+#   standard_allowance = 424.90
+#   work allowance applies? no children, no LCWRA -> false -> 0
+#   earned above WA    = 800 - 0 = 800.00
+#   earned deduction   = 0.55 * 800 = 440.00
+#   award              = 424.90 - 440.00 = -15.10 -> floored to 0
+- name: single_no_children_no_work_allowance_full_taper_floors_award
+  period: 2026-04
+  input:
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_is_couple: false
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_either_aged_25_or_over: true
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_number_of_responsible_children: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_number_of_disabled_children_lower_rate: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_number_of_disabled_children_higher_rate: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_has_lcwra: false
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_number_of_carer_elements: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_number_of_children_in_childcare: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_childcare_charges_monthly: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_rent_monthly: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_number_of_non_dependants: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_capital: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_earned_income_monthly: 800
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_unearned_income_monthly: 0
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_resident_in_greater_london: false
+    uk:policies/universal_credit_composed_award_pipeline#input.uc_pilot_exempt_from_benefit_cap: true
+  output:
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_work_allowance_applies: not_holds
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_applicable_work_allowance: 0
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_earned_income_deduction: 440.00
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_award_before_cap: 0
+    uk:policies/universal_credit_composed_award_pipeline#uc_pilot_award_amount: 0
