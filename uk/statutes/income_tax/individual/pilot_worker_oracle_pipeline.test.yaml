@@ -1,0 +1,74 @@
+- name: basic_rate_employee_income_composes_to_section_23_liability
+  period:
+    period_kind: tax_year
+    start: '2026-04-06'
+    end: '2027-04-05'
+  input:
+    uk:statutes/income_tax/individual/pilot_worker_oracle_pipeline#input.uk_pit_pilot_annual_employment_income: 30000
+    uk:statutes/income_tax/individual/pilot_worker_oracle_pipeline#input.uk_pit_pilot_supplied_section_24_reliefs: 0
+  output:
+    uk:statutes/income_tax/individual/pilot_worker_oracle_pipeline#uk_pit_pilot_total_income: 30000
+    uk:statutes/income_tax/individual/pilot_worker_oracle_pipeline#uk_pit_pilot_net_income: 30000
+    uk:statutes/income_tax/individual/pilot_worker_oracle_pipeline#uk_pit_pilot_adjusted_net_income: 30000
+    uk:statutes/income_tax/individual/pilot_worker_oracle_pipeline#uk_pit_pilot_personal_allowance: 12570
+    uk:statutes/income_tax/individual/pilot_worker_oracle_pipeline#uk_pit_pilot_income_remaining_after_allowances: 17430
+    uk:statutes/income_tax/individual/pilot_worker_oracle_pipeline#uk_pit_pilot_income_charged_at_basic_rate: 17430
+    uk:statutes/income_tax/individual/pilot_worker_oracle_pipeline#uk_pit_pilot_income_charged_at_higher_rate: 0
+    uk:statutes/income_tax/individual/pilot_worker_oracle_pipeline#uk_pit_pilot_income_charged_at_additional_rate: 0
+    uk:statutes/income_tax/individual/pilot_worker_oracle_pipeline#uk_pit_pilot_tax_calculated_at_applicable_rates: 3486
+    uk:statutes/income_tax/individual/pilot_worker_oracle_pipeline#uk_pit_pilot_income_tax_liability: 3486
+- name: higher_rate_employee_income_uses_basic_and_higher_bands
+  period:
+    period_kind: tax_year
+    start: '2026-04-06'
+    end: '2027-04-05'
+  input:
+    uk:statutes/income_tax/individual/pilot_worker_oracle_pipeline#input.uk_pit_pilot_annual_employment_income: 60000
+    uk:statutes/income_tax/individual/pilot_worker_oracle_pipeline#input.uk_pit_pilot_supplied_section_24_reliefs: 0
+  output:
+    uk:statutes/income_tax/individual/pilot_worker_oracle_pipeline#uk_pit_pilot_personal_allowance: 12570
+    uk:statutes/income_tax/individual/pilot_worker_oracle_pipeline#uk_pit_pilot_income_remaining_after_allowances: 47430
+    uk:statutes/income_tax/individual/pilot_worker_oracle_pipeline#uk_pit_pilot_income_charged_at_basic_rate: 37700
+    uk:statutes/income_tax/individual/pilot_worker_oracle_pipeline#uk_pit_pilot_income_charged_at_higher_rate: 9730
+    uk:statutes/income_tax/individual/pilot_worker_oracle_pipeline#uk_pit_pilot_income_charged_at_additional_rate: 0
+    uk:statutes/income_tax/individual/pilot_worker_oracle_pipeline#uk_pit_pilot_income_tax_liability: 11432
+- name: additional_rate_income_withdraws_personal_allowance_and_uses_all_bands
+  period:
+    period_kind: tax_year
+    start: '2026-04-06'
+    end: '2027-04-05'
+  input:
+    uk:statutes/income_tax/individual/pilot_worker_oracle_pipeline#input.uk_pit_pilot_annual_employment_income: 130000
+    uk:statutes/income_tax/individual/pilot_worker_oracle_pipeline#input.uk_pit_pilot_supplied_section_24_reliefs: 0
+  output:
+    uk:statutes/income_tax/individual/pilot_worker_oracle_pipeline#uk_pit_pilot_personal_allowance: 0
+    uk:statutes/income_tax/individual/pilot_worker_oracle_pipeline#uk_pit_pilot_income_remaining_after_allowances: 130000
+    uk:statutes/income_tax/individual/pilot_worker_oracle_pipeline#uk_pit_pilot_income_charged_at_basic_rate: 37700
+    uk:statutes/income_tax/individual/pilot_worker_oracle_pipeline#uk_pit_pilot_income_charged_at_higher_rate: 87440
+    uk:statutes/income_tax/individual/pilot_worker_oracle_pipeline#uk_pit_pilot_income_charged_at_additional_rate: 4860
+    uk:statutes/income_tax/individual/pilot_worker_oracle_pipeline#uk_pit_pilot_income_tax_liability: 44703
+- name: high_income_fully_withdraws_personal_allowance
+  period:
+    period_kind: tax_year
+    start: '2026-04-06'
+    end: '2027-04-05'
+  input:
+    uk:statutes/income_tax/individual/pilot_worker_oracle_pipeline#input.uk_pit_pilot_annual_employment_income: 360000
+    uk:statutes/income_tax/individual/pilot_worker_oracle_pipeline#input.uk_pit_pilot_supplied_section_24_reliefs: 0
+  output:
+    uk:statutes/income_tax/individual/pilot_worker_oracle_pipeline#uk_pit_pilot_personal_allowance: 0
+    uk:statutes/income_tax/individual/pilot_worker_oracle_pipeline#uk_pit_pilot_income_charged_at_additional_rate: 234860
+    uk:statutes/income_tax/individual/pilot_worker_oracle_pipeline#uk_pit_pilot_income_tax_liability: 148203
+- name: section_24_reliefs_reduce_net_income_before_allowances
+  period:
+    period_kind: tax_year
+    start: '2026-04-06'
+    end: '2027-04-05'
+  input:
+    uk:statutes/income_tax/individual/pilot_worker_oracle_pipeline#input.uk_pit_pilot_annual_employment_income: 30000
+    uk:statutes/income_tax/individual/pilot_worker_oracle_pipeline#input.uk_pit_pilot_supplied_section_24_reliefs: 5000
+  output:
+    uk:statutes/income_tax/individual/pilot_worker_oracle_pipeline#uk_pit_pilot_net_income: 25000
+    uk:statutes/income_tax/individual/pilot_worker_oracle_pipeline#uk_pit_pilot_personal_allowance: 12570
+    uk:statutes/income_tax/individual/pilot_worker_oracle_pipeline#uk_pit_pilot_income_remaining_after_allowances: 12430
+    uk:statutes/income_tax/individual/pilot_worker_oracle_pipeline#uk_pit_pilot_income_tax_liability: 2486
