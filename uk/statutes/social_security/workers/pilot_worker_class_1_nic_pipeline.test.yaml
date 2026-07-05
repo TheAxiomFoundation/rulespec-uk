@@ -1,0 +1,49 @@
+- name: earnings_between_pt_and_uel_use_only_the_main_percentage
+  period:
+    period_kind: tax_year
+    start: '2026-04-06'
+    end: '2027-04-05'
+  input:
+    uk:statutes/social_security/workers/pilot_worker_class_1_nic_pipeline#input.uk_nic_pilot_annual_employment_income: 30000
+  output:
+    uk:statutes/social_security/workers/pilot_worker_class_1_nic_pipeline#uk_nic_pilot_primary_threshold_annual: 12570
+    uk:statutes/social_security/workers/pilot_worker_class_1_nic_pipeline#uk_nic_pilot_upper_earnings_limit_annual: 50270
+    uk:statutes/social_security/workers/pilot_worker_class_1_nic_pipeline#uk_nic_pilot_annual_earnings: 30000
+    uk:statutes/social_security/workers/pilot_worker_class_1_nic_pipeline#uk_nic_pilot_main_primary_contribution: 1394.4
+    uk:statutes/social_security/workers/pilot_worker_class_1_nic_pipeline#uk_nic_pilot_additional_primary_contribution: 0
+    uk:statutes/social_security/workers/pilot_worker_class_1_nic_pipeline#uk_nic_pilot_primary_class_1_contribution: 1394.4
+- name: earnings_above_uel_add_the_additional_percentage
+  period:
+    period_kind: tax_year
+    start: '2026-04-06'
+    end: '2027-04-05'
+  input:
+    uk:statutes/social_security/workers/pilot_worker_class_1_nic_pipeline#input.uk_nic_pilot_annual_employment_income: 60000
+  output:
+    uk:statutes/social_security/workers/pilot_worker_class_1_nic_pipeline#uk_nic_pilot_upper_earnings_limit_annual: 50270
+    uk:statutes/social_security/workers/pilot_worker_class_1_nic_pipeline#uk_nic_pilot_main_primary_contribution: 3016
+    uk:statutes/social_security/workers/pilot_worker_class_1_nic_pipeline#uk_nic_pilot_additional_primary_contribution: 194.6
+    uk:statutes/social_security/workers/pilot_worker_class_1_nic_pipeline#uk_nic_pilot_primary_class_1_contribution: 3210.6
+- name: high_earnings_apply_two_percent_across_the_whole_excess
+  period:
+    period_kind: tax_year
+    start: '2026-04-06'
+    end: '2027-04-05'
+  input:
+    uk:statutes/social_security/workers/pilot_worker_class_1_nic_pipeline#input.uk_nic_pilot_annual_employment_income: 360000
+  output:
+    uk:statutes/social_security/workers/pilot_worker_class_1_nic_pipeline#uk_nic_pilot_main_primary_contribution: 3016
+    uk:statutes/social_security/workers/pilot_worker_class_1_nic_pipeline#uk_nic_pilot_additional_primary_contribution: 6194.6
+    uk:statutes/social_security/workers/pilot_worker_class_1_nic_pipeline#uk_nic_pilot_primary_class_1_contribution: 9210.6
+- name: earnings_below_the_primary_threshold_owe_no_contribution
+  period:
+    period_kind: tax_year
+    start: '2026-04-06'
+    end: '2027-04-05'
+  input:
+    uk:statutes/social_security/workers/pilot_worker_class_1_nic_pipeline#input.uk_nic_pilot_annual_employment_income: 10000
+  output:
+    uk:statutes/social_security/workers/pilot_worker_class_1_nic_pipeline#uk_nic_pilot_annual_earnings: 10000
+    uk:statutes/social_security/workers/pilot_worker_class_1_nic_pipeline#uk_nic_pilot_main_primary_contribution: 0
+    uk:statutes/social_security/workers/pilot_worker_class_1_nic_pipeline#uk_nic_pilot_additional_primary_contribution: 0
+    uk:statutes/social_security/workers/pilot_worker_class_1_nic_pipeline#uk_nic_pilot_primary_class_1_contribution: 0
