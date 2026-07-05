@@ -1,0 +1,183 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/statute/ukpga/2007/3/55B
+  summary: |-
+    Marriage Allowance. Section 55B of the Income Tax Act 2007 entitles an
+    individual to a tax reduction of the appropriate percentage of the
+    transferable amount where the conditions in subsection (2) are met: the
+    individual is the gaining party under a section 55C election in force for
+    the year, is not liable to tax at a rate other than the basic rate (or the
+    equivalent starter/basic/intermediate rates for a Scottish or Welsh
+    taxpayer), meets the residence requirement, and neither party claims the
+    married couple's allowance. The transferable amount for 2015-16 is £1,060
+    and, for 2016-17 and subsequent tax years, is 10% of the personal allowance
+    specified in section 35(1) for the year, rounded up to the nearest £10. The
+    transferring spouse or civil partner can transfer no more personal allowance
+    than they leave unused, so the amount actually transferred is the lesser of
+    the statutory 10%-of-personal-allowance figure and the transferor's unused
+    personal allowance. The personal allowance for the year and the transferor's
+    unused personal allowance are supplied as case inputs; whether each
+    subsection (2) condition is met is supplied as case inputs.
+rules:
+  - name: appropriate_percentage_of_personal_allowance
+    kind: parameter
+    dtype: Rate
+    source: Income Tax Act 2007 s.55B(4)(b)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/55B
+              excerpt: "is 10% of the amount of personal allowance specified in section 35(1)"
+    versions:
+      - effective_from: '2016-04-06'
+        formula: |-
+          0.10
+
+  - name: transferable_amount_rounding_multiple
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: Income Tax Act 2007 s.55B(5)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/55B
+              excerpt: "rounded up to the nearest amount which is a multiple of £10"
+    versions:
+      - effective_from: '2016-04-06'
+        formula: |-
+          10
+
+  - name: transferable_amount_2015_16
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: Income Tax Act 2007 s.55B(4)(a)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/55B
+              excerpt: "for the tax year 2015-16, is £1,060"
+    versions:
+      - effective_from: '2015-04-06'
+        formula: |-
+          1060
+
+  - name: individual_entitled_to_marriage_allowance_tax_reduction
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Year
+    source: Income Tax Act 2007 s.55B(1), (2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/55B
+              excerpt: "the individual is the gaining party"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/55B
+              excerpt: "not, for the tax year, liable to tax at a rate other than the basic rate"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/55B
+              excerpt: "the individual meets the requirements of section 56 (residence)"
+    versions:
+      - effective_from: '2015-04-06'
+        formula: |-
+          individual_is_the_gaining_party_under_a_section_55c_election
+          and individual_not_liable_above_basic_rate
+          and individual_meets_section_56_residence_requirement
+          and neither_party_claims_married_couples_allowance
+
+  - name: statutory_transferable_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.55B(4)(b), (5)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/55B
+              excerpt: "is 10% of the amount of personal allowance specified in section 35(1)"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/55B
+              excerpt: "rounded up to the nearest amount which is a multiple of £10"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/2007/3/55B#appropriate_percentage_of_personal_allowance
+              output: appropriate_percentage_of_personal_allowance
+              hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/2007/3/55B#transferable_amount_rounding_multiple
+              output: transferable_amount_rounding_multiple
+              hash: sha256:local
+    versions:
+      - effective_from: '2016-04-06'
+        formula: |-
+          ceil((appropriate_percentage_of_personal_allowance * personal_allowance_specified_in_section_35_1) / transferable_amount_rounding_multiple) * transferable_amount_rounding_multiple
+
+  - name: transferable_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax Act 2007 s.55B(1), (4)(b), (5), (6)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/55B
+              excerpt: "the personal allowance to which the relinquishing spouse or civil partner is entitled under section 35 ... is reduced for the tax year by the transferable amount"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/2007/3/55B#statutory_transferable_amount
+              output: statutory_transferable_amount
+              hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/2007/3/55B#transferable_amount_rounding_multiple
+              output: transferable_amount_rounding_multiple
+              hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/2007/3/55B#individual_entitled_to_marriage_allowance_tax_reduction
+              output: individual_entitled_to_marriage_allowance_tax_reduction
+              hash: sha256:local
+    versions:
+      - effective_from: '2016-04-06'
+        formula: |-
+          if individual_entitled_to_marriage_allowance_tax_reduction: ceil(max(0, min(relinquishing_partner_unused_personal_allowance, statutory_transferable_amount)) / transferable_amount_rounding_multiple) * transferable_amount_rounding_multiple else: 0

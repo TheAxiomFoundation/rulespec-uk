@@ -1,0 +1,57 @@
+- name: class_3_contribution_paid_at_flat_weekly_rate_when_elected
+  period:
+    period_kind: custom
+    name: tax_week
+    start: '2025-04-07'
+    end: '2025-04-13'
+  input:
+    uk:statutes/ukpga/1992/4/13#input.contributor_is_over_16: true
+    uk:statutes/ukpga/1992/4/13#input.contributor_satisfies_prescribed_conditions_to_pay_class_3: true
+    uk:statutes/ukpga/1992/4/13#input.payment_is_with_a_view_to_satisfying_benefit_entitlement_conditions: true
+    uk:statutes/ukpga/1992/4/13#input.contributor_elects_to_pay_class_3_contribution: true
+  output:
+    uk:statutes/ukpga/1992/4/13#class_3_weekly_contribution_amount: 17.75
+    uk:statutes/ukpga/1992/4/13#entitled_to_pay_class_3_contribution: holds
+    uk:statutes/ukpga/1992/4/13#class_3_contribution_if_elected: 17.75
+- name: no_class_3_contribution_when_entitled_but_not_elected
+  period:
+    period_kind: custom
+    name: tax_week
+    start: '2025-04-07'
+    end: '2025-04-13'
+  input:
+    uk:statutes/ukpga/1992/4/13#input.contributor_is_over_16: true
+    uk:statutes/ukpga/1992/4/13#input.contributor_satisfies_prescribed_conditions_to_pay_class_3: true
+    uk:statutes/ukpga/1992/4/13#input.payment_is_with_a_view_to_satisfying_benefit_entitlement_conditions: true
+    uk:statutes/ukpga/1992/4/13#input.contributor_elects_to_pay_class_3_contribution: false
+  output:
+    uk:statutes/ukpga/1992/4/13#entitled_to_pay_class_3_contribution: holds
+    uk:statutes/ukpga/1992/4/13#class_3_contribution_if_elected: 0
+- name: no_class_3_contribution_when_under_16
+  period:
+    period_kind: custom
+    name: tax_week
+    start: '2025-04-07'
+    end: '2025-04-13'
+  input:
+    uk:statutes/ukpga/1992/4/13#input.contributor_is_over_16: false
+    uk:statutes/ukpga/1992/4/13#input.contributor_satisfies_prescribed_conditions_to_pay_class_3: true
+    uk:statutes/ukpga/1992/4/13#input.payment_is_with_a_view_to_satisfying_benefit_entitlement_conditions: true
+    uk:statutes/ukpga/1992/4/13#input.contributor_elects_to_pay_class_3_contribution: true
+  output:
+    uk:statutes/ukpga/1992/4/13#entitled_to_pay_class_3_contribution: not_holds
+    uk:statutes/ukpga/1992/4/13#class_3_contribution_if_elected: 0
+- name: no_class_3_contribution_when_not_for_benefit_purpose
+  period:
+    period_kind: custom
+    name: tax_week
+    start: '2025-04-07'
+    end: '2025-04-13'
+  input:
+    uk:statutes/ukpga/1992/4/13#input.contributor_is_over_16: true
+    uk:statutes/ukpga/1992/4/13#input.contributor_satisfies_prescribed_conditions_to_pay_class_3: true
+    uk:statutes/ukpga/1992/4/13#input.payment_is_with_a_view_to_satisfying_benefit_entitlement_conditions: false
+    uk:statutes/ukpga/1992/4/13#input.contributor_elects_to_pay_class_3_contribution: true
+  output:
+    uk:statutes/ukpga/1992/4/13#entitled_to_pay_class_3_contribution: not_holds
+    uk:statutes/ukpga/1992/4/13#class_3_contribution_if_elected: 0

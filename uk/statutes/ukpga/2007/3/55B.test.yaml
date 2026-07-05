@@ -1,0 +1,75 @@
+- name: full_transferable_amount_when_conditions_met_2026_27
+  period:
+    period_kind: tax_year
+    start: '2026-04-06'
+    end: '2027-04-05'
+  input:
+    uk:statutes/ukpga/2007/3/55B#input.individual_is_the_gaining_party_under_a_section_55c_election: true
+    uk:statutes/ukpga/2007/3/55B#input.individual_not_liable_above_basic_rate: true
+    uk:statutes/ukpga/2007/3/55B#input.individual_meets_section_56_residence_requirement: true
+    uk:statutes/ukpga/2007/3/55B#input.neither_party_claims_married_couples_allowance: true
+    uk:statutes/ukpga/2007/3/55B#input.personal_allowance_specified_in_section_35_1: 12570
+    uk:statutes/ukpga/2007/3/55B#input.relinquishing_partner_unused_personal_allowance: 11570
+  output:
+    uk:statutes/ukpga/2007/3/55B#appropriate_percentage_of_personal_allowance: 0.10
+    uk:statutes/ukpga/2007/3/55B#transferable_amount_rounding_multiple: 10
+    uk:statutes/ukpga/2007/3/55B#individual_entitled_to_marriage_allowance_tax_reduction: holds
+    uk:statutes/ukpga/2007/3/55B#statutory_transferable_amount: 1260
+    uk:statutes/ukpga/2007/3/55B#transferable_amount: 1260
+- name: no_transferable_amount_when_transferor_liable_above_basic_rate
+  period:
+    period_kind: tax_year
+    start: '2026-04-06'
+    end: '2027-04-05'
+  input:
+    uk:statutes/ukpga/2007/3/55B#input.individual_is_the_gaining_party_under_a_section_55c_election: true
+    uk:statutes/ukpga/2007/3/55B#input.individual_not_liable_above_basic_rate: false
+    uk:statutes/ukpga/2007/3/55B#input.individual_meets_section_56_residence_requirement: true
+    uk:statutes/ukpga/2007/3/55B#input.neither_party_claims_married_couples_allowance: true
+    uk:statutes/ukpga/2007/3/55B#input.personal_allowance_specified_in_section_35_1: 12570
+    uk:statutes/ukpga/2007/3/55B#input.relinquishing_partner_unused_personal_allowance: 11570
+  output:
+    uk:statutes/ukpga/2007/3/55B#individual_entitled_to_marriage_allowance_tax_reduction: not_holds
+    uk:statutes/ukpga/2007/3/55B#transferable_amount: 0
+- name: transferable_amount_capped_at_partner_unused_personal_allowance
+  period:
+    period_kind: tax_year
+    start: '2026-04-06'
+    end: '2027-04-05'
+  input:
+    uk:statutes/ukpga/2007/3/55B#input.individual_is_the_gaining_party_under_a_section_55c_election: true
+    uk:statutes/ukpga/2007/3/55B#input.individual_not_liable_above_basic_rate: true
+    uk:statutes/ukpga/2007/3/55B#input.individual_meets_section_56_residence_requirement: true
+    uk:statutes/ukpga/2007/3/55B#input.neither_party_claims_married_couples_allowance: true
+    uk:statutes/ukpga/2007/3/55B#input.personal_allowance_specified_in_section_35_1: 12570
+    uk:statutes/ukpga/2007/3/55B#input.relinquishing_partner_unused_personal_allowance: 833
+  output:
+    uk:statutes/ukpga/2007/3/55B#statutory_transferable_amount: 1260
+    uk:statutes/ukpga/2007/3/55B#transferable_amount: 840
+- name: no_transferable_amount_when_married_couples_allowance_claimed
+  period:
+    period_kind: tax_year
+    start: '2026-04-06'
+    end: '2027-04-05'
+  input:
+    uk:statutes/ukpga/2007/3/55B#input.individual_is_the_gaining_party_under_a_section_55c_election: true
+    uk:statutes/ukpga/2007/3/55B#input.individual_not_liable_above_basic_rate: true
+    uk:statutes/ukpga/2007/3/55B#input.individual_meets_section_56_residence_requirement: true
+    uk:statutes/ukpga/2007/3/55B#input.neither_party_claims_married_couples_allowance: false
+    uk:statutes/ukpga/2007/3/55B#input.personal_allowance_specified_in_section_35_1: 12570
+    uk:statutes/ukpga/2007/3/55B#input.relinquishing_partner_unused_personal_allowance: 11570
+  output:
+    uk:statutes/ukpga/2007/3/55B#individual_entitled_to_marriage_allowance_tax_reduction: not_holds
+    uk:statutes/ukpga/2007/3/55B#transferable_amount: 0
+- name: transferable_amount_2015_16_flat_figure
+  period:
+    period_kind: tax_year
+    start: '2015-04-06'
+    end: '2016-04-05'
+  input:
+    uk:statutes/ukpga/2007/3/55B#input.individual_is_the_gaining_party_under_a_section_55c_election: true
+    uk:statutes/ukpga/2007/3/55B#input.individual_not_liable_above_basic_rate: true
+    uk:statutes/ukpga/2007/3/55B#input.individual_meets_section_56_residence_requirement: true
+    uk:statutes/ukpga/2007/3/55B#input.neither_party_claims_married_couples_allowance: true
+  output:
+    uk:statutes/ukpga/2007/3/55B#transferable_amount_2015_16: 1060
