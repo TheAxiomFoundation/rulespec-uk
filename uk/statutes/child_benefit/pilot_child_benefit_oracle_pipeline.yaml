@@ -1,0 +1,242 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_paths:
+      - uk/statute/ukpga/1992/4/141
+      - uk/regulation/uksi/2006/965/2
+      - uk/regulation/uksi/2013/376/schedule/4/paragraph/7
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - uk/regulation/uksi/2006/965/2
+        - uk/regulation/uksi/2013/376/schedule/4/paragraph/7
+      rationale: |-
+        Every monetary parameter is grounded in an official source: the two
+        Child Benefit weekly rates are imported from the Child Benefit (General)
+        Regulations 2006 (SI 2006/965) regulation 2 module — the enhanced
+        (eldest or only child) rate of £27.05 and the other (each subsequent
+        child) rate of £17.90, both verbatim in that regulation's corpus text —
+        and the Social Security Contributions and Benefits Act 1992 section 141
+        entitlement that pays those rates for each child or qualifying young
+        person the family is responsible for. The pilot composes those weekly
+        rates into a family-level annual Child Benefit entitlement so an
+        end-to-end UKMOD bch_s comparison is queryable from the number of
+        children without the caller supplying the per-child rate branch.
+
+        This pilot deliberately encodes only the section 141 entitlement (the
+        gross, pre-charge amount). The High Income Child Benefit Charge
+        (ITEPA 2003 sections 681B-681H, introduced by Finance Act 2012
+        Schedule 1) that claws Child Benefit back through the income-tax system
+        for a partner with adjusted net income over the threshold is NOT
+        encoded here: those charge provisions are not yet in the Axiom corpus,
+        so encoding the £60,000 threshold or the 1%-per-£200 taper would not be
+        corpus-grounded. The gap is tracked in rulespec-uk issue #75, and
+        the UKMOD oracle comparison therefore compares this gross entitlement
+        against UKMOD's pre-charge Child Benefit (bch_s + bchrd_s), reconstructed
+        by adding back UKMOD's separately-reported High Income Child Benefit
+        Charge clawback.
+  summary: |-
+    Composed family Child Benefit pipeline for the UKMOD oracle slice at the
+    2026-27 rates. It exposes a dense-engine-friendly Family-level path from the
+    number of children or qualifying young persons for whom the family is
+    responsible into the Social Security Contributions and Benefits Act 1992
+    section 141 annual entitlement, so an end-to-end bch_s comparison does not
+    require the caller to supply the per-child enhanced/other rate branch. It
+    wires: the section 141 weekly entitlement (the enhanced rate for the only or
+    eldest child plus the other rate for each subsequent child, both imported
+    from the Child Benefit (General) Regulations 2006 regulation 2), and the
+    annualisation of that weekly entitlement to a tax year of 52 benefit weeks.
+
+    It models the ordinary family that would claim Child Benefit for every child
+    it is responsible for, with the eldest child taking the enhanced rate. It
+    deliberately excludes: the section 141 responsibility, presence, and
+    qualifying-young-person conditions (the caller supplies the resolved child
+    count); the regulation 2 enhanced-rate coordination across spouses, civil
+    partners, and polygamous marriages and its voluntary-organisation and
+    residing-with-a-parent exceptions (an ordinary single family takes the
+    enhanced rate for its eldest child); and the High Income Child Benefit
+    Charge, which is levied separately through income tax and is not encoded in
+    the Axiom corpus (see the module source-verification note). The 2025-26 and
+    2026-27 Child Benefit weekly rates are the same, so UKMOD UK_2025 and UK_2026
+    return the same gross entitlement here.
+imports:
+  - uk:regulations/uksi/2006/965/2#child_benefit_enhanced_weekly_rate
+  - uk:regulations/uksi/2006/965/2#child_benefit_other_weekly_rate
+rules:
+  - name: uk_cb_pilot_benefit_weeks_per_year
+    kind: parameter
+    dtype: Number
+    source: |-
+      Social Security Contributions and Benefits Act 1992 s.141 pays Child
+      Benefit for each benefit week; the weekly entitlement is annualised over
+      the 52 weeks in a year, the same weekly-to-periodic conversion factor the
+      Universal Credit Regulations 2013 Schedule 4 paragraph 7 uses. This is a
+      period-conversion factor, not a statutory monetary amount.
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/7
+              excerpt: "weekly payments are multiplied by 52 and divided by 12"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          52
+
+  - name: uk_cb_pilot_enhanced_weekly_rate
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Child Benefit (General) Regulations 2006 (SI 2006/965) reg.2(1)(a), enhanced (only or eldest child) weekly rate
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2006/965/2#child_benefit_enhanced_weekly_rate
+              output: child_benefit_enhanced_weekly_rate
+              hash: sha256:b6e695578d5932d958e9316ef51ac49a6ab01743faf1cc1177fb823309ef1a7d
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          child_benefit_enhanced_weekly_rate
+
+  - name: uk_cb_pilot_other_weekly_rate
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Child Benefit (General) Regulations 2006 (SI 2006/965) reg.2(1)(b), other (each subsequent child) weekly rate
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2006/965/2#child_benefit_other_weekly_rate
+              output: child_benefit_other_weekly_rate
+              hash: sha256:b6e695578d5932d958e9316ef51ac49a6ab01743faf1cc1177fb823309ef1a7d
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          child_benefit_other_weekly_rate
+
+  - name: uk_cb_pilot_number_of_children
+    kind: derived
+    entity: Family
+    dtype: Number
+    period: Week
+    source: |-
+      Social Security Contributions and Benefits Act 1992 s.141, count of
+      children or qualifying young persons for whom the family is responsible;
+      supplied as an input so the composed entitlement is queryable without the
+      caller resolving the section 141 responsibility conditions.
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/141
+              excerpt: "responsible for one or more children or qualifying young persons"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, uk_cb_pilot_supplied_number_of_children)
+
+  - name: uk_cb_pilot_number_of_other_children
+    kind: derived
+    entity: Family
+    dtype: Number
+    period: Week
+    source: |-
+      Social Security Contributions and Benefits Act 1992 s.141 with SI 2006/965
+      reg.2; the children charged at the other rate are every child after the
+      only or eldest child, who takes the enhanced rate.
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2006/965/2
+              excerpt: "in any other case, £17.90"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, uk_cb_pilot_number_of_children - 1)
+
+  - name: uk_cb_pilot_weekly_entitlement
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: |-
+      Social Security Contributions and Benefits Act 1992 s.141 weekly
+      entitlement: the enhanced rate for the only or eldest child plus the other
+      rate for each subsequent child, when the family is responsible for at least
+      one child or qualifying young person.
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/141
+              excerpt: "in respect of the child or qualifying young person, or each of the children or qualifying young persons"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/child_benefit/pilot_child_benefit_oracle_pipeline#uk_cb_pilot_enhanced_weekly_rate
+              output: uk_cb_pilot_enhanced_weekly_rate
+              hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/child_benefit/pilot_child_benefit_oracle_pipeline#uk_cb_pilot_other_weekly_rate
+              output: uk_cb_pilot_other_weekly_rate
+              hash: sha256:local
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          if uk_cb_pilot_number_of_children > 0: uk_cb_pilot_enhanced_weekly_rate + uk_cb_pilot_number_of_other_children * uk_cb_pilot_other_weekly_rate else: 0
+
+  - name: uk_cb_pilot_annual_entitlement
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: |-
+      Social Security Contributions and Benefits Act 1992 s.141 annual Child
+      Benefit entitlement: the weekly entitlement paid across a 52-benefit-week
+      tax year. This is the gross entitlement before the High Income Child
+      Benefit Charge, which is levied separately through income tax and is not
+      encoded here.
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/141
+              excerpt: "entitled ... to a benefit ... for that week"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/child_benefit/pilot_child_benefit_oracle_pipeline#uk_cb_pilot_weekly_entitlement
+              output: uk_cb_pilot_weekly_entitlement
+              hash: sha256:local
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          uk_cb_pilot_weekly_entitlement * uk_cb_pilot_benefit_weeks_per_year
