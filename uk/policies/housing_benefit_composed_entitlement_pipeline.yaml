@@ -1,0 +1,724 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_paths:
+      - uk/regulation/uksi/2006/213/22
+      - uk/regulation/uksi/2006/213/70
+      - uk/regulation/uksi/2006/213/71
+      - uk/regulation/uksi/2006/213/74
+      - uk/regulation/uksi/2006/213/schedule/3
+      - uk/regulation/uksi/2006/214/22
+      - uk/regulation/uksi/2006/214/50
+      - uk/regulation/uksi/2006/214/51
+      - uk/regulation/uksi/2006/214/55
+      - uk/regulation/uksi/2006/214/schedule/3
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - uk/regulation/uksi/2006/213/71
+        - uk/regulation/uksi/2006/213/74
+        - uk/regulation/uksi/2006/213/schedule/3
+        - uk/regulation/uksi/2006/214/schedule/3
+      rationale: |-
+        Every numeric parameter is grounded in an official source captured at
+        the 2026-04-06 in-force expression. The working-age personal
+        allowances (single aged under 25 GBP 75.65 / aged 25 or over GBP 95.55,
+        couple both aged under 18 GBP 114.35 / at least one aged 18 or over GBP
+        150.15) are in the Housing Benefit Regulations 2006 Schedule 3
+        paragraph 1, and the pension-age personal allowances (single who has
+        attained pensionable age before 1 April 2021 GBP 256.00, couple GBP
+        383.35) are in the SI 2006/214 Schedule 3 paragraph 1; the 65 per cent
+        taper is in regulation 71 (working-age) / regulation 51 (pension-age);
+        the appropriate maximum housing benefit is 100 per cent of eligible
+        rent less non-dependant deductions under regulation 70 / regulation 50;
+        and the non-dependant deduction amounts (GBP 20.40 base rising to GBP
+        131.45 by gross-income band, thresholds GBP 192 / 279 / 365 / 485 /
+        605) are in regulation 74 / regulation 55, all as uprated by the Social
+        Security Benefits Up-rating Order 2026 (SI 2026/148). The pipeline
+        models the Family-level maximum entitlement so an end-to-end
+        PolicyEngine housing_benefit_entitlement comparison is queryable from
+        raw household facts without the caller supplying the regulation 70/71
+        maximum-benefit and taper mechanics or the Schedule 3 personal-
+        allowance branch.
+  summary: |-
+    Composed Family-level Housing Benefit entitlement pipeline for the 2026-27
+    Housing Benefit Regulations 2006 parameters. It exposes a
+    dense-engine-friendly path from raw household facts (couple/lone-parent/
+    single status, eldest adult age, whether any member has attained state
+    pension age, number of income-banded non-dependants, eligible rent,
+    applicable income, whether a maximum rent (LHA) cap applies) into the
+    regulation 70 (working-age) / regulation 50 (pension-age) appropriate
+    maximum housing benefit after the regulation 71 / regulation 51 65 per cent
+    taper, so an end-to-end PolicyEngine housing_benefit_entitlement comparison
+    does not require the caller to supply the maximum-benefit and taper
+    mechanics.
+
+    It wires the regulation 22 applicable amount from the Schedule 3 paragraph
+    1 personal allowance (selected by family type and age band, with the
+    pension-age personal allowances where any member has attained state pension
+    age) plus a supplied premium amount (Parts 3 and 4 of Schedule 3, which
+    PolicyEngine adds as benefits_premiums); the regulation 74 / regulation 55
+    non-dependant deductions as an income-banded amount per non-dependant; and
+    then the regulation 70 / regulation 50 maximum benefit: 100 per cent of the
+    eligible rent, reduced by 65 per cent of the excess of applicable income
+    over the applicable amount (regulation 71 / regulation 51), capped at the
+    supplied maximum rent (LHA) where the LHA path applies, and floored at
+    zero, less the non-dependant deductions.
+
+    Deliberately excluded (all outside the composed household grid this slice
+    models, or set locally, or separately encoded): the maximum rent (LHA)
+    rate itself, which is the local housing allowance the rent officer
+    determines under regulation 13D by virtue of the Rent Officers Order for
+    the broad rental market area (a locally-set input, like council-tax
+    liability in Council Tax Reduction, supplied as hb_pilot_maximum_rent);
+    the applicable income build (regulation 40 and Schedules 4 and 5, which
+    PolicyEngine aggregates from many benefit and income variables and whose
+    earnings disregards differ between the statute and PolicyEngine), supplied
+    as hb_pilot_applicable_income; the family premium and the disability,
+    enhanced-disability, severe-disability and carer premiums of Parts 3 and 4
+    of Schedule 3, supplied as hb_pilot_premium_amount; the capital tariff
+    income (regulation 52 / regulation 29, separately encoded and folded into
+    the supplied applicable income); the capital upper-limit eligibility gate
+    (regulation 43); and the child and young-person amounts of Schedule 3
+    paragraph 2, which are nil for 2026-27 in PolicyEngine because Child Tax
+    Credit and its Housing Benefit successor amounts are not awarded to
+    working-age Housing Benefit families under Universal Credit migration.
+rules:
+  # --------------------------------------------------------------------------
+  # Schedule 3 paragraph 1 -- working-age personal allowances (2026-27)
+  # --------------------------------------------------------------------------
+  - name: hb_pilot_personal_allowance_single_under_25_amount
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Housing Benefit Regulations 2006, Schedule 3 paragraph 1, single claimant aged under 25
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2006/213/schedule/3
+              excerpt: "is aged less than 25. | | (c) | £75.65."
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          75.65
+
+  - name: hb_pilot_personal_allowance_single_25_or_over_amount
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Housing Benefit Regulations 2006, Schedule 3 paragraph 1, single claimant aged 25 or over
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2006/213/schedule/3
+              excerpt: "is aged not less than 25; | | (b) | £95.55;"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          95.55
+
+  - name: hb_pilot_personal_allowance_couple_both_under_18_amount
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Housing Benefit Regulations 2006, Schedule 3 paragraph 1, couple both aged under 18
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2006/213/schedule/3
+              excerpt: "both members are aged less than 18. | | (c) | £114.35."
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          114.35
+
+  - name: hb_pilot_personal_allowance_couple_one_18_or_over_amount
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Housing Benefit Regulations 2006, Schedule 3 paragraph 1, couple at least one aged 18 or over
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2006/213/schedule/3
+              excerpt: "at least one member is aged not less than 18; | | (b) | £150.15;"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          150.15
+
+  # --------------------------------------------------------------------------
+  # SI 2006/214 Schedule 3 paragraph 1 -- pension-age personal allowances
+  # --------------------------------------------------------------------------
+  - name: hb_pilot_personal_allowance_single_pension_age_amount
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Housing Benefit (Persons who have attained the qualifying age for state pension credit) Regulations 2006, Schedule 3 paragraph 1, single claimant of pension age
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2006/214/schedule/3
+              excerpt: "attained pensionable age before 1st April 2021. (b) (c) £256.00."
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          256.00
+
+  - name: hb_pilot_personal_allowance_couple_pension_age_amount
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Housing Benefit (Persons who have attained the qualifying age for state pension credit) Regulations 2006, Schedule 3 paragraph 1, couple of pension age
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2006/214/schedule/3
+              excerpt: "attained pensionable age before 1st April 2021. (b) (c) £383.35"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          383.35
+
+  # --------------------------------------------------------------------------
+  # Schedule 3 paragraph 1 -- personal allowance age thresholds
+  # --------------------------------------------------------------------------
+  - name: hb_pilot_personal_allowance_younger_age_threshold
+    kind: parameter
+    dtype: Count
+    source: Housing Benefit Regulations 2006, Schedule 3 paragraph 1, couple age band
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2006/213/schedule/3
+              excerpt: "at least one member is aged not less than 18"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          18
+
+  - name: hb_pilot_personal_allowance_older_age_threshold
+    kind: parameter
+    dtype: Count
+    source: Housing Benefit Regulations 2006, Schedule 3 paragraph 1, single-claimant age band
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2006/213/schedule/3
+              excerpt: "is aged not less than 25"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          25
+
+  # --------------------------------------------------------------------------
+  # Regulation 74 / regulation 55 -- non-dependant deduction bands (2026-27)
+  # --------------------------------------------------------------------------
+  - name: hb_pilot_non_dependant_deduction_base_amount
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Housing Benefit Regulations 2006, regulation 74(1)(b)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2006/213/74
+              excerpt: "sub-paragraph (a) does not apply, £20.40 per week"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          20.40
+
+  - name: hb_pilot_non_dependant_deduction_band_2_amount
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Housing Benefit Regulations 2006, regulation 74(2)(b)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2006/213/74
+              excerpt: "not less than £192.00 but less than £279.00, the deduction to be made under this regulation shall be £46.85"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          46.85
+
+  - name: hb_pilot_non_dependant_deduction_band_3_amount
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Housing Benefit Regulations 2006, regulation 74(2)(c)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2006/213/74
+              excerpt: "not less than £279.00 but less than £365.00, the deduction to be made under this regulation shall be £64.35"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          64.35
+
+  - name: hb_pilot_non_dependant_deduction_band_4_amount
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Housing Benefit Regulations 2006, regulation 74(2)(d)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2006/213/74
+              excerpt: "not less than £365.00 but less than £485.00, the deduction to be made under this regulation shall be £105.20"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          105.20
+
+  - name: hb_pilot_non_dependant_deduction_band_5_amount
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Housing Benefit Regulations 2006, regulation 74(2)(e)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2006/213/74
+              excerpt: "not less than £485.00 but less than £605.00, the deduction to be made under this regulation shall be £119.85"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          119.85
+
+  - name: hb_pilot_non_dependant_deduction_top_amount
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Housing Benefit Regulations 2006, regulation 74(1)(a)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2006/213/74
+              excerpt: "in remunerative work, £131.45 per week"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          131.45
+
+  - name: hb_pilot_non_dependant_deduction_threshold_2
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Housing Benefit Regulations 2006, regulation 74(2)(a)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2006/213/74
+              excerpt: "less than £192.00, the deduction"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          192.00
+
+  - name: hb_pilot_non_dependant_deduction_threshold_3
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Housing Benefit Regulations 2006, regulation 74(2)(b)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2006/213/74
+              excerpt: "not less than £192.00 but less than £279.00"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          279.00
+
+  - name: hb_pilot_non_dependant_deduction_threshold_4
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Housing Benefit Regulations 2006, regulation 74(2)(c)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2006/213/74
+              excerpt: "not less than £279.00 but less than £365.00"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          365.00
+
+  - name: hb_pilot_non_dependant_deduction_threshold_5
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Housing Benefit Regulations 2006, regulation 74(2)(d)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2006/213/74
+              excerpt: "not less than £365.00 but less than £485.00"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          485.00
+
+  - name: hb_pilot_non_dependant_deduction_threshold_top
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Housing Benefit Regulations 2006, regulation 74(2)(e)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2006/213/74
+              excerpt: "not less than £485.00 but less than £605.00"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          605.00
+
+  # --------------------------------------------------------------------------
+  # Regulation 71 / regulation 51 -- housing benefit taper (65 per cent)
+  # --------------------------------------------------------------------------
+  - name: hb_pilot_taper_rate
+    kind: parameter
+    dtype: Rate
+    source: Housing Benefit Regulations 2006, regulation 71
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/regulation/uksi/2006/213/71
+              excerpt: "deducted from maximum housing benefit) shall be 65 per cent"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          0.65
+
+  - name: hb_pilot_maximum_benefit_rent_percentage
+    kind: parameter
+    dtype: Rate
+    source: Housing Benefit Regulations 2006, regulation 70
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/regulation/uksi/2006/213/70
+              excerpt: "appropriate maximum housing benefit in any week shall be 100 per cent. of his eligible rent"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          1.0
+
+  - name: hb_pilot_benefit_weeks_per_year
+    kind: parameter
+    dtype: Count
+    source: |-
+      Housing Benefit Regulations 2006, regulation 80 pays Housing Benefit for
+      each benefit week; the weekly amounts are annualised over the 52 weeks in
+      a year. This is a period-conversion factor, not a statutory monetary
+      amount.
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2006/213/70
+              excerpt: "calculated on a weekly basis"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          52
+
+  # ==========================================================================
+  # Regulation 22 applicable amount -- personal allowance by family type
+  # ==========================================================================
+  # Applicable amount (regulation 22 / Schedule 3 paragraph 1): the weekly
+  # personal allowance for the claimant, selected by family type (single, lone
+  # parent, couple) and age band, using the pension-age personal allowances
+  # where any member has attained state pension age, plus any premiums. A lone
+  # parent takes the single-person personal allowance amounts (Schedule 3
+  # paragraph 1(1) and (2) share the single-claimant figures). Inputs:
+  # hb_pilot_is_couple, hb_pilot_any_member_pension_age, hb_pilot_eldest_adult_age.
+  - name: hb_pilot_weekly_personal_allowance
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Housing Benefit Regulations 2006, regulation 22 and Schedule 3 paragraph 1
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2006/213/22
+              excerpt: "an amount in respect of himself or, if he is a member of a couple, an amount in respect of both of them, determined in accordance with paragraph 1(1), (2) or (3)"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2006/214/22
+              excerpt: "an amount in respect of his personal allowance, determined in accordance with paragraph 1 of Schedule 3"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          if hb_pilot_any_member_pension_age:
+            if hb_pilot_is_couple: hb_pilot_personal_allowance_couple_pension_age_amount else: hb_pilot_personal_allowance_single_pension_age_amount
+          else:
+            if hb_pilot_is_couple:
+              if hb_pilot_eldest_adult_age >= hb_pilot_personal_allowance_younger_age_threshold: hb_pilot_personal_allowance_couple_one_18_or_over_amount else: hb_pilot_personal_allowance_couple_both_under_18_amount
+            else:
+              if hb_pilot_eldest_adult_age >= hb_pilot_personal_allowance_older_age_threshold: hb_pilot_personal_allowance_single_25_or_over_amount else: hb_pilot_personal_allowance_single_under_25_amount
+
+  # Annual applicable amount: the weekly personal allowance annualised over the
+  # 52 benefit weeks plus the supplied premium amount (Parts 3 and 4 of
+  # Schedule 3, which PolicyEngine adds as benefits_premiums). This is the
+  # PolicyEngine housing_benefit_applicable_amount. Input: hb_pilot_premium_amount.
+  - name: hb_pilot_applicable_amount
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Housing Benefit Regulations 2006, regulation 22 and Schedule 3
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2006/213/22
+              excerpt: "a claimant's weekly applicable amount shall be the aggregate of such of the following amounts as may apply in his case"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2006/213/22
+              excerpt: "the amount of any premiums which may be applicable to him, determined in accordance with Parts 3 and 4 of Schedule 3 (premiums)"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          hb_pilot_weekly_personal_allowance * hb_pilot_benefit_weeks_per_year + max(0, hb_pilot_premium_amount)
+
+  # ==========================================================================
+  # Regulation 74 / regulation 55 non-dependant deductions
+  # ==========================================================================
+  # Weekly non-dependant deduction for a single non-dependant by gross weekly
+  # income band (regulation 74(1) and (2)): the base amount below the first
+  # threshold, rising through the regulation 74(2) bands to the top amount at
+  # or above the highest threshold. Input: hb_pilot_non_dependant_gross_weekly_income.
+  - name: hb_pilot_non_dependant_deduction_per_non_dependant
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Housing Benefit Regulations 2006, regulation 74(1) and (2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2006/213/74
+              excerpt: "the deduction to be made under this regulation shall be"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          if hb_pilot_non_dependant_gross_weekly_income >= hb_pilot_non_dependant_deduction_threshold_top: hb_pilot_non_dependant_deduction_top_amount
+          else: if hb_pilot_non_dependant_gross_weekly_income >= hb_pilot_non_dependant_deduction_threshold_5: hb_pilot_non_dependant_deduction_band_5_amount
+          else: if hb_pilot_non_dependant_gross_weekly_income >= hb_pilot_non_dependant_deduction_threshold_4: hb_pilot_non_dependant_deduction_band_4_amount
+          else: if hb_pilot_non_dependant_gross_weekly_income >= hb_pilot_non_dependant_deduction_threshold_3: hb_pilot_non_dependant_deduction_band_3_amount
+          else: if hb_pilot_non_dependant_gross_weekly_income >= hb_pilot_non_dependant_deduction_threshold_2: hb_pilot_non_dependant_deduction_band_2_amount
+          else: hb_pilot_non_dependant_deduction_base_amount
+
+  # Annual non-dependant deductions: the per-non-dependant weekly deduction for
+  # each non-dependant, annualised. This models the common case where each
+  # non-dependant is in the same gross-income band; the caller supplies the
+  # band-representative gross weekly income and the number of non-dependants.
+  # This is the PolicyEngine housing_benefit_non_dep_deductions. Inputs:
+  # hb_pilot_number_of_non_dependants, hb_pilot_non_dependant_gross_weekly_income.
+  - name: hb_pilot_non_dependant_deductions
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Housing Benefit Regulations 2006, regulation 70 and regulation 74
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2006/213/70
+              excerpt: "less any deductions in respect of non-dependants which fall to be made under regulation 74 (non-dependant deductions)"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          max(0, hb_pilot_number_of_non_dependants) * hb_pilot_non_dependant_deduction_per_non_dependant * hb_pilot_benefit_weeks_per_year
+
+  # ==========================================================================
+  # Regulation 70 / regulation 50 maximum benefit and regulation 71 taper
+  # ==========================================================================
+  # Income taper (regulation 71 / regulation 51): the amount deducted from the
+  # maximum housing benefit is 65 per cent of the excess of the applicable
+  # income over the applicable amount. Inputs: hb_pilot_applicable_income.
+  - name: hb_pilot_income_reduction
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Housing Benefit Regulations 2006, regulation 71
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2006/213/71
+              excerpt: "percentage of excess of income over applicable amount which is deducted from maximum housing benefit) shall be 65 per cent"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          hb_pilot_taper_rate * max(0, max(0, hb_pilot_applicable_income) - hb_pilot_applicable_amount)
+
+  # Eligible rent less the tapered income (regulation 70 / regulation 50: 100
+  # per cent of eligible rent, less the taper), floored at zero and capped at
+  # the supplied maximum rent (LHA) where the LHA path applies (regulation 13D:
+  # the local housing allowance the rent officer determines for the broad
+  # rental market area). Inputs: hb_pilot_eligible_rent,
+  # hb_pilot_lha_path_applies, hb_pilot_maximum_rent.
+  - name: hb_pilot_rent_after_taper
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Housing Benefit Regulations 2006, regulation 70 and regulation 71
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2006/213/70
+              excerpt: "shall be 100 per cent. of his eligible rent"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          if hb_pilot_lha_path_applies:
+            min(max(0, hb_pilot_maximum_benefit_rent_percentage * max(0, hb_pilot_eligible_rent) - hb_pilot_income_reduction), max(0, hb_pilot_maximum_rent))
+          else:
+            max(0, hb_pilot_maximum_benefit_rent_percentage * max(0, hb_pilot_eligible_rent) - hb_pilot_income_reduction)
+
+  # ==========================================================================
+  # Housing Benefit entitlement (pre-take-up, pre-benefit-cap)
+  # ==========================================================================
+  # The appropriate maximum housing benefit after the taper, less the
+  # non-dependant deductions (regulation 70 / regulation 50), floored at zero.
+  # This is the PolicyEngine housing_benefit_entitlement, before the
+  # would-claim take-up gate and the benefit-cap reduction.
+  - name: hb_pilot_entitlement
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Housing Benefit Regulations 2006, regulation 70 and regulation 71
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2006/213/70
+              excerpt: "less any deductions in respect of non-dependants which fall to be made under regulation 74"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          max(0, hb_pilot_rent_after_taper - hb_pilot_non_dependant_deductions)

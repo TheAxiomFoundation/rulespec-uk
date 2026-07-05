@@ -1,0 +1,224 @@
+# Composed Housing Benefit entitlement pipeline -- hand-verified 2026-27 cases.
+# Every intermediate output is asserted so the arithmetic is auditable. All
+# parameter values are the Housing Benefit Regulations 2006 (SI 2006/213) and
+# the pension-age SI 2006/214 amounts for 2026-27 as uprated by the Social
+# Security Benefits Up-rating Order 2026 (SI 2026/148). Applicable-amount and
+# entitlement cases are cross-checked against PolicyEngine UK
+# housing_benefit_applicable_amount and housing_benefit_entitlement.
+#
+# Personal allowances (weekly): single u25 75.65, single 25+ 95.55,
+# couple both u18 114.35, couple one 18+ 150.15, single pension-age 256.00,
+# couple pension-age 383.35. Annualised over 52 benefit weeks.
+
+# Case 1: single claimant aged 22, social housing (no LHA cap), eligible rent
+# 6000/yr, applicable income 4000/yr, no non-dependants, no premium.
+#   weekly_personal_allowance = 75.65 (single u25)
+#   applicable_amount         = 75.65 * 52 = 3933.80
+#   income_reduction          = 0.65 * max(0, 4000 - 3933.80) = 0.65 * 66.20 = 43.03
+#   rent_after_taper          = max(0, 6000 - 43.03) = 5956.97
+#   entitlement               = 5956.97
+- name: single_under_25_social_housing_partial_taper
+  period: 2026-04
+  input:
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_is_couple: false
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_any_member_pension_age: false
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_eldest_adult_age: 22
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_premium_amount: 0
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_number_of_non_dependants: 0
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_non_dependant_gross_weekly_income: 0
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_applicable_income: 4000
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_eligible_rent: 6000
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_lha_path_applies: false
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_maximum_rent: 0
+  output:
+    uk:policies/housing_benefit_composed_entitlement_pipeline#hb_pilot_weekly_personal_allowance: 75.65
+    uk:policies/housing_benefit_composed_entitlement_pipeline#hb_pilot_applicable_amount: 3933.80
+    uk:policies/housing_benefit_composed_entitlement_pipeline#hb_pilot_non_dependant_deduction_per_non_dependant: 20.40
+    uk:policies/housing_benefit_composed_entitlement_pipeline#hb_pilot_non_dependant_deductions: 0
+    uk:policies/housing_benefit_composed_entitlement_pipeline#hb_pilot_income_reduction: 43.03
+    uk:policies/housing_benefit_composed_entitlement_pipeline#hb_pilot_rent_after_taper: 5956.97
+    uk:policies/housing_benefit_composed_entitlement_pipeline#hb_pilot_entitlement: 5956.97
+
+# Case 2: single claimant aged 40, social housing, eligible rent 5200/yr,
+# applicable income 2000/yr (below applicable amount, no taper).
+#   applicable_amount = 95.55 * 52 = 4968.60
+#   income_reduction  = 0.65 * max(0, 2000 - 4968.60) = 0
+#   rent_after_taper  = 5200.00
+#   entitlement       = 5200.00
+- name: single_over_25_income_below_applicable_amount_full_rent
+  period: 2026-04
+  input:
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_is_couple: false
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_any_member_pension_age: false
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_eldest_adult_age: 40
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_premium_amount: 0
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_number_of_non_dependants: 0
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_non_dependant_gross_weekly_income: 0
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_applicable_income: 2000
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_eligible_rent: 5200
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_lha_path_applies: false
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_maximum_rent: 0
+  output:
+    uk:policies/housing_benefit_composed_entitlement_pipeline#hb_pilot_weekly_personal_allowance: 95.55
+    uk:policies/housing_benefit_composed_entitlement_pipeline#hb_pilot_applicable_amount: 4968.60
+    uk:policies/housing_benefit_composed_entitlement_pipeline#hb_pilot_income_reduction: 0
+    uk:policies/housing_benefit_composed_entitlement_pipeline#hb_pilot_rent_after_taper: 5200.00
+    uk:policies/housing_benefit_composed_entitlement_pipeline#hb_pilot_entitlement: 5200.00
+
+# Case 3: isolated entitlement formula cross-checked against PolicyEngine
+# (single 40, rent 5200, applicable income 5000, applicable amount 4968.60,
+# no non-dependants). PolicyEngine housing_benefit_entitlement returns 5179.59.
+#   income_reduction = 0.65 * (5000 - 4968.60) = 0.65 * 31.40 = 20.41
+#   rent_after_taper = max(0, 5200 - 20.41) = 5179.59
+#   entitlement      = 5179.59
+- name: single_over_25_matches_policyengine_entitlement
+  period: 2026-04
+  input:
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_is_couple: false
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_any_member_pension_age: false
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_eldest_adult_age: 40
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_premium_amount: 0
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_number_of_non_dependants: 0
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_non_dependant_gross_weekly_income: 0
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_applicable_income: 5000
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_eligible_rent: 5200
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_lha_path_applies: false
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_maximum_rent: 0
+  output:
+    uk:policies/housing_benefit_composed_entitlement_pipeline#hb_pilot_applicable_amount: 4968.60
+    uk:policies/housing_benefit_composed_entitlement_pipeline#hb_pilot_income_reduction: 20.41
+    uk:policies/housing_benefit_composed_entitlement_pipeline#hb_pilot_rent_after_taper: 5179.59
+    uk:policies/housing_benefit_composed_entitlement_pipeline#hb_pilot_entitlement: 5179.59
+
+# Case 4: couple, at least one member aged 18 or over, LHA path (private
+# rented), eligible rent 9000/yr capped at maximum rent 8000/yr, applicable
+# income 12000/yr, 1 non-dependant with gross weekly income 300 (band 3, 64.35).
+#   applicable_amount = 150.15 * 52 = 7807.80
+#   non_dep_deductions = 1 * 64.35 * 52 = 3346.20
+#   income_reduction  = 0.65 * (12000 - 7807.80) = 0.65 * 4192.20 = 2724.93
+#   rent_after_taper  = min(max(0, 9000 - 2724.93), 8000) = min(6275.07, 8000) = 6275.07
+#   entitlement       = max(0, 6275.07 - 3346.20) = 2928.87
+- name: couple_lha_capped_with_non_dependant
+  period: 2026-04
+  input:
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_is_couple: true
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_any_member_pension_age: false
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_eldest_adult_age: 40
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_premium_amount: 0
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_number_of_non_dependants: 1
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_non_dependant_gross_weekly_income: 300
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_applicable_income: 12000
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_eligible_rent: 9000
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_lha_path_applies: true
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_maximum_rent: 8000
+  output:
+    uk:policies/housing_benefit_composed_entitlement_pipeline#hb_pilot_weekly_personal_allowance: 150.15
+    uk:policies/housing_benefit_composed_entitlement_pipeline#hb_pilot_applicable_amount: 7807.80
+    uk:policies/housing_benefit_composed_entitlement_pipeline#hb_pilot_non_dependant_deduction_per_non_dependant: 64.35
+    uk:policies/housing_benefit_composed_entitlement_pipeline#hb_pilot_non_dependant_deductions: 3346.20
+    uk:policies/housing_benefit_composed_entitlement_pipeline#hb_pilot_income_reduction: 2724.93
+    uk:policies/housing_benefit_composed_entitlement_pipeline#hb_pilot_rent_after_taper: 6275.07
+    uk:policies/housing_benefit_composed_entitlement_pipeline#hb_pilot_entitlement: 2928.87
+
+# Case 5: single claimant of pension age, social housing, eligible rent
+# 7000/yr, applicable income 5000/yr (below applicable amount, no taper).
+#   applicable_amount = 256.00 * 52 = 13312.00
+#   income_reduction  = 0.65 * max(0, 5000 - 13312.00) = 0
+#   entitlement       = 7000.00
+- name: single_pension_age_full_rent
+  period: 2026-04
+  input:
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_is_couple: false
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_any_member_pension_age: true
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_eldest_adult_age: 70
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_premium_amount: 0
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_number_of_non_dependants: 0
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_non_dependant_gross_weekly_income: 0
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_applicable_income: 5000
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_eligible_rent: 7000
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_lha_path_applies: false
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_maximum_rent: 0
+  output:
+    uk:policies/housing_benefit_composed_entitlement_pipeline#hb_pilot_weekly_personal_allowance: 256.00
+    uk:policies/housing_benefit_composed_entitlement_pipeline#hb_pilot_applicable_amount: 13312.00
+    uk:policies/housing_benefit_composed_entitlement_pipeline#hb_pilot_income_reduction: 0
+    uk:policies/housing_benefit_composed_entitlement_pipeline#hb_pilot_rent_after_taper: 7000.00
+    uk:policies/housing_benefit_composed_entitlement_pipeline#hb_pilot_entitlement: 7000.00
+
+# Case 6: high applicable income wipes out the award. Single 40, rent 5200,
+# applicable income 20000.
+#   applicable_amount = 4968.60
+#   income_reduction  = 0.65 * (20000 - 4968.60) = 0.65 * 15031.40 = 9770.41
+#   rent_after_taper  = max(0, 5200 - 9770.41) = 0
+#   entitlement       = 0
+- name: single_high_income_zero_entitlement
+  period: 2026-04
+  input:
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_is_couple: false
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_any_member_pension_age: false
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_eldest_adult_age: 40
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_premium_amount: 0
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_number_of_non_dependants: 0
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_non_dependant_gross_weekly_income: 0
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_applicable_income: 20000
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_eligible_rent: 5200
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_lha_path_applies: false
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_maximum_rent: 0
+  output:
+    uk:policies/housing_benefit_composed_entitlement_pipeline#hb_pilot_applicable_amount: 4968.60
+    uk:policies/housing_benefit_composed_entitlement_pipeline#hb_pilot_income_reduction: 9770.41
+    uk:policies/housing_benefit_composed_entitlement_pipeline#hb_pilot_rent_after_taper: 0
+    uk:policies/housing_benefit_composed_entitlement_pipeline#hb_pilot_entitlement: 0
+
+# Case 7: non-dependant deduction at the top band bites. Couple one 18+, 1
+# non-dependant with gross weekly income 700 (>= 605 top band, 131.45),
+# eligible rent 12000, applicable income equal to applicable amount (no taper).
+#   applicable_amount  = 7807.80
+#   income_reduction   = 0
+#   non_dep_deductions = 1 * 131.45 * 52 = 6835.40
+#   rent_after_taper   = 12000.00
+#   entitlement        = max(0, 12000 - 6835.40) = 5164.60
+- name: couple_non_dependant_top_band_deduction
+  period: 2026-04
+  input:
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_is_couple: true
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_any_member_pension_age: false
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_eldest_adult_age: 45
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_premium_amount: 0
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_number_of_non_dependants: 1
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_non_dependant_gross_weekly_income: 700
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_applicable_income: 7807.80
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_eligible_rent: 12000
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_lha_path_applies: false
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_maximum_rent: 0
+  output:
+    uk:policies/housing_benefit_composed_entitlement_pipeline#hb_pilot_applicable_amount: 7807.80
+    uk:policies/housing_benefit_composed_entitlement_pipeline#hb_pilot_non_dependant_deduction_per_non_dependant: 131.45
+    uk:policies/housing_benefit_composed_entitlement_pipeline#hb_pilot_non_dependant_deductions: 6835.40
+    uk:policies/housing_benefit_composed_entitlement_pipeline#hb_pilot_income_reduction: 0
+    uk:policies/housing_benefit_composed_entitlement_pipeline#hb_pilot_rent_after_taper: 12000.00
+    uk:policies/housing_benefit_composed_entitlement_pipeline#hb_pilot_entitlement: 5164.60
+
+# Case 8: premium adds to the applicable amount (Parts 3 and 4 of Schedule 3).
+# Single 40, premium 1000/yr, rent 6000, applicable income 5000.
+#   applicable_amount = 95.55 * 52 + 1000 = 4968.60 + 1000 = 5968.60
+#   income_reduction  = 0.65 * max(0, 5000 - 5968.60) = 0
+#   entitlement       = 6000.00
+- name: single_with_premium_in_applicable_amount
+  period: 2026-04
+  input:
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_is_couple: false
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_any_member_pension_age: false
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_eldest_adult_age: 40
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_premium_amount: 1000
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_number_of_non_dependants: 0
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_non_dependant_gross_weekly_income: 0
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_applicable_income: 5000
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_eligible_rent: 6000
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_lha_path_applies: false
+    uk:policies/housing_benefit_composed_entitlement_pipeline#input.hb_pilot_maximum_rent: 0
+  output:
+    uk:policies/housing_benefit_composed_entitlement_pipeline#hb_pilot_applicable_amount: 5968.60
+    uk:policies/housing_benefit_composed_entitlement_pipeline#hb_pilot_income_reduction: 0
+    uk:policies/housing_benefit_composed_entitlement_pipeline#hb_pilot_rent_after_taper: 6000.00
+    uk:policies/housing_benefit_composed_entitlement_pipeline#hb_pilot_entitlement: 6000.00
