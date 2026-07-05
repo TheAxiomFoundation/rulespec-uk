@@ -62,6 +62,24 @@ rules:
               target: uk:statutes/ukpga/2012/5/77#personal_independence_payment_weekly_amount
               output: personal_independence_payment_weekly_amount
               hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/2012/5/78#pip_daily_living_component_weekly_amount
+              output: pip_daily_living_component_weekly_amount
+              hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/2012/5/79#pip_mobility_component_weekly_amount
+              output: pip_mobility_component_weekly_amount
+              hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/2012/5/78#pip_daily_living_enhanced_rate_entitlement
+              output: pip_daily_living_enhanced_rate_entitlement
+              hash: sha256:local
     versions:
       - effective_from: '0001-01-01'
         formula: |-
