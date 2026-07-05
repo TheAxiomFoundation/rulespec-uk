@@ -1,0 +1,280 @@
+format: rulespec/v1
+imports:
+  - uk:statutes/ukpga/1992/4/15#main_class_4_percentage
+  - uk:statutes/ukpga/1992/4/15#additional_class_4_percentage
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_paths:
+      - uk/statute/ukpga/1992/4/11
+      - uk/statute/ukpga/1992/4/15
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - uk/statute/ukpga/1992/4/11
+        - uk/statute/ukpga/1992/4/15
+      rationale: |-
+        Every numeric parameter is the encoded Social Security Contributions
+        and Benefits Act 1992 self-employed National Insurance figure. The 6%
+        main and 2% additional Class 4 percentages and the 12,570 lower and
+        50,270 upper profits limits are section 15(3), (3ZA). The Class 2
+        small profits threshold (6,845) and the voluntary weekly Class 2 rate
+        (3.50) are the section 11(4)(b), (6) figures carried in the ingested
+        source text. Section 11(2), which formerly imposed a flat Class 2
+        liability, was omitted from 6 April 2024 by the National Insurance
+        Contributions (Reduction in Rates) Act 2023, and section 11(5B) now
+        treats a self-employed earner with profits at or above the small
+        profits threshold as having actually paid Class 2 without any amount
+        being payable; so the self-employed National Insurance a person with
+        profits above the small profits threshold actually pays is the Class 4
+        contribution alone. The 6% main Class 4 percentage and the 12,570 and
+        50,270 profits limits are frozen for 2026-27, so this pipeline
+        reproduces UKMOD UK_2026 tscse_s; the Class 2 figures do not enter the
+        amount payable for the modelled above-threshold trader and so do not
+        affect the oracle comparison.
+  summary: |-
+    Composed single-earner annual self-employed National Insurance pipeline
+    for the UKMOD oracle slice at the 2026-27 parameters. Class 4 (Social
+    Security Contributions and Benefits Act 1992 section 15) is charged as an
+    annual amount on profits from a trade, profession, or vocation: the 6%
+    main Class 4 percentage on profits between the 12,570 lower profits limit
+    and the 50,270 upper profits limit, plus the 2% additional Class 4
+    percentage on profits above the upper profits limit. Class 2 (section 11)
+    contributes nothing to the amount payable for the ordinary above-threshold
+    trader modelled here: section 11(2)'s former flat liability was omitted
+    from 6 April 2024, and section 11(5B) treats an earner with relevant
+    profits at or above the 6,845 small profits threshold as having actually
+    paid Class 2 with no amount payable; only an earner below the small
+    profits threshold may voluntarily pay 3.50 per week under section 11(6),
+    which this ordinary trader does not. The composed self-employed
+    contribution is therefore the Class 4 amount, matching UKMOD's annual
+    tscse_s exactly (Class 4 is an annual charge, so there is no weekly
+    rounding). It models the ordinary self-employed earner above the small
+    profits threshold and below pensionable age; it excludes Class 1
+    (employee) and the employer secondary contribution, the Regulation 100
+    annual maximum, share-fisherman and volunteer-development-worker special
+    Class 2 rates, and deferment.
+rules:
+  - name: uk_nic_pilot_se_lower_profits_limit
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: Social Security Contributions and Benefits Act 1992 s.15(3)(a); Class 4 lower profits limit
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/15
+              excerpt: "as exceeds £12,570 but does not exceed £50,270"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          12570
+
+  - name: uk_nic_pilot_se_upper_profits_limit
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: Social Security Contributions and Benefits Act 1992 s.15(3)(a), (b); Class 4 upper profits limit
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/15
+              excerpt: "as exceeds £50,270"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          50270
+
+  - name: uk_nic_pilot_se_small_profits_threshold
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: |-
+      Social Security Contributions and Benefits Act 1992 s.11(4)(b); the
+      small profits threshold as carried in the ingested source. At or above
+      it, s.11(5B) treats Class 2 as paid; below it, s.11(6) permits voluntary
+      Class 2.
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/11
+              excerpt: "the “small profits threshold” is £6,845"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          6845
+
+  - name: uk_nic_pilot_se_voluntary_class_2_weekly_rate
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: |-
+      Social Security Contributions and Benefits Act 1992 s.11(6); the
+      voluntary weekly Class 2 rate a self-employed earner below the small
+      profits threshold may pay, as carried in the ingested source.
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/11
+              excerpt: "the earner may pay a Class 2 contribution of £3.50"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          3.50
+
+  - name: uk_nic_pilot_se_profits
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: |-
+      Social Security Contributions and Benefits Act 1992 s.15(1), profits
+      immediately derived from carrying on a trade, profession, or vocation
+      chargeable to income tax as trading income.
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/15
+              excerpt: "as exceeds £12,570 but does not exceed £50,270"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, uk_nic_pilot_se_annual_profits)
+
+  - name: uk_nic_pilot_se_main_class_4_contribution
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Social Security Contributions and Benefits Act 1992 s.15(3)(a), main Class 4 percentage on profits between the lower and upper profits limits
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/15
+              excerpt: "as exceeds £12,570 but does not exceed £50,270"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/1992/4/15#main_class_4_percentage
+              output: main_class_4_percentage
+              hash: sha256:b52eb7fe9493059ce41a744bee95fb07e1a5c5539a1e88a768fecb94d649a06e
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          main_class_4_percentage * max(0, min(uk_nic_pilot_se_profits, uk_nic_pilot_se_upper_profits_limit) - uk_nic_pilot_se_lower_profits_limit)
+
+  - name: uk_nic_pilot_se_additional_class_4_contribution
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Social Security Contributions and Benefits Act 1992 s.15(3)(b), additional Class 4 percentage on profits above the upper profits limit
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/15
+              excerpt: "as exceeds £50,270"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/1992/4/15#additional_class_4_percentage
+              output: additional_class_4_percentage
+              hash: sha256:b52eb7fe9493059ce41a744bee95fb07e1a5c5539a1e88a768fecb94d649a06e
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          additional_class_4_percentage * max(0, uk_nic_pilot_se_profits - uk_nic_pilot_se_upper_profits_limit)
+
+  - name: uk_nic_pilot_se_class_4_contribution
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Social Security Contributions and Benefits Act 1992 s.15(3), aggregate Class 4 contribution before the Regulation 100 annual maximum
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/15
+              excerpt: "as exceeds £12,570 but does not exceed £50,270"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          uk_nic_pilot_se_main_class_4_contribution + uk_nic_pilot_se_additional_class_4_contribution
+
+  - name: uk_nic_pilot_se_class_2_amount_payable
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: |-
+      Social Security Contributions and Benefits Act 1992 s.11. Since 6 April
+      2024 (s.11(2) omitted; s.11(5B)) a self-employed earner with relevant
+      profits at or above the small profits threshold is treated as having
+      actually paid Class 2 with no amount payable, so the Class 2 amount
+      payable for the ordinary above-threshold trader is nil.
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/11
+              excerpt: "treated, for relevant purposes, as having actually paid a Class 2 contribution"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          if uk_nic_pilot_se_profits >= uk_nic_pilot_se_small_profits_threshold: 0 else: 0
+
+  - name: uk_nic_pilot_se_self_employed_contribution
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: |-
+      Aggregate self-employed National Insurance actually payable: the Class 4
+      contribution plus the Class 2 amount payable, which for the ordinary
+      above-small-profits-threshold trader is the Class 4 amount alone
+      (Social Security Contributions and Benefits Act 1992 ss.11, 15).
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/15
+              excerpt: "as exceeds £12,570 but does not exceed £50,270"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          uk_nic_pilot_se_class_4_contribution + uk_nic_pilot_se_class_2_amount_payable

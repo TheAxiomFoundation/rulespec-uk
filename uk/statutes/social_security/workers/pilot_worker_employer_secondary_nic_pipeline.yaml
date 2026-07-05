@@ -1,0 +1,106 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_paths:
+      - uk/statute/ukpga/1992/4/9
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - uk/statute/ukpga/1992/4/9
+      rationale: |-
+        The 15% secondary percentage is the encoded Social Security
+        Contributions and Benefits Act 1992 section 9(2) figure (substituted
+        for 13.8% from 6 April 2025 by the National Insurance Contributions
+        (Secondary Class 1 Contributions) Act 2025). Section 9(1) charges the
+        secondary percentage on earnings above the current secondary
+        threshold. The secondary threshold is not a figure in the primary
+        legislation; it is set for the year by Treasury order under section 5,
+        so this pipeline takes it as a supplied input rather than encoding an
+        ungrounded literal — the same way the section 8 primary Class 1
+        encoding takes the primary threshold as an input. For 2026-27 the
+        secondary threshold is 5,000 a year (96 a week), which the oracle case
+        supplies.
+  summary: |-
+    Composed single-employment annual employer (secondary) Class 1 National
+    Insurance pipeline for the UKMOD oracle slice at the 2026-27 parameters.
+    Section 9 of the Social Security Contributions and Benefits Act 1992
+    charges the secondary percentage on so much of the earnings paid in the
+    tax week as exceeds the current secondary threshold; this module applies
+    the encoded 15% secondary percentage to annual earnings above the supplied
+    secondary threshold. The secondary threshold (5,000 a year for 2026-27,
+    set by Treasury order under section 5) is a supplied input, matching how
+    the section 8 primary Class 1 encoding takes the primary threshold as an
+    input. It matches UKMOD's annual tscer_s to within the small difference
+    UKMOD carries from computing the contribution week by week on the
+    weekly-rounded secondary threshold (about 0.86 a year on this grid). It
+    models the ordinary secondary contributor for whom the section 9A
+    age-related and 9B apprentice zero-rate percentages do not apply, and the
+    section 6(6) and sections 116-120 regulations do not displace the
+    calculation; it excludes the employee primary and self-employed
+    contributions, the employment allowance (which is applied at the employer
+    level against the aggregate secondary liability, not per employee), Class
+    1A and Class 1B, and contracted-out and deferment cases.
+rules:
+  - name: uk_nic_pilot_er_secondary_percentage
+    kind: parameter
+    dtype: Rate
+    source: Social Security Contributions and Benefits Act 1992 s.9(2); secondary percentage from 6 April 2025
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/9
+              excerpt: "the secondary percentage is 15%"
+    versions:
+      - effective_from: '2025-04-06'
+        formula: |-
+          0.15
+
+  - name: uk_nic_pilot_er_secondary_earnings
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: |-
+      Social Security Contributions and Benefits Act 1992 s.9(1), annual
+      employment earnings on which the secondary contribution is charged.
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/9
+              excerpt: "the relevant percentage of so much of the earnings paid in the tax week"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, uk_nic_pilot_er_annual_employment_income)
+
+  - name: uk_nic_pilot_er_secondary_class_1_contribution
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: |-
+      Social Security Contributions and Benefits Act 1992 s.9(1), (1A)(b),
+      (2), the secondary percentage on earnings above the current secondary
+      threshold, for the ordinary secondary contributor.
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/9
+              excerpt: "as exceeds the current secondary threshold (or the prescribed equivalent)"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          uk_nic_pilot_er_secondary_percentage * max(0, uk_nic_pilot_er_secondary_earnings - uk_nic_pilot_er_secondary_threshold)
