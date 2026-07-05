@@ -1,0 +1,200 @@
+format: rulespec/v1
+imports:
+  - uk:statutes/ukpga/1992/4/8#main_primary_percentage
+  - uk:statutes/ukpga/1992/4/8#additional_primary_percentage
+  - uk:statutes/ukpga/2007/3/35#personal_allowance_base_amount
+  - uk:statutes/ukpga/2007/3/10#basic_rate_limit
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_paths:
+      - uk/statute/ukpga/1992/4/8
+      - uk/statute/ukpga/2007/3/10
+      - uk/statute/ukpga/2007/3/35
+    upstream_source_check:
+      status: composed_from_grounded_modules
+      checked_paths:
+        - uk/statute/ukpga/1992/4/8
+        - uk/statute/ukpga/2007/3/10
+        - uk/statute/ukpga/2007/3/35
+      rationale: |-
+        The 8% main and 2% additional primary Class 1 percentages are the
+        encoded Social Security Contributions and Benefits Act 1992 section 8
+        parameters. The annual primary threshold and upper earnings limit are
+        derived from already-grounded income-tax parameters they are aligned
+        to: from 2022-23 the primary threshold equals the income-tax personal
+        allowance (12,570, Income Tax Act 2007 s.35), and the upper earnings
+        limit equals the higher-rate threshold, i.e. the personal allowance
+        plus the basic-rate limit (12,570 + 37,700 = 50,270, Income Tax Act
+        2007 ss.35 and 10). The pipeline adds no new numeric literals.
+  summary: |-
+    Composed single-employee annual Class 1 primary (employee) National
+    Insurance pipeline for the UKMOD oracle slice. Section 8 of the Social
+    Security Contributions and Benefits Act 1992 is encoded at the weekly
+    earnings-period grain with the primary threshold and upper earnings limit
+    supplied as inputs; this module derives the 2025-26/2026-27 annual PT
+    (12,570) and UEL (50,270) from the aligned income-tax personal allowance
+    and higher-rate threshold and applies the encoded 8% main and 2%
+    additional percentages to annual earnings. It matches UKMOD's annual
+    tscee_s to within the small difference UKMOD carries from computing the
+    contribution week by week on the weekly-rounded thresholds. It models the
+    ordinary employee for whom the section 6(6) and sections 116-120
+    regulations do not displace the calculation; it excludes Class 2 and Class
+    4 (self-employed), the employer secondary contribution, contracted-out and
+    deferment cases, and directors' annual-earnings-period rules.
+rules:
+  - name: uk_nic_pilot_primary_threshold_annual
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: |-
+      SSCBA 1992 s.8 primary threshold, aligned from 2022-23 to the income-tax
+      personal allowance (Income Tax Act 2007 s.35(1)).
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/8
+              excerpt: "the current primary threshold"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/2007/3/35#personal_allowance_base_amount
+              output: personal_allowance_base_amount
+              hash: sha256:40fa47b7b5bdef3c8bac84cbdb483cd114c81aa40560bfd5bfc3e3d19b4eeaf7
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          personal_allowance_base_amount
+
+  - name: uk_nic_pilot_upper_earnings_limit_annual
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: |-
+      SSCBA 1992 s.8 upper earnings limit, aligned to the income-tax
+      higher-rate threshold: the personal allowance (Income Tax Act 2007
+      s.35(1)) plus the basic-rate limit (Income Tax Act 2007 s.10(5)).
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/8
+              excerpt: "the current upper earnings limit"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/2007/3/35#personal_allowance_base_amount
+              output: personal_allowance_base_amount
+              hash: sha256:40fa47b7b5bdef3c8bac84cbdb483cd114c81aa40560bfd5bfc3e3d19b4eeaf7
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/2007/3/10#basic_rate_limit
+              output: basic_rate_limit
+              hash: sha256:b13046eac4823c7ff97e81f2604d1a8d37848d5c20d8adc22524d03abe6fc621
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          personal_allowance_base_amount + basic_rate_limit
+
+  - name: uk_nic_pilot_annual_earnings
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: SSCBA 1992 s.8, annual employment earnings subject to primary Class 1 contributions
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/8
+              excerpt: "the earnings paid in the tax week in respect of the employment"
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          max(0, uk_nic_pilot_annual_employment_income)
+
+  - name: uk_nic_pilot_main_primary_contribution
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: SSCBA 1992 s.8(1)(a), (2), main primary percentage on earnings between the primary threshold and upper earnings limit
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/8
+              excerpt: "the main primary percentage of so much of the earnings paid in the tax week in respect of the employment as exceeds the current primary threshold but does not exceed the current upper earnings limit"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/1992/4/8#main_primary_percentage
+              output: main_primary_percentage
+              hash: sha256:2c28cff34bb21cf4acfbc9af615938cdd2b3a34e0b4b189260d80106e158fa3a
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          main_primary_percentage * max(0, min(uk_nic_pilot_annual_earnings, uk_nic_pilot_upper_earnings_limit_annual) - uk_nic_pilot_primary_threshold_annual)
+
+  - name: uk_nic_pilot_additional_primary_contribution
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: SSCBA 1992 s.8(1)(b), (2), additional primary percentage on earnings above the upper earnings limit
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/8
+              excerpt: "the additional primary percentage of so much of those earnings as exceeds the current upper earnings limit"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/1992/4/8#additional_primary_percentage
+              output: additional_primary_percentage
+              hash: sha256:2c28cff34bb21cf4acfbc9af615938cdd2b3a34e0b4b189260d80106e158fa3a
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          additional_primary_percentage * max(0, uk_nic_pilot_annual_earnings - uk_nic_pilot_upper_earnings_limit_annual)
+
+  - name: uk_nic_pilot_primary_class_1_contribution
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: SSCBA 1992 s.8(1), aggregate annual primary Class 1 employee contribution
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/8
+              excerpt: "the amount of that contribution is the aggregate of"
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          uk_nic_pilot_main_primary_contribution + uk_nic_pilot_additional_primary_contribution
