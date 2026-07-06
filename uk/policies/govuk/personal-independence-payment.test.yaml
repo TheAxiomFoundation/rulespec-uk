@@ -1,0 +1,50 @@
+- name: enhanced_daily_living_and_enhanced_mobility_combine
+  period:
+    period_kind: tax_year
+    start: '2026-04-06'
+    end: '2027-04-05'
+  input:
+    uk:policies/govuk/personal-independence-payment#input.daily_living_is_enhanced_rate: true
+    uk:policies/govuk/personal-independence-payment#input.daily_living_is_standard_rate: false
+    uk:policies/govuk/personal-independence-payment#input.mobility_is_enhanced_rate: true
+    uk:policies/govuk/personal-independence-payment#input.mobility_is_standard_rate: false
+  output:
+    uk:policies/govuk/personal-independence-payment#pip_daily_living_weekly_amount: 114.60
+    uk:policies/govuk/personal-independence-payment#pip_mobility_weekly_amount: 80.00
+    uk:policies/govuk/personal-independence-payment#personal_independence_payment_weekly_total: 194.60
+    uk:policies/govuk/personal-independence-payment#personal_independence_payment_annual_amount: 10119.20
+    uk:policies/govuk/personal-independence-payment#receives_enhanced_daily_living_component: holds
+
+- name: standard_daily_living_and_standard_mobility_combine
+  period:
+    period_kind: tax_year
+    start: '2026-04-06'
+    end: '2027-04-05'
+  input:
+    uk:policies/govuk/personal-independence-payment#input.daily_living_is_enhanced_rate: false
+    uk:policies/govuk/personal-independence-payment#input.daily_living_is_standard_rate: true
+    uk:policies/govuk/personal-independence-payment#input.mobility_is_enhanced_rate: false
+    uk:policies/govuk/personal-independence-payment#input.mobility_is_standard_rate: true
+  output:
+    uk:policies/govuk/personal-independence-payment#pip_daily_living_weekly_amount: 76.70
+    uk:policies/govuk/personal-independence-payment#pip_mobility_weekly_amount: 30.30
+    uk:policies/govuk/personal-independence-payment#personal_independence_payment_weekly_total: 107.00
+    uk:policies/govuk/personal-independence-payment#personal_independence_payment_annual_amount: 5564.00
+    uk:policies/govuk/personal-independence-payment#receives_enhanced_daily_living_component: not_holds
+
+- name: no_award_yields_nil
+  period:
+    period_kind: tax_year
+    start: '2026-04-06'
+    end: '2027-04-05'
+  input:
+    uk:policies/govuk/personal-independence-payment#input.daily_living_is_enhanced_rate: false
+    uk:policies/govuk/personal-independence-payment#input.daily_living_is_standard_rate: false
+    uk:policies/govuk/personal-independence-payment#input.mobility_is_enhanced_rate: false
+    uk:policies/govuk/personal-independence-payment#input.mobility_is_standard_rate: false
+  output:
+    uk:policies/govuk/personal-independence-payment#pip_daily_living_weekly_amount: 0
+    uk:policies/govuk/personal-independence-payment#pip_mobility_weekly_amount: 0
+    uk:policies/govuk/personal-independence-payment#personal_independence_payment_weekly_total: 0
+    uk:policies/govuk/personal-independence-payment#personal_independence_payment_annual_amount: 0
+    uk:policies/govuk/personal-independence-payment#receives_enhanced_daily_living_component: not_holds
