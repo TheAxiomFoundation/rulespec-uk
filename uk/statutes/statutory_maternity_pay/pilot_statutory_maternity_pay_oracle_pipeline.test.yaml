@@ -1,0 +1,67 @@
+# Expected values computed by the axiom-rules-engine from the corpus-grounded
+# Statutory Maternity Pay structure (SSCBA 1992 Part XII: s.164 lower-earnings-
+# limit qualifying condition, s.165 maternity pay period, s.166 earnings-related
+# rate of 90% of normal weekly earnings). The delegated cash amounts — the
+# prescribed weekly standard rate (UKMOD $SMPwsr £196.16), the lower earnings
+# limit (£130), and the 39-week paid period — are supplied as inputs, since they
+# are set by regulation and are not numeric values in the primary Act; the 90%
+# earnings-related rate is grounded in the s.166 text.
+#
+# The weekly-amount arithmetic is 0.9 * normal weekly earnings, paid across 39
+# weeks. These cases use round weekly-earnings figures so the expected amounts
+# terminate: £200/week gives 0.9 * 200 * 39 = £7,020; £400/week gives £14,040;
+# £500/week gives £17,550; £100/week is below the £130 lower earnings limit, so
+# there is no entitlement. The end-to-end UKMOD UK_2026 bmact_s parity check —
+# where the supplied weekly earnings equal UKMOD's yem/30.5*7 monthly-to-weekly
+# proxy and the pilot reconstructs the live oracle exactly (annual gross £25,000
+# -> £16,782.79, £8,000 -> £5,370.49) — lives in the axiom-oracles
+# uk-statutory-pay suite. Coverage: every derived rule is asserted in at least
+# one case; every supplied input is assigned in every case.
+- name: smp_400_weekly_earnings_full_period
+  period: {period_kind: tax_year, start: '2026-04-06', end: '2027-04-05'}
+  input:
+    uk:statutes/statutory_maternity_pay/pilot_statutory_maternity_pay_oracle_pipeline#input.uk_smp_pilot_supplied_normal_weekly_earnings: 400
+    uk:statutes/statutory_maternity_pay/pilot_statutory_maternity_pay_oracle_pipeline#input.uk_smp_pilot_supplied_prescribed_weekly_standard_rate: 196.16
+    uk:statutes/statutory_maternity_pay/pilot_statutory_maternity_pay_oracle_pipeline#input.uk_smp_pilot_supplied_lower_earnings_limit_weekly: 130
+    uk:statutes/statutory_maternity_pay/pilot_statutory_maternity_pay_oracle_pipeline#input.uk_smp_pilot_supplied_maternity_pay_period_weeks: 39
+  output:
+    uk:statutes/statutory_maternity_pay/pilot_statutory_maternity_pay_oracle_pipeline#uk_smp_pilot_earnings_related_rate: 0.9
+    uk:statutes/statutory_maternity_pay/pilot_statutory_maternity_pay_oracle_pipeline#uk_smp_pilot_prescribed_weekly_standard_rate: 196.16
+    uk:statutes/statutory_maternity_pay/pilot_statutory_maternity_pay_oracle_pipeline#uk_smp_pilot_lower_earnings_limit_weekly: 130
+    uk:statutes/statutory_maternity_pay/pilot_statutory_maternity_pay_oracle_pipeline#uk_smp_pilot_maternity_pay_period_weeks: 39
+    uk:statutes/statutory_maternity_pay/pilot_statutory_maternity_pay_oracle_pipeline#uk_smp_pilot_normal_weekly_earnings: 400
+    uk:statutes/statutory_maternity_pay/pilot_statutory_maternity_pay_oracle_pipeline#uk_smp_pilot_is_entitled: 1
+    uk:statutes/statutory_maternity_pay/pilot_statutory_maternity_pay_oracle_pipeline#uk_smp_pilot_weekly_amount: 360
+    uk:statutes/statutory_maternity_pay/pilot_statutory_maternity_pay_oracle_pipeline#uk_smp_pilot_total_entitlement: 14040
+- name: smp_200_weekly_earnings_earnings_related
+  period: {period_kind: tax_year, start: '2026-04-06', end: '2027-04-05'}
+  input:
+    uk:statutes/statutory_maternity_pay/pilot_statutory_maternity_pay_oracle_pipeline#input.uk_smp_pilot_supplied_normal_weekly_earnings: 200
+    uk:statutes/statutory_maternity_pay/pilot_statutory_maternity_pay_oracle_pipeline#input.uk_smp_pilot_supplied_prescribed_weekly_standard_rate: 196.16
+    uk:statutes/statutory_maternity_pay/pilot_statutory_maternity_pay_oracle_pipeline#input.uk_smp_pilot_supplied_lower_earnings_limit_weekly: 130
+    uk:statutes/statutory_maternity_pay/pilot_statutory_maternity_pay_oracle_pipeline#input.uk_smp_pilot_supplied_maternity_pay_period_weeks: 39
+  output:
+    uk:statutes/statutory_maternity_pay/pilot_statutory_maternity_pay_oracle_pipeline#uk_smp_pilot_is_entitled: 1
+    uk:statutes/statutory_maternity_pay/pilot_statutory_maternity_pay_oracle_pipeline#uk_smp_pilot_weekly_amount: 180
+    uk:statutes/statutory_maternity_pay/pilot_statutory_maternity_pay_oracle_pipeline#uk_smp_pilot_total_entitlement: 7020
+- name: smp_500_weekly_earnings_earnings_related
+  period: {period_kind: tax_year, start: '2026-04-06', end: '2027-04-05'}
+  input:
+    uk:statutes/statutory_maternity_pay/pilot_statutory_maternity_pay_oracle_pipeline#input.uk_smp_pilot_supplied_normal_weekly_earnings: 500
+    uk:statutes/statutory_maternity_pay/pilot_statutory_maternity_pay_oracle_pipeline#input.uk_smp_pilot_supplied_prescribed_weekly_standard_rate: 196.16
+    uk:statutes/statutory_maternity_pay/pilot_statutory_maternity_pay_oracle_pipeline#input.uk_smp_pilot_supplied_lower_earnings_limit_weekly: 130
+    uk:statutes/statutory_maternity_pay/pilot_statutory_maternity_pay_oracle_pipeline#input.uk_smp_pilot_supplied_maternity_pay_period_weeks: 39
+  output:
+    uk:statutes/statutory_maternity_pay/pilot_statutory_maternity_pay_oracle_pipeline#uk_smp_pilot_weekly_amount: 450
+    uk:statutes/statutory_maternity_pay/pilot_statutory_maternity_pay_oracle_pipeline#uk_smp_pilot_total_entitlement: 17550
+- name: smp_below_lower_earnings_limit_no_entitlement
+  period: {period_kind: tax_year, start: '2026-04-06', end: '2027-04-05'}
+  input:
+    uk:statutes/statutory_maternity_pay/pilot_statutory_maternity_pay_oracle_pipeline#input.uk_smp_pilot_supplied_normal_weekly_earnings: 100
+    uk:statutes/statutory_maternity_pay/pilot_statutory_maternity_pay_oracle_pipeline#input.uk_smp_pilot_supplied_prescribed_weekly_standard_rate: 196.16
+    uk:statutes/statutory_maternity_pay/pilot_statutory_maternity_pay_oracle_pipeline#input.uk_smp_pilot_supplied_lower_earnings_limit_weekly: 130
+    uk:statutes/statutory_maternity_pay/pilot_statutory_maternity_pay_oracle_pipeline#input.uk_smp_pilot_supplied_maternity_pay_period_weeks: 39
+  output:
+    uk:statutes/statutory_maternity_pay/pilot_statutory_maternity_pay_oracle_pipeline#uk_smp_pilot_is_entitled: 0
+    uk:statutes/statutory_maternity_pay/pilot_statutory_maternity_pay_oracle_pipeline#uk_smp_pilot_weekly_amount: 0
+    uk:statutes/statutory_maternity_pay/pilot_statutory_maternity_pay_oracle_pipeline#uk_smp_pilot_total_entitlement: 0

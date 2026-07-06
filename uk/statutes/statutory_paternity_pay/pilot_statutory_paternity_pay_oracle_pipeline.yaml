@@ -1,0 +1,227 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_paths:
+      - uk/statute/ukpga/1992/4/171ZA
+      - uk/statute/ukpga/1992/4/171ZB
+      - uk/statute/ukpga/1992/4/171ZE
+      - uk/statute/ukpga/1992/4/171ZJ
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - uk/statute/ukpga/1992/4/171ZA
+        - uk/statute/ukpga/1992/4/171ZE
+      rationale: |-
+        The entitlement conditions and the rate/period framework are grounded in
+        the Social Security Contributions and Benefits Act 1992 Part 12ZA corpus
+        text: the continuous-employment and lower-earnings-limit qualifying
+        conditions (s.171ZA), and the rate and period of pay (s.171ZE — a fixed
+        or earnings-related weekly rate as prescribed, for a period of two
+        consecutive weeks). The delegated cash amounts — the prescribed weekly
+        rate, the earnings-related percentage, and the exact lower earnings limit
+        — are set by the Statutory Paternity Pay and Statutory Adoption Pay
+        (General) Regulations and the annual re-rating order (s.171ZE prescribes
+        the rate by regulation, not as a numeric value in the primary Act), so
+        they are supplied as inputs rather than hardcoded as invented literals.
+        For the UKMOD UK_2026 oracle comparison the supplied values are the UKMOD
+        parameters ($SMPrr 0.9 earnings-related rate, $SMPwsr £196.16 prescribed
+        weekly rate, $SMPlel £130 lower earnings limit), so the composed weekly
+        amount — which reduces to 0.9 x normal weekly earnings x 2 weeks, the
+        earnings-related limb UKMOD applies for the hypothetical case — matches
+        the UKMOD UK_2026 bpact_s exactly.
+  summary: |-
+    Composed Statutory Paternity Pay pipeline for the UKMOD UK_2026 oracle slice
+    at the 2026-27 rates. It exposes a Person-level path from a supplied gross
+    weekly earnings figure to the total Statutory Paternity Pay a recipient
+    receives over the statutory paternity pay period, so an end-to-end UKMOD
+    bpact_s comparison is queryable from earnings alone without the caller
+    resolving the section 171ZA relationship and continuous-employment
+    conditions.
+
+    It reproduces the arithmetic UKMOD UK_2026 applies to a synthetic
+    hypothetical-household paternity case: the recipient qualifies (weekly
+    earnings at or above the lower earnings limit) and is paid the
+    earnings-related rate of 90 per cent of normal weekly earnings across the
+    2-week statutory paternity pay period (s.171ZE). (UKMOD applies the
+    earnings-related rate over the whole period for the HHoT case; the fixed
+    prescribed rate binds only where 90 per cent of weekly earnings falls below
+    it, which is below the lower-earnings-limit floor.)
+
+    The earnings-related percentage, the prescribed weekly rate, the lower
+    earnings limit, and the 2-week paid period are all set by regulations under
+    s.171ZE and are supplied as inputs. It deliberately excludes: the section
+    171ZA/171ZB relationship-with-the-child and continuous-employment conditions
+    (the caller supplies a qualifying recipient); the shared-parental-leave
+    interactions; and the recovery/reimbursement machinery. This pilot pins the
+    2026-27 values.
+rules:
+  - name: uk_spp_pilot_earnings_related_rate
+    kind: derived
+    entity: Person
+    dtype: Number
+    period: Week
+    source: |-
+      Social Security Contributions and Benefits Act 1992 s.171ZE(2); statutory
+      paternity pay is payable at an earnings-related weekly rate as prescribed by
+      regulations. The earnings-related percentage (90 per cent of normal weekly
+      earnings, the same as Statutory Maternity Pay and Maternity Allowance) is
+      set by regulation, so it is supplied as an input. For the UKMOD UK_2026
+      oracle comparison the supplied value is 0.9.
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/171ZE
+              excerpt: "earnings-related weekly rate as may be prescribed"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, uk_spp_pilot_supplied_earnings_related_rate)
+
+  - name: uk_spp_pilot_lower_earnings_limit_weekly
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: |-
+      Social Security Contributions and Benefits Act 1992 s.171ZA(2)(c);
+      statutory paternity pay is payable only where the recipient's normal weekly
+      earnings are not less than the lower earnings limit. The lower earnings
+      limit is set under the National Insurance re-rating machinery, not a numeric
+      value in the primary Act, so it is supplied as an input. For the UKMOD
+      UK_2026 oracle comparison the supplied value is £130.
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/171ZA
+              excerpt: "not less than the lower earnings limit"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, uk_spp_pilot_supplied_lower_earnings_limit_weekly)
+
+  - name: uk_spp_pilot_paternity_pay_period_weeks
+    kind: derived
+    entity: Person
+    dtype: Number
+    period: Week
+    source: |-
+      Social Security Contributions and Benefits Act 1992 s.171ZE(3); statutory
+      paternity pay is payable in respect of a period of two consecutive weeks.
+      The paid duration is supplied as an input for the composed entitlement; for
+      the UKMOD UK_2026 oracle comparison the supplied value is 2 weeks.
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/171ZE
+              excerpt: "a period of two consecutive weeks"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, uk_spp_pilot_supplied_paternity_pay_period_weeks)
+
+  - name: uk_spp_pilot_normal_weekly_earnings
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: |-
+      Social Security Contributions and Benefits Act 1992 s.171ZJ(1); the
+      recipient's normal weekly earnings, supplied as an input so the composed
+      entitlement is queryable without the caller resolving the reference-period
+      averaging rules.
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/171ZJ
+              excerpt: "normal weekly earnings"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, uk_spp_pilot_supplied_normal_weekly_earnings)
+
+  - name: uk_spp_pilot_is_entitled
+    kind: derived
+    entity: Person
+    dtype: Number
+    period: Week
+    source: |-
+      Social Security Contributions and Benefits Act 1992 s.171ZA(2)(c);
+      statutory paternity pay is payable only where normal weekly earnings are
+      not less than the lower earnings limit. Returns 1 when entitled, 0
+      otherwise.
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/171ZA
+              excerpt: "not less than the lower earnings limit"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          if uk_spp_pilot_normal_weekly_earnings >= uk_spp_pilot_lower_earnings_limit_weekly: 1 else: 0
+
+  - name: uk_spp_pilot_weekly_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: |-
+      Social Security Contributions and Benefits Act 1992 s.171ZE; the weekly
+      statutory paternity pay for an entitled recipient is the earnings-related
+      rate applied to normal weekly earnings, which is the rate UKMOD applies
+      across the paternity pay period for the hypothetical case.
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/171ZE
+              excerpt: "earnings-related weekly rate as may be prescribed"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          uk_spp_pilot_is_entitled * uk_spp_pilot_earnings_related_rate * uk_spp_pilot_normal_weekly_earnings
+
+  - name: uk_spp_pilot_total_entitlement
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: |-
+      Social Security Contributions and Benefits Act 1992 s.171ZE; the total
+      statutory paternity pay is the weekly amount paid across the 2-week
+      statutory paternity pay period. This is the amount the UKMOD oracle reports
+      as the annualised bpact_s.
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/171ZE
+              excerpt: "a period of two consecutive weeks"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          uk_spp_pilot_weekly_amount * uk_spp_pilot_paternity_pay_period_weeks

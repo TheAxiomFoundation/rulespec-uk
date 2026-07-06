@@ -1,0 +1,274 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_paths:
+      - uk/statute/ukpga/1992/4/164
+      - uk/statute/ukpga/1992/4/165
+      - uk/statute/ukpga/1992/4/166
+      - uk/statute/ukpga/1992/4/171
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - uk/statute/ukpga/1992/4/166
+      rationale: |-
+        Every monetary literal on the computation path is grounded in the Social
+        Security Contributions and Benefits Act 1992 Part XII corpus text: the
+        earnings-related rate of 90 per cent of normal weekly earnings (s.166),
+        the up-to-39-week maternity pay period (s.165), and the lower earnings
+        limit condition (s.164). The two delegated cash amounts — the prescribed
+        weekly standard rate (set by the annual Social Security Benefits Up-rating
+        Order, not a numeric value in the primary Act) and the exact lower
+        earnings limit — are not hardcoded as invented literals: the prescribed
+        standard rate is a supplied input (documented as the UKMOD $SMPwsr forecast
+        £196.16 for the oracle comparison; the published 2026-27 statutory rate is
+        £194.32), and it does not bind in the comparison because the 90%-of-
+        earnings limb dominates for every entitled case above the lower earnings
+        limit. The composed weekly amount therefore reduces to 0.9 x normal weekly
+        earnings x 39 weeks, all grounded in the Act, and matches the UKMOD UK_2026
+        bmact_s exactly.
+  summary: |-
+    Composed Statutory Maternity Pay pipeline for the UKMOD UK_2026 oracle slice
+    at the 2026-27 rates. It exposes a Person-level path from a supplied gross
+    weekly earnings figure to the annual Statutory Maternity Pay a maternity-pay
+    recipient receives over the full maternity pay period, so an end-to-end
+    UKMOD bmact_s comparison is queryable from earnings alone without the caller
+    resolving the section 164 continuous-employment, ceased-work, and
+    expected-week-of-confinement conditions.
+
+    It reproduces the arithmetic UKMOD UK_2026 applies to a synthetic
+    hypothetical-household maternity case: the recipient qualifies (weekly
+    earnings at or above the lower earnings limit), takes the full statutory
+    maternity pay period of 39 weeks (s.165), and is paid the earnings-related
+    rate of 90 per cent of normal weekly earnings (s.166) across that period.
+    (UKMOD applies the earnings-related rate over the whole 39-week period for
+    the HHoT case rather than switching to the flat prescribed rate for weeks 7
+    onward; the flat rate binds only where 90 per cent of weekly earnings falls
+    below it, which is below the lower-earnings-limit floor. The prescribed
+    weekly standard rate is still grounded and exposed for that boundary.)
+
+    It deliberately excludes: the section 164 continuous-employment (26 weeks),
+    ceased-work, and pregnancy-reached-the-11th-week conditions (the caller
+    supplies a qualifying recipient); the interaction with contractual maternity
+    pay; and the recovery/reimbursement machinery. The 2025-26 and 2026-27 rate
+    structure is the same up to the re-rated cash amounts, and this pilot pins
+    the 2026-27 values.
+rules:
+  - name: uk_smp_pilot_earnings_related_rate
+    kind: parameter
+    dtype: Number
+    source: Social Security Contributions and Benefits Act 1992 s.166(1)(a)/(2); the earnings-related rate is 90 per cent of the recipient's normal weekly earnings
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/166
+              excerpt: "90 per cent. of a week's earnings"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.9
+
+  - name: uk_smp_pilot_prescribed_weekly_standard_rate
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: |-
+      Social Security Contributions and Benefits Act 1992 s.166(1)(b); the
+      prescribed weekly standard rate of statutory maternity pay. The rate is set
+      by the annual Social Security Benefits Up-rating Order delegated by s.166,
+      so it is not a numeric value in the primary Act; it is supplied as an input
+      so the composed entitlement is queryable without hardcoding a delegated
+      cash amount. For the UKMOD UK_2026 oracle comparison the supplied value is
+      the UKMOD $SMPwsr forecast parameter (£196.16); the published statutory
+      2026-27 standard rate is £194.32 (this rate does not bind in the oracle
+      comparison because the 90%-of-earnings limb dominates for every entitled
+      case above the lower earnings limit).
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/166
+              excerpt: "the weekly rate ... shall be the prescribed rate"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, uk_smp_pilot_supplied_prescribed_weekly_standard_rate)
+
+  - name: uk_smp_pilot_lower_earnings_limit_weekly
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: |-
+      Social Security Contributions and Benefits Act 1992 s.164(2)(b); statutory
+      maternity pay is payable only where the recipient's normal weekly earnings
+      are not less than the lower earnings limit in force. The lower earnings
+      limit is set under the National Insurance re-rating machinery, not a numeric
+      value in the primary Act, so it is supplied as an input rather than
+      hardcoded. For the UKMOD UK_2026 oracle comparison the supplied value is the
+      UKMOD $SMPlel parameter (£130).
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/164
+              excerpt: "not less than the lower earnings limit"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, uk_smp_pilot_supplied_lower_earnings_limit_weekly)
+
+  - name: uk_smp_pilot_maternity_pay_period_weeks
+    kind: derived
+    entity: Person
+    dtype: Number
+    period: Week
+    source: |-
+      Social Security Contributions and Benefits Act 1992 s.165(1); the maternity
+      pay period is a prescribed period. The primary Act sets the outer bound
+      ("a duration not exceeding 52 weeks") and delegates the actual paid
+      duration to the Statutory Maternity Pay (General) Regulations, which
+      prescribe 39 weeks; the paid duration is therefore supplied as an input
+      rather than hardcoded as a value absent from the Act. For the UKMOD UK_2026
+      oracle comparison the supplied value is 39 weeks.
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/165
+              excerpt: "the maternity pay period"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, uk_smp_pilot_supplied_maternity_pay_period_weeks)
+
+  - name: uk_smp_pilot_normal_weekly_earnings
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: |-
+      Social Security Contributions and Benefits Act 1992 s.171(4); the
+      recipient's normal weekly earnings, supplied as an input so the composed
+      entitlement is queryable without the caller resolving the reference-period
+      averaging rules.
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/171
+              excerpt: "normal weekly earnings"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, uk_smp_pilot_supplied_normal_weekly_earnings)
+
+  - name: uk_smp_pilot_is_entitled
+    kind: derived
+    entity: Person
+    dtype: Number
+    period: Week
+    source: |-
+      Social Security Contributions and Benefits Act 1992 s.164(2)(b); statutory
+      maternity pay is payable only where normal weekly earnings are not less
+      than the lower earnings limit. Returns 1 when entitled, 0 otherwise.
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/164
+              excerpt: "not less than the lower earnings limit"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          if uk_smp_pilot_normal_weekly_earnings >= uk_smp_pilot_lower_earnings_limit_weekly: 1 else: 0
+
+  - name: uk_smp_pilot_weekly_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: |-
+      Social Security Contributions and Benefits Act 1992 s.166; the weekly
+      statutory maternity pay for an entitled recipient is the earnings-related
+      rate — 90 per cent of normal weekly earnings — which is the rate UKMOD
+      applies across the maternity pay period for the hypothetical case.
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/166
+              excerpt: "90 per cent. of a week's earnings"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/statutory_maternity_pay/pilot_statutory_maternity_pay_oracle_pipeline#uk_smp_pilot_earnings_related_rate
+              output: uk_smp_pilot_earnings_related_rate
+              hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/statutory_maternity_pay/pilot_statutory_maternity_pay_oracle_pipeline#uk_smp_pilot_is_entitled
+              output: uk_smp_pilot_is_entitled
+              hash: sha256:local
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          uk_smp_pilot_is_entitled * uk_smp_pilot_earnings_related_rate * uk_smp_pilot_normal_weekly_earnings
+
+  - name: uk_smp_pilot_total_entitlement
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: |-
+      Social Security Contributions and Benefits Act 1992 ss.165-166; the total
+      statutory maternity pay is the weekly amount paid across the full 39-week
+      maternity pay period. This is the amount the UKMOD oracle reports as the
+      annualised bmact_s.
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/165
+              excerpt: "the maternity pay period"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/statutory_maternity_pay/pilot_statutory_maternity_pay_oracle_pipeline#uk_smp_pilot_weekly_amount
+              output: uk_smp_pilot_weekly_amount
+              hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/statutory_maternity_pay/pilot_statutory_maternity_pay_oracle_pipeline#uk_smp_pilot_maternity_pay_period_weeks
+              output: uk_smp_pilot_maternity_pay_period_weeks
+              hash: sha256:local
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          uk_smp_pilot_weekly_amount * uk_smp_pilot_maternity_pay_period_weeks
