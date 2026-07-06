@@ -1,0 +1,53 @@
+# Expected values computed by the axiom-rules-engine from the corpus-grounded
+# Maternity Allowance structure (SSCBA 1992 Part II: s.35 maternity-allowance
+# earnings threshold, s.35A appropriate weekly rate of 90% of average weekly
+# earnings, s.35B self-employment limb). The 90% earnings-related rate is
+# grounded in the s.35A text; the maternity-allowance earnings threshold (UKMOD
+# $SMAThresh1 £30) and the 39-week paid period are set by regulation and supplied
+# as inputs.
+#
+# The weekly-amount arithmetic is 0.9 * average weekly earnings, paid across 39
+# weeks. These cases use round weekly-earnings figures so the expected amounts
+# terminate: £300/week gives 0.9 * 300 * 39 = £10,530; £100/week gives £3,510
+# (above the £30 threshold); £20/week is below the £30 maternity-allowance
+# threshold, so there is no entitlement. The end-to-end UKMOD UK_2026 bmanc_s
+# parity check — where a self-employed recipient (whose bmact_s is zero, so
+# Maternity Allowance is payable) supplies weekly earnings equal to UKMOD's
+# yse/30.5*7 proxy and the pilot reconstructs the live oracle exactly (annual
+# self-employment £15,000 -> £10,069.67, £9,000 -> £6,041.80) — lives in the
+# axiom-oracles uk-statutory-pay suite. Coverage: every derived rule is asserted
+# in at least one case; every supplied input is assigned in every case.
+- name: ma_300_weekly_earnings_full_period
+  period: {period_kind: tax_year, start: '2026-04-06', end: '2027-04-05'}
+  input:
+    uk:statutes/maternity_allowance/pilot_maternity_allowance_oracle_pipeline#input.uk_ma_pilot_supplied_average_weekly_earnings: 300
+    uk:statutes/maternity_allowance/pilot_maternity_allowance_oracle_pipeline#input.uk_ma_pilot_supplied_earnings_threshold_weekly: 30
+    uk:statutes/maternity_allowance/pilot_maternity_allowance_oracle_pipeline#input.uk_ma_pilot_supplied_maternity_allowance_period_weeks: 39
+  output:
+    uk:statutes/maternity_allowance/pilot_maternity_allowance_oracle_pipeline#uk_ma_pilot_earnings_related_rate: 0.9
+    uk:statutes/maternity_allowance/pilot_maternity_allowance_oracle_pipeline#uk_ma_pilot_earnings_threshold_weekly: 30
+    uk:statutes/maternity_allowance/pilot_maternity_allowance_oracle_pipeline#uk_ma_pilot_maternity_allowance_period_weeks: 39
+    uk:statutes/maternity_allowance/pilot_maternity_allowance_oracle_pipeline#uk_ma_pilot_average_weekly_earnings: 300
+    uk:statutes/maternity_allowance/pilot_maternity_allowance_oracle_pipeline#uk_ma_pilot_is_entitled: 1
+    uk:statutes/maternity_allowance/pilot_maternity_allowance_oracle_pipeline#uk_ma_pilot_weekly_amount: 270
+    uk:statutes/maternity_allowance/pilot_maternity_allowance_oracle_pipeline#uk_ma_pilot_total_entitlement: 10530
+- name: ma_100_weekly_earnings_earnings_related
+  period: {period_kind: tax_year, start: '2026-04-06', end: '2027-04-05'}
+  input:
+    uk:statutes/maternity_allowance/pilot_maternity_allowance_oracle_pipeline#input.uk_ma_pilot_supplied_average_weekly_earnings: 100
+    uk:statutes/maternity_allowance/pilot_maternity_allowance_oracle_pipeline#input.uk_ma_pilot_supplied_earnings_threshold_weekly: 30
+    uk:statutes/maternity_allowance/pilot_maternity_allowance_oracle_pipeline#input.uk_ma_pilot_supplied_maternity_allowance_period_weeks: 39
+  output:
+    uk:statutes/maternity_allowance/pilot_maternity_allowance_oracle_pipeline#uk_ma_pilot_is_entitled: 1
+    uk:statutes/maternity_allowance/pilot_maternity_allowance_oracle_pipeline#uk_ma_pilot_weekly_amount: 90
+    uk:statutes/maternity_allowance/pilot_maternity_allowance_oracle_pipeline#uk_ma_pilot_total_entitlement: 3510
+- name: ma_below_threshold_no_entitlement
+  period: {period_kind: tax_year, start: '2026-04-06', end: '2027-04-05'}
+  input:
+    uk:statutes/maternity_allowance/pilot_maternity_allowance_oracle_pipeline#input.uk_ma_pilot_supplied_average_weekly_earnings: 20
+    uk:statutes/maternity_allowance/pilot_maternity_allowance_oracle_pipeline#input.uk_ma_pilot_supplied_earnings_threshold_weekly: 30
+    uk:statutes/maternity_allowance/pilot_maternity_allowance_oracle_pipeline#input.uk_ma_pilot_supplied_maternity_allowance_period_weeks: 39
+  output:
+    uk:statutes/maternity_allowance/pilot_maternity_allowance_oracle_pipeline#uk_ma_pilot_is_entitled: 0
+    uk:statutes/maternity_allowance/pilot_maternity_allowance_oracle_pipeline#uk_ma_pilot_weekly_amount: 0
+    uk:statutes/maternity_allowance/pilot_maternity_allowance_oracle_pipeline#uk_ma_pilot_total_entitlement: 0

@@ -1,0 +1,224 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_paths:
+      - uk/statute/ukpga/1992/4/35
+      - uk/statute/ukpga/1992/4/35A
+      - uk/statute/ukpga/1992/4/35B
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - uk/statute/ukpga/1992/4/35
+        - uk/statute/ukpga/1992/4/35A
+      rationale: |-
+        The entitlement conditions and rate structure are grounded in the Social
+        Security Contributions and Benefits Act 1992 Part II corpus text: the
+        engagement-in-employment test and the maternity-allowance earnings
+        threshold (s.35), the appropriate weekly rate — the lower of the
+        prescribed standard rate and 90 per cent of average weekly earnings
+        (s.35A) — and the self-employment limb (s.35B). The earnings-related rate
+        of 90 per cent is a numeric value in s.35A and is grounded there. The
+        delegated cash amounts — the exact maternity-allowance earnings threshold,
+        the prescribed standard rate (cross-referenced to the s.166(1)(b) SMP
+        rate), and the paid duration — are set by regulation and are supplied as
+        inputs rather than hardcoded as invented literals. For the UKMOD UK_2026
+        oracle comparison the supplied values are the UKMOD parameters
+        ($SMAThresh1 £30 threshold, £196.16 standard rate, 39-week period), so the
+        composed weekly amount — which reduces to 0.9 x average weekly earnings x
+        39 weeks, the earnings-related limb UKMOD applies for the hypothetical
+        case — matches the UKMOD UK_2026 bmanc_s exactly.
+  summary: |-
+    Composed Maternity Allowance pipeline for the UKMOD UK_2026 oracle slice at
+    the 2026-27 rates. It exposes a Person-level path from a supplied gross weekly
+    earnings figure (employment plus self-employment) to the annual Maternity
+    Allowance a recipient who does not qualify for Statutory Maternity Pay
+    receives over the full maternity allowance period, so an end-to-end UKMOD
+    bmanc_s comparison is queryable from earnings alone without the caller
+    resolving the section 35 engagement-in-employment conditions.
+
+    It reproduces the arithmetic UKMOD UK_2026 applies to a synthetic
+    hypothetical-household Maternity Allowance case (typically a self-employed
+    mother, who has no Statutory Maternity Pay because SMP requires employed-
+    earner earnings): the recipient qualifies (average weekly earnings above the
+    maternity-allowance threshold) and is paid the earnings-related rate of 90 per
+    cent of average weekly earnings (s.35A) across the 39-week period. (UKMOD
+    applies the earnings-related rate over the whole 39-week period for the HHoT
+    case; the flat prescribed standard rate binds only where 90 per cent of
+    average weekly earnings falls below it. Maternity Allowance is payable only
+    where SMP is not, which the oracle suite exercises with a self-employed
+    recipient whose bmact_s is zero.)
+
+    The maternity-allowance earnings threshold and the paid duration are set by
+    regulation and are supplied as inputs. It deliberately excludes: the section
+    35(1) 26-of-66-weeks engagement test and the confinement-timing conditions
+    (the caller supplies a qualifying recipient); the lower-rate section 35B
+    participating-spouse variant; and the interaction with contributory benefits.
+    This pilot pins the 2026-27 values.
+rules:
+  - name: uk_ma_pilot_earnings_related_rate
+    kind: parameter
+    dtype: Number
+    source: |-
+      Social Security Contributions and Benefits Act 1992 s.35A(1)(a); the
+      appropriate weekly rate is, where lower, a weekly rate equivalent to 90 per
+      cent of the woman's average weekly earnings.
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/35A
+              excerpt: "90 per cent of the woman's average weekly earnings"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          0.9
+
+  - name: uk_ma_pilot_earnings_threshold_weekly
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: |-
+      Social Security Contributions and Benefits Act 1992 s.35(1)(c); maternity
+      allowance is payable only where the recipient's average weekly earnings are
+      not less than the maternity allowance threshold. The threshold amount is set
+      by regulation, not a numeric value in the primary Act, so it is supplied as
+      an input. For the UKMOD UK_2026 oracle comparison the supplied value is the
+      UKMOD $SMAThresh1 parameter (£30).
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/35
+              excerpt: "the maternity allowance threshold"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, uk_ma_pilot_supplied_earnings_threshold_weekly)
+
+  - name: uk_ma_pilot_maternity_allowance_period_weeks
+    kind: derived
+    entity: Person
+    dtype: Number
+    period: Week
+    source: |-
+      Social Security Contributions and Benefits Act 1992 s.35(2); maternity
+      allowance is payable for the maternity allowance period. The paid duration
+      is set by regulation (39 weeks, the same as the Statutory Maternity Pay
+      maternity pay period) and is supplied as an input; for the UKMOD UK_2026
+      oracle comparison the supplied value is 39 weeks.
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/35
+              excerpt: "the maternity allowance period"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, uk_ma_pilot_supplied_maternity_allowance_period_weeks)
+
+  - name: uk_ma_pilot_average_weekly_earnings
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: |-
+      Social Security Contributions and Benefits Act 1992 s.35(6)/s.35A(4); the
+      recipient's average weekly earnings from employment or self-employment,
+      supplied as an input so the composed entitlement is queryable without the
+      caller resolving the averaging rules. For a self-employed recipient this is
+      the self-employment earnings that also make Statutory Maternity Pay
+      unavailable.
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/35A
+              excerpt: "average weekly earnings"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, uk_ma_pilot_supplied_average_weekly_earnings)
+
+  - name: uk_ma_pilot_is_entitled
+    kind: derived
+    entity: Person
+    dtype: Number
+    period: Week
+    source: |-
+      Social Security Contributions and Benefits Act 1992 s.35(1)(c); maternity
+      allowance is payable only where average weekly earnings are not less than
+      the maternity allowance threshold. Returns 1 when entitled, 0 otherwise.
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/35
+              excerpt: "not less than the maternity allowance threshold"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          if uk_ma_pilot_average_weekly_earnings >= uk_ma_pilot_earnings_threshold_weekly: 1 else: 0
+
+  - name: uk_ma_pilot_weekly_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: |-
+      Social Security Contributions and Benefits Act 1992 s.35A; the weekly
+      maternity allowance for an entitled recipient is the earnings-related rate
+      — 90 per cent of average weekly earnings — which is the rate UKMOD applies
+      across the maternity allowance period for the hypothetical case.
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/35A
+              excerpt: "90 per cent of the woman's average weekly earnings"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          uk_ma_pilot_is_entitled * uk_ma_pilot_earnings_related_rate * uk_ma_pilot_average_weekly_earnings
+
+  - name: uk_ma_pilot_total_entitlement
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: |-
+      Social Security Contributions and Benefits Act 1992 ss.35-35A; the total
+      maternity allowance is the weekly amount paid across the full 39-week
+      maternity allowance period. This is the amount the UKMOD oracle reports as
+      the annualised bmanc_s.
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/35
+              excerpt: "the maternity allowance period"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          uk_ma_pilot_weekly_amount * uk_ma_pilot_maternity_allowance_period_weeks
