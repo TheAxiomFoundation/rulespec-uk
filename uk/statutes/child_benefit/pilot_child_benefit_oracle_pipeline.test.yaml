@@ -7,6 +7,15 @@
 # same weekly rates over UKMOD's 52.14-week convention; the ~0.27% convention
 # residual is dispositioned as an explained residual in that suite. Coverage:
 # every derived rule is asserted in at least one case.
+#
+# The High Income Child Benefit Charge cases (ITEPA 2003 ss.681B-681C) cross the
+# taper at a supplied adjusted net income of £20,000 (below the £60,000
+# threshold, no charge), £70,000 (mid-taper, 50 appropriate-percentage points,
+# 0.5 charged fraction), £80,000 (the full-clawback point, 100 points, fraction
+# 1), and £90,000 (past it, 150 uncapped points but the fraction still caps at
+# 1), matching the axiom-oracles uk-child-benefit income sweep. The charge amount
+# is floor(charged_fraction * gross) and net Child Benefit is gross - charge,
+# both grounded in s.681C(2)-(3).
 - name: one_child_takes_the_enhanced_rate
   period: {period_kind: tax_year, start: '2026-04-06', end: '2027-04-05'}
   input:
@@ -51,3 +60,63 @@
     uk:statutes/child_benefit/pilot_child_benefit_oracle_pipeline#uk_cb_pilot_number_of_other_children: 0
     uk:statutes/child_benefit/pilot_child_benefit_oracle_pipeline#uk_cb_pilot_weekly_entitlement: 0
     uk:statutes/child_benefit/pilot_child_benefit_oracle_pipeline#uk_cb_pilot_annual_entitlement: 0
+- name: hicbc_one_child_below_threshold_no_charge
+  period: {period_kind: tax_year, start: '2026-04-06', end: '2027-04-05'}
+  input:
+    uk:statutes/child_benefit/pilot_child_benefit_oracle_pipeline#input.uk_cb_pilot_supplied_number_of_children: 1
+    uk:statutes/child_benefit/pilot_child_benefit_oracle_pipeline#input.uk_cb_pilot_supplied_adjusted_net_income: 20000
+  output:
+    uk:statutes/child_benefit/pilot_child_benefit_oracle_pipeline#uk_cb_pilot_hicbc_income_threshold: 60000
+    uk:statutes/child_benefit/pilot_child_benefit_oracle_pipeline#uk_cb_pilot_hicbc_taper_step: 200
+    uk:statutes/child_benefit/pilot_child_benefit_oracle_pipeline#uk_cb_pilot_hicbc_taper_rate_per_step: 0.01
+    uk:statutes/child_benefit/pilot_child_benefit_oracle_pipeline#uk_cb_pilot_adjusted_net_income: 20000
+    uk:statutes/child_benefit/pilot_child_benefit_oracle_pipeline#uk_cb_pilot_hicbc_appropriate_percentage_points: 0
+    uk:statutes/child_benefit/pilot_child_benefit_oracle_pipeline#uk_cb_pilot_hicbc_charge: 0
+    uk:statutes/child_benefit/pilot_child_benefit_oracle_pipeline#uk_cb_pilot_annual_entitlement_net_of_charge: 1406.6
+- name: hicbc_one_child_mid_taper_half_clawback
+  period: {period_kind: tax_year, start: '2026-04-06', end: '2027-04-05'}
+  input:
+    uk:statutes/child_benefit/pilot_child_benefit_oracle_pipeline#input.uk_cb_pilot_supplied_number_of_children: 1
+    uk:statutes/child_benefit/pilot_child_benefit_oracle_pipeline#input.uk_cb_pilot_supplied_adjusted_net_income: 70000
+  output:
+    uk:statutes/child_benefit/pilot_child_benefit_oracle_pipeline#uk_cb_pilot_hicbc_appropriate_percentage_points: 50
+    uk:statutes/child_benefit/pilot_child_benefit_oracle_pipeline#uk_cb_pilot_hicbc_charged_fraction: 0.5
+    uk:statutes/child_benefit/pilot_child_benefit_oracle_pipeline#uk_cb_pilot_hicbc_charge: 703
+    uk:statutes/child_benefit/pilot_child_benefit_oracle_pipeline#uk_cb_pilot_annual_entitlement_net_of_charge: 703.6
+- name: hicbc_one_child_full_clawback_at_eighty_thousand
+  period: {period_kind: tax_year, start: '2026-04-06', end: '2027-04-05'}
+  input:
+    uk:statutes/child_benefit/pilot_child_benefit_oracle_pipeline#input.uk_cb_pilot_supplied_number_of_children: 1
+    uk:statutes/child_benefit/pilot_child_benefit_oracle_pipeline#input.uk_cb_pilot_supplied_adjusted_net_income: 80000
+  output:
+    uk:statutes/child_benefit/pilot_child_benefit_oracle_pipeline#uk_cb_pilot_hicbc_appropriate_percentage_points: 100
+    uk:statutes/child_benefit/pilot_child_benefit_oracle_pipeline#uk_cb_pilot_hicbc_charge: 1406
+    uk:statutes/child_benefit/pilot_child_benefit_oracle_pipeline#uk_cb_pilot_annual_entitlement_net_of_charge: 0.6
+- name: hicbc_one_child_past_full_clawback_capped_at_hundred
+  period: {period_kind: tax_year, start: '2026-04-06', end: '2027-04-05'}
+  input:
+    uk:statutes/child_benefit/pilot_child_benefit_oracle_pipeline#input.uk_cb_pilot_supplied_number_of_children: 1
+    uk:statutes/child_benefit/pilot_child_benefit_oracle_pipeline#input.uk_cb_pilot_supplied_adjusted_net_income: 90000
+  output:
+    uk:statutes/child_benefit/pilot_child_benefit_oracle_pipeline#uk_cb_pilot_hicbc_appropriate_percentage_points: 150
+    uk:statutes/child_benefit/pilot_child_benefit_oracle_pipeline#uk_cb_pilot_hicbc_charged_fraction: 1
+    uk:statutes/child_benefit/pilot_child_benefit_oracle_pipeline#uk_cb_pilot_hicbc_charge: 1406
+    uk:statutes/child_benefit/pilot_child_benefit_oracle_pipeline#uk_cb_pilot_annual_entitlement_net_of_charge: 0.6
+- name: hicbc_two_children_mid_taper
+  period: {period_kind: tax_year, start: '2026-04-06', end: '2027-04-05'}
+  input:
+    uk:statutes/child_benefit/pilot_child_benefit_oracle_pipeline#input.uk_cb_pilot_supplied_number_of_children: 2
+    uk:statutes/child_benefit/pilot_child_benefit_oracle_pipeline#input.uk_cb_pilot_supplied_adjusted_net_income: 70000
+  output:
+    uk:statutes/child_benefit/pilot_child_benefit_oracle_pipeline#uk_cb_pilot_hicbc_appropriate_percentage_points: 50
+    uk:statutes/child_benefit/pilot_child_benefit_oracle_pipeline#uk_cb_pilot_hicbc_charge: 1168
+    uk:statutes/child_benefit/pilot_child_benefit_oracle_pipeline#uk_cb_pilot_annual_entitlement_net_of_charge: 1169.4
+- name: hicbc_three_children_mid_taper
+  period: {period_kind: tax_year, start: '2026-04-06', end: '2027-04-05'}
+  input:
+    uk:statutes/child_benefit/pilot_child_benefit_oracle_pipeline#input.uk_cb_pilot_supplied_number_of_children: 3
+    uk:statutes/child_benefit/pilot_child_benefit_oracle_pipeline#input.uk_cb_pilot_supplied_adjusted_net_income: 70000
+  output:
+    uk:statutes/child_benefit/pilot_child_benefit_oracle_pipeline#uk_cb_pilot_hicbc_appropriate_percentage_points: 50
+    uk:statutes/child_benefit/pilot_child_benefit_oracle_pipeline#uk_cb_pilot_hicbc_charge: 1634
+    uk:statutes/child_benefit/pilot_child_benefit_oracle_pipeline#uk_cb_pilot_annual_entitlement_net_of_charge: 1634.2
