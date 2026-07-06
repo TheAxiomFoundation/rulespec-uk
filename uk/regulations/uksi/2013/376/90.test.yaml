@@ -1,0 +1,122 @@
+- name: person_section_20_apprentice_and_minimum_income_floor_paths_apply
+  period: 2026-04
+  input:
+    uk:regulations/uksi/2013/376/90#input.earned_income_fluctuates_or_is_likely_to_fluctuate: false
+    uk:regulations/uksi/2013/376/90#input.monthly_average_earned_income_before_deductions: 0
+    uk:regulations/uksi/2013/376/90#input.earned_income_from_ceased_employment_disregarded_for_monthly_earnings: 0
+    uk:regulations/uksi/2013/376/90#input.earned_income_current_assessment_period_before_deductions: 1000
+    uk:regulations/uksi/2013/376/90#input.claimant_would_otherwise_fall_within_section_20_or_21: true
+    uk:regulations/uksi/2013/376/90#input.claimant_would_otherwise_fall_within_section_22: false
+    ? uk:regulations/uksi/2013/376/90#input.national_minimum_wage_hourly_rate_applicable_to_claimant_under_regulation_4_or_4A_1_a_to_c
+    : 12
+    uk:regulations/uksi/2013/376/90#input.expected_hours_per_week_for_claimant: 20
+    uk:regulations/uksi/2013/376/90#input.claimant_is_employed_under_contract_of_apprenticeship: true
+    uk:regulations/uksi/2013/376/90#input.national_minimum_wage_apprentice_hourly_rate_under_regulation_4A_1_d: 9
+    uk:regulations/uksi/2013/376/90#input.claimant_is_treated_as_having_earned_income_in_accordance_with_regulation_62: true
+  output:
+    uk:regulations/uksi/2013/376/90#claimant_monthly_earnings: 1000
+    uk:regulations/uksi/2013/376/90#claimant_has_individual_threshold: holds
+    uk:regulations/uksi/2013/376/90#claimant_individual_threshold: 832
+    uk:regulations/uksi/2013/376/90#claimant_falls_within_section_19_by_individual_threshold: holds
+    uk:regulations/uksi/2013/376/90#apprentice_threshold: 780
+    uk:regulations/uksi/2013/376/90#claimant_falls_within_section_19_by_apprenticeship_threshold: holds
+    uk:regulations/uksi/2013/376/90#claimant_falls_within_section_19_by_minimum_income_floor: holds
+- name: person_section_22_fluctuating_average_below_threshold
+  period: 2026-04
+  input:
+    uk:regulations/uksi/2013/376/90#input.earned_income_fluctuates_or_is_likely_to_fluctuate: true
+    uk:regulations/uksi/2013/376/90#input.monthly_average_earned_income_before_deductions: 2000
+    uk:regulations/uksi/2013/376/90#input.earned_income_from_ceased_employment_disregarded_for_monthly_earnings: 100
+    uk:regulations/uksi/2013/376/90#input.earned_income_current_assessment_period_before_deductions: 3000
+    uk:regulations/uksi/2013/376/90#input.claimant_would_otherwise_fall_within_section_20_or_21: false
+    uk:regulations/uksi/2013/376/90#input.claimant_would_otherwise_fall_within_section_22: true
+    ? uk:regulations/uksi/2013/376/90#input.national_minimum_wage_hourly_rate_applicable_to_claimant_under_regulation_4_or_4A_1_a_to_c
+    : 12
+    uk:regulations/uksi/2013/376/90#input.expected_hours_per_week_for_claimant: 40
+    uk:regulations/uksi/2013/376/90#input.claimant_is_employed_under_contract_of_apprenticeship: false
+    uk:regulations/uksi/2013/376/90#input.national_minimum_wage_apprentice_hourly_rate_under_regulation_4A_1_d: 9
+    uk:regulations/uksi/2013/376/90#input.claimant_is_treated_as_having_earned_income_in_accordance_with_regulation_62: false
+  output:
+    uk:regulations/uksi/2013/376/90#claimant_monthly_earnings: 1900
+    uk:regulations/uksi/2013/376/90#claimant_has_individual_threshold: holds
+    uk:regulations/uksi/2013/376/90#claimant_individual_threshold: 2080
+    uk:regulations/uksi/2013/376/90#claimant_falls_within_section_19_by_individual_threshold: not_holds
+    uk:regulations/uksi/2013/376/90#claimant_falls_within_section_19_by_apprenticeship_threshold: not_holds
+    uk:regulations/uksi/2013/376/90#claimant_falls_within_section_19_by_minimum_income_floor: not_holds
+- name: person_without_otherwise_work_related_requirement_has_no_individual_threshold
+  period: 2026-04
+  input:
+    uk:regulations/uksi/2013/376/90#input.earned_income_fluctuates_or_is_likely_to_fluctuate: false
+    uk:regulations/uksi/2013/376/90#input.monthly_average_earned_income_before_deductions: 0
+    uk:regulations/uksi/2013/376/90#input.earned_income_from_ceased_employment_disregarded_for_monthly_earnings: 0
+    uk:regulations/uksi/2013/376/90#input.earned_income_current_assessment_period_before_deductions: 1000
+    uk:regulations/uksi/2013/376/90#input.claimant_would_otherwise_fall_within_section_20_or_21: false
+    uk:regulations/uksi/2013/376/90#input.claimant_would_otherwise_fall_within_section_22: false
+    ? uk:regulations/uksi/2013/376/90#input.national_minimum_wage_hourly_rate_applicable_to_claimant_under_regulation_4_or_4A_1_a_to_c
+    : 12
+    uk:regulations/uksi/2013/376/90#input.expected_hours_per_week_for_claimant: 40
+  output:
+    uk:regulations/uksi/2013/376/90#claimant_has_individual_threshold: not_holds
+    uk:regulations/uksi/2013/376/90#claimant_individual_threshold: 0
+    uk:regulations/uksi/2013/376/90#claimant_falls_within_section_19_by_individual_threshold: not_holds
+- name: couple_claiming_as_single_by_regulation_3_3_meets_combined_threshold
+  period: 2026-04
+  input:
+    uk:regulations/uksi/2013/376/90#input.claimant_is_member_of_couple: true
+    uk:regulations/uksi/2013/376/90#input.claim_is_for_joint_claimants: false
+    uk:regulations/uksi/2013/376/90#input.claimant_claims_universal_credit_as_single_person_by_virtue_of_regulation_3_3: true
+    uk:regulations/uksi/2013/376/90#input.couple_combined_monthly_earnings: 3000
+    uk:regulations/uksi/2013/376/90#input.claimant_individual_threshold_for_couple_claim: 900
+    uk:regulations/uksi/2013/376/90#input.other_joint_claimant_individual_threshold_for_couple_claim: 800
+    ? uk:regulations/uksi/2013/376/90#input.national_minimum_wage_hourly_rate_specified_in_regulation_4_for_regulation_3_3_partner_threshold
+    : 12
+  output:
+    uk:regulations/uksi/2013/376/90#regulation_3_3_partner_threshold: 1820
+    uk:regulations/uksi/2013/376/90#joint_claimants_combined_individual_threshold: 1700
+    uk:regulations/uksi/2013/376/90#couple_combined_earnings_threshold: 2720
+    uk:regulations/uksi/2013/376/90#couple_threshold_branch_applies: holds
+    uk:regulations/uksi/2013/376/90#claimant_falls_within_section_19_by_couple_combined_threshold: holds
+- name: joint_claim_threshold_branch_inoperative_when_claimant_not_member_of_couple
+  period: 2026-04
+  input:
+    uk:regulations/uksi/2013/376/90#input.claimant_is_member_of_couple: false
+    uk:regulations/uksi/2013/376/90#input.claim_is_for_joint_claimants: true
+    uk:regulations/uksi/2013/376/90#input.claimant_claims_universal_credit_as_single_person_by_virtue_of_regulation_3_3: false
+    uk:regulations/uksi/2013/376/90#input.couple_combined_monthly_earnings: 2000
+    uk:regulations/uksi/2013/376/90#input.claimant_individual_threshold_for_couple_claim: 900
+    uk:regulations/uksi/2013/376/90#input.other_joint_claimant_individual_threshold_for_couple_claim: 800
+    ? uk:regulations/uksi/2013/376/90#input.national_minimum_wage_hourly_rate_specified_in_regulation_4_for_regulation_3_3_partner_threshold
+    : 12
+  output:
+    uk:regulations/uksi/2013/376/90#joint_claimants_combined_individual_threshold: 1700
+    uk:regulations/uksi/2013/376/90#couple_combined_earnings_threshold: 1700
+    uk:regulations/uksi/2013/376/90#couple_threshold_branch_applies: holds
+    uk:regulations/uksi/2013/376/90#claimant_falls_within_section_19_by_couple_combined_threshold: not_holds
+- name: auto_zero_couple_combined_earnings_threshold
+  period:
+    period_kind: tax_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:regulations/uksi/2013/376/90#input.claim_is_for_joint_claimants: false
+    uk:regulations/uksi/2013/376/90#input.claimant_claims_universal_credit_as_single_person_by_virtue_of_regulation_3_3: false
+    uk:regulations/uksi/2013/376/90#input.claimant_individual_threshold_for_couple_claim: 0
+    uk:regulations/uksi/2013/376/90#input.claimant_is_employed_under_contract_of_apprenticeship: false
+    uk:regulations/uksi/2013/376/90#input.claimant_is_member_of_couple: false
+    uk:regulations/uksi/2013/376/90#input.claimant_is_treated_as_having_earned_income_in_accordance_with_regulation_62: false
+    uk:regulations/uksi/2013/376/90#input.claimant_would_otherwise_fall_within_section_20_or_21: false
+    uk:regulations/uksi/2013/376/90#input.claimant_would_otherwise_fall_within_section_22: false
+    uk:regulations/uksi/2013/376/90#input.couple_combined_monthly_earnings: 0
+    uk:regulations/uksi/2013/376/90#input.earned_income_current_assessment_period_before_deductions: 0
+    uk:regulations/uksi/2013/376/90#input.earned_income_fluctuates_or_is_likely_to_fluctuate: false
+    uk:regulations/uksi/2013/376/90#input.earned_income_from_ceased_employment_disregarded_for_monthly_earnings: 0
+    uk:regulations/uksi/2013/376/90#input.expected_hours_per_week_for_claimant: 0
+    uk:regulations/uksi/2013/376/90#input.monthly_average_earned_income_before_deductions: 0
+    uk:regulations/uksi/2013/376/90#input.national_minimum_wage_apprentice_hourly_rate_under_regulation_4A_1_d: 0
+    ? uk:regulations/uksi/2013/376/90#input.national_minimum_wage_hourly_rate_applicable_to_claimant_under_regulation_4_or_4A_1_a_to_c
+    : 0
+    ? uk:regulations/uksi/2013/376/90#input.national_minimum_wage_hourly_rate_specified_in_regulation_4_for_regulation_3_3_partner_threshold
+    : 0
+    uk:regulations/uksi/2013/376/90#input.other_joint_claimant_individual_threshold_for_couple_claim: 0
+  output:
+    uk:regulations/uksi/2013/376/90#couple_combined_earnings_threshold: 0

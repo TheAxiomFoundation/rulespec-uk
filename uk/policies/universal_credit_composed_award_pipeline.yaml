@@ -10,8 +10,12 @@ module:
       - uk/regulation/uksi/2013/376/34
       - uk/regulation/uksi/2013/376/36
       - uk/regulation/uksi/2013/376/72
+      - uk/regulation/uksi/2013/376/62
       - uk/regulation/uksi/2013/376/80A
+      - uk/regulation/uksi/2013/376/88
+      - uk/regulation/uksi/2013/376/90
       - uk/regulation/uksi/2013/376/schedule/4/paragraph/14
+      - uk/regulation/uksi/2015/621/4
     upstream_source_check:
       status: official_parameter_source
       checked_paths:
@@ -29,8 +33,12 @@ module:
         reimbursement rate is in regulation 34; the capital tariff-income
         thresholds (6,000 lower / 250 band / 4.35 per band) are in regulation
         72 with the 16,000 upper limit in regulation 18; the benefit-cap
-        annual limits are in regulation 80A; and the 96.55 non-dependant
-        housing-cost contribution is in Schedule 4 paragraph 14. The pilot
+        annual limits are in regulation 80A; the 96.55 non-dependant
+        housing-cost contribution is in Schedule 4 paragraph 14; and the
+        minimum-income-floor rate (the 12.71 national living wage rate in the
+        National Minimum Wage Regulations 2015 regulation 4, the 35 expected
+        hours in regulation 88, and the 52/12 monthly conversion in regulation
+        90) grounds the regulation 62 gainful-self-employment floor. The pilot
         models the monthly Family-level award so the composed amount is
         queryable from raw household facts without the caller supplying the
         section 8 maximum-amount / deduction stage boundaries or the
@@ -55,16 +63,27 @@ module:
     (regulation 22) work allowance; then the regulation 80A/81 benefit-cap
     reduction; and finally the section 8(1) award, floored at zero.
 
+    The minimum-income-floor deeming (regulation 62) is now applied on the
+    pipeline: regulation 90 (the individual/couple thresholds) and the National
+    Minimum Wage Regulations 2015 regulation 4 rate it points to are in the
+    corpus (ingested for corpus#224), so for a claimant flagged as in gainful
+    self-employment (uc_pilot_is_gainfully_self_employed) the pipeline computes
+    the floor from the regulation 4 national living wage rate x the regulation
+    88 expected hours (35) x 52 / 12, nets the supplied regulation 62(5)
+    notional tax/NI deduction, and treats earned income below the floor as
+    equal to it. A claimant who is not gainfully self-employed uses the
+    supplied combined monthly earned income unchanged, so consumers that model
+    employment income or floor earnings upstream keep the pre-existing
+    behaviour.
+
     Deliberately excluded (all outside the composed household grid this slice
     models, and all separately encoded): the transitional-protection element,
     surplus-earnings and self-employment loss carry-forward mechanics, the
     Schedule 5 owner-occupier and Schedule 4 shared-ownership housing paths,
     the regulation-25 under-occupancy and bedroom-cap detail beyond the
-    supplied cap rent, and the minimum-income-floor deeming (regulation 62)
-    whose individual/couple thresholds sit in regulation 90, which is not in
-    the corpus slice: for gainful self-employment the pipeline reads a
-    supplied floored earned income (uc_pilot_earned_income_monthly) so the MIF
-    can be applied upstream once regulation 90 is encoded. The two-child limit
+    supplied cap rent, the start-up-period exemption and the reduced expected
+    hours for carers/disability (regulation 88), and the reg 90 apprenticeship
+    and regulation-3(3) single-claim couple thresholds. The two-child limit
     (former regulation 24A) is not applied: it was revoked from 6 April 2026
     for assessment periods commencing on or after that date by the Universal
     Credit (Removal of Two Child Limit) Act 2026 (c.13) s.1(3)(a), so every
@@ -918,11 +937,174 @@ rules:
           else:
             0
 
-  # Earned income for the deduction. For gainful self-employment the caller
-  # supplies uc_pilot_earned_income_monthly already floored to the regulation
-  # 62 minimum income floor (the regulation 90 thresholds are not in the
-  # corpus slice, so the floor cannot be computed here); otherwise it is the
-  # combined monthly earned income. Input: uc_pilot_earned_income_monthly.
+  # --------------------------------------------------------------------------
+  # Regulation 62 / 90 minimum income floor for gainful self-employment
+  # --------------------------------------------------------------------------
+  # The individual threshold that defines the floor (regulation 90(2)) is the
+  # applicable National Minimum Wage / National Living Wage hourly rate for the
+  # expected number of hours per week, converted to a monthly amount by
+  # multiplying by 52 and dividing by 12. The pilot models a working-age
+  # claimant subject to all work-related requirements (section 22), so the
+  # hours figure is the regulation 88 default expected hours (35) and the rate
+  # is the regulation 4 national living wage rate (21 or over). These three
+  # figures are grounded in the corpus (reg 4 = 12.71, reg 88 = 35, reg 90 =
+  # the 52/12 conversion) so the floor is computed here rather than supplied.
+  - name: uc_pilot_minimum_income_floor_national_living_wage_hourly_rate
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: National Minimum Wage Regulations 2015, regulation 4
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2015/621/4
+              excerpt: "the national living wage rate"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          12.71
+
+  - name: uc_pilot_minimum_income_floor_expected_hours_per_week
+    kind: parameter
+    dtype: Count
+    source: Universal Credit Regulations 2013, regulation 88(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: default
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/88
+              excerpt: "is 35 unless some lesser number of hours applies"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          35
+
+  - name: uc_pilot_minimum_income_floor_weeks_per_year
+    kind: parameter
+    dtype: Count
+    source: Universal Credit Regulations 2013, regulation 90(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: unit
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/90
+              excerpt: "multiplying by 52 and dividing by 12"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          52
+
+  - name: uc_pilot_minimum_income_floor_months_per_year
+    kind: parameter
+    dtype: Count
+    source: Universal Credit Regulations 2013, regulation 90(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: unit
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/90
+              excerpt: "multiplying by 52 and dividing by 12"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          12
+
+  # Individual threshold, gross of the notional tax/NI deduction (regulation
+  # 90(2): hourly rate x expected hours x 52 / 12).
+  - name: uc_pilot_individual_minimum_income_floor_gross
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 90(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/90
+              excerpt: "the hourly rate applicable under regulation 4... for... the expected number of hours per week... converted to a monthly amount by multiplying by 52 and dividing by 12"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          uc_pilot_minimum_income_floor_national_living_wage_hourly_rate * uc_pilot_minimum_income_floor_expected_hours_per_week * uc_pilot_minimum_income_floor_weeks_per_year / uc_pilot_minimum_income_floor_months_per_year
+
+  # Applicable threshold: for a couple the floor is the sum of the individual
+  # thresholds (regulation 90(3)(a)); for a single claimant it is the single
+  # individual threshold. Net of the regulation 62(5) notional tax/NI
+  # deduction, which the Secretary of State determines and the caller supplies
+  # (uc_pilot_minimum_income_floor_notional_deduction_monthly, default 0),
+  # matching the regulations/uksi/2013/376/62 net-conversion input. Floored at
+  # zero. Inputs: uc_pilot_is_couple,
+  # uc_pilot_minimum_income_floor_notional_deduction_monthly.
+  - name: uc_pilot_minimum_income_floor_monthly
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 62(2) and 90(3)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/90
+              excerpt: "in the case of joint claimants, the sum of their individual thresholds"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/62
+              excerpt: "treated as having earned income equal to that threshold"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          max(0, (if uc_pilot_is_couple: 2 * uc_pilot_individual_minimum_income_floor_gross else: uc_pilot_individual_minimum_income_floor_gross) - max(0, uc_pilot_minimum_income_floor_notional_deduction_monthly))
+
+  # Floored earned income for the deduction. For a claimant in gainful
+  # self-employment (regulation 62), earned income below the minimum income
+  # floor is treated as equal to the floor; the floor is now computed here
+  # from regulation 90 rather than supplied. For a claimant who is not
+  # gainfully self-employed, the pipeline uses the supplied combined monthly
+  # earned income unchanged, so consumers that already floor earnings upstream
+  # or model employment income keep the pre-existing behaviour. Inputs:
+  # uc_pilot_is_gainfully_self_employed, uc_pilot_earned_income_monthly.
+  - name: uc_pilot_floored_earned_income_monthly
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 62(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/62
+              excerpt: "the claimant is to be treated as having earned income equal to that threshold"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          if uc_pilot_is_gainfully_self_employed and max(0, uc_pilot_earned_income_monthly) < uc_pilot_minimum_income_floor_monthly: uc_pilot_minimum_income_floor_monthly else: max(0, uc_pilot_earned_income_monthly)
+
+  # Earned income above the work allowance (regulation 22(1)(b)), tapered
+  # below. Consumes the floored earned income so the regulation 62 minimum
+  # income floor is applied for gainful self-employment; for every other case
+  # the floored amount equals the supplied combined monthly earned income.
   - name: uc_pilot_earned_income_above_work_allowance
     kind: derived
     entity: Family
@@ -941,7 +1123,7 @@ rules:
     versions:
       - effective_from: '2026-04-01'
         formula: |-
-          max(0, max(0, uc_pilot_earned_income_monthly) - uc_pilot_applicable_work_allowance)
+          max(0, uc_pilot_floored_earned_income_monthly - uc_pilot_applicable_work_allowance)
 
   - name: uc_pilot_earned_income_deduction
     kind: derived

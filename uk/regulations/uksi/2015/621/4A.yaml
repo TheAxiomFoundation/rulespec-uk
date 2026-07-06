@@ -1,0 +1,93 @@
+format: rulespec/v1
+imports:
+  - uk:regulations/uksi/2015/621/4#national_living_wage_hourly_rate
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2015/621/4A
+  summary: |-
+    The hourly rate of the national minimum wage is £10.85 for a worker aged 18 years or over but not yet aged 21, £8.00 for a worker aged under 18, and £8.00 for a worker to whom the apprenticeship rate applies. If the apprenticeship rate applies, the national living wage rate and the 18-to-under-21 and under-18 rates do not apply.
+rules:
+  - name: worker_aged_18_to_under_21_hourly_rate
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: National Minimum Wage Regulations 2015, regulation 4A(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2015/621/4A
+              excerpt: "£10.85 for a worker who is aged 18 years or over (but is not yet aged 21 years)"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          10.85
+
+  - name: worker_under_18_hourly_rate
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: National Minimum Wage Regulations 2015, regulation 4A(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2015/621/4A
+              excerpt: "£8.00 for a worker who is aged under 18 years"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          8.00
+
+  - name: apprenticeship_hourly_rate
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: National Minimum Wage Regulations 2015, regulation 4A(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2015/621/4A
+              excerpt: "£8.00 for a worker to whom the apprenticeship rate applies"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          8.00
+
+  - name: national_minimum_wage_hourly_rate
+    kind: derived
+    entity: Person
+    dtype: Money
+    unit: GBP
+    source: National Minimum Wage Regulations 2015, regulation 4A
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2015/621/4A
+          - path: versions[0].formula
+            kind: exception
+            source:
+              corpus_citation_path: uk/regulation/uksi/2015/621/4A
+              excerpt: "If the rate in paragraph (1)(d) applies to a worker, the national living wage rate and the rates in paragraph 1(b) and (c) of this regulation do not apply"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2015/621/4#national_living_wage_hourly_rate
+              output: national_living_wage_hourly_rate
+              hash: sha256:373c8a23177b335713fed7ddad047f0039ee5490ecef14671667f95205b76206
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          if apprenticeship_rate_applies: apprenticeship_hourly_rate else: if worker_is_aged_18_or_over_and_not_yet_aged_21: worker_aged_18_to_under_21_hourly_rate else: if worker_is_aged_under_18: worker_under_18_hourly_rate else: national_living_wage_hourly_rate

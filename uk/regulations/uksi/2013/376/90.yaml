@@ -1,0 +1,337 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2013/376/90
+  summary: |-
+    "A claimant falls within section 19 ... if the claimant's monthly earnings are equal to or exceed the claimant's individual threshold." Individual thresholds use "16 hours per week" or "the expected number of hours per week", converted monthly by "multiplying by 52 and dividing by 12". Couple and apprentice threshold branches, minimum income floor treatment, and monthly earnings definitions are also stated.
+rules:
+  - name: threshold_hours_for_section_20_or_21_claimant
+    kind: parameter
+    dtype: Count
+    period: Week
+    source: Universal Credit Regulations 2013, regulation 90(2)(a)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/90
+              excerpt: "16 hours per week"
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          16
+
+  - name: weekly_hours_for_regulation_3_3_partner_threshold
+    kind: parameter
+    dtype: Count
+    period: Week
+    source: Universal Credit Regulations 2013, regulation 90(3)(b)(ii)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/90
+              excerpt: "35 hours per week"
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          35
+
+  - name: apprentice_weekly_hours_cap
+    kind: parameter
+    dtype: Count
+    period: Week
+    source: Universal Credit Regulations 2013, regulation 90(4)(a)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/90
+              excerpt: "30 hours a week"
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          30
+
+  - name: weeks_per_year_for_monthly_threshold_conversion
+    kind: parameter
+    dtype: Count
+    period: Year
+    source: Universal Credit Regulations 2013, regulation 90(2)(b), 90(3)(b)(ii), and 90(4)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: unit
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/90
+              excerpt: "multiplying by 52 and dividing by 12"
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          52
+
+  - name: months_per_year_for_monthly_threshold_conversion
+    kind: parameter
+    dtype: Count
+    period: Year
+    source: Universal Credit Regulations 2013, regulation 90(2)(b), 90(3)(b)(ii), and 90(4)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: unit
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/90
+              excerpt: "multiplying by 52 and dividing by 12"
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          12
+
+  - name: claimant_monthly_earnings
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 90(6)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/90
+              excerpt: "earned income calculated or estimated... before any deduction"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/90
+              excerpt: "where the person's earned income fluctuates... taken as a monthly average"
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          max(0, (if earned_income_fluctuates_or_is_likely_to_fluctuate: monthly_average_earned_income_before_deductions - earned_income_from_ceased_employment_disregarded_for_monthly_earnings else: earned_income_current_assessment_period_before_deductions))
+
+  - name: claimant_has_individual_threshold
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Month
+    source: Universal Credit Regulations 2013, regulation 90(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/90
+              excerpt: "would otherwise fall within section 20... section 21... section 22"
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          claimant_would_otherwise_fall_within_section_20_or_21 or claimant_would_otherwise_fall_within_section_22
+
+  - name: claimant_individual_threshold
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 90(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/90
+              excerpt: "hourly rate applicable... for 16 hours per week... or... expected number of hours per week... converted to a monthly amount"
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          if claimant_would_otherwise_fall_within_section_20_or_21: national_minimum_wage_hourly_rate_applicable_to_claimant_under_regulation_4_or_4A_1_a_to_c * threshold_hours_for_section_20_or_21_claimant * weeks_per_year_for_monthly_threshold_conversion / months_per_year_for_monthly_threshold_conversion else: if claimant_would_otherwise_fall_within_section_22: national_minimum_wage_hourly_rate_applicable_to_claimant_under_regulation_4_or_4A_1_a_to_c * expected_hours_per_week_for_claimant * weeks_per_year_for_monthly_threshold_conversion / months_per_year_for_monthly_threshold_conversion else: 0
+
+  - name: claimant_falls_within_section_19_by_individual_threshold
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Month
+    source: Universal Credit Regulations 2013, regulation 90(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: predicate
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/90
+              excerpt: "monthly earnings are equal to or exceed the claimant's individual threshold"
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          claimant_has_individual_threshold and claimant_monthly_earnings >= claimant_individual_threshold
+
+  - name: apprentice_threshold
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 90(4)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/90
+              excerpt: "30 hours a week; or if less, the expected number of hours per week"
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          national_minimum_wage_apprentice_hourly_rate_under_regulation_4A_1_d * min(apprentice_weekly_hours_cap, expected_hours_per_week_for_claimant) * weeks_per_year_for_monthly_threshold_conversion / months_per_year_for_monthly_threshold_conversion
+
+  - name: claimant_falls_within_section_19_by_apprenticeship_threshold
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Month
+    source: Universal Credit Regulations 2013, regulation 90(4)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: predicate
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/90
+              excerpt: "employed under a contract of apprenticeship and has monthly earnings that are equal to or exceed"
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          claimant_is_employed_under_contract_of_apprenticeship and claimant_monthly_earnings >= apprentice_threshold
+
+  - name: claimant_falls_within_section_19_by_minimum_income_floor
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Month
+    source: Universal Credit Regulations 2013, regulation 90(5)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: predicate
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/90
+              excerpt: "treated as having earned income in accordance with regulation 62"
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          claimant_is_treated_as_having_earned_income_in_accordance_with_regulation_62
+
+  - name: regulation_3_3_partner_threshold
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 90(3)(b)(ii)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/90
+              excerpt: "35 hours per week at the hourly rate specified in regulation 4... converted to a monthly amount"
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          national_minimum_wage_hourly_rate_specified_in_regulation_4_for_regulation_3_3_partner_threshold * weekly_hours_for_regulation_3_3_partner_threshold * weeks_per_year_for_monthly_threshold_conversion / months_per_year_for_monthly_threshold_conversion
+
+  - name: joint_claimants_combined_individual_threshold
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 90(3)(a)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/90
+              excerpt: "in the case of joint claimants, the sum of their individual thresholds"
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          claimant_individual_threshold_for_couple_claim + other_joint_claimant_individual_threshold_for_couple_claim
+
+  - name: couple_combined_earnings_threshold
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Universal Credit Regulations 2013, regulation 90(3)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/90
+              excerpt: "whichever of the following amounts is applicable"
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          if claim_is_for_joint_claimants: joint_claimants_combined_individual_threshold else: if claimant_claims_universal_credit_as_single_person_by_virtue_of_regulation_3_3: claimant_individual_threshold_for_couple_claim + regulation_3_3_partner_threshold else: 0
+
+  - name: couple_threshold_branch_applies
+    kind: derived
+    entity: Family
+    dtype: Judgment
+    period: Month
+    source: Universal Credit Regulations 2013, regulation 90(3)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/90
+              excerpt: "in the case of joint claimants... in the case of a claimant who claims universal credit as a single person by virtue of regulation 3(3)"
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          claim_is_for_joint_claimants or claimant_claims_universal_credit_as_single_person_by_virtue_of_regulation_3_3
+
+  - name: claimant_falls_within_section_19_by_couple_combined_threshold
+    kind: derived
+    entity: Family
+    dtype: Judgment
+    period: Month
+    source: Universal Credit Regulations 2013, regulation 90(3)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: predicate
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/90
+              excerpt: "member of a couple falls within section 19... combined monthly earnings are equal to or exceed"
+    versions:
+      - effective_from: '2013-04-29'
+        formula: |-
+          claimant_is_member_of_couple and couple_threshold_branch_applies and couple_combined_monthly_earnings >= couple_combined_earnings_threshold

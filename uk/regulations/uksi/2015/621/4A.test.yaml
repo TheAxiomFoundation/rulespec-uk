@@ -1,0 +1,48 @@
+- name: apprenticeship_rate_displaces_18_to_under_21_rate
+  period:
+    period_kind: custom
+    name: month
+    start: '2026-04-01'
+    end: '2026-04-30'
+  input:
+    uk:regulations/uksi/2015/621/4A#input.apprenticeship_rate_applies: true
+    uk:regulations/uksi/2015/621/4A#input.worker_is_aged_18_or_over_and_not_yet_aged_21: true
+    uk:regulations/uksi/2015/621/4A#input.worker_is_aged_under_18: false
+  output:
+    uk:regulations/uksi/2015/621/4A#national_minimum_wage_hourly_rate: 8.0
+- name: worker_aged_18_to_under_21_rate
+  period:
+    period_kind: custom
+    name: month
+    start: '2026-04-01'
+    end: '2026-04-30'
+  input:
+    uk:regulations/uksi/2015/621/4A#input.apprenticeship_rate_applies: false
+    uk:regulations/uksi/2015/621/4A#input.worker_is_aged_18_or_over_and_not_yet_aged_21: true
+    uk:regulations/uksi/2015/621/4A#input.worker_is_aged_under_18: false
+  output:
+    uk:regulations/uksi/2015/621/4A#national_minimum_wage_hourly_rate: 10.85
+- name: worker_under_18_rate
+  period:
+    period_kind: custom
+    name: month
+    start: '2026-04-01'
+    end: '2026-04-30'
+  input:
+    uk:regulations/uksi/2015/621/4A#input.apprenticeship_rate_applies: false
+    uk:regulations/uksi/2015/621/4A#input.worker_is_aged_18_or_over_and_not_yet_aged_21: false
+    uk:regulations/uksi/2015/621/4A#input.worker_is_aged_under_18: true
+  output:
+    uk:regulations/uksi/2015/621/4A#national_minimum_wage_hourly_rate: 8.0
+- name: national_living_wage_rate_when_no_4A_branch_applies
+  period:
+    period_kind: custom
+    name: month
+    start: '2026-04-01'
+    end: '2026-04-30'
+  input:
+    uk:regulations/uksi/2015/621/4A#input.apprenticeship_rate_applies: false
+    uk:regulations/uksi/2015/621/4A#input.worker_is_aged_18_or_over_and_not_yet_aged_21: false
+    uk:regulations/uksi/2015/621/4A#input.worker_is_aged_under_18: false
+  output:
+    uk:regulations/uksi/2015/621/4A#national_minimum_wage_hourly_rate: 12.71
