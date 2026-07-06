@@ -1,0 +1,335 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_paths:
+      - uk/regulation/uksi/2008/794/67
+      - uk/regulation/uksi/2008/794/schedule/4
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - uk/regulation/uksi/2008/794/schedule/4
+      rationale: |-
+        Every monetary parameter is grounded in an official source captured at
+        the 2026-04-06 in-force expression. The personal-allowance amounts
+        (single or lone parent aged 25 or over, and any member of the
+        work-related activity group, GBP 97.75 per week; single aged under 25
+        GBP 77.52 per week; couple both aged 18 or over GBP 153.61 per week) are
+        the Employment and Support Allowance Regulations 2008 (SI 2008/794)
+        Schedule 4 Part A1 amounts; the work-related activity component
+        (GBP 36.55 per week) and support component (GBP 48.50 per week) for an
+        income-related allowance are the Schedule 4 Part 4 amounts; and the
+        severe-disability premium (single GBP 86.05, couple where both qualify
+        GBP 172.10) and carer premium (GBP 48.15 per qualifying partner) are the
+        Schedule 4 Part 3 premium amounts. Regulation 67(1) composes the
+        applicable amount from the personal allowance, premiums and housing
+        costs; this pipeline models the personal-allowance-plus-component-plus-
+        premium applicable amount and the section 4(2)(a) income-related award
+        (applicable amount less assessable income, floored at zero), so an
+        end-to-end comparison is queryable from raw household facts without the
+        caller supplying the Schedule 4 amount-selection or the means
+        arithmetic. Housing costs (Schedule 6) are supplied as a case input.
+
+        Note on the UKMOD oracle. UKMOD_PUBLIC_B2026.03 UK_2026 simulates
+        income-related ESA (bsadi_s) but with a FROZEN applicable amount
+        (its constant $ISSing25 = 73.10 per week, a mid-2010s vintage) rather
+        than the current statutory Schedule 4 amount (97.75 per week). This
+        pipeline encodes the CURRENT in-force statute, so a live UKMOD
+        comparison surfaces that frozen-rate divergence as a dispositioned
+        oracle-rate gap, not an Axiom encoding error (evidence: axiom-oracles
+        conformance/uk.yaml bsadi_uk note; UK.xml UK_2026 bsadi_uk constants).
+  summary: |-
+    Composed Family-level income-related Employment and Support Allowance
+    applicable-amount and award pipeline for the 2026-27 Employment and Support
+    Allowance Regulations 2008 (SI 2008/794) amounts. It exposes a
+    dense-engine-friendly path from raw household facts (couple/lone-parent/
+    single status, whether the eldest adult is aged 25 or over, whether the
+    claimant is in the support group or the work-related activity group, the
+    severe-disability and carer premium indicators, weekly assessable income,
+    and any weekly housing-cost amount) into the regulation 67(1) applicable
+    amount and the section 4(2)(a) income-related allowance, so an end-to-end
+    comparison does not require the caller to supply the Schedule 4 amount
+    selection or the means arithmetic.
+
+    Period. The award is expressed weekly (the native period of the Schedule 4
+    amounts, so every monetary value is a grounded weekly statutory rate with no
+    period-conversion arithmetic).
+
+    Scope. The applicable amount is the Schedule 4 Part A1 personal allowance
+    (selected by family type and age band), plus the Part 4 income-related
+    component (support component where the claimant is in the support group,
+    otherwise the work-related activity component where in the work-related
+    activity group), plus the Part 3 severe-disability and carer premiums where
+    the indicators are set, plus a supplied weekly housing-cost amount
+    (Schedule 6). The income-related allowance (section 4(2)(a) of the Welfare
+    Reform Act 2007) is the applicable amount less the claimant's weekly
+    assessable income, floored at zero. Deliberately outside this slice: the
+    limited-capability-for-work eligibility determination (a documented input
+    flag, the support-group / work-related-activity-group status); the capital
+    and tariff-income rules; contributory-allowance netting; and the detailed
+    Schedule 6 housing-cost mechanics (supplied as esa_ir_pilot_housing_costs_weekly).
+rules:
+  # ==========================================================================
+  # Personal allowance (Schedule 4 Part A1) - weekly
+  # ==========================================================================
+  - name: esa_ir_pilot_personal_allowance_single_25_or_over_weekly_amount
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Employment and Support Allowance Regulations 2008, Schedule 4 Part A1, single claimant aged 25 or over or member of the work-related activity group
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2008/794/schedule/4
+              excerpt: "who satisfies the conditions set out in section 4(4) of the Act or who is a member of the work-related activity group; (a) £97.75"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          97.75
+
+  - name: esa_ir_pilot_personal_allowance_single_under_25_weekly_amount
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Employment and Support Allowance Regulations 2008, Schedule 4 Part A1, single claimant aged less than 25
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2008/794/schedule/4
+              excerpt: "aged less than 25. (c) £77.52"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          77.52
+
+  - name: esa_ir_pilot_personal_allowance_couple_weekly_amount
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Employment and Support Allowance Regulations 2008, Schedule 4 Part A1, couple both aged not less than 18
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2008/794/schedule/4
+              excerpt: "where both members are aged not less than 18; (a) £153.61"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          153.61
+
+  - name: esa_ir_pilot_personal_allowance_weekly
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Employment and Support Allowance Regulations 2008, Schedule 4 Part A1
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2008/794/schedule/4
+              excerpt: "The weekly amounts specified in column (2) in respect of each person or couple specified in column (1)"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          if esa_ir_pilot_is_couple:
+            esa_ir_pilot_personal_allowance_couple_weekly_amount
+          else:
+            if esa_ir_pilot_eldest_adult_is_25_or_over: esa_ir_pilot_personal_allowance_single_25_or_over_weekly_amount else: esa_ir_pilot_personal_allowance_single_under_25_weekly_amount
+
+  # ==========================================================================
+  # Income-related component (Schedule 4 Part 4) - weekly
+  # ==========================================================================
+  - name: esa_ir_pilot_support_component_weekly_amount
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Employment and Support Allowance Regulations 2008, Schedule 4 Part 4, support component for an income-related allowance
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2008/794/schedule/4
+              excerpt: "The amount of the support component for the purposes of an income-related allowance is £48.50"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          48.50
+
+  - name: esa_ir_pilot_work_related_activity_component_weekly_amount
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Employment and Support Allowance Regulations 2008, Schedule 4 Part 4, work-related activity component for an income-related allowance
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2008/794/schedule/4
+              excerpt: "The amount of the work-related activity component for the purposes of an income-related allowance is £36.55"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          36.55
+
+  - name: esa_ir_pilot_component_weekly
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Employment and Support Allowance Regulations 2008, Schedule 4 Part 4 and regulation 67(3)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2008/794/67
+              excerpt: "the amount of the work-related activity component and the support component are is prescribed in Part 4 of Schedule 4"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          if esa_ir_pilot_in_support_group:
+            esa_ir_pilot_support_component_weekly_amount
+          else:
+            if esa_ir_pilot_in_work_related_activity_group: esa_ir_pilot_work_related_activity_component_weekly_amount else: 0
+
+  # ==========================================================================
+  # Premiums (Schedule 4 Part 3) - weekly
+  # ==========================================================================
+  - name: esa_ir_pilot_severe_disability_premium_single_weekly_amount
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Employment and Support Allowance Regulations 2008, Schedule 4 Part 3, severe disability premium single rate
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2008/794/schedule/4
+              excerpt: "Severe disability premium— (2) (a) where the claimant satisfies the condition in paragraph 6(2)(a); (a) £86.05"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          86.05
+
+  - name: esa_ir_pilot_carer_premium_per_partner_weekly_amount
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Employment and Support Allowance Regulations 2008, Schedule 4 Part 3, carer premium
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2008/794/schedule/4
+              excerpt: "£48.15"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          48.15
+
+  - name: esa_ir_pilot_premiums_weekly
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Employment and Support Allowance Regulations 2008, Schedule 4 Part 3
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2008/794/67
+              excerpt: "the amount of any premiums which may be applicable to the claimant determined in accordance with Parts 2 and 3 of that Schedule (premiums)"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          (esa_ir_pilot_number_of_severe_disability_premiums * esa_ir_pilot_severe_disability_premium_single_weekly_amount) + (esa_ir_pilot_number_of_carer_premiums * esa_ir_pilot_carer_premium_per_partner_weekly_amount)
+
+  # ==========================================================================
+  # Applicable amount (regulation 67(1)) - weekly
+  # ==========================================================================
+  - name: esa_ir_pilot_applicable_amount_weekly
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Employment and Support Allowance Regulations 2008, regulation 67(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2008/794/67
+              excerpt: "the amounts prescribed for the purposes of the calculation of the amount of an income-related allowance under section 4(2)(a) of the Act in relation to a claimant are such of the following amounts as may apply"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2008/794/67
+              excerpt: "an amount in respect of the claimant"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2008/794/67
+              excerpt: "any amounts determined in accordance with Schedule 6 (housing costs)"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          esa_ir_pilot_personal_allowance_weekly + esa_ir_pilot_component_weekly + esa_ir_pilot_premiums_weekly + esa_ir_pilot_housing_costs_weekly
+
+  # ==========================================================================
+  # Income-related allowance (WRA 2007 s.4(2)(a)) - weekly award
+  # ==========================================================================
+  - name: esa_ir_pilot_award_amount
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Welfare Reform Act 2007 s.4(2)(a) and Employment and Support Allowance Regulations 2008 regulation 67
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2008/794/67
+              excerpt: "the calculation of the amount of an income-related allowance under section 4(2)(a) of the Act"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          max(0, esa_ir_pilot_applicable_amount_weekly - esa_ir_pilot_assessable_income_weekly)

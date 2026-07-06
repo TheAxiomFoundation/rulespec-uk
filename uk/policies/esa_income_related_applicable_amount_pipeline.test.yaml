@@ -1,0 +1,181 @@
+# Composed income-related Employment and Support Allowance applicable-amount and
+# award pipeline -- hand-verified 2026-27 weekly cases. Every intermediate output
+# is asserted so the arithmetic is auditable. The personal-allowance amounts are
+# the Employment and Support Allowance Regulations 2008 (SI 2008/794) Schedule 4
+# Part A1 figures (single 25+/WRAG-or-support 97.75/week, single under-25
+# 77.52/week, couple both 18+ 153.61/week); the income-related component amounts
+# are Schedule 4 Part 4 (support component 48.50/week, work-related activity
+# component 36.55/week); the premiums are Schedule 4 Part 3 (severe disability
+# 86.05/week single, carer 48.15/week per partner). The income-related allowance
+# is the regulation 67(1) applicable amount less weekly assessable income, floored
+# at zero (Welfare Reform Act 2007 s.4(2)(a)). All amounts weekly.
+#
+# NOTE on the UKMOD oracle: UKMOD_PUBLIC_B2026.03 UK_2026 simulates bsadi_s but
+# freezes the applicable amount ($ISSing25 = 73.10/week, mid-2010s vintage); this
+# pipeline encodes the CURRENT statute, so these hand-verified values are the
+# statutory amounts, not UKMOD's frozen ones.
+
+# Case 1: single claimant aged 25+, support group, no income, no premiums, no
+# housing costs. Applicable amount = personal allowance 97.75 + support component
+# 48.50 = 146.25; award = 146.25 (no income).
+- name: single_25_support_group_no_income
+  period: 2026-04
+  input:
+    uk:policies/esa_income_related_applicable_amount_pipeline#input.esa_ir_pilot_is_couple: false
+    uk:policies/esa_income_related_applicable_amount_pipeline#input.esa_ir_pilot_eldest_adult_is_25_or_over: true
+    uk:policies/esa_income_related_applicable_amount_pipeline#input.esa_ir_pilot_in_support_group: true
+    uk:policies/esa_income_related_applicable_amount_pipeline#input.esa_ir_pilot_in_work_related_activity_group: false
+    uk:policies/esa_income_related_applicable_amount_pipeline#input.esa_ir_pilot_number_of_severe_disability_premiums: 0
+    uk:policies/esa_income_related_applicable_amount_pipeline#input.esa_ir_pilot_number_of_carer_premiums: 0
+    uk:policies/esa_income_related_applicable_amount_pipeline#input.esa_ir_pilot_housing_costs_weekly: 0
+    uk:policies/esa_income_related_applicable_amount_pipeline#input.esa_ir_pilot_assessable_income_weekly: 0
+  output:
+    uk:policies/esa_income_related_applicable_amount_pipeline#esa_ir_pilot_personal_allowance_weekly: 97.75
+    uk:policies/esa_income_related_applicable_amount_pipeline#esa_ir_pilot_component_weekly: 48.50
+    uk:policies/esa_income_related_applicable_amount_pipeline#esa_ir_pilot_premiums_weekly: 0
+    uk:policies/esa_income_related_applicable_amount_pipeline#esa_ir_pilot_applicable_amount_weekly: 146.25
+    uk:policies/esa_income_related_applicable_amount_pipeline#esa_ir_pilot_award_amount: 146.25
+
+# Case 2: single claimant aged 25+, work-related activity group, no income.
+# Applicable amount = 97.75 + WRAG component 36.55 = 134.30; award = 134.30.
+- name: single_25_wrag_no_income
+  period: 2026-04
+  input:
+    uk:policies/esa_income_related_applicable_amount_pipeline#input.esa_ir_pilot_is_couple: false
+    uk:policies/esa_income_related_applicable_amount_pipeline#input.esa_ir_pilot_eldest_adult_is_25_or_over: true
+    uk:policies/esa_income_related_applicable_amount_pipeline#input.esa_ir_pilot_in_support_group: false
+    uk:policies/esa_income_related_applicable_amount_pipeline#input.esa_ir_pilot_in_work_related_activity_group: true
+    uk:policies/esa_income_related_applicable_amount_pipeline#input.esa_ir_pilot_number_of_severe_disability_premiums: 0
+    uk:policies/esa_income_related_applicable_amount_pipeline#input.esa_ir_pilot_number_of_carer_premiums: 0
+    uk:policies/esa_income_related_applicable_amount_pipeline#input.esa_ir_pilot_housing_costs_weekly: 0
+    uk:policies/esa_income_related_applicable_amount_pipeline#input.esa_ir_pilot_assessable_income_weekly: 0
+  output:
+    uk:policies/esa_income_related_applicable_amount_pipeline#esa_ir_pilot_personal_allowance_weekly: 97.75
+    uk:policies/esa_income_related_applicable_amount_pipeline#esa_ir_pilot_component_weekly: 36.55
+    uk:policies/esa_income_related_applicable_amount_pipeline#esa_ir_pilot_applicable_amount_weekly: 134.30
+    uk:policies/esa_income_related_applicable_amount_pipeline#esa_ir_pilot_award_amount: 134.30
+
+# Case 3: single 25+, support group, severe disability premium, no income.
+# Applicable amount = 97.75 + 48.50 + SDP 86.05 = 232.30; award = 232.30.
+- name: single_25_support_group_sdp
+  period: 2026-04
+  input:
+    uk:policies/esa_income_related_applicable_amount_pipeline#input.esa_ir_pilot_is_couple: false
+    uk:policies/esa_income_related_applicable_amount_pipeline#input.esa_ir_pilot_eldest_adult_is_25_or_over: true
+    uk:policies/esa_income_related_applicable_amount_pipeline#input.esa_ir_pilot_in_support_group: true
+    uk:policies/esa_income_related_applicable_amount_pipeline#input.esa_ir_pilot_in_work_related_activity_group: false
+    uk:policies/esa_income_related_applicable_amount_pipeline#input.esa_ir_pilot_number_of_severe_disability_premiums: 1
+    uk:policies/esa_income_related_applicable_amount_pipeline#input.esa_ir_pilot_number_of_carer_premiums: 0
+    uk:policies/esa_income_related_applicable_amount_pipeline#input.esa_ir_pilot_housing_costs_weekly: 0
+    uk:policies/esa_income_related_applicable_amount_pipeline#input.esa_ir_pilot_assessable_income_weekly: 0
+  output:
+    uk:policies/esa_income_related_applicable_amount_pipeline#esa_ir_pilot_premiums_weekly: 86.05
+    uk:policies/esa_income_related_applicable_amount_pipeline#esa_ir_pilot_applicable_amount_weekly: 232.30
+    uk:policies/esa_income_related_applicable_amount_pipeline#esa_ir_pilot_award_amount: 232.30
+
+# Case 4: single 25+, support group, assessable income 50.00 partially reducing
+# the award. Applicable amount = 146.25; award = 146.25 - 50.00 = 96.25.
+- name: single_25_support_group_partial_income
+  period: 2026-04
+  input:
+    uk:policies/esa_income_related_applicable_amount_pipeline#input.esa_ir_pilot_is_couple: false
+    uk:policies/esa_income_related_applicable_amount_pipeline#input.esa_ir_pilot_eldest_adult_is_25_or_over: true
+    uk:policies/esa_income_related_applicable_amount_pipeline#input.esa_ir_pilot_in_support_group: true
+    uk:policies/esa_income_related_applicable_amount_pipeline#input.esa_ir_pilot_in_work_related_activity_group: false
+    uk:policies/esa_income_related_applicable_amount_pipeline#input.esa_ir_pilot_number_of_severe_disability_premiums: 0
+    uk:policies/esa_income_related_applicable_amount_pipeline#input.esa_ir_pilot_number_of_carer_premiums: 0
+    uk:policies/esa_income_related_applicable_amount_pipeline#input.esa_ir_pilot_housing_costs_weekly: 0
+    uk:policies/esa_income_related_applicable_amount_pipeline#input.esa_ir_pilot_assessable_income_weekly: 50.00
+  output:
+    uk:policies/esa_income_related_applicable_amount_pipeline#esa_ir_pilot_applicable_amount_weekly: 146.25
+    uk:policies/esa_income_related_applicable_amount_pipeline#esa_ir_pilot_award_amount: 96.25
+
+# Case 5: single 25+, support group, assessable income 200.00 exceeding the
+# applicable amount. Award floored at zero.
+- name: single_25_support_group_income_above_applicable
+  period: 2026-04
+  input:
+    uk:policies/esa_income_related_applicable_amount_pipeline#input.esa_ir_pilot_is_couple: false
+    uk:policies/esa_income_related_applicable_amount_pipeline#input.esa_ir_pilot_eldest_adult_is_25_or_over: true
+    uk:policies/esa_income_related_applicable_amount_pipeline#input.esa_ir_pilot_in_support_group: true
+    uk:policies/esa_income_related_applicable_amount_pipeline#input.esa_ir_pilot_in_work_related_activity_group: false
+    uk:policies/esa_income_related_applicable_amount_pipeline#input.esa_ir_pilot_number_of_severe_disability_premiums: 0
+    uk:policies/esa_income_related_applicable_amount_pipeline#input.esa_ir_pilot_number_of_carer_premiums: 0
+    uk:policies/esa_income_related_applicable_amount_pipeline#input.esa_ir_pilot_housing_costs_weekly: 0
+    uk:policies/esa_income_related_applicable_amount_pipeline#input.esa_ir_pilot_assessable_income_weekly: 200.00
+  output:
+    uk:policies/esa_income_related_applicable_amount_pipeline#esa_ir_pilot_applicable_amount_weekly: 146.25
+    uk:policies/esa_income_related_applicable_amount_pipeline#esa_ir_pilot_award_amount: 0
+
+# Case 6: couple both 18+, support group, no income. Applicable amount =
+# couple personal allowance 153.61 + support 48.50 = 202.11; award = 202.11.
+- name: couple_support_group_no_income
+  period: 2026-04
+  input:
+    uk:policies/esa_income_related_applicable_amount_pipeline#input.esa_ir_pilot_is_couple: true
+    uk:policies/esa_income_related_applicable_amount_pipeline#input.esa_ir_pilot_eldest_adult_is_25_or_over: true
+    uk:policies/esa_income_related_applicable_amount_pipeline#input.esa_ir_pilot_in_support_group: true
+    uk:policies/esa_income_related_applicable_amount_pipeline#input.esa_ir_pilot_in_work_related_activity_group: false
+    uk:policies/esa_income_related_applicable_amount_pipeline#input.esa_ir_pilot_number_of_severe_disability_premiums: 0
+    uk:policies/esa_income_related_applicable_amount_pipeline#input.esa_ir_pilot_number_of_carer_premiums: 0
+    uk:policies/esa_income_related_applicable_amount_pipeline#input.esa_ir_pilot_housing_costs_weekly: 0
+    uk:policies/esa_income_related_applicable_amount_pipeline#input.esa_ir_pilot_assessable_income_weekly: 0
+  output:
+    uk:policies/esa_income_related_applicable_amount_pipeline#esa_ir_pilot_personal_allowance_weekly: 153.61
+    uk:policies/esa_income_related_applicable_amount_pipeline#esa_ir_pilot_applicable_amount_weekly: 202.11
+    uk:policies/esa_income_related_applicable_amount_pipeline#esa_ir_pilot_award_amount: 202.11
+
+# Case 7: single aged under 25, work-related activity group, no income.
+# Applicable amount = under-25 personal allowance 77.52 + WRAG 36.55 = 114.07.
+- name: single_under_25_wrag_no_income
+  period: 2026-04
+  input:
+    uk:policies/esa_income_related_applicable_amount_pipeline#input.esa_ir_pilot_is_couple: false
+    uk:policies/esa_income_related_applicable_amount_pipeline#input.esa_ir_pilot_eldest_adult_is_25_or_over: false
+    uk:policies/esa_income_related_applicable_amount_pipeline#input.esa_ir_pilot_in_support_group: false
+    uk:policies/esa_income_related_applicable_amount_pipeline#input.esa_ir_pilot_in_work_related_activity_group: true
+    uk:policies/esa_income_related_applicable_amount_pipeline#input.esa_ir_pilot_number_of_severe_disability_premiums: 0
+    uk:policies/esa_income_related_applicable_amount_pipeline#input.esa_ir_pilot_number_of_carer_premiums: 0
+    uk:policies/esa_income_related_applicable_amount_pipeline#input.esa_ir_pilot_housing_costs_weekly: 0
+    uk:policies/esa_income_related_applicable_amount_pipeline#input.esa_ir_pilot_assessable_income_weekly: 0
+  output:
+    uk:policies/esa_income_related_applicable_amount_pipeline#esa_ir_pilot_personal_allowance_weekly: 77.52
+    uk:policies/esa_income_related_applicable_amount_pipeline#esa_ir_pilot_component_weekly: 36.55
+    uk:policies/esa_income_related_applicable_amount_pipeline#esa_ir_pilot_applicable_amount_weekly: 114.07
+    uk:policies/esa_income_related_applicable_amount_pipeline#esa_ir_pilot_award_amount: 114.07
+
+# Case 8: single 25+, support group, carer premium + housing costs 90.00.
+# Applicable amount = 97.75 + 48.50 + carer 48.15 + housing 90.00 = 284.40.
+- name: single_25_support_group_carer_and_housing
+  period: 2026-04
+  input:
+    uk:policies/esa_income_related_applicable_amount_pipeline#input.esa_ir_pilot_is_couple: false
+    uk:policies/esa_income_related_applicable_amount_pipeline#input.esa_ir_pilot_eldest_adult_is_25_or_over: true
+    uk:policies/esa_income_related_applicable_amount_pipeline#input.esa_ir_pilot_in_support_group: true
+    uk:policies/esa_income_related_applicable_amount_pipeline#input.esa_ir_pilot_in_work_related_activity_group: false
+    uk:policies/esa_income_related_applicable_amount_pipeline#input.esa_ir_pilot_number_of_severe_disability_premiums: 0
+    uk:policies/esa_income_related_applicable_amount_pipeline#input.esa_ir_pilot_number_of_carer_premiums: 1
+    uk:policies/esa_income_related_applicable_amount_pipeline#input.esa_ir_pilot_housing_costs_weekly: 90.00
+    uk:policies/esa_income_related_applicable_amount_pipeline#input.esa_ir_pilot_assessable_income_weekly: 0
+  output:
+    uk:policies/esa_income_related_applicable_amount_pipeline#esa_ir_pilot_premiums_weekly: 48.15
+    uk:policies/esa_income_related_applicable_amount_pipeline#esa_ir_pilot_applicable_amount_weekly: 284.40
+    uk:policies/esa_income_related_applicable_amount_pipeline#esa_ir_pilot_award_amount: 284.40
+
+# Case 9: single 25+, neither support nor WRAG (component nil). Applicable
+# amount = personal allowance 97.75 only.
+- name: single_25_no_component
+  period: 2026-04
+  input:
+    uk:policies/esa_income_related_applicable_amount_pipeline#input.esa_ir_pilot_is_couple: false
+    uk:policies/esa_income_related_applicable_amount_pipeline#input.esa_ir_pilot_eldest_adult_is_25_or_over: true
+    uk:policies/esa_income_related_applicable_amount_pipeline#input.esa_ir_pilot_in_support_group: false
+    uk:policies/esa_income_related_applicable_amount_pipeline#input.esa_ir_pilot_in_work_related_activity_group: false
+    uk:policies/esa_income_related_applicable_amount_pipeline#input.esa_ir_pilot_number_of_severe_disability_premiums: 0
+    uk:policies/esa_income_related_applicable_amount_pipeline#input.esa_ir_pilot_number_of_carer_premiums: 0
+    uk:policies/esa_income_related_applicable_amount_pipeline#input.esa_ir_pilot_housing_costs_weekly: 0
+    uk:policies/esa_income_related_applicable_amount_pipeline#input.esa_ir_pilot_assessable_income_weekly: 0
+  output:
+    uk:policies/esa_income_related_applicable_amount_pipeline#esa_ir_pilot_component_weekly: 0
+    uk:policies/esa_income_related_applicable_amount_pipeline#esa_ir_pilot_applicable_amount_weekly: 97.75
+    uk:policies/esa_income_related_applicable_amount_pipeline#esa_ir_pilot_award_amount: 97.75
