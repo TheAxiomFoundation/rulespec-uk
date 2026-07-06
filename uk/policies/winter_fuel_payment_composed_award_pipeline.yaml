@@ -1,0 +1,152 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_paths:
+      - uk/regulation/uksi/2025/969/3
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - uk/regulation/uksi/2025/969/3
+      rationale: |-
+        Every monetary parameter is grounded in an official source. The annual
+        standard Winter Fuel Payment amounts (GBP 200 for a person who has not
+        reached age 80, GBP 300 for a person who has reached age 80) are the
+        Social Fund Winter Fuel Payment Regulations 2025 regulation 3(1) and
+        3(4) figures for England and Wales. The shared-household and
+        residential-care branch amounts in regulation 3(2), 3(5), and 3(6) are
+        deliberately outside this UKMOD boaht_s parity pipeline.
+  summary: |-
+    Composed Family-level Winter Fuel Payment award pipeline for England and
+    Wales. It exposes the UKMOD boaht_s parity path from caller-supplied
+    benefit-unit judgments into the annual award amount without requiring the
+    caller to supply the regulation 3 standard amount branch.
+
+    Scope. The pipeline models only the standard single-person regulation 3
+    amounts used by the UKMOD_PUBLIC_B2026.03 boaht_s parity cases: GBP 200
+    where nobody in the benefit unit is aged 80 or over, and GBP 300 where any
+    member is aged 80 or over. The amount is a benefit-unit amount and does not
+    scale with the number of pension-age members. The caller supplies whether
+    the benefit unit contains at least one state-pension-age member, whether
+    any member is aged 80 or over, and whether income is below the Winter Fuel
+    Payment recovery threshold.
+rules:
+  # ==========================================================================
+  # Standard annual amounts (regulation 3(1) and 3(4))
+  # ==========================================================================
+  - name: wfp_pilot_under_80_amount
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Social Fund Winter Fuel Payment Regulations 2025, regulation 3(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2025/969/3
+              excerpt: "has not reached the age of 80 ... £200"
+    versions:
+      - effective_from: '2025-09-15'
+        formula: |-
+          200
+
+  - name: wfp_pilot_age_80_amount
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Social Fund Winter Fuel Payment Regulations 2025, regulation 3(4)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2025/969/3
+              excerpt: "has reached the age of 80 ... £300"
+    versions:
+      - effective_from: '2025-09-15'
+        formula: |-
+          300
+
+  # ==========================================================================
+  # Benefit-unit amount and final award
+  # ==========================================================================
+  - name: wfp_pilot_household_amount
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Social Fund Winter Fuel Payment Regulations 2025, regulation 3(1) and 3(4)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2025/969/3
+              excerpt: "has not reached the age of 80 ... £200"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2025/969/3
+              excerpt: "has reached the age of 80 ... £300"
+    versions:
+      - effective_from: '2025-09-15'
+        formula: |-
+          if wfp_pilot_any_member_aged_80_or_over: wfp_pilot_age_80_amount else: wfp_pilot_under_80_amount
+
+  - name: wfp_pilot_award_before_means_test
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Social Fund Winter Fuel Payment Regulations 2025, regulation 3(1) and 3(4)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2025/969/3
+              excerpt: "has not reached the age of 80 ... £200"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2025/969/3
+              excerpt: "has reached the age of 80 ... £300"
+    versions:
+      - effective_from: '2025-09-15'
+        formula: |-
+          if wfp_pilot_has_pension_age_member: wfp_pilot_household_amount else: 0
+
+  - name: wfp_pilot_award_amount
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Social Fund Winter Fuel Payment Regulations 2025, regulation 3(1) and 3(4)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2025/969/3
+              excerpt: "has not reached the age of 80 ... £200"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2025/969/3
+              excerpt: "has reached the age of 80 ... £300"
+    versions:
+      - effective_from: '2025-09-15'
+        formula: |-
+          if wfp_pilot_income_below_recovery_threshold: wfp_pilot_award_before_means_test else: 0

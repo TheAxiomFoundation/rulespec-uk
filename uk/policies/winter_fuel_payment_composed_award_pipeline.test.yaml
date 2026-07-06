@@ -1,0 +1,105 @@
+# Composed Winter Fuel Payment award pipeline -- UKMOD_PUBLIC_B2026.03
+# boaht_s parity cases for England and Wales. The award is a benefit-unit
+# amount: it is GBP 200 if at least one member has reached state pension age
+# and nobody in the unit is aged 80 or over, GBP 300 if any member is aged 80
+# or over, and GBP 0 when the pension-age or income-recovery gate fails.
+
+- name: winter_fuel_payment_2025_regulation_3_standard_amounts
+  period:
+    period_kind: custom
+    name: calendar_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input: {}
+  output:
+    uk:policies/winter_fuel_payment_composed_award_pipeline#wfp_pilot_under_80_amount: 200
+    uk:policies/winter_fuel_payment_composed_award_pipeline#wfp_pilot_age_80_amount: 300
+
+- name: single_pension_age_under_80_income_below_threshold
+  period:
+    period_kind: custom
+    name: calendar_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:policies/winter_fuel_payment_composed_award_pipeline#input.wfp_pilot_has_pension_age_member: true
+    uk:policies/winter_fuel_payment_composed_award_pipeline#input.wfp_pilot_any_member_aged_80_or_over: false
+    uk:policies/winter_fuel_payment_composed_award_pipeline#input.wfp_pilot_income_below_recovery_threshold: true
+  output:
+    uk:policies/winter_fuel_payment_composed_award_pipeline#wfp_pilot_household_amount: 200
+    uk:policies/winter_fuel_payment_composed_award_pipeline#wfp_pilot_award_before_means_test: 200
+    uk:policies/winter_fuel_payment_composed_award_pipeline#wfp_pilot_award_amount: 200
+
+- name: single_pension_age_age_80_income_below_threshold
+  period:
+    period_kind: custom
+    name: calendar_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:policies/winter_fuel_payment_composed_award_pipeline#input.wfp_pilot_has_pension_age_member: true
+    uk:policies/winter_fuel_payment_composed_award_pipeline#input.wfp_pilot_any_member_aged_80_or_over: true
+    uk:policies/winter_fuel_payment_composed_award_pipeline#input.wfp_pilot_income_below_recovery_threshold: true
+  output:
+    uk:policies/winter_fuel_payment_composed_award_pipeline#wfp_pilot_household_amount: 300
+    uk:policies/winter_fuel_payment_composed_award_pipeline#wfp_pilot_award_before_means_test: 300
+    uk:policies/winter_fuel_payment_composed_award_pipeline#wfp_pilot_award_amount: 300
+
+- name: couple_both_pension_age_under_80_income_below_threshold
+  period:
+    period_kind: custom
+    name: calendar_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:policies/winter_fuel_payment_composed_award_pipeline#input.wfp_pilot_has_pension_age_member: true
+    uk:policies/winter_fuel_payment_composed_award_pipeline#input.wfp_pilot_any_member_aged_80_or_over: false
+    uk:policies/winter_fuel_payment_composed_award_pipeline#input.wfp_pilot_income_below_recovery_threshold: true
+  output:
+    uk:policies/winter_fuel_payment_composed_award_pipeline#wfp_pilot_award_amount: 200
+
+- name: couple_one_member_age_80_income_below_threshold
+  period:
+    period_kind: custom
+    name: calendar_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:policies/winter_fuel_payment_composed_award_pipeline#input.wfp_pilot_has_pension_age_member: true
+    uk:policies/winter_fuel_payment_composed_award_pipeline#input.wfp_pilot_any_member_aged_80_or_over: true
+    uk:policies/winter_fuel_payment_composed_award_pipeline#input.wfp_pilot_income_below_recovery_threshold: true
+  output:
+    uk:policies/winter_fuel_payment_composed_award_pipeline#wfp_pilot_award_amount: 300
+
+- name: single_pension_age_under_80_income_above_threshold
+  period:
+    period_kind: custom
+    name: calendar_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:policies/winter_fuel_payment_composed_award_pipeline#input.wfp_pilot_has_pension_age_member: true
+    uk:policies/winter_fuel_payment_composed_award_pipeline#input.wfp_pilot_any_member_aged_80_or_over: false
+    uk:policies/winter_fuel_payment_composed_award_pipeline#input.wfp_pilot_income_below_recovery_threshold: false
+  output:
+    # The household amount and pre-means-test award are still £200 (a pension-age
+    # member, under 80); the recovery means test then withdraws the award to nil.
+    uk:policies/winter_fuel_payment_composed_award_pipeline#wfp_pilot_household_amount: 200
+    uk:policies/winter_fuel_payment_composed_award_pipeline#wfp_pilot_award_before_means_test: 200
+    uk:policies/winter_fuel_payment_composed_award_pipeline#wfp_pilot_award_amount: 0
+
+- name: no_pension_age_member_no_award
+  period:
+    period_kind: custom
+    name: calendar_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:policies/winter_fuel_payment_composed_award_pipeline#input.wfp_pilot_has_pension_age_member: false
+    uk:policies/winter_fuel_payment_composed_award_pipeline#input.wfp_pilot_any_member_aged_80_or_over: false
+    uk:policies/winter_fuel_payment_composed_award_pipeline#input.wfp_pilot_income_below_recovery_threshold: true
+  output:
+    # No pension-age member: the pre-means-test award is nil even though income is
+    # below the threshold.
+    uk:policies/winter_fuel_payment_composed_award_pipeline#wfp_pilot_award_before_means_test: 0
+    uk:policies/winter_fuel_payment_composed_award_pipeline#wfp_pilot_award_amount: 0
