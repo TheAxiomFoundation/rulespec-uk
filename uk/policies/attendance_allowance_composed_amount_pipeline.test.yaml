@@ -1,0 +1,63 @@
+# Composed Attendance Allowance amount pipeline -- SI 2026/148 Schedule 1 Part III
+# weekly rates (GBP 114.60 higher, GBP 76.70 lower) applied over the awarded care
+# category, and their 52-week annualisation. The award category is a supplied
+# judgment (the rate-only surface PolicyEngine-UK's attendance_allowance exposes).
+
+- name: si_2026_148_schedule_1_part_iii_attendance_allowance_rates
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2026-04-06'
+    end: '2026-04-12'
+  input: {}
+  output:
+    uk:policies/attendance_allowance_composed_amount_pipeline#aa_pilot_higher_weekly_rate: 114.60
+    uk:policies/attendance_allowance_composed_amount_pipeline#aa_pilot_lower_weekly_rate: 76.70
+
+- name: awarded_higher_rate
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2026-04-06'
+    end: '2026-04-12'
+  input:
+    uk:policies/attendance_allowance_composed_amount_pipeline#input.aa_pilot_awarded_higher_rate: true
+    uk:policies/attendance_allowance_composed_amount_pipeline#input.aa_pilot_awarded_lower_rate: false
+  output:
+    uk:policies/attendance_allowance_composed_amount_pipeline#aa_pilot_weekly_amount: 114.60
+
+- name: awarded_lower_rate
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2026-04-06'
+    end: '2026-04-12'
+  input:
+    uk:policies/attendance_allowance_composed_amount_pipeline#input.aa_pilot_awarded_higher_rate: false
+    uk:policies/attendance_allowance_composed_amount_pipeline#input.aa_pilot_awarded_lower_rate: true
+  output:
+    uk:policies/attendance_allowance_composed_amount_pipeline#aa_pilot_weekly_amount: 76.70
+
+- name: no_award
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2026-04-06'
+    end: '2026-04-12'
+  input:
+    uk:policies/attendance_allowance_composed_amount_pipeline#input.aa_pilot_awarded_higher_rate: false
+    uk:policies/attendance_allowance_composed_amount_pipeline#input.aa_pilot_awarded_lower_rate: false
+  output:
+    uk:policies/attendance_allowance_composed_amount_pipeline#aa_pilot_weekly_amount: 0
+
+- name: higher_rate_takes_precedence_over_lower
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2026-04-06'
+    end: '2026-04-12'
+  input:
+    uk:policies/attendance_allowance_composed_amount_pipeline#input.aa_pilot_awarded_higher_rate: true
+    uk:policies/attendance_allowance_composed_amount_pipeline#input.aa_pilot_awarded_lower_rate: true
+  output:
+    uk:policies/attendance_allowance_composed_amount_pipeline#aa_pilot_weekly_amount: 114.60
