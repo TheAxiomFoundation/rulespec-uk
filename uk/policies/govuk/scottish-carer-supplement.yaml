@@ -1,0 +1,109 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_paths:
+      - uk/regulation/ssi/2023/302/16
+      - uk/regulation/uksi/2013/376/schedule/4/paragraph/7
+  summary: |-
+    Scottish Carer Supplement weekly rate (Carer's Assistance (Carer Support
+    Payment) (Scotland) Regulations 2023, SSI 2023/302, regulation 16(1A)): the
+    weekly rate of payment of Scottish Carer Supplement is £11.70. The weekly
+    amount is annualised over 52 weeks for the annual entitlement. This is the
+    Scottish top-up paid in addition to Carer Support Payment; the base Carer
+    Support Payment rate (£86.45) is a separate award and is not included here.
+rules:
+  - name: scottish_carer_supplement_weekly_amount
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Carer's Assistance (Carer Support Payment) (Scotland) Regulations 2023 (SSI 2023/302) regulation 16(1A)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/ssi/2023/302/16
+              excerpt: "£11.70"
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          11.70
+
+  - name: scottish_carer_supplement_weeks_in_year
+    kind: parameter
+    dtype: Count
+    source: Universal Credit Regulations 2013, Schedule 4 paragraph 7 (weekly amounts converted over 52 weeks)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/7
+              excerpt: "calculated as a monthly amount"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          52
+
+  - name: scottish_carer_supplement_weekly_payment
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Carer's Assistance (Carer Support Payment) (Scotland) Regulations 2023 (SSI 2023/302) regulation 16(1A)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/ssi/2023/302/16
+              excerpt: "The weekly rate of payment of Scottish Carer Supplement"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:policies/govuk/scottish-carer-supplement#scottish_carer_supplement_weekly_amount
+              output: scottish_carer_supplement_weekly_amount
+              hash: sha256:local
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          if entitled_to_scottish_carer_supplement: scottish_carer_supplement_weekly_amount else: 0
+
+  - name: scottish_carer_supplement_annual_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Carer's Assistance (Carer Support Payment) (Scotland) Regulations 2023 (SSI 2023/302) regulation 16(1A) (weekly amount annualised over the year)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/ssi/2023/302/16
+              excerpt: "The weekly rate of payment of Scottish Carer Supplement"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:policies/govuk/scottish-carer-supplement#scottish_carer_supplement_weekly_payment
+              output: scottish_carer_supplement_weekly_payment
+              hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:policies/govuk/scottish-carer-supplement#scottish_carer_supplement_weeks_in_year
+              output: scottish_carer_supplement_weeks_in_year
+              hash: sha256:local
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          scottish_carer_supplement_weekly_payment * scottish_carer_supplement_weeks_in_year

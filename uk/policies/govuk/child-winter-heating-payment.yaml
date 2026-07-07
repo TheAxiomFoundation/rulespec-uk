@@ -1,0 +1,57 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/ssi/2020/352/10
+  summary: |-
+    The value of child winter heating assistance is £265.50 (SSI 2020/352
+    regulation 10(1)), paid as money in a single payment. This is the substantive
+    payable value; the regulation 10(1A) / regulation 4(7) commencement-value
+    transitional exception is out of scope (its value is not stated in the
+    regulation).
+rules:
+  - name: child_winter_heating_assistance_standard_value
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    period: Year
+    source: SSI 2020/352 regulation 10(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/ssi/2020/352/10
+              excerpt: "the value of child winter heating assistance is £265.50"
+    versions:
+      - effective_from: '2024-01-01'
+        formula: |-
+          265.50
+
+  - name: child_winter_heating_assistance_payable_value
+    kind: derived
+    entity: Person
+    dtype: Money
+    unit: GBP
+    period: Year
+    source: SSI 2020/352 regulation 10(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/ssi/2020/352/10
+              excerpt: "the value of child winter heating assistance is £265.50"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:policies/govuk/child-winter-heating-payment#child_winter_heating_assistance_standard_value
+              output: child_winter_heating_assistance_standard_value
+              hash: sha256:local
+    versions:
+      - effective_from: '2024-01-01'
+        formula: |-
+          child_winter_heating_assistance_standard_value

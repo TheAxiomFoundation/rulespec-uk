@@ -1,0 +1,160 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_paths:
+      - uk/regulation/uksi/1996/207/79
+      - uk/regulation/uksi/2013/376/schedule/4/paragraph/7
+  summary: |-
+    Contribution-based jobseeker's allowance age-related weekly amount
+    (Jobseeker's Allowance Regulations 1996, SI 1996/207, regulation 79(1) as
+    amended for 2026-27 by the Social Security Benefits Up-rating Order 2026):
+    the age-related amount is £75.65 per week for a claimant who has not attained
+    the age of 25 and £95.55 per week for a claimant who has attained the age of
+    25. The weekly amount is annualised over 52 weeks for the annual entitlement.
+rules:
+  - name: contribution_based_jsa_under_25_weekly_amount
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Jobseeker's Allowance Regulations 1996 (SI 1996/207) regulation 79(1)(a)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/1996/207/79
+              excerpt: "£75.65 per week"
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          75.65
+
+  - name: contribution_based_jsa_25_or_over_weekly_amount
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Jobseeker's Allowance Regulations 1996 (SI 1996/207) regulation 79(1)(c)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/1996/207/79
+              excerpt: "£95.55 per week"
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          95.55
+
+  - name: contribution_based_jsa_weeks_in_year
+    kind: parameter
+    dtype: Count
+    source: Universal Credit Regulations 2013, Schedule 4 paragraph 7 (weekly amounts converted over 52 weeks)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/7
+              excerpt: "calculated as a monthly amount"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          52
+
+  - name: contribution_based_jsa_weekly_age_related_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Jobseeker's Allowance Regulations 1996 (SI 1996/207) regulation 79(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/1996/207/79
+              excerpt: "the age-related amount applicable to a claimant"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:policies/govuk/contribution-based-jobseekers-allowance#contribution_based_jsa_under_25_weekly_amount
+              output: contribution_based_jsa_under_25_weekly_amount
+              hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:policies/govuk/contribution-based-jobseekers-allowance#contribution_based_jsa_25_or_over_weekly_amount
+              output: contribution_based_jsa_25_or_over_weekly_amount
+              hash: sha256:local
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          if claimant_has_attained_age_25: contribution_based_jsa_25_or_over_weekly_amount else: contribution_based_jsa_under_25_weekly_amount
+
+  - name: contribution_based_jsa_weekly_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Jobseeker's Allowance Regulations 1996 (SI 1996/207) regulation 79(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/1996/207/79
+              excerpt: "the age-related amount applicable to a claimant"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:policies/govuk/contribution-based-jobseekers-allowance#contribution_based_jsa_weekly_age_related_amount
+              output: contribution_based_jsa_weekly_age_related_amount
+              hash: sha256:local
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          if entitled_to_contribution_based_jsa: contribution_based_jsa_weekly_age_related_amount else: 0
+
+  - name: contribution_based_jsa_annual_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Jobseeker's Allowance Regulations 1996 (SI 1996/207) regulation 79(1) (weekly amount annualised over the year)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/1996/207/79
+              excerpt: "the age-related amount applicable to a claimant"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:policies/govuk/contribution-based-jobseekers-allowance#contribution_based_jsa_weekly_amount
+              output: contribution_based_jsa_weekly_amount
+              hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:policies/govuk/contribution-based-jobseekers-allowance#contribution_based_jsa_weeks_in_year
+              output: contribution_based_jsa_weeks_in_year
+              hash: sha256:local
+    versions:
+      - effective_from: '2026-04-06'
+        formula: |-
+          contribution_based_jsa_weekly_amount * contribution_based_jsa_weeks_in_year
