@@ -1,0 +1,42 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_paths:
+      - uk/statute/ukpga/1988/41/43
+  summary: |-
+    Non-domestic rating (business rates) household incidence proxy. The Local
+    Government Finance Act 1988 section 43 makes an occupier of a non-domestic
+    hereditament liable to pay non-domestic rates for each chargeable day, so
+    the tax falls on the businesses that occupy rated property. This module does
+    not compute an individual ratepayer's bill (the LGFA 1988 Part III
+    multiplier and reliefs); it restates PolicyEngine-UK's distributional
+    incidence model, which assigns the total non-domestic rates raised across
+    the four nations to households in proportion to their share in the corporate
+    sector. The award is the product of two supplied inputs: the household's
+    shareholding (its fraction of aggregate corporate wealth) and the total
+    business rates revenue (England, Scotland, Wales and Northern Ireland
+    combined). Both inputs are supplied by the caller, so the module carries no
+    grounded numeric literal; LGFA 1988 section 43 is cited as the enabling
+    authority that creates the liability being distributed.
+rules:
+  - name: business_rates
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Local Government Finance Act 1988, section 43 (liability to non-domestic rates), distributed to households as a corporate-shareholding incidence proxy
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1988/41/43
+              excerpt: "the ratepayer shall be liable to pay an amount"
+    versions:
+      - effective_from: '1990-04-01'
+        formula: |-
+          shareholding * business_rates_total_revenue
