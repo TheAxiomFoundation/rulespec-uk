@@ -1,0 +1,80 @@
+# Companion tests for the residential LBTT band split (SSI 2015/126 rate
+# schedule + LBTT(S)A 2013 Schedule 2A Additional Dwelling Supplement, 8% from
+# 5 December 2024). main_residential_property_purchased and
+# additional_residential_property_purchased are supplied inputs; expected values
+# are recomputed from the marginal-bracket schedule.
+- name: main_home_below_nil_rate_band_no_charge
+  period:
+    period_kind: tax_year
+    start: '2026-04-06'
+    end: '2027-04-05'
+  input:
+    uk:policies/govuk/lbtt#input.main_residential_property_purchased: 100000
+    uk:policies/govuk/lbtt#input.additional_residential_property_purchased: 0
+  output:
+    uk:policies/govuk/lbtt#lbtt_main_residence_charge: 0
+    uk:policies/govuk/lbtt#lbtt_additional_residence_standard_charge: 0
+    uk:policies/govuk/lbtt#lbtt_additional_dwelling_supplement: 0
+    uk:policies/govuk/lbtt#land_and_buildings_transaction_tax: 0
+
+- name: main_home_in_two_percent_band
+  period:
+    period_kind: tax_year
+    start: '2026-04-06'
+    end: '2027-04-05'
+  input:
+    uk:policies/govuk/lbtt#input.main_residential_property_purchased: 200000
+    uk:policies/govuk/lbtt#input.additional_residential_property_purchased: 0
+  output:
+    uk:policies/govuk/lbtt#lbtt_main_residence_charge: 1100
+    uk:policies/govuk/lbtt#land_and_buildings_transaction_tax: 1100
+
+- name: main_home_spanning_two_and_five_percent_bands
+  period:
+    period_kind: tax_year
+    start: '2026-04-06'
+    end: '2027-04-05'
+  input:
+    uk:policies/govuk/lbtt#input.main_residential_property_purchased: 300000
+    uk:policies/govuk/lbtt#input.additional_residential_property_purchased: 0
+  output:
+    uk:policies/govuk/lbtt#lbtt_main_residence_charge: 4600
+    uk:policies/govuk/lbtt#land_and_buildings_transaction_tax: 4600
+
+- name: main_home_into_ten_percent_band
+  period:
+    period_kind: tax_year
+    start: '2026-04-06'
+    end: '2027-04-05'
+  input:
+    uk:policies/govuk/lbtt#input.main_residential_property_purchased: 500000
+    uk:policies/govuk/lbtt#input.additional_residential_property_purchased: 0
+  output:
+    uk:policies/govuk/lbtt#lbtt_main_residence_charge: 23350
+    uk:policies/govuk/lbtt#land_and_buildings_transaction_tax: 23350
+
+- name: main_home_into_twelve_percent_band
+  period:
+    period_kind: tax_year
+    start: '2026-04-06'
+    end: '2027-04-05'
+  input:
+    uk:policies/govuk/lbtt#input.main_residential_property_purchased: 800000
+    uk:policies/govuk/lbtt#input.additional_residential_property_purchased: 0
+  output:
+    uk:policies/govuk/lbtt#lbtt_main_residence_charge: 54350
+    uk:policies/govuk/lbtt#land_and_buildings_transaction_tax: 54350
+
+- name: additional_dwelling_adds_standard_charge_plus_eight_percent_supplement
+  period:
+    period_kind: tax_year
+    start: '2026-04-06'
+    end: '2027-04-05'
+  input:
+    uk:policies/govuk/lbtt#input.main_residential_property_purchased: 0
+    uk:policies/govuk/lbtt#input.additional_residential_property_purchased: 300000
+  output:
+    uk:policies/govuk/lbtt#lbtt_main_residence_charge: 0
+    uk:policies/govuk/lbtt#lbtt_additional_residence_standard_charge: 4600
+    uk:policies/govuk/lbtt#lbtt_additional_dwelling_supplement: 24000
+    uk:policies/govuk/lbtt#land_and_buildings_transaction_tax: 28600
