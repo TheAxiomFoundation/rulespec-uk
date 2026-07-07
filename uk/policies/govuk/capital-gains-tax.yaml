@@ -1,0 +1,193 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_paths:
+      - uk/statute/ukpga/1992/12/1H
+      - uk/statute/ukpga/1992/12/1I
+      - uk/statute/ukpga/1992/12/1K
+  summary: |-
+    Capital gains tax on the chargeable gains accruing to an individual in a
+    tax year. The annual exempt amount (TCGA 1992 s.1K, £3,000) is first
+    deducted from the chargeable gains. Under s.1H the gains are charged at
+    18% or 24%, and s.1I allocates them: gains falling within the individual's
+    unused basic rate band are charged at the basic 18% rate, and the excess
+    over that band at the higher 24% rate. The individual's taxable income
+    (which uses up the basic rate band) and the basic rate limit are supplied
+    inputs, matching the PolicyEngine-UK capital_gains_tax surface, which
+    charges the portion above the basic rate limit at the higher/additional
+    rate (both 24%).
+rules:
+  - name: capital_gains_tax_annual_exempt_amount
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Taxation of Chargeable Gains Act 1992 s.1K(2) (annual exempt amount for individuals)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/12/1K
+              excerpt: "The annual exempt amount for a tax year is £3,000."
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          3000
+
+  - name: capital_gains_tax_basic_rate
+    kind: parameter
+    dtype: Rate
+    source: Taxation of Chargeable Gains Act 1992 s.1H (basic rate of capital gains tax)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/12/1H
+              excerpt: "charged to capital gains tax at a rate of 18% or 24%"
+    versions:
+      - effective_from: '2025-04-06'
+        formula: |-
+          0.18
+
+  - name: capital_gains_tax_higher_rate
+    kind: parameter
+    dtype: Rate
+    source: Taxation of Chargeable Gains Act 1992 s.1H (higher rate of capital gains tax)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/12/1H
+              excerpt: "charged to capital gains tax at a rate of 18% or 24%"
+    versions:
+      - effective_from: '2025-04-06'
+        formula: |-
+          0.24
+
+  - name: capital_gains_tax_chargeable_gains
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Taxation of Chargeable Gains Act 1992 s.1H(1) (chargeable gains accruing in the tax year)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/12/1H
+              excerpt: "chargeable gains accruing in a tax year to an individual are charged to capital gains tax"
+    versions:
+      - effective_from: '2025-04-06'
+        formula: |-
+          max(0, capital_gains)
+
+  - name: capital_gains_tax_gains_after_annual_exempt_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Taxation of Chargeable Gains Act 1992 s.1K(1) (deduction of the annual exempt amount from chargeable gains)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/12/1K
+              excerpt: "the annual exempt amount for the year is to be deducted from those gains"
+    versions:
+      - effective_from: '2024-04-06'
+        formula: |-
+          max(0, capital_gains_tax_chargeable_gains - capital_gains_tax_annual_exempt_amount)
+
+  - name: capital_gains_tax_unused_basic_rate_band
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Taxation of Chargeable Gains Act 1992 s.1I (unused part of the individual's basic rate band, after taxable income)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/12/1I
+              excerpt: "an amount that exceeds the unused part of the individual's basic rate band"
+    versions:
+      - effective_from: '2025-04-06'
+        formula: |-
+          max(0, basic_rate_limit - taxable_income)
+
+  - name: capital_gains_tax_basic_rate_gains
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Taxation of Chargeable Gains Act 1992 s.1I (gains within the unused basic rate band charged at the basic rate)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/12/1I
+              excerpt: "the unused part of the individual's basic rate band"
+    versions:
+      - effective_from: '2025-04-06'
+        formula: |-
+          min(capital_gains_tax_gains_after_annual_exempt_amount, capital_gains_tax_unused_basic_rate_band)
+
+  - name: capital_gains_tax_higher_rate_gains
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Taxation of Chargeable Gains Act 1992 s.1I (the higher rate excess above the basic rate band)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/12/1I
+              excerpt: "the excess (“the higher rate excess”) is charged"
+    versions:
+      - effective_from: '2025-04-06'
+        formula: |-
+          max(0, capital_gains_tax_gains_after_annual_exempt_amount - capital_gains_tax_unused_basic_rate_band)
+
+  - name: capital_gains_tax
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Taxation of Chargeable Gains Act 1992 s.1H (capital gains tax charged at 18% on the basic rate band and 24% above)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/12/1H
+              excerpt: "charged to capital gains tax at a rate of 18% or 24%"
+    versions:
+      - effective_from: '2025-04-06'
+        formula: |-
+          capital_gains_tax_basic_rate_gains * capital_gains_tax_basic_rate + capital_gains_tax_higher_rate_gains * capital_gains_tax_higher_rate
