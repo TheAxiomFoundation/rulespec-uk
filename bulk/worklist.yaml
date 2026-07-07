@@ -1,0 +1,129 @@
+version: 1
+defaults:
+  backend: openai
+  model: gpt-5.5
+# UK bulk-encode worklist. Mechanically derived per bulk/README.md: the corpus
+# current_provisions view (jurisdiction uk) minus what is already encoded in the
+# YAML tree on main, filtered for self-containment (low external cross-reference
+# density, substantive body text). Skips cross-reference-heavy provisions
+# (encode#1058). Values are the encoder's; this queue never invents them.
+entries:
+# --- Batch A: pilot (cleanest, lowest cross-reference density) ---
+- citation: uk/statute/ukpga/2003/1/681B
+  repo: rulespec-uk
+  batch: A
+  status: pending
+  heading: Liability for the high income child benefit charge (ITEPA s681B)
+  class: charge
+  note: Self-contained HICBC liability test over adjusted net income above the
+    £60,000 threshold. In-chapter structure only.
+- citation: uk/statute/ukpga/2003/1/681G
+  repo: rulespec-uk
+  batch: A
+  status: pending
+  heading: Meaning of "partner" for the high income child benefit charge (ITEPA s681G)
+  class: definition
+  note: Self-contained partner definition (conditions A/B) for the HICBC chapter.
+    In-chapter text only.
+- citation: uk/statute/ukpga/2012/5/7
+  repo: rulespec-uk
+  batch: A
+  status: pending
+  heading: Universal credit basis of awards; assessment periods (WRA 2012 s7)
+  class: mechanics
+  note: Self-contained; UC is payable per complete assessment period. In-Part
+    structure only.
+- citation: uk/statute/ukpga/2012/5/39
+  repo: rulespec-uk
+  batch: A
+  status: pending
+  heading: Universal credit "couple" definition (WRA 2012 s39)
+  class: definition
+  note: Self-contained definition of "couple" for Part 1. In-Part text only.
+# --- Batch B: remaining ITEPA HICBC + WRA UC + SSCBA + HB Regs ---
+- citation: uk/statute/ukpga/2003/1/681C
+  repo: rulespec-uk
+  batch: B
+  status: pending
+  heading: Amount of the high income child benefit charge (ITEPA s681C)
+  class: charge
+  note: Self-contained charge amount = appropriate percentage of the relevant
+    child benefit. In-chapter refs only.
+- citation: uk/statute/ukpga/2003/1/681H
+  repo: rulespec-uk
+  batch: B
+  status: pending
+  heading: Adjusted net income for the high income child benefit charge (ITEPA s681H)
+  class: definition
+  note: Self-contained; adjusted net income has the ITA 2007 s58 meaning. One
+    in-chapter definitional ref.
+- citation: uk/statute/ukpga/2012/5/6
+  repo: rulespec-uk
+  batch: B
+  status: pending
+  heading: Restrictions on entitlement to universal credit (WRA 2012 s6)
+  class: mechanics
+  note: Self-contained entitlement-exclusion rule. In-Part structure only.
+- citation: uk/statute/ukpga/2012/5/34
+  repo: rulespec-uk
+  batch: B
+  status: pending
+  heading: Housing element of state pension credit (WRA 2012 s34)
+  class: mechanics
+  note: Self-contained; introduces Schedule 4 housing element on abolition of
+    housing benefit. In-Part refs only.
+- citation: uk/statute/ukpga/1992/4/166
+  repo: rulespec-uk
+  batch: B
+  status: pending
+  heading: Rate of statutory maternity pay (SSCBA 1992 s166)
+  class: rate
+  note: Self-contained SMP rate structure (earnings-related then prescribed
+    weekly rate). In-Part refs only.
+- citation: uk/statute/ukpga/1992/4/171ZA
+  repo: rulespec-uk
+  batch: B
+  status: pending
+  heading: Entitlement to statutory paternity pay - birth (SSCBA 1992 s171ZA)
+  class: entitlement
+  note: Self-contained SPP entitlement conditions on birth. In-Part refs only.
+- citation: uk/regulation/uksi/2006/213/70
+  repo: rulespec-uk
+  batch: B
+  status: pending
+  heading: Appropriate maximum housing benefit (HB Regs 2006 reg 70)
+  class: rate
+  note: Self-contained; maximum HB is 100 per cent of eligible rent, less
+    non-dependant deductions. In-instrument refs only.
+- citation: uk/regulation/uksi/2006/213/71
+  repo: rulespec-uk
+  batch: B
+  status: pending
+  heading: Prescribed taper percentage for housing benefit (HB Regs 2006 reg 71)
+  class: rate
+  note: Self-contained taper percentage of excess income over the applicable
+    amount. In-instrument refs only.
+- citation: uk/regulation/uksi/2006/214/50
+  repo: rulespec-uk
+  batch: B
+  status: pending
+  heading: Appropriate maximum housing benefit - state pension age (HB(SPC) Regs 2006 reg 50)
+  class: rate
+  note: Self-contained; maximum HB is 100 per cent of eligible rent for
+    pension-age claimants. In-instrument refs only.
+- citation: uk/regulation/uksi/2006/214/51
+  repo: rulespec-uk
+  batch: B
+  status: pending
+  heading: Prescribed taper percentage - state pension age (HB(SPC) Regs 2006 reg 51)
+  class: rate
+  note: Self-contained taper percentage for pension-age housing benefit. In-instrument
+    refs only.
+- citation: uk/statute/ukpga/1998/46/80C
+  repo: rulespec-uk
+  batch: B
+  status: pending
+  heading: Scottish rate resolution (Scotland Act 1998 s80C)
+  class: rate
+  note: Self-contained; the Scottish Parliament sets the Scottish rate(s) by
+    resolution. In-Part refs only.
