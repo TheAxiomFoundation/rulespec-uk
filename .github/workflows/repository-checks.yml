@@ -12,6 +12,9 @@ jobs:
     secrets: inherit
     with:
       validate-roots: auto
-      # TODO(consolidation): re-enable immediately after the monorepo
-      # migration PR merges.
-      run-generated-guard: false
+      # Re-enabled after the monorepo migration (carried 2026-06-12); the
+      # full corpus now carries encoder apply-manifests or baseline manual
+      # attestations (encode#1053).
+      run-generated-guard: true
+      # Pilot the composed-pilot programs/ guarding (encode#1053).
+      guard-programs-root: true
