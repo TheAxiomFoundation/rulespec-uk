@@ -207,3 +207,41 @@ The `validate / validate` national shard build (engine compile + full-tree
 validate) is the per-PR floor. It is inherent to the gate and out of scope for
 the dispatcher to change; the mitigations above reduce *how many times* it runs,
 not its per-run cost.
+
+### 4. Oracle-coverage gate on new outputs (dominant UK blocker) — out of scope
+
+The pilot batch (`batch=A`, 4 entries) exposed the real gate for UK bulk PRs.
+The org `validate / validate` required check runs a **changed-file oracle
+coverage classifier** (`axiom-encode oracle-coverage --json`, then
+`--fail-on-unmapped`). Every output a new module introduces must resolve to a
+status other than `unmapped` — either `comparable` (a PolicyEngine oracle
+exists) or `known_not_comparable` (explicitly registered as having no
+comparable oracle). On the current merged UK tree, coverage is
+18768 `known_not_comparable` + 1032 `comparable` + **0 `unmapped`**: every
+existing output is already classified.
+
+A freshly bulk-encoded output starts life `unmapped`, so the classifier fails
+and auto-merge correctly holds on the red required check. This is **not** a
+dispatcher defect and there is **no cheap workflow-level mitigation**: the
+classification is a quality decision owned by `axiom-oracles` +
+`axiom-encode classify`, exactly like the companion-fixture tier. The plumbing's
+job ends at producing a reviewable PR with a signed manifest and armed
+auto-merge; a mapping follow-up (register each new output as `comparable` with
+its oracle, or `known_not_comparable`) is what turns the check green, after
+which auto-merge completes on its own.
+
+Contrast with `rulespec-us`, where many bulk targets (e.g. NY Article 22 income
+tax) map to existing PolicyEngine oracles and merge green without a mapping
+step. UK statute/reg outputs (UC/HICBC/HB definitions and mechanics) are largely
+un-mapped today, so the mapping follow-up is the throughput-limiting step for a
+UK drain — plan a mapping pass per batch alongside the fixture pass.
+
+**Pilot result (batch A, 2026-07-07):** dispatch → matrix → pinned-toolchain
+encode ran on all 4 legs. 3 legs (ITEPA s681B/s681G, WRA s7) hit the encoder's
+fail-closed compile-validation gate at apply (`apply-blocked`; re-encode
+territory, not plumbing). 1 leg (WRA s39) applied cleanly, and the manifest
+detector correctly located and staged its signed manifest — PR #97 opened with
+module + companion test + manifest and auto-merge armed, holding only on the
+`unmapped` oracle-coverage check above. The dispatcher path is verified
+end-to-end; the remaining blockers are the encoder (quality) and oracle mapping
+(coverage), both by-design outside this plumbing.
