@@ -263,21 +263,35 @@ jobs:
           fi
 
           module="${applied[0]}"
-          test_file="${module%.yaml}.test.yaml"
-          juris="${module%%/*}"
-          # The apply manifest mirrors the module's path under the jurisdiction's
-          # .axiom/encoding-manifests/ -- e.g. uk/statutes/ukpga/2003/1/681B.yaml ->
-          # uk/.axiom/encoding-manifests/statutes/ukpga/2003/1/681B.json. Strip only
-          # the jurisdiction prefix (keep the statutes/regulations/policies bucket).
-          rest="${module#"$juris"/}"
-          manifest_rel="$juris/.axiom/encoding-manifests/${rest%.yaml}.json"
-          # Fall back to a basename search if the direct manifest path guess misses.
-          if [ ! -f "$GITHUB_WORKSPACE/$manifest_rel" ]; then
-            manifest_rel="$(cd "$GITHUB_WORKSPACE" && find "$juris/.axiom/encoding-manifests" -name "$(basename "${module%.yaml}").json" 2>/dev/null | head -1)"
+          base="$(basename "${module%.yaml}")"
+
+          # Detect the companion test and the signed apply manifest from the git
+          # worktree rather than guessing their paths. In rulespec-uk the encoder
+          # writes manifests under the ROOT `.axiom/encoding-manifests/...`
+          # (either `.../statutes/...` or `.../uk/statutes/...`), NOT under a
+          # per-jurisdiction `uk/.axiom/...` dir as rulespec-us does -- so a
+          # US-style path guess would miss. `--apply` just wrote these files, so
+          # they show up as changes; pick them out by basename + suffix. This is
+          # layout-agnostic and works for both conventions.
+          changed="$(git -C "$GITHUB_WORKSPACE" status --porcelain | sed 's/^...//')"
+          test_file="$(echo "$changed" | grep -E "(^|/)${base}\.test\.yaml$" | head -1 || true)"
+          # Fall back to the co-located convention if the encoder did not emit a
+          # separate companion-test change line.
+          [ -z "$test_file" ] && test_file="${module%.yaml}.test.yaml"
+          manifest_rel="$(echo "$changed" | grep -E '/\.axiom/encoding-manifests/.*\.json$' | grep -E "(^|/)${base}\.json$" | head -1 || true)"
+          # Last-resort basename search across the whole tree.
+          if [ -z "$manifest_rel" ] || [ ! -f "$GITHUB_WORKSPACE/$manifest_rel" ]; then
+            manifest_rel="$(cd "$GITHUB_WORKSPACE" && find . -path '*/.axiom/encoding-manifests/*' -name "${base}.json" 2>/dev/null | sed 's#^\./##' | head -1)"
+          fi
+          if [ -z "$manifest_rel" ]; then
+            echo "status=failed" >> "$GITHUB_OUTPUT"
+            echo "::error::Applied $module but could not locate its signed apply manifest under .axiom/encoding-manifests/." >&2
+            exit 1
           fi
           echo "module=$module" >> "$GITHUB_OUTPUT"
           echo "test_file=$test_file" >> "$GITHUB_OUTPUT"
           echo "Applied module: $module"
+          echo "Applied test: $test_file"
           echo "Applied manifest: $manifest_rel"
 
           # --- Gate battery (fail-closed pre-check; mirrors PR CI order) ---
