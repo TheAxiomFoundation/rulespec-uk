@@ -265,31 +265,34 @@ jobs:
           module="${applied[0]}"
           base="$(basename "${module%.yaml}")"
 
-          # Detect the companion test and the signed apply manifest from the git
-          # worktree rather than guessing their paths. In rulespec-uk the encoder
-          # writes manifests under the ROOT `.axiom/encoding-manifests/...`
-          # (either `.../statutes/...` or `.../uk/statutes/...`), NOT under a
-          # per-jurisdiction `uk/.axiom/...` dir as rulespec-us does -- so a
-          # US-style path guess would miss. `--apply` just wrote these files, so
-          # they show up as changes; pick them out by basename + suffix. This is
-          # layout-agnostic and works for both conventions.
-          changed="$(git -C "$GITHUB_WORKSPACE" status --porcelain | sed 's/^...//')"
-          test_file="$(echo "$changed" | grep -E "(^|/)${base}\.test\.yaml$" | head -1 || true)"
-          # Fall back to the co-located convention if the encoder did not emit a
-          # separate companion-test change line.
-          [ -z "$test_file" ] && test_file="${module%.yaml}.test.yaml"
-          manifest_rel="$(echo "$changed" | grep -E '/\.axiom/encoding-manifests/.*\.json$' | grep -E "(^|/)${base}\.json$" | head -1 || true)"
-          # Last-resort basename search across the whole tree.
-          if [ -z "$manifest_rel" ] || [ ! -f "$GITHUB_WORKSPACE/$manifest_rel" ]; then
-            manifest_rel="$(cd "$GITHUB_WORKSPACE" && find . -path '*/.axiom/encoding-manifests/*' -name "${base}.json" 2>/dev/null | sed 's#^\./##' | head -1)"
-          fi
-          if [ -z "$manifest_rel" ]; then
+          # Derive the companion test and the signed apply manifest paths
+          # DETERMINISTICALLY from the module path (as rulespec-us does). `--apply`
+          # co-locates the manifest under the jurisdiction's own
+          # `.axiom/encoding-manifests/` tree, mirroring the module path with a
+          # `.json` suffix -- e.g.
+          #   uk/statutes/ukpga/2012/5/34.yaml
+          #   -> uk/.axiom/encoding-manifests/statutes/ukpga/2012/5/34.json
+          # That is exactly where guard-generated looks: it maps a manifest at
+          # `<juris>/.axiom/encoding-manifests/<rest>.json` back to the changed
+          # rule path `<juris>/<rest>.yaml` (manifest root_prefix = <juris>).
+          # Deriving the path is REQUIRED for correctness: WRA 2012 (ukpga/2012/5)
+          # and the UC Regs (uksi/2013/376) are both densely encoded here, so a
+          # whole-tree `find -name "<section>.json"` matched an unrelated
+          # same-numbered statute's manifest and staged the wrong (unchanged)
+          # file, so guard-generated saw the rule change "without a matching
+          # manifest" -- yet the PR was still pushed. Never guess by basename.
+          juris="${module%%/*}"
+          rest="${module#*/}"
+          test_file="${module%.yaml}.test.yaml"
+          manifest_rel="$juris/.axiom/encoding-manifests/${rest%.yaml}.json"
+          if [ ! -f "$GITHUB_WORKSPACE/$manifest_rel" ]; then
             echo "status=failed" >> "$GITHUB_OUTPUT"
-            echo "::error::Applied $module but could not locate its signed apply manifest under .axiom/encoding-manifests/." >&2
+            echo "::error::apply wrote no signed manifest at $manifest_rel for $CITATION -- apply was blocked (see encode.log; a *.repair.json was written under $RUNNER_TEMP/encode-out). Not opening a PR." >&2
             exit 1
           fi
           echo "module=$module" >> "$GITHUB_OUTPUT"
           echo "test_file=$test_file" >> "$GITHUB_OUTPUT"
+          echo "manifest=$manifest_rel" >> "$GITHUB_OUTPUT"
           echo "Applied module: $module"
           echo "Applied test: $test_file"
           echo "Applied manifest: $manifest_rel"
@@ -352,11 +355,19 @@ jobs:
 
       - name: Assemble PR body
         id: prbody
-        if: ${{ always() && steps.encode.outputs.module != '' }}
+        # Only assemble/open a PR when the local gate battery actually passed
+        # (guard-generated + validate + proof-validate). `status` is set to
+        # `green`/`needs-fixtures` only after those gates pass; a guard/validate/
+        # proof failure exits the encode step before `status` is written, so this
+        # condition is empty and no PR is pushed. (A `needs-fixtures` companion
+        # failure is a soft fail and still opens the PR.) This replaces an
+        # `always() && module != ''` guard that pushed manifest-less generations.
+        if: ${{ steps.encode.outputs.status == 'green' || steps.encode.outputs.status == 'needs-fixtures' }}
         shell: bash
         env:
           CITATION: ${{ matrix.item.citation }}
           MODULE: ${{ steps.encode.outputs.module }}
+          MANIFEST: ${{ steps.encode.outputs.manifest }}
           TEST_FILE: ${{ steps.encode.outputs.test_file }}
           ENC_STATUS: ${{ steps.encode.outputs.status }}
           WALL: ${{ steps.encode.outputs.wall_seconds }}
@@ -379,12 +390,11 @@ jobs:
             echo
             echo "### Manifest summary"
             echo '```json'
-            # The apply manifest mirrors the module path under the jurisdiction's
-            # .axiom/encoding-manifests/. Locate it by basename (robust to the
-            # statutes/regulations/policies split).
+            # Use the exact manifest the encode step located deterministically
+            # (uk/.axiom/encoding-manifests/<rest>.json), not a basename search
+            # that could surface an unrelated same-numbered statute's manifest.
             manifest=""
-            mf="$(find "$GITHUB_WORKSPACE" -path '*/.axiom/encoding-manifests/*' -name "$(basename "${MODULE%.yaml}").json" 2>/dev/null | head -1)"
-            [ -n "$mf" ] && manifest="$(cat "$mf")"
+            [ -n "$MANIFEST" ] && [ -f "$GITHUB_WORKSPACE/$MANIFEST" ] && manifest="$(cat "$GITHUB_WORKSPACE/$MANIFEST")"
             echo "$manifest" | python3 -c 'import sys,json; d=json.load(sys.stdin); print(json.dumps({k:d.get(k) for k in ["citation","model","backend","run_id","axiom_encode_version","applied_files"]}, indent=2))' 2>/dev/null || echo "$manifest"
             echo '```'
             echo
@@ -405,7 +415,11 @@ jobs:
           echo "path=$body" >> "$GITHUB_OUTPUT"
 
       - name: Open PR and enable auto-merge
-        if: ${{ always() && steps.encode.outputs.module != '' }}
+        # Same gate as the PR body: never (re)open or force-push a branch for a
+        # generation that failed guard-generated/validate/proof. needs-fixtures
+        # (a soft companion-test failure) still opens; the red required check
+        # holds the merge until a follow-up fixture pass turns it green.
+        if: ${{ steps.encode.outputs.status == 'green' || steps.encode.outputs.status == 'needs-fixtures' }}
         shell: bash
         env:
           GH_TOKEN: ${{ secrets.BULK_ENCODE_TOKEN }}
@@ -417,15 +431,22 @@ jobs:
           set -euo pipefail
           branch="bulk/$SLUG"
 
-          # Push the applied commit onto the bulk branch.
-          git -C "$GITHUB_WORKSPACE" -c user.email=bulk-encode@axiom \
-            -c user.name="bulk-encode" commit --amend -q \
-            -m "Encode $CITATION via bulk dispatcher" \
-            -m "" \
-            -m "Produced by axiom-encode encode $CITATION --apply (backend ${{ matrix.item.backend }}, model ${{ matrix.item.model }})." \
-            -m "" \
-            -m "Co-Authored-By: Claude Fable 5 <noreply@anthropic.com>"
-          git -C "$GITHUB_WORKSPACE" push -f origin "HEAD:$branch"
+          # Retry through transient GitHub API failures (PR mutations occasionally
+          # hit a 502/503 from the GraphQL API; an unattended weekly drain must
+          # self-heal rather than drop the module until the next run). Backs off;
+          # NOT applied to `gh pr reopen`, whose failure is a meaningful signal
+          # (orphaned head -> fresh-PR fallback). Ported from rulespec-us#592.
+          retry() {
+            local n=1 max=5 delay=5
+            until "$@"; do
+              if [ "$n" -ge "$max" ]; then
+                echo "::error::\`$*\` failed after $max attempts." >&2
+                return 1
+              fi
+              echo "attempt $n/$max failed; retrying in ${delay}s: $*" >&2
+              sleep "$delay"; n=$((n + 1)); delay=$((delay * 2))
+            done
+          }
 
           # Ensure the bulk-encode label exists.
           gh label create bulk-encode --repo "$GITHUB_REPOSITORY" \
@@ -436,29 +457,49 @@ jobs:
             title="Encode $CITATION (bulk, needs-fixtures)"
           fi
 
-          # Reconcile the PR for this branch across all states. A prior run may
-          # have left a CLOSED PR for the same bulk/<slug> branch; auto-merge
-          # cannot be enabled on a closed PR, so reopen it before proceeding.
+          # Reconcile the PR for this branch BEFORE touching the branch. A prior
+          # run may have left a CLOSED PR for bulk/<slug>. auto-merge cannot be
+          # enabled on a closed PR, so it must be reopened -- but GitHub pins a
+          # closed PR to its head SHA and refuses to reopen once that head has
+          # been force-updated. The force-push therefore MUST happen AFTER the
+          # reopen, so the closed head still matches the branch at reopen time.
+          # If the branch was already orphaned by an earlier failed run, reopen
+          # is impossible; open a fresh PR instead (GitHub permits a new PR from
+          # a branch whose prior PR is closed). Ported from rulespec-us#592.
           pr_state="$(gh pr view "$branch" --repo "$GITHUB_REPOSITORY" --json state -q .state 2>/dev/null || true)"
+          if [ "$pr_state" = "CLOSED" ]; then
+            if gh pr reopen "$branch" --repo "$GITHUB_REPOSITORY" 2>/dev/null; then
+              echo "Reopened closed PR for $branch."
+            else
+              echo "::warning::Closed PR for $branch cannot be reopened (head orphaned by a prior force-push); opening a fresh PR." >&2
+              pr_state=""
+            fi
+          fi
+
+          # Push the applied commit onto the bulk branch. This updates the open or
+          # just-reopened PR, or stages the branch for a fresh PR below.
+          git -C "$GITHUB_WORKSPACE" -c user.email=bulk-encode@axiom \
+            -c user.name="bulk-encode" commit --amend -q \
+            -m "Encode $CITATION via bulk dispatcher" \
+            -m "" \
+            -m "Produced by axiom-encode encode $CITATION --apply (backend ${{ matrix.item.backend }}, model ${{ matrix.item.model }})." \
+            -m "" \
+            -m "Co-Authored-By: Claude Fable 5 <noreply@anthropic.com>"
+          git -C "$GITHUB_WORKSPACE" push -f origin "HEAD:$branch"
+
           if [ -z "$pr_state" ]; then
-            gh pr create --repo "$GITHUB_REPOSITORY" \
+            retry gh pr create --repo "$GITHUB_REPOSITORY" \
               --base "$DEFAULT_BRANCH" --head "$branch" \
               --title "$title" \
               --body-file "${{ steps.prbody.outputs.path }}" \
               --label bulk-encode
           else
-            if [ "$pr_state" = "CLOSED" ]; then
-              gh pr reopen "$branch" --repo "$GITHUB_REPOSITORY"
-            fi
-            gh pr edit "$branch" --repo "$GITHUB_REPOSITORY" \
+            retry gh pr edit "$branch" --repo "$GITHUB_REPOSITORY" \
               --title "$title" --body-file "${{ steps.prbody.outputs.path }}" \
               --add-label bulk-encode
           fi
 
-          # Enable auto-merge on green. Never admin, never bypass red. If the
-          # module is needs-fixtures, auto-merge is still enabled but the red
-          # companion-test-derived required check holds the merge until a
-          # follow-up fixture pass turns it green.
-          gh pr merge "$branch" --repo "$GITHUB_REPOSITORY" --auto --squash
+          # Enable auto-merge on green. Never admin, never bypass red.
+          retry gh pr merge "$branch" --repo "$GITHUB_REPOSITORY" --auto --squash
 
           echo "PR ready for $CITATION on branch $branch (status: $ENC_STATUS, auto-merge on green)."
