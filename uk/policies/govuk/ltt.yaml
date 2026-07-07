@@ -1,0 +1,427 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_paths:
+      - uk/regulation/wsi/2018/128/schedule/2026
+      - uk/statute/anaw/2017/1/24
+  summary: |-
+    Land Transaction Tax on residential property purchases in Wales. Section 24
+    of the Land Transaction Tax and Anti-avoidance of Devolved Taxes (Wales)
+    Act 2017 (anaw 2017/1) requires the Welsh Ministers to set the tax bands
+    and percentage tax rates by regulations. The Land Transaction Tax (Tax
+    Bands and Tax Rates) (Wales) Regulations 2018 (WSI 2018/128), as amended,
+    set the residential rate schedule as progressive marginal bands: 0% up to
+    £225,000, 6% on the slice from £225,000 to £400,000, 7.5% from £400,000 to
+    £750,000, 10% from £750,000 to £1,500,000, and 12% above £1,500,000. Tax on
+    a purchase is the sum of each band rate applied to the part of the price
+    that falls within that band. A purchase of an additional dwelling (a higher
+    rates residential property transaction) is charged under a separate higher
+    rates schedule with no zero-rate band: 5% up to £180,000, 8.5% from
+    £180,000 to £250,000, 10% from £250,000 to £400,000, 12.5% from £400,000 to
+    £750,000, 15% from £750,000 to £1,500,000, and 17% above £1,500,000.
+    First-time-buyer relief does not exist in Wales and is out of scope. The
+    total liability is the main-home charge plus the higher-rates charge.
+rules:
+  - name: ltt_residential_nil_rate_upper_limit
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: WSI 2018/128, residential relevant consideration table, nil rate band upper bound
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/wsi/2018/128/schedule/2026
+              excerpt: "Not more than £225,000"
+    versions:
+      - effective_from: '2022-10-10'
+        formula: |-
+          225000
+
+  - name: ltt_residential_six_percent_upper_limit
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: WSI 2018/128, residential relevant consideration table, first tax band upper bound
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/wsi/2018/128/schedule/2026
+              excerpt: "More than £225,000 but not more than £400,000"
+    versions:
+      - effective_from: '2022-10-10'
+        formula: |-
+          400000
+
+  - name: ltt_residential_seven_point_five_percent_upper_limit
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: WSI 2018/128, residential relevant consideration table, second tax band upper bound
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/wsi/2018/128/schedule/2026
+              excerpt: "More than £400,000 but not more than £750,000"
+    versions:
+      - effective_from: '2022-10-10'
+        formula: |-
+          750000
+
+  - name: ltt_residential_ten_percent_upper_limit
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: WSI 2018/128, residential relevant consideration table, third tax band upper bound
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/wsi/2018/128/schedule/2026
+              excerpt: "More than £750,000 but not more than £1,500,000"
+    versions:
+      - effective_from: '2022-10-10'
+        formula: |-
+          1500000
+
+  - name: ltt_residential_six_percent_rate
+    kind: parameter
+    dtype: Rate
+    source: WSI 2018/128, residential relevant consideration table, first tax band percentage
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/wsi/2018/128/schedule/2026
+              excerpt: "but not more than £400,000 | 6%"
+    versions:
+      - effective_from: '2022-10-10'
+        formula: |-
+          0.06
+
+  - name: ltt_residential_seven_point_five_percent_rate
+    kind: parameter
+    dtype: Rate
+    source: WSI 2018/128, residential relevant consideration table, second tax band percentage
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/wsi/2018/128/schedule/2026
+              excerpt: "but not more than £750,000 | 7.5%"
+    versions:
+      - effective_from: '2022-10-10'
+        formula: |-
+          0.075
+
+  - name: ltt_residential_ten_percent_rate
+    kind: parameter
+    dtype: Rate
+    source: WSI 2018/128, residential relevant consideration table, third tax band percentage
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/wsi/2018/128/schedule/2026
+              excerpt: "but not more than £1,500,000 | 10%"
+    versions:
+      - effective_from: '2022-10-10'
+        formula: |-
+          0.10
+
+  - name: ltt_residential_twelve_percent_rate
+    kind: parameter
+    dtype: Rate
+    source: WSI 2018/128, residential relevant consideration table, top tax band percentage
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/wsi/2018/128/schedule/2026
+              excerpt: "More than £1,500,000 | 12%"
+    versions:
+      - effective_from: '2022-10-10'
+        formula: |-
+          0.12
+
+  - name: ltt_higher_five_percent_upper_limit
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: WSI 2018/128, higher rates residential relevant consideration table, first tax band upper bound
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/wsi/2018/128/schedule/2026
+              excerpt: "Not more than £180,000"
+    versions:
+      - effective_from: '2024-12-11'
+        formula: |-
+          180000
+
+  - name: ltt_higher_eight_point_five_percent_upper_limit
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: WSI 2018/128, higher rates residential relevant consideration table, second tax band upper bound
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/wsi/2018/128/schedule/2026
+              excerpt: "More than £180,000 but not more than £250,000"
+    versions:
+      - effective_from: '2024-12-11'
+        formula: |-
+          250000
+
+  - name: ltt_higher_ten_percent_upper_limit
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: WSI 2018/128, higher rates residential relevant consideration table, third tax band upper bound
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/wsi/2018/128/schedule/2026
+              excerpt: "More than £250,000 but not more than £400,000"
+    versions:
+      - effective_from: '2024-12-11'
+        formula: |-
+          400000
+
+  - name: ltt_higher_twelve_point_five_percent_upper_limit
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: WSI 2018/128, higher rates residential relevant consideration table, fourth tax band upper bound
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/wsi/2018/128/schedule/2026
+              excerpt: "More than £400,000 but not more than £750,000"
+    versions:
+      - effective_from: '2024-12-11'
+        formula: |-
+          750000
+
+  - name: ltt_higher_fifteen_percent_upper_limit
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: WSI 2018/128, higher rates residential relevant consideration table, fifth tax band upper bound
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/wsi/2018/128/schedule/2026
+              excerpt: "More than £750,000 but not more than £1,500,000"
+    versions:
+      - effective_from: '2024-12-11'
+        formula: |-
+          1500000
+
+  - name: ltt_higher_five_percent_rate
+    kind: parameter
+    dtype: Rate
+    source: WSI 2018/128, higher rates residential relevant consideration table, first tax band percentage
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/wsi/2018/128/schedule/2026
+              excerpt: "Not more than £180,000 | 5%"
+    versions:
+      - effective_from: '2024-12-11'
+        formula: |-
+          0.05
+
+  - name: ltt_higher_eight_point_five_percent_rate
+    kind: parameter
+    dtype: Rate
+    source: WSI 2018/128, higher rates residential relevant consideration table, second tax band percentage
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/wsi/2018/128/schedule/2026
+              excerpt: "but not more than £250,000 | 8.5%"
+    versions:
+      - effective_from: '2024-12-11'
+        formula: |-
+          0.085
+
+  - name: ltt_higher_ten_percent_rate
+    kind: parameter
+    dtype: Rate
+    source: WSI 2018/128, higher rates residential relevant consideration table, third tax band percentage
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/wsi/2018/128/schedule/2026
+              excerpt: "but not more than £400,000 | 10%"
+    versions:
+      - effective_from: '2024-12-11'
+        formula: |-
+          0.10
+
+  - name: ltt_higher_twelve_point_five_percent_rate
+    kind: parameter
+    dtype: Rate
+    source: WSI 2018/128, higher rates residential relevant consideration table, fourth tax band percentage
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/wsi/2018/128/schedule/2026
+              excerpt: "but not more than £750,000 | 12.5%"
+    versions:
+      - effective_from: '2024-12-11'
+        formula: |-
+          0.125
+
+  - name: ltt_higher_fifteen_percent_rate
+    kind: parameter
+    dtype: Rate
+    source: WSI 2018/128, higher rates residential relevant consideration table, fifth tax band percentage
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/wsi/2018/128/schedule/2026
+              excerpt: "but not more than £1,500,000 | 15%"
+    versions:
+      - effective_from: '2024-12-11'
+        formula: |-
+          0.15
+
+  - name: ltt_higher_seventeen_percent_rate
+    kind: parameter
+    dtype: Rate
+    source: WSI 2018/128, higher rates residential relevant consideration table, top tax band percentage
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/wsi/2018/128/schedule/2026
+              excerpt: "More than £1,500,000 | 17%"
+    versions:
+      - effective_from: '2024-12-11'
+        formula: |-
+          0.17
+
+  - name: ltt_main_residence_charge
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: WSI 2018/128, residential schedule applied as progressive marginal bands to the main-home purchase price
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/wsi/2018/128/schedule/2026
+              excerpt: "Relevant consideration | Percentage"
+    versions:
+      - effective_from: '2022-10-10'
+        formula: |-
+          ltt_residential_six_percent_rate * max(0, min(main_residential_property_purchased, ltt_residential_six_percent_upper_limit) - ltt_residential_nil_rate_upper_limit) + ltt_residential_seven_point_five_percent_rate * max(0, min(main_residential_property_purchased, ltt_residential_seven_point_five_percent_upper_limit) - ltt_residential_six_percent_upper_limit) + ltt_residential_ten_percent_rate * max(0, min(main_residential_property_purchased, ltt_residential_ten_percent_upper_limit) - ltt_residential_seven_point_five_percent_upper_limit) + ltt_residential_twelve_percent_rate * max(0, main_residential_property_purchased - ltt_residential_ten_percent_upper_limit)
+
+  - name: ltt_higher_rates_charge
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: WSI 2018/128 higher rates residential schedule applied as progressive marginal bands to the additional-dwelling purchase price (anaw 2017/1 s.24 higher rates residential property transactions)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/wsi/2018/128/schedule/2026
+              excerpt: "Relevant consideration | Percentage"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/anaw/2017/1/24
+              excerpt: "higher rates residential property transactions"
+    versions:
+      - effective_from: '2024-12-11'
+        formula: |-
+          ltt_higher_five_percent_rate * min(additional_residential_property_purchased, ltt_higher_five_percent_upper_limit) + ltt_higher_eight_point_five_percent_rate * max(0, min(additional_residential_property_purchased, ltt_higher_eight_point_five_percent_upper_limit) - ltt_higher_five_percent_upper_limit) + ltt_higher_ten_percent_rate * max(0, min(additional_residential_property_purchased, ltt_higher_ten_percent_upper_limit) - ltt_higher_eight_point_five_percent_upper_limit) + ltt_higher_twelve_point_five_percent_rate * max(0, min(additional_residential_property_purchased, ltt_higher_twelve_point_five_percent_upper_limit) - ltt_higher_ten_percent_upper_limit) + ltt_higher_fifteen_percent_rate * max(0, min(additional_residential_property_purchased, ltt_higher_fifteen_percent_upper_limit) - ltt_higher_twelve_point_five_percent_upper_limit) + ltt_higher_seventeen_percent_rate * max(0, additional_residential_property_purchased - ltt_higher_fifteen_percent_upper_limit)
+
+  - name: land_transaction_tax
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: WSI 2018/128 residential and higher rates schedules under anaw 2017/1 s.24 — total residential LTT on the household's Welsh purchases
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/wsi/2018/128/schedule/2026
+              excerpt: "Relevant consideration | Percentage"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/anaw/2017/1/24
+              excerpt: "tax bands and percentage tax rates for each band"
+    versions:
+      - effective_from: '2024-12-11'
+        formula: |-
+          ltt_main_residence_charge + ltt_higher_rates_charge

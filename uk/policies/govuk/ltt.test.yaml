@@ -1,0 +1,93 @@
+# Companion tests for the residential LTT band split (WSI 2018/128 main and
+# higher rates schedules under anaw 2017/1 s.24). In Wales the additional
+# dwelling is charged under a separate higher rates schedule (no zero-rate
+# band), not the main schedule plus a supplement.
+# main_residential_property_purchased and additional_residential_property_purchased
+# are supplied inputs; expected values are recomputed from the marginal-bracket
+# schedules.
+- name: main_home_below_nil_rate_band_no_charge
+  period:
+    period_kind: tax_year
+    start: '2026-04-06'
+    end: '2027-04-05'
+  input:
+    uk:policies/govuk/ltt#input.main_residential_property_purchased: 100000
+    uk:policies/govuk/ltt#input.additional_residential_property_purchased: 0
+  output:
+    uk:policies/govuk/ltt#ltt_main_residence_charge: 0
+    uk:policies/govuk/ltt#ltt_higher_rates_charge: 0
+    uk:policies/govuk/ltt#land_transaction_tax: 0
+
+- name: main_home_in_six_percent_band
+  period:
+    period_kind: tax_year
+    start: '2026-04-06'
+    end: '2027-04-05'
+  input:
+    uk:policies/govuk/ltt#input.main_residential_property_purchased: 300000
+    uk:policies/govuk/ltt#input.additional_residential_property_purchased: 0
+  output:
+    uk:policies/govuk/ltt#ltt_main_residence_charge: 4500
+    uk:policies/govuk/ltt#land_transaction_tax: 4500
+
+- name: main_home_spanning_six_and_seven_point_five_bands
+  period:
+    period_kind: tax_year
+    start: '2026-04-06'
+    end: '2027-04-05'
+  input:
+    uk:policies/govuk/ltt#input.main_residential_property_purchased: 500000
+    uk:policies/govuk/ltt#input.additional_residential_property_purchased: 0
+  output:
+    uk:policies/govuk/ltt#ltt_main_residence_charge: 18000
+    uk:policies/govuk/ltt#land_transaction_tax: 18000
+
+- name: main_home_into_ten_percent_band
+  period:
+    period_kind: tax_year
+    start: '2026-04-06'
+    end: '2027-04-05'
+  input:
+    uk:policies/govuk/ltt#input.main_residential_property_purchased: 800000
+    uk:policies/govuk/ltt#input.additional_residential_property_purchased: 0
+  output:
+    uk:policies/govuk/ltt#ltt_main_residence_charge: 41750
+    uk:policies/govuk/ltt#land_transaction_tax: 41750
+
+- name: main_home_into_twelve_percent_band
+  period:
+    period_kind: tax_year
+    start: '2026-04-06'
+    end: '2027-04-05'
+  input:
+    uk:policies/govuk/ltt#input.main_residential_property_purchased: 2000000
+    uk:policies/govuk/ltt#input.additional_residential_property_purchased: 0
+  output:
+    uk:policies/govuk/ltt#ltt_main_residence_charge: 171750
+    uk:policies/govuk/ltt#land_transaction_tax: 171750
+
+- name: additional_dwelling_charged_under_higher_rates_schedule
+  period:
+    period_kind: tax_year
+    start: '2026-04-06'
+    end: '2027-04-05'
+  input:
+    uk:policies/govuk/ltt#input.main_residential_property_purchased: 0
+    uk:policies/govuk/ltt#input.additional_residential_property_purchased: 300000
+  output:
+    uk:policies/govuk/ltt#ltt_main_residence_charge: 0
+    uk:policies/govuk/ltt#ltt_higher_rates_charge: 19950
+    uk:policies/govuk/ltt#land_transaction_tax: 19950
+
+- name: main_and_additional_purchase_sum_both_schedules
+  period:
+    period_kind: tax_year
+    start: '2026-04-06'
+    end: '2027-04-05'
+  input:
+    uk:policies/govuk/ltt#input.main_residential_property_purchased: 300000
+    uk:policies/govuk/ltt#input.additional_residential_property_purchased: 250000
+  output:
+    uk:policies/govuk/ltt#ltt_main_residence_charge: 4500
+    uk:policies/govuk/ltt#ltt_higher_rates_charge: 14950
+    uk:policies/govuk/ltt#land_transaction_tax: 19450
