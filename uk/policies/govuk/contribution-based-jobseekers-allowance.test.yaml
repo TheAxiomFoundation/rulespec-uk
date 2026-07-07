@@ -1,0 +1,35 @@
+- name: under_25_claimant_receives_lower_age_related_amount
+  period:
+    period_kind: tax_year
+    start: '2026-04-06'
+    end: '2027-04-05'
+  input:
+    uk:policies/govuk/contribution-based-jobseekers-allowance#input.entitled_to_contribution_based_jsa: true
+    uk:policies/govuk/contribution-based-jobseekers-allowance#input.claimant_has_attained_age_25: false
+  output:
+    uk:policies/govuk/contribution-based-jobseekers-allowance#contribution_based_jsa_weekly_amount: 75.65
+    uk:policies/govuk/contribution-based-jobseekers-allowance#contribution_based_jsa_annual_amount: 3933.80
+
+- name: claimant_aged_25_or_over_receives_higher_age_related_amount
+  period:
+    period_kind: tax_year
+    start: '2026-04-06'
+    end: '2027-04-05'
+  input:
+    uk:policies/govuk/contribution-based-jobseekers-allowance#input.entitled_to_contribution_based_jsa: true
+    uk:policies/govuk/contribution-based-jobseekers-allowance#input.claimant_has_attained_age_25: true
+  output:
+    uk:policies/govuk/contribution-based-jobseekers-allowance#contribution_based_jsa_weekly_amount: 95.55
+    uk:policies/govuk/contribution-based-jobseekers-allowance#contribution_based_jsa_annual_amount: 4968.60
+
+- name: not_entitled_claimant_receives_nil
+  period:
+    period_kind: tax_year
+    start: '2026-04-06'
+    end: '2027-04-05'
+  input:
+    uk:policies/govuk/contribution-based-jobseekers-allowance#input.entitled_to_contribution_based_jsa: false
+    uk:policies/govuk/contribution-based-jobseekers-allowance#input.claimant_has_attained_age_25: true
+  output:
+    uk:policies/govuk/contribution-based-jobseekers-allowance#contribution_based_jsa_weekly_amount: 0
+    uk:policies/govuk/contribution-based-jobseekers-allowance#contribution_based_jsa_annual_amount: 0
