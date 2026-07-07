@@ -1,0 +1,60 @@
+- name: prescribed_circumstances_preclude_entitlement_even_though_section_3_met
+  period: 2024-01
+  input:
+    uk:statutes/ukpga/2012/5/6#input.prescribed_period_under_subsection_1_b_or_1_c_days: 7
+    uk:statutes/ukpga/2012/5/6#input.requirements_in_section_3_are_met: true
+    uk:statutes/ukpga/2012/5/6#input.universal_credit_entitlement_excluded_in_prescribed_circumstances_under_subsection_1_a: true
+    ? uk:statutes/ukpga/2012/5/6#input.requirements_in_section_3_are_met_for_period_shorter_than_prescribed_period_under_subsection_1_b
+    : false
+    uk:statutes/ukpga/2012/5/6#input.exception_to_subsection_1_b_applies_by_regulations: false
+    ? uk:statutes/ukpga/2012/5/6#input.claimant_is_in_prescribed_period_at_beginning_of_period_during_which_section_3_requirements_are_met_under_subsection_1_c
+    : false
+    uk:statutes/ukpga/2012/5/6#input.exception_to_subsection_1_c_applies_by_regulations: false
+  output:
+    uk:statutes/ukpga/2012/5/6#prescribed_period_under_subsection_1_b_or_1_c_within_statutory_limit: holds
+    uk:statutes/ukpga/2012/5/6#section_6_precludes_universal_credit_entitlement: holds
+- name: shorter_than_prescribed_period_precludes_entitlement_without_subsection_1_b_exception
+  period: 2024-01
+  input:
+    uk:statutes/ukpga/2012/5/6#input.prescribed_period_under_subsection_1_b_or_1_c_days: 7
+    uk:statutes/ukpga/2012/5/6#input.requirements_in_section_3_are_met: true
+    uk:statutes/ukpga/2012/5/6#input.universal_credit_entitlement_excluded_in_prescribed_circumstances_under_subsection_1_a: false
+    ? uk:statutes/ukpga/2012/5/6#input.requirements_in_section_3_are_met_for_period_shorter_than_prescribed_period_under_subsection_1_b
+    : true
+    uk:statutes/ukpga/2012/5/6#input.exception_to_subsection_1_b_applies_by_regulations: false
+    ? uk:statutes/ukpga/2012/5/6#input.claimant_is_in_prescribed_period_at_beginning_of_period_during_which_section_3_requirements_are_met_under_subsection_1_c
+    : false
+    uk:statutes/ukpga/2012/5/6#input.exception_to_subsection_1_c_applies_by_regulations: false
+  output:
+    uk:statutes/ukpga/2012/5/6#prescribed_period_under_subsection_1_b_or_1_c_within_statutory_limit: holds
+    uk:statutes/ukpga/2012/5/6#section_6_precludes_universal_credit_entitlement: holds
+- name: subsection_1_b_regulatory_exception_blocks_short_period_preclusion
+  period: 2024-01
+  input:
+    uk:statutes/ukpga/2012/5/6#input.prescribed_period_under_subsection_1_b_or_1_c_days: 7
+    uk:statutes/ukpga/2012/5/6#input.requirements_in_section_3_are_met: true
+    uk:statutes/ukpga/2012/5/6#input.universal_credit_entitlement_excluded_in_prescribed_circumstances_under_subsection_1_a: false
+    ? uk:statutes/ukpga/2012/5/6#input.requirements_in_section_3_are_met_for_period_shorter_than_prescribed_period_under_subsection_1_b
+    : true
+    uk:statutes/ukpga/2012/5/6#input.exception_to_subsection_1_b_applies_by_regulations: true
+    ? uk:statutes/ukpga/2012/5/6#input.claimant_is_in_prescribed_period_at_beginning_of_period_during_which_section_3_requirements_are_met_under_subsection_1_c
+    : false
+    uk:statutes/ukpga/2012/5/6#input.exception_to_subsection_1_c_applies_by_regulations: false
+  output:
+    uk:statutes/ukpga/2012/5/6#prescribed_period_under_subsection_1_b_or_1_c_within_statutory_limit: holds
+    uk:statutes/ukpga/2012/5/6#section_6_precludes_universal_credit_entitlement: not_holds
+- name: subsection_1_c_regulatory_exception_blocks_beginning_period_preclusion
+  period: 2024-01
+  input:
+    uk:statutes/ukpga/2012/5/6#input.prescribed_period_under_subsection_1_b_or_1_c_days: 7
+    uk:statutes/ukpga/2012/5/6#input.requirements_in_section_3_are_met: true
+    uk:statutes/ukpga/2012/5/6#input.universal_credit_entitlement_excluded_in_prescribed_circumstances_under_subsection_1_a: false
+    ? uk:statutes/ukpga/2012/5/6#input.requirements_in_section_3_are_met_for_period_shorter_than_prescribed_period_under_subsection_1_b
+    : false
+    uk:statutes/ukpga/2012/5/6#input.exception_to_subsection_1_b_applies_by_regulations: false
+    ? uk:statutes/ukpga/2012/5/6#input.claimant_is_in_prescribed_period_at_beginning_of_period_during_which_section_3_requirements_are_met_under_subsection_1_c
+    : true
+    uk:statutes/ukpga/2012/5/6#input.exception_to_subsection_1_c_applies_by_regulations: true
+  output:
+    uk:statutes/ukpga/2012/5/6#prescribed_period_under_subsection_1_b_or_1_c_within_statutory_limit: holds
+    uk:statutes/ukpga/2012/5/6#section_6_precludes_universal_credit_entitlement: not_holds

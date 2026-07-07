@@ -1,0 +1,101 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/statute/ukpga/2012/5/6
+  summary: |-
+    Entitlement to universal credit does not arise in prescribed circumstances, for too-short section 3 periods, or for a prescribed beginning period; a period prescribed under subsection (1)(b) or (c) may not exceed seven days, and regulations may provide exceptions to subsection (1)(b) or (c).
+rules:
+  - name: maximum_prescribed_period_under_subsection_1_b_or_1_c_days
+    kind: parameter
+    dtype: Count
+    source: Welfare Reform Act 2012 s. 6(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/6
+              excerpt: may not exceed seven days
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          7
+  - name: prescribed_period_under_subsection_1_b_or_1_c_within_statutory_limit
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Month
+    source: Welfare Reform Act 2012 s. 6(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/6
+              excerpt: may not exceed seven days
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/2012/5/6#maximum_prescribed_period_under_subsection_1_b_or_1_c_days
+              output: maximum_prescribed_period_under_subsection_1_b_or_1_c_days
+              hash: sha256:local
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          prescribed_period_under_subsection_1_b_or_1_c_days <= maximum_prescribed_period_under_subsection_1_b_or_1_c_days
+  - name: section_6_precludes_universal_credit_entitlement
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Month
+    source: Welfare Reform Act 2012 s. 6(1)-(3)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/6
+              excerpt: in prescribed circumstances
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/6
+              excerpt: requirements in section 3 are met for a period shorter than a prescribed period
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/6
+              excerpt: for a prescribed period at the beginning of a period
+          - path: versions[0].formula
+            kind: exception
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/6
+              excerpt: Regulations may provide for exceptions to subsection (1)(b) or (c)
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/2012/5/6#prescribed_period_under_subsection_1_b_or_1_c_within_statutory_limit
+              output: prescribed_period_under_subsection_1_b_or_1_c_within_statutory_limit
+              hash: sha256:local
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          requirements_in_section_3_are_met
+          and (
+            universal_credit_entitlement_excluded_in_prescribed_circumstances_under_subsection_1_a
+            or (
+              requirements_in_section_3_are_met_for_period_shorter_than_prescribed_period_under_subsection_1_b
+              and prescribed_period_under_subsection_1_b_or_1_c_within_statutory_limit
+              and not exception_to_subsection_1_b_applies_by_regulations
+            )
+            or (
+              claimant_is_in_prescribed_period_at_beginning_of_period_during_which_section_3_requirements_are_met_under_subsection_1_c
+              and prescribed_period_under_subsection_1_b_or_1_c_within_statutory_limit
+              and not exception_to_subsection_1_c_applies_by_regulations
+            )
+          )
