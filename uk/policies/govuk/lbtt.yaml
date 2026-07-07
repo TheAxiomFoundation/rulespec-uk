@@ -1,0 +1,265 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_paths:
+      - uk/regulation/ssi/2015/126
+      - uk/statute/asp/2013/11/schedule/2A
+  summary: |-
+    Land and Buildings Transaction Tax on residential property purchases in
+    Scotland. The Land and Buildings Transaction Tax (Tax Rates and Tax Bands)
+    (Scotland) Order 2015 (SSI 2015/126) sets the residential rate schedule as
+    progressive marginal bands: 0% up to £145,000, 2% on the slice from
+    £145,000 to £250,000, 5% from £250,000 to £325,000, 10% from £325,000 to
+    £750,000, and 12% above £750,000. Tax on a purchase is the sum of each
+    band rate applied to the part of the price that falls within that band.
+    A purchase of an additional dwelling (a second home) pays the same
+    residential schedule on the price plus the Additional Dwelling Supplement:
+    an extra amount equal to 8% of the whole relevant consideration under
+    schedule 2A of the Land and Buildings Transaction Tax (Scotland) Act 2013
+    (from 5 December 2024). First-time-buyer relief is out of scope. The total
+    liability is the main-home charge plus the additional-dwelling charge plus
+    the supplement.
+rules:
+  - name: lbtt_residential_nil_rate_upper_limit
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: SSI 2015/126, residential relevant consideration table, nil rate band upper bound
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/ssi/2015/126
+              excerpt: "Not more than £145,000"
+    versions:
+      - effective_from: '2015-04-01'
+        formula: |-
+          145000
+
+  - name: lbtt_residential_two_percent_upper_limit
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: SSI 2015/126, residential relevant consideration table, first tax band upper bound
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/ssi/2015/126
+              excerpt: "More than £145,000 but not more than £250,000"
+    versions:
+      - effective_from: '2015-04-01'
+        formula: |-
+          250000
+
+  - name: lbtt_residential_five_percent_upper_limit
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: SSI 2015/126, residential relevant consideration table, second tax band upper bound
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/ssi/2015/126
+              excerpt: "More than £250,000 but not more than £325,000"
+    versions:
+      - effective_from: '2015-04-01'
+        formula: |-
+          325000
+
+  - name: lbtt_residential_ten_percent_upper_limit
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: SSI 2015/126, residential relevant consideration table, third tax band upper bound
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/ssi/2015/126
+              excerpt: "More than £325,000 but not more than £750,000"
+    versions:
+      - effective_from: '2015-04-01'
+        formula: |-
+          750000
+
+  - name: lbtt_residential_two_percent_rate
+    kind: parameter
+    dtype: Rate
+    source: SSI 2015/126, residential relevant consideration table, first tax band percentage
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/ssi/2015/126
+              excerpt: "but not more than £250,000 | 2%"
+    versions:
+      - effective_from: '2015-04-01'
+        formula: |-
+          0.02
+
+  - name: lbtt_residential_five_percent_rate
+    kind: parameter
+    dtype: Rate
+    source: SSI 2015/126, residential relevant consideration table, second tax band percentage
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/ssi/2015/126
+              excerpt: "but not more than £325,000 | 5%"
+    versions:
+      - effective_from: '2015-04-01'
+        formula: |-
+          0.05
+
+  - name: lbtt_residential_ten_percent_rate
+    kind: parameter
+    dtype: Rate
+    source: SSI 2015/126, residential relevant consideration table, third tax band percentage
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/ssi/2015/126
+              excerpt: "but not more than £750,000 | 10%"
+    versions:
+      - effective_from: '2015-04-01'
+        formula: |-
+          0.10
+
+  - name: lbtt_residential_twelve_percent_rate
+    kind: parameter
+    dtype: Rate
+    source: SSI 2015/126, residential relevant consideration table, top tax band percentage
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/ssi/2015/126
+              excerpt: "More than £750,000 | 12%"
+    versions:
+      - effective_from: '2015-04-01'
+        formula: |-
+          0.12
+
+  - name: lbtt_additional_dwelling_supplement_rate
+    kind: parameter
+    dtype: Rate
+    source: Land and Buildings Transaction Tax (Scotland) Act 2013 schedule 2A part 3 (Additional Dwelling Supplement, 8% from 5 December 2024)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/asp/2013/11/schedule/2A
+              excerpt: "The additional amount is an amount equal to 8% of the relevant consideration."
+    versions:
+      - effective_from: '2024-12-05'
+        formula: |-
+          0.08
+
+  - name: lbtt_main_residence_charge
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: SSI 2015/126, residential schedule applied as progressive marginal bands to the main-home purchase price
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/ssi/2015/126
+              excerpt: "Relevant consideration | Percentage"
+    versions:
+      - effective_from: '2015-04-01'
+        formula: |-
+          lbtt_residential_two_percent_rate * max(0, min(main_residential_property_purchased, lbtt_residential_two_percent_upper_limit) - lbtt_residential_nil_rate_upper_limit) + lbtt_residential_five_percent_rate * max(0, min(main_residential_property_purchased, lbtt_residential_five_percent_upper_limit) - lbtt_residential_two_percent_upper_limit) + lbtt_residential_ten_percent_rate * max(0, min(main_residential_property_purchased, lbtt_residential_ten_percent_upper_limit) - lbtt_residential_five_percent_upper_limit) + lbtt_residential_twelve_percent_rate * max(0, main_residential_property_purchased - lbtt_residential_ten_percent_upper_limit)
+
+  - name: lbtt_additional_residence_standard_charge
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: SSI 2015/126, residential schedule applied as progressive marginal bands to the additional-dwelling purchase price
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/ssi/2015/126
+              excerpt: "Relevant consideration | Percentage"
+    versions:
+      - effective_from: '2015-04-01'
+        formula: |-
+          lbtt_residential_two_percent_rate * max(0, min(additional_residential_property_purchased, lbtt_residential_two_percent_upper_limit) - lbtt_residential_nil_rate_upper_limit) + lbtt_residential_five_percent_rate * max(0, min(additional_residential_property_purchased, lbtt_residential_five_percent_upper_limit) - lbtt_residential_two_percent_upper_limit) + lbtt_residential_ten_percent_rate * max(0, min(additional_residential_property_purchased, lbtt_residential_ten_percent_upper_limit) - lbtt_residential_five_percent_upper_limit) + lbtt_residential_twelve_percent_rate * max(0, additional_residential_property_purchased - lbtt_residential_ten_percent_upper_limit)
+
+  - name: lbtt_additional_dwelling_supplement
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Land and Buildings Transaction Tax (Scotland) Act 2013 schedule 2A part 3 (8% of the relevant consideration for the additional dwelling)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/asp/2013/11/schedule/2A
+              excerpt: "The additional amount is an amount equal to 8% of the relevant consideration."
+    versions:
+      - effective_from: '2024-12-05'
+        formula: |-
+          lbtt_additional_dwelling_supplement_rate * additional_residential_property_purchased
+
+  - name: land_and_buildings_transaction_tax
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: SSI 2015/126 residential schedule plus LBTT(S)A 2013 schedule 2A Additional Dwelling Supplement — total residential LBTT on the household's purchases
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/ssi/2015/126
+              excerpt: "Relevant consideration | Percentage"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/asp/2013/11/schedule/2A
+              excerpt: "the amount of tax chargeable in respect of the transaction"
+    versions:
+      - effective_from: '2024-12-05'
+        formula: |-
+          lbtt_main_residence_charge + lbtt_additional_residence_standard_charge + lbtt_additional_dwelling_supplement
