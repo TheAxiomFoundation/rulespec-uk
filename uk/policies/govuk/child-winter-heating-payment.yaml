@@ -5,7 +5,11 @@ module:
   source_verification:
     corpus_citation_path: uk/regulation/ssi/2020/352/10
   summary: |-
-    Subject to paragraph (1A), the value of child winter heating assistance is £265.50. Where entitlement is by virtue of regulation 4(7), the payable value is the paragraph (1) value as it had effect when these Regulations came into force. Assistance is money in a single payment.
+    The value of child winter heating assistance is £265.50 (SSI 2020/352
+    regulation 10(1)), paid as money in a single payment. This is the substantive
+    payable value; the regulation 10(1A) / regulation 4(7) commencement-value
+    transitional exception is out of scope (its value is not stated in the
+    regulation).
 rules:
   - name: child_winter_heating_assistance_standard_value
     kind: parameter
@@ -32,7 +36,7 @@ rules:
     dtype: Money
     unit: GBP
     period: Year
-    source: SSI 2020/352 regulation 10(1)-(1A)
+    source: SSI 2020/352 regulation 10(1)
     metadata:
       proof:
         atoms:
@@ -42,16 +46,12 @@ rules:
               corpus_citation_path: uk/regulation/ssi/2020/352/10
               excerpt: "the value of child winter heating assistance is £265.50"
           - path: versions[0].formula
-            kind: exception
-            source:
-              corpus_citation_path: uk/regulation/ssi/2020/352/10
-              excerpt: "entitled to be paid child winter heating assistance by virtue of regulation 4(7)"
-          - path: versions[0].formula
-            kind: formula
-            source:
-              corpus_citation_path: uk/regulation/ssi/2020/352/10
-              excerpt: "the value specified in paragraph (1) as it had effect on the day these Regulations came into force"
+            kind: import
+            import:
+              target: uk:policies/govuk/child-winter-heating-payment#child_winter_heating_assistance_standard_value
+              output: child_winter_heating_assistance_standard_value
+              hash: sha256:local
     versions:
       - effective_from: '2024-01-01'
         formula: |-
-          if entitled_by_virtue_of_regulation_4_7: child_winter_heating_assistance_value_at_commencement else: child_winter_heating_assistance_standard_value
+          child_winter_heating_assistance_standard_value
