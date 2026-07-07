@@ -1,0 +1,52 @@
+- name: married_or_civil_partners_same_household_are_couple
+  period: 2024-01
+  input:
+    uk:statutes/ukpga/2012/5/39#input.two_people_are_married_or_civil_partners_of_each_other: true
+    uk:statutes/ukpga/2012/5/39#input.fact_that_two_persons_are_married_or_civil_partners_disregarded_by_regulations: false
+    uk:statutes/ukpga/2012/5/39#input.two_people_are_members_of_same_household: true
+    uk:statutes/ukpga/2012/5/39#input.two_people_are_treated_as_members_of_same_household_by_regulations: false
+    uk:statutes/ukpga/2012/5/39#input.two_people_are_treated_as_not_members_of_same_household_by_regulations: false
+    uk:statutes/ukpga/2012/5/39#input.two_people_are_living_together_as_if_married_couple_or_civil_partners: false
+    ? uk:statutes/ukpga/2012/5/39#input.two_people_are_treated_as_living_together_as_if_married_couple_or_civil_partners_by_regulations
+    : false
+  output:
+    uk:statutes/ukpga/2012/5/39#couple: holds
+- name: married_or_civil_partners_disregarded_by_regulations_blocks_married_path
+  period: 2024-01
+  input:
+    uk:statutes/ukpga/2012/5/39#input.two_people_are_married_or_civil_partners_of_each_other: true
+    uk:statutes/ukpga/2012/5/39#input.fact_that_two_persons_are_married_or_civil_partners_disregarded_by_regulations: true
+    uk:statutes/ukpga/2012/5/39#input.two_people_are_members_of_same_household: true
+    uk:statutes/ukpga/2012/5/39#input.two_people_are_treated_as_members_of_same_household_by_regulations: false
+    uk:statutes/ukpga/2012/5/39#input.two_people_are_treated_as_not_members_of_same_household_by_regulations: false
+    uk:statutes/ukpga/2012/5/39#input.two_people_are_living_together_as_if_married_couple_or_civil_partners: false
+    ? uk:statutes/ukpga/2012/5/39#input.two_people_are_treated_as_living_together_as_if_married_couple_or_civil_partners_by_regulations
+    : false
+  output:
+    uk:statutes/ukpga/2012/5/39#couple: not_holds
+- name: treated_as_not_same_household_blocks_married_path
+  period: 2024-01
+  input:
+    uk:statutes/ukpga/2012/5/39#input.two_people_are_married_or_civil_partners_of_each_other: true
+    uk:statutes/ukpga/2012/5/39#input.fact_that_two_persons_are_married_or_civil_partners_disregarded_by_regulations: false
+    uk:statutes/ukpga/2012/5/39#input.two_people_are_members_of_same_household: true
+    uk:statutes/ukpga/2012/5/39#input.two_people_are_treated_as_members_of_same_household_by_regulations: false
+    uk:statutes/ukpga/2012/5/39#input.two_people_are_treated_as_not_members_of_same_household_by_regulations: true
+    uk:statutes/ukpga/2012/5/39#input.two_people_are_living_together_as_if_married_couple_or_civil_partners: false
+    ? uk:statutes/ukpga/2012/5/39#input.two_people_are_treated_as_living_together_as_if_married_couple_or_civil_partners_by_regulations
+    : false
+  output:
+    uk:statutes/ukpga/2012/5/39#couple: not_holds
+- name: unmarried_people_treated_as_living_together_as_if_married_are_couple
+  period: 2024-01
+  input:
+    uk:statutes/ukpga/2012/5/39#input.two_people_are_married_or_civil_partners_of_each_other: false
+    uk:statutes/ukpga/2012/5/39#input.fact_that_two_persons_are_married_or_civil_partners_disregarded_by_regulations: false
+    uk:statutes/ukpga/2012/5/39#input.two_people_are_members_of_same_household: false
+    uk:statutes/ukpga/2012/5/39#input.two_people_are_treated_as_members_of_same_household_by_regulations: false
+    uk:statutes/ukpga/2012/5/39#input.two_people_are_treated_as_not_members_of_same_household_by_regulations: false
+    uk:statutes/ukpga/2012/5/39#input.two_people_are_living_together_as_if_married_couple_or_civil_partners: false
+    ? uk:statutes/ukpga/2012/5/39#input.two_people_are_treated_as_living_together_as_if_married_couple_or_civil_partners_by_regulations
+    : true
+  output:
+    uk:statutes/ukpga/2012/5/39#couple: holds

@@ -1,0 +1,56 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/statute/ukpga/2012/5/39
+  summary: |-
+    In this Part “couple” means two people who are married to, or civil partners of, each other and are members of the same household; or two people who are not married to, or civil partners of, each other but are living together as if they were a married couple or civil partners. Regulations may prescribe circumstances for disregarding marriage or civil partnership, treating people as living together as if married or civil partners, and treating people as being or not being members of the same household.
+rules:
+  - name: couple
+    kind: derived
+    entity: Family
+    dtype: Judgment
+    period: Month
+    source: Welfare Reform Act 2012 s. 39
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/39
+              excerpt: two people who are married to, or civil partners of, each other and are members of the same household
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/39
+              excerpt: two people who are not married to, or civil partners of, each other but are living together as if they were a married couple or civil partners
+          - path: versions[0].formula
+            kind: exception
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/39
+              excerpt: circumstances in which the fact that two persons are married or are civil partners is to be disregarded
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/39
+              excerpt: circumstances in which two people are to be treated as living together as if they were a married couple or civil partners
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2012/5/39
+              excerpt: circumstances in which people are to be treated as being or not being members of the same household
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          (
+            two_people_are_married_or_civil_partners_of_each_other
+            and not fact_that_two_persons_are_married_or_civil_partners_disregarded_by_regulations
+            and (two_people_are_members_of_same_household or two_people_are_treated_as_members_of_same_household_by_regulations)
+            and not two_people_are_treated_as_not_members_of_same_household_by_regulations
+          )
+          or (
+            not two_people_are_married_or_civil_partners_of_each_other
+            and (two_people_are_living_together_as_if_married_couple_or_civil_partners or two_people_are_treated_as_living_together_as_if_married_couple_or_civil_partners_by_regulations)
+          )
