@@ -1,0 +1,47 @@
+# Composed Tax-Free Childcare top-up pipeline -- Childcare Payments Act 2014
+# section 1: the top-up is 25% of the qualifying childcare payment. Cases stay
+# below the per-child entitlement-period cap (GBP 2,000/year standard), which is
+# outside this pipeline's scope, so the top-up is exactly 25% of the payment.
+
+- name: cpa_2014_section_1_top_up_rate
+  period:
+    period_kind: custom
+    name: uk_fiscal_year
+    start: '2026-04-06'
+    end: '2027-04-05'
+  input: {}
+  output:
+    uk:policies/tax_free_childcare_composed_top_up_pipeline#tfc_pilot_top_up_rate: 0.25
+
+- name: qualifying_payment_4000_below_cap
+  period:
+    period_kind: custom
+    name: uk_fiscal_year
+    start: '2026-04-06'
+    end: '2027-04-05'
+  input:
+    uk:policies/tax_free_childcare_composed_top_up_pipeline#input.tfc_pilot_qualifying_childcare_payment: 4000
+  output:
+    uk:policies/tax_free_childcare_composed_top_up_pipeline#tfc_pilot_top_up_amount: 1000
+
+- name: qualifying_payment_2000_below_cap
+  period:
+    period_kind: custom
+    name: uk_fiscal_year
+    start: '2026-04-06'
+    end: '2027-04-05'
+  input:
+    uk:policies/tax_free_childcare_composed_top_up_pipeline#input.tfc_pilot_qualifying_childcare_payment: 2000
+  output:
+    uk:policies/tax_free_childcare_composed_top_up_pipeline#tfc_pilot_top_up_amount: 500
+
+- name: no_qualifying_payment
+  period:
+    period_kind: custom
+    name: uk_fiscal_year
+    start: '2026-04-06'
+    end: '2027-04-05'
+  input:
+    uk:policies/tax_free_childcare_composed_top_up_pipeline#input.tfc_pilot_qualifying_childcare_payment: 0
+  output:
+    uk:policies/tax_free_childcare_composed_top_up_pipeline#tfc_pilot_top_up_amount: 0
