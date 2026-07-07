@@ -265,29 +265,38 @@ jobs:
           module="${applied[0]}"
           base="$(basename "${module%.yaml}")"
 
-          # Derive the companion test and the signed apply manifest paths
-          # DETERMINISTICALLY from the module path (as rulespec-us does). `--apply`
-          # co-locates the manifest under the jurisdiction's own
-          # `.axiom/encoding-manifests/` tree, mirroring the module path with a
-          # `.json` suffix -- e.g.
-          #   uk/statutes/ukpga/2012/5/34.yaml
-          #   -> uk/.axiom/encoding-manifests/statutes/ukpga/2012/5/34.json
-          # That is exactly where guard-generated looks: it maps a manifest at
-          # `<juris>/.axiom/encoding-manifests/<rest>.json` back to the changed
-          # rule path `<juris>/<rest>.yaml` (manifest root_prefix = <juris>).
-          # Deriving the path is REQUIRED for correctness: WRA 2012 (ukpga/2012/5)
-          # and the UC Regs (uksi/2013/376) are both densely encoded here, so a
-          # whole-tree `find -name "<section>.json"` matched an unrelated
-          # same-numbered statute's manifest and staged the wrong (unchanged)
-          # file, so guard-generated saw the rule change "without a matching
-          # manifest" -- yet the PR was still pushed. Never guess by basename.
+          # Derive the companion test and the signed apply manifest path
+          # DETERMINISTICALLY from the module path (as rulespec-us does).
+          # `encode --apply` writes the manifest at one of two module-path-
+          # mirrored locations, chosen by what this repo's repository-structure
+          # layout gate permits (axiom-encode#1078):
+          #   Config A (co-located):  <juris>/.axiom/encoding-manifests/<rest>.json
+          #     used when the gate allows .json under <juris>/** (e.g. rulespec-us).
+          #   Config C (root mirror): .axiom/encoding-manifests/<juris>/<rest>.json
+          #     used when the gate forbids .json under <juris>/** -- rulespec-uk
+          #     (uk/** allows only .yaml), rulespec-be, rulespec-gh. This is the
+          #     ONLY manifest layout that merges here, since the layout gate
+          #     rejects a .json under uk/**.
+          # Both are guard-generated-valid: A maps back via root_prefix=<juris>,
+          # C via root_prefix="" with jurisdiction-prefixed applied_files.
+          # Deriving the path (never a whole-tree basename `find`) is REQUIRED:
+          # WRA 2012 (ukpga/2012/5) and the UC Regs (uksi/2013/376) are both
+          # densely encoded, so `find -name "<section>.json"` matched an
+          # unrelated same-numbered statute's manifest and pushed a manifest-less
+          # PR. Detect whichever exact mirror the encoder wrote; prefer the
+          # mergeable Config C when both are present.
           juris="${module%%/*}"
           rest="${module#*/}"
           test_file="${module%.yaml}.test.yaml"
-          manifest_rel="$juris/.axiom/encoding-manifests/${rest%.yaml}.json"
-          if [ ! -f "$GITHUB_WORKSPACE/$manifest_rel" ]; then
+          manifest_a="$juris/.axiom/encoding-manifests/${rest%.yaml}.json"
+          manifest_c=".axiom/encoding-manifests/$juris/${rest%.yaml}.json"
+          if [ -f "$GITHUB_WORKSPACE/$manifest_c" ]; then
+            manifest_rel="$manifest_c"
+          elif [ -f "$GITHUB_WORKSPACE/$manifest_a" ]; then
+            manifest_rel="$manifest_a"
+          else
             echo "status=failed" >> "$GITHUB_OUTPUT"
-            echo "::error::apply wrote no signed manifest at $manifest_rel for $CITATION -- apply was blocked (see encode.log; a *.repair.json was written under $RUNNER_TEMP/encode-out). Not opening a PR." >&2
+            echo "::error::apply wrote no signed manifest at $manifest_c or $manifest_a for $CITATION -- apply was blocked (see encode.log; a *.repair.json was written under $RUNNER_TEMP/encode-out). Not opening a PR." >&2
             exit 1
           fi
           echo "module=$module" >> "$GITHUB_OUTPUT"
