@@ -1,0 +1,22 @@
+- name: standard payable value
+  period:
+    period_kind: custom
+    name: calendar_year
+    start: '2024-01-01'
+    end: '2024-12-31'
+  input:
+    uk:policies/govuk/child-winter-heating-payment#input.entitled_by_virtue_of_regulation_4_7: false
+    uk:policies/govuk/child-winter-heating-payment#input.child_winter_heating_assistance_value_at_commencement: 200
+  output:
+    uk:policies/govuk/child-winter-heating-payment#child_winter_heating_assistance_payable_value: 265.5
+- name: regulation 4 7 commencement value
+  period:
+    period_kind: custom
+    name: calendar_year
+    start: '2024-01-01'
+    end: '2024-12-31'
+  input:
+    uk:policies/govuk/child-winter-heating-payment#input.entitled_by_virtue_of_regulation_4_7: true
+    uk:policies/govuk/child-winter-heating-payment#input.child_winter_heating_assistance_value_at_commencement: 200
+  output:
+    uk:policies/govuk/child-winter-heating-payment#child_winter_heating_assistance_payable_value: 200
