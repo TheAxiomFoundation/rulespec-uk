@@ -8,14 +8,8 @@
 # Maintained by: axiom-encode oracle-coverage-pending sync.
 version: 1
 issue: https://github.com/TheAxiomFoundation/rulespec-uk/issues/101
-ceiling: 10
+ceiling: 22
 entries:
-  - legal_id: uk:policies/tax_free_childcare_composed_top_up_pipeline#tfc_pilot_top_up_rate
-    source: manual
-    since: 2026-07-07
-  - legal_id: uk:policies/tax_free_childcare_composed_top_up_pipeline#tfc_pilot_top_up_amount
-    source: manual
-    since: 2026-07-07
   - legal_id: uk:policies/attendance_allowance_composed_amount_pipeline#aa_pilot_higher_weekly_rate
     source: manual
     since: 2026-07-07
@@ -23,6 +17,48 @@ entries:
     source: manual
     since: 2026-07-07
   - legal_id: uk:policies/attendance_allowance_composed_amount_pipeline#aa_pilot_weekly_amount
+    source: manual
+    since: 2026-07-07
+  - legal_id: uk:policies/govuk/fuel-duty#fuel_duty_annual_amount
+    source: bulk
+    since: 2026-07-07
+  - legal_id: uk:policies/govuk/fuel-duty#fuel_duty_effective_rate_per_litre
+    source: bulk
+    since: 2026-07-07
+  - legal_id: uk:policies/govuk/fuel-duty#fuel_duty_rural_relief_amount
+    source: bulk
+    since: 2026-07-07
+  - legal_id: uk:policies/govuk/fuel-duty#fuel_duty_standing_rate_per_litre
+    source: bulk
+    since: 2026-07-07
+  - legal_id: uk:policies/govuk/fuel-duty#fuel_duty_total_litres
+    source: bulk
+    since: 2026-07-07
+  - legal_id: uk:policies/govuk/tv-licence#free_tv_licence_value
+    source: bulk
+    since: 2026-07-07
+  - legal_id: uk:policies/govuk/tv-licence#tv_licence_aged_concession_applies
+    source: bulk
+    since: 2026-07-07
+  - legal_id: uk:policies/govuk/tv-licence#tv_licence_aged_concession_value
+    source: bulk
+    since: 2026-07-07
+  - legal_id: uk:policies/govuk/tv-licence#tv_licence_blind_concession_value
+    source: bulk
+    since: 2026-07-07
+  - legal_id: uk:policies/govuk/tv-licence#tv_licence_colour_fee
+    source: bulk
+    since: 2026-07-07
+  - legal_id: uk:policies/govuk/tv-licence#tv_licence_concession_rate
+    source: bulk
+    since: 2026-07-07
+  - legal_id: uk:policies/govuk/tv-licence#tv_licence_net_cost
+    source: bulk
+    since: 2026-07-07
+  - legal_id: uk:policies/tax_free_childcare_composed_top_up_pipeline#tfc_pilot_top_up_amount
+    source: manual
+    since: 2026-07-07
+  - legal_id: uk:policies/tax_free_childcare_composed_top_up_pipeline#tfc_pilot_top_up_rate
     source: manual
     since: 2026-07-07
   - legal_id: uk:statutes/ukpga/2012/5/39#couple

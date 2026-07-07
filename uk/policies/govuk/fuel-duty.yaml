@@ -1,0 +1,122 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_paths:
+      - uk/statute/ukpga/1979/5/6
+  summary: |-
+    Excise duty on road fuel (petrol and diesel) for private motoring. Hydrocarbon
+    Oil Duties Act 1979 s.6(1) charges a duty of excise on hydrocarbon oil at the
+    rates specified in s.6(1A); the standing s.6(1A) rate is £0.5795 a litre for
+    both unleaded petrol and heavy oil (diesel). The duty actually in force is the
+    standing rate less any temporary reduction: since 23 March 2022 a temporary
+    fuel duty cut (extended and partially unwound by the Autumn Budget 2025) has
+    applied, set by annual Budget resolution and not carried into the consolidated
+    s.6(1A) text. This reproduces the PolicyEngine-UK `fuel_duty` surface: the
+    per-litre effective rate (standing rate net of the temporary reduction) less
+    the Rural Fuel Duty Relief where applicable, applied to the household's petrol
+    and diesel litres. The current temporary reduction, the rural relief rate,
+    the relief-area flag, and the litres are supplied inputs (PolicyEngine's
+    gov.hmrc.fuel_duty parameters and household consumption); this module grounds
+    the s.6(1A) standing statutory rate and encodes the charging structure.
+rules:
+  - name: fuel_duty_standing_rate_per_litre
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: Hydrocarbon Oil Duties Act 1979 s.6(1A) (standing rate of excise duty on unleaded petrol and heavy oil)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/1979/5/6
+              excerpt: "£0.5795 a litre in the case of unleaded petrol"
+    versions:
+      - effective_from: '2011-03-23'
+        formula: |-
+          0.5795
+
+  - name: fuel_duty_rural_relief_amount
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: The Rural Fuel Duty Relief reduces the per-litre duty in eligible rural areas (HODA 1979 s.6; Rural Fuel Duty Relief scheme)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/1979/5/6
+              excerpt: "a duty of excise at the rates specified in subsection (1A)"
+    versions:
+      - effective_from: '2011-03-23'
+        formula: |-
+          if in_rural_fuel_duty_relief_area:
+            rural_fuel_duty_relief_per_litre
+          else:
+            0
+
+  - name: fuel_duty_effective_rate_per_litre
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: The per-litre duty in force is the s.6(1A) standing rate less the current temporary fuel duty reduction and any rural relief (HODA 1979 s.6)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1979/5/6
+              excerpt: "a duty of excise at the rates specified in subsection (1A)"
+    versions:
+      - effective_from: '2011-03-23'
+        formula: |-
+          fuel_duty_standing_rate_per_litre - temporary_fuel_duty_reduction_per_litre - fuel_duty_rural_relief_amount
+
+  - name: fuel_duty_total_litres
+    kind: derived
+    entity: Household
+    dtype: Number
+    period: Year
+    source: Total dutiable road fuel is the household's petrol plus diesel litres (HODA 1979 s.6(1))
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1979/5/6
+              excerpt: "There shall be charged on hydrocarbon oil"
+    versions:
+      - effective_from: '2011-03-23'
+        formula: |-
+          petrol_litres + diesel_litres
+
+  - name: fuel_duty_annual_amount
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Annual fuel duty is the effective per-litre rate applied to the household's dutiable litres (HODA 1979 s.6)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1979/5/6
+              excerpt: "a duty of excise at the rates specified in subsection (1A)"
+    versions:
+      - effective_from: '2011-03-23'
+        formula: |-
+          fuel_duty_effective_rate_per_litre * fuel_duty_total_litres

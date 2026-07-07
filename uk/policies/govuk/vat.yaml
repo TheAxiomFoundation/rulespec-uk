@@ -1,0 +1,80 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_paths:
+      - uk/statute/ukpga/1994/23/2
+      - uk/statute/ukpga/1994/23/29A
+  summary: |-
+    Value Added Tax charged on household final consumption at the two positive
+    UK rates. VATA 1994 s.2(1) charges VAT at the standard rate of 20 per cent
+    on standard-rated supplies; s.29A charges the reduced rate of 5 per cent on
+    supplies of a description specified in Schedule 7A (domestic fuel and power
+    and the other reduced-rated groups). This reproduces the PolicyEngine-UK
+    `vat` surface: standard-rated consumption at 20 per cent plus reduced-rated
+    consumption at 5 per cent, grossed up by the LCFS microdata VAT-coverage
+    factor to hit HMRC-reported receipts. The full/reduced consumption split and
+    the coverage factor are supplied simulation inputs (PolicyEngine household
+    consumption imputation and gov.simulation.microdata_vat_coverage); this
+    module encodes the statutory rate application, not the Schedule 7A/8/9 goods
+    classification, which PolicyEngine applies upstream in the microdata.
+rules:
+  - name: vat_standard_rate
+    kind: parameter
+    dtype: Rate
+    source: Value Added Tax Act 1994 s.2(1) (standard rate of VAT)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/1994/23/2
+              excerpt: "VAT shall be charged at the rate of 20 per cent"
+    versions:
+      - effective_from: '2011-01-04'
+        formula: |-
+          0.20
+
+  - name: vat_reduced_rate
+    kind: parameter
+    dtype: Rate
+    source: Value Added Tax Act 1994 s.29A (reduced rate for Schedule 7A supplies)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/1994/23/29A
+              excerpt: "shall be charged at the rate of 5 per cent"
+    versions:
+      - effective_from: '2001-11-01'
+        formula: |-
+          0.05
+
+  - name: vat_annual_amount
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Value Added Tax Act 1994 ss.2(1) and 29A — VAT charged at 20 per cent on standard-rated supplies and 5 per cent on Schedule 7A supplies, grossed to HMRC receipts by the LCFS microdata coverage factor
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1994/23/2
+              excerpt: "VAT shall be charged at the rate of 20 per cent"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1994/23/29A
+              excerpt: "shall be charged at the rate of 5 per cent"
+    versions:
+      - effective_from: '2011-01-04'
+        formula: |-
+          (full_rate_vat_consumption * vat_standard_rate + reduced_rate_vat_consumption * vat_reduced_rate) / microdata_vat_coverage

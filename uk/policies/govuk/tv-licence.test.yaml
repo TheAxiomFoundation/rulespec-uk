@@ -1,0 +1,139 @@
+# Fixture-split (encode#1060): rules encode Communications Act 2003 s.363/s.365
+# and SI 2004/692 Sch 1; these expected amounts are orchestrator-computed shown
+# arithmetic. fee = 180; net = fee*(1-concession); free = fee*concession;
+# concession = max(over-75 rate if aged75 & pension credit, blind rate if blind).
+# The concession rates (aged 1.0, blind 0.5) are supplied inputs (BBC scheme).
+- name: standard_household_pays_full_fee
+  period:
+    period_kind: tax_year
+    start: '2026-04-06'
+    end: '2027-04-05'
+  input:
+    uk:policies/govuk/tv-licence#input.household_owns_tv: true
+    uk:policies/govuk/tv-licence#input.household_would_evade_tv_licence: false
+    uk:policies/govuk/tv-licence#input.household_has_person_aged_75: false
+    uk:policies/govuk/tv-licence#input.household_receives_pension_credit: false
+    uk:policies/govuk/tv-licence#input.household_has_blind_person: false
+    uk:policies/govuk/tv-licence#input.tv_licence_aged_concession_rate: 1.0
+    uk:policies/govuk/tv-licence#input.tv_licence_blind_concession_rate: 0.5
+  output:
+    uk:policies/govuk/tv-licence#tv_licence_colour_fee: 180
+    uk:policies/govuk/tv-licence#tv_licence_aged_concession_value: 0
+    uk:policies/govuk/tv-licence#tv_licence_blind_concession_value: 0
+    uk:policies/govuk/tv-licence#tv_licence_concession_rate: 0
+    # 180 * (1 - 0) = 180
+    uk:policies/govuk/tv-licence#tv_licence_net_cost: 180
+    uk:policies/govuk/tv-licence#free_tv_licence_value: 0
+
+- name: over_75_on_pension_credit_free_licence
+  period:
+    period_kind: tax_year
+    start: '2026-04-06'
+    end: '2027-04-05'
+  input:
+    uk:policies/govuk/tv-licence#input.household_owns_tv: true
+    uk:policies/govuk/tv-licence#input.household_would_evade_tv_licence: false
+    uk:policies/govuk/tv-licence#input.household_has_person_aged_75: true
+    uk:policies/govuk/tv-licence#input.household_receives_pension_credit: true
+    uk:policies/govuk/tv-licence#input.household_has_blind_person: false
+    uk:policies/govuk/tv-licence#input.tv_licence_aged_concession_rate: 1.0
+    uk:policies/govuk/tv-licence#input.tv_licence_blind_concession_rate: 0.5
+  output:
+    uk:policies/govuk/tv-licence#tv_licence_aged_concession_applies: holds
+    uk:policies/govuk/tv-licence#tv_licence_aged_concession_value: 1
+    uk:policies/govuk/tv-licence#tv_licence_concession_rate: 1
+    # 180 * (1 - 1) = 0; free value 180 * 1 = 180
+    uk:policies/govuk/tv-licence#tv_licence_net_cost: 0
+    uk:policies/govuk/tv-licence#free_tv_licence_value: 180
+
+- name: over_75_without_pension_credit_pays_full
+  period:
+    period_kind: tax_year
+    start: '2026-04-06'
+    end: '2027-04-05'
+  input:
+    uk:policies/govuk/tv-licence#input.household_owns_tv: true
+    uk:policies/govuk/tv-licence#input.household_would_evade_tv_licence: false
+    uk:policies/govuk/tv-licence#input.household_has_person_aged_75: true
+    uk:policies/govuk/tv-licence#input.household_receives_pension_credit: false
+    uk:policies/govuk/tv-licence#input.household_has_blind_person: false
+    uk:policies/govuk/tv-licence#input.tv_licence_aged_concession_rate: 1.0
+    uk:policies/govuk/tv-licence#input.tv_licence_blind_concession_rate: 0.5
+  output:
+    uk:policies/govuk/tv-licence#tv_licence_aged_concession_applies: not_holds
+    # 180 * (1 - 0) = 180
+    uk:policies/govuk/tv-licence#tv_licence_net_cost: 180
+    uk:policies/govuk/tv-licence#free_tv_licence_value: 0
+
+- name: blind_household_half_fee
+  period:
+    period_kind: tax_year
+    start: '2026-04-06'
+    end: '2027-04-05'
+  input:
+    uk:policies/govuk/tv-licence#input.household_owns_tv: true
+    uk:policies/govuk/tv-licence#input.household_would_evade_tv_licence: false
+    uk:policies/govuk/tv-licence#input.household_has_person_aged_75: false
+    uk:policies/govuk/tv-licence#input.household_receives_pension_credit: false
+    uk:policies/govuk/tv-licence#input.household_has_blind_person: true
+    uk:policies/govuk/tv-licence#input.tv_licence_aged_concession_rate: 1.0
+    uk:policies/govuk/tv-licence#input.tv_licence_blind_concession_rate: 0.5
+  output:
+    uk:policies/govuk/tv-licence#tv_licence_blind_concession_value: 0.5
+    uk:policies/govuk/tv-licence#tv_licence_concession_rate: 0.5
+    # 180 * (1 - 0.5) = 90; free value 180 * 0.5 = 90
+    uk:policies/govuk/tv-licence#tv_licence_net_cost: 90
+    uk:policies/govuk/tv-licence#free_tv_licence_value: 90
+
+- name: over_75_pc_and_blind_takes_larger_concession
+  period:
+    period_kind: tax_year
+    start: '2026-04-06'
+    end: '2027-04-05'
+  input:
+    uk:policies/govuk/tv-licence#input.household_owns_tv: true
+    uk:policies/govuk/tv-licence#input.household_would_evade_tv_licence: false
+    uk:policies/govuk/tv-licence#input.household_has_person_aged_75: true
+    uk:policies/govuk/tv-licence#input.household_receives_pension_credit: true
+    uk:policies/govuk/tv-licence#input.household_has_blind_person: true
+    uk:policies/govuk/tv-licence#input.tv_licence_aged_concession_rate: 1.0
+    uk:policies/govuk/tv-licence#input.tv_licence_blind_concession_rate: 0.5
+  output:
+    # max(1.0, 0.5) = 1.0 -> free licence
+    uk:policies/govuk/tv-licence#tv_licence_concession_rate: 1
+    uk:policies/govuk/tv-licence#tv_licence_net_cost: 0
+    uk:policies/govuk/tv-licence#free_tv_licence_value: 180
+
+- name: no_receiver_no_cost
+  period:
+    period_kind: tax_year
+    start: '2026-04-06'
+    end: '2027-04-05'
+  input:
+    uk:policies/govuk/tv-licence#input.household_owns_tv: false
+    uk:policies/govuk/tv-licence#input.household_would_evade_tv_licence: false
+    uk:policies/govuk/tv-licence#input.household_has_person_aged_75: false
+    uk:policies/govuk/tv-licence#input.household_receives_pension_credit: false
+    uk:policies/govuk/tv-licence#input.household_has_blind_person: false
+    uk:policies/govuk/tv-licence#input.tv_licence_aged_concession_rate: 1.0
+    uk:policies/govuk/tv-licence#input.tv_licence_blind_concession_rate: 0.5
+  output:
+    uk:policies/govuk/tv-licence#tv_licence_net_cost: 0
+    uk:policies/govuk/tv-licence#free_tv_licence_value: 0
+
+- name: evader_no_cost
+  period:
+    period_kind: tax_year
+    start: '2026-04-06'
+    end: '2027-04-05'
+  input:
+    uk:policies/govuk/tv-licence#input.household_owns_tv: true
+    uk:policies/govuk/tv-licence#input.household_would_evade_tv_licence: true
+    uk:policies/govuk/tv-licence#input.household_has_person_aged_75: false
+    uk:policies/govuk/tv-licence#input.household_receives_pension_credit: false
+    uk:policies/govuk/tv-licence#input.household_has_blind_person: false
+    uk:policies/govuk/tv-licence#input.tv_licence_aged_concession_rate: 1.0
+    uk:policies/govuk/tv-licence#input.tv_licence_blind_concession_rate: 0.5
+  output:
+    uk:policies/govuk/tv-licence#tv_licence_net_cost: 0
+    uk:policies/govuk/tv-licence#free_tv_licence_value: 0

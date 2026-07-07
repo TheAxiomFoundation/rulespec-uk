@@ -1,0 +1,184 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_paths:
+      - uk/statute/ukpga/2003/21/363
+      - uk/statute/ukpga/2003/21/365
+      - uk/regulation/uksi/2004/692/schedule/1
+  summary: |-
+    Net cost of a TV licence and the value of any concession. A television
+    receiver must be covered by a licence (Communications Act 2003 s.363); the
+    fee for a colour (General Form) licence is set by the Communications
+    (Television Licensing) Regulations 2004 Schedule 1 (£180.00 for the 2026-27
+    year). s.365 makes liability to pay the fee subject to any concession the
+    BBC provides. This reproduces the PolicyEngine-UK `tv_licence` and
+    `free_tv_licence_value` surface: a household that owns a receiver and does
+    not evade pays the fee net of the largest applicable concession, and the
+    concession value is the balance. Two concessions are modelled — the over-75
+    free licence (100 per cent), available since August 2020 only to households
+    where someone aged 75 or over receives Pension Credit, and the blind
+    (severely sight impaired) 50 per cent concession. Whether a household owns a
+    receiver, would evade, contains a person aged 75+, receives Pension Credit,
+    and contains a blind person are supplied facts (PolicyEngine household and
+    person inputs). The two concession rates (over-75 100 per cent, blind 50 per
+    cent) are supplied simulation inputs matching the BBC concession scheme that
+    PolicyEngine reads from gov.dcms.bbc.tv_licence.discount; this module encodes
+    the fee, the eligibility conditions, and the concession arithmetic.
+rules:
+  - name: tv_licence_colour_fee
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: Communications (Television Licensing) Regulations 2004 (SI 2004/692) Schedule 1 (colour TV licence, General Form fee)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2004/692/schedule/1
+              excerpt: "£180.00"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          180
+
+  - name: tv_licence_aged_concession_applies
+    kind: derived
+    entity: Household
+    dtype: Judgment
+    period: Year
+    source: The over-75 concession applies where the household contains a person aged 75 or over who receives Pension Credit (Communications Act 2003 s.365 concession, BBC arrangements from August 2020)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/21/365
+              excerpt: "subject to any concession"
+    versions:
+      - effective_from: '2020-08-01'
+        formula: |-
+          household_has_person_aged_75 and household_receives_pension_credit
+
+  - name: tv_licence_aged_concession_value
+    kind: derived
+    entity: Household
+    dtype: Rate
+    period: Year
+    source: The over-75 concession rate applies where the household qualifies for it (Communications Act 2003 s.365)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/21/365
+              excerpt: "subject to any concession"
+    versions:
+      - effective_from: '2020-08-01'
+        formula: |-
+          if tv_licence_aged_concession_applies:
+            tv_licence_aged_concession_rate
+          else:
+            0
+
+  - name: tv_licence_blind_concession_value
+    kind: derived
+    entity: Household
+    dtype: Rate
+    period: Year
+    source: The blind concession rate applies where the household contains a blind person (Communications Act 2003 s.365)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/21/365
+              excerpt: "subject to any concession"
+    versions:
+      - effective_from: '2003-01-01'
+        formula: |-
+          if household_has_blind_person:
+            tv_licence_blind_concession_rate
+          else:
+            0
+
+  - name: tv_licence_concession_rate
+    kind: derived
+    entity: Household
+    dtype: Rate
+    period: Year
+    source: The applicable concession is the larger of the over-75 and blind concessions (Communications Act 2003 s.365)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/21/365
+              excerpt: "subject to any concession"
+    versions:
+      - effective_from: '2020-08-01'
+        formula: |-
+          max(tv_licence_aged_concession_value, tv_licence_blind_concession_value)
+
+  - name: tv_licence_net_cost
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: A household that owns a receiver and does not evade pays the Schedule 1 fee net of the applicable concession (Communications Act 2003 s.363, s.365; SI 2004/692 Schedule 1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/21/363
+              excerpt: "must not be installed or used unless"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2004/692/schedule/1
+              excerpt: "£180.00"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          if household_owns_tv and not household_would_evade_tv_licence:
+            tv_licence_colour_fee * (1 - tv_licence_concession_rate)
+          else:
+            0
+
+  - name: free_tv_licence_value
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: The value of the concession is the Schedule 1 fee multiplied by the applicable concession rate (Communications Act 2003 s.365; SI 2004/692 Schedule 1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/21/365
+              excerpt: "subject to any concession"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2004/692/schedule/1
+              excerpt: "£180.00"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          if household_owns_tv and not household_would_evade_tv_licence:
+            tv_licence_colour_fee * tv_licence_concession_rate
+          else:
+            0
