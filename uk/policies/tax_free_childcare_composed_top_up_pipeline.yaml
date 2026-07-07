@@ -1,0 +1,73 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_paths:
+      - uk/statute/ukpga/2014/28/1
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - uk/statute/ukpga/2014/28/1
+      rationale: |-
+        The 25% top-up rate is grounded in an official source: Childcare Payments
+        Act 2014 section 1 provides that the amount of the top-up payment is 25%
+        of the amount of the qualifying payment. This pipeline models that top-up
+        rate on the qualifying childcare payment; the per-child entitlement-period
+        cap (the GBP 500 quarterly / GBP 2,000 annual maximum, GBP 1,000 / GBP
+        4,000 for a disabled child) is a separate parameter under the Childcare
+        Payments Regulations and is deliberately outside this pipeline's scope
+        (it is not yet in the ingested corpus), so the grid comparison is
+        confined to qualifying payments below the cap.
+  summary: |-
+    Composed Person-level Tax-Free Childcare top-up pipeline. Under the Childcare
+    Payments Act 2014 the government pays a top-up of 25% of a parent's qualifying
+    childcare payment into the childcare account (equivalently, the top-up is 20%
+    of the total account balance — PolicyEngine-UK computes this as
+    payment * rate / (1 - rate) with rate = 0.20, which grosses up to the same 25%
+    of the qualifying payment). This pipeline exposes the 25%-of-qualifying-payment
+    top-up on a supplied qualifying childcare payment.
+
+    Scope. The pipeline models the section 1 top-up RATE only. The per-child
+    entitlement-period maximum (GBP 500 per quarter / GBP 2,000 per year, or GBP
+    1,000 / GBP 4,000 for a disabled child) is a separate cap not encoded here,
+    so the top-up is exact only for qualifying payments below the cap. Eligibility
+    (working parents, adjusted net income below GBP 100,000, a qualifying child
+    using a qualifying provider) is a supplied judgment, not computed here.
+rules:
+  - name: tfc_pilot_top_up_rate
+    kind: parameter
+    dtype: Rate
+    source: Childcare Payments Act 2014, section 1(4)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2014/28/1
+              excerpt: "The amount of the top-up payment is 25% of the amount of the qualifying payment"
+    versions:
+      - effective_from: '2017-04-21'
+        formula: |-
+          0.25
+
+  - name: tfc_pilot_top_up_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Childcare Payments Act 2014, section 1
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2014/28/1
+              excerpt: "The amount of the top-up payment is 25% of the amount of the qualifying payment"
+    versions:
+      - effective_from: '2017-04-21'
+        formula: |-
+          tfc_pilot_qualifying_childcare_payment * tfc_pilot_top_up_rate
