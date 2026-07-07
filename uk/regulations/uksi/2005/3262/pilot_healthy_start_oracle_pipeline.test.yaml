@@ -1,0 +1,44 @@
+# Expected values computed by the axiom-rules-engine from the corpus-grounded
+# Healthy Start structure (Healthy Start Scheme and Welfare Food (Amendment)
+# Regulations 2005 (SI 2005/3262) regulation 8: the voucher or credit value must
+# not be less than the £3.10 floor, and the Secretary of State sets the operative
+# value above it by determination). The determined weekly value is supplied as an
+# input, since it is set by determination and is not a numeric value fixed in the
+# regulation; the composed rule floors it at £3.10. The weekly value is annualised
+# over 52 benefit weeks (Universal Credit Regulations 2013 Schedule 4 paragraph 7
+# conversion factor).
+#
+# For the UKMOD UK_2026 comparison the supplied determined value is £8.50 for a
+# child under one (£8.50 x 52 = £442.00) and £4.25 for a pregnant woman or a child
+# aged one to four (£4.25 x 52 = £221.00). The floor case supplies £3.00, below
+# the £3.10 minimum, and the composed value floors up to £3.10. The end-to-end
+# UKMOD UK_2026 bmamt01_s parity check — a zero-earnings lone parent with a
+# newborn passported onto Universal Credit (bsauc_s > 0, take-up pinned on), where
+# UKMOD annualises over 365/7 = 52.14 weeks to £443.21 and the 0.27% convention
+# residual is absorbed by a 0.3% relative tolerance — lives in the axiom-oracles
+# uk-healthy-start suite. Coverage: every derived rule is asserted in at least one
+# case; every supplied input is assigned in every case.
+- name: healthy_start_newborn_double_value_annual
+  period: {period_kind: tax_year, start: '2026-04-06', end: '2027-04-05'}
+  input:
+    uk:regulations/uksi/2005/3262/pilot_healthy_start_oracle_pipeline#input.uk_hs_pilot_supplied_determined_weekly_value: 8.50
+  output:
+    uk:regulations/uksi/2005/3262/pilot_healthy_start_oracle_pipeline#uk_hs_pilot_weeks_per_year: 52
+    uk:regulations/uksi/2005/3262/pilot_healthy_start_oracle_pipeline#uk_hs_pilot_minimum_weekly_value: 3.10
+    uk:regulations/uksi/2005/3262/pilot_healthy_start_oracle_pipeline#uk_hs_pilot_determined_weekly_value: 8.50
+    uk:regulations/uksi/2005/3262/pilot_healthy_start_oracle_pipeline#uk_hs_pilot_annual_entitlement: 442.00
+- name: healthy_start_individual_value_annual
+  period: {period_kind: tax_year, start: '2026-04-06', end: '2027-04-05'}
+  input:
+    uk:regulations/uksi/2005/3262/pilot_healthy_start_oracle_pipeline#input.uk_hs_pilot_supplied_determined_weekly_value: 4.25
+  output:
+    uk:regulations/uksi/2005/3262/pilot_healthy_start_oracle_pipeline#uk_hs_pilot_minimum_weekly_value: 3.10
+    uk:regulations/uksi/2005/3262/pilot_healthy_start_oracle_pipeline#uk_hs_pilot_determined_weekly_value: 4.25
+    uk:regulations/uksi/2005/3262/pilot_healthy_start_oracle_pipeline#uk_hs_pilot_annual_entitlement: 221.00
+- name: healthy_start_floored_at_statutory_minimum
+  period: {period_kind: tax_year, start: '2026-04-06', end: '2027-04-05'}
+  input:
+    uk:regulations/uksi/2005/3262/pilot_healthy_start_oracle_pipeline#input.uk_hs_pilot_supplied_determined_weekly_value: 3.00
+  output:
+    uk:regulations/uksi/2005/3262/pilot_healthy_start_oracle_pipeline#uk_hs_pilot_minimum_weekly_value: 3.10
+    uk:regulations/uksi/2005/3262/pilot_healthy_start_oracle_pipeline#uk_hs_pilot_determined_weekly_value: 3.10

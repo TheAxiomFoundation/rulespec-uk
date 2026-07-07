@@ -1,0 +1,88 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_paths:
+      - uk/regulation/uksi/2005/3061/5
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - uk/regulation/uksi/2005/3061/5
+      rationale: |-
+        The single monetary literal is grounded in the Social Fund Maternity and
+        Funeral Expenses (General) Regulations 2005 (SI 2005/3061) regulation 5
+        corpus text: a payment of £500 to meet maternity expenses where the
+        regulation's conditions are satisfied. The pilot exposes that amount as a
+        Person-level annual entitlement so an end-to-end UKMOD bmamt_s comparison
+        is queryable for a passported recipient; it is the same £500 the existing
+        regulation-5 encoding (uk/regulations/uksi/2005/3061/5) carries as a
+        Year-period parameter.
+  summary: |-
+    Composed Sure Start Maternity Grant pipeline for the UKMOD UK_2026 oracle
+    slice. The Sure Start Maternity Grant is a passported means-tested lump sum:
+    eligibility passports off a qualifying means-tested benefit in payment (in
+    the UKMOD comparison Universal Credit, bsauc_s > 0, with the take-up gate
+    pinned on) for a family with a child under one and no other dependent
+    children. This pilot exposes the regulation 5 £500 amount as a Person-level
+    annual entitlement so an end-to-end UKMOD bmamt_s comparison is queryable
+    from a passported recipient without the caller resolving the regulation 5A
+    to 6 responsibility, child-count, and qualifying-benefit conditions.
+
+    It reproduces the amount UKMOD UK_2026 pays for a synthetic passported
+    maternity case: the Social Fund Maternity and Funeral Expenses (General)
+    Regulations 2005 regulation 5 £500 lump sum ($BSurMaG 500#y). It is an
+    already-annual lump sum, so it matches the UKMOD UK_2026 bmamt_s to the
+    penny. It deliberately excludes the regulation 5A to 6 responsibility,
+    child-under-one, no-other-dependent-children, and qualifying-benefit
+    passporting conditions (the caller supplies a resolved passported eligible
+    recipient).
+rules:
+  - name: uk_ssmg_pilot_grant_amount
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Social Fund Maternity and Funeral Expenses (General) Regulations 2005 (SI 2005/3061) reg. 5(1); the £500 Sure Start Maternity Grant to meet maternity expenses.
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2005/3061/5
+              excerpt: "a payment of £500 to meet maternity expenses"
+    versions:
+      - effective_from: '2005-12-05'
+        formula: |-
+          500
+
+  - name: uk_ssmg_pilot_annual_entitlement
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: |-
+      Social Fund Maternity and Funeral Expenses (General) Regulations 2005
+      (SI 2005/3061) regulation 5; the annual Sure Start Maternity Grant a
+      passported recipient receives is the £500 lump sum. This is the amount the
+      UKMOD oracle reports as bmamt_s.
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2005/3061/5
+              excerpt: "a payment of £500 to meet maternity expenses"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2005/3061/pilot_sure_start_maternity_grant_oracle_pipeline#uk_ssmg_pilot_grant_amount
+              output: uk_ssmg_pilot_grant_amount
+              hash: sha256:local
+    versions:
+      - effective_from: '2005-12-05'
+        formula: |-
+          uk_ssmg_pilot_grant_amount

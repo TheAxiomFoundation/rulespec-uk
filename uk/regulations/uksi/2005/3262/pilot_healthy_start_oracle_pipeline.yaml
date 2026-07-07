@@ -1,0 +1,189 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_paths:
+      - uk/regulation/uksi/2005/3262/8
+      - uk/regulation/uksi/2013/376/schedule/4/paragraph/7
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - uk/regulation/uksi/2005/3262/8
+      rationale: |-
+        The one monetary literal grounded in the primary regulation is the
+        statutory floor: the Healthy Start Scheme and Welfare Food (Amendment)
+        Regulations 2005 (SI 2005/3262) regulation 8 provides that the value
+        represented by a voucher or credit "must not be less than £3.10", and
+        that "the Secretary of State may increase or decrease the voucher or
+        credit value". The operative weekly value is therefore not a numeric
+        value fixed in the regulation; it is set by the Secretary of State by
+        determination above that floor. It is supplied as an input rather than
+        hardcoded as an invented literal: for the UKMOD UK_2026 oracle
+        comparison the supplied value is the value UKMOD applies through its
+        $HSFood parameter — £4.25 for each week for an eligible pregnant woman
+        or a child aged one to four, doubled to £8.50 for each week for a child
+        who has not yet reached the age of one (the published rates in force to
+        31 March 2026; the determined rates rise to £4.65 and £9.30 from 1 April
+        2026, a change UKMOD UK_2026 does not yet apply). The weekly value is
+        annualised over 52 benefit weeks, the same weekly-to-periodic conversion
+        factor the Universal Credit Regulations 2013 Schedule 4 paragraph 7
+        uses; this is a period-conversion factor, not a statutory monetary
+        amount. UKMOD reports the annualised bmamt01_s over its 365/7
+        calendar-week convention, so the composed 52-week annual entitlement
+        sits about 0.27% below the UKMOD figure (£442.00 against £443.21 for a
+        newborn), a systematic convention residual the oracle comparison absorbs
+        with a 0.3% relative tolerance while both sides recover the same £8.50 /
+        £4.25 determined weekly values.
+  summary: |-
+    Composed Healthy Start pipeline for the UKMOD UK_2026 oracle slice at the
+    rates UKMOD applies. Healthy Start is a passported means-tested payment for
+    the rest of the UK (England, Wales, and Northern Ireland): eligibility
+    passports off a qualifying means-tested benefit in payment (in the UKMOD
+    comparison Universal Credit, bsauc_s > 0, with the take-up gate pinned on)
+    with the earned-income condition satisfied. This pilot exposes a Person-level
+    path from the supplied determined weekly voucher value to the annual Healthy
+    Start a passported recipient receives, so an end-to-end UKMOD bmamt01_s
+    comparison is queryable without the caller resolving the pregnancy,
+    responsibility, and qualifying-benefit conditions (the caller supplies a
+    resolved passported eligible recipient and the applicable weekly value).
+
+    It reproduces the arithmetic UKMOD UK_2026 applies to a synthetic passported
+    maternity case: the Healthy Start Scheme and Welfare Food (Amendment)
+    Regulations 2005 regulation 8 voucher value — supplied above the £3.10
+    statutory floor as the Secretary of State's determined weekly amount (£8.50
+    for each week for a child under one, £4.25 for each week for a pregnant
+    woman or a child aged one to four) — annualised over 52 benefit weeks. For a
+    newborn the composed annual amount is £8.50 x 52 = £442.00, about 0.27% below
+    the UKMOD UK_2026 bmamt01_s (which annualises the same £8.50 weekly value
+    over 365/7 = 52.14 weeks to £443.21); the oracle comparison absorbs that
+    convention residual with a 0.3% relative tolerance.
+
+    It deliberately excludes: the regulation 3 to 7 pregnancy, responsibility,
+    residence, and qualifying-benefit passporting conditions and the £408
+    monthly earned-income limit (the caller supplies a resolved passported
+    eligible recipient); the free-vitamin entitlement; and the four-weekly
+    payment-card top-up mechanics (the value is expressed as the equivalent
+    determined weekly amount). The Scottish equivalent (Best Start Foods) is a
+    separate instrument (bmascmt01_uk). This pilot pins the weekly value UKMOD
+    UK_2026 applies.
+rules:
+  - name: uk_hs_pilot_weeks_per_year
+    kind: parameter
+    dtype: Number
+    source: |-
+      Healthy Start is a weekly benefit (the Healthy Start Scheme and Welfare
+      Food (Amendment) Regulations 2005 regulation 8 fixes a voucher or credit
+      value expressed for each week). The weekly value is annualised over the 52
+      benefit weeks in a year, the same weekly-to-periodic conversion factor the
+      Universal Credit Regulations 2013 Schedule 4 paragraph 7 uses. This is a
+      period-conversion factor, not a statutory monetary amount.
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/7
+              excerpt: "weekly payments are multiplied by 52 and divided by 12"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          52
+
+  - name: uk_hs_pilot_minimum_weekly_value
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: |-
+      Healthy Start Scheme and Welfare Food (Amendment) Regulations 2005
+      (SI 2005/3262) regulation 8; the value represented by a Healthy Start
+      voucher or credit must not be less than £3.10. This is the statutory floor
+      below which the determined value may not fall; the operative value is set
+      above it by the Secretary of State.
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2005/3262/8
+              excerpt: "must not be less than £3.10"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          3.10
+
+  - name: uk_hs_pilot_determined_weekly_value
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: |-
+      Healthy Start Scheme and Welfare Food (Amendment) Regulations 2005
+      (SI 2005/3262) regulation 8; the voucher or credit value set by the
+      Secretary of State, who "may increase or decrease the voucher or credit
+      value" above the £3.10 floor. It is supplied as an input rather than
+      hardcoded because it is a determined amount, not a value fixed in the
+      regulation; the composed rule takes the greater of the supplied value and
+      the statutory floor so the delegated value can never fall below the
+      regulation 8 minimum. For the UKMOD UK_2026 comparison the supplied value
+      is the applicable determined weekly amount (£8.50 for a child under one,
+      £4.25 otherwise).
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2005/3262/8
+              excerpt: "may increase or decrease the voucher or credit value"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2005/3262/pilot_healthy_start_oracle_pipeline#uk_hs_pilot_minimum_weekly_value
+              output: uk_hs_pilot_minimum_weekly_value
+              hash: sha256:local
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(uk_hs_pilot_minimum_weekly_value, uk_hs_pilot_supplied_determined_weekly_value)
+
+  - name: uk_hs_pilot_annual_entitlement
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: |-
+      Healthy Start Scheme and Welfare Food (Amendment) Regulations 2005
+      (SI 2005/3262) regulation 8; the annual Healthy Start entitlement is the
+      determined weekly voucher value paid across the 365/7 calendar weeks in a
+      year. This is the amount the UKMOD oracle reports as the annualised
+      bmamt01_s.
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2005/3262/8
+              excerpt: "the voucher or credit value"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2005/3262/pilot_healthy_start_oracle_pipeline#uk_hs_pilot_determined_weekly_value
+              output: uk_hs_pilot_determined_weekly_value
+              hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2005/3262/pilot_healthy_start_oracle_pipeline#uk_hs_pilot_weeks_per_year
+              output: uk_hs_pilot_weeks_per_year
+              hash: sha256:local
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          uk_hs_pilot_determined_weekly_value * uk_hs_pilot_weeks_per_year

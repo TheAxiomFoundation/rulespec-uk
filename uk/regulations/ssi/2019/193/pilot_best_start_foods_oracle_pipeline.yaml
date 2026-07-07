@@ -1,0 +1,233 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_paths:
+      - uk/regulation/ssi/2019/193/13
+      - uk/regulation/uksi/2013/376/schedule/4/paragraph/7
+    upstream_source_check:
+      status: official_parameter_source
+      checked_paths:
+        - uk/regulation/ssi/2019/193/13
+      rationale: |-
+        Every monetary literal on the computation path is grounded in the
+        Welfare Foods (Best Start Foods) (Scotland) Regulations 2019
+        (SSI 2019/193) regulation 13 (value of benefit) corpus text: the basic
+        rate of £5.60 for each week (regulation 13(1)), the doubled rate for a
+        child who has not yet reached the age of one — "double the basic rate",
+        i.e. £11.20 for each week (regulation 13 read with the entitlement for a
+        child described in regulation 8) — and the basic rate for a child aged
+        one to three (regulation 8). The £5.60 basic rate is the amount
+        currently in force: the Social Security (Up-rating) (Miscellaneous
+        Amendments) (Scotland) Regulations 2026 (SSI 2026/170) substituted
+        "£5.60" for "£5.40" in regulation 13(1) with effect from 1 April 2026.
+        The weekly value is annualised over 52 benefit weeks, the same
+        weekly-to-periodic conversion factor the Universal Credit Regulations
+        2013 Schedule 4 paragraph 7 uses; this is a period-conversion factor,
+        not a statutory monetary amount. UKMOD reports the annualised bmascmt01_s
+        over its 365/7 calendar-week convention, so the composed 52-week annual
+        entitlement sits about 0.27% below the UKMOD figure (£582.40 against
+        £584.00 for a newborn), a systematic convention residual the oracle
+        comparison absorbs with a 0.3% relative tolerance while both sides
+        recover the same £11.20 / £5.60 statutory weekly rates.
+  summary: |-
+    Composed Best Start Foods pipeline for the UKMOD UK_2026 oracle slice at the
+    2026-27 rates. Best Start Foods is a passported means-tested Scottish
+    payment: eligibility passports off a qualifying means-tested benefit in
+    payment (in the UKMOD comparison Universal Credit, bsauc_s > 0, with the
+    take-up gate pinned on) together with Scottish residence. This pilot exposes
+    a Person-level path from the eligible child's age to the annual Best Start
+    Foods a passported recipient receives, so an end-to-end UKMOD bmascmt01_s
+    comparison is queryable from the child's age without the caller resolving
+    the regulation 4 to 9 responsibility, residence, and pregnancy conditions
+    (the caller supplies a passported, Scotland-resident eligible recipient).
+
+    It reproduces the arithmetic UKMOD UK_2026 applies to a synthetic
+    passported Scottish maternity case: the Welfare Foods (Best Start Foods)
+    (Scotland) Regulations 2019 regulation 13 basic rate of £5.60 for each week,
+    doubled to £11.20 for each week while the child has not yet reached the age
+    of one (regulation 8 read with regulation 13), reverting to the £5.60 basic
+    rate from age one until the child reaches the age of three, annualised over
+    52 benefit weeks. For a newborn the composed annual amount is £11.20 x 52 =
+    £582.40, about 0.27% below the UKMOD UK_2026 bmascmt01_s (which annualises
+    the same £11.20 weekly rate over 365/7 = 52.14 weeks to £584.00); the oracle
+    comparison absorbs that convention residual with a 0.3% relative tolerance.
+
+    It deliberately excludes: the regulation 4 to 9 responsibility, ordinary-
+    residence, pregnancy, and qualifying-benefit passporting conditions (the
+    caller supplies a resolved passported eligible recipient); the four-weekly
+    payment-card top-up mechanics (the value is expressed as the equivalent
+    weekly rate the regulation fixes); and the Best Start Grant cash payments
+    (Pregnancy and Baby, Early Learning, School Age), which are a separate,
+    take-up-gated instrument (bmascmt_uk). The 2025-26 and 2026-27 structure is
+    the same up to the re-rated basic rate, and this pilot pins the 2026-27
+    value.
+rules:
+  - name: uk_bsf_pilot_weeks_per_year
+    kind: parameter
+    dtype: Number
+    source: |-
+      Best Start Foods is a weekly benefit (Welfare Foods (Best Start Foods)
+      (Scotland) Regulations 2019 regulation 13 fixes a value "for each week").
+      The weekly value is annualised over the 52 benefit weeks in a year, the
+      same weekly-to-periodic conversion factor the Universal Credit Regulations
+      2013 Schedule 4 paragraph 7 uses. This is a period-conversion factor, not
+      a statutory monetary amount.
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/7
+              excerpt: "weekly payments are multiplied by 52 and divided by 12"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          52
+
+  - name: uk_bsf_pilot_basic_weekly_rate
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: |-
+      Welfare Foods (Best Start Foods) (Scotland) Regulations 2019
+      (SSI 2019/193) regulation 13(1); the basic rate of Best Start Foods is
+      £5.60 for each week, as substituted for £5.40 by the Social Security
+      (Up-rating) (Miscellaneous Amendments) (Scotland) Regulations 2026
+      (SSI 2026/170) with effect from 1 April 2026.
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/ssi/2019/193/13
+              excerpt: "to the value of £5.60 (\"the basic rate\") for each week"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          5.60
+
+  - name: uk_bsf_pilot_under_one_weekly_rate
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: |-
+      Welfare Foods (Best Start Foods) (Scotland) Regulations 2019
+      (SSI 2019/193) regulation 13, read with the entitlement of a child
+      described in regulation 8; while the child has not yet reached the age of
+      one the payment is double the basic rate (£11.20 for each week).
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/ssi/2019/193/13
+              excerpt: "double the basic rate"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          2 * uk_bsf_pilot_basic_weekly_rate
+
+  - name: uk_bsf_pilot_child_age_years
+    kind: derived
+    entity: Person
+    dtype: Number
+    period: Year
+    source: |-
+      The age in years of the child in respect of whom Best Start Foods is paid,
+      supplied as an input so the composed entitlement is queryable without the
+      caller resolving the regulation 4 responsibility conditions. Regulation 13
+      pays the doubled rate while the child is under one and the basic rate from
+      age one until the child reaches the age of three.
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/regulation/ssi/2019/193/13
+              excerpt: "until the child has reached the age of one year"
+    versions:
+      - effective_from: '2026-01-01'
+        formula: |-
+          max(0, uk_bsf_pilot_supplied_child_age_years)
+
+  - name: uk_bsf_pilot_applicable_weekly_rate
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: |-
+      Welfare Foods (Best Start Foods) (Scotland) Regulations 2019
+      (SSI 2019/193) regulation 13 read with regulation 8; the applicable weekly
+      value is the doubled rate while the child is under one year old and the
+      basic rate from age one until the child reaches the age of three.
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/ssi/2019/193/13
+              excerpt: "double the basic rate ... the basic rate"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/ssi/2019/193/pilot_best_start_foods_oracle_pipeline#uk_bsf_pilot_under_one_weekly_rate
+              output: uk_bsf_pilot_under_one_weekly_rate
+              hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/ssi/2019/193/pilot_best_start_foods_oracle_pipeline#uk_bsf_pilot_basic_weekly_rate
+              output: uk_bsf_pilot_basic_weekly_rate
+              hash: sha256:local
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          if uk_bsf_pilot_child_age_years < 1: uk_bsf_pilot_under_one_weekly_rate else: uk_bsf_pilot_basic_weekly_rate
+
+  - name: uk_bsf_pilot_annual_entitlement
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: |-
+      Welfare Foods (Best Start Foods) (Scotland) Regulations 2019
+      (SSI 2019/193) regulation 13; the annual Best Start Foods entitlement is
+      the applicable weekly value paid across the 365/7 calendar weeks in a
+      year. This is the amount the UKMOD oracle reports as the annualised
+      bmascmt01_s.
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/ssi/2019/193/13
+              excerpt: "the basic rate ... for each week"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/ssi/2019/193/pilot_best_start_foods_oracle_pipeline#uk_bsf_pilot_applicable_weekly_rate
+              output: uk_bsf_pilot_applicable_weekly_rate
+              hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/ssi/2019/193/pilot_best_start_foods_oracle_pipeline#uk_bsf_pilot_weeks_per_year
+              output: uk_bsf_pilot_weeks_per_year
+              hash: sha256:local
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          uk_bsf_pilot_applicable_weekly_rate * uk_bsf_pilot_weeks_per_year

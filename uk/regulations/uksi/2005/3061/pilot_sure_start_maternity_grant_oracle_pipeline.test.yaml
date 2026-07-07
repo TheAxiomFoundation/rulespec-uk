@@ -1,0 +1,15 @@
+# Expected value computed by the axiom-rules-engine from the corpus-grounded
+# Sure Start Maternity Grant amount (Social Fund Maternity and Funeral Expenses
+# (General) Regulations 2005 (SI 2005/3061) regulation 5: the £500 lump sum to
+# meet maternity expenses). It is an already-annual lump sum, so the annual
+# entitlement is £500. The end-to-end UKMOD UK_2026 bmamt_s parity check — a
+# zero-earnings lone parent with a newborn passported onto Universal Credit
+# (bsauc_s > 0, take-up pinned on) reconstructing the live oracle (£500.00) —
+# lives in the axiom-oracles uk-sure-start-maternity-grant suite. Coverage: every
+# derived rule is asserted.
+- name: ssmg_passported_lump_sum_annual
+  period: {period_kind: tax_year, start: '2026-04-06', end: '2027-04-05'}
+  input: {}
+  output:
+    uk:regulations/uksi/2005/3061/pilot_sure_start_maternity_grant_oracle_pipeline#uk_ssmg_pilot_grant_amount: 500
+    uk:regulations/uksi/2005/3061/pilot_sure_start_maternity_grant_oracle_pipeline#uk_ssmg_pilot_annual_entitlement: 500

@@ -1,0 +1,37 @@
+# Expected values computed by the axiom-rules-engine from the corpus-grounded
+# Best Start Foods structure (Welfare Foods (Best Start Foods) (Scotland)
+# Regulations 2019 (SSI 2019/193) regulation 13: the £5.60 basic weekly rate, in
+# force from 1 April 2026 by SSI 2026/170, doubled to £11.20 for each week while
+# the child is under one year old, reverting to the basic rate from age one). The
+# weekly value is annualised over 52 benefit weeks (Universal Credit Regulations
+# 2013 Schedule 4 paragraph 7 conversion factor).
+#
+# A newborn is paid the doubled rate: £11.20 x 52 = £582.40. A child aged one is
+# paid the basic rate: £5.60 x 52 = £291.20. The end-to-end UKMOD UK_2026
+# bmascmt01_s parity check — a zero-earnings lone parent in Scotland (drgn1=12)
+# with a newborn passported onto Universal Credit (bsauc_s > 0, take-up pinned
+# on), where UKMOD annualises over 365/7 = 52.14 weeks to £584.00 and the 0.27%
+# convention residual is absorbed by a 0.3% relative tolerance — lives in the
+# axiom-oracles uk-best-start-foods suite. Coverage: every derived rule is
+# asserted in at least one case; every supplied input is assigned in every case.
+- name: bsf_newborn_double_rate_annual
+  period: {period_kind: tax_year, start: '2026-04-06', end: '2027-04-05'}
+  input:
+    uk:regulations/ssi/2019/193/pilot_best_start_foods_oracle_pipeline#input.uk_bsf_pilot_supplied_child_age_years: 0
+  output:
+    uk:regulations/ssi/2019/193/pilot_best_start_foods_oracle_pipeline#uk_bsf_pilot_weeks_per_year: 52
+    uk:regulations/ssi/2019/193/pilot_best_start_foods_oracle_pipeline#uk_bsf_pilot_basic_weekly_rate: 5.60
+    uk:regulations/ssi/2019/193/pilot_best_start_foods_oracle_pipeline#uk_bsf_pilot_under_one_weekly_rate: 11.20
+    uk:regulations/ssi/2019/193/pilot_best_start_foods_oracle_pipeline#uk_bsf_pilot_child_age_years: 0
+    uk:regulations/ssi/2019/193/pilot_best_start_foods_oracle_pipeline#uk_bsf_pilot_applicable_weekly_rate: 11.20
+    uk:regulations/ssi/2019/193/pilot_best_start_foods_oracle_pipeline#uk_bsf_pilot_annual_entitlement: 582.40
+- name: bsf_age_one_basic_rate_annual
+  period: {period_kind: tax_year, start: '2026-04-06', end: '2027-04-05'}
+  input:
+    uk:regulations/ssi/2019/193/pilot_best_start_foods_oracle_pipeline#input.uk_bsf_pilot_supplied_child_age_years: 1
+  output:
+    uk:regulations/ssi/2019/193/pilot_best_start_foods_oracle_pipeline#uk_bsf_pilot_basic_weekly_rate: 5.60
+    uk:regulations/ssi/2019/193/pilot_best_start_foods_oracle_pipeline#uk_bsf_pilot_under_one_weekly_rate: 11.20
+    uk:regulations/ssi/2019/193/pilot_best_start_foods_oracle_pipeline#uk_bsf_pilot_child_age_years: 1
+    uk:regulations/ssi/2019/193/pilot_best_start_foods_oracle_pipeline#uk_bsf_pilot_applicable_weekly_rate: 5.60
+    uk:regulations/ssi/2019/193/pilot_best_start_foods_oracle_pipeline#uk_bsf_pilot_annual_entitlement: 291.20
