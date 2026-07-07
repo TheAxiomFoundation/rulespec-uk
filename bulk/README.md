@@ -208,7 +208,7 @@ validate) is the per-PR floor. It is inherent to the gate and out of scope for
 the dispatcher to change; the mitigations above reduce *how many times* it runs,
 not its per-run cost.
 
-### 4. Oracle-coverage gate on new outputs (dominant UK blocker) — out of scope
+### 4. Oracle-coverage gate on new outputs (dominant UK blocker) — the pending lane
 
 The pilot batch (`batch=A`, 4 entries) exposed the real gate for UK bulk PRs.
 The org `validate / validate` required check runs a **changed-file oracle
@@ -216,32 +216,39 @@ coverage classifier** (`axiom-encode oracle-coverage --json`, then
 `--fail-on-unmapped`). Every output a new module introduces must resolve to a
 status other than `unmapped` — either `comparable` (a PolicyEngine oracle
 exists) or `known_not_comparable` (explicitly registered as having no
-comparable oracle). On the current merged UK tree, coverage is
-18768 `known_not_comparable` + 1032 `comparable` + **0 `unmapped`**: every
-existing output is already classified.
+comparable oracle). UK statute/reg outputs (UC/HICBC/HB definitions and
+mechanics) are largely un-mapped today, so a freshly bulk-encoded output starts
+life `unmapped`.
 
-A freshly bulk-encoded output starts life `unmapped`, so the classifier fails
-and auto-merge correctly holds on the red required check. This is **not** a
-dispatcher defect and there is **no cheap workflow-level mitigation**: the
-classification is a quality decision owned by `axiom-oracles` +
-`axiom-encode classify`, exactly like the companion-fixture tier. The plumbing's
-job ends at producing a reviewable PR with a signed manifest and armed
-auto-merge; a mapping follow-up (register each new output as `comparable` with
-its oracle, or `known_not_comparable`) is what turns the check green, after
-which auto-merge completes on its own.
+Registering each new output in `axiom-oracles` before its PR can go green means
+a per-PR cross-repo pin dance (edit `axiom-oracles`, bump its pinned commit
+through `axiom-encode`, bump the toolchain here), which does not scale to bulk.
+The **oracle-coverage pending lane** decouples the two without weakening the
+gate's *no-silent-unmapped* guarantee:
+
+* **Declared debt.** New outputs are declared in the repo-root
+  [`oracle-coverage-pending.yaml`](../oracle-coverage-pending.yaml). The gate
+  (`axiom-encode` ≥ 0.2.1185) reclassifies a declared `unmapped` output to
+  `pending_classification` — visible, counted, accountable — so
+  `--fail-on-unmapped` and the changed-file JSON gate both pass. An output
+  declared in **neither** the mappings **nor** the pending file still fails:
+  nothing goes silently unclassified.
+* **Dispatcher step.** The `encode` job runs
+  `axiom-encode oracle-coverage-pending sync --repo rulespec-uk` after
+  `--apply`, so every bulk PR self-declares its new outputs and stages the
+  updated pending file alongside the module. No per-PR pin dance.
+* **Ratchet down.** `tests/test_oracle_coverage_pending.py` runs
+  `oracle-coverage-pending check` (both ways, like `known-validation-gaps`):
+  an undeclared unmapped output fails, and a declaration whose output is now
+  classified upstream is **stale** and must be removed. The optional `ceiling`
+  caps the count. Debt can only shrink except when genuinely new outputs land.
+* **Sweep drains it.** A periodic classification sweep maps declared outputs in
+  one batch `axiom-oracles` change (`comparable` with its oracle, or
+  `known_not_comparable`) and bumps the pin once — not per PR. Mapped outputs
+  stop being `unmapped`, their declarations go stale, and the ratchet forces
+  their removal. Track the drain in issue #101.
 
 Contrast with `rulespec-us`, where many bulk targets (e.g. NY Article 22 income
-tax) map to existing PolicyEngine oracles and merge green without a mapping
-step. UK statute/reg outputs (UC/HICBC/HB definitions and mechanics) are largely
-un-mapped today, so the mapping follow-up is the throughput-limiting step for a
-UK drain — plan a mapping pass per batch alongside the fixture pass.
-
-**Pilot result (batch A, 2026-07-07):** dispatch → matrix → pinned-toolchain
-encode ran on all 4 legs. 3 legs (ITEPA s681B/s681G, WRA s7) hit the encoder's
-fail-closed compile-validation gate at apply (`apply-blocked`; re-encode
-territory, not plumbing). 1 leg (WRA s39) applied cleanly, and the manifest
-detector correctly located and staged its signed manifest — PR #97 opened with
-module + companion test + manifest and auto-merge armed, holding only on the
-`unmapped` oracle-coverage check above. The dispatcher path is verified
-end-to-end; the remaining blockers are the encoder (quality) and oracle mapping
-(coverage), both by-design outside this plumbing.
+tax) map to existing PolicyEngine oracles and merge green immediately; UK needs
+the pending lane because its outputs are largely un-mapped today. Plan a sweep
+per batch alongside the fixture pass.

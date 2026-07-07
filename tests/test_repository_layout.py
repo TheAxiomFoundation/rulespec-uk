@@ -51,6 +51,7 @@ def allowed_yaml_roots() -> set[str]:
         "programs",
         "known-dangling.yaml",
         "known-validation-gaps.yaml",
+        "oracle-coverage-pending.yaml",
         "data",
         "validation_baselines",
         *(d.name for d in jurisdiction_dirs()),
