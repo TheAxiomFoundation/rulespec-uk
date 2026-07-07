@@ -127,3 +127,52 @@ entries:
   class: rate
   note: Self-contained; the Scottish Parliament sets the Scottish rate(s) by
     resolution. In-Part refs only.
+# --- Batch indirect-tax: standalone statute sections ingested for the VAT,
+# fuel-duty, and TV-licence composed pipelines (corpus 2026-07-07 UK indirect-tax
+# ingests). The pipelines re-inline the operative atoms; these entries let the
+# dispatcher land standalone statute modules too. Values are the encoder's.
+- citation: uk/statute/ukpga/1979/5/6
+  repo: rulespec-uk
+  batch: indirect-tax
+  status: pending
+  heading: Excise duty on hydrocarbon oil (HODA 1979 s.6)
+  class: rate
+  note: Standing per-litre excise duty rates in s.6(1A). Self-contained rate
+    schedule; the temporary Budget-resolution cut is external to the text.
+- citation: uk/regulation/uksi/2004/692/schedule/1
+  repo: rulespec-uk
+  batch: indirect-tax
+  status: pending
+  heading: TV licence fees (Communications (Television Licensing) Regs 2004 Sch 1)
+  class: rate
+  note: Colour and black-and-white licence fee schedule (£180.00 colour for
+    2026-27). Self-contained fee table.
+- citation: uk/statute/ukpga/2003/21/365
+  repo: rulespec-uk
+  batch: indirect-tax
+  status: pending
+  heading: TV licence fee liability and concessions (Communications Act 2003 s.365)
+  class: charge
+  note: Fee liability subject to BBC concessions; delegates amounts to SI 2004/692.
+- citation: uk/statute/ukpga/2003/21/363
+  repo: rulespec-uk
+  batch: indirect-tax
+  status: pending
+  heading: TV licence required for a television receiver (Communications Act 2003 s.363)
+  class: definition
+  note: Licence requirement and offence for unlicensed installation/use. Self-contained.
+- citation: uk/statute/ukpga/1994/23/2
+  repo: rulespec-uk
+  batch: indirect-tax
+  status: pending
+  heading: Standard rate of VAT (VATA 1994 s.2)
+  class: rate
+  note: Standard rate 20 per cent. Cross-references s.29A and the Treasury order
+    power; the encoder may pull neighbouring input-tax sections (watch encode#1058).
+- citation: uk/statute/ukpga/1994/23/29A
+  repo: rulespec-uk
+  batch: indirect-tax
+  status: pending
+  heading: Reduced rate of VAT (VATA 1994 s.29A)
+  class: rate
+  note: Reduced rate 5 per cent for Schedule 7A supplies. References Schedule 7A.

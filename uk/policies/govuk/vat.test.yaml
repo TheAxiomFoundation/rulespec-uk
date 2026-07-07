@@ -1,0 +1,68 @@
+# Fixture-split (encode#1060): rules encode VATA 1994 s.2/s.29A; these expected
+# amounts are orchestrator-computed shown arithmetic, independent of the rule text.
+# vat = (full_rate_consumption*0.20 + reduced_rate_consumption*0.05) / coverage.
+- name: standard_rated_consumption_only
+  period:
+    period_kind: tax_year
+    start: '2026-04-06'
+    end: '2027-04-05'
+  input:
+    uk:policies/govuk/vat#input.full_rate_vat_consumption: 1900
+    uk:policies/govuk/vat#input.reduced_rate_vat_consumption: 0
+    uk:policies/govuk/vat#input.microdata_vat_coverage: 0.38
+  output:
+    uk:policies/govuk/vat#vat_standard_rate: 0.2
+    uk:policies/govuk/vat#vat_reduced_rate: 0.05
+    # 1900*0.20 = 380; 380 / 0.38 = 1000
+    uk:policies/govuk/vat#vat_annual_amount: 1000
+
+- name: reduced_rated_consumption_only
+  period:
+    period_kind: tax_year
+    start: '2026-04-06'
+    end: '2027-04-05'
+  input:
+    uk:policies/govuk/vat#input.full_rate_vat_consumption: 0
+    uk:policies/govuk/vat#input.reduced_rate_vat_consumption: 3800
+    uk:policies/govuk/vat#input.microdata_vat_coverage: 0.38
+  output:
+    # 3800*0.05 = 190; 190 / 0.38 = 500
+    uk:policies/govuk/vat#vat_annual_amount: 500
+
+- name: standard_and_reduced_consumption
+  period:
+    period_kind: tax_year
+    start: '2026-04-06'
+    end: '2027-04-05'
+  input:
+    uk:policies/govuk/vat#input.full_rate_vat_consumption: 1900
+    uk:policies/govuk/vat#input.reduced_rate_vat_consumption: 3800
+    uk:policies/govuk/vat#input.microdata_vat_coverage: 0.38
+  output:
+    # 380 + 190 = 570; 570 / 0.38 = 1500
+    uk:policies/govuk/vat#vat_annual_amount: 1500
+
+- name: higher_consumption_grossed_up
+  period:
+    period_kind: tax_year
+    start: '2026-04-06'
+    end: '2027-04-05'
+  input:
+    uk:policies/govuk/vat#input.full_rate_vat_consumption: 9500
+    uk:policies/govuk/vat#input.reduced_rate_vat_consumption: 1900
+    uk:policies/govuk/vat#input.microdata_vat_coverage: 0.38
+  output:
+    # 9500*0.20 + 1900*0.05 = 1900 + 95 = 1995; 1995 / 0.38 = 5250
+    uk:policies/govuk/vat#vat_annual_amount: 5250
+
+- name: no_consumption_no_vat
+  period:
+    period_kind: tax_year
+    start: '2026-04-06'
+    end: '2027-04-05'
+  input:
+    uk:policies/govuk/vat#input.full_rate_vat_consumption: 0
+    uk:policies/govuk/vat#input.reduced_rate_vat_consumption: 0
+    uk:policies/govuk/vat#input.microdata_vat_coverage: 0.38
+  output:
+    uk:policies/govuk/vat#vat_annual_amount: 0

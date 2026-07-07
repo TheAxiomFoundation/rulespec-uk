@@ -1,0 +1,98 @@
+# Fixture-split (encode#1060): rules encode HODA 1979 s.6; these expected amounts
+# are orchestrator-computed shown arithmetic. effective_rate = standing 0.5795
+# - temporary_reduction - rural_relief(if area); annual = effective_rate * litres.
+- name: petrol_only_effective_rate_after_temporary_cut
+  period:
+    period_kind: tax_year
+    start: '2026-04-06'
+    end: '2027-04-05'
+  input:
+    uk:policies/govuk/fuel-duty#input.petrol_litres: 1000
+    uk:policies/govuk/fuel-duty#input.diesel_litres: 0
+    uk:policies/govuk/fuel-duty#input.temporary_fuel_duty_reduction_per_litre: 0.045
+    uk:policies/govuk/fuel-duty#input.in_rural_fuel_duty_relief_area: false
+    uk:policies/govuk/fuel-duty#input.rural_fuel_duty_relief_per_litre: 0.05
+  output:
+    uk:policies/govuk/fuel-duty#fuel_duty_rural_relief_amount: 0
+    uk:policies/govuk/fuel-duty#fuel_duty_total_litres: 1000
+    # 0.5795 - 0.045 - 0 = 0.5345; 0.5345 * 1000 = 534.5
+    uk:policies/govuk/fuel-duty#fuel_duty_annual_amount: 534.5
+
+- name: diesel_only_effective_rate
+  period:
+    period_kind: tax_year
+    start: '2026-04-06'
+    end: '2027-04-05'
+  input:
+    uk:policies/govuk/fuel-duty#input.petrol_litres: 0
+    uk:policies/govuk/fuel-duty#input.diesel_litres: 1000
+    uk:policies/govuk/fuel-duty#input.temporary_fuel_duty_reduction_per_litre: 0.045
+    uk:policies/govuk/fuel-duty#input.in_rural_fuel_duty_relief_area: false
+    uk:policies/govuk/fuel-duty#input.rural_fuel_duty_relief_per_litre: 0.05
+  output:
+    # 0.5345 * 1000 = 534.5
+    uk:policies/govuk/fuel-duty#fuel_duty_annual_amount: 534.5
+
+- name: petrol_and_diesel_combined
+  period:
+    period_kind: tax_year
+    start: '2026-04-06'
+    end: '2027-04-05'
+  input:
+    uk:policies/govuk/fuel-duty#input.petrol_litres: 1000
+    uk:policies/govuk/fuel-duty#input.diesel_litres: 500
+    uk:policies/govuk/fuel-duty#input.temporary_fuel_duty_reduction_per_litre: 0.045
+    uk:policies/govuk/fuel-duty#input.in_rural_fuel_duty_relief_area: false
+    uk:policies/govuk/fuel-duty#input.rural_fuel_duty_relief_per_litre: 0.05
+  output:
+    uk:policies/govuk/fuel-duty#fuel_duty_total_litres: 1500
+    # 0.5345 * 1500 = 801.75
+    uk:policies/govuk/fuel-duty#fuel_duty_annual_amount: 801.75
+
+- name: rural_relief_area_reduces_rate
+  period:
+    period_kind: tax_year
+    start: '2026-04-06'
+    end: '2027-04-05'
+  input:
+    uk:policies/govuk/fuel-duty#input.petrol_litres: 1000
+    uk:policies/govuk/fuel-duty#input.diesel_litres: 0
+    uk:policies/govuk/fuel-duty#input.temporary_fuel_duty_reduction_per_litre: 0.045
+    uk:policies/govuk/fuel-duty#input.in_rural_fuel_duty_relief_area: true
+    uk:policies/govuk/fuel-duty#input.rural_fuel_duty_relief_per_litre: 0.05
+  output:
+    uk:policies/govuk/fuel-duty#fuel_duty_rural_relief_amount: 0.05
+    # 0.5795 - 0.045 - 0.05 = 0.4845; 0.4845 * 1000 = 484.5
+    uk:policies/govuk/fuel-duty#fuel_duty_annual_amount: 484.5
+
+- name: standing_statutory_rate_no_temporary_cut
+  period:
+    period_kind: tax_year
+    start: '2026-04-06'
+    end: '2027-04-05'
+  input:
+    uk:policies/govuk/fuel-duty#input.petrol_litres: 1000
+    uk:policies/govuk/fuel-duty#input.diesel_litres: 0
+    uk:policies/govuk/fuel-duty#input.temporary_fuel_duty_reduction_per_litre: 0
+    uk:policies/govuk/fuel-duty#input.in_rural_fuel_duty_relief_area: false
+    uk:policies/govuk/fuel-duty#input.rural_fuel_duty_relief_per_litre: 0.05
+  output:
+    uk:policies/govuk/fuel-duty#fuel_duty_standing_rate_per_litre: 0.5795
+    uk:policies/govuk/fuel-duty#fuel_duty_effective_rate_per_litre: 0.5795
+    # 0.5795 * 1000 = 579.5
+    uk:policies/govuk/fuel-duty#fuel_duty_annual_amount: 579.5
+
+- name: no_fuel_no_duty
+  period:
+    period_kind: tax_year
+    start: '2026-04-06'
+    end: '2027-04-05'
+  input:
+    uk:policies/govuk/fuel-duty#input.petrol_litres: 0
+    uk:policies/govuk/fuel-duty#input.diesel_litres: 0
+    uk:policies/govuk/fuel-duty#input.temporary_fuel_duty_reduction_per_litre: 0.045
+    uk:policies/govuk/fuel-duty#input.in_rural_fuel_duty_relief_area: false
+    uk:policies/govuk/fuel-duty#input.rural_fuel_duty_relief_per_litre: 0.05
+  output:
+    uk:policies/govuk/fuel-duty#fuel_duty_total_litres: 0
+    uk:policies/govuk/fuel-duty#fuel_duty_annual_amount: 0
