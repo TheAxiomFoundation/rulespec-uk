@@ -1,0 +1,15 @@
+format: rulespec/v1
+module:
+  status: deferred
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/statute/ukpga/2003/1/681H
+  summary: |-
+    This section applies for the purposes of this Chapter. “Adjusted net income” means the person's adjusted net income as determined under section 58 of ITA 2007. “Week” means a 7-day period beginning with a Monday, and is in a tax year iff that Monday is in the tax year.
+  deferred_outputs:
+    - output: uk:statutes/ukpga/2003/1/681H#adjusted_net_income
+      reason: The definition is a pure cross-reference to section 58 of ITA 2007, and no executable RuleSpec import for that referenced determination is supplied in context.
+    - output: uk:statutes/ukpga/2003/1/681H#week_in_tax_year
+      reason: The week definition turns on the calendar day on which the week begins and whether that Monday is in the tax year; the available RuleSpec surface for this eval does not provide date-valued period-boundary operations or an appropriate non-person entity for a standalone statutory period definition.
+rules: []
