@@ -1,0 +1,64 @@
+- name: condition_a_and_income_threshold_met
+  period:
+    period_kind: tax_year
+    start: '2024-01-01'
+    end: '2024-12-31'
+  input:
+    uk:statutes/ukpga/2003/1/681B#input.adjusted_net_income_for_year: 65000
+    uk:statutes/ukpga/2003/1/681B#input.p_entitled_to_child_benefit_for_week_in_tax_year: true
+    uk:statutes/ukpga/2003/1/681B#input.other_partner_throughout_week_has_adjusted_net_income_exceeding_p: false
+    uk:statutes/ukpga/2003/1/681B#input.q_other_than_p_entitled_to_child_benefit_for_week_in_tax_year: false
+    uk:statutes/ukpga/2003/1/681B#input.q_is_partner_of_p_throughout_week: false
+    uk:statutes/ukpga/2003/1/681B#input.p_adjusted_net_income_exceeds_q_adjusted_net_income_for_year: false
+  output:
+    uk:statutes/ukpga/2003/1/681B#condition_a_met: holds
+    uk:statutes/ukpga/2003/1/681B#condition_b_met: not_holds
+    uk:statutes/ukpga/2003/1/681B#liable_to_high_income_child_benefit_charge: holds
+- name: condition_b_and_income_threshold_met
+  period:
+    period_kind: tax_year
+    start: '2024-01-01'
+    end: '2024-12-31'
+  input:
+    uk:statutes/ukpga/2003/1/681B#input.adjusted_net_income_for_year: 65000
+    uk:statutes/ukpga/2003/1/681B#input.p_entitled_to_child_benefit_for_week_in_tax_year: false
+    uk:statutes/ukpga/2003/1/681B#input.other_partner_throughout_week_has_adjusted_net_income_exceeding_p: false
+    uk:statutes/ukpga/2003/1/681B#input.q_other_than_p_entitled_to_child_benefit_for_week_in_tax_year: true
+    uk:statutes/ukpga/2003/1/681B#input.q_is_partner_of_p_throughout_week: true
+    uk:statutes/ukpga/2003/1/681B#input.p_adjusted_net_income_exceeds_q_adjusted_net_income_for_year: true
+  output:
+    uk:statutes/ukpga/2003/1/681B#condition_a_met: not_holds
+    uk:statutes/ukpga/2003/1/681B#condition_b_met: holds
+    uk:statutes/ukpga/2003/1/681B#liable_to_high_income_child_benefit_charge: holds
+- name: income_not_above_threshold_blocks_charge
+  period:
+    period_kind: tax_year
+    start: '2024-01-01'
+    end: '2024-12-31'
+  input:
+    uk:statutes/ukpga/2003/1/681B#input.adjusted_net_income_for_year: 60000
+    uk:statutes/ukpga/2003/1/681B#input.p_entitled_to_child_benefit_for_week_in_tax_year: true
+    uk:statutes/ukpga/2003/1/681B#input.other_partner_throughout_week_has_adjusted_net_income_exceeding_p: false
+    uk:statutes/ukpga/2003/1/681B#input.q_other_than_p_entitled_to_child_benefit_for_week_in_tax_year: false
+    uk:statutes/ukpga/2003/1/681B#input.q_is_partner_of_p_throughout_week: false
+    uk:statutes/ukpga/2003/1/681B#input.p_adjusted_net_income_exceeds_q_adjusted_net_income_for_year: false
+  output:
+    uk:statutes/ukpga/2003/1/681B#condition_a_met: holds
+    uk:statutes/ukpga/2003/1/681B#condition_b_met: not_holds
+    uk:statutes/ukpga/2003/1/681B#liable_to_high_income_child_benefit_charge: not_holds
+- name: condition_a_partner_with_higher_income_blocks_condition_and_charge
+  period:
+    period_kind: tax_year
+    start: '2024-01-01'
+    end: '2024-12-31'
+  input:
+    uk:statutes/ukpga/2003/1/681B#input.adjusted_net_income_for_year: 65000
+    uk:statutes/ukpga/2003/1/681B#input.p_entitled_to_child_benefit_for_week_in_tax_year: true
+    uk:statutes/ukpga/2003/1/681B#input.other_partner_throughout_week_has_adjusted_net_income_exceeding_p: true
+    uk:statutes/ukpga/2003/1/681B#input.q_other_than_p_entitled_to_child_benefit_for_week_in_tax_year: false
+    uk:statutes/ukpga/2003/1/681B#input.q_is_partner_of_p_throughout_week: false
+    uk:statutes/ukpga/2003/1/681B#input.p_adjusted_net_income_exceeds_q_adjusted_net_income_for_year: false
+  output:
+    uk:statutes/ukpga/2003/1/681B#condition_a_met: not_holds
+    uk:statutes/ukpga/2003/1/681B#condition_b_met: not_holds
+    uk:statutes/ukpga/2003/1/681B#liable_to_high_income_child_benefit_charge: not_holds

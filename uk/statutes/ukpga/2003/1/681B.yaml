@@ -1,0 +1,113 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/statute/ukpga/2003/1/681B
+  summary: |-
+    A person (“P”) is liable to a charge to income tax for a tax year if P's adjusted net income for the year exceeds £60,000 and one or both of conditions A and B are met. The charge is to be known as a “high income child benefit charge”.
+rules:
+  - name: high_income_child_benefit_charge_adjusted_net_income_threshold
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    period: Year
+    source: uk/statute/ukpga/2003/1/681B
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/1/681B
+              excerpt: "P's adjusted net income for the year exceeds £60,000"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          60000
+
+  - name: condition_a_met
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Year
+    source: uk/statute/ukpga/2003/1/681B
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/1/681B
+              excerpt: "Condition A is that— P is entitled to an amount in respect of child benefit for a week in the tax year"
+          - path: versions[0].formula
+            kind: exception
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/1/681B
+              excerpt: "there is no other person who is a partner of P throughout the week and has an adjusted net income for the year which exceeds that of P"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          p_entitled_to_child_benefit_for_week_in_tax_year
+          and not other_partner_throughout_week_has_adjusted_net_income_exceeding_p
+
+  - name: condition_b_met
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Year
+    source: uk/statute/ukpga/2003/1/681B
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/1/681B
+              excerpt: "a person (“Q”) other than P is entitled to an amount in respect of child benefit for a week in the tax year"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/1/681B
+              excerpt: "Q is a partner of P throughout the week"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/1/681B
+              excerpt: "P has an adjusted net income for the year which exceeds that of Q"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          q_other_than_p_entitled_to_child_benefit_for_week_in_tax_year
+          and q_is_partner_of_p_throughout_week
+          and p_adjusted_net_income_exceeds_q_adjusted_net_income_for_year
+
+  - name: liable_to_high_income_child_benefit_charge
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Year
+    source: uk/statute/ukpga/2003/1/681B
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/1/681B
+              excerpt: "P's adjusted net income for the year exceeds £60,000"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/1/681B
+              excerpt: "one or both of conditions A and B are met"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/1/681B
+              excerpt: "The charge is to be known as a “high income child benefit charge”."
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          adjusted_net_income_for_year > high_income_child_benefit_charge_adjusted_net_income_threshold
+          and (condition_a_met or condition_b_met)
