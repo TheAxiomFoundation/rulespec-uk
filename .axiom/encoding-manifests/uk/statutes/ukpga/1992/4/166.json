@@ -2,11 +2,11 @@
   "applied_files": [
     {
       "path": "uk/statutes/ukpga/1992/4/166.yaml",
-      "sha256": "7f1b9b603c1af6f48968561d8ec01243364f1d4d77b919fcdadc84c9dd33acda"
+      "sha256": "65b88816f04c09c0478b7e30bec8be346f38b2d88e0de5583ffdb2ba78372d36"
     },
     {
       "path": "uk/statutes/ukpga/1992/4/166.test.yaml",
-      "sha256": "5f83d313f9043aca13712350caf1d34b48da0ec38b52dd18a9c5b434e98ad5e5"
+      "sha256": "31f8070a86d079cf2a1f133568e18cc2cc4a3ae791468444e0680ada3f7cb6ba"
     }
   ],
   "axiom_encode_git": {
@@ -20,22 +20,31 @@
   "backend": "openai",
   "citation": "uk/statute/ukpga/1992/4/166",
   "context_manifest_file": "/home/runner/work/_temp/encode-out/_eval_workspaces/openai-gpt-5.5/uk-statute-ukpga-1992-4-166/workspace/context-manifest.json",
-  "context_manifest_sha256": "e4b6cceff1211a68ed4d928367d4fea56bf628c97b7ddd7f7640046cb07ed744",
-  "generated_at": "2026-07-08T00:57:26.150658+00:00",
+  "context_manifest_sha256": "15a6c5708d5f99ed902548847051aae7dae9c339e3ccb07258a18f4b0e537585",
+  "generated_at": "2026-07-08T02:03:19.806818+00:00",
   "generated_output_file": "/home/runner/work/_temp/encode-out/openai-gpt-5.5/statutes/ukpga/1992/4/166.yaml",
   "generated_output_root": "/home/runner/work/_temp/encode-out",
-  "generated_output_sha256": "7f1b9b603c1af6f48968561d8ec01243364f1d4d77b919fcdadc84c9dd33acda",
-  "generation_prompt_sha256": "b921bfb4cfa45676e000ad4eb2e694e2335260a13a2c91bc4ec995f1a633ab99",
+  "generated_output_sha256": "65b88816f04c09c0478b7e30bec8be346f38b2d88e0de5583ffdb2ba78372d36",
+  "generation_prompt_sha256": "ac792d7d0886004773dce9cf9b89aaad421964d0eb414a6686ec0b8612439d07",
   "model": "gpt-5.5",
-  "run_id": "73e3c656",
+  "run_id": "e54d4189",
   "runner": "openai-gpt-5.5",
   "schema_version": "axiom-encode/applied-rulespec/v1",
   "signature": {
     "algorithm": "hmac-sha256",
     "key_id": "axiom-encode-apply-v1",
-    "value": "b48769d1087ac24d6f3c1ea8251b92d84d152b63b6a983284da0d1ccbac06b27"
+    "value": "6753779ebc3764ea4db4a1a39d6b81aff759458f97ad98fa656af080423e90f7"
+  },
+  "supersedes": {
+    "backend": "openai",
+    "generated_at": "2026-07-08T00:57:26.150658+00:00",
+    "generation_prompt_sha256": "b921bfb4cfa45676e000ad4eb2e694e2335260a13a2c91bc4ec995f1a633ab99",
+    "manifest_sha256": "ea6a5c9cdd3e8b519748cf1bb727a7063b85bbdaafe8bff7ecab74d59949523d",
+    "prior_signature": "b48769d1087ac24d6f3c1ea8251b92d84d152b63b6a983284da0d1ccbac06b27",
+    "run_id": "73e3c656",
+    "tool": "axiom-encode encode --apply"
   },
   "tool": "axiom-encode encode --apply",
   "trace_file": "/home/runner/work/_temp/encode-out/traces/openai-gpt-5.5/uk-statute-ukpga-1992-4-166.json",
-  "trace_sha256": "ba4bacb8b34fb02755f2b7225b2c455bd2c8e53408e1e9fbce864f809e86fd36"
+  "trace_sha256": "d9424b6f3b6e61dc60a0b91f1cffe8fef84b7c6cd66e217846b6271a5836653e"
 }
