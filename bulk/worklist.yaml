@@ -12,7 +12,7 @@ entries:
 - citation: uk/statute/ukpga/2003/1/681B
   repo: rulespec-uk
   batch: A
-  status: pending
+  status: done  # reconciled 2026-07: encoded on main (uk/statutes/ukpga/2003/1/681B.yaml)
   heading: Liability for the high income child benefit charge (ITEPA s681B)
   class: charge
   note: Self-contained HICBC liability test over adjusted net income above the
@@ -20,7 +20,7 @@ entries:
 - citation: uk/statute/ukpga/2003/1/681G
   repo: rulespec-uk
   batch: A
-  status: pending
+  status: pr-open  # reconciled 2026-07: bulk PR #126 open (auto-merge on green)
   heading: Meaning of "partner" for the high income child benefit charge (ITEPA s681G)
   class: definition
   note: Self-contained partner definition (conditions A/B) for the HICBC chapter.
@@ -52,7 +52,7 @@ entries:
 - citation: uk/statute/ukpga/2003/1/681H
   repo: rulespec-uk
   batch: B
-  status: pending
+  status: done  # reconciled 2026-07: encoded on main (uk/statutes/ukpga/2003/1/681H.yaml)
   heading: Adjusted net income for the high income child benefit charge (ITEPA s681H)
   class: definition
   note: Self-contained; adjusted net income has the ITA 2007 s58 meaning. One
@@ -75,7 +75,7 @@ entries:
 - citation: uk/statute/ukpga/1992/4/166
   repo: rulespec-uk
   batch: B
-  status: pending
+  status: done  # reconciled 2026-07: encoded on main (uk/statutes/ukpga/1992/4/166.yaml)
   heading: Rate of statutory maternity pay (SSCBA 1992 s166)
   class: rate
   note: Self-contained SMP rate structure (earnings-related then prescribed
@@ -83,14 +83,14 @@ entries:
 - citation: uk/statute/ukpga/1992/4/171ZA
   repo: rulespec-uk
   batch: B
-  status: pending
+  status: pr-open  # reconciled 2026-07: bulk PR #120 open (auto-merge on green)
   heading: Entitlement to statutory paternity pay - birth (SSCBA 1992 s171ZA)
   class: entitlement
   note: Self-contained SPP entitlement conditions on birth. In-Part refs only.
 - citation: uk/regulation/uksi/2006/213/70
   repo: rulespec-uk
   batch: B
-  status: pending
+  status: pr-open  # reconciled 2026-07: bulk PR #121 open (auto-merge on green)
   heading: Appropriate maximum housing benefit (HB Regs 2006 reg 70)
   class: rate
   note: Self-contained; maximum HB is 100 per cent of eligible rent, less
@@ -98,7 +98,7 @@ entries:
 - citation: uk/regulation/uksi/2006/213/71
   repo: rulespec-uk
   batch: B
-  status: pending
+  status: pr-open  # reconciled 2026-07: bulk PR #122 open (auto-merge on green)
   heading: Prescribed taper percentage for housing benefit (HB Regs 2006 reg 71)
   class: rate
   note: Self-contained taper percentage of excess income over the applicable
@@ -142,7 +142,7 @@ entries:
 - citation: uk/regulation/uksi/2004/692/schedule/1
   repo: rulespec-uk
   batch: indirect-tax
-  status: pending
+  status: done  # reconciled 2026-07: encoded on main (uk/regulations/uksi/2004/692/schedule/1.yaml)
   heading: TV licence fees (Communications (Television Licensing) Regs 2004 Sch 1)
   class: rate
   note: Colour and black-and-white licence fee schedule (£180.00 colour for
@@ -164,7 +164,7 @@ entries:
 - citation: uk/statute/ukpga/1994/23/2
   repo: rulespec-uk
   batch: indirect-tax
-  status: pending
+  status: done  # reconciled 2026-07: encoded on main (uk/statutes/ukpga/1994/23/2.yaml)
   heading: Standard rate of VAT (VATA 1994 s.2)
   class: rate
   note: Standard rate 20 per cent. Cross-references s.29A and the Treasury order
@@ -176,3 +176,152 @@ entries:
   heading: Reduced rate of VAT (VATA 1994 s.29A)
   class: rate
   note: Reduced rate 5 per cent for Schedule 7A supplies. References Schedule 7A.
+# --- Batch topup: corpus-verified un-encoded sections. Each was checked against the
+# Supabase current_provisions view (jurisdiction uk) to resolve to exactly one live,
+# non-repealed provision AND against the on-main encoded tree to be un-encoded, then
+# its body read to confirm a self-contained rule. Amendment sections (Finance/NIC Acts
+# that "substitute" figures into ITA/TCGA/SSCBA) skipped per encode#1079 — the direct
+# consolidated sections are queued instead. Cross-reference-heavy pointer sections
+# skipped per encode#1058. Validation year 2026 (eval >= 2026-04-06 where a vintage
+# matters). Completes started chapters (HICBC ITEPA ch. 8; NICs; CGT; pensions).
+- citation: uk/statute/ukpga/1992/4/9
+  repo: rulespec-uk
+  batch: topup
+  status: pending
+  heading: Calculation of secondary Class 1 NICs (SSCBA 1992 s9)
+  class: rate
+  note: Self-contained — a secondary Class 1 contribution is the secondary percentage
+    of earnings above the secondary threshold; the in-section secondary percentage is
+    15 per cent. In-Act refs only. Validates 2026 (eval >= 2026-04-06).
+- citation: uk/statute/ukpga/1992/4/11
+  repo: rulespec-uk
+  batch: topup
+  status: pending
+  heading: Class 2 contributions and the small profits threshold (SSCBA 1992 s11)
+  class: rate
+  note: Self-contained — Class 2 liability keyed to the in-section small profits
+    threshold of £6,845, with a treated-as-paid credit above it. In-Act refs only.
+- citation: uk/statute/ukpga/1992/4/142
+  repo: rulespec-uk
+  batch: topup
+  status: pending
+  heading: Meaning of "child" and "qualifying young person" (SSCBA 1992 s142)
+  class: definition
+  note: Self-contained — a child is a person under 16; a qualifying young person is
+    under a prescribed greater age meeting prescribed conditions. In-section definition.
+- citation: uk/statute/ukpga/1992/4/143
+  repo: rulespec-uk
+  batch: topup
+  status: pending
+  heading: Person responsible for a child or qualifying young person (SSCBA 1992 s143)
+  class: definition
+  note: Self-contained — responsibility where the child lives with the person, or the
+    person contributes at least the weekly child-benefit rate; with a 56-days-in-16-
+    weeks absence rule and disregards. In-section arithmetic.
+- citation: uk/statute/ukpga/1992/12/1H
+  repo: rulespec-uk
+  batch: topup
+  status: pending
+  heading: Main rates of capital gains tax (TCGA 1992 s1H)
+  class: rate
+  note: Self-contained — chargeable gains of individuals are taxed at 18 or 24 per
+    cent (which one per s1I), and gains of personal representatives and trustees at
+    24 per cent. In-Act refs only. Validates 2026 (eval >= 2026-04-06).
+- citation: uk/statute/ukpga/1992/12/1K
+  repo: rulespec-uk
+  batch: topup
+  status: pending
+  heading: Capital gains tax annual exempt amount (TCGA 1992 s1K)
+  class: rate
+  note: Self-contained — the annual exempt amount is £3,000, deducted from chargeable
+    gains after current-year losses; unavailable where a foreign-gain or foreign-income
+    claim is made. In-Act refs only.
+- citation: uk/statute/ukpga/2004/12/228
+  repo: rulespec-uk
+  batch: topup
+  status: pending
+  heading: Pension annual allowance (FA 2004 s228)
+  class: rate
+  note: Self-contained — the annual allowance for 2023-24 and each subsequent tax year
+    is £60,000, subject to Treasury order. In-section amount.
+- citation: uk/statute/ukpga/2004/12/228ZA
+  repo: rulespec-uk
+  batch: topup
+  status: pending
+  heading: Tapered reduction of the annual allowance (FA 2004 s228ZA)
+  class: mechanics
+  note: Self-contained — for a high-income individual the annual allowance is reduced
+    (but not below £10,000) by (adjusted income − £260,000) × ½, with the high-income
+    test on adjusted and threshold income. In-section arithmetic.
+- citation: uk/statute/ukpga/2004/12/190
+  repo: rulespec-uk
+  batch: topup
+  status: pending
+  heading: Annual limit for pension contribution relief (FA 2004 s190)
+  class: mechanics
+  note: Self-contained — relief under s188 is capped at the individual's relevant UK
+    earnings chargeable to income tax, floored at the basic amount. In-Act refs only.
+- citation: uk/statute/ukpga/2007/3/58
+  repo: rulespec-uk
+  batch: topup
+  status: pending
+  heading: Meaning of "adjusted net income" (ITA 2007 s58)
+  class: definition
+  note: Self-contained four-step calculation — net income less grossed-up gift-aid and
+    gross pension contributions, adding back union/police relief. Underpins the HICBC
+    and personal-allowance tapers. In-Act refs only.
+- citation: uk/statute/ukpga/2003/1/11
+  repo: rulespec-uk
+  batch: topup
+  status: pending
+  heading: Calculation of net taxable earnings (ITEPA 2003 s11)
+  class: mechanics
+  note: Self-contained — net taxable earnings equal taxable earnings (TE) minus allowed
+    deductions (DE), floored at nil, computed per employment. In-Act refs only.
+- citation: uk/statute/ukpga/2003/1/681D
+  repo: rulespec-uk
+  batch: topup
+  status: pending
+  heading: HICBC where a child lives with another person (ITEPA 2003 s681D)
+  class: mechanics
+  note: Self-contained — attributes a contributor's child-benefit amount to the person
+    the child lives with (the one with the highest adjusted net income), with a 52-week
+    continuity rule. In-chapter refs only.
+- citation: uk/statute/ukpga/2003/1/681E
+  repo: rulespec-uk
+  batch: topup
+  status: pending
+  heading: HICBC disregarded amounts and partner tiebreak (ITEPA 2003 s681E)
+  class: mechanics
+  note: Self-contained — disregards election-suspended and post-death child-benefit
+    amounts, and where two or more partners would be liable charges only the one with
+    the highest adjusted net income. In-chapter refs only.
+- citation: uk/statute/ukpga/2003/21/365A
+  repo: rulespec-uk
+  batch: topup
+  status: pending
+  heading: TV licence fee concessions by age (Communications Act 2003 s365A)
+  class: mechanics
+  note: Self-contained — a BBC age concession under s365(1A) must require the licence
+    holder (or another person) to be at or above a specified age of 65 or higher by the
+    end of the issue month. Complements the s363/s365 TV-licence entries.
+- citation: uk/statute/asp/2013/11/24
+  repo: rulespec-uk
+  batch: topup
+  status: pending
+  heading: LBTT tax bands and rates structure (LBTT(S) Act 2013 s24)
+  class: mechanics
+  note: Self-contained band-structure rule — Scottish Ministers set, by order, a nil-
+    rate (0 per cent) band and at least two further bands with strictly increasing rates
+    for residential and non-residential transactions; numeric bands sit in the linked
+    order (mirrors the composed LBTT pipeline).
+- citation: uk/statute/anaw/2017/1/24
+  repo: rulespec-uk
+  batch: topup
+  status: pending
+  heading: LTT tax bands and rates structure (LTTA (Wales) 2017 s24)
+  class: mechanics
+  note: Self-contained band-structure rule — Welsh Ministers set, by regulations, a
+    zero-rate band and two or more higher bands with increasing rates for residential,
+    higher-rates residential, and non-residential transactions; numeric bands sit in
+    the linked WSI (mirrors the composed LTT pipeline).
