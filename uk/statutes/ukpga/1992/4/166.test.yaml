@@ -1,0 +1,58 @@
+- name: first_six_weeks_use_earnings_related_rate
+  period:
+    period_kind: custom
+    name: maternity_pay_week
+    start: '2025-04-07'
+    end: '2025-04-13'
+  input:
+    uk:statutes/ukpga/1992/4/166#input.normal_weekly_earnings_for_statutory_maternity_pay_reference_period: 700
+    uk:statutes/ukpga/1992/4/166#input.maternity_pay_period_week_number: 6
+    uk:statutes/ukpga/1992/4/166#input.prescribed_statutory_maternity_pay_weekly_rate: 200
+    uk:statutes/ukpga/1992/4/166#input.higher_or_highest_weekly_rate_of_statutory_sick_pay_specified_in_section_157_1: 100
+  output:
+    uk:statutes/ukpga/1992/4/166#statutory_maternity_pay_earnings_related_rate: 630
+    uk:statutes/ukpga/1992/4/166#prescribed_statutory_maternity_pay_weekly_rate_meets_minimum: holds
+    uk:statutes/ukpga/1992/4/166#statutory_maternity_pay_weekly_rate: 630
+- name: remaining_period_uses_lower_prescribed_rate
+  period:
+    period_kind: custom
+    name: maternity_pay_week
+    start: '2025-04-14'
+    end: '2025-04-20'
+  input:
+    uk:statutes/ukpga/1992/4/166#input.normal_weekly_earnings_for_statutory_maternity_pay_reference_period: 700
+    uk:statutes/ukpga/1992/4/166#input.maternity_pay_period_week_number: 7
+    uk:statutes/ukpga/1992/4/166#input.prescribed_statutory_maternity_pay_weekly_rate: 200
+    uk:statutes/ukpga/1992/4/166#input.higher_or_highest_weekly_rate_of_statutory_sick_pay_specified_in_section_157_1: 100
+  output:
+    uk:statutes/ukpga/1992/4/166#prescribed_statutory_maternity_pay_weekly_rate_meets_minimum: holds
+    uk:statutes/ukpga/1992/4/166#statutory_maternity_pay_weekly_rate: 200
+- name: remaining_period_uses_lower_earnings_related_rate
+  period:
+    period_kind: custom
+    name: maternity_pay_week
+    start: '2025-04-21'
+    end: '2025-04-27'
+  input:
+    uk:statutes/ukpga/1992/4/166#input.normal_weekly_earnings_for_statutory_maternity_pay_reference_period: 200
+    uk:statutes/ukpga/1992/4/166#input.maternity_pay_period_week_number: 7
+    uk:statutes/ukpga/1992/4/166#input.prescribed_statutory_maternity_pay_weekly_rate: 250
+    uk:statutes/ukpga/1992/4/166#input.higher_or_highest_weekly_rate_of_statutory_sick_pay_specified_in_section_157_1: 100
+  output:
+    uk:statutes/ukpga/1992/4/166#statutory_maternity_pay_earnings_related_rate: 180
+    uk:statutes/ukpga/1992/4/166#prescribed_statutory_maternity_pay_weekly_rate_meets_minimum: holds
+    uk:statutes/ukpga/1992/4/166#statutory_maternity_pay_weekly_rate: 180
+- name: daily_rate_is_one_seventh_of_weekly_rate_and_prescribed_rate_can_fail_minimum
+  period:
+    period_kind: custom
+    name: day
+    start: '2025-04-28'
+    end: '2025-04-28'
+  input:
+    uk:statutes/ukpga/1992/4/166#input.normal_weekly_earnings_for_statutory_maternity_pay_reference_period: 700
+    uk:statutes/ukpga/1992/4/166#input.maternity_pay_period_week_number: 7
+    uk:statutes/ukpga/1992/4/166#input.prescribed_statutory_maternity_pay_weekly_rate: 140
+    uk:statutes/ukpga/1992/4/166#input.higher_or_highest_weekly_rate_of_statutory_sick_pay_specified_in_section_157_1: 150
+  output:
+    uk:statutes/ukpga/1992/4/166#prescribed_statutory_maternity_pay_weekly_rate_meets_minimum: not_holds
+    uk:statutes/ukpga/1992/4/166#statutory_maternity_pay_daily_rate: 20

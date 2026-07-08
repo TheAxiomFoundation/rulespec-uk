@@ -1,0 +1,216 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/statute/ukpga/1992/4/166
+  summary: |-
+    Statutory maternity pay is payable at the earnings-related rate for the first 6 weeks, and afterwards at the lower of the earnings-related rate and the prescribed weekly rate. The earnings-related rate is 90 per cent of normal weekly earnings for the 8 weeks immediately preceding the 14th week before the expected week of confinement; a daily rate is one seventh of the weekly rate.
+rules:
+  - name: statutory_maternity_pay_earnings_related_percentage
+    kind: parameter
+    dtype: Rate
+    source: Social Security Contributions and Benefits Act 1992 s.166(3)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/166
+              excerpt: "90 per cent of a woman’s normal weekly earnings"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          0.90
+
+  - name: statutory_maternity_pay_first_earnings_related_weeks
+    kind: parameter
+    dtype: Count
+    period: Week
+    source: Social Security Contributions and Benefits Act 1992 s.166(1)(a)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/166
+              excerpt: "the first 6 weeks"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          6
+
+  - name: statutory_maternity_pay_days_in_week
+    kind: parameter
+    dtype: Count
+    period: Week
+    source: Social Security Contributions and Benefits Act 1992 s.166(2), (5)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/166
+              excerpt: "“week” means any period of seven days"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/166
+              excerpt: "one seventh of the weekly rate"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          7
+
+  - name: statutory_maternity_pay_normal_earnings_period_weeks
+    kind: parameter
+    dtype: Count
+    period: Week
+    source: Social Security Contributions and Benefits Act 1992 s.166(3)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/166
+              excerpt: "for the period of 8 weeks"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          8
+
+  - name: statutory_maternity_pay_reference_week_before_expected_confinement
+    kind: parameter
+    dtype: Count
+    period: Week
+    source: Social Security Contributions and Benefits Act 1992 s.166(3)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/166
+              excerpt: "immediately preceding the 14th week before the expected week of confinement"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          14
+
+  - name: statutory_maternity_pay_earnings_related_rate
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Social Security Contributions and Benefits Act 1992 s.166(3)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/166
+              excerpt: "weekly rate equivalent to 90 per cent of a woman’s normal weekly earnings"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/1992/4/166#statutory_maternity_pay_earnings_related_percentage
+              output: statutory_maternity_pay_earnings_related_percentage
+              hash: sha256:local
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          statutory_maternity_pay_earnings_related_percentage * normal_weekly_earnings_for_statutory_maternity_pay_reference_period
+
+  - name: prescribed_statutory_maternity_pay_weekly_rate_meets_minimum
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Week
+    source: Social Security Contributions and Benefits Act 1992 s.166(4)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/166
+              excerpt: "must not be less than the weekly rate of statutory sick pay"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          prescribed_statutory_maternity_pay_weekly_rate >= higher_or_highest_weekly_rate_of_statutory_sick_pay_specified_in_section_157_1
+
+  - name: statutory_maternity_pay_weekly_rate
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Social Security Contributions and Benefits Act 1992 s.166(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/166
+              excerpt: "at the earnings-related rate, in respect of the first 6 weeks"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/166
+              excerpt: "whichever is the lower of the earnings-related rate and such weekly rate as may be prescribed"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/1992/4/166#statutory_maternity_pay_first_earnings_related_weeks
+              output: statutory_maternity_pay_first_earnings_related_weeks
+              hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/1992/4/166#statutory_maternity_pay_earnings_related_rate
+              output: statutory_maternity_pay_earnings_related_rate
+              hash: sha256:local
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if maternity_pay_period_week_number <= statutory_maternity_pay_first_earnings_related_weeks: statutory_maternity_pay_earnings_related_rate else: min(statutory_maternity_pay_earnings_related_rate, prescribed_statutory_maternity_pay_weekly_rate)
+
+  - name: statutory_maternity_pay_daily_rate
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Day
+    unit: GBP
+    source: Social Security Contributions and Benefits Act 1992 s.166(5)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/166
+              excerpt: "one seventh of the weekly rate"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/1992/4/166#statutory_maternity_pay_weekly_rate
+              output: statutory_maternity_pay_weekly_rate
+              hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/1992/4/166#statutory_maternity_pay_days_in_week
+              output: statutory_maternity_pay_days_in_week
+              hash: sha256:local
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          statutory_maternity_pay_weekly_rate / statutory_maternity_pay_days_in_week
