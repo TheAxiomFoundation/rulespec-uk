@@ -1,0 +1,15 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2006/213/71
+  summary: The prescribed percentage deducted from maximum housing benefit is 65 per
+    cent.
+rules:
+- name: housing_benefit_excess_income_taper_rate_restatement
+  kind: source_relation
+  source_relation:
+    type: restates
+    target: uk:regulations/uksi/2006/214/51#housing_benefit_excess_income_taper_rate
+  source: SI 2006/213 regulation 71

@@ -1,0 +1,45 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2006/213/70
+  summary: |-
+    The appropriate maximum housing benefit in any week is 100 per cent of eligible rent calculated weekly under regulations 80 and 81, less non-dependant deductions under regulation 74.
+rules:
+  - name: appropriate_maximum_housing_benefit_percentage
+    kind: parameter
+    dtype: Rate
+    source: regulation 70
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/regulation/uksi/2006/213/70
+              excerpt: "100 per cent. of his eligible rent"
+    versions:
+      - effective_from: '2006-03-06'
+        formula: |-
+          1.0
+
+  - name: appropriate_maximum_housing_benefit
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: regulation 70
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2006/213/70
+              excerpt: "100 per cent. of his eligible rent calculated on a weekly basis in accordance with regulations 80 and 81 less any deductions in respect of non-dependants"
+    versions:
+      - effective_from: '2006-03-06'
+        formula: |-
+          max(0, appropriate_maximum_housing_benefit_percentage * eligible_rent_calculated_weekly_under_regulations_80_and_81 - non_dependant_deductions_under_regulation_74)
