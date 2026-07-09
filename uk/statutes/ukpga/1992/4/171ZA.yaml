@@ -1,0 +1,190 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/statute/ukpga/1992/4/171ZA
+  summary: |-
+    A person satisfying subsection (2) conditions is entitled to statutory paternity pay. Conditions include prescribed relationship conditions with a newborn child and the child's mother, at least 26 weeks continuous employed earner's employment ending with the relevant week, normal weekly earnings for the 8 weeks ending with the relevant week not less than the lower earnings limit, and continued employed earner's employment with that employer until the child's birth. The relevant week is the week immediately preceding the 14th week before expected week of birth; multiple births from the same pregnancy do not affect entitlement; “newborn child” includes a child stillborn after twenty-four weeks of pregnancy.
+rules:
+  - name: statutory_paternity_pay_continuous_employment_weeks_required
+    kind: parameter
+    dtype: Count
+    period: Week
+    source: Social Security Contributions and Benefits Act 1992 s.171ZA(2)(b)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/171ZA
+              excerpt: "a continuous period of at least 26 weeks"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          26
+
+  - name: statutory_paternity_pay_normal_earnings_period_weeks
+    kind: parameter
+    dtype: Count
+    period: Week
+    source: Social Security Contributions and Benefits Act 1992 s.171ZA(2)(c)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/171ZA
+              excerpt: "for the period of 8 weeks ending with the relevant week"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          8
+
+  - name: statutory_paternity_pay_relevant_week_before_expected_birth_week
+    kind: parameter
+    dtype: Count
+    period: Week
+    source: Social Security Contributions and Benefits Act 1992 s.171ZA(3)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/171ZA
+              excerpt: "the week immediately preceding the 14th week before the expected week of the child’s birth"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          14
+
+  - name: statutory_paternity_pay_stillbirth_pregnancy_weeks_threshold
+    kind: parameter
+    dtype: Count
+    period: Week
+    source: Social Security Contributions and Benefits Act 1992 s.171ZA(5)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/171ZA
+              excerpt: "stillborn after twenty-four weeks of pregnancy"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          24
+
+  - name: child_is_newborn_for_statutory_paternity_pay
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Week
+    source: Social Security Contributions and Benefits Act 1992 s.171ZA(5)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/171ZA
+              excerpt: "“newborn child” includes a child stillborn after twenty-four weeks of pregnancy"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/1992/4/171ZA#statutory_paternity_pay_stillbirth_pregnancy_weeks_threshold
+              output: statutory_paternity_pay_stillbirth_pregnancy_weeks_threshold
+              hash: sha256:local
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          child_is_liveborn
+          or (
+            child_is_stillborn
+            and pregnancy_weeks_at_stillbirth > statutory_paternity_pay_stillbirth_pregnancy_weeks_threshold
+          )
+
+  - name: statutory_paternity_pay_earnings_condition
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Week
+    source: Social Security Contributions and Benefits Act 1992 s.171ZA(2)(c)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/171ZA
+              excerpt: "normal weekly earnings for the period of 8 weeks ending with the relevant week are not less than the lower earnings limit"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          normal_weekly_earnings_for_statutory_paternity_pay_relevant_period >= lower_earnings_limit_in_force_under_section_5_1_a_at_end_of_relevant_week
+
+  - name: entitled_to_statutory_paternity_pay
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Week
+    source: Social Security Contributions and Benefits Act 1992 s.171ZA(1), (2), (4)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/171ZA
+              excerpt: "Where a person satisfies the conditions in subsection (2) below, he shall be entitled"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/171ZA
+              excerpt: "prescribed conditions—as to relationship with a newborn child, and as to relationship with the child’s mother"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/171ZA
+              excerpt: "continuous period of at least 26 weeks ending with the relevant week"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/171ZA
+              excerpt: "beginning with the end of the relevant week and ending with the day on which the child is born"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/171ZA
+              excerpt: "shall not be affected by the birth, or expected birth, of more than one child as a result of the same pregnancy"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/1992/4/171ZA#statutory_paternity_pay_continuous_employment_weeks_required
+              output: statutory_paternity_pay_continuous_employment_weeks_required
+              hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/1992/4/171ZA#child_is_newborn_for_statutory_paternity_pay
+              output: child_is_newborn_for_statutory_paternity_pay
+              hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/1992/4/171ZA#statutory_paternity_pay_earnings_condition
+              output: statutory_paternity_pay_earnings_condition
+              hash: sha256:local
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          child_is_newborn_for_statutory_paternity_pay
+          and person_satisfies_prescribed_conditions_as_to_relationship_with_newborn_child
+          and person_satisfies_prescribed_conditions_as_to_relationship_with_child_mother
+          and employed_earner_employment_with_employer_continuous_weeks_ending_with_relevant_week >= statutory_paternity_pay_continuous_employment_weeks_required
+          and statutory_paternity_pay_earnings_condition
+          and employed_earner_employment_with_same_employer_continuous_from_end_of_relevant_week_to_birth
