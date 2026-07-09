@@ -1,0 +1,192 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/statute/ukpga/1998/46/80C
+  summary: |-
+    The Scottish Parliament may by resolution set the Scottish basic rate and any other rates for section 11A of the Income Tax Act 2007. Where more than one rate is set, the resolution must also set limits or make other provision to ascertain which rates apply. A Scottish rate resolution applies for only one tax year and for the whole of that year; a Scottish rate must be a whole number or half a whole number, or zero. The resolution must specify the tax year, be made before that year starts, and not be made more than 12 months before the start.
+rules:
+  - name: scottish_rate_resolution_required_tax_year_count
+    kind: parameter
+    dtype: Count
+    source: ukpga 1998 c.46 s.80C
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/statute/ukpga/1998/46/80C
+              excerpt: "applies—for only one tax year"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          1
+
+  - name: scottish_rate_resolution_multiple_rate_threshold
+    kind: parameter
+    dtype: Count
+    source: ukpga 1998 c.46 s.80C
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/statute/ukpga/1998/46/80C
+              excerpt: "sets more than one rate"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          1
+
+  - name: scottish_rate_resolution_maximum_months_before_tax_year_start
+    kind: parameter
+    dtype: Count
+    source: ukpga 1998 c.46 s.80C
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/statute/ukpga/1998/46/80C
+              excerpt: "must not be made more than 12 months before the start of that year"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          12
+
+  - name: scottish_rate_resolution_applies_for_required_period
+    kind: derived
+    entity: ScottishRateResolution
+    dtype: Judgment
+    period: Year
+    source: ukpga 1998 c.46 s.80C
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/1998/46/80C
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/1998/46/80C#scottish_rate_resolution_required_tax_year_count
+              output: scottish_rate_resolution_required_tax_year_count
+              hash: sha256:local
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          scottish_rate_resolution_tax_year_count == scottish_rate_resolution_required_tax_year_count
+          and scottish_rate_resolution_applies_for_whole_tax_year
+
+  - name: scottish_rate_resolution_makes_required_rate_allocation_provision
+    kind: derived
+    entity: ScottishRateResolution
+    dtype: Judgment
+    period: Year
+    source: ukpga 1998 c.46 s.80C
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/1998/46/80C
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/1998/46/80C#scottish_rate_resolution_multiple_rate_threshold
+              output: scottish_rate_resolution_multiple_rate_threshold
+              hash: sha256:local
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          scottish_rate_resolution_rate_count <= scottish_rate_resolution_multiple_rate_threshold
+          or scottish_rate_resolution_sets_limits_or_other_provision_to_ascertain_applicable_rates
+
+  - name: scottish_rate_resolution_made_within_required_time
+    kind: derived
+    entity: ScottishRateResolution
+    dtype: Judgment
+    period: Year
+    source: ukpga 1998 c.46 s.80C
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/1998/46/80C
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/1998/46/80C#scottish_rate_resolution_maximum_months_before_tax_year_start
+              output: scottish_rate_resolution_maximum_months_before_tax_year_start
+              hash: sha256:local
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          scottish_rate_resolution_made_before_start_of_tax_year
+          and scottish_rate_resolution_months_before_tax_year_start <= scottish_rate_resolution_maximum_months_before_tax_year_start
+
+  - name: scottish_rate_resolution_satisfies_source_requirements
+    kind: derived
+    entity: ScottishRateResolution
+    dtype: Judgment
+    period: Year
+    source: ukpga 1998 c.46 s.80C
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/1998/46/80C
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/1998/46/80C#scottish_rate_resolution_applies_for_required_period
+              output: scottish_rate_resolution_applies_for_required_period
+              hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/1998/46/80C#scottish_rate_resolution_makes_required_rate_allocation_provision
+              output: scottish_rate_resolution_makes_required_rate_allocation_provision
+              hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/1998/46/80C#scottish_rate_resolution_made_within_required_time
+              output: scottish_rate_resolution_made_within_required_time
+              hash: sha256:local
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          scottish_rate_resolution_specifies_tax_year
+          and scottish_rate_resolution_applies_for_required_period
+          and scottish_rate_resolution_makes_required_rate_allocation_provision
+          and scottish_rate_resolution_made_within_required_time
+          and motion_for_scottish_rate_resolution_moved_by_member_of_scottish_government
+
+  - name: scottish_rate_resolution_cancelled_before_tax_year_treated_as_never_passed
+    kind: derived
+    entity: ScottishRateResolution
+    dtype: Judgment
+    period: Year
+    source: ukpga 1998 c.46 s.80C
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/1998/46/80C
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          scottish_rate_resolution_cancelled_before_start_of_tax_year

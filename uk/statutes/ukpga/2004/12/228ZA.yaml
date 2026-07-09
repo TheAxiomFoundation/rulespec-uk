@@ -1,0 +1,72 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/statute/ukpga/2004/12/228ZA
+  summary: |-
+    Section 228ZA provides that a high-income individual's annual allowance is the amount specified by or under section 228 reduced, but not below £10,000, by (AI - £260,000) × 1/2, rounded down to the nearest £1. A high-income individual has adjusted income more than £260,000 and threshold income more than £260,000 minus the section 228 annual allowance amount. The section also defines adjusted income and threshold income by reference to net income, pension inputs, contributions, lump sum death benefits, salary sacrifice and flexible remuneration arrangements.
+  deferred_outputs:
+    - output: uk:statutes/ukpga/2004/12/228ZA#annual_allowance_for_high_income_individual
+      reason: The annual allowance calculation depends on the amount specified for the tax year by or under section 228, but no copied context provides the RuleSpec output for that cited amount.
+      source_values:
+        - uk:statutes/ukpga/2004/12/228ZA#adjusted_income_taper_threshold
+        - uk:statutes/ukpga/2004/12/228ZA#minimum_tapered_annual_allowance
+        - uk:statutes/ukpga/2004/12/228ZA#annual_allowance_reduction_fraction
+    - output: uk:statutes/ukpga/2004/12/228ZA#adjusted_income
+      reason: The adjusted income definition depends on relief, deductions, and pension input amounts defined or calculated under cited sections 193(4), 194(1), 193(2), and 229(1), but no copied context provides those upstream RuleSpec outputs.
+    - output: uk:statutes/ukpga/2004/12/228ZA#threshold_income
+      reason: The threshold income definition depends on contribution relief under cited section 192 and related calculations, but no copied context provides the upstream RuleSpec output.
+rules:
+  - name: adjusted_income_taper_threshold
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    period: Year
+    source: Section 228ZA(1), (3)(a), (3)(b)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2004/12/228ZA
+              excerpt: "£260,000"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          260000
+  - name: minimum_tapered_annual_allowance
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    period: Year
+    source: Section 228ZA(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2004/12/228ZA
+              excerpt: "not below £10,000"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          10000
+  - name: annual_allowance_reduction_fraction
+    kind: parameter
+    dtype: Rate
+    source: Section 228ZA(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2004/12/228ZA
+              excerpt: "(AI - £260,000) × 1/2"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          1 / 2

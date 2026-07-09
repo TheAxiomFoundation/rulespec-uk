@@ -1,0 +1,62 @@
+- name: single_rate_resolution_satisfies_requirements
+  period:
+    period_kind: tax_year
+    start: '2024-04-06'
+    end: '2025-04-05'
+  input:
+    uk:statutes/ukpga/1998/46/80C#input.scottish_rate_resolution_tax_year_count: 1
+    uk:statutes/ukpga/1998/46/80C#input.scottish_rate_resolution_applies_for_whole_tax_year: true
+    uk:statutes/ukpga/1998/46/80C#input.scottish_rate_resolution_rate_count: 1
+    uk:statutes/ukpga/1998/46/80C#input.scottish_rate_resolution_sets_limits_or_other_provision_to_ascertain_applicable_rates: false
+    uk:statutes/ukpga/1998/46/80C#input.scottish_rate_resolution_made_before_start_of_tax_year: true
+    uk:statutes/ukpga/1998/46/80C#input.scottish_rate_resolution_months_before_tax_year_start: 6
+    uk:statutes/ukpga/1998/46/80C#input.scottish_rate_resolution_specifies_tax_year: true
+    uk:statutes/ukpga/1998/46/80C#input.motion_for_scottish_rate_resolution_moved_by_member_of_scottish_government: true
+  output:
+    uk:statutes/ukpga/1998/46/80C#scottish_rate_resolution_applies_for_required_period: holds
+    uk:statutes/ukpga/1998/46/80C#scottish_rate_resolution_makes_required_rate_allocation_provision: holds
+    uk:statutes/ukpga/1998/46/80C#scottish_rate_resolution_made_within_required_time: holds
+    uk:statutes/ukpga/1998/46/80C#scottish_rate_resolution_satisfies_source_requirements: holds
+- name: multiple_rate_resolution_needs_allocation_provision
+  period:
+    period_kind: tax_year
+    start: '2024-04-06'
+    end: '2025-04-05'
+  input:
+    uk:statutes/ukpga/1998/46/80C#input.scottish_rate_resolution_tax_year_count: 1
+    uk:statutes/ukpga/1998/46/80C#input.scottish_rate_resolution_applies_for_whole_tax_year: true
+    uk:statutes/ukpga/1998/46/80C#input.scottish_rate_resolution_rate_count: 2
+    uk:statutes/ukpga/1998/46/80C#input.scottish_rate_resolution_sets_limits_or_other_provision_to_ascertain_applicable_rates: false
+    uk:statutes/ukpga/1998/46/80C#input.scottish_rate_resolution_made_before_start_of_tax_year: true
+    uk:statutes/ukpga/1998/46/80C#input.scottish_rate_resolution_months_before_tax_year_start: 6
+    uk:statutes/ukpga/1998/46/80C#input.scottish_rate_resolution_specifies_tax_year: true
+    uk:statutes/ukpga/1998/46/80C#input.motion_for_scottish_rate_resolution_moved_by_member_of_scottish_government: true
+  output:
+    uk:statutes/ukpga/1998/46/80C#scottish_rate_resolution_makes_required_rate_allocation_provision: not_holds
+    uk:statutes/ukpga/1998/46/80C#scottish_rate_resolution_satisfies_source_requirements: not_holds
+- name: resolution_made_too_early_fails_timing
+  period:
+    period_kind: tax_year
+    start: '2024-04-06'
+    end: '2025-04-05'
+  input:
+    uk:statutes/ukpga/1998/46/80C#input.scottish_rate_resolution_tax_year_count: 1
+    uk:statutes/ukpga/1998/46/80C#input.scottish_rate_resolution_applies_for_whole_tax_year: true
+    uk:statutes/ukpga/1998/46/80C#input.scottish_rate_resolution_rate_count: 1
+    uk:statutes/ukpga/1998/46/80C#input.scottish_rate_resolution_sets_limits_or_other_provision_to_ascertain_applicable_rates: false
+    uk:statutes/ukpga/1998/46/80C#input.scottish_rate_resolution_made_before_start_of_tax_year: true
+    uk:statutes/ukpga/1998/46/80C#input.scottish_rate_resolution_months_before_tax_year_start: 13
+    uk:statutes/ukpga/1998/46/80C#input.scottish_rate_resolution_specifies_tax_year: true
+    uk:statutes/ukpga/1998/46/80C#input.motion_for_scottish_rate_resolution_moved_by_member_of_scottish_government: true
+  output:
+    uk:statutes/ukpga/1998/46/80C#scottish_rate_resolution_made_within_required_time: not_holds
+    uk:statutes/ukpga/1998/46/80C#scottish_rate_resolution_satisfies_source_requirements: not_holds
+- name: cancelled_resolution_treated_as_never_passed
+  period:
+    period_kind: tax_year
+    start: '2024-04-06'
+    end: '2025-04-05'
+  input:
+    uk:statutes/ukpga/1998/46/80C#input.scottish_rate_resolution_cancelled_before_start_of_tax_year: true
+  output:
+    uk:statutes/ukpga/1998/46/80C#scottish_rate_resolution_cancelled_before_tax_year_treated_as_never_passed: holds

@@ -1,0 +1,116 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/statute/ukpga/1992/12/1K
+  summary: |-
+    Annual exempt amount: if an individual is, or apart from this section would be, chargeable to capital gains tax for a tax year on chargeable gains, the annual exempt amount is deducted from those gains no further than necessary to eliminate them. The amount is £3,000. The deduction is after same-year allowable losses and before previous-year losses or section 62 subsequent-year losses. No annual exempt amount is available where the individual makes a foreign gain claim, foreign income claim, or foreign employment election.
+rules:
+  - name: annual_exempt_amount
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Section 1K(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/12/1K
+              excerpt: "The annual exempt amount for a tax year is £3,000."
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          3000
+
+  - name: annual_exempt_amount_available
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Year
+    source: Section 1K(1), (6)(b)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/12/1K
+          - path: versions[0].formula
+            kind: exception
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/12/1K
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          (individual_is_chargeable_to_capital_gains_tax_on_chargeable_gains or individual_would_be_chargeable_to_capital_gains_tax_apart_from_section_1K)
+          and not individual_makes_foreign_gain_claim
+          and not individual_makes_foreign_income_claim
+          and not individual_makes_foreign_employment_election
+
+  - name: annual_exempt_amount_deduction
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Section 1K(1), (4), (6)(b)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/12/1K
+          - path: versions[0].formula
+            kind: ordering
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/12/1K
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/1992/12/1K#annual_exempt_amount
+              output: annual_exempt_amount
+              hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/1992/12/1K#annual_exempt_amount_available
+              output: annual_exempt_amount_available
+              hash: sha256:local
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if annual_exempt_amount_available: min(annual_exempt_amount, max(0, chargeable_gains_after_allowable_losses_accruing_in_tax_year)) else: 0
+
+  - name: chargeable_gains_after_annual_exempt_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Section 1K(1), (4)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/12/1K
+          - path: versions[0].formula
+            kind: ordering
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/12/1K
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/1992/12/1K#annual_exempt_amount_deduction
+              output: annual_exempt_amount_deduction
+              hash: sha256:local
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          max(0, chargeable_gains_after_allowable_losses_accruing_in_tax_year - annual_exempt_amount_deduction)

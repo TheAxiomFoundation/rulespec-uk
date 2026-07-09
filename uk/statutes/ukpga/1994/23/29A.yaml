@@ -1,0 +1,100 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/statute/ukpga/1994/23/29A
+  summary: |-
+    VAT charged on any supply of a description for the time being specified in Schedule 7A, or any equivalent importation, shall be charged at the rate of 5 per cent. An equivalent importation is an importation of goods whose supply would be such a supply.
+imports: []
+rules:
+  - name: reduced_rate_of_vat
+    kind: parameter
+    dtype: Rate
+    source: Value Added Tax Act 1994 s.29A(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/1994/23/29A
+              excerpt: "shall be charged at the rate of 5 per cent"
+    versions:
+      - effective_from: '1994-09-01'
+        formula: |-
+          0.05
+
+  - name: equivalent_importation_of_schedule_7a_goods
+    kind: derived
+    entity: Payment
+    dtype: Judgment
+    period: Year
+    source: Value Added Tax Act 1994 s.29A(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/statute/ukpga/1994/23/29A
+    versions:
+      - effective_from: '1994-09-01'
+        formula: |-
+          importation_of_goods_whose_supply_would_be_schedule_7a_supply
+
+  - name: supply_or_equivalent_importation_subject_to_reduced_vat_rate
+    kind: derived
+    entity: Payment
+    dtype: Judgment
+    period: Year
+    source: Value Added Tax Act 1994 s.29A(1)-(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/1994/23/29A
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/1994/23/29A#equivalent_importation_of_schedule_7a_goods
+              output: equivalent_importation_of_schedule_7a_goods
+              hash: sha256:local
+    versions:
+      - effective_from: '1994-09-01'
+        formula: |-
+          supply_of_description_for_time_being_specified_in_schedule_7a
+          or equivalent_importation_of_schedule_7a_goods
+
+  - name: vat_charged_at_reduced_rate
+    kind: derived
+    entity: Payment
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Value Added Tax Act 1994 s.29A(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1994/23/29A
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/1994/23/29A#supply_or_equivalent_importation_subject_to_reduced_vat_rate
+              output: supply_or_equivalent_importation_subject_to_reduced_vat_rate
+              hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/1994/23/29A#reduced_rate_of_vat
+              output: reduced_rate_of_vat
+              hash: sha256:local
+    versions:
+      - effective_from: '1994-09-01'
+        formula: |-
+          if supply_or_equivalent_importation_subject_to_reduced_vat_rate: value_of_supply_or_importation * reduced_rate_of_vat else: 0

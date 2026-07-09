@@ -1,0 +1,52 @@
+- name: child_under_16
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:statutes/ukpga/1992/4/142#input.person_age: 15
+    uk:statutes/ukpga/1992/4/142#input.prescribed_qualifying_young_person_age: 20
+    uk:statutes/ukpga/1992/4/142#input.person_satisfies_prescribed_qualifying_young_person_conditions: true
+  output:
+    uk:statutes/ukpga/1992/4/142#child: holds
+    uk:statutes/ukpga/1992/4/142#qualifying_young_person: not_holds
+- name: qualifying_young_person_other_than_child
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:statutes/ukpga/1992/4/142#input.person_age: 17
+    uk:statutes/ukpga/1992/4/142#input.prescribed_qualifying_young_person_age: 20
+    uk:statutes/ukpga/1992/4/142#input.person_satisfies_prescribed_qualifying_young_person_conditions: true
+  output:
+    uk:statutes/ukpga/1992/4/142#child: not_holds
+    uk:statutes/ukpga/1992/4/142#qualifying_young_person: holds
+- name: qualifying_young_person_too_old
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:statutes/ukpga/1992/4/142#input.person_age: 20
+    uk:statutes/ukpga/1992/4/142#input.prescribed_qualifying_young_person_age: 20
+    uk:statutes/ukpga/1992/4/142#input.person_satisfies_prescribed_qualifying_young_person_conditions: true
+  output:
+    uk:statutes/ukpga/1992/4/142#child: not_holds
+    uk:statutes/ukpga/1992/4/142#qualifying_young_person: not_holds
+- name: qualifying_young_person_prescribed_conditions_not_satisfied
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:statutes/ukpga/1992/4/142#input.person_age: 17
+    uk:statutes/ukpga/1992/4/142#input.prescribed_qualifying_young_person_age: 20
+    uk:statutes/ukpga/1992/4/142#input.person_satisfies_prescribed_qualifying_young_person_conditions: false
+  output:
+    uk:statutes/ukpga/1992/4/142#child: not_holds
+    uk:statutes/ukpga/1992/4/142#qualifying_young_person: not_holds

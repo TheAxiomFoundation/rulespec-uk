@@ -1,0 +1,39 @@
+- name: relevant person meets age requirement at minimum specified age
+  period: 2024-01
+  input:
+    uk:statutes/ukpga/2003/21/365A#input.person_is_licence_holder_or_other_relevant_person: true
+    uk:statutes/ukpga/2003/21/365A#input.person_is_of_or_above_specified_age_by_end_of_licence_issue_month: true
+    uk:statutes/ukpga/2003/21/365A#input.specified_age_for_concession: 65
+  output:
+    uk:statutes/ukpga/2003/21/365A#relevant_person_meets_tv_licence_concession_age_requirement: holds
+- name: relevant person fails when specified age is below statutory minimum
+  period: 2024-01
+  input:
+    uk:statutes/ukpga/2003/21/365A#input.person_is_licence_holder_or_other_relevant_person: true
+    uk:statutes/ukpga/2003/21/365A#input.person_is_of_or_above_specified_age_by_end_of_licence_issue_month: true
+    uk:statutes/ukpga/2003/21/365A#input.specified_age_for_concession: 64
+  output:
+    uk:statutes/ukpga/2003/21/365A#relevant_person_meets_tv_licence_concession_age_requirement: not_holds
+- name: bbc determination valid where all statutory determination conditions are met
+  period: 2024-01
+  input:
+    uk:statutes/ukpga/2003/21/365A#input.concession_requires_licence_holder_or_other_person_to_meet_age_requirement: true
+    uk:statutes/ukpga/2003/21/365A#input.specified_age_for_concession: 65
+    uk:statutes/ukpga/2003/21/365A#input.determination_is_in_writing: true
+    uk:statutes/ukpga/2003/21/365A#input.determination_is_published_as_bbc_considers_appropriate: true
+    uk:statutes/ukpga/2003/21/365A#input.bbc_consulted_persons_it_considers_appropriate_before_determination: true
+    uk:statutes/ukpga/2003/21/365A#input.concession_applies_in_same_circumstances_as_concession_within_section_365_5B: false
+  output:
+    uk:statutes/ukpga/2003/21/365A#bbc_age_concession_determination_valid: holds
+- name: bbc determination invalid where it applies in same circumstances as section
+    365 5B concession
+  period: 2024-01
+  input:
+    uk:statutes/ukpga/2003/21/365A#input.concession_requires_licence_holder_or_other_person_to_meet_age_requirement: true
+    uk:statutes/ukpga/2003/21/365A#input.specified_age_for_concession: 65
+    uk:statutes/ukpga/2003/21/365A#input.determination_is_in_writing: true
+    uk:statutes/ukpga/2003/21/365A#input.determination_is_published_as_bbc_considers_appropriate: true
+    uk:statutes/ukpga/2003/21/365A#input.bbc_consulted_persons_it_considers_appropriate_before_determination: true
+    uk:statutes/ukpga/2003/21/365A#input.concession_applies_in_same_circumstances_as_concession_within_section_365_5B: true
+  output:
+    uk:statutes/ukpga/2003/21/365A#bbc_age_concession_determination_valid: not_holds

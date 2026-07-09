@@ -1,0 +1,100 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/statute/ukpga/2003/1/681D
+  summary: |-
+    This section applies where R is entitled to child benefit by virtue of contributing to the cost of providing for a child, neither R nor R's partner is liable under section 681B for that amount, and S is a person with whom the child is living in that week. Section 681B applies as if S were entitled to that amount, with a highest-adjusted-net-income rule where more than one such S exists and a 52-week temporary contribution-entitlement disregard.
+rules:
+  - name: temporary_contribution_entitlement_period_limit_weeks
+    kind: parameter
+    dtype: Count
+    period: Week
+    source: uk/statute/ukpga/2003/1/681D(4)(a)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/1/681D
+              excerpt: "does not exceed 52 weeks"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          52
+
+  - name: contribution_child_benefit_amount_ignored_for_section_681d
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Year
+    source: uk/statute/ukpga/2003/1/681D(4)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: exception
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/1/681D
+              excerpt: "an amount of child benefit to which R is entitled for a week is to be ignored if"
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/1/681D
+              excerpt: "does not exceed 52 weeks"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/1/681D
+              excerpt: "R is entitled to child benefit in respect of the child for the week immediately before and the week immediately after that period"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          r_contribution_entitlement_period_for_same_child_weeks <= temporary_contribution_entitlement_period_limit_weeks
+          and r_entitled_to_child_benefit_by_living_with_child_for_week_immediately_before_period
+          and r_entitled_to_child_benefit_by_living_with_child_for_week_immediately_after_period
+
+  - name: section_681b_applies_to_s_as_if_entitled_to_child_benefit_amount
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Year
+    source: uk/statute/ukpga/2003/1/681D(1)-(3)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/1/681D
+              excerpt: "R is entitled to an amount in respect of child benefit for a child for a week in a tax year by virtue of section 143(1)(b)"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/1/681D
+              excerpt: "neither R, nor any person who is a partner of R throughout that week, is liable for a charge to income tax in respect of that amount under section 681B"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/1/681D
+              excerpt: "S ... is a person who has the child living with him or her in that week"
+          - path: versions[0].formula
+            kind: ordering
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/1/681D
+              excerpt: "subsection (2) applies only to the one with the highest adjusted net income for the tax year"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/1/681D
+              excerpt: "Section 681B applies as if S were entitled to the amount of child benefit mentioned in subsection (1)(a)."
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          r_entitled_to_child_benefit_by_contributing_for_child_for_week_in_tax_year
+          and not r_or_partner_throughout_week_liable_under_section_681b_for_that_amount
+          and s_has_child_living_with_him_or_her_for_that_week
+          and s_has_highest_adjusted_net_income_among_persons_with_child_living_for_that_week_for_tax_year
+          and not contribution_child_benefit_amount_ignored_for_section_681d

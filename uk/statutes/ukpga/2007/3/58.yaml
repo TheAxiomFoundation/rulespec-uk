@@ -1,0 +1,13 @@
+format: rulespec/v1
+module:
+  status: deferred
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/statute/ukpga/2007/3/58
+  summary: |-
+    For Chapters 2 and 3, an individual's adjusted net income starts with net income, deducts grossed up qualifying gift aid donations, deducts gross pension contributions relieved at source, and adds back relief under sections 457 or 458. The grossed up gift amount is grossed up by reference to the basic rate; section 809ZM(6) excludes certain donations from the step 2 deduction.
+  deferred_outputs:
+    - output: uk:statutes/ukpga/2007/3/58#adjusted_net_income
+      reason: The definition depends on missing upstream legal mechanics for gifts treated as made under section 426 and the section 809ZM(6) exclusion from step 2. Because this source is a definition of adjusted net income, emitting helper-only rules without the final adjusted_net_income output would be misleading.
+rules: []

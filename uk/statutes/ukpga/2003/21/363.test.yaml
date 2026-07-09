@@ -1,0 +1,77 @@
+- name: unlicensed_receiver_use_contravenes_subsection_1
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:statutes/ukpga/2003/21/363#input.television_receiver_is_installed_or_used: true
+    uk:statutes/ukpga/2003/21/363#input.installation_and_use_of_television_receiver_authorised_by_licence_under_this_part: false
+    uk:statutes/ukpga/2003/21/363#input.thing_done_in_course_of_business_of_dealer_in_television_receivers: false
+    uk:statutes/ukpga/2003/21/363#input.thing_done_solely_for_installing_television_receiver_on_delivery: false
+    uk:statutes/ukpga/2003/21/363#input.thing_done_solely_for_demonstrating_testing_or_repairing_television_receiver: false
+    ? uk:statutes/ukpga/2003/21/363#input.installation_or_use_of_television_receiver_exempt_from_licence_requirement_under_regulations
+    : false
+  output:
+    uk:statutes/ukpga/2003/21/363#dealer_business_noncontravention_applies: not_holds
+    uk:statutes/ukpga/2003/21/363#subsection_1_contravened_by_receiver_installation_or_use: holds
+- name: dealer_delivery_installation_does_not_contravene
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:statutes/ukpga/2003/21/363#input.television_receiver_is_installed_or_used: true
+    uk:statutes/ukpga/2003/21/363#input.installation_and_use_of_television_receiver_authorised_by_licence_under_this_part: false
+    uk:statutes/ukpga/2003/21/363#input.thing_done_in_course_of_business_of_dealer_in_television_receivers: true
+    uk:statutes/ukpga/2003/21/363#input.thing_done_solely_for_installing_television_receiver_on_delivery: true
+    uk:statutes/ukpga/2003/21/363#input.thing_done_solely_for_demonstrating_testing_or_repairing_television_receiver: false
+    ? uk:statutes/ukpga/2003/21/363#input.installation_or_use_of_television_receiver_exempt_from_licence_requirement_under_regulations
+    : false
+  output:
+    uk:statutes/ukpga/2003/21/363#dealer_business_noncontravention_applies: holds
+    uk:statutes/ukpga/2003/21/363#subsection_1_contravened_by_receiver_installation_or_use: not_holds
+- name: person_offence_by_possession_with_own_intent
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:statutes/ukpga/2003/21/363#input.person_installs_or_uses_television_receiver_in_contravention_of_subsection_1: false
+    uk:statutes/ukpga/2003/21/363#input.person_has_television_receiver_in_possession_or_under_control: true
+    uk:statutes/ukpga/2003/21/363#input.person_intends_to_install_or_use_it_in_contravention_of_subsection_1: true
+    ? uk:statutes/ukpga/2003/21/363#input.person_knows_or_has_reasonable_grounds_for_believing_another_person_intends_to_install_or_use_it_in_contravention_of_subsection_1
+    : false
+  output:
+    uk:statutes/ukpga/2003/21/363#person_guilty_of_installation_or_use_offence: not_holds
+    uk:statutes/ukpga/2003/21/363#person_guilty_of_possession_or_control_intent_offence: holds
+    uk:statutes/ukpga/2003/21/363#person_guilty_of_section_offence: holds
+    uk:statutes/ukpga/2003/21/363#section_offence_fine_level_on_summary_conviction: 3
+- name: person_no_offence_without_contravening_act_or_intent_knowledge
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:statutes/ukpga/2003/21/363#input.person_installs_or_uses_television_receiver_in_contravention_of_subsection_1: false
+    uk:statutes/ukpga/2003/21/363#input.person_has_television_receiver_in_possession_or_under_control: true
+    uk:statutes/ukpga/2003/21/363#input.person_intends_to_install_or_use_it_in_contravention_of_subsection_1: false
+    ? uk:statutes/ukpga/2003/21/363#input.person_knows_or_has_reasonable_grounds_for_believing_another_person_intends_to_install_or_use_it_in_contravention_of_subsection_1
+    : false
+  output:
+    uk:statutes/ukpga/2003/21/363#person_guilty_of_installation_or_use_offence: not_holds
+    uk:statutes/ukpga/2003/21/363#person_guilty_of_possession_or_control_intent_offence: not_holds
+    uk:statutes/ukpga/2003/21/363#person_guilty_of_section_offence: not_holds
+    uk:statutes/ukpga/2003/21/363#section_offence_fine_level_on_summary_conviction: 0
+- name: auto_positive_person_guilty_of_installation_or_use_offence
+  period:
+    period_kind: tax_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:statutes/ukpga/2003/21/363#input.person_installs_or_uses_television_receiver_in_contravention_of_subsection_1: true
+  output:
+    uk:statutes/ukpga/2003/21/363#person_guilty_of_installation_or_use_offence: holds

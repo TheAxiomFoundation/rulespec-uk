@@ -1,0 +1,36 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/statute/ukpga/2003/1/681E
+  summary: |-
+    Amounts are disregarded for this Chapter where a person is entitled but an election for child benefit payment not to be made has effect, or where entitlement arises after the death of a child or qualifying young person. If multiple partners of T would otherwise each be liable for the same child benefit amount, only the person with the highest adjusted net income is liable.
+  deferred_outputs:
+    - output: uk:statutes/ukpga/2003/1/681E#only_highest_adjusted_net_income_partner_liable
+      reason: The special liability rule depends on whether T is treated as entitled by section 681D(2) and whether two or more partners would, apart from subsection (3), each be liable under section 681B(1) in relation to the amount. Exact executable RuleSpec outputs for those cited subsection-level dependencies are not supplied in context.
+rules:
+  - name: child_benefit_amount_disregarded_for_chapter
+    kind: derived
+    entity: Payment
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: uk/statute/ukpga/2003/1/681E
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/1/681E
+              excerpt: "amounts to which a person is entitled but in respect of which an election ... has effect"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/1/681E
+              excerpt: "amounts to which a person is entitled by virtue of ... entitlement to child benefit after death"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if person_entitled_to_child_benefit_amount and (election_for_child_benefit_payment_not_to_be_made_has_effect or entitlement_by_virtue_of_child_or_qualifying_young_person_death): max(0, child_benefit_amount) else: 0

@@ -1,0 +1,102 @@
+- name: imported unleaded petrol duty
+  period:
+    period_kind: custom
+    name: day
+    start: '2026-01-15'
+    end: '2026-01-15'
+  input:
+    uk:statutes/ukpga/1979/5/6#input.hydrocarbon_oil_imported_into_united_kingdom: true
+    ? uk:statutes/ukpga/1979/5/6#input.hydrocarbon_oil_produced_in_united_kingdom_and_delivered_for_home_use_from_refinery_or_production_premises_or_bonded_storage_not_chargeable_on_import
+    : false
+    ? uk:statutes/ukpga/1979/5/6#input.imported_hydrocarbon_oil_removed_to_refinery_and_goods_delivered_from_refinery_for_home_use
+    : false
+    uk:statutes/ukpga/1979/5/6#input.hydrocarbon_oil_is_unleaded_petrol: true
+    uk:statutes/ukpga/1979/5/6#input.hydrocarbon_oil_is_aviation_gasoline: false
+    uk:statutes/ukpga/1979/5/6#input.hydrocarbon_oil_is_light_oil_other_than_unleaded_petrol_or_aviation_gasoline: false
+    uk:statutes/ukpga/1979/5/6#input.hydrocarbon_oil_is_heavy_oil: false
+    uk:statutes/ukpga/1979/5/6#input.hydrocarbon_oil_litres: 1000
+  output:
+    uk:statutes/ukpga/1979/5/6#hydrocarbon_oil_excise_duty_chargeable: holds
+    uk:statutes/ukpga/1979/5/6#hydrocarbon_oil_excise_duty_rate_per_litre: 0.5795
+    uk:statutes/ukpga/1979/5/6#hydrocarbon_oil_excise_duty: 579.5
+- name: refinery-delivered aviation gasoline duty
+  period:
+    period_kind: custom
+    name: day
+    start: '2026-01-15'
+    end: '2026-01-15'
+  input:
+    uk:statutes/ukpga/1979/5/6#input.hydrocarbon_oil_imported_into_united_kingdom: false
+    ? uk:statutes/ukpga/1979/5/6#input.hydrocarbon_oil_produced_in_united_kingdom_and_delivered_for_home_use_from_refinery_or_production_premises_or_bonded_storage_not_chargeable_on_import
+    : false
+    ? uk:statutes/ukpga/1979/5/6#input.imported_hydrocarbon_oil_removed_to_refinery_and_goods_delivered_from_refinery_for_home_use
+    : true
+    uk:statutes/ukpga/1979/5/6#input.hydrocarbon_oil_is_unleaded_petrol: false
+    uk:statutes/ukpga/1979/5/6#input.hydrocarbon_oil_is_aviation_gasoline: true
+    uk:statutes/ukpga/1979/5/6#input.hydrocarbon_oil_is_light_oil_other_than_unleaded_petrol_or_aviation_gasoline: false
+    uk:statutes/ukpga/1979/5/6#input.hydrocarbon_oil_is_heavy_oil: false
+    uk:statutes/ukpga/1979/5/6#input.hydrocarbon_oil_litres: 1000
+  output:
+    uk:statutes/ukpga/1979/5/6#hydrocarbon_oil_excise_duty_chargeable: holds
+    uk:statutes/ukpga/1979/5/6#hydrocarbon_oil_excise_duty_rate_per_litre: 0.382
+    uk:statutes/ukpga/1979/5/6#hydrocarbon_oil_excise_duty: 382
+- name: produced other light oil duty
+  period:
+    period_kind: custom
+    name: day
+    start: '2026-01-15'
+    end: '2026-01-15'
+  input:
+    uk:statutes/ukpga/1979/5/6#input.hydrocarbon_oil_imported_into_united_kingdom: false
+    ? uk:statutes/ukpga/1979/5/6#input.hydrocarbon_oil_produced_in_united_kingdom_and_delivered_for_home_use_from_refinery_or_production_premises_or_bonded_storage_not_chargeable_on_import
+    : true
+    ? uk:statutes/ukpga/1979/5/6#input.imported_hydrocarbon_oil_removed_to_refinery_and_goods_delivered_from_refinery_for_home_use
+    : false
+    uk:statutes/ukpga/1979/5/6#input.hydrocarbon_oil_is_unleaded_petrol: false
+    uk:statutes/ukpga/1979/5/6#input.hydrocarbon_oil_is_aviation_gasoline: false
+    uk:statutes/ukpga/1979/5/6#input.hydrocarbon_oil_is_light_oil_other_than_unleaded_petrol_or_aviation_gasoline: true
+    uk:statutes/ukpga/1979/5/6#input.hydrocarbon_oil_is_heavy_oil: false
+    uk:statutes/ukpga/1979/5/6#input.hydrocarbon_oil_litres: 1000
+  output:
+    uk:statutes/ukpga/1979/5/6#hydrocarbon_oil_excise_duty_chargeable: holds
+    uk:statutes/ukpga/1979/5/6#hydrocarbon_oil_excise_duty_rate_per_litre: 0.6767
+    uk:statutes/ukpga/1979/5/6#hydrocarbon_oil_excise_duty: 676.7
+- name: non-chargeable heavy oil
+  period:
+    period_kind: custom
+    name: day
+    start: '2026-01-15'
+    end: '2026-01-15'
+  input:
+    uk:statutes/ukpga/1979/5/6#input.hydrocarbon_oil_imported_into_united_kingdom: false
+    ? uk:statutes/ukpga/1979/5/6#input.hydrocarbon_oil_produced_in_united_kingdom_and_delivered_for_home_use_from_refinery_or_production_premises_or_bonded_storage_not_chargeable_on_import
+    : false
+    ? uk:statutes/ukpga/1979/5/6#input.imported_hydrocarbon_oil_removed_to_refinery_and_goods_delivered_from_refinery_for_home_use
+    : false
+    uk:statutes/ukpga/1979/5/6#input.hydrocarbon_oil_is_unleaded_petrol: false
+    uk:statutes/ukpga/1979/5/6#input.hydrocarbon_oil_is_aviation_gasoline: false
+    uk:statutes/ukpga/1979/5/6#input.hydrocarbon_oil_is_light_oil_other_than_unleaded_petrol_or_aviation_gasoline: false
+    uk:statutes/ukpga/1979/5/6#input.hydrocarbon_oil_is_heavy_oil: true
+    uk:statutes/ukpga/1979/5/6#input.hydrocarbon_oil_litres: 1000
+  output:
+    uk:statutes/ukpga/1979/5/6#hydrocarbon_oil_excise_duty_chargeable: not_holds
+    uk:statutes/ukpga/1979/5/6#hydrocarbon_oil_excise_duty_rate_per_litre: 0.5795
+    uk:statutes/ukpga/1979/5/6#hydrocarbon_oil_excise_duty: 0
+- name: auto_zero_hydrocarbon_oil_excise_duty_rate_per_litre
+  period:
+    period_kind: tax_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:statutes/ukpga/1979/5/6#input.hydrocarbon_oil_imported_into_united_kingdom: false
+    uk:statutes/ukpga/1979/5/6#input.hydrocarbon_oil_is_aviation_gasoline: false
+    uk:statutes/ukpga/1979/5/6#input.hydrocarbon_oil_is_heavy_oil: false
+    uk:statutes/ukpga/1979/5/6#input.hydrocarbon_oil_is_light_oil_other_than_unleaded_petrol_or_aviation_gasoline: false
+    uk:statutes/ukpga/1979/5/6#input.hydrocarbon_oil_is_unleaded_petrol: false
+    uk:statutes/ukpga/1979/5/6#input.hydrocarbon_oil_litres: 0
+    ? uk:statutes/ukpga/1979/5/6#input.hydrocarbon_oil_produced_in_united_kingdom_and_delivered_for_home_use_from_refinery_or_production_premises_or_bonded_storage_not_chargeable_on_import
+    : false
+    ? uk:statutes/ukpga/1979/5/6#input.imported_hydrocarbon_oil_removed_to_refinery_and_goods_delivered_from_refinery_for_home_use
+    : false
+  output:
+    uk:statutes/ukpga/1979/5/6#hydrocarbon_oil_excise_duty_rate_per_litre: 0

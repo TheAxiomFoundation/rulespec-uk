@@ -1,0 +1,75 @@
+- name: profits_at_threshold_treated_as_paid
+  period:
+    period_kind: custom
+    name: tax_week
+    start: '2025-04-07'
+    end: '2025-04-13'
+  input:
+    uk:statutes/ukpga/1992/4/11#input.relevant_profits: 6845
+    uk:statutes/ukpga/1992/4/11#input.earner_is_in_employment_as_self_employed_earner_for_week: true
+    uk:statutes/ukpga/1992/4/11#input.week_is_before_week_earner_attains_age_16: false
+    uk:statutes/ukpga/1992/4/11#input.week_is_after_week_earner_attains_pensionable_age: false
+  output:
+    uk:statutes/ukpga/1992/4/11#class_2_contribution_treated_as_paid_for_relevant_purposes_week: holds
+    uk:statutes/ukpga/1992/4/11#class_2_contribution_may_be_paid_for_week: not_holds
+    uk:statutes/ukpga/1992/4/11#class_2_contribution_amount_available_for_week: 0
+- name: profits_below_threshold_may_pay_weekly_amount
+  period:
+    period_kind: custom
+    name: tax_week
+    start: '2025-04-07'
+    end: '2025-04-13'
+  input:
+    uk:statutes/ukpga/1992/4/11#input.relevant_profits: 6844
+    uk:statutes/ukpga/1992/4/11#input.earner_is_in_employment_as_self_employed_earner_for_week: true
+    uk:statutes/ukpga/1992/4/11#input.week_is_before_week_earner_attains_age_16: false
+    uk:statutes/ukpga/1992/4/11#input.week_is_after_week_earner_attains_pensionable_age: false
+  output:
+    uk:statutes/ukpga/1992/4/11#class_2_contribution_treated_as_paid_for_relevant_purposes_week: not_holds
+    uk:statutes/ukpga/1992/4/11#class_2_contribution_may_be_paid_for_week: holds
+    uk:statutes/ukpga/1992/4/11#class_2_contribution_amount_available_for_week: 3.5
+- name: no_self_employed_employment_no_class_2_week_result
+  period:
+    period_kind: custom
+    name: tax_week
+    start: '2025-04-07'
+    end: '2025-04-13'
+  input:
+    uk:statutes/ukpga/1992/4/11#input.relevant_profits: 6844
+    uk:statutes/ukpga/1992/4/11#input.earner_is_in_employment_as_self_employed_earner_for_week: false
+    uk:statutes/ukpga/1992/4/11#input.week_is_before_week_earner_attains_age_16: false
+    uk:statutes/ukpga/1992/4/11#input.week_is_after_week_earner_attains_pensionable_age: false
+  output:
+    uk:statutes/ukpga/1992/4/11#class_2_contribution_treated_as_paid_for_relevant_purposes_week: not_holds
+    uk:statutes/ukpga/1992/4/11#class_2_contribution_may_be_paid_for_week: not_holds
+    uk:statutes/ukpga/1992/4/11#class_2_contribution_amount_available_for_week: 0
+- name: week_before_age_16_blocks_class_2
+  period:
+    period_kind: custom
+    name: tax_week
+    start: '2025-04-07'
+    end: '2025-04-13'
+  input:
+    uk:statutes/ukpga/1992/4/11#input.relevant_profits: 6845
+    uk:statutes/ukpga/1992/4/11#input.earner_is_in_employment_as_self_employed_earner_for_week: true
+    uk:statutes/ukpga/1992/4/11#input.week_is_before_week_earner_attains_age_16: true
+    uk:statutes/ukpga/1992/4/11#input.week_is_after_week_earner_attains_pensionable_age: false
+  output:
+    uk:statutes/ukpga/1992/4/11#class_2_contribution_treated_as_paid_for_relevant_purposes_week: not_holds
+    uk:statutes/ukpga/1992/4/11#class_2_contribution_may_be_paid_for_week: not_holds
+    uk:statutes/ukpga/1992/4/11#class_2_contribution_amount_available_for_week: 0
+- name: week_after_pensionable_age_blocks_class_2
+  period:
+    period_kind: custom
+    name: tax_week
+    start: '2025-04-07'
+    end: '2025-04-13'
+  input:
+    uk:statutes/ukpga/1992/4/11#input.relevant_profits: 6845
+    uk:statutes/ukpga/1992/4/11#input.earner_is_in_employment_as_self_employed_earner_for_week: true
+    uk:statutes/ukpga/1992/4/11#input.week_is_before_week_earner_attains_age_16: false
+    uk:statutes/ukpga/1992/4/11#input.week_is_after_week_earner_attains_pensionable_age: true
+  output:
+    uk:statutes/ukpga/1992/4/11#class_2_contribution_treated_as_paid_for_relevant_purposes_week: not_holds
+    uk:statutes/ukpga/1992/4/11#class_2_contribution_may_be_paid_for_week: not_holds
+    uk:statutes/ukpga/1992/4/11#class_2_contribution_amount_available_for_week: 0

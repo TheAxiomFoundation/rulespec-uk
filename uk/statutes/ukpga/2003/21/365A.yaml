@@ -1,0 +1,76 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/statute/ukpga/2003/21/365A
+  summary: |-
+    The BBC may determine that a TV licence fee concession is to apply; any such concession must require the licence holder or another person to be of or above a specified age, which must be 65 or higher, by the end of the licence-issue month. A determination must be written, published as the BBC considers appropriate, and preceded by consultation with persons the BBC considers appropriate; it may not apply in the same circumstances as a concession within section 365(5B).
+rules:
+  - name: minimum_specified_age_for_tv_licence_concession
+    kind: parameter
+    dtype: Integer
+    source: section 365A(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/21/365A
+              excerpt: "specified age, which must be 65 or higher"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          65
+
+  - name: relevant_person_meets_tv_licence_concession_age_requirement
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Month
+    source: section 365A(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/21/365A
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          person_is_licence_holder_or_other_relevant_person
+          and person_is_of_or_above_specified_age_by_end_of_licence_issue_month
+          and specified_age_for_concession >= minimum_specified_age_for_tv_licence_concession
+
+  - name: bbc_age_concession_determination_valid
+    kind: derived
+    entity: TvLicenceConcessionDetermination
+    dtype: Judgment
+    period: Month
+    source: section 365A(2), (3)(b), (6), (8)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/21/365A
+          - path: versions[0].formula
+            kind: exception
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/21/365A
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/21/365A
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          concession_requires_licence_holder_or_other_person_to_meet_age_requirement
+          and specified_age_for_concession >= minimum_specified_age_for_tv_licence_concession
+          and determination_is_in_writing
+          and determination_is_published_as_bbc_considers_appropriate
+          and bbc_consulted_persons_it_considers_appropriate_before_determination
+          and not concession_applies_in_same_circumstances_as_concession_within_section_365_5B

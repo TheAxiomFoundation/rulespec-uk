@@ -1,0 +1,60 @@
+- name: election_amount_disregarded
+  period:
+    period_kind: tax_year
+    start: '2024-01-01'
+    end: '2024-12-31'
+  input: {}
+  tables:
+    Payment:
+    - uk:statutes/ukpga/2003/1/681E#input.person_entitled_to_child_benefit_amount: true
+      uk:statutes/ukpga/2003/1/681E#input.election_for_child_benefit_payment_not_to_be_made_has_effect: true
+      uk:statutes/ukpga/2003/1/681E#input.entitlement_by_virtue_of_child_or_qualifying_young_person_death: false
+      uk:statutes/ukpga/2003/1/681E#input.child_benefit_amount: 100
+  output:
+    uk:statutes/ukpga/2003/1/681E#child_benefit_amount_disregarded_for_chapter:
+    - 100
+- name: death_entitlement_amount_disregarded
+  period:
+    period_kind: tax_year
+    start: '2024-01-01'
+    end: '2024-12-31'
+  input: {}
+  tables:
+    Payment:
+    - uk:statutes/ukpga/2003/1/681E#input.person_entitled_to_child_benefit_amount: true
+      uk:statutes/ukpga/2003/1/681E#input.election_for_child_benefit_payment_not_to_be_made_has_effect: false
+      uk:statutes/ukpga/2003/1/681E#input.entitlement_by_virtue_of_child_or_qualifying_young_person_death: true
+      uk:statutes/ukpga/2003/1/681E#input.child_benefit_amount: 120
+  output:
+    uk:statutes/ukpga/2003/1/681E#child_benefit_amount_disregarded_for_chapter:
+    - 120
+- name: no_disregard_category
+  period:
+    period_kind: tax_year
+    start: '2024-01-01'
+    end: '2024-12-31'
+  input: {}
+  tables:
+    Payment:
+    - uk:statutes/ukpga/2003/1/681E#input.person_entitled_to_child_benefit_amount: true
+      uk:statutes/ukpga/2003/1/681E#input.election_for_child_benefit_payment_not_to_be_made_has_effect: false
+      uk:statutes/ukpga/2003/1/681E#input.entitlement_by_virtue_of_child_or_qualifying_young_person_death: false
+      uk:statutes/ukpga/2003/1/681E#input.child_benefit_amount: 100
+  output:
+    uk:statutes/ukpga/2003/1/681E#child_benefit_amount_disregarded_for_chapter:
+    - 0
+- name: no_entitlement_blocks_disregard
+  period:
+    period_kind: tax_year
+    start: '2024-01-01'
+    end: '2024-12-31'
+  input: {}
+  tables:
+    Payment:
+    - uk:statutes/ukpga/2003/1/681E#input.person_entitled_to_child_benefit_amount: false
+      uk:statutes/ukpga/2003/1/681E#input.election_for_child_benefit_payment_not_to_be_made_has_effect: true
+      uk:statutes/ukpga/2003/1/681E#input.entitlement_by_virtue_of_child_or_qualifying_young_person_death: false
+      uk:statutes/ukpga/2003/1/681E#input.child_benefit_amount: 100
+  output:
+    uk:statutes/ukpga/2003/1/681E#child_benefit_amount_disregarded_for_chapter:
+    - 0

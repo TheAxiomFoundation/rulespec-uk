@@ -1,0 +1,105 @@
+- name: secondary_class_1_contribution_uses_secondary_percentage
+  period:
+    period_kind: custom
+    name: tax_week
+    start: '2025-04-07'
+    end: '2025-04-13'
+  input:
+    uk:statutes/ukpga/1992/4/9#input.secondary_class_1_contribution_payable_as_mentioned_in_section_6_1_b: true
+    uk:statutes/ukpga/1992/4/9#input.regulations_under_section_6_6_do_not_displace_calculation: true
+    uk:statutes/ukpga/1992/4/9#input.regulations_under_sections_116_to_120_do_not_displace_calculation: true
+    uk:statutes/ukpga/1992/4/9#input.section_9A_applies_to_the_earnings: false
+    uk:statutes/ukpga/1992/4/9#input.section_9B_applies_to_the_earnings: false
+    uk:statutes/ukpga/1992/4/9#input.age_related_secondary_percentage: 0.05
+    uk:statutes/ukpga/1992/4/9#input.current_secondary_threshold_or_prescribed_equivalent: 100
+    uk:statutes/ukpga/1992/4/9#input.earnings_paid_in_tax_week_in_respect_of_employment: 500
+  output:
+    uk:statutes/ukpga/1992/4/9#relevant_secondary_class_1_percentage: 0.15
+    uk:statutes/ukpga/1992/4/9#secondary_class_1_contribution: 60
+- name: secondary_class_1_contribution_uses_age_related_percentage_first
+  period:
+    period_kind: custom
+    name: tax_week
+    start: '2025-04-07'
+    end: '2025-04-13'
+  input:
+    uk:statutes/ukpga/1992/4/9#input.secondary_class_1_contribution_payable_as_mentioned_in_section_6_1_b: true
+    uk:statutes/ukpga/1992/4/9#input.regulations_under_section_6_6_do_not_displace_calculation: true
+    uk:statutes/ukpga/1992/4/9#input.regulations_under_sections_116_to_120_do_not_displace_calculation: true
+    uk:statutes/ukpga/1992/4/9#input.section_9A_applies_to_the_earnings: true
+    uk:statutes/ukpga/1992/4/9#input.section_9B_applies_to_the_earnings: true
+    uk:statutes/ukpga/1992/4/9#input.age_related_secondary_percentage: 0.05
+    uk:statutes/ukpga/1992/4/9#input.current_secondary_threshold_or_prescribed_equivalent: 100
+    uk:statutes/ukpga/1992/4/9#input.earnings_paid_in_tax_week_in_respect_of_employment: 500
+  output:
+    uk:statutes/ukpga/1992/4/9#relevant_secondary_class_1_percentage: 0.05
+    uk:statutes/ukpga/1992/4/9#secondary_class_1_contribution: 20
+- name: secondary_class_1_contribution_uses_apprentice_zero_rate
+  period:
+    period_kind: custom
+    name: tax_week
+    start: '2025-04-07'
+    end: '2025-04-13'
+  input:
+    uk:statutes/ukpga/1992/4/9#input.secondary_class_1_contribution_payable_as_mentioned_in_section_6_1_b: true
+    uk:statutes/ukpga/1992/4/9#input.regulations_under_section_6_6_do_not_displace_calculation: true
+    uk:statutes/ukpga/1992/4/9#input.regulations_under_sections_116_to_120_do_not_displace_calculation: true
+    uk:statutes/ukpga/1992/4/9#input.section_9A_applies_to_the_earnings: false
+    uk:statutes/ukpga/1992/4/9#input.section_9B_applies_to_the_earnings: true
+    uk:statutes/ukpga/1992/4/9#input.age_related_secondary_percentage: 0.05
+    uk:statutes/ukpga/1992/4/9#input.current_secondary_threshold_or_prescribed_equivalent: 100
+    uk:statutes/ukpga/1992/4/9#input.earnings_paid_in_tax_week_in_respect_of_employment: 500
+  output:
+    uk:statutes/ukpga/1992/4/9#relevant_secondary_class_1_percentage: 0
+    uk:statutes/ukpga/1992/4/9#secondary_class_1_contribution: 0
+- name: no_secondary_class_1_contribution_payable
+  period:
+    period_kind: custom
+    name: tax_week
+    start: '2025-04-07'
+    end: '2025-04-13'
+  input:
+    uk:statutes/ukpga/1992/4/9#input.secondary_class_1_contribution_payable_as_mentioned_in_section_6_1_b: false
+    uk:statutes/ukpga/1992/4/9#input.regulations_under_section_6_6_do_not_displace_calculation: true
+    uk:statutes/ukpga/1992/4/9#input.regulations_under_sections_116_to_120_do_not_displace_calculation: true
+    uk:statutes/ukpga/1992/4/9#input.section_9A_applies_to_the_earnings: false
+    uk:statutes/ukpga/1992/4/9#input.section_9B_applies_to_the_earnings: false
+    uk:statutes/ukpga/1992/4/9#input.age_related_secondary_percentage: 0.05
+    uk:statutes/ukpga/1992/4/9#input.current_secondary_threshold_or_prescribed_equivalent: 100
+    uk:statutes/ukpga/1992/4/9#input.earnings_paid_in_tax_week_in_respect_of_employment: 500
+  output:
+    uk:statutes/ukpga/1992/4/9#secondary_class_1_contribution: 0
+- name: section_6_6_regulations_displace_secondary_calculation
+  period:
+    period_kind: custom
+    name: tax_week
+    start: '2025-04-07'
+    end: '2025-04-13'
+  input:
+    uk:statutes/ukpga/1992/4/9#input.secondary_class_1_contribution_payable_as_mentioned_in_section_6_1_b: true
+    uk:statutes/ukpga/1992/4/9#input.regulations_under_section_6_6_do_not_displace_calculation: false
+    uk:statutes/ukpga/1992/4/9#input.regulations_under_sections_116_to_120_do_not_displace_calculation: true
+    uk:statutes/ukpga/1992/4/9#input.section_9A_applies_to_the_earnings: false
+    uk:statutes/ukpga/1992/4/9#input.section_9B_applies_to_the_earnings: false
+    uk:statutes/ukpga/1992/4/9#input.age_related_secondary_percentage: 0.05
+    uk:statutes/ukpga/1992/4/9#input.current_secondary_threshold_or_prescribed_equivalent: 100
+    uk:statutes/ukpga/1992/4/9#input.earnings_paid_in_tax_week_in_respect_of_employment: 500
+  output:
+    uk:statutes/ukpga/1992/4/9#secondary_class_1_contribution: 0
+- name: sections_116_to_120_regulations_displace_secondary_calculation
+  period:
+    period_kind: custom
+    name: tax_week
+    start: '2025-04-07'
+    end: '2025-04-13'
+  input:
+    uk:statutes/ukpga/1992/4/9#input.secondary_class_1_contribution_payable_as_mentioned_in_section_6_1_b: true
+    uk:statutes/ukpga/1992/4/9#input.regulations_under_section_6_6_do_not_displace_calculation: true
+    uk:statutes/ukpga/1992/4/9#input.regulations_under_sections_116_to_120_do_not_displace_calculation: false
+    uk:statutes/ukpga/1992/4/9#input.section_9A_applies_to_the_earnings: false
+    uk:statutes/ukpga/1992/4/9#input.section_9B_applies_to_the_earnings: false
+    uk:statutes/ukpga/1992/4/9#input.age_related_secondary_percentage: 0.05
+    uk:statutes/ukpga/1992/4/9#input.current_secondary_threshold_or_prescribed_equivalent: 100
+    uk:statutes/ukpga/1992/4/9#input.earnings_paid_in_tax_week_in_respect_of_employment: 500
+  output:
+    uk:statutes/ukpga/1992/4/9#secondary_class_1_contribution: 0

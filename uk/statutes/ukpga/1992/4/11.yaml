@@ -1,0 +1,128 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/statute/ukpga/1992/4/11
+  summary: |-
+    Section 11 applies if an earner is in employment as a self-employed earner in a relevant tax year. The small profits threshold is £6,845. An earner with relevant profits of or exceeding that threshold is treated, for relevant purposes, as having actually paid a Class 2 contribution for each week in the relevant tax year that the earner is in the employment. If the earner does not have profits at that threshold, the earner may pay a Class 2 contribution of £3.50 for any such week. No Class 2 contributions are paid or treated as paid for weeks before the earner attains age 16 or after the earner attains pensionable age.
+rules:
+  - name: small_profits_threshold
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Social Security Contributions and Benefits Act 1992, s.11(4)(b)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/11
+              excerpt: 'the "small profits threshold" is £6,845'
+    versions:
+      - effective_from: '2025-04-06'
+        formula: |-
+          6845
+
+  - name: class_2_weekly_contribution_amount
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Social Security Contributions and Benefits Act 1992, s.11(6)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/11
+              excerpt: 'may pay a Class 2 contribution of £3.50'
+    versions:
+      - effective_from: '2025-04-06'
+        formula: |-
+          3.50
+
+  - name: class_2_contribution_treated_as_paid_for_relevant_purposes_week
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Week
+    source: Social Security Contributions and Benefits Act 1992, s.11(5A)-(5C), (7)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/11
+              excerpt: 'relevant profits of, or exceeding, the small profits threshold'
+          - path: versions[0].formula
+            kind: predicate
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/11
+          - path: versions[0].formula
+            kind: exception
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/11
+              excerpt: 'No Class 2 contributions are to be paid or treated as paid'
+    versions:
+      - effective_from: '2025-04-06'
+        formula: |-
+          relevant_profits >= small_profits_threshold
+          and earner_is_in_employment_as_self_employed_earner_for_week
+          and not week_is_before_week_earner_attains_age_16
+          and not week_is_after_week_earner_attains_pensionable_age
+
+  - name: class_2_contribution_may_be_paid_for_week
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Week
+    source: Social Security Contributions and Benefits Act 1992, s.11(6)-(7)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/11
+              excerpt: 'does not have relevant profits of, or exceeding, the small profits threshold'
+          - path: versions[0].formula
+            kind: exception
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/11
+              excerpt: 'No Class 2 contributions are to be paid or treated as paid'
+    versions:
+      - effective_from: '2025-04-06'
+        formula: |-
+          relevant_profits < small_profits_threshold
+          and earner_is_in_employment_as_self_employed_earner_for_week
+          and not week_is_before_week_earner_attains_age_16
+          and not week_is_after_week_earner_attains_pensionable_age
+
+  - name: class_2_contribution_amount_available_for_week
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Social Security Contributions and Benefits Act 1992, s.11(6)-(7)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/11
+              excerpt: 'may pay a Class 2 contribution of £3.50'
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/11
+    versions:
+      - effective_from: '2025-04-06'
+        formula: |-
+          if class_2_contribution_may_be_paid_for_week: class_2_weekly_contribution_amount else: 0

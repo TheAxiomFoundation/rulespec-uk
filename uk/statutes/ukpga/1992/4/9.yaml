@@ -1,0 +1,98 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/statute/ukpga/1992/4/9
+  summary: |-
+    Where a secondary Class 1 contribution is payable as mentioned in section 6(1)(b), the amount is the relevant percentage of earnings paid in the tax week, in respect of the employment in question, above the current secondary threshold or prescribed equivalent. The relevant percentage is the age-related secondary percentage if section 9A applies, 0% if section 9B applies, and otherwise the secondary percentage. The secondary percentage is 15%, subject to alteration under sections 143 and 145 of the Administration Act. Subsection (1) is subject to regulations under section 6(6) and sections 116 to 120.
+rules:
+  - name: secondary_percentage
+    kind: parameter
+    dtype: Rate
+    source: Social Security Contributions and Benefits Act 1992 s.9(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/9
+              excerpt: "the secondary percentage is 15%"
+    versions:
+      - effective_from: '2025-04-06'
+        formula: |-
+          0.15
+
+  - name: apprentice_zero_rate_secondary_percentage
+    kind: parameter
+    dtype: Rate
+    source: Social Security Contributions and Benefits Act 1992 s.9(1A)(aa)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/9
+              excerpt: "if section 9B below ... applies to the earnings, 0%"
+    versions:
+      - effective_from: '2025-04-06'
+        formula: |-
+          0
+
+  - name: relevant_secondary_class_1_percentage
+    kind: derived
+    entity: Employer
+    dtype: Rate
+    period: Week
+    source: Social Security Contributions and Benefits Act 1992 s.9(1A)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/9
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/1992/4/9#secondary_percentage
+              output: secondary_percentage
+              hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/1992/4/9#apprentice_zero_rate_secondary_percentage
+              output: apprentice_zero_rate_secondary_percentage
+              hash: sha256:local
+    versions:
+      - effective_from: '2025-04-06'
+        formula: |-
+          if section_9A_applies_to_the_earnings: age_related_secondary_percentage else: if section_9B_applies_to_the_earnings: apprentice_zero_rate_secondary_percentage else: secondary_percentage
+
+  - name: secondary_class_1_contribution
+    kind: derived
+    entity: Employer
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Social Security Contributions and Benefits Act 1992 s.9(1), (3)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/9
+              excerpt: "the amount of that contribution shall be the relevant percentage of so much of the earnings paid in the tax week ... as exceeds the current secondary threshold"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/1992/4/9#relevant_secondary_class_1_percentage
+              output: relevant_secondary_class_1_percentage
+              hash: sha256:local
+    versions:
+      - effective_from: '2025-04-06'
+        formula: |-
+          if secondary_class_1_contribution_payable_as_mentioned_in_section_6_1_b and regulations_under_section_6_6_do_not_displace_calculation and regulations_under_sections_116_to_120_do_not_displace_calculation: relevant_secondary_class_1_percentage * max(0, earnings_paid_in_tax_week_in_respect_of_employment - current_secondary_threshold_or_prescribed_equivalent) else: 0

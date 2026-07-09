@@ -1,0 +1,64 @@
+- name: deducts_annual_exempt_amount_up_to_remaining_gains
+  period:
+    period_kind: tax_year
+    start: '2024-04-06'
+    end: '2025-04-05'
+  input:
+    uk:statutes/ukpga/1992/12/1K#input.individual_is_chargeable_to_capital_gains_tax_on_chargeable_gains: true
+    uk:statutes/ukpga/1992/12/1K#input.individual_would_be_chargeable_to_capital_gains_tax_apart_from_section_1K: false
+    uk:statutes/ukpga/1992/12/1K#input.individual_makes_foreign_gain_claim: false
+    uk:statutes/ukpga/1992/12/1K#input.individual_makes_foreign_income_claim: false
+    uk:statutes/ukpga/1992/12/1K#input.individual_makes_foreign_employment_election: false
+    uk:statutes/ukpga/1992/12/1K#input.chargeable_gains_after_allowable_losses_accruing_in_tax_year: 5000
+  output:
+    uk:statutes/ukpga/1992/12/1K#annual_exempt_amount_available: holds
+    uk:statutes/ukpga/1992/12/1K#annual_exempt_amount_deduction: 3000
+    uk:statutes/ukpga/1992/12/1K#chargeable_gains_after_annual_exempt_amount: 2000
+- name: deduction_does_not_exceed_gains
+  period:
+    period_kind: tax_year
+    start: '2024-04-06'
+    end: '2025-04-05'
+  input:
+    uk:statutes/ukpga/1992/12/1K#input.individual_is_chargeable_to_capital_gains_tax_on_chargeable_gains: false
+    uk:statutes/ukpga/1992/12/1K#input.individual_would_be_chargeable_to_capital_gains_tax_apart_from_section_1K: true
+    uk:statutes/ukpga/1992/12/1K#input.individual_makes_foreign_gain_claim: false
+    uk:statutes/ukpga/1992/12/1K#input.individual_makes_foreign_income_claim: false
+    uk:statutes/ukpga/1992/12/1K#input.individual_makes_foreign_employment_election: false
+    uk:statutes/ukpga/1992/12/1K#input.chargeable_gains_after_allowable_losses_accruing_in_tax_year: 1200
+  output:
+    uk:statutes/ukpga/1992/12/1K#annual_exempt_amount_available: holds
+    uk:statutes/ukpga/1992/12/1K#annual_exempt_amount_deduction: 1200
+    uk:statutes/ukpga/1992/12/1K#chargeable_gains_after_annual_exempt_amount: 0
+- name: foreign_gain_claim_blocks_annual_exempt_amount
+  period:
+    period_kind: tax_year
+    start: '2024-04-06'
+    end: '2025-04-05'
+  input:
+    uk:statutes/ukpga/1992/12/1K#input.individual_is_chargeable_to_capital_gains_tax_on_chargeable_gains: true
+    uk:statutes/ukpga/1992/12/1K#input.individual_would_be_chargeable_to_capital_gains_tax_apart_from_section_1K: false
+    uk:statutes/ukpga/1992/12/1K#input.individual_makes_foreign_gain_claim: true
+    uk:statutes/ukpga/1992/12/1K#input.individual_makes_foreign_income_claim: false
+    uk:statutes/ukpga/1992/12/1K#input.individual_makes_foreign_employment_election: false
+    uk:statutes/ukpga/1992/12/1K#input.chargeable_gains_after_allowable_losses_accruing_in_tax_year: 5000
+  output:
+    uk:statutes/ukpga/1992/12/1K#annual_exempt_amount_available: not_holds
+    uk:statutes/ukpga/1992/12/1K#annual_exempt_amount_deduction: 0
+    uk:statutes/ukpga/1992/12/1K#chargeable_gains_after_annual_exempt_amount: 5000
+- name: foreign_employment_election_blocks_annual_exempt_amount
+  period:
+    period_kind: tax_year
+    start: '2024-04-06'
+    end: '2025-04-05'
+  input:
+    uk:statutes/ukpga/1992/12/1K#input.individual_is_chargeable_to_capital_gains_tax_on_chargeable_gains: true
+    uk:statutes/ukpga/1992/12/1K#input.individual_would_be_chargeable_to_capital_gains_tax_apart_from_section_1K: false
+    uk:statutes/ukpga/1992/12/1K#input.individual_makes_foreign_gain_claim: false
+    uk:statutes/ukpga/1992/12/1K#input.individual_makes_foreign_income_claim: false
+    uk:statutes/ukpga/1992/12/1K#input.individual_makes_foreign_employment_election: true
+    uk:statutes/ukpga/1992/12/1K#input.chargeable_gains_after_allowable_losses_accruing_in_tax_year: 5000
+  output:
+    uk:statutes/ukpga/1992/12/1K#annual_exempt_amount_available: not_holds
+    uk:statutes/ukpga/1992/12/1K#annual_exempt_amount_deduction: 0
+    uk:statutes/ukpga/1992/12/1K#chargeable_gains_after_annual_exempt_amount: 5000

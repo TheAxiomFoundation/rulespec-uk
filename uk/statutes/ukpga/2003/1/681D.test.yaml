@@ -1,0 +1,68 @@
+- name: deemed_entitlement_applies_to_highest_income_s
+  period:
+    period_kind: tax_year
+    start: '2024-01-01'
+    end: '2024-12-31'
+  input:
+    uk:statutes/ukpga/2003/1/681D#input.r_contribution_entitlement_period_for_same_child_weeks: 53
+    uk:statutes/ukpga/2003/1/681D#input.r_entitled_to_child_benefit_by_living_with_child_for_week_immediately_before_period: true
+    uk:statutes/ukpga/2003/1/681D#input.r_entitled_to_child_benefit_by_living_with_child_for_week_immediately_after_period: true
+    uk:statutes/ukpga/2003/1/681D#input.r_entitled_to_child_benefit_by_contributing_for_child_for_week_in_tax_year: true
+    uk:statutes/ukpga/2003/1/681D#input.r_or_partner_throughout_week_liable_under_section_681b_for_that_amount: false
+    uk:statutes/ukpga/2003/1/681D#input.s_has_child_living_with_him_or_her_for_that_week: true
+    ? uk:statutes/ukpga/2003/1/681D#input.s_has_highest_adjusted_net_income_among_persons_with_child_living_for_that_week_for_tax_year
+    : true
+  output:
+    uk:statutes/ukpga/2003/1/681D#contribution_child_benefit_amount_ignored_for_section_681d: not_holds
+    uk:statutes/ukpga/2003/1/681D#section_681b_applies_to_s_as_if_entitled_to_child_benefit_amount: holds
+- name: temporary_contribution_period_disregard_blocks_deemed_entitlement
+  period:
+    period_kind: tax_year
+    start: '2024-01-01'
+    end: '2024-12-31'
+  input:
+    uk:statutes/ukpga/2003/1/681D#input.r_contribution_entitlement_period_for_same_child_weeks: 52
+    uk:statutes/ukpga/2003/1/681D#input.r_entitled_to_child_benefit_by_living_with_child_for_week_immediately_before_period: true
+    uk:statutes/ukpga/2003/1/681D#input.r_entitled_to_child_benefit_by_living_with_child_for_week_immediately_after_period: true
+    uk:statutes/ukpga/2003/1/681D#input.r_entitled_to_child_benefit_by_contributing_for_child_for_week_in_tax_year: true
+    uk:statutes/ukpga/2003/1/681D#input.r_or_partner_throughout_week_liable_under_section_681b_for_that_amount: false
+    uk:statutes/ukpga/2003/1/681D#input.s_has_child_living_with_him_or_her_for_that_week: true
+    ? uk:statutes/ukpga/2003/1/681D#input.s_has_highest_adjusted_net_income_among_persons_with_child_living_for_that_week_for_tax_year
+    : true
+  output:
+    uk:statutes/ukpga/2003/1/681D#contribution_child_benefit_amount_ignored_for_section_681d: holds
+    uk:statutes/ukpga/2003/1/681D#section_681b_applies_to_s_as_if_entitled_to_child_benefit_amount: not_holds
+- name: r_or_partner_section_681b_liability_blocks_deemed_entitlement
+  period:
+    period_kind: tax_year
+    start: '2024-01-01'
+    end: '2024-12-31'
+  input:
+    uk:statutes/ukpga/2003/1/681D#input.r_contribution_entitlement_period_for_same_child_weeks: 53
+    uk:statutes/ukpga/2003/1/681D#input.r_entitled_to_child_benefit_by_living_with_child_for_week_immediately_before_period: true
+    uk:statutes/ukpga/2003/1/681D#input.r_entitled_to_child_benefit_by_living_with_child_for_week_immediately_after_period: true
+    uk:statutes/ukpga/2003/1/681D#input.r_entitled_to_child_benefit_by_contributing_for_child_for_week_in_tax_year: true
+    uk:statutes/ukpga/2003/1/681D#input.r_or_partner_throughout_week_liable_under_section_681b_for_that_amount: true
+    uk:statutes/ukpga/2003/1/681D#input.s_has_child_living_with_him_or_her_for_that_week: true
+    ? uk:statutes/ukpga/2003/1/681D#input.s_has_highest_adjusted_net_income_among_persons_with_child_living_for_that_week_for_tax_year
+    : true
+  output:
+    uk:statutes/ukpga/2003/1/681D#contribution_child_benefit_amount_ignored_for_section_681d: not_holds
+    uk:statutes/ukpga/2003/1/681D#section_681b_applies_to_s_as_if_entitled_to_child_benefit_amount: not_holds
+- name: missing_r_contribution_or_s_living_highest_income_conditions_blocks_deemed_entitlement
+  period:
+    period_kind: tax_year
+    start: '2024-01-01'
+    end: '2024-12-31'
+  input:
+    uk:statutes/ukpga/2003/1/681D#input.r_contribution_entitlement_period_for_same_child_weeks: 53
+    uk:statutes/ukpga/2003/1/681D#input.r_entitled_to_child_benefit_by_living_with_child_for_week_immediately_before_period: true
+    uk:statutes/ukpga/2003/1/681D#input.r_entitled_to_child_benefit_by_living_with_child_for_week_immediately_after_period: true
+    uk:statutes/ukpga/2003/1/681D#input.r_entitled_to_child_benefit_by_contributing_for_child_for_week_in_tax_year: false
+    uk:statutes/ukpga/2003/1/681D#input.r_or_partner_throughout_week_liable_under_section_681b_for_that_amount: false
+    uk:statutes/ukpga/2003/1/681D#input.s_has_child_living_with_him_or_her_for_that_week: false
+    ? uk:statutes/ukpga/2003/1/681D#input.s_has_highest_adjusted_net_income_among_persons_with_child_living_for_that_week_for_tax_year
+    : false
+  output:
+    uk:statutes/ukpga/2003/1/681D#contribution_child_benefit_amount_ignored_for_section_681d: not_holds
+    uk:statutes/ukpga/2003/1/681D#section_681b_applies_to_s_as_if_entitled_to_child_benefit_amount: not_holds
