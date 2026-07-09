@@ -1,0 +1,39 @@
+- name: net taxable earnings subtracts allowed deductions
+  period:
+    period_kind: tax_year
+    start: '2024-01-01'
+    end: '2024-12-31'
+  input:
+    uk:statutes/ukpga/2003/1/11#input.taxable_earnings_from_employment_in_tax_year: 50000
+    uk:statutes/ukpga/2003/1/11#input.deductions_allowed_from_those_earnings_under_section_327_3_to_5: 8000
+    uk:statutes/ukpga/2003/1/11#input.certain_exceptional_case_for_section_128_relief: false
+  output:
+    uk:statutes/ukpga/2003/1/11#taxable_earnings_less_allowed_deductions: 42000
+    uk:statutes/ukpga/2003/1/11#net_taxable_earnings: 42000
+    uk:statutes/ukpga/2003/1/11#section_128_relief_may_be_available_circumstance: not_holds
+- name: negative calculation is nil and exceptional relief circumstance holds
+  period:
+    period_kind: tax_year
+    start: '2024-01-01'
+    end: '2024-12-31'
+  input:
+    uk:statutes/ukpga/2003/1/11#input.taxable_earnings_from_employment_in_tax_year: 3000
+    uk:statutes/ukpga/2003/1/11#input.deductions_allowed_from_those_earnings_under_section_327_3_to_5: 5000
+    uk:statutes/ukpga/2003/1/11#input.certain_exceptional_case_for_section_128_relief: true
+  output:
+    uk:statutes/ukpga/2003/1/11#taxable_earnings_less_allowed_deductions: -2000
+    uk:statutes/ukpga/2003/1/11#net_taxable_earnings: 0
+    uk:statutes/ukpga/2003/1/11#section_128_relief_may_be_available_circumstance: holds
+- name: negative taxable earnings gives relief circumstance
+  period:
+    period_kind: tax_year
+    start: '2024-01-01'
+    end: '2024-12-31'
+  input:
+    uk:statutes/ukpga/2003/1/11#input.taxable_earnings_from_employment_in_tax_year: -1000
+    uk:statutes/ukpga/2003/1/11#input.deductions_allowed_from_those_earnings_under_section_327_3_to_5: 500
+    uk:statutes/ukpga/2003/1/11#input.certain_exceptional_case_for_section_128_relief: false
+  output:
+    uk:statutes/ukpga/2003/1/11#taxable_earnings_less_allowed_deductions: -1500
+    uk:statutes/ukpga/2003/1/11#net_taxable_earnings: 0
+    uk:statutes/ukpga/2003/1/11#section_128_relief_may_be_available_circumstance: holds

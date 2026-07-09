@@ -1,0 +1,51 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/statute/ukpga/2004/12/190
+  summary: |-
+    The maximum amount of relief under section 188 for a tax year is the individual's relevant UK earnings chargeable to income tax; if those earnings are less than the basic amount, the maximum is increased so that it is the basic amount. "The basic amount" is £3,600 or a greater Treasury-specified amount.
+rules:
+  - name: basic_amount
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax (Earnings and Pensions) Act 2003, s.190(4)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2004/12/190
+              excerpt: '"The basic amount" is £3,600'
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          3600
+
+  - name: maximum_relief_under_section_188
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Income Tax (Earnings and Pensions) Act 2003, s.190(1)-(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2004/12/190
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2004/12/190
+              excerpt: '"The basic amount" is £3,600'
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          max(relevant_uk_earnings_chargeable_to_income_tax, basic_amount)

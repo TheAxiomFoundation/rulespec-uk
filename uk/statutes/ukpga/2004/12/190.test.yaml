@@ -1,0 +1,27 @@
+- name: earnings_above_basic_amount
+  period:
+    period_kind: tax_year
+    start: '2024-04-06'
+    end: '2025-04-05'
+  input:
+    uk:statutes/ukpga/2004/12/190#input.relevant_uk_earnings_chargeable_to_income_tax: 10000
+  output:
+    uk:statutes/ukpga/2004/12/190#maximum_relief_under_section_188: 10000
+- name: earnings_below_basic_amount
+  period:
+    period_kind: tax_year
+    start: '2024-04-06'
+    end: '2025-04-05'
+  input:
+    uk:statutes/ukpga/2004/12/190#input.relevant_uk_earnings_chargeable_to_income_tax: 2000
+  output:
+    uk:statutes/ukpga/2004/12/190#maximum_relief_under_section_188: 3600
+- name: no_relevant_uk_earnings
+  period:
+    period_kind: tax_year
+    start: '2024-04-06'
+    end: '2025-04-05'
+  input:
+    uk:statutes/ukpga/2004/12/190#input.relevant_uk_earnings_chargeable_to_income_tax: 0
+  output:
+    uk:statutes/ukpga/2004/12/190#maximum_relief_under_section_188: 3600

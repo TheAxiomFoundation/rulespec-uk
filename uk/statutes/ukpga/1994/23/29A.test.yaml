@@ -1,0 +1,39 @@
+- name: schedule_7a_supply_charged_at_reduced_rate
+  period:
+    period_kind: tax_year
+    start: '2024-04-06'
+    end: '2025-04-05'
+  input:
+    uk:statutes/ukpga/1994/23/29A#input.supply_of_description_for_time_being_specified_in_schedule_7a: true
+    uk:statutes/ukpga/1994/23/29A#input.importation_of_goods_whose_supply_would_be_schedule_7a_supply: false
+    uk:statutes/ukpga/1994/23/29A#input.value_of_supply_or_importation: 100
+  output:
+    uk:statutes/ukpga/1994/23/29A#equivalent_importation_of_schedule_7a_goods: not_holds
+    uk:statutes/ukpga/1994/23/29A#supply_or_equivalent_importation_subject_to_reduced_vat_rate: holds
+    uk:statutes/ukpga/1994/23/29A#vat_charged_at_reduced_rate: 5
+- name: equivalent_importation_charged_at_reduced_rate
+  period:
+    period_kind: tax_year
+    start: '2024-04-06'
+    end: '2025-04-05'
+  input:
+    uk:statutes/ukpga/1994/23/29A#input.supply_of_description_for_time_being_specified_in_schedule_7a: false
+    uk:statutes/ukpga/1994/23/29A#input.importation_of_goods_whose_supply_would_be_schedule_7a_supply: true
+    uk:statutes/ukpga/1994/23/29A#input.value_of_supply_or_importation: 200
+  output:
+    uk:statutes/ukpga/1994/23/29A#equivalent_importation_of_schedule_7a_goods: holds
+    uk:statutes/ukpga/1994/23/29A#supply_or_equivalent_importation_subject_to_reduced_vat_rate: holds
+    uk:statutes/ukpga/1994/23/29A#vat_charged_at_reduced_rate: 10
+- name: non_schedule_7a_payment_not_charged_under_this_rate_rule
+  period:
+    period_kind: tax_year
+    start: '2024-04-06'
+    end: '2025-04-05'
+  input:
+    uk:statutes/ukpga/1994/23/29A#input.supply_of_description_for_time_being_specified_in_schedule_7a: false
+    uk:statutes/ukpga/1994/23/29A#input.importation_of_goods_whose_supply_would_be_schedule_7a_supply: false
+    uk:statutes/ukpga/1994/23/29A#input.value_of_supply_or_importation: 100
+  output:
+    uk:statutes/ukpga/1994/23/29A#equivalent_importation_of_schedule_7a_goods: not_holds
+    uk:statutes/ukpga/1994/23/29A#supply_or_equivalent_importation_subject_to_reduced_vat_rate: not_holds
+    uk:statutes/ukpga/1994/23/29A#vat_charged_at_reduced_rate: 0

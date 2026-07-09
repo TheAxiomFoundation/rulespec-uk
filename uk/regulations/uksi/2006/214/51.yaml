@@ -1,0 +1,50 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2006/214/51
+  summary: |-
+    Housing benefit tapers: prescribed percentage for section 130(3)(b) deduction from maximum housing benefit is 65 per cent.
+rules:
+  - name: housing_benefit_excess_income_taper_rate
+    kind: parameter
+    dtype: Rate
+    source: Regulation 51, Housing benefit tapers
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/regulation/uksi/2006/214/51
+              excerpt: "shall be 65 per cent"
+    versions:
+      - effective_from: '2006-03-06'
+        formula: |-
+          0.65
+
+  - name: housing_benefit_excess_income_deduction
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Regulation 51, Housing benefit tapers
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2006/214/51
+              excerpt: "percentage of excess of income over applicable amount which is deducted from maximum housing benefit"
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/regulation/uksi/2006/214/51
+              excerpt: "shall be 65 per cent"
+    versions:
+      - effective_from: '2006-03-06'
+        formula: |-
+          housing_benefit_excess_income_taper_rate * max(0, income_over_applicable_amount)

@@ -1,0 +1,57 @@
+- name: residential_transaction_direct_residential_interest
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:statutes/anaw/2017/1/24#input.transaction_is_chargeable: true
+    uk:statutes/anaw/2017/1/24#input.main_subject_matter_consists_entirely_of_residential_property_interest: true
+    uk:statutes/anaw/2017/1/24#input.transaction_is_one_of_linked_transactions: false
+    ? uk:statutes/anaw/2017/1/24#input.each_linked_transaction_main_subject_matter_consists_entirely_of_residential_property_interest
+    : false
+  output:
+    uk:statutes/anaw/2017/1/24#residential_property_transaction: holds
+- name: residential_transaction_not_chargeable
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:statutes/anaw/2017/1/24#input.transaction_is_chargeable: false
+    uk:statutes/anaw/2017/1/24#input.main_subject_matter_consists_entirely_of_residential_property_interest: true
+    uk:statutes/anaw/2017/1/24#input.transaction_is_one_of_linked_transactions: false
+    ? uk:statutes/anaw/2017/1/24#input.each_linked_transaction_main_subject_matter_consists_entirely_of_residential_property_interest
+    : false
+  output:
+    uk:statutes/anaw/2017/1/24#residential_property_transaction: not_holds
+- name: higher_rates_schedule_5_applies_and_non_rent_consideration
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:statutes/anaw/2017/1/24#input.transaction_is_chargeable: true
+    uk:statutes/anaw/2017/1/24#input.schedule_5_applies_to_transaction: true
+    uk:statutes/anaw/2017/1/24#input.chargeable_consideration_is_rent: false
+  output:
+    uk:statutes/anaw/2017/1/24#higher_rates_residential_property_transaction: holds
+    uk:statutes/anaw/2017/1/24#tax_bands_and_rates_apply_to_chargeable_consideration: holds
+- name: non_residential_linked_transaction_and_rent_excluded
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:statutes/anaw/2017/1/24#input.transaction_is_chargeable: true
+    uk:statutes/anaw/2017/1/24#input.main_subject_matter_consists_of_or_includes_non_residential_land_interest: false
+    uk:statutes/anaw/2017/1/24#input.transaction_is_one_of_linked_transactions: true
+    ? uk:statutes/anaw/2017/1/24#input.any_linked_transaction_main_subject_matter_consists_of_or_includes_non_residential_land_interest
+    : true
+    uk:statutes/anaw/2017/1/24#input.chargeable_consideration_is_rent: true
+  output:
+    uk:statutes/anaw/2017/1/24#non_residential_property_transaction: holds
+    uk:statutes/anaw/2017/1/24#tax_bands_and_rates_apply_to_chargeable_consideration: not_holds

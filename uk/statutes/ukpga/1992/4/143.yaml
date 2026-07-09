@@ -1,0 +1,120 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/statute/ukpga/1992/4/143
+  summary: |-
+    For this Part, a person is treated as responsible for a child or qualifying young person in any week if the child or qualifying young person lives with him in that week, or if he contributes to providing for them at a weekly rate not less than the child benefit weekly rate. Prior living-with status continues despite absence unless, in the 16 weeks preceding the week, absence exceeded 56 days excluding disregarded days. Certain education, treatment, and prescribed residential-accommodation absence days are disregarded, subject to prescribed limits unless regular expenditure is incurred.
+imports:
+  - uk:statutes/ukpga/1992/4/141#child_benefit_weekly_rate_for_responsible_child_or_qualifying_young_person
+rules:
+  - name: living_with_absence_lookback_weeks
+    kind: parameter
+    dtype: Count
+    period: Week
+    source: Social Security Contributions and Benefits Act 1992 s.143(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/143
+              excerpt: "in the 16 weeks preceding that week"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          16
+
+  - name: living_with_absence_day_limit
+    kind: parameter
+    dtype: Count
+    period: Week
+    source: Social Security Contributions and Benefits Act 1992 s.143(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/143
+              excerpt: "absent from one another for more than 56 days"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          56
+
+  - name: child_or_qualifying_young_person_absence_day_disregarded_for_living_with_test
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Day
+    source: Social Security Contributions and Benefits Act 1992 s.143(3)-(4)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/143
+          - path: versions[0].formula
+            kind: exception
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/143
+              excerpt: "shall not exceed such number as may be prescribed unless the person ... regularly incurs expenditure"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          day_of_absence_due_solely_to_prescribed_education_or_training
+          or (
+            (
+              day_of_absence_due_solely_to_inpatient_treatment
+              or day_of_absence_due_solely_to_prescribed_residential_accommodation_under_listed_arrangements
+            )
+            and (
+              medical_or_residential_absence_days_do_not_exceed_prescribed_number
+              or (
+                (
+                  person_regularly_incurs_expenditure_in_respect_of_child_or_qualifying_young_person
+                  or person_is_treated_as_regularly_incurring_expenditure_under_regulations
+                )
+                and regulations_do_not_disapply_regularly_incurring_expenditure_treatment
+              )
+            )
+          )
+
+  - name: person_responsible_for_child_or_qualifying_young_person
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Week
+    source: Social Security Contributions and Benefits Act 1992 s.143(1)-(2), (5)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/143
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/1992/4/141#child_benefit_weekly_rate_for_responsible_child_or_qualifying_young_person
+              output: child_benefit_weekly_rate_for_responsible_child_or_qualifying_young_person
+              hash: sha256:5de00c8f8e1b9f77c792940131d1e8a5a96bfbc47a4cab5aa385dde7632814f8
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          child_or_qualifying_young_person_living_with_person_in_week
+          or (
+            person_had_child_or_qualifying_young_person_living_with_person_before_week
+            and absent_days_not_counting_disregarded_days_in_preceding_lookback_period <= living_with_absence_day_limit
+          )
+          or (
+            (
+              person_is_treated_as_contributing_to_cost_under_regulations
+              or weekly_contribution_to_cost_of_providing_for_child_or_qualifying_young_person >= child_benefit_weekly_rate_for_responsible_child_or_qualifying_young_person
+            )
+            and regulations_do_not_disapply_treatment_as_contributing_to_cost
+          )

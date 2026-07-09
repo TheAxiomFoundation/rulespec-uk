@@ -1,0 +1,77 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/statute/ukpga/2003/1/11
+  summary: |-
+    “net taxable earnings” from an employment in a tax year are TE-DE, where TE is taxable earnings and DE is deductions allowed under provisions listed in section 327(3) to (5). If negative, net taxable earnings are nil. For more than one employment, the calculation is carried out for each employment.
+rules:
+  - name: taxable_earnings_less_allowed_deductions
+    kind: derived
+    entity: Employment
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: ITEPA 2003 s.11(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/1/11
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          taxable_earnings_from_employment_in_tax_year - deductions_allowed_from_those_earnings_under_section_327_3_to_5
+  - name: net_taxable_earnings
+    kind: derived
+    entity: Employment
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: ITEPA 2003 s.11(1)-(2), (4)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/1/11
+              excerpt: If the amount calculated under subsection (1) is negative, the net taxable earnings from the employment in the year are to be taken to be nil instead.
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/2003/1/11#taxable_earnings_less_allowed_deductions
+              output: taxable_earnings_less_allowed_deductions
+              hash: sha256:local
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          max(0, taxable_earnings_less_allowed_deductions)
+  - name: section_128_relief_may_be_available_circumstance
+    kind: derived
+    entity: Employment
+    dtype: Judgment
+    period: Year
+    source: ITEPA 2003 s.11(3)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/1/11
+              excerpt: where TE is negative, or in certain exceptional cases where the amount calculated under subsection (1) is negative
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/2003/1/11#taxable_earnings_less_allowed_deductions
+              output: taxable_earnings_less_allowed_deductions
+              hash: sha256:local
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          taxable_earnings_from_employment_in_tax_year < 0
+          or (certain_exceptional_case_for_section_128_relief and taxable_earnings_less_allowed_deductions < 0)

@@ -1,0 +1,167 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/statute/ukpga/1979/5/6
+  summary: |-
+    Section 6 charges excise duty on hydrocarbon oil imported into the United Kingdom, or produced in the United Kingdom and delivered for home use from specified premises or bonded storage. The rates are £0.5795/litre for unleaded petrol, £0.3820/litre for aviation gasoline, £0.6767/litre for other light oil, and £0.5795/litre for heavy oil. Imported oil removed to a refinery is charged on delivery from the refinery for home use at the same duty as like imported goods.
+rules:
+  - name: unleaded_petrol_excise_duty_rate_per_litre
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: section 6(1A)(a)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/1979/5/6
+              excerpt: "£0.5795 a litre in the case of unleaded petrol"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          0.5795
+  - name: aviation_gasoline_excise_duty_rate_per_litre
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: section 6(1A)(aa)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/1979/5/6
+              excerpt: "£0.3820 a litre in the case of aviation gasoline"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          0.3820
+  - name: other_light_oil_excise_duty_rate_per_litre
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: section 6(1A)(b)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/1979/5/6
+              excerpt: "£0.6767 a litre in the case of light oil other than unleaded petrol or aviation gasoline"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          0.6767
+  - name: heavy_oil_excise_duty_rate_per_litre
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: section 6(1A)(c)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/1979/5/6
+              excerpt: "£0.5795 a litre in the case of heavy oil"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          0.5795
+  - name: hydrocarbon_oil_excise_duty_rate_per_litre
+    kind: derived
+    entity: Asset
+    dtype: Money
+    period: Day
+    unit: GBP
+    source: section 6(1A)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1979/5/6
+              excerpt: "The rates are—"
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/1979/5/6
+              excerpt: "£0.5795 a litre in the case of unleaded petrol"
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/1979/5/6
+              excerpt: "£0.3820 a litre in the case of aviation gasoline"
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/1979/5/6
+              excerpt: "£0.6767 a litre in the case of light oil other than unleaded petrol or aviation gasoline"
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/1979/5/6
+              excerpt: "£0.5795 a litre in the case of heavy oil"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if hydrocarbon_oil_is_unleaded_petrol: unleaded_petrol_excise_duty_rate_per_litre else: if hydrocarbon_oil_is_aviation_gasoline: aviation_gasoline_excise_duty_rate_per_litre else: if hydrocarbon_oil_is_light_oil_other_than_unleaded_petrol_or_aviation_gasoline: other_light_oil_excise_duty_rate_per_litre else: if hydrocarbon_oil_is_heavy_oil: heavy_oil_excise_duty_rate_per_litre else: 0
+  - name: hydrocarbon_oil_excise_duty_chargeable
+    kind: derived
+    entity: Asset
+    dtype: Judgment
+    period: Day
+    source: section 6(1), section 6(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/1979/5/6
+          - path: versions[0].formula
+            kind: exception
+            source:
+              corpus_citation_path: uk/statute/ukpga/1979/5/6
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          hydrocarbon_oil_imported_into_united_kingdom
+          or hydrocarbon_oil_produced_in_united_kingdom_and_delivered_for_home_use_from_refinery_or_production_premises_or_bonded_storage_not_chargeable_on_import
+          or imported_hydrocarbon_oil_removed_to_refinery_and_goods_delivered_from_refinery_for_home_use
+  - name: hydrocarbon_oil_excise_duty
+    kind: derived
+    entity: Asset
+    dtype: Money
+    period: Day
+    unit: GBP
+    source: section 6(1), section 6(1A), section 6(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1979/5/6
+              excerpt: "a duty of excise at the rates specified in subsection (1A)"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/1979/5/6
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/1979/5/6
+              excerpt: "shall be the same as that which would be payable on the importation of like goods"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if hydrocarbon_oil_excise_duty_chargeable: hydrocarbon_oil_litres * hydrocarbon_oil_excise_duty_rate_per_litre else: 0

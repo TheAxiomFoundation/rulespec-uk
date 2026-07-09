@@ -1,0 +1,119 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/statute/asp/2013/11/24
+  summary: |-
+    The Scottish Ministers must, by order, specify tax bands and percentage tax rates for residential and non-residential property transactions. Each type must have a nil rate band and at least two other bands; the nil rate must be 0%, and higher bands must have higher rates than the band below. A transaction is residential if its main subject-matter, or each linked transaction's main subject-matter, consists entirely of an interest in residential land; it is non-residential if it consists of or includes an interest in non-residential land, including any linked transaction.
+rules:
+  - name: nil_rate_tax_band_rate
+    kind: parameter
+    dtype: Rate
+    source: asp 2013/11/24, subsection (2)(b)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/statute/asp/2013/11/24
+              excerpt: "the tax rate for the nil rate tax band, which must be 0%"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          0
+
+  - name: minimum_other_tax_band_count
+    kind: parameter
+    dtype: Count
+    source: asp 2013/11/24, subsection (2)(a)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/statute/asp/2013/11/24
+              excerpt: "a nil rate tax band and at least two other tax bands"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          2
+
+  - name: residential_property_transaction
+    kind: derived
+    entity: LandTransaction
+    dtype: Judgment
+    period: Day
+    source: asp 2013/11/24, subsection (3)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/statute/asp/2013/11/24
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          main_subject_matter_consists_entirely_of_interest_in_land_that_is_residential_property
+          or (
+            transaction_is_one_of_number_of_linked_transactions
+            and main_subject_matter_of_each_linked_transaction_consists_entirely_of_interest_in_land_that_is_residential_property
+          )
+
+  - name: non_residential_property_transaction
+    kind: derived
+    entity: LandTransaction
+    dtype: Judgment
+    period: Day
+    source: asp 2013/11/24, subsection (4)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/statute/asp/2013/11/24
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          main_subject_matter_consists_of_or_includes_interest_in_land_that_is_not_residential_property
+          or (
+            transaction_is_one_of_number_of_linked_transactions
+            and main_subject_matter_of_any_linked_transaction_consists_of_or_includes_interest_in_land_that_is_not_residential_property
+          )
+
+  - name: tax_bands_order_meets_minimum_band_structure
+    kind: derived
+    entity: TaxBandsOrder
+    dtype: Judgment
+    period: Day
+    source: asp 2013/11/24, subsection (2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/asp/2013/11/24
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/asp/2013/11/24#nil_rate_tax_band_rate
+              output: nil_rate_tax_band_rate
+              hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/asp/2013/11/24#minimum_other_tax_band_count
+              output: minimum_other_tax_band_count
+              hash: sha256:local
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          order_specifies_nil_rate_tax_band
+          and other_tax_band_count >= minimum_other_tax_band_count
+          and specified_nil_rate_tax_band_rate == nil_rate_tax_band_rate
+          and rate_for_each_band_above_nil_rate_band_is_higher_than_rate_for_band_below_it

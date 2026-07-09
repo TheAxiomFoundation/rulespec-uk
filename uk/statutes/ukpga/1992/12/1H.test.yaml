@@ -1,0 +1,34 @@
+- name: individual_lower_rate_selected_under_section_1I
+  period:
+    period_kind: tax_year
+    start: '2024-04-06'
+    end: '2025-04-05'
+  input:
+    uk:statutes/ukpga/1992/12/1H#input.lower_rate_applies_under_section_1I: true
+  output:
+    uk:statutes/ukpga/1992/12/1H#individual_chargeable_gains_capital_gains_tax_rate: 0.18
+- name: individual_higher_rate_selected_under_section_1I
+  period:
+    period_kind: tax_year
+    start: '2024-04-06'
+    end: '2025-04-05'
+  input:
+    uk:statutes/ukpga/1992/12/1H#input.lower_rate_applies_under_section_1I: false
+  output:
+    uk:statutes/ukpga/1992/12/1H#individual_chargeable_gains_capital_gains_tax_rate: 0.24
+- name: personal_representatives_rate
+  period:
+    period_kind: tax_year
+    start: '2024-04-06'
+    end: '2025-04-05'
+  input: {}
+  output:
+    uk:statutes/ukpga/1992/12/1H#personal_representatives_chargeable_gains_capital_gains_tax_rate: 0.24
+- name: settlement_trustees_rate
+  period:
+    period_kind: tax_year
+    start: '2024-04-06'
+    end: '2025-04-05'
+  input: {}
+  output:
+    uk:statutes/ukpga/1992/12/1H#settlement_trustees_chargeable_gains_capital_gains_tax_rate: 0.24

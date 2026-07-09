@@ -1,0 +1,100 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/statute/ukpga/1992/12/1H
+  summary: |-
+    Chargeable gains accruing in a tax year to an individual are charged to capital gains tax at a rate of 18% or 24%; section 1I determines which rate applies. Chargeable gains accruing to personal representatives of a deceased individual or to trustees of a settlement are charged at 24%.
+rules:
+  - name: lower_capital_gains_tax_rate
+    kind: parameter
+    dtype: Rate
+    source: TCGA 1992 s 1H
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/12/1H
+              excerpt: "charged to capital gains tax at a rate of 18% or 24%"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          0.18
+  - name: higher_capital_gains_tax_rate
+    kind: parameter
+    dtype: Rate
+    source: TCGA 1992 s 1H
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/12/1H
+              excerpt: "charged to capital gains tax at a rate of 18% or 24%"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          0.24
+  - name: individual_chargeable_gains_capital_gains_tax_rate
+    kind: derived
+    entity: Person
+    dtype: Rate
+    period: Year
+    source: TCGA 1992 s 1H
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/12/1H
+              excerpt: "individual are charged to capital gains tax at a rate of 18% or 24%"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/12/1H
+              excerpt: "which of the rates applies ... is determined by section 1I"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if lower_rate_applies_under_section_1I: lower_capital_gains_tax_rate else: higher_capital_gains_tax_rate
+  - name: personal_representatives_chargeable_gains_capital_gains_tax_rate
+    kind: derived
+    entity: TaxUnit
+    dtype: Rate
+    period: Year
+    source: TCGA 1992 s 1H
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/12/1H
+              excerpt: "personal representatives of a deceased individual are charged ... at a rate of 24%"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          higher_capital_gains_tax_rate
+  - name: settlement_trustees_chargeable_gains_capital_gains_tax_rate
+    kind: derived
+    entity: TaxUnit
+    dtype: Rate
+    period: Year
+    source: TCGA 1992 s 1H
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/12/1H
+              excerpt: "trustees of a settlement are charged ... at a rate of 24%"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          higher_capital_gains_tax_rate

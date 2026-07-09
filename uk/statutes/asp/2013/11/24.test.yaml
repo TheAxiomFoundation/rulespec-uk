@@ -1,0 +1,53 @@
+- name: residential_transaction_direct_residential_land_interest
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:statutes/asp/2013/11/24#input.main_subject_matter_consists_entirely_of_interest_in_land_that_is_residential_property: true
+    uk:statutes/asp/2013/11/24#input.transaction_is_one_of_number_of_linked_transactions: false
+    ? uk:statutes/asp/2013/11/24#input.main_subject_matter_of_each_linked_transaction_consists_entirely_of_interest_in_land_that_is_residential_property
+    : false
+  output:
+    uk:statutes/asp/2013/11/24#residential_property_transaction: holds
+- name: residential_transaction_linked_each_residential
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:statutes/asp/2013/11/24#input.main_subject_matter_consists_entirely_of_interest_in_land_that_is_residential_property: false
+    uk:statutes/asp/2013/11/24#input.transaction_is_one_of_number_of_linked_transactions: true
+    ? uk:statutes/asp/2013/11/24#input.main_subject_matter_of_each_linked_transaction_consists_entirely_of_interest_in_land_that_is_residential_property
+    : true
+  output:
+    uk:statutes/asp/2013/11/24#residential_property_transaction: holds
+- name: non_residential_transaction_linked_any_non_residential
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    ? uk:statutes/asp/2013/11/24#input.main_subject_matter_consists_of_or_includes_interest_in_land_that_is_not_residential_property
+    : false
+    uk:statutes/asp/2013/11/24#input.transaction_is_one_of_number_of_linked_transactions: true
+    ? uk:statutes/asp/2013/11/24#input.main_subject_matter_of_any_linked_transaction_consists_of_or_includes_interest_in_land_that_is_not_residential_property
+    : true
+  output:
+    uk:statutes/asp/2013/11/24#non_residential_property_transaction: holds
+- name: order_satisfies_minimum_band_structure
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:statutes/asp/2013/11/24#input.order_specifies_nil_rate_tax_band: true
+    uk:statutes/asp/2013/11/24#input.other_tax_band_count: 2
+    uk:statutes/asp/2013/11/24#input.specified_nil_rate_tax_band_rate: 0
+    uk:statutes/asp/2013/11/24#input.rate_for_each_band_above_nil_rate_band_is_higher_than_rate_for_band_below_it: true
+  output:
+    uk:statutes/asp/2013/11/24#tax_bands_order_meets_minimum_band_structure: holds

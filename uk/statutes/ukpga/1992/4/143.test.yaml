@@ -1,0 +1,159 @@
+- name: direct_living_with_child_counts_as_responsible
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2025-04-07'
+    end: '2025-04-13'
+  input:
+    uk:statutes/ukpga/1992/4/143#input.child_or_qualifying_young_person_living_with_person_in_week: true
+    uk:statutes/ukpga/1992/4/143#input.person_had_child_or_qualifying_young_person_living_with_person_before_week: false
+    uk:statutes/ukpga/1992/4/143#input.absent_days_not_counting_disregarded_days_in_preceding_lookback_period: 0
+    uk:statutes/ukpga/1992/4/143#input.weekly_contribution_to_cost_of_providing_for_child_or_qualifying_young_person: 0
+    uk:statutes/ukpga/1992/4/143#input.person_is_treated_as_contributing_to_cost_under_regulations: false
+    uk:statutes/ukpga/1992/4/143#input.regulations_do_not_disapply_treatment_as_contributing_to_cost: true
+    uk:regulations/uksi/2006/965/2#input.during_subsistence_of_marriage_any_party_married_to_more_than_one_person: false
+    uk:regulations/uksi/2006/965/2#input.marriage_ceremony_took_place_under_law_permitting_polygamy: false
+    uk:regulations/uksi/2006/965/2#input.specified_benefit_allowance_or_increase_paid_for_week_to_person: false
+    ? uk:regulations/uksi/2006/965/2#input.specified_benefit_is_in_respect_of_only_elder_or_eldest_child_for_child_benefit_entitlement
+    : false
+    uk:regulations/uksi/2006/965/2#input.child_or_qualifying_young_person_is_only_elder_or_eldest_for_payee: false
+    uk:regulations/uksi/2006/965/2#input.paragraph_2_relationship_coordination_applies: false
+    uk:regulations/uksi/2006/965/2#input.child_or_qualifying_young_person_is_elder_or_eldest_among_paragraph_2_children: false
+    uk:regulations/uksi/2006/965/2#input.payee_is_voluntary_organisation: false
+    uk:regulations/uksi/2006/965/2#input.payee_resides_with_parent_otherwise_than_paragraph_2_a: false
+  output:
+    uk:statutes/ukpga/1992/4/143#person_responsible_for_child_or_qualifying_young_person: holds
+- name: prior_living_with_absence_within_limit_counts_as_living_with
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2025-04-14'
+    end: '2025-04-20'
+  input:
+    uk:statutes/ukpga/1992/4/143#input.child_or_qualifying_young_person_living_with_person_in_week: false
+    uk:statutes/ukpga/1992/4/143#input.person_had_child_or_qualifying_young_person_living_with_person_before_week: true
+    uk:statutes/ukpga/1992/4/143#input.absent_days_not_counting_disregarded_days_in_preceding_lookback_period: 56
+    uk:statutes/ukpga/1992/4/143#input.weekly_contribution_to_cost_of_providing_for_child_or_qualifying_young_person: 0
+    uk:statutes/ukpga/1992/4/143#input.person_is_treated_as_contributing_to_cost_under_regulations: false
+    uk:statutes/ukpga/1992/4/143#input.regulations_do_not_disapply_treatment_as_contributing_to_cost: true
+    uk:regulations/uksi/2006/965/2#input.during_subsistence_of_marriage_any_party_married_to_more_than_one_person: false
+    uk:regulations/uksi/2006/965/2#input.marriage_ceremony_took_place_under_law_permitting_polygamy: false
+    uk:regulations/uksi/2006/965/2#input.specified_benefit_allowance_or_increase_paid_for_week_to_person: false
+    ? uk:regulations/uksi/2006/965/2#input.specified_benefit_is_in_respect_of_only_elder_or_eldest_child_for_child_benefit_entitlement
+    : false
+    uk:regulations/uksi/2006/965/2#input.child_or_qualifying_young_person_is_only_elder_or_eldest_for_payee: false
+    uk:regulations/uksi/2006/965/2#input.paragraph_2_relationship_coordination_applies: false
+    uk:regulations/uksi/2006/965/2#input.child_or_qualifying_young_person_is_elder_or_eldest_among_paragraph_2_children: false
+    uk:regulations/uksi/2006/965/2#input.payee_is_voluntary_organisation: false
+    uk:regulations/uksi/2006/965/2#input.payee_resides_with_parent_otherwise_than_paragraph_2_a: false
+  output:
+    uk:statutes/ukpga/1992/4/143#person_responsible_for_child_or_qualifying_young_person: holds
+- name: contribution_at_child_benefit_weekly_rate_counts_as_responsible
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2025-04-21'
+    end: '2025-04-27'
+  input:
+    uk:statutes/ukpga/1992/4/143#input.child_or_qualifying_young_person_living_with_person_in_week: false
+    uk:statutes/ukpga/1992/4/143#input.person_had_child_or_qualifying_young_person_living_with_person_before_week: false
+    uk:statutes/ukpga/1992/4/143#input.absent_days_not_counting_disregarded_days_in_preceding_lookback_period: 57
+    uk:statutes/ukpga/1992/4/143#input.weekly_contribution_to_cost_of_providing_for_child_or_qualifying_young_person: 20
+    uk:statutes/ukpga/1992/4/143#input.person_is_treated_as_contributing_to_cost_under_regulations: false
+    uk:statutes/ukpga/1992/4/143#input.regulations_do_not_disapply_treatment_as_contributing_to_cost: true
+    uk:regulations/uksi/2006/965/2#input.during_subsistence_of_marriage_any_party_married_to_more_than_one_person: false
+    uk:regulations/uksi/2006/965/2#input.marriage_ceremony_took_place_under_law_permitting_polygamy: false
+    uk:regulations/uksi/2006/965/2#input.specified_benefit_allowance_or_increase_paid_for_week_to_person: false
+    ? uk:regulations/uksi/2006/965/2#input.specified_benefit_is_in_respect_of_only_elder_or_eldest_child_for_child_benefit_entitlement
+    : false
+    uk:regulations/uksi/2006/965/2#input.child_or_qualifying_young_person_is_only_elder_or_eldest_for_payee: false
+    uk:regulations/uksi/2006/965/2#input.paragraph_2_relationship_coordination_applies: false
+    uk:regulations/uksi/2006/965/2#input.child_or_qualifying_young_person_is_elder_or_eldest_among_paragraph_2_children: false
+    uk:regulations/uksi/2006/965/2#input.payee_is_voluntary_organisation: false
+    uk:regulations/uksi/2006/965/2#input.payee_resides_with_parent_otherwise_than_paragraph_2_a: false
+  output:
+    uk:statutes/ukpga/1992/4/143#person_responsible_for_child_or_qualifying_young_person: holds
+- name: contribution_disapplied_by_regulations_does_not_count
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2025-04-28'
+    end: '2025-05-04'
+  input:
+    uk:statutes/ukpga/1992/4/143#input.child_or_qualifying_young_person_living_with_person_in_week: false
+    uk:statutes/ukpga/1992/4/143#input.person_had_child_or_qualifying_young_person_living_with_person_before_week: false
+    uk:statutes/ukpga/1992/4/143#input.absent_days_not_counting_disregarded_days_in_preceding_lookback_period: 57
+    uk:statutes/ukpga/1992/4/143#input.weekly_contribution_to_cost_of_providing_for_child_or_qualifying_young_person: 20
+    uk:statutes/ukpga/1992/4/143#input.person_is_treated_as_contributing_to_cost_under_regulations: false
+    uk:statutes/ukpga/1992/4/143#input.regulations_do_not_disapply_treatment_as_contributing_to_cost: false
+    uk:regulations/uksi/2006/965/2#input.during_subsistence_of_marriage_any_party_married_to_more_than_one_person: false
+    uk:regulations/uksi/2006/965/2#input.marriage_ceremony_took_place_under_law_permitting_polygamy: false
+    uk:regulations/uksi/2006/965/2#input.specified_benefit_allowance_or_increase_paid_for_week_to_person: false
+    ? uk:regulations/uksi/2006/965/2#input.specified_benefit_is_in_respect_of_only_elder_or_eldest_child_for_child_benefit_entitlement
+    : false
+    uk:regulations/uksi/2006/965/2#input.child_or_qualifying_young_person_is_only_elder_or_eldest_for_payee: false
+    uk:regulations/uksi/2006/965/2#input.paragraph_2_relationship_coordination_applies: false
+    uk:regulations/uksi/2006/965/2#input.child_or_qualifying_young_person_is_elder_or_eldest_among_paragraph_2_children: false
+    uk:regulations/uksi/2006/965/2#input.payee_is_voluntary_organisation: false
+    uk:regulations/uksi/2006/965/2#input.payee_resides_with_parent_otherwise_than_paragraph_2_a: false
+  output:
+    uk:statutes/ukpga/1992/4/143#person_responsible_for_child_or_qualifying_young_person: not_holds
+- name: absence_exceeds_limit_and_no_sufficient_contribution_not_responsible
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2025-05-05'
+    end: '2025-05-11'
+  input:
+    uk:statutes/ukpga/1992/4/143#input.child_or_qualifying_young_person_living_with_person_in_week: false
+    uk:statutes/ukpga/1992/4/143#input.person_had_child_or_qualifying_young_person_living_with_person_before_week: true
+    uk:statutes/ukpga/1992/4/143#input.absent_days_not_counting_disregarded_days_in_preceding_lookback_period: 57
+    uk:statutes/ukpga/1992/4/143#input.weekly_contribution_to_cost_of_providing_for_child_or_qualifying_young_person: 0
+    uk:statutes/ukpga/1992/4/143#input.person_is_treated_as_contributing_to_cost_under_regulations: false
+    uk:statutes/ukpga/1992/4/143#input.regulations_do_not_disapply_treatment_as_contributing_to_cost: true
+    uk:regulations/uksi/2006/965/2#input.during_subsistence_of_marriage_any_party_married_to_more_than_one_person: false
+    uk:regulations/uksi/2006/965/2#input.marriage_ceremony_took_place_under_law_permitting_polygamy: false
+    uk:regulations/uksi/2006/965/2#input.specified_benefit_allowance_or_increase_paid_for_week_to_person: false
+    ? uk:regulations/uksi/2006/965/2#input.specified_benefit_is_in_respect_of_only_elder_or_eldest_child_for_child_benefit_entitlement
+    : false
+    uk:regulations/uksi/2006/965/2#input.child_or_qualifying_young_person_is_only_elder_or_eldest_for_payee: false
+    uk:regulations/uksi/2006/965/2#input.paragraph_2_relationship_coordination_applies: false
+    uk:regulations/uksi/2006/965/2#input.child_or_qualifying_young_person_is_elder_or_eldest_among_paragraph_2_children: false
+    uk:regulations/uksi/2006/965/2#input.payee_is_voluntary_organisation: false
+    uk:regulations/uksi/2006/965/2#input.payee_resides_with_parent_otherwise_than_paragraph_2_a: false
+  output:
+    uk:statutes/ukpga/1992/4/143#person_responsible_for_child_or_qualifying_young_person: not_holds
+- name: education_absence_day_is_disregarded
+  period:
+    period_kind: custom
+    name: day
+    start: '2025-05-12'
+    end: '2025-05-12'
+  input:
+    uk:statutes/ukpga/1992/4/143#input.day_of_absence_due_solely_to_prescribed_education_or_training: true
+    uk:statutes/ukpga/1992/4/143#input.day_of_absence_due_solely_to_inpatient_treatment: false
+    ? uk:statutes/ukpga/1992/4/143#input.day_of_absence_due_solely_to_prescribed_residential_accommodation_under_listed_arrangements
+    : false
+    uk:statutes/ukpga/1992/4/143#input.medical_or_residential_absence_days_do_not_exceed_prescribed_number: false
+    uk:statutes/ukpga/1992/4/143#input.person_regularly_incurs_expenditure_in_respect_of_child_or_qualifying_young_person: false
+    uk:statutes/ukpga/1992/4/143#input.person_is_treated_as_regularly_incurring_expenditure_under_regulations: false
+    uk:statutes/ukpga/1992/4/143#input.regulations_do_not_disapply_regularly_incurring_expenditure_treatment: false
+  output:
+    uk:statutes/ukpga/1992/4/143#child_or_qualifying_young_person_absence_day_disregarded_for_living_with_test: holds
+- name: inpatient_absence_day_disregarded_when_regular_expenditure_counts
+  period:
+    period_kind: custom
+    name: day
+    start: '2025-05-13'
+    end: '2025-05-13'
+  input:
+    uk:statutes/ukpga/1992/4/143#input.day_of_absence_due_solely_to_prescribed_education_or_training: false
+    uk:statutes/ukpga/1992/4/143#input.day_of_absence_due_solely_to_inpatient_treatment: true
+    ? uk:statutes/ukpga/1992/4/143#input.day_of_absence_due_solely_to_prescribed_residential_accommodation_under_listed_arrangements
+    : false
+    uk:statutes/ukpga/1992/4/143#input.medical_or_residential_absence_days_do_not_exceed_prescribed_number: false
+    uk:statutes/ukpga/1992/4/143#input.person_regularly_incurs_expenditure_in_respect_of_child_or_qualifying_young_person: true
+    uk:statutes/ukpga/1992/4/143#input.person_is_treated_as_regularly_incurring_expenditure_under_regulations: false
+    uk:statutes/ukpga/1992/4/143#input.regulations_do_not_disapply_regularly_incurring_expenditure_treatment: true
+  output:
+    uk:statutes/ukpga/1992/4/143#child_or_qualifying_young_person_absence_day_disregarded_for_living_with_test: holds

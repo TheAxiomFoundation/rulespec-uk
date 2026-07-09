@@ -1,0 +1,27 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/statute/ukpga/2004/12/228
+  summary: |-
+    The annual allowance for tax year 2023-24 and, subject to Treasury order for later tax years, each subsequent tax year is £60,000.
+rules:
+  - name: annual_allowance
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Finance Act 2004 s.228(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/2004/12/228
+              excerpt: "The annual allowance for the tax year 2023-24 and, subject to subsection (2), each subsequent tax year is £60,000."
+    versions:
+      - effective_from: '2023-04-06'
+        formula: |-
+          60000

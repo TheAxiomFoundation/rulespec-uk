@@ -1,0 +1,147 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/statute/anaw/2017/1/24
+  summary: |-
+    The Welsh Ministers must by regulations specify the tax bands and percentage tax rates for residential, higher rates residential, and non-residential property transactions. Regulations for residential and non-residential transactions must include a 0% zero rate band and two or more bands above it; higher rates residential regulations must specify three or more tax bands. A chargeable transaction is residential if its main subject-matter consists entirely of residential property interests, higher rates residential if Schedule 5 applies, and non-residential if its main subject-matter consists of or includes non-residential land interests. The specified bands and rates do not apply to chargeable consideration that is rent.
+rules:
+  - name: zero_rate_band_tax_rate
+    kind: parameter
+    dtype: Rate
+    source: subsection (3)(a)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/statute/anaw/2017/1/24
+              excerpt: 'a tax band for which the applicable tax rate is 0% ("the zero rate band")'
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          0
+
+  - name: minimum_bands_above_zero_rate_band
+    kind: parameter
+    dtype: Count
+    source: subsection (3)(b)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/statute/anaw/2017/1/24
+              excerpt: 'two or more tax bands above the zero rate band'
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          2
+
+  - name: minimum_higher_rates_residential_tax_bands
+    kind: parameter
+    dtype: Count
+    source: subsection (4)(a)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/statute/anaw/2017/1/24
+              excerpt: 'three or more tax bands'
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          3
+
+  - name: residential_property_transaction
+    kind: derived
+    entity: ChargeableTransaction
+    dtype: Judgment
+    period: Day
+    source: subsection (6)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/statute/anaw/2017/1/24
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          transaction_is_chargeable
+          and (
+            main_subject_matter_consists_entirely_of_residential_property_interest
+            or (
+              transaction_is_one_of_linked_transactions
+              and each_linked_transaction_main_subject_matter_consists_entirely_of_residential_property_interest
+            )
+          )
+
+  - name: higher_rates_residential_property_transaction
+    kind: derived
+    entity: ChargeableTransaction
+    dtype: Judgment
+    period: Day
+    source: subsection (7)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/statute/anaw/2017/1/24
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          transaction_is_chargeable
+          and schedule_5_applies_to_transaction
+
+  - name: non_residential_property_transaction
+    kind: derived
+    entity: ChargeableTransaction
+    dtype: Judgment
+    period: Day
+    source: subsection (8)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/statute/anaw/2017/1/24
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          transaction_is_chargeable
+          and (
+            main_subject_matter_consists_of_or_includes_non_residential_land_interest
+            or (
+              transaction_is_one_of_linked_transactions
+              and any_linked_transaction_main_subject_matter_consists_of_or_includes_non_residential_land_interest
+            )
+          )
+
+  - name: tax_bands_and_rates_apply_to_chargeable_consideration
+    kind: derived
+    entity: ChargeableTransaction
+    dtype: Judgment
+    period: Day
+    source: subsection (9)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: exception
+            source:
+              corpus_citation_path: uk/statute/anaw/2017/1/24
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          transaction_is_chargeable
+          and not chargeable_consideration_is_rent
