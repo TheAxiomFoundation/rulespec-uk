@@ -1,0 +1,25 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2006/213/71
+  summary: |-
+    "The prescribed percentages ... shall be 65 per cent."
+rules:
+  - name: housing_benefit_taper_rate
+    kind: parameter
+    dtype: Rate
+    source: Housing Benefit Regulations 2006, regulation 71
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2006/213/71
+              excerpt: "shall be 65 per cent"
+    versions:
+      - effective_from: '2006-03-06'
+        formula: |-
+          0.65
