@@ -1,0 +1,76 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/statute/ukpga/2003/1/681G
+  summary: |-
+    For this Chapter a person is a “partner” of another person if condition A or condition B is met: married or civil partners and not separated under a court order or likely permanent separation; or not married/civil partners but living together as if married or civil partners.
+rules:
+  - name: partner_condition_a_for_chapter_met
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Day
+    source: Income Tax (Earnings and Pensions) Act 2003 s 681G, condition A
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/1/681G
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          persons_are_married_to_or_civil_partners_of_each_other
+          and not separated_under_court_order
+          and not separated_in_circumstances_likely_to_be_permanent
+  - name: partner_condition_b_for_chapter_met
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Day
+    source: Income Tax (Earnings and Pensions) Act 2003 s 681G, condition B
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/1/681G
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          not persons_are_married_to_or_civil_partners_of_each_other
+          and living_together_as_if_married_couple_or_civil_partners
+  - name: partner
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Day
+    source: Income Tax (Earnings and Pensions) Act 2003 s 681G
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/1/681G
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/2003/1/681G#partner_condition_a_for_chapter_met
+              output: partner_condition_a_for_chapter_met
+              hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:statutes/ukpga/2003/1/681G#partner_condition_b_for_chapter_met
+              output: partner_condition_b_for_chapter_met
+              hash: sha256:local
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          partner_condition_a_for_chapter_met
+          or partner_condition_b_for_chapter_met

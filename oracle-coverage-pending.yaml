@@ -8,7 +8,7 @@
 # Maintained by: axiom-encode oracle-coverage-pending sync.
 version: 1
 issue: https://github.com/TheAxiomFoundation/rulespec-uk/issues/101
-ceiling: 128
+ceiling: 141
 entries:
   - legal_id: uk:policies/attendance_allowance_composed_amount_pipeline#aa_pilot_higher_weekly_rate
     source: manual
@@ -97,6 +97,12 @@ entries:
   - legal_id: uk:policies/tax_free_childcare_composed_top_up_pipeline#tfc_pilot_top_up_rate
     source: manual
     since: 2026-07-07
+  - legal_id: uk:regulations/uksi/2006/213/70#appropriate_maximum_housing_benefit
+    source: bulk
+    since: 2026-07-09
+  - legal_id: uk:regulations/uksi/2006/213/70#appropriate_maximum_housing_benefit_percentage
+    source: bulk
+    since: 2026-07-09
   - legal_id: uk:regulations/uksi/2006/214/50#appropriate_maximum_housing_benefit
     source: bulk
     since: 2026-07-09
@@ -256,6 +262,30 @@ entries:
   - legal_id: uk:statutes/ukpga/1992/4/166#statutory_maternity_pay_weekly_rate
     source: bulk
     since: 2026-07-08
+  - legal_id: uk:statutes/ukpga/1992/4/171ZA#child_is_newborn_child_for_statutory_paternity_pay
+    source: bulk
+    since: 2026-07-09
+  - legal_id: uk:statutes/ukpga/1992/4/171ZA#statutory_paternity_pay_employment_continuity_weeks_before_relevant_week
+    source: bulk
+    since: 2026-07-09
+  - legal_id: uk:statutes/ukpga/1992/4/171ZA#statutory_paternity_pay_entitlement
+    source: bulk
+    since: 2026-07-09
+  - legal_id: uk:statutes/ukpga/1992/4/171ZA#statutory_paternity_pay_entitlement_unaffected_by_multiple_birth_same_pregnancy
+    source: bulk
+    since: 2026-07-09
+  - legal_id: uk:statutes/ukpga/1992/4/171ZA#statutory_paternity_pay_normal_weekly_earnings_reference_weeks
+    source: bulk
+    since: 2026-07-09
+  - legal_id: uk:statutes/ukpga/1992/4/171ZA#statutory_paternity_pay_relationship_conditions_satisfied
+    source: bulk
+    since: 2026-07-09
+  - legal_id: uk:statutes/ukpga/1992/4/171ZA#statutory_paternity_pay_relevant_week_offset_before_expected_birth_week
+    source: bulk
+    since: 2026-07-09
+  - legal_id: uk:statutes/ukpga/1992/4/171ZA#stillborn_child_newborn_child_pregnancy_week_threshold
+    source: bulk
+    since: 2026-07-09
   - legal_id: uk:statutes/ukpga/1992/4/9#apprentice_zero_rate_secondary_percentage
     source: bulk
     since: 2026-07-09
@@ -335,6 +365,15 @@ entries:
     source: bulk
     since: 2026-07-09
   - legal_id: uk:statutes/ukpga/2003/1/681E#child_benefit_amount_disregarded_for_chapter
+    source: bulk
+    since: 2026-07-09
+  - legal_id: uk:statutes/ukpga/2003/1/681G#partner
+    source: bulk
+    since: 2026-07-09
+  - legal_id: uk:statutes/ukpga/2003/1/681G#partner_condition_a_for_chapter_met
+    source: bulk
+    since: 2026-07-09
+  - legal_id: uk:statutes/ukpga/2003/1/681G#partner_condition_b_for_chapter_met
     source: bulk
     since: 2026-07-09
   - legal_id: uk:statutes/ukpga/2003/21/363#dealer_business_noncontravention_applies

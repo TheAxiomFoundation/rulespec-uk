@@ -1,0 +1,22 @@
+- name: weekly_maximum_housing_benefit_after_non_dependant_deductions
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2026-04-06'
+    end: '2026-04-12'
+  input:
+    uk:regulations/uksi/2006/213/70#input.eligible_rent_calculated_weekly_under_regulations_80_and_81: 150
+    uk:regulations/uksi/2006/213/70#input.non_dependant_deductions_under_regulation_74: 25
+  output:
+    uk:regulations/uksi/2006/213/70#appropriate_maximum_housing_benefit: 125
+- name: deductions_cannot_make_maximum_housing_benefit_negative
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2026-04-06'
+    end: '2026-04-12'
+  input:
+    uk:regulations/uksi/2006/213/70#input.eligible_rent_calculated_weekly_under_regulations_80_and_81: 80
+    uk:regulations/uksi/2006/213/70#input.non_dependant_deductions_under_regulation_74: 100
+  output:
+    uk:regulations/uksi/2006/213/70#appropriate_maximum_housing_benefit: 0

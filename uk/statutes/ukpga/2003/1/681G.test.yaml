@@ -1,0 +1,60 @@
+- name: married_or_civil_partners_not_separated_are_partners
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:statutes/ukpga/2003/1/681G#input.persons_are_married_to_or_civil_partners_of_each_other: true
+    uk:statutes/ukpga/2003/1/681G#input.separated_under_court_order: false
+    uk:statutes/ukpga/2003/1/681G#input.separated_in_circumstances_likely_to_be_permanent: false
+    uk:statutes/ukpga/2003/1/681G#input.living_together_as_if_married_couple_or_civil_partners: false
+  output:
+    uk:statutes/ukpga/2003/1/681G#partner_condition_a_for_chapter_met: holds
+    uk:statutes/ukpga/2003/1/681G#partner_condition_b_for_chapter_met: not_holds
+    uk:statutes/ukpga/2003/1/681G#partner: holds
+- name: court_order_separation_blocks_condition_a
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:statutes/ukpga/2003/1/681G#input.persons_are_married_to_or_civil_partners_of_each_other: true
+    uk:statutes/ukpga/2003/1/681G#input.separated_under_court_order: true
+    uk:statutes/ukpga/2003/1/681G#input.separated_in_circumstances_likely_to_be_permanent: false
+    uk:statutes/ukpga/2003/1/681G#input.living_together_as_if_married_couple_or_civil_partners: false
+  output:
+    uk:statutes/ukpga/2003/1/681G#partner_condition_a_for_chapter_met: not_holds
+    uk:statutes/ukpga/2003/1/681G#partner_condition_b_for_chapter_met: not_holds
+    uk:statutes/ukpga/2003/1/681G#partner: not_holds
+- name: likely_permanent_separation_blocks_condition_a
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:statutes/ukpga/2003/1/681G#input.persons_are_married_to_or_civil_partners_of_each_other: true
+    uk:statutes/ukpga/2003/1/681G#input.separated_under_court_order: false
+    uk:statutes/ukpga/2003/1/681G#input.separated_in_circumstances_likely_to_be_permanent: true
+    uk:statutes/ukpga/2003/1/681G#input.living_together_as_if_married_couple_or_civil_partners: false
+  output:
+    uk:statutes/ukpga/2003/1/681G#partner_condition_a_for_chapter_met: not_holds
+    uk:statutes/ukpga/2003/1/681G#partner_condition_b_for_chapter_met: not_holds
+    uk:statutes/ukpga/2003/1/681G#partner: not_holds
+- name: living_together_as_if_married_or_civil_partners_are_partners
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:statutes/ukpga/2003/1/681G#input.persons_are_married_to_or_civil_partners_of_each_other: false
+    uk:statutes/ukpga/2003/1/681G#input.separated_under_court_order: false
+    uk:statutes/ukpga/2003/1/681G#input.separated_in_circumstances_likely_to_be_permanent: false
+    uk:statutes/ukpga/2003/1/681G#input.living_together_as_if_married_couple_or_civil_partners: true
+  output:
+    uk:statutes/ukpga/2003/1/681G#partner_condition_a_for_chapter_met: not_holds
+    uk:statutes/ukpga/2003/1/681G#partner_condition_b_for_chapter_met: holds
+    uk:statutes/ukpga/2003/1/681G#partner: holds

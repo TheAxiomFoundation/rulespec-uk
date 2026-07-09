@@ -1,0 +1,76 @@
+- name: qualifies_for_statutory_paternity_pay_with_liveborn_child
+  period:
+    period_kind: custom
+    name: week
+    start: '2025-04-07'
+    end: '2025-04-13'
+  input:
+    uk:statutes/ukpga/1992/4/171ZA#input.person_satisfies_prescribed_relationship_conditions_as_to_newborn_child: true
+    uk:statutes/ukpga/1992/4/171ZA#input.person_satisfies_prescribed_relationship_conditions_as_to_childs_mother: true
+    uk:statutes/ukpga/1992/4/171ZA#input.child_is_liveborn: true
+    uk:statutes/ukpga/1992/4/171ZA#input.child_is_stillborn: false
+    uk:statutes/ukpga/1992/4/171ZA#input.pregnancy_weeks_at_stillbirth: 0
+    uk:statutes/ukpga/1992/4/171ZA#input.continuous_employed_earner_employment_weeks_ending_with_relevant_week: 26
+    uk:statutes/ukpga/1992/4/171ZA#input.normal_weekly_earnings_reference_period_weeks: 8
+    uk:statutes/ukpga/1992/4/171ZA#input.normal_weekly_earnings_for_reference_period: 130
+    uk:statutes/ukpga/1992/4/171ZA#input.lower_earnings_limit_in_force_under_section_5_1_a_at_end_of_relevant_week: 125
+    uk:statutes/ukpga/1992/4/171ZA#input.employed_earner_employment_continues_from_end_of_relevant_week_until_child_birth: true
+    ? uk:statutes/ukpga/1992/4/171ZA#input.relevant_week_is_immediately_preceding_week_at_required_offset_before_expected_birth_week
+    : true
+  output:
+    uk:statutes/ukpga/1992/4/171ZA#statutory_paternity_pay_relationship_conditions_satisfied: holds
+    uk:statutes/ukpga/1992/4/171ZA#child_is_newborn_child_for_statutory_paternity_pay: holds
+    uk:statutes/ukpga/1992/4/171ZA#statutory_paternity_pay_entitlement: holds
+- name: insufficient_continuous_employment_blocks_entitlement
+  period:
+    period_kind: custom
+    name: week
+    start: '2025-04-07'
+    end: '2025-04-13'
+  input:
+    uk:statutes/ukpga/1992/4/171ZA#input.person_satisfies_prescribed_relationship_conditions_as_to_newborn_child: true
+    uk:statutes/ukpga/1992/4/171ZA#input.person_satisfies_prescribed_relationship_conditions_as_to_childs_mother: true
+    uk:statutes/ukpga/1992/4/171ZA#input.child_is_liveborn: true
+    uk:statutes/ukpga/1992/4/171ZA#input.child_is_stillborn: false
+    uk:statutes/ukpga/1992/4/171ZA#input.pregnancy_weeks_at_stillbirth: 0
+    uk:statutes/ukpga/1992/4/171ZA#input.continuous_employed_earner_employment_weeks_ending_with_relevant_week: 25
+    uk:statutes/ukpga/1992/4/171ZA#input.normal_weekly_earnings_reference_period_weeks: 8
+    uk:statutes/ukpga/1992/4/171ZA#input.normal_weekly_earnings_for_reference_period: 130
+    uk:statutes/ukpga/1992/4/171ZA#input.lower_earnings_limit_in_force_under_section_5_1_a_at_end_of_relevant_week: 125
+    uk:statutes/ukpga/1992/4/171ZA#input.employed_earner_employment_continues_from_end_of_relevant_week_until_child_birth: true
+    ? uk:statutes/ukpga/1992/4/171ZA#input.relevant_week_is_immediately_preceding_week_at_required_offset_before_expected_birth_week
+    : true
+  output:
+    uk:statutes/ukpga/1992/4/171ZA#statutory_paternity_pay_entitlement: not_holds
+- name: stillborn_after_twenty_four_weeks_counts_as_newborn_child
+  period:
+    period_kind: custom
+    name: week
+    start: '2025-04-07'
+    end: '2025-04-13'
+  input:
+    uk:statutes/ukpga/1992/4/171ZA#input.person_satisfies_prescribed_relationship_conditions_as_to_newborn_child: true
+    uk:statutes/ukpga/1992/4/171ZA#input.person_satisfies_prescribed_relationship_conditions_as_to_childs_mother: true
+    uk:statutes/ukpga/1992/4/171ZA#input.child_is_liveborn: false
+    uk:statutes/ukpga/1992/4/171ZA#input.child_is_stillborn: true
+    uk:statutes/ukpga/1992/4/171ZA#input.pregnancy_weeks_at_stillbirth: 25
+    uk:statutes/ukpga/1992/4/171ZA#input.continuous_employed_earner_employment_weeks_ending_with_relevant_week: 26
+    uk:statutes/ukpga/1992/4/171ZA#input.normal_weekly_earnings_reference_period_weeks: 8
+    uk:statutes/ukpga/1992/4/171ZA#input.normal_weekly_earnings_for_reference_period: 130
+    uk:statutes/ukpga/1992/4/171ZA#input.lower_earnings_limit_in_force_under_section_5_1_a_at_end_of_relevant_week: 125
+    uk:statutes/ukpga/1992/4/171ZA#input.employed_earner_employment_continues_from_end_of_relevant_week_until_child_birth: true
+    ? uk:statutes/ukpga/1992/4/171ZA#input.relevant_week_is_immediately_preceding_week_at_required_offset_before_expected_birth_week
+    : true
+  output:
+    uk:statutes/ukpga/1992/4/171ZA#child_is_newborn_child_for_statutory_paternity_pay: holds
+    uk:statutes/ukpga/1992/4/171ZA#statutory_paternity_pay_entitlement: holds
+- name: multiple_birth_same_pregnancy_does_not_affect_entitlement
+  period:
+    period_kind: custom
+    name: week
+    start: '2025-04-07'
+    end: '2025-04-13'
+  input:
+    uk:statutes/ukpga/1992/4/171ZA#input.birth_or_expected_birth_of_more_than_one_child_as_result_of_same_pregnancy: true
+  output:
+    uk:statutes/ukpga/1992/4/171ZA#statutory_paternity_pay_entitlement_unaffected_by_multiple_birth_same_pregnancy: holds
