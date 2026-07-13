@@ -1,11 +1,3 @@
-# Pre-existing content debt surfaced by repository-wide validation at
-# consolidation time. Ratchets both ways (see tests/). Do not add
-# entries without an issue link.
-issue: https://github.com/TheAxiomFoundation/rulespec-uk/issues/42
-missing_companion_tests:
-  - uk/regulations/uksi/2013/376/23.yaml
-shape_issues: []
-uncovered_derived_rules: []
 # Exact combined validator + independently executed companion failures.
 # Active records expire within 90 days; replacements require a protected-base
 # pending approval in a separate waiver-only pull request.
