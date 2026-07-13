@@ -59,7 +59,7 @@ so two runs never fight over the same `bulk/<slug>` branches.
      file, companion test, and direct dependents in a temporary overlay and
      writes nothing on failure (fail-closed), then installs the three artifacts:
      `uk/**/<sec>.yaml`, `<sec>.test.yaml`, and a signed
-     `uk/.axiom/encoding-manifests/**/<sec>.json`.
+     `.axiom/encoding-manifests/uk/**/<sec>.json`.
    - Runs the gate battery in PR-CI order: `guard-generated` (manifest present),
      `validate --skip-reviewers`, `proof-validate`, then the companion `test`.
    - Opens `bulk/<slug>` with the manifest summary + gate output as the PR body,
@@ -115,7 +115,7 @@ and once they land the required check goes green and auto-merge completes.
 | Symptom | Class | Action |
 | --- | --- | --- |
 | `Generated RuleSpec failed CI validation` at apply | apply-blocked | Read `*.repair.json` under the run's `encode-out`; usually a bad generated formula or unresolved import. Re-encode (a new run), do not hand-edit. |
-| `points to a RuleSpec file that could not be resolved: rulespec-uk/...` | resolver/layout | The checkout leaf dir was not `rulespec-uk`, or a sibling checkout was missing. The workflow guards the leaf-dir name; check the sibling symlink step. |
+| `points to a RuleSpec file that could not be resolved: rulespec-uk/...` | resolver/layout | The checkout was not the exact canonical `rulespec-uk` country checkout or the module was not under a direct UK jurisdiction's atomic root. The workflow passes dependency checkouts explicitly; no sibling or symlink fallback is supported. |
 | companion test red only | fixtures (#1060) | `needs-fixtures`; run the follow-up fixture pass. |
 | self-import / same-section subsection import error | encode#1058 | The section is too cross-reference-heavy for a clean atomic encode. Drop it from the worklist or split the citation to the self-contained fragment. |
 | `oracle coverage ... unmapped` on the PR | oracle mapping | The output needs a PolicyEngine/UKMOD oracle mapping entry. Out of scope for the encode job; handle as a mapping follow-up. |
@@ -208,7 +208,7 @@ validate) is the per-PR floor. It is inherent to the gate and out of scope for
 the dispatcher to change; the mitigations above reduce *how many times* it runs,
 not its per-run cost.
 
-### 4. Oracle-coverage gate on new outputs (dominant UK blocker) — the pending lane
+### 4. Oracle-coverage gate on new outputs (dominant UK blocker)
 
 The pilot batch (`batch=A`, 4 entries) exposed the real gate for UK bulk PRs.
 The org `validate / validate` required check runs a **changed-file oracle
@@ -223,32 +223,30 @@ life `unmapped`.
 Registering each new output in `axiom-oracles` before its PR can go green means
 a per-PR cross-repo pin dance (edit `axiom-oracles`, bump its pinned commit
 through `axiom-encode`, bump the toolchain here), which does not scale to bulk.
-The **oracle-coverage pending lane** decouples the two without weakening the
-gate's *no-silent-unmapped* guarantee:
+The pending ledger records the backlog, but it no longer turns blocking debt
+green:
 
 * **Declared debt.** New outputs are declared in the repo-root
   [`oracle-coverage-pending.yaml`](../oracle-coverage-pending.yaml). The gate
   (`axiom-encode` ≥ 0.2.1185) reclassifies a declared `unmapped` output to
-  `pending_classification` — visible, counted, accountable — so
-  `--fail-on-unmapped` and the changed-file JSON gate both pass. An output
-  declared in **neither** the mappings **nor** the pending file still fails:
-  nothing goes silently unclassified.
-* **Dispatcher step.** The `encode` job runs
-  `axiom-encode oracle-coverage-pending sync --repo rulespec-uk` after
-  `--apply`, so every bulk PR self-declares its new outputs and stages the
-  updated pending file alongside the module. No per-PR pin dance.
+  `pending_classification` — visible, counted, and still blocking under
+  `--fail-on-pending`. An output declared in neither the mappings nor the
+  pending file remains `unmapped` and also blocks.
+* **No dispatcher self-declaration.** The `encode` job never writes or stages
+  pending debt. It runs oracle coverage with `--fail-on-unmapped`,
+  `--fail-on-pending`, and `--fail-on-stale-pending`; a new output must be
+  classified before the job can open a PR.
 * **Ratchet down.** `tests/test_oracle_coverage_pending.py` runs
   `oracle-coverage-pending check` (both ways, like `known-validation-gaps`):
   an undeclared unmapped output fails, and a declaration whose output is now
-  classified upstream is **stale** and must be removed. The optional `ceiling`
-  caps the count. Debt can only shrink except when genuinely new outputs land.
+  classified upstream is **stale** and must be removed. The production gate
+  separately fails while any live pending entry remains.
 * **Sweep drains it.** A periodic classification sweep maps declared outputs in
   one batch `axiom-oracles` change (`comparable` with its oracle, or
   `known_not_comparable`) and bumps the pin once — not per PR. Mapped outputs
   stop being `unmapped`, their declarations go stale, and the ratchet forces
   their removal. Track the drain in issue #101.
 
-Contrast with `rulespec-us`, where many bulk targets (e.g. NY Article 22 income
-tax) map to existing PolicyEngine oracles and merge green immediately; UK needs
-the pending lane because its outputs are largely un-mapped today. Plan a sweep
-per batch alongside the fixture pass.
+The UK queue remains intentionally paused while live pending classifications
+exist. Drain them through reviewed oracle mappings or explicit
+`known_not_comparable` decisions before resuming bulk encoding.

@@ -3,43 +3,7 @@ module:
   proof_validation:
     required: true
   source_verification:
-    corpus_citation_paths:
-      - uk/statute/ukpga/2007/3/11A
-      - uk/statute/ukpga/2007/3/16
-      - uk/statute/ukpga/2007/3/23
-      - uk/statute/ukpga/2007/3/35
-      - uk/statute/ukpga/1998/46/80C
-      - uk/guidance/scottish-government/scottish-rate-resolution-2026-27/draft-motion/block-1
-    upstream_source_check:
-      status: official_parameter_source
-      checked_paths:
-        - uk/statute/ukpga/2007/3/11A
-        - uk/statute/ukpga/2007/3/35
-        - uk/statute/ukpga/1998/46/80C
-        - uk/guidance/scottish-government/scottish-rate-resolution-2026-27/draft-motion/block-1
-      rationale: |-
-        Every numeric parameter is grounded in an official source. The charge
-        of income tax at Scottish rates on the non-savings income of a Scottish
-        taxpayer is ITA 2007 section 11A. The power to set the Scottish rates
-        and their band limits is the Scottish rate resolution under Scotland
-        Act 1998 section 80C. The 2026-27 rates and band limits themselves --
-        the starter rate (19%, £3,967), the Scottish basic rate (20%, £16,956),
-        the intermediate rate (21%, £31,092), the higher rate (42%, £62,430),
-        the advanced rate (45%, £125,140) and the top rate (48%) -- are set by
-        the Scottish Rate Resolution 2026-27 (gov.scot draft motion agreed by
-        the Scottish Parliament on 2026-02-19). The UK-wide personal allowance
-        base (£12,570) and its £100,000 adjusted-net-income taper are ITA 2007
-        section 35. The starter/basic/intermediate/higher band limits in the
-        Resolution are measured on income above the personal allowance; the
-        £125,140 advanced-rate upper limit is a total-income figure (the point
-        at which the personal allowance is fully withdrawn), so it is applied
-        as £125,140 minus the personal allowance in the after-allowance band
-        space, reproducing the published total-income bands
-        (£12,571-£16,537 starter, £16,538-£29,526 basic, £29,527-£43,662
-        intermediate, £43,663-£75,000 higher, £75,001-£125,140 advanced,
-        over £125,140 top). The pilot models the single-individual 2026-27
-        slice at calendar-year grain so a composed Scottish non-savings
-        non-dividend income tax liability is queryable from gross earned income.
+    corpus_citation_path: uk/statute/ukpga/2007/3/11A
   summary: |-
     Composed single-individual income-tax pipeline covering the non-savings
     non-dividend (earned) income of a Scottish taxpayer for the UKMOD oracle
@@ -319,7 +283,7 @@ rules:
             kind: formula
             source:
               corpus_citation_path: uk/statute/ukpga/2007/3/23
-              excerpt: "Total income"
+              excerpt: "total income."
     versions:
       - effective_from: '2026-01-01'
         formula: |-

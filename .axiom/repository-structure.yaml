@@ -4,7 +4,7 @@ allowed_root_directories:
   - .github
   - bulk
   - data
-  - programs
+  - docs
   - tests
   - uk
   - uk-kingston-upon-thames
@@ -44,9 +44,9 @@ path_rules:
       - ".jsonl"
       - ".xml"
   - patterns:
-      - "programs/**"
+      - "docs/**"
     allow_extensions:
-      - ".yaml"
+      - ".md"
   - patterns:
       - "tests/**"
     allow_extensions:

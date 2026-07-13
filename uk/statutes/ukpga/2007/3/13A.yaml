@@ -61,7 +61,7 @@ rules:
             import:
               target: uk:statutes/ukpga/2007/3/13#dividend_income_charged_at_dividend_ordinary_rate
               output: dividend_income_charged_at_dividend_ordinary_rate
-              hash: sha256:35147334ace44c023e67f4b0f39d9017b0101730b98f6a19362bea15401601a2
+              hash: sha256:103b4694da54842205d993789d69ba83efa904a3ef166e27057aed0b20926881
     versions:
       - effective_from: '2024-04-06'
         formula: |-
@@ -97,13 +97,13 @@ rules:
             import:
               target: uk:statutes/ukpga/2007/3/13#dividend_income_charged_at_dividend_ordinary_rate
               output: dividend_income_charged_at_dividend_ordinary_rate
-              hash: sha256:35147334ace44c023e67f4b0f39d9017b0101730b98f6a19362bea15401601a2
+              hash: sha256:103b4694da54842205d993789d69ba83efa904a3ef166e27057aed0b20926881
           - path: versions[0].formula
             kind: import
             import:
               target: uk:statutes/ukpga/2007/3/13#dividend_income_charged_at_dividend_upper_rate
               output: dividend_income_charged_at_dividend_upper_rate
-              hash: sha256:35147334ace44c023e67f4b0f39d9017b0101730b98f6a19362bea15401601a2
+              hash: sha256:103b4694da54842205d993789d69ba83efa904a3ef166e27057aed0b20926881
     versions:
       - effective_from: '2024-04-06'
         formula: |-
@@ -123,7 +123,7 @@ rules:
             kind: formula
             source:
               corpus_citation_path: uk/statute/ukpga/2007/3/13A
-              excerpt: "the first £X of A is charged at the dividend nil rate (rather than the dividend additional rate), where £X is the difference between £500, and the total of D and U"
+              excerpt: "the first £M of U is charged at the dividend nil rate (rather than the dividend upper rate), where £M is the difference between £500 and D, and"
           - path: versions[0].formula
             kind: formula
             source:
@@ -134,19 +134,19 @@ rules:
             import:
               target: uk:statutes/ukpga/2007/3/13#dividend_income_charged_at_dividend_ordinary_rate
               output: dividend_income_charged_at_dividend_ordinary_rate
-              hash: sha256:35147334ace44c023e67f4b0f39d9017b0101730b98f6a19362bea15401601a2
+              hash: sha256:103b4694da54842205d993789d69ba83efa904a3ef166e27057aed0b20926881
           - path: versions[0].formula
             kind: import
             import:
               target: uk:statutes/ukpga/2007/3/13#dividend_income_charged_at_dividend_upper_rate
               output: dividend_income_charged_at_dividend_upper_rate
-              hash: sha256:35147334ace44c023e67f4b0f39d9017b0101730b98f6a19362bea15401601a2
+              hash: sha256:103b4694da54842205d993789d69ba83efa904a3ef166e27057aed0b20926881
           - path: versions[0].formula
             kind: import
             import:
               target: uk:statutes/ukpga/2007/3/13#dividend_income_charged_at_dividend_additional_rate
               output: dividend_income_charged_at_dividend_additional_rate
-              hash: sha256:35147334ace44c023e67f4b0f39d9017b0101730b98f6a19362bea15401601a2
+              hash: sha256:103b4694da54842205d993789d69ba83efa904a3ef166e27057aed0b20926881
     versions:
       - effective_from: '2024-04-06'
         formula: |-

@@ -3,11 +3,7 @@ module:
   proof_validation:
     required: true
   source_verification:
-    corpus_citation_paths:
-      - uk/guidance/govuk/pension-credit/what-youll-get
-      - uk/guidance/govuk/pension-credit/eligibility
-      - uk/regulation/uksi/2002/1792/6
-      - uk/regulation/uksi/2013/376/schedule/4/paragraph/7
+    corpus_citation_path: uk/guidance/govuk/pension-credit/what-youll-get
   summary: |-
     Pension credit guarantee credit as described by GOV.UK guidance: tops up
     weekly income to the standard minimum guarantee for a person who has
@@ -60,7 +56,7 @@ rules:
             import:
               target: uk:regulations/uksi/2002/1792/6#standard_minimum_guarantee
               output: standard_minimum_guarantee
-              hash: sha256:ece6b2972afef712657aa636f347bb21ceadb051b4bae974d170d83249fa07c9
+              hash: sha256:fa9b2bb5d4d4372b05d3dd8b87bfde0498b0ce97140167e64884f1e505841bcf
     versions:
       - effective_from: '0001-01-01'
         formula: |-

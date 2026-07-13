@@ -111,12 +111,12 @@ rules:
             kind: definition
             source:
               corpus_citation_path: uk/regulation/uksi/2013/376/90
-              excerpt: "earned income calculated or estimated... before any deduction"
+              excerpt: "A person’s monthly earnings are—\nthe person’s earned income calculated or estimated in relation to the current assessment period before any deduction for income tax, national insurance contributions or relievable pension contributions; or"
           - path: versions[0].formula
             kind: formula
             source:
               corpus_citation_path: uk/regulation/uksi/2013/376/90
-              excerpt: "where the person's earned income fluctuates... taken as a monthly average"
+              excerpt: "A person’s monthly earnings are—\nthe person’s earned income calculated or estimated in relation to the current assessment period before any deduction for income tax, national insurance contributions or relievable pension contributions; or\nin a case where the person's earned income fluctuates (or is likely to fluctuate) the amount of that income , calculated or estimated before any deduction for income tax, national insurance contributions or relievable pension contributions, taken as a monthly average—\nwhere there is an identifiable cycle, over the duration of one such cycle, or\nwhere there is no identifiable cycle, over three months or such other period as may, in the particular case, enable the monthly average to be determined more accurately"
     versions:
       - effective_from: '2013-04-29'
         formula: |-
@@ -135,7 +135,7 @@ rules:
             kind: condition
             source:
               corpus_citation_path: uk/regulation/uksi/2013/376/90
-              excerpt: "would otherwise fall within section 20... section 21... section 22"
+              excerpt: "A claimant's individual threshold is the amount that a person of the same age as the claimant would be paid at the hourly rate applicable under regulation 4 or regulation 4A(1)(a) to (c) of the National Minimum Wage Regulations for—\n16 hours per week, in the case of a claimant who would otherwise fall within section 20 (claimants subject to work-focused interview requirement only) or section 21 (claimants subject to work-preparation requirement) of the Act; or\nthe expected number of hours per week in the case of a claimant who would otherwise fall within section 22 of the Act (claimants subject to all work-related requirements),\nconverted to a monthly amount by multiplying by 52 and dividing by 12."
     versions:
       - effective_from: '2013-04-29'
         formula: |-
@@ -155,7 +155,7 @@ rules:
             kind: formula
             source:
               corpus_citation_path: uk/regulation/uksi/2013/376/90
-              excerpt: "hourly rate applicable... for 16 hours per week... or... expected number of hours per week... converted to a monthly amount"
+              excerpt: "A claimant's individual threshold is the amount that a person of the same age as the claimant would be paid at the hourly rate applicable under regulation 4 or regulation 4A(1)(a) to (c) of the National Minimum Wage Regulations for—\n16 hours per week, in the case of a claimant who would otherwise fall within section 20 (claimants subject to work-focused interview requirement only) or section 21 (claimants subject to work-preparation requirement) of the Act; or\nthe expected number of hours per week in the case of a claimant who would otherwise fall within section 22 of the Act (claimants subject to all work-related requirements),\nconverted to a monthly amount by multiplying by 52 and dividing by 12."
     versions:
       - effective_from: '2013-04-29'
         formula: |-
@@ -194,7 +194,7 @@ rules:
             kind: formula
             source:
               corpus_citation_path: uk/regulation/uksi/2013/376/90
-              excerpt: "30 hours a week; or if less, the expected number of hours per week"
+              excerpt: "30 hours a week; or\nif less, the expected number of hours per week for that claimant,"
     versions:
       - effective_from: '2013-04-29'
         formula: |-
@@ -252,7 +252,7 @@ rules:
             kind: formula
             source:
               corpus_citation_path: uk/regulation/uksi/2013/376/90
-              excerpt: "35 hours per week at the hourly rate specified in regulation 4... converted to a monthly amount"
+              excerpt: "the amount a person would be paid for 35 hours per week at the hourly rate specified in regulation 4 of the National Minimum Wage Regulations , converted to a monthly amount by multiplying by 52 and dividing by 12."
     versions:
       - effective_from: '2013-04-29'
         formula: |-
@@ -311,7 +311,7 @@ rules:
             kind: condition
             source:
               corpus_citation_path: uk/regulation/uksi/2013/376/90
-              excerpt: "in the case of joint claimants... in the case of a claimant who claims universal credit as a single person by virtue of regulation 3(3)"
+              excerpt: "or\nin the case of a claimant who claims universal credit as a single person by virtue of regulation 3(3), the sum of—"
     versions:
       - effective_from: '2013-04-29'
         formula: |-
@@ -330,7 +330,7 @@ rules:
             kind: predicate
             source:
               corpus_citation_path: uk/regulation/uksi/2013/376/90
-              excerpt: "member of a couple falls within section 19... combined monthly earnings are equal to or exceed"
+              excerpt: "A claimant who is a member of a couple falls within section 19 of the Act if the couple's combined monthly earnings are equal to or exceed whichever of the following amounts is applicable—"
     versions:
       - effective_from: '2013-04-29'
         formula: |-

@@ -3,25 +3,7 @@ module:
   proof_validation:
     required: true
   source_verification:
-    corpus_citation_paths:
-      - uk/statute/ukpga/1992/4/9
-    upstream_source_check:
-      status: official_parameter_source
-      checked_paths:
-        - uk/statute/ukpga/1992/4/9
-      rationale: |-
-        The 15% secondary percentage is the encoded Social Security
-        Contributions and Benefits Act 1992 section 9(2) figure (substituted
-        for 13.8% from 6 April 2025 by the National Insurance Contributions
-        (Secondary Class 1 Contributions) Act 2025). Section 9(1) charges the
-        secondary percentage on earnings above the current secondary
-        threshold. The secondary threshold is not a figure in the primary
-        legislation; it is set for the year by Treasury order under section 5,
-        so this pipeline takes it as a supplied input rather than encoding an
-        ungrounded literal — the same way the section 8 primary Class 1
-        encoding takes the primary threshold as an input. For 2026-27 the
-        secondary threshold is 5,000 a year (96 a week), which the oracle case
-        supplies.
+    corpus_citation_path: uk/statute/ukpga/1992/4/9
   summary: |-
     Composed single-employment annual employer (secondary) Class 1 National
     Insurance pipeline for the UKMOD oracle slice at the 2026-27 parameters.

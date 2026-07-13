@@ -3,45 +3,7 @@ module:
   proof_validation:
     required: true
   source_verification:
-    corpus_citation_paths:
-      - uk/statute/ukpga/2007/3/8
-      - uk/statute/ukpga/2007/3/10
-      - uk/statute/ukpga/2007/3/12
-      - uk/statute/ukpga/2007/3/12B
-      - uk/statute/ukpga/2007/3/13
-      - uk/statute/ukpga/2007/3/13A
-      - uk/statute/ukpga/2007/3/16
-      - uk/statute/ukpga/2007/3/35
-      - uk/statute/ukpga/2016/24/4
-      - uk/statute/ukpga/2026/11/2
-      - uk/statute/ukpga/2026/11/3
-    upstream_source_check:
-      status: official_parameter_source
-      checked_paths:
-        - uk/statute/ukpga/2007/3/8
-        - uk/statute/ukpga/2007/3/10
-        - uk/statute/ukpga/2007/3/12
-        - uk/statute/ukpga/2007/3/12B
-        - uk/statute/ukpga/2007/3/13
-        - uk/statute/ukpga/2007/3/13A
-        - uk/statute/ukpga/2007/3/35
-        - uk/statute/ukpga/2026/11/2
-        - uk/statute/ukpga/2026/11/3
-      rationale: |-
-        Every numeric parameter is grounded in an official source: the main
-        rates (20%/40%/45%) in Finance Act 2026 (ukpga 2026 c.11 section 2);
-        the savings basic/higher/additional rates (20%/40%/45%) in section 3
-        of the same Act; the savings nil rate (0%) inserted into ITA 2007
-        section 7 by Finance Act 2016 (ukpga 2016 c.24 section 4); the savings
-        allowance amounts (nil/£500/£1,000) in ITA 2007 section 12B; the
-        starting rate limit for savings (£5,000) in ITA 2007 section 12(3);
-        the dividend nil/ordinary/upper/additional rates (0%/10.75%/35.75%/
-        39.35%) in ITA 2007 section 8; and the dividend allowance (£500) in
-        ITA 2007 section 13A. The pilot models the single-individual 2026-27
-        slice at calendar-year grain so a composed savings-and-dividend income
-        tax liability is queryable from gross earned, savings, and dividend
-        income without the caller supplying the section 10/12/12A/13/13A/16
-        stage boundaries.
+    corpus_citation_path: uk/statute/ukpga/2007/3/8
   summary: |-
     Composed single-individual income-tax pipeline covering savings and
     dividend income for the UKMOD oracle slice at the 2026-27 tax-year
@@ -422,8 +384,18 @@ rules:
           - path: versions[0].formula
             kind: formula
             source:
-              corpus_citation_path: uk/statute/ukpga/2007/3/8
-              excerpt: "Rates at which income tax is charged"
+              corpus_citation_path: uk/statute/ukpga/2007/3/10
+              excerpt: "The higher rate limit for a tax year is equal to—"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/10
+              excerpt: "twice the amount specified in subsection (1) of section 35 (personal allowance) for the tax year, plus"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/10
+              excerpt: "the amount specified in subsection (2) of that section (amount at which personal allowance starts to be withdrawn)"
     versions:
       - effective_from: '2026-01-01'
         formula: |-
@@ -466,8 +438,8 @@ rules:
           - path: versions[0].formula
             kind: formula
             source:
-              corpus_citation_path: uk/statute/ukpga/2007/3/8
-              excerpt: "Income tax"
+              corpus_citation_path: uk/statute/ukpga/2007/3/58
+              excerpt: "Step 1 Take the amount of the individual's net income for the tax year."
     versions:
       - effective_from: '2026-01-01'
         formula: |-
@@ -486,8 +458,18 @@ rules:
           - path: versions[0].formula
             kind: formula
             source:
-              corpus_citation_path: uk/statute/ukpga/2007/3/8
-              excerpt: "Income tax"
+              corpus_citation_path: uk/statute/ukpga/2007/3/35
+              excerpt: "entitled to a personal allowance of £12,570 for a tax year"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/35
+              excerpt: "the allowance under subsection (1) is reduced by one-half of the excess"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/35
+              excerpt: "it is to be rounded up to the nearest amount which is a multiple of £1"
     versions:
       - effective_from: '2026-01-01'
         formula: |-
@@ -609,8 +591,8 @@ rules:
           - path: versions[0].formula
             kind: formula
             source:
-              corpus_citation_path: uk/statute/ukpga/2007/3/8
-              excerpt: "Income tax"
+              corpus_citation_path: uk/statute/ukpga/2007/3/23
+              excerpt: "Deduct from the amounts of the components left after Step 2 any allowances to which the taxpayer is entitled for the tax year"
     versions:
       - effective_from: '2026-01-01'
         formula: |-
@@ -632,8 +614,8 @@ rules:
           - path: versions[0].formula
             kind: formula
             source:
-              corpus_citation_path: uk/statute/ukpga/2007/3/8
-              excerpt: "Income tax"
+              corpus_citation_path: uk/statute/ukpga/2007/3/10
+              excerpt: "Income tax on an individual's income up to the basic rate limit is charged at the basic rate"
     versions:
       - effective_from: '2026-01-01'
         formula: |-
@@ -652,8 +634,8 @@ rules:
           - path: versions[0].formula
             kind: formula
             source:
-              corpus_citation_path: uk/statute/ukpga/2007/3/8
-              excerpt: "Income tax"
+              corpus_citation_path: uk/statute/ukpga/2007/3/10
+              excerpt: "Income tax is charged at the higher rate on an individual's income above the basic rate limit and up to the higher rate limit."
     versions:
       - effective_from: '2026-01-01'
         formula: |-
@@ -672,8 +654,8 @@ rules:
           - path: versions[0].formula
             kind: formula
             source:
-              corpus_citation_path: uk/statute/ukpga/2007/3/8
-              excerpt: "Income tax"
+              corpus_citation_path: uk/statute/ukpga/2007/3/10
+              excerpt: "Income tax is charged at the additional rate on an individual's income above the higher rate limit."
     versions:
       - effective_from: '2026-01-01'
         formula: |-
@@ -779,7 +761,17 @@ rules:
             kind: formula
             source:
               corpus_citation_path: uk/statute/ukpga/2007/3/12
-              excerpt: "on so much of an individual's income up to the starting rate limit for savings as— (a) is savings income, and (b) would otherwise be charged at the basic rate or the default basic rate"
+              excerpt: "on so much of an individual's income up to the starting rate limit for savings as—"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/12
+              excerpt: "is savings income, and"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/12
+              excerpt: "would otherwise be charged at the basic rate or the default basic rate"
     versions:
       - effective_from: '2026-01-01'
         formula: |-
@@ -888,8 +880,8 @@ rules:
           - path: versions[0].formula
             kind: formula
             source:
-              corpus_citation_path: uk/statute/ukpga/2007/3/8
-              excerpt: "Income tax"
+              corpus_citation_path: uk/statute/ukpga/2007/3/11D
+              excerpt: "Income tax is charged at the savings basic rate on an individual’s income which—"
     versions:
       - effective_from: '2026-01-01'
         formula: |-
@@ -908,8 +900,8 @@ rules:
           - path: versions[0].formula
             kind: formula
             source:
-              corpus_citation_path: uk/statute/ukpga/2007/3/8
-              excerpt: "Income tax"
+              corpus_citation_path: uk/statute/ukpga/2007/3/11D
+              excerpt: "Income tax is charged at the savings higher rate on an individual’s income which—"
     versions:
       - effective_from: '2026-01-01'
         formula: |-
@@ -928,8 +920,8 @@ rules:
           - path: versions[0].formula
             kind: formula
             source:
-              corpus_citation_path: uk/statute/ukpga/2007/3/8
-              excerpt: "Income tax"
+              corpus_citation_path: uk/statute/ukpga/2007/3/11D
+              excerpt: "Income tax is charged at the savings additional rate on an individual’s income which—"
     versions:
       - effective_from: '2026-01-01'
         formula: |-
@@ -950,8 +942,13 @@ rules:
           - path: versions[0].formula
             kind: formula
             source:
-              corpus_citation_path: uk/statute/ukpga/2007/3/8
-              excerpt: "Income tax"
+              corpus_citation_path: uk/statute/ukpga/2007/3/11D
+              excerpt: "Income tax is charged at the savings additional rate on an individual’s income which—"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/11D
+              excerpt: "have effect after sections 12 and 12A have been applied"
     versions:
       - effective_from: '2026-01-01'
         formula: |-
@@ -970,8 +967,13 @@ rules:
           - path: versions[0].formula
             kind: formula
             source:
-              corpus_citation_path: uk/statute/ukpga/2007/3/8
-              excerpt: "Income tax"
+              corpus_citation_path: uk/statute/ukpga/2007/3/11D
+              excerpt: "Income tax is charged at the savings higher rate on an individual’s income which—"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/11D
+              excerpt: "have effect after sections 12 and 12A have been applied"
     versions:
       - effective_from: '2026-01-01'
         formula: |-
@@ -990,8 +992,13 @@ rules:
           - path: versions[0].formula
             kind: formula
             source:
-              corpus_citation_path: uk/statute/ukpga/2007/3/8
-              excerpt: "Income tax"
+              corpus_citation_path: uk/statute/ukpga/2007/3/11D
+              excerpt: "Income tax is charged at the savings basic rate on an individual’s income which—"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/11D
+              excerpt: "have effect after sections 12 and 12A have been applied"
     versions:
       - effective_from: '2026-01-01'
         formula: |-
@@ -1080,8 +1087,8 @@ rules:
           - path: versions[0].formula
             kind: formula
             source:
-              corpus_citation_path: uk/statute/ukpga/2007/3/8
-              excerpt: "dividend ordinary rate"
+              corpus_citation_path: uk/statute/ukpga/2007/3/13
+              excerpt: "Income tax is charged at the dividend ordinary rate"
     versions:
       - effective_from: '2026-01-01'
         formula: |-
@@ -1100,8 +1107,8 @@ rules:
           - path: versions[0].formula
             kind: formula
             source:
-              corpus_citation_path: uk/statute/ukpga/2007/3/8
-              excerpt: "dividend upper rate"
+              corpus_citation_path: uk/statute/ukpga/2007/3/13
+              excerpt: "Income tax is charged at the dividend upper rate"
     versions:
       - effective_from: '2026-01-01'
         formula: |-
@@ -1120,8 +1127,8 @@ rules:
           - path: versions[0].formula
             kind: formula
             source:
-              corpus_citation_path: uk/statute/ukpga/2007/3/8
-              excerpt: "dividend additional"
+              corpus_citation_path: uk/statute/ukpga/2007/3/13
+              excerpt: "Income tax is charged at the dividend additional rate"
     versions:
       - effective_from: '2026-01-01'
         formula: |-
@@ -1142,8 +1149,8 @@ rules:
           - path: versions[0].formula
             kind: formula
             source:
-              corpus_citation_path: uk/statute/ukpga/2007/3/8
-              excerpt: "dividend additional"
+              corpus_citation_path: uk/statute/ukpga/2007/3/13
+              excerpt: "Income tax is charged at the dividend additional rate"
     versions:
       - effective_from: '2026-01-01'
         formula: |-
@@ -1162,8 +1169,8 @@ rules:
           - path: versions[0].formula
             kind: formula
             source:
-              corpus_citation_path: uk/statute/ukpga/2007/3/8
-              excerpt: "dividend upper rate"
+              corpus_citation_path: uk/statute/ukpga/2007/3/13
+              excerpt: "Income tax is charged at the dividend upper rate"
     versions:
       - effective_from: '2026-01-01'
         formula: |-
@@ -1182,8 +1189,8 @@ rules:
           - path: versions[0].formula
             kind: formula
             source:
-              corpus_citation_path: uk/statute/ukpga/2007/3/8
-              excerpt: "dividend ordinary rate"
+              corpus_citation_path: uk/statute/ukpga/2007/3/13
+              excerpt: "Income tax is charged at the dividend ordinary rate"
     versions:
       - effective_from: '2026-01-01'
         formula: |-
@@ -1204,6 +1211,21 @@ rules:
             source:
               corpus_citation_path: uk/statute/ukpga/2007/3/8
               excerpt: "dividend ordinary rate"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/13
+              excerpt: "Income tax is charged at the dividend ordinary rate"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/13
+              excerpt: "Income tax is charged at the dividend upper rate"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/13
+              excerpt: "Income tax is charged at the dividend additional rate"
     versions:
       - effective_from: '2026-01-01'
         formula: |-
@@ -1225,8 +1247,18 @@ rules:
           - path: versions[0].formula
             kind: formula
             source:
-              corpus_citation_path: uk/statute/ukpga/2007/3/8
-              excerpt: "Income tax"
+              corpus_citation_path: uk/statute/ukpga/2007/3/23
+              excerpt: "Calculate tax at each applicable rate on the amounts of the components left after Step 3."
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/23
+              excerpt: "Add together the amounts of tax calculated at Step 4."
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2007/3/23
+              excerpt: "The result is the taxpayer's liability to income tax for the tax year."
     versions:
       - effective_from: '2026-01-01'
         formula: |-

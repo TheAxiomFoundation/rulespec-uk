@@ -3,22 +3,7 @@ module:
   proof_validation:
     required: true
   source_verification:
-    corpus_citation_paths:
-      - uk/statute/ukpga/2014/28/1
-    upstream_source_check:
-      status: official_parameter_source
-      checked_paths:
-        - uk/statute/ukpga/2014/28/1
-      rationale: |-
-        The 25% top-up rate is grounded in an official source: Childcare Payments
-        Act 2014 section 1 provides that the amount of the top-up payment is 25%
-        of the amount of the qualifying payment. This pipeline models that top-up
-        rate on the qualifying childcare payment; the per-child entitlement-period
-        cap (the GBP 500 quarterly / GBP 2,000 annual maximum, GBP 1,000 / GBP
-        4,000 for a disabled child) is a separate parameter under the Childcare
-        Payments Regulations and is deliberately outside this pipeline's scope
-        (it is not yet in the ingested corpus), so the grid comparison is
-        confined to qualifying payments below the cap.
+    corpus_citation_path: uk/statute/ukpga/2014/28/1
   summary: |-
     Composed Person-level Tax-Free Childcare top-up pipeline. Under the Childcare
     Payments Act 2014 the government pays a top-up of 25% of a parent's qualifying

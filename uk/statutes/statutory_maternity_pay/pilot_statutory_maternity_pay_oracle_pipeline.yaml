@@ -3,31 +3,7 @@ module:
   proof_validation:
     required: true
   source_verification:
-    corpus_citation_paths:
-      - uk/statute/ukpga/1992/4/164
-      - uk/statute/ukpga/1992/4/165
-      - uk/statute/ukpga/1992/4/166
-      - uk/statute/ukpga/1992/4/171
-    upstream_source_check:
-      status: official_parameter_source
-      checked_paths:
-        - uk/statute/ukpga/1992/4/166
-      rationale: |-
-        Every monetary literal on the computation path is grounded in the Social
-        Security Contributions and Benefits Act 1992 Part XII corpus text: the
-        earnings-related rate of 90 per cent of normal weekly earnings (s.166),
-        the up-to-39-week maternity pay period (s.165), and the lower earnings
-        limit condition (s.164). The two delegated cash amounts — the prescribed
-        weekly standard rate (set by the annual Social Security Benefits Up-rating
-        Order, not a numeric value in the primary Act) and the exact lower
-        earnings limit — are not hardcoded as invented literals: the prescribed
-        standard rate is a supplied input (documented as the UKMOD $SMPwsr forecast
-        £196.16 for the oracle comparison; the published 2026-27 statutory rate is
-        £194.32), and it does not bind in the comparison because the 90%-of-
-        earnings limb dominates for every entitled case above the lower earnings
-        limit. The composed weekly amount therefore reduces to 0.9 x normal weekly
-        earnings x 39 weeks, all grounded in the Act, and matches the UKMOD UK_2026
-        bmact_s exactly.
+    corpus_citation_path: uk/statute/ukpga/1992/4/164
   summary: |-
     Composed Statutory Maternity Pay pipeline for the UKMOD UK_2026 oracle slice
     at the 2026-27 rates. It exposes a Person-level path from a supplied gross
@@ -66,7 +42,7 @@ rules:
             kind: amount
             source:
               corpus_citation_path: uk/statute/ukpga/1992/4/166
-              excerpt: "90 per cent. of a week's earnings"
+              excerpt: "90 per cent of a woman’s normal weekly earnings"
     versions:
       - effective_from: '2026-01-01'
         formula: |-
@@ -96,7 +72,7 @@ rules:
             kind: definition
             source:
               corpus_citation_path: uk/statute/ukpga/1992/4/166
-              excerpt: "the weekly rate ... shall be the prescribed rate"
+              excerpt: "such weekly rate as may be prescribed,"
     versions:
       - effective_from: '2026-01-01'
         formula: |-
@@ -219,7 +195,7 @@ rules:
             kind: formula
             source:
               corpus_citation_path: uk/statute/ukpga/1992/4/166
-              excerpt: "90 per cent. of a week's earnings"
+              excerpt: "90 per cent of a woman’s normal weekly earnings"
           - path: versions[0].formula
             kind: import
             import:

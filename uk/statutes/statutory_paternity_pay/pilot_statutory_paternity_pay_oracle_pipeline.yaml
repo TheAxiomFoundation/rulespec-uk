@@ -3,34 +3,7 @@ module:
   proof_validation:
     required: true
   source_verification:
-    corpus_citation_paths:
-      - uk/statute/ukpga/1992/4/171ZA
-      - uk/statute/ukpga/1992/4/171ZB
-      - uk/statute/ukpga/1992/4/171ZE
-      - uk/statute/ukpga/1992/4/171ZJ
-    upstream_source_check:
-      status: official_parameter_source
-      checked_paths:
-        - uk/statute/ukpga/1992/4/171ZA
-        - uk/statute/ukpga/1992/4/171ZE
-      rationale: |-
-        The entitlement conditions and the rate/period framework are grounded in
-        the Social Security Contributions and Benefits Act 1992 Part 12ZA corpus
-        text: the continuous-employment and lower-earnings-limit qualifying
-        conditions (s.171ZA), and the rate and period of pay (s.171ZE — a fixed
-        or earnings-related weekly rate as prescribed, for a period of two
-        consecutive weeks). The delegated cash amounts — the prescribed weekly
-        rate, the earnings-related percentage, and the exact lower earnings limit
-        — are set by the Statutory Paternity Pay and Statutory Adoption Pay
-        (General) Regulations and the annual re-rating order (s.171ZE prescribes
-        the rate by regulation, not as a numeric value in the primary Act), so
-        they are supplied as inputs rather than hardcoded as invented literals.
-        For the UKMOD UK_2026 oracle comparison the supplied values are the UKMOD
-        parameters ($SMPrr 0.9 earnings-related rate, $SMPwsr £196.16 prescribed
-        weekly rate, $SMPlel £130 lower earnings limit), so the composed weekly
-        amount — which reduces to 0.9 x normal weekly earnings x 2 weeks, the
-        earnings-related limb UKMOD applies for the hypothetical case — matches
-        the UKMOD UK_2026 bpact_s exactly.
+    corpus_citation_path: uk/statute/ukpga/1992/4/171ZA
   summary: |-
     Composed Statutory Paternity Pay pipeline for the UKMOD UK_2026 oracle slice
     at the 2026-27 rates. It exposes a Person-level path from a supplied gross

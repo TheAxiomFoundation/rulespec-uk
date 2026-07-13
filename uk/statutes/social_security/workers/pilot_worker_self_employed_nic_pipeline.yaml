@@ -6,33 +6,7 @@ module:
   proof_validation:
     required: true
   source_verification:
-    corpus_citation_paths:
-      - uk/statute/ukpga/1992/4/11
-      - uk/statute/ukpga/1992/4/15
-    upstream_source_check:
-      status: official_parameter_source
-      checked_paths:
-        - uk/statute/ukpga/1992/4/11
-        - uk/statute/ukpga/1992/4/15
-      rationale: |-
-        Every numeric parameter is the encoded Social Security Contributions
-        and Benefits Act 1992 self-employed National Insurance figure. The 6%
-        main and 2% additional Class 4 percentages and the 12,570 lower and
-        50,270 upper profits limits are section 15(3), (3ZA). The Class 2
-        small profits threshold (6,845) and the voluntary weekly Class 2 rate
-        (3.50) are the section 11(4)(b), (6) figures carried in the ingested
-        source text. Section 11(2), which formerly imposed a flat Class 2
-        liability, was omitted from 6 April 2024 by the National Insurance
-        Contributions (Reduction in Rates) Act 2023, and section 11(5B) now
-        treats a self-employed earner with profits at or above the small
-        profits threshold as having actually paid Class 2 without any amount
-        being payable; so the self-employed National Insurance a person with
-        profits above the small profits threshold actually pays is the Class 4
-        contribution alone. The 6% main Class 4 percentage and the 12,570 and
-        50,270 profits limits are frozen for 2026-27, so this pipeline
-        reproduces UKMOD UK_2026 tscse_s; the Class 2 figures do not enter the
-        amount payable for the modelled above-threshold trader and so do not
-        affect the oracle comparison.
+    corpus_citation_path: uk/statute/ukpga/1992/4/11
   summary: |-
     Composed single-earner annual self-employed National Insurance pipeline
     for the UKMOD oracle slice at the 2026-27 parameters. Class 4 (Social

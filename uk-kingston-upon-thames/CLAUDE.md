@@ -1,10 +1,12 @@
-# rulespec-uk-kingston-upon-thames Agent Notes
+# Kingston upon Thames jurisdiction notes
 
-This repo stores Kingston upon Thames RuleSpec source registry materials and related policy metadata.
+This direct jurisdiction root belongs to the `rulespec-uk` country monorepo; it
+is not a standalone repository or toolchain boundary.
 
 ## Do
 
-- Add RuleSpec encodings under `policies/`, `statutes/`, or `regulations/` when ready.
+- Add atomic RuleSpec under `legislation/`, `policies/`, `regulations/`, or
+  `statutes/`, and declarative ProgramSpecs only under `programs/`.
 - Keep local Council Tax Reduction source material ingestion-led, with signed corpus ingest manifests for generated corpus artifacts.
 - Use source verification against the official Kingston upon Thames scheme PDF or other primary council sources.
 

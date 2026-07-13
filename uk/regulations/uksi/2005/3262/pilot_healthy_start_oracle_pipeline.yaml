@@ -3,38 +3,7 @@ module:
   proof_validation:
     required: true
   source_verification:
-    corpus_citation_paths:
-      - uk/regulation/uksi/2005/3262/8
-      - uk/regulation/uksi/2013/376/schedule/4/paragraph/7
-    upstream_source_check:
-      status: official_parameter_source
-      checked_paths:
-        - uk/regulation/uksi/2005/3262/8
-      rationale: |-
-        The one monetary literal grounded in the primary regulation is the
-        statutory floor: the Healthy Start Scheme and Welfare Food (Amendment)
-        Regulations 2005 (SI 2005/3262) regulation 8 provides that the value
-        represented by a voucher or credit "must not be less than £3.10", and
-        that "the Secretary of State may increase or decrease the voucher or
-        credit value". The operative weekly value is therefore not a numeric
-        value fixed in the regulation; it is set by the Secretary of State by
-        determination above that floor. It is supplied as an input rather than
-        hardcoded as an invented literal: for the UKMOD UK_2026 oracle
-        comparison the supplied value is the value UKMOD applies through its
-        $HSFood parameter — £4.25 for each week for an eligible pregnant woman
-        or a child aged one to four, doubled to £8.50 for each week for a child
-        who has not yet reached the age of one (the published rates in force to
-        31 March 2026; the determined rates rise to £4.65 and £9.30 from 1 April
-        2026, a change UKMOD UK_2026 does not yet apply). The weekly value is
-        annualised over 52 benefit weeks, the same weekly-to-periodic conversion
-        factor the Universal Credit Regulations 2013 Schedule 4 paragraph 7
-        uses; this is a period-conversion factor, not a statutory monetary
-        amount. UKMOD reports the annualised bmamt01_s over its 365/7
-        calendar-week convention, so the composed 52-week annual entitlement
-        sits about 0.27% below the UKMOD figure (£442.00 against £443.21 for a
-        newborn), a systematic convention residual the oracle comparison absorbs
-        with a 0.3% relative tolerance while both sides recover the same £8.50 /
-        £4.25 determined weekly values.
+    corpus_citation_path: uk/regulation/uksi/2005/3262/8
   summary: |-
     Composed Healthy Start pipeline for the UKMOD UK_2026 oracle slice at the
     rates UKMOD applies. Healthy Start is a passported means-tested payment for

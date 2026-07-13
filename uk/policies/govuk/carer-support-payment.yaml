@@ -3,10 +3,7 @@ module:
   proof_validation:
     required: true
   source_verification:
-    corpus_citation_paths:
-      - uk/guidance/mygovscot/carer-support-payment/who-can-apply
-      - uk/guidance/mygovscot/carer-support-payment/if-you-work
-      - uk/regulation/uksi/2013/376/schedule/4/paragraph/7
+    corpus_citation_path: uk/guidance/mygovscot/carer-support-payment/who-can-apply
   summary: |-
     Carer support payment as described by mygov.scot guidance: a weekly amount
     for a person aged 16 or over living in Scotland who provides unpaid care
@@ -104,13 +101,13 @@ rules:
             import:
               target: uk:regulations/ssi/2023/302/16#carer_support_payment_weekly_rate
               output: carer_support_payment_weekly_rate
-              hash: sha256:733f3df1793f0dcb37e21f7e150a0ae103ddf6eab2746afdaebfdb39b36638a9
+              hash: sha256:3fde36a3a1697d79cc622a0dad825e3bfeb0e85710c2aafc3c0f41f4b8ba0559
           - path: versions[0].formula
             kind: import
             import:
               target: uk:regulations/ssi/2023/302/16#scottish_carer_supplement_weekly_rate
               output: scottish_carer_supplement_weekly_rate
-              hash: sha256:733f3df1793f0dcb37e21f7e150a0ae103ddf6eab2746afdaebfdb39b36638a9
+              hash: sha256:3fde36a3a1697d79cc622a0dad825e3bfeb0e85710c2aafc3c0f41f4b8ba0559
     versions:
       - effective_from: '0001-01-01'
         formula: |-

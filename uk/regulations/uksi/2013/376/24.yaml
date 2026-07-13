@@ -36,8 +36,7 @@ rules:
         kind: condition
         source:
           corpus_citation_path: uk/regulation/uksi/2013/376/24
-          excerpt: the higher rate where the child or qualifying young person is...
-            entitled to... highest rate... enhanced rate, or ... blind
+          excerpt: "the higher rate where the child or qualifying young person is—"
   versions:
   - effective_from: '0001-01-01'
     formula: 'child_or_qualifying_young_person_entitled_to_care_component_of_disability_living_allowance_at_highest_rate
@@ -64,9 +63,7 @@ rules:
         kind: condition
         source:
           corpus_citation_path: uk/regulation/uksi/2013/376/24
-          excerpt: the lower rate, where the child or qualifying young person is entitled
-            to disability living allowance... or personal independence payment (unless
-            sub-paragraph (b) applies)
+          excerpt: "the lower rate, where the child or qualifying young person is entitled to disability living allowance , Scottish adult disability living allowance , child disability payment , adult disability payment or personal independence payment (unless sub-paragraph (b) applies);"
   versions:
   - effective_from: '0001-01-01'
     formula: "(\n  child_or_qualifying_young_person_entitled_to_disability_living_allowance\n\
@@ -89,14 +86,13 @@ rules:
         kind: formula
         source:
           corpus_citation_path: uk/regulation/uksi/2013/376/24
-          excerpt: for each child or qualifying young person for whom a claimant is
-            responsible ... is given in the table in regulation 36
+          excerpt: "The amount to be included in an award of universal credit for each child or qualifying young person for whom a claimant is responsible ... (“the child element”) is given in the table in regulation 36."
       - path: versions[0].formula
         kind: import
         import:
           target: uk:regulations/uksi/2013/376/36#child_element_amount
           output: child_element_amount
-          hash: sha256:116501892639c2eed68b342a1cdc5bb01877836f4d68913141873bbc36782265
+          hash: sha256:d46b584d2c186a2817d56906fc2dd56930797297ed90e1313b9974027c0fcd9c
   versions:
   - effective_from: '0001-01-01'
     formula: 'if claimant_responsible_for_child_or_qualifying_young_person: child_element_amount

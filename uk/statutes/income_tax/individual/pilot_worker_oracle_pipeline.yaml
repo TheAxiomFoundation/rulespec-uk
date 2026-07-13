@@ -11,26 +11,7 @@ module:
   proof_validation:
     required: true
   source_verification:
-    corpus_citation_paths:
-      - uk/statute/ukpga/2007/3/10
-      - uk/statute/ukpga/2007/3/23
-      - uk/statute/ukpga/2007/3/35
-    upstream_source_check:
-      status: composed_from_grounded_modules
-      checked_paths:
-        - uk/statute/ukpga/2007/3/10
-        - uk/statute/ukpga/2007/3/35
-      rationale: |-
-        Every numeric parameter this pipeline uses is imported from an
-        already-grounded module: the basic-rate limit and higher-rate-limit
-        construction from Income Tax Act 2007 section 10, the personal-
-        allowance base and its 100,000 adjusted-net-income withdrawal
-        threshold from section 35, and the 2026-27 main rates (20%/40%/45%)
-        from the Finance Act (ukpga 2026 c.11 section 2). The pipeline adds no
-        new numeric literals; it only wires the section 23 liability steps
-        together for the single-employee oracle slice so an end-to-end tin_s
-        comparison does not require the caller to supply the s10/s23 stage
-        boundaries.
+    corpus_citation_path: uk/statute/ukpga/2007/3/10
   summary: |-
     Composed single-employee income-tax pipeline for the UKMOD oracle slice
     at the 2026-27 tax year. It exposes a dense-engine-friendly Person-level
@@ -65,7 +46,7 @@ rules:
             kind: formula
             source:
               corpus_citation_path: uk/statute/ukpga/2007/3/23
-              excerpt: "Total income: add together the amounts of income on which the taxpayer is charged to income tax for the tax year"
+              excerpt: "the amounts of income on which the taxpayer is charged to income tax for the tax year."
     versions:
       - effective_from: '2026-04-06'
         formula: |-
@@ -85,7 +66,7 @@ rules:
             kind: formula
             source:
               corpus_citation_path: uk/statute/ukpga/2007/3/23
-              excerpt: "deduct from the amounts of income the amount of any relief"
+              excerpt: "Deduct from the components the amount of any relief"
     versions:
       - effective_from: '2026-04-06'
         formula: |-
@@ -160,7 +141,7 @@ rules:
             kind: formula
             source:
               corpus_citation_path: uk/statute/ukpga/2007/3/23
-              excerpt: "deduct any allowances to which the taxpayer is entitled for the tax year under Chapter 2 of Part 3"
+              excerpt: "allowances to which the taxpayer is entitled for the tax year under Chapter 2 of Part 3"
     versions:
       - effective_from: '2026-04-06'
         formula: |-
@@ -186,7 +167,7 @@ rules:
             import:
               target: uk:statutes/ukpga/2007/3/10#basic_rate_limit
               output: basic_rate_limit
-              hash: sha256:b13046eac4823c7ff97e81f2604d1a8d37848d5c20d8adc22524d03abe6fc621
+              hash: sha256:0e672605b24bd2f85c3fdcfd0a1686670be0b6afd6f72e8e9bc02a79f7d93832
     versions:
       - effective_from: '2026-04-06'
         formula: |-
@@ -212,13 +193,13 @@ rules:
             import:
               target: uk:statutes/ukpga/2007/3/10#basic_rate_limit
               output: basic_rate_limit
-              hash: sha256:b13046eac4823c7ff97e81f2604d1a8d37848d5c20d8adc22524d03abe6fc621
+              hash: sha256:0e672605b24bd2f85c3fdcfd0a1686670be0b6afd6f72e8e9bc02a79f7d93832
           - path: versions[0].formula
             kind: import
             import:
               target: uk:statutes/ukpga/2007/3/10#higher_rate_limit
               output: higher_rate_limit
-              hash: sha256:b13046eac4823c7ff97e81f2604d1a8d37848d5c20d8adc22524d03abe6fc621
+              hash: sha256:0e672605b24bd2f85c3fdcfd0a1686670be0b6afd6f72e8e9bc02a79f7d93832
     versions:
       - effective_from: '2026-04-06'
         formula: |-
@@ -244,7 +225,7 @@ rules:
             import:
               target: uk:statutes/ukpga/2007/3/10#higher_rate_limit
               output: higher_rate_limit
-              hash: sha256:b13046eac4823c7ff97e81f2604d1a8d37848d5c20d8adc22524d03abe6fc621
+              hash: sha256:0e672605b24bd2f85c3fdcfd0a1686670be0b6afd6f72e8e9bc02a79f7d93832
     versions:
       - effective_from: '2026-04-06'
         formula: |-
@@ -264,7 +245,7 @@ rules:
             kind: formula
             source:
               corpus_citation_path: uk/statute/ukpga/2007/3/23
-              excerpt: "calculate tax at each applicable rate on the amounts of income"
+              excerpt: "Calculate tax at each applicable rate on the amounts of the"
           - path: versions[0].formula
             kind: import
             import:
@@ -302,7 +283,7 @@ rules:
             kind: formula
             source:
               corpus_citation_path: uk/statute/ukpga/2007/3/23
-              excerpt: "produce the taxpayer's liability to income tax"
+              excerpt: "the taxpayer's liability to income tax"
     versions:
       - effective_from: '2026-04-06'
         formula: |-

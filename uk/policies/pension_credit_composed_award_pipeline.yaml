@@ -3,25 +3,7 @@ module:
   proof_validation:
     required: true
   source_verification:
-    corpus_citation_paths:
-      - uk/statute/ukpga/2002/16/1
-      - uk/statute/ukpga/2002/16/2
-      - uk/statute/ukpga/2002/16/3
-      - uk/regulation/uksi/2002/1792/6
-    upstream_source_check:
-      status: official_parameter_source
-      checked_paths:
-        - uk/regulation/uksi/2002/1792/6
-      rationale: |-
-        Every monetary parameter is grounded in an official source. The
-        standard minimum guarantee amounts (238.00 per week single, 363.25 per
-        week couple) are the regulation 6(1) figures in the State Pension
-        Credit Regulations 2002 as amended for 2026-27; the severe-disability
-        additional amounts (86.05 single, 172.10 couple) are regulation 6(5)
-        and the carer addition (48.15 per qualifying partner) is regulation
-        6(8). These are the same 2026-27 weekly rates UKMOD UK_2026 applies
-        through its Pension Credit constants (verified against UKMOD
-        UKMOD_PUBLIC_B2026.03: $PCGCSing = 238#w, $PCGCCoup = 363.25#w).
+    corpus_citation_path: uk/statute/ukpga/2002/16/2
   summary: |-
     Composed Family-level Pension Credit guarantee-credit award pipeline for
     the 2026-27 weekly rates. It exposes a dense-engine-friendly path from raw
@@ -245,7 +227,7 @@ rules:
             kind: formula
             source:
               corpus_citation_path: uk/regulation/uksi/2002/1792/6
-              excerpt: "such prescribed additional amounts as may be applicable"
+              excerpt: "The additional amount applicable is"
     versions:
       - effective_from: '2026-04-01'
         formula: |-
@@ -369,7 +351,7 @@ rules:
             kind: formula
             source:
               corpus_citation_path: uk/statute/ukpga/2002/16/1
-              excerpt: "the claimant is entitled to a guarantee credit"
+              excerpt: "to a guarantee credit, calculated in accordance with section 2"
     versions:
       - effective_from: '2026-04-01'
         formula: |-

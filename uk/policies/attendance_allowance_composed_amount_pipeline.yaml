@@ -3,18 +3,7 @@ module:
   proof_validation:
     required: true
   source_verification:
-    corpus_citation_paths:
-      - uk/regulation/uksi/2026/148/schedule/1
-    upstream_source_check:
-      status: official_parameter_source
-      checked_paths:
-        - uk/regulation/uksi/2026/148/schedule/1
-      rationale: |-
-        Every monetary parameter is grounded in an official source. The weekly
-        Attendance Allowance amounts (GBP 114.60 higher rate, GBP 76.70 lower
-        rate) are the Social Security Benefits Up-rating Order 2026 (SI 2026/148)
-        Schedule 1 Part III figures effective from 6 April 2026 (the same figures
-        encoded in uk/regulations/uksi/2026/148/schedule/1.yaml).
+    corpus_citation_path: uk/regulation/uksi/2026/148/schedule/1
   summary: |-
     Composed Person-level Attendance Allowance amount pipeline. Attendance
     Allowance (SSCBA 1992 ss.64-67) is a non-means-tested disability benefit paid
