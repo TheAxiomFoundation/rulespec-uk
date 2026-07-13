@@ -26,7 +26,7 @@ rules:
             kind: definition
             source:
               corpus_citation_path: uk/statute/ukpga/2007/3/12A
-              excerpt: "the other ('the individual's income above the starting rate limit for savings') consisting of the rest of the individual's Step 3 income"
+              excerpt: "the other (“the individual's income above the starting rate limit for savings”) consisting of the rest of the individual's Step 3 income,"
           - path: versions[0].formula
             kind: import
             import:
@@ -38,7 +38,7 @@ rules:
             import:
               target: uk:statutes/ukpga/2007/3/12#starting_rate_limit_for_savings
               output: starting_rate_limit_for_savings
-              hash: sha256:32ab1eca7c936c595d321aa402e5d85f36f056067e8d5a0b82b002cb45e24b11
+              hash: sha256:111b17d47f173858fb19dd0292ce6811891f182234e5429188975f64fec0057b
     versions:
       - effective_from: '2024-04-06'
         formula: |-
@@ -74,7 +74,7 @@ rules:
             import:
               target: uk:statutes/ukpga/2007/3/12#starting_rate_limit_for_savings
               output: starting_rate_limit_for_savings
-              hash: sha256:32ab1eca7c936c595d321aa402e5d85f36f056067e8d5a0b82b002cb45e24b11
+              hash: sha256:111b17d47f173858fb19dd0292ce6811891f182234e5429188975f64fec0057b
     versions:
       - effective_from: '2024-04-06'
         formula: |-
@@ -95,12 +95,12 @@ rules:
             kind: formula
             source:
               corpus_citation_path: uk/statute/ukpga/2007/3/12A
-              excerpt: "If £X is less than or equal to £A, income tax is charged at the savings nil rate ... on the excess."
+              excerpt: "If £X is less than or equal to £A, income tax is charged at the savings nil rate (rather than the basic, higher or additional rate or the default basic, default higher or default additional rate) on the excess."
           - path: versions[0].formula
             kind: formula
             source:
               corpus_citation_path: uk/statute/ukpga/2007/3/12A
-              excerpt: "If £X is more than £A, income tax is charged at the savings nil rate ... on the lowest £A of the excess."
+              excerpt: "If £X is more than £A, income tax is charged at the savings nil rate (rather than the basic, higher or additional rate or the default basic, default higher or default additional rate) on the lowest £A of the excess."
           - path: versions[0].formula
             kind: import
             import:

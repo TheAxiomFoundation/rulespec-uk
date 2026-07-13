@@ -3,32 +3,7 @@ module:
   proof_validation:
     required: true
   source_verification:
-    corpus_citation_paths:
-      - uk/statute/ukpga/1992/4/35
-      - uk/statute/ukpga/1992/4/35A
-      - uk/statute/ukpga/1992/4/35B
-    upstream_source_check:
-      status: official_parameter_source
-      checked_paths:
-        - uk/statute/ukpga/1992/4/35
-        - uk/statute/ukpga/1992/4/35A
-      rationale: |-
-        The entitlement conditions and rate structure are grounded in the Social
-        Security Contributions and Benefits Act 1992 Part II corpus text: the
-        engagement-in-employment test and the maternity-allowance earnings
-        threshold (s.35), the appropriate weekly rate — the lower of the
-        prescribed standard rate and 90 per cent of average weekly earnings
-        (s.35A) — and the self-employment limb (s.35B). The earnings-related rate
-        of 90 per cent is a numeric value in s.35A and is grounded there. The
-        delegated cash amounts — the exact maternity-allowance earnings threshold,
-        the prescribed standard rate (cross-referenced to the s.166(1)(b) SMP
-        rate), and the paid duration — are set by regulation and are supplied as
-        inputs rather than hardcoded as invented literals. For the UKMOD UK_2026
-        oracle comparison the supplied values are the UKMOD parameters
-        ($SMAThresh1 £30 threshold, £196.16 standard rate, 39-week period), so the
-        composed weekly amount — which reduces to 0.9 x average weekly earnings x
-        39 weeks, the earnings-related limb UKMOD applies for the hypothetical
-        case — matches the UKMOD UK_2026 bmanc_s exactly.
+    corpus_citation_path: uk/statute/ukpga/1992/4/35
   summary: |-
     Composed Maternity Allowance pipeline for the UKMOD UK_2026 oracle slice at
     the 2026-27 rates. It exposes a Person-level path from a supplied gross weekly
@@ -71,7 +46,7 @@ rules:
             kind: amount
             source:
               corpus_citation_path: uk/statute/ukpga/1992/4/35A
-              excerpt: "90 per cent of the woman's average weekly earnings"
+              excerpt: "90 per cent of the woman’s average weekly earnings;"
     versions:
       - effective_from: '2026-01-01'
         formula: |-
@@ -193,7 +168,7 @@ rules:
             kind: formula
             source:
               corpus_citation_path: uk/statute/ukpga/1992/4/35A
-              excerpt: "90 per cent of the woman's average weekly earnings"
+              excerpt: "90 per cent of the woman’s average weekly earnings;"
     versions:
       - effective_from: '2026-01-01'
         formula: |-

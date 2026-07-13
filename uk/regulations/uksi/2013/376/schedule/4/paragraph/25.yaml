@@ -20,17 +20,17 @@ rules:
             kind: condition
             source:
               corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/25
-              excerpt: "paragraph 4 of Schedule 3 ... applies to the renter"
+              excerpt: "But the maximum allowable amount in relation to the renter is to be determined under sub-paragraph (4) in any case where—\nparagraph 4 of Schedule 3 (claimant housed in two dwellings by provider of social housing) applies to the renter; and"
           - path: versions[0].formula
             kind: condition
             source:
               corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/25
-              excerpt: "the maximum allowable amount ... in relation to accommodation A and ... accommodation B are different"
+              excerpt: "But the maximum allowable amount in relation to the renter is to be determined under sub-paragraph (4) in any case where—\nparagraph 4 of Schedule 3 (claimant housed in two dwellings by provider of social housing) applies to the renter; and\nthe maximum allowable amount determined under sub-paragraph (2) for the renter in relation to accommodation A and the amount so determined in relation to accommodation B are different (references to accommodation A and accommodation B are to be understood in accordance with paragraph 4 of Schedule 3); and"
           - path: versions[0].formula
             kind: condition
             source:
               corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/25
-              excerpt: "a single calculation is to be made ... under paragraph 17"
+              excerpt: "But the maximum allowable amount in relation to the renter is to be determined under sub-paragraph (4) in any case where—\nparagraph 4 of Schedule 3 (claimant housed in two dwellings by provider of social housing) applies to the renter; and\nthe maximum allowable amount determined under sub-paragraph (2) for the renter in relation to accommodation A and the amount so determined in relation to accommodation B are different (references to accommodation A and accommodation B are to be understood in accordance with paragraph 4 of Schedule 3); and\na single calculation is to be made in relation to the renter under paragraph 17 (renter treated as occupying single accommodation)."
     versions:
       - effective_from: '0001-01-01'
         formula: |-
@@ -57,12 +57,12 @@ rules:
             kind: formula
             source:
               corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/25
-              excerpt: "the maximum allowable amount ... is the local housing allowance"
+              excerpt: "The maximum allowable amount to be used in relation to the renter is the local housing allowance which applies at the relevant time to—\nthe broad rental market area in which the renter's accommodation is situated; and\nthe category of accommodation determined at step 1 as that to which the renter is entitled."
           - path: versions[0].formula
             kind: formula
             source:
               corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/25
-              excerpt: "determined by reference to the accommodation for which ... is lower when the calculation is first made"
+              excerpt: "is to be determined by reference to the accommodation for which the amount referred to in sub-paragraph (3)(b) is lower when the calculation is first made;"
           - path: versions[0].formula
             kind: import
             import:

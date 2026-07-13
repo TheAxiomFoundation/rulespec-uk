@@ -3,34 +3,7 @@ module:
   proof_validation:
     required: true
   source_verification:
-    corpus_citation_paths:
-      - uk/regulation/ssi/2019/193/13
-      - uk/regulation/uksi/2013/376/schedule/4/paragraph/7
-    upstream_source_check:
-      status: official_parameter_source
-      checked_paths:
-        - uk/regulation/ssi/2019/193/13
-      rationale: |-
-        Every monetary literal on the computation path is grounded in the
-        Welfare Foods (Best Start Foods) (Scotland) Regulations 2019
-        (SSI 2019/193) regulation 13 (value of benefit) corpus text: the basic
-        rate of £5.60 for each week (regulation 13(1)), the doubled rate for a
-        child who has not yet reached the age of one — "double the basic rate",
-        i.e. £11.20 for each week (regulation 13 read with the entitlement for a
-        child described in regulation 8) — and the basic rate for a child aged
-        one to three (regulation 8). The £5.60 basic rate is the amount
-        currently in force: the Social Security (Up-rating) (Miscellaneous
-        Amendments) (Scotland) Regulations 2026 (SSI 2026/170) substituted
-        "£5.60" for "£5.40" in regulation 13(1) with effect from 1 April 2026.
-        The weekly value is annualised over 52 benefit weeks, the same
-        weekly-to-periodic conversion factor the Universal Credit Regulations
-        2013 Schedule 4 paragraph 7 uses; this is a period-conversion factor,
-        not a statutory monetary amount. UKMOD reports the annualised bmascmt01_s
-        over its 365/7 calendar-week convention, so the composed 52-week annual
-        entitlement sits about 0.27% below the UKMOD figure (£582.40 against
-        £584.00 for a newborn), a systematic convention residual the oracle
-        comparison absorbs with a 0.3% relative tolerance while both sides
-        recover the same £11.20 / £5.60 statutory weekly rates.
+    corpus_citation_path: uk/regulation/ssi/2019/193/13
   summary: |-
     Composed Best Start Foods pipeline for the UKMOD UK_2026 oracle slice at the
     2026-27 rates. Best Start Foods is a passported means-tested Scottish
@@ -105,7 +78,7 @@ rules:
             kind: amount
             source:
               corpus_citation_path: uk/regulation/ssi/2019/193/13
-              excerpt: "to the value of £5.60 (\"the basic rate\") for each week"
+              excerpt: "to the value of £5.60 (“the basic rate”) for each week"
     versions:
       - effective_from: '2026-04-01'
         formula: |-
@@ -177,7 +150,12 @@ rules:
             kind: formula
             source:
               corpus_citation_path: uk/regulation/ssi/2019/193/13
-              excerpt: "double the basic rate ... the basic rate"
+              excerpt: "double the basic rate for each week that the child is so entitled"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/ssi/2019/193/13
+              excerpt: "the basic rate for each week thereafter that the child is so entitled"
           - path: versions[0].formula
             kind: import
             import:
@@ -214,7 +192,7 @@ rules:
             kind: formula
             source:
               corpus_citation_path: uk/regulation/ssi/2019/193/13
-              excerpt: "the basic rate ... for each week"
+              excerpt: "the basic rate for each week thereafter that the child is so entitled"
           - path: versions[0].formula
             kind: import
             import:

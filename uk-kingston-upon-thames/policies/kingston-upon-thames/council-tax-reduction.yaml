@@ -3,18 +3,12 @@ module:
   proof_validation:
     required: true
   source_verification:
-    corpus_citation_paths:
-      - uk-kingston-upon-thames/manual/council-tax-reduction-scheme-2026-2027/page-2
-      - uk-kingston-upon-thames/manual/council-tax-reduction-scheme-2026-2027/page-26
-      - uk-kingston-upon-thames/manual/council-tax-reduction-scheme-2026-2027/page-28
-      - uk-kingston-upon-thames/manual/council-tax-reduction-scheme-2026-2027/page-38
-      - uk-kingston-upon-thames/manual/council-tax-reduction-scheme-2026-2027/page-40
-      - uk-kingston-upon-thames/manual/council-tax-reduction-scheme-2026-2027/page-41
-      - uk-kingston-upon-thames/manual/council-tax-reduction-scheme-2026-2027/page-42
-      - uk-kingston-upon-thames/manual/council-tax-reduction-scheme-2026-2027/page-43
-      - uk-kingston-upon-thames/manual/council-tax-reduction-scheme-2026-2027/page-76
+    corpus_citation_path: uk-kingston-upon-thames/manual/council-tax-reduction-scheme-2026-2027/page-38
   summary: |-
     Kingston upon Thames Council Tax Reduction working-age alignment surface for the 2026-2027 scheme: it applies the local maximum-liability award, working-age UC applicable-amount treatment, capital limit and tariff income, 20 percent excess-income taper, and working-age non-dependant deductions used by PolicyEngine UK's Kingston CTR implementation.
+  deferred_outputs:
+    - output: uk-kingston-upon-thames:policies/kingston-upon-thames/council-tax-reduction/e#applicable_premiums_amount
+      reason: Page 38(e) adds premiums determined under Parts 3 and 4 of the applicable-amount Schedule. This module does not encode those category-specific premium eligibility and amount schedules, so the premium component is deferred rather than treated as zero or inferred from an unrelated amount.
 rules:
   - name: kingston_upon_thames_council_tax_reduction_maximum_support_rate
     kind: parameter
@@ -338,7 +332,7 @@ rules:
             kind: amount
             source:
               corpus_citation_path: uk-kingston-upon-thames/manual/council-tax-reduction-scheme-2026-2027/page-41
-              excerpt: "not less than £605.00"
+              excerpt: "not less than £485.00 but less than £605.00"
     versions:
       - effective_from: '2026-04-01'
         formula: |-
@@ -376,7 +370,7 @@ rules:
             kind: condition
             source:
               corpus_citation_path: uk-kingston-upon-thames/manual/council-tax-reduction-scheme-2026-2027/page-38
-              excerpt: "has an award of universal credit"
+              excerpt: "has, an award of universal credit,"
     versions:
       - effective_from: '2026-04-01'
         formula: |-

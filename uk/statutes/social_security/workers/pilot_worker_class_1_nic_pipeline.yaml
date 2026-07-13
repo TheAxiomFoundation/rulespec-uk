@@ -8,26 +8,7 @@ module:
   proof_validation:
     required: true
   source_verification:
-    corpus_citation_paths:
-      - uk/statute/ukpga/1992/4/8
-      - uk/statute/ukpga/2007/3/10
-      - uk/statute/ukpga/2007/3/35
-    upstream_source_check:
-      status: composed_from_grounded_modules
-      checked_paths:
-        - uk/statute/ukpga/1992/4/8
-        - uk/statute/ukpga/2007/3/10
-        - uk/statute/ukpga/2007/3/35
-      rationale: |-
-        The 8% main and 2% additional primary Class 1 percentages are the
-        encoded Social Security Contributions and Benefits Act 1992 section 8
-        parameters. The annual primary threshold and upper earnings limit are
-        derived from already-grounded income-tax parameters they are aligned
-        to: from 2022-23 the primary threshold equals the income-tax personal
-        allowance (12,570, Income Tax Act 2007 s.35), and the upper earnings
-        limit equals the higher-rate threshold, i.e. the personal allowance
-        plus the basic-rate limit (12,570 + 37,700 = 50,270, Income Tax Act
-        2007 ss.35 and 10). The pipeline adds no new numeric literals.
+    corpus_citation_path: uk/statute/ukpga/1992/4/8
   summary: |-
     Composed single-employee annual Class 1 primary (employee) National
     Insurance pipeline for the UKMOD oracle slice. Section 8 of the Social
@@ -101,7 +82,7 @@ rules:
             import:
               target: uk:statutes/ukpga/2007/3/10#basic_rate_limit
               output: basic_rate_limit
-              hash: sha256:b13046eac4823c7ff97e81f2604d1a8d37848d5c20d8adc22524d03abe6fc621
+              hash: sha256:0e672605b24bd2f85c3fdcfd0a1686670be0b6afd6f72e8e9bc02a79f7d93832
     versions:
       - effective_from: '2024-04-06'
         formula: |-
@@ -121,7 +102,7 @@ rules:
             kind: formula
             source:
               corpus_citation_path: uk/statute/ukpga/1992/4/8
-              excerpt: "the earnings paid in the tax week in respect of the employment"
+              excerpt: "earnings paid in the tax week, in respect of the employment"
     versions:
       - effective_from: '2024-04-06'
         formula: |-
@@ -141,7 +122,17 @@ rules:
             kind: formula
             source:
               corpus_citation_path: uk/statute/ukpga/1992/4/8
-              excerpt: "the main primary percentage of so much of the earnings paid in the tax week in respect of the employment as exceeds the current primary threshold but does not exceed the current upper earnings limit"
+              excerpt: "primary percentage of so much of the earner’s earnings paid in the tax week, in respect of the employment in question"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/8
+              excerpt: "exceeds the current primary threshold (or the prescribed equivalent); but"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/4/8
+              excerpt: "does not exceed the current upper earnings limit (or the prescribed equivalent)"
           - path: versions[0].formula
             kind: import
             import:

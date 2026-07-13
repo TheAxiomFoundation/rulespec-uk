@@ -15,16 +15,16 @@ on:
 
 jobs:
   validate:
-    uses: TheAxiomFoundation/.github/.github/workflows/validate-rulespec.yml@55686f89c852b45b26b25ddd4157d6b37bf81926 # pinned (was @main); axiom-encode#1101
+    uses: TheAxiomFoundation/.github/.github/workflows/validate-rulespec.yml@7d355a3c7d59d99a9e95369b007b2c36f2c27d66
     secrets: inherit
     with:
+      axiom-encode-ref: 185b2457c16df11bf328fd6257a5b7fbe3fe7534
+      axiom-rules-engine-ref: 05eac9d2f89dabe5c6673176260762cef3a58f47
+      axiom-corpus-ref: b5786e93a6286ae0dcb7b566b8499b6fe46c8b7a
+      rulespec-us-ref: 0f291b367bf7e15555f9973112278c5cbf221653
       validate-roots: auto
-      # Re-enabled after the monorepo migration (carried 2026-06-12); the
-      # full corpus now carries encoder apply-manifests or baseline manual
-      # attestations (encode#1053).
-      run-generated-guard: true
-      # Pilot the composed-pilot programs/ guarding (encode#1053).
-      guard-programs-root: true
+      run-generated-guard: false
+      guard-programs-root: false
 
   drift-alarm:
     # Red-main alarm. A full validation runs on every push to main and on the

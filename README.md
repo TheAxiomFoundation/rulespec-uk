@@ -1,20 +1,26 @@
 # rulespec-uk
 
-United Kingdom RuleSpec encodings — the country monorepo: uk/ (national),
-uk-kingston-upon-thames/ (council), and programs/ (declarative compose
-specs). Durable ids are <jurisdiction>:<path>#<rule>, identical to the
-pre-consolidation layout. Known gaps ratchet via known-validation-gaps.yaml
-(rulespec-uk#42) and known-dangling.yaml conventions; see rulespec-us for
-the full monorepo conventions.
+United Kingdom RuleSpec encodings in one country monorepo. Direct jurisdiction
+roots include `uk/` (national) and `uk-kingston-upon-thames/` (council).
+Durable ids are `<jurisdiction>:<path>#<rule>`.
 
 ## Contents
 
-- `sources/`: source slices, target manifests, and sidecar metadata when available.
-- `statutes/`, `regulations/`, or `policies/`: RuleSpec YAML when encoded rules are added.
+- `<jurisdiction>/{legislation,policies,regulations,statutes}/`: atomic
+  `rulespec/v1` modules and companion tests.
+- `<jurisdiction>/programs/`: declarative axiom-compose ProgramSpecs. Programs
+  are canonical filesystem content but are not atomic RuleSpec modules.
 - `.github/workflows/`: wrapper around the shared RuleSpec validation workflow.
 
 ## Conventions
 
-Use RuleSpec YAML under `statutes/`, `regulations/`, or `policies/` for encoded rules. Keep source text with matching `.meta.yaml` files that record provenance and relations. Large XML or source payloads belong in object storage, with only registry or manifest metadata in Git.
+Use the exact `.yaml` extension under one of the five jurisdiction-scoped roots.
+Do not add repository-root content trees, `.yml` aliases, symlinks, or Python
+program implementations. ProgramSpecs are declarative composition only.
+
+Legacy applied manifests are deleted, not retained as migration inputs. This
+migration snapshot intentionally contains no applied manifests; the named-release
+trusted signer must regenerate `applied-rulespec/v5` attestations before release.
+No workflow may accept an older schema as current attestation.
 
 Jurisdiction-specific materials belong in this repo. Shared federal materials belong in `rulespec-us`.

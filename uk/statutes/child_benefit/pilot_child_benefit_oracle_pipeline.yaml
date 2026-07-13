@@ -3,49 +3,7 @@ module:
   proof_validation:
     required: true
   source_verification:
-    corpus_citation_paths:
-      - uk/statute/ukpga/1992/4/141
-      - uk/regulation/uksi/2006/965/2
-      - uk/regulation/uksi/2013/376/schedule/4/paragraph/7
-      - uk/statute/ukpga/2003/1/681B
-      - uk/statute/ukpga/2003/1/681C
-      - uk/statute/ukpga/2003/1/681H
-    upstream_source_check:
-      status: official_parameter_source
-      checked_paths:
-        - uk/regulation/uksi/2006/965/2
-        - uk/regulation/uksi/2013/376/schedule/4/paragraph/7
-        - uk/statute/ukpga/2003/1/681B
-        - uk/statute/ukpga/2003/1/681C
-      rationale: |-
-        Every monetary parameter is grounded in an official source: the two
-        Child Benefit weekly rates are imported from the Child Benefit (General)
-        Regulations 2006 (SI 2006/965) regulation 2 module — the enhanced
-        (eldest or only child) rate of £27.05 and the other (each subsequent
-        child) rate of £17.90, both verbatim in that regulation's corpus text —
-        and the Social Security Contributions and Benefits Act 1992 section 141
-        entitlement that pays those rates for each child or qualifying young
-        person the family is responsible for. The pilot composes those weekly
-        rates into a family-level annual Child Benefit entitlement so an
-        end-to-end UKMOD bch_s comparison is queryable from the number of
-        children without the caller supplying the per-child rate branch.
-
-        The pipeline now also encodes the High Income Child Benefit Charge
-        (Income Tax (Earnings and Pensions) Act 2003 Part 10 Chapter 8, sections
-        681B-681H, inserted by Finance Act 2012 Schedule 1), which claws Child
-        Benefit back through the income-tax system for a person whose adjusted
-        net income exceeds the threshold. Its money atoms are grounded in the
-        ITEPA 2003 corpus provisions: the £60,000 adjusted-net-income threshold
-        (s.681B(1)(a), "L" in s.681C(2)), the £200 taper step ("X" in s.681C(2),
-        1% per £200), the 100% appropriate-percentage cap and the round-down to
-        whole numbers (s.681C(2)-(3)); the £80,000 full-clawback point is derived
-        from that formula (£60,000 + 100 × £200), and the adjusted-net-income
-        base is the s.681H(2) cross-reference to ITA 2007 s.58. The charge amount
-        is netted off the section 141 gross entitlement to a post-charge net
-        Child Benefit output, so the UKMOD oracle comparison can compare net
-        Child Benefit against UKMOD's paid bch_s directly (UKMOD nets its
-        separately-reported clawback bchrd_s into bch_s). The gross entitlement
-        remains exposed for the pre-charge comparison. See rulespec-uk issue #75.
+    corpus_citation_path: uk/statute/ukpga/1992/4/141
   summary: |-
     Composed family Child Benefit pipeline for the UKMOD oracle slice at the
     2026-27 rates. It exposes a dense-engine-friendly Family-level path from the
@@ -247,7 +205,7 @@ rules:
             kind: formula
             source:
               corpus_citation_path: uk/statute/ukpga/1992/4/141
-              excerpt: "entitled ... to a benefit ... for that week"
+              excerpt: "for that week in respect of the child or qualifying young person"
           - path: versions[0].formula
             kind: import
             import:
@@ -321,7 +279,7 @@ rules:
             kind: amount
             source:
               corpus_citation_path: uk/statute/ukpga/2003/1/681C
-              excerpt: "if less, the percentage determined by the formula— ANI – L X %"
+              excerpt: "if less, the percentage determined by the formula—"
     versions:
       - effective_from: '2026-01-01'
         formula: |-
@@ -371,12 +329,14 @@ rules:
             kind: formula
             source:
               corpus_citation_path: uk/statute/ukpga/2003/1/681C
-              excerpt: "if less, the percentage determined by the formula— ANI – L X %"
+              excerpt: "if less, the percentage determined by the formula—"
           - path: versions[0].formula
             kind: formula
             source:
               corpus_citation_path: uk/statute/ukpga/2003/1/681C
-              excerpt: "the percentage determined under subsection (2)(b) is not a whole number, it is to be rounded down to the nearest whole number"
+              excerpt: |-
+                the percentage determined under subsection (2)(b) is not a whole number,
+                it is to be rounded down to the nearest whole number.
     versions:
       - effective_from: '2026-01-01'
         formula: |-
@@ -400,7 +360,17 @@ rules:
             kind: formula
             source:
               corpus_citation_path: uk/statute/ukpga/2003/1/681C
-              excerpt: "“The appropriate percentage” is— 100%, or if less, the percentage determined by the formula— ANI – L X %"
+              excerpt: "“The appropriate percentage” is—"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/1/681C
+              excerpt: "100%, or"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/1/681C
+              excerpt: "if less, the percentage determined by the formula—"
     versions:
       - effective_from: '2026-01-01'
         formula: |-
@@ -430,7 +400,12 @@ rules:
             kind: formula
             source:
               corpus_citation_path: uk/statute/ukpga/2003/1/681C
-              excerpt: "the amount of the charge determined under that subsection, is not a whole number of pounds ... it is to be rounded down to the nearest whole number"
+              excerpt: "the amount of the charge determined under that subsection, is not a whole number of pounds"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/2003/1/681C
+              excerpt: "it is to be rounded down to the nearest whole number."
           - path: versions[0].formula
             kind: import
             import:

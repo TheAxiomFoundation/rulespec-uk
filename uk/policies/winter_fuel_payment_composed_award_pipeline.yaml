@@ -3,20 +3,7 @@ module:
   proof_validation:
     required: true
   source_verification:
-    corpus_citation_paths:
-      - uk/regulation/uksi/2025/969/3
-    upstream_source_check:
-      status: official_parameter_source
-      checked_paths:
-        - uk/regulation/uksi/2025/969/3
-      rationale: |-
-        Every monetary parameter is grounded in an official source. The annual
-        standard Winter Fuel Payment amounts (GBP 200 for a person who has not
-        reached age 80, GBP 300 for a person who has reached age 80) are the
-        Social Fund Winter Fuel Payment Regulations 2025 regulation 3(1) and
-        3(4) figures for England and Wales. The shared-household and
-        residential-care branch amounts in regulation 3(2), 3(5), and 3(6) are
-        deliberately outside this UKMOD boaht_s parity pipeline.
+    corpus_citation_path: uk/regulation/uksi/2025/969/3
   summary: |-
     Composed Family-level Winter Fuel Payment award pipeline for England and
     Wales. It exposes the UKMOD boaht_s parity path from caller-supplied
@@ -48,7 +35,7 @@ rules:
             kind: amount
             source:
               corpus_citation_path: uk/regulation/uksi/2025/969/3
-              excerpt: "has not reached the age of 80 ... £200"
+              excerpt: "where P has not reached the age of 80 in or before the qualifying week, the amount of a winter fuel payment is £200"
     versions:
       - effective_from: '2025-09-15'
         formula: |-
@@ -67,7 +54,7 @@ rules:
             kind: amount
             source:
               corpus_citation_path: uk/regulation/uksi/2025/969/3
-              excerpt: "has reached the age of 80 ... £300"
+              excerpt: "where P has reached the age of 80 in or before the qualifying week, the amount of a winter fuel payment is £300"
     versions:
       - effective_from: '2025-09-15'
         formula: |-
@@ -90,12 +77,12 @@ rules:
             kind: formula
             source:
               corpus_citation_path: uk/regulation/uksi/2025/969/3
-              excerpt: "has not reached the age of 80 ... £200"
+              excerpt: "where P has not reached the age of 80 in or before the qualifying week, the amount of a winter fuel payment is £200"
           - path: versions[0].formula
             kind: formula
             source:
               corpus_citation_path: uk/regulation/uksi/2025/969/3
-              excerpt: "has reached the age of 80 ... £300"
+              excerpt: "where P has reached the age of 80 in or before the qualifying week, the amount of a winter fuel payment is £300"
     versions:
       - effective_from: '2025-09-15'
         formula: |-
@@ -115,12 +102,12 @@ rules:
             kind: condition
             source:
               corpus_citation_path: uk/regulation/uksi/2025/969/3
-              excerpt: "has not reached the age of 80 ... £200"
+              excerpt: "where P has not reached the age of 80 in or before the qualifying week, the amount of a winter fuel payment is £200"
           - path: versions[0].formula
             kind: condition
             source:
               corpus_citation_path: uk/regulation/uksi/2025/969/3
-              excerpt: "has reached the age of 80 ... £300"
+              excerpt: "where P has reached the age of 80 in or before the qualifying week, the amount of a winter fuel payment is £300"
     versions:
       - effective_from: '2025-09-15'
         formula: |-
@@ -140,12 +127,12 @@ rules:
             kind: formula
             source:
               corpus_citation_path: uk/regulation/uksi/2025/969/3
-              excerpt: "has not reached the age of 80 ... £200"
+              excerpt: "where P has not reached the age of 80 in or before the qualifying week, the amount of a winter fuel payment is £200"
           - path: versions[0].formula
             kind: formula
             source:
               corpus_citation_path: uk/regulation/uksi/2025/969/3
-              excerpt: "has reached the age of 80 ... £300"
+              excerpt: "where P has reached the age of 80 in or before the qualifying week, the amount of a winter fuel payment is £300"
     versions:
       - effective_from: '2025-09-15'
         formula: |-

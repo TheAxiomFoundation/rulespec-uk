@@ -3,26 +3,7 @@ module:
   proof_validation:
     required: true
   source_verification:
-    corpus_citation_paths:
-      - uk/guidance/govuk/student-loan-repayments/what-you-pay
-      - uk/guidance/govuk/student-loan-repayments/getting-a-refund
-    upstream_source_check:
-      status: checked_higher_authority
-      checked_paths:
-        - uk/regulation/uksi/2009/470/schedule/1A
-        - uk/regulation/uksi/2009/470/part/6
-      rationale: |-
-        The income-contingent repayment scheme is made under the Education
-        (Student Loans) (Repayment) Regulations 2009 (SI 2009/470): Schedule 1A
-        sets the plan repayment thresholds and Part 6 governs cancellation and
-        cessation of repayment once the loan is cleared. The regulations fix the
-        9% (Plan 1/2/4/5) and 6% (Postgraduate) repayment percentages and the
-        stop-at-full-repayment rule, but delegate the annual threshold figures
-        to the Secretary of State, who publishes the operative amounts through
-        GOV.UK "Repaying your student loan". The GOV.UK guidance is therefore the
-        authoritative published source for the yearly thresholds and the
-        stop-at-full-repayment behaviour restated here; no numeric literal is
-        taken from a source below that regulation.
+    corpus_citation_path: uk/guidance/govuk/student-loan-repayments/what-you-pay
   summary: |-
     GOV.UK student loan repayment guidance sets yearly income thresholds of GBP 26900 for Plan 1, GBP 29385 for Plan 2, GBP 33795 for Plan 4, GBP 25000 for Plan 5, and GBP 21000 for Postgraduate Loans. A borrower repays 9% of income over the threshold for Plan 1, Plan 2, Plan 4, or Plan 5, and 6% of income over the threshold for a Postgraduate Loan plan. Repayments stop once the loan is repaid in full, so the annual repayment never exceeds the outstanding loan balance.
 rules:

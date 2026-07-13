@@ -1,17 +1,21 @@
-# rulespec-uk-kingston-upon-thames
+# Kingston upon Thames jurisdiction
 
-Kingston upon Thames RuleSpec encodings.
+Kingston upon Thames RuleSpec encodings inside the `rulespec-uk` country
+monorepo. This directory is a jurisdiction content root, not a standalone
+repository or toolchain boundary.
 
 ## Contents
 
-- `policies/`: local policy RuleSpec YAML.
+- `policies/`: local atomic RuleSpec YAML.
+- `programs/`: declarative axiom-compose ProgramSpecs when needed.
 - `data/corpus/`: scoped generated corpus artifacts when needed for source verification.
 - `.axiom/corpus-manifests/`: source manifests used by the corpus ingester.
 - `.axiom/ingest-manifests/`: signed manifests for generated corpus artifacts.
-- `.github/workflows/`: wrapper around the shared RuleSpec validation workflow.
 
 ## Conventions
 
-Jurisdiction-specific materials belong in this repo. Shared UK materials belong in `rulespec-uk`.
+Jurisdiction-specific materials belong here. Shared UK materials belong under
+the sibling `uk/` jurisdiction root. Toolchain configuration and encoding
+manifests live only at the country-checkout root.
 
 Local Council Tax Reduction source rows should be produced by the corpus ingester from official council sources. Do not edit corpus JSONL rows by hand.

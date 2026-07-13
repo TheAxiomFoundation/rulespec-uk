@@ -3,45 +3,7 @@ module:
   proof_validation:
     required: true
   source_verification:
-    corpus_citation_paths:
-      - uk/regulation/uksi/2006/213/22
-      - uk/regulation/uksi/2006/213/70
-      - uk/regulation/uksi/2006/213/71
-      - uk/regulation/uksi/2006/213/74
-      - uk/regulation/uksi/2006/213/schedule/3
-      - uk/regulation/uksi/2006/214/22
-      - uk/regulation/uksi/2006/214/50
-      - uk/regulation/uksi/2006/214/51
-      - uk/regulation/uksi/2006/214/55
-      - uk/regulation/uksi/2006/214/schedule/3
-    upstream_source_check:
-      status: official_parameter_source
-      checked_paths:
-        - uk/regulation/uksi/2006/213/71
-        - uk/regulation/uksi/2006/213/74
-        - uk/regulation/uksi/2006/213/schedule/3
-        - uk/regulation/uksi/2006/214/schedule/3
-      rationale: |-
-        Every numeric parameter is grounded in an official source captured at
-        the 2026-04-06 in-force expression. The working-age personal
-        allowances (single aged under 25 GBP 75.65 / aged 25 or over GBP 95.55,
-        couple both aged under 18 GBP 114.35 / at least one aged 18 or over GBP
-        150.15) are in the Housing Benefit Regulations 2006 Schedule 3
-        paragraph 1, and the pension-age personal allowances (single who has
-        attained pensionable age before 1 April 2021 GBP 256.00, couple GBP
-        383.35) are in the SI 2006/214 Schedule 3 paragraph 1; the 65 per cent
-        taper is in regulation 71 (working-age) / regulation 51 (pension-age);
-        the appropriate maximum housing benefit is 100 per cent of eligible
-        rent less non-dependant deductions under regulation 70 / regulation 50;
-        and the non-dependant deduction amounts (GBP 20.40 base rising to GBP
-        131.45 by gross-income band, thresholds GBP 192 / 279 / 365 / 485 /
-        605) are in regulation 74 / regulation 55, all as uprated by the Social
-        Security Benefits Up-rating Order 2026 (SI 2026/148). The pipeline
-        models the Family-level maximum entitlement so an end-to-end
-        PolicyEngine housing_benefit_entitlement comparison is queryable from
-        raw household facts without the caller supplying the regulation 70/71
-        maximum-benefit and taper mechanics or the Schedule 3 personal-
-        allowance branch.
+    corpus_citation_path: uk/regulation/uksi/2006/213/70
   summary: |-
     Composed Family-level Housing Benefit entitlement pipeline for the 2026-27
     Housing Benefit Regulations 2006 parameters. It exposes a
@@ -102,7 +64,7 @@ rules:
             kind: amount
             source:
               corpus_citation_path: uk/regulation/uksi/2006/213/schedule/3
-              excerpt: "is aged less than 25. | | (c) | £75.65."
+              excerpt: "is aged less than 25. |  | (c) | £75.65."
     versions:
       - effective_from: '2026-04-01'
         formula: |-
@@ -121,7 +83,7 @@ rules:
             kind: amount
             source:
               corpus_citation_path: uk/regulation/uksi/2006/213/schedule/3
-              excerpt: "is aged not less than 25; | | (b) | £95.55;"
+              excerpt: "is aged not less than 25; |  | (b) | £95.55;"
     versions:
       - effective_from: '2026-04-01'
         formula: |-
@@ -140,7 +102,7 @@ rules:
             kind: amount
             source:
               corpus_citation_path: uk/regulation/uksi/2006/213/schedule/3
-              excerpt: "both members are aged less than 18. | | (c) | £114.35."
+              excerpt: "both members are aged less than 18. |  | (c) | £114.35."
     versions:
       - effective_from: '2026-04-01'
         formula: |-
@@ -159,7 +121,7 @@ rules:
             kind: amount
             source:
               corpus_citation_path: uk/regulation/uksi/2006/213/schedule/3
-              excerpt: "at least one member is aged not less than 18; | | (b) | £150.15;"
+              excerpt: "at least one member is aged not less than 18; |  | (b) | £150.15;"
     versions:
       - effective_from: '2026-04-01'
         formula: |-
@@ -181,7 +143,12 @@ rules:
             kind: amount
             source:
               corpus_citation_path: uk/regulation/uksi/2006/214/schedule/3
-              excerpt: "attained pensionable age before 1st April 2021. (b) (c) £256.00."
+              excerpt: |-
+                who has attained pensionable age before 1st April 2021.
+                who has attained pensionable age on or after 1st April 2021.
+                (b)
+                (c)
+                £256.00.
     versions:
       - effective_from: '2026-04-01'
         formula: |-
@@ -200,7 +167,12 @@ rules:
             kind: amount
             source:
               corpus_citation_path: uk/regulation/uksi/2006/214/schedule/3
-              excerpt: "attained pensionable age before 1st April 2021. (b) (c) £383.35"
+              excerpt: |-
+                one member or both members who have attained pensionable age before 1st April 2021.
+                both members who have attained pensionable age on or after 1st April 2021.
+                (b)
+                (c)
+                £383.35
     versions:
       - effective_from: '2026-04-01'
         formula: |-
@@ -260,6 +232,11 @@ rules:
             source:
               corpus_citation_path: uk/regulation/uksi/2006/213/74
               excerpt: "sub-paragraph (a) does not apply, £20.40 per week"
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2006/214/55
+              excerpt: "sub-paragraph (a) does not apply, £20.40 per week"
     versions:
       - effective_from: '2026-04-01'
         formula: |-
@@ -278,6 +255,11 @@ rules:
             kind: amount
             source:
               corpus_citation_path: uk/regulation/uksi/2006/213/74
+              excerpt: "not less than £192.00 but less than £279.00, the deduction to be made under this regulation shall be £46.85"
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2006/214/55
               excerpt: "not less than £192.00 but less than £279.00, the deduction to be made under this regulation shall be £46.85"
     versions:
       - effective_from: '2026-04-01'
@@ -298,6 +280,11 @@ rules:
             source:
               corpus_citation_path: uk/regulation/uksi/2006/213/74
               excerpt: "not less than £279.00 but less than £365.00, the deduction to be made under this regulation shall be £64.35"
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2006/214/55
+              excerpt: "not less than £279.00 but less than £365.00, the deduction to be made under this regulation shall be £64.35"
     versions:
       - effective_from: '2026-04-01'
         formula: |-
@@ -316,6 +303,11 @@ rules:
             kind: amount
             source:
               corpus_citation_path: uk/regulation/uksi/2006/213/74
+              excerpt: "not less than £365.00 but less than £485.00, the deduction to be made under this regulation shall be £105.20"
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2006/214/55
               excerpt: "not less than £365.00 but less than £485.00, the deduction to be made under this regulation shall be £105.20"
     versions:
       - effective_from: '2026-04-01'
@@ -336,6 +328,11 @@ rules:
             source:
               corpus_citation_path: uk/regulation/uksi/2006/213/74
               excerpt: "not less than £485.00 but less than £605.00, the deduction to be made under this regulation shall be £119.85"
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2006/214/55
+              excerpt: "not less than £485.00 but less than £605.00, the deduction to be made under this regulation shall be £119.85"
     versions:
       - effective_from: '2026-04-01'
         formula: |-
@@ -354,6 +351,11 @@ rules:
             kind: amount
             source:
               corpus_citation_path: uk/regulation/uksi/2006/213/74
+              excerpt: "in remunerative work, £131.45 per week"
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2006/214/55
               excerpt: "in remunerative work, £131.45 per week"
     versions:
       - effective_from: '2026-04-01'
@@ -374,6 +376,11 @@ rules:
             source:
               corpus_citation_path: uk/regulation/uksi/2006/213/74
               excerpt: "less than £192.00, the deduction"
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2006/214/55
+              excerpt: "less than £192.00, the deduction"
     versions:
       - effective_from: '2026-04-01'
         formula: |-
@@ -392,6 +399,11 @@ rules:
             kind: amount
             source:
               corpus_citation_path: uk/regulation/uksi/2006/213/74
+              excerpt: "not less than £192.00 but less than £279.00"
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2006/214/55
               excerpt: "not less than £192.00 but less than £279.00"
     versions:
       - effective_from: '2026-04-01'
@@ -412,6 +424,11 @@ rules:
             source:
               corpus_citation_path: uk/regulation/uksi/2006/213/74
               excerpt: "not less than £279.00 but less than £365.00"
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2006/214/55
+              excerpt: "not less than £279.00 but less than £365.00"
     versions:
       - effective_from: '2026-04-01'
         formula: |-
@@ -431,6 +448,11 @@ rules:
             source:
               corpus_citation_path: uk/regulation/uksi/2006/213/74
               excerpt: "not less than £365.00 but less than £485.00"
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2006/214/55
+              excerpt: "not less than £365.00 but less than £485.00"
     versions:
       - effective_from: '2026-04-01'
         formula: |-
@@ -449,6 +471,11 @@ rules:
             kind: amount
             source:
               corpus_citation_path: uk/regulation/uksi/2006/213/74
+              excerpt: "not less than £485.00 but less than £605.00"
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2006/214/55
               excerpt: "not less than £485.00 but less than £605.00"
     versions:
       - effective_from: '2026-04-01'
@@ -470,6 +497,11 @@ rules:
             source:
               corpus_citation_path: uk/regulation/uksi/2006/213/71
               excerpt: "deducted from maximum housing benefit) shall be 65 per cent"
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/regulation/uksi/2006/214/51
+              excerpt: "deducted from maximum housing benefit) shall be 65 per cent"
     versions:
       - effective_from: '2026-04-01'
         formula: |-
@@ -486,6 +518,11 @@ rules:
             kind: parameter
             source:
               corpus_citation_path: uk/regulation/uksi/2006/213/70
+              excerpt: "appropriate maximum housing benefit in any week shall be 100 per cent. of his eligible rent"
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/regulation/uksi/2006/214/50
               excerpt: "appropriate maximum housing benefit in any week shall be 100 per cent. of his eligible rent"
     versions:
       - effective_from: '2026-04-01'
@@ -507,6 +544,11 @@ rules:
             kind: amount
             source:
               corpus_citation_path: uk/regulation/uksi/2006/213/70
+              excerpt: "calculated on a weekly basis"
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2006/214/50
               excerpt: "calculated on a weekly basis"
     versions:
       - effective_from: '2026-04-01'
@@ -605,6 +647,11 @@ rules:
             source:
               corpus_citation_path: uk/regulation/uksi/2006/213/74
               excerpt: "the deduction to be made under this regulation shall be"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2006/214/55
+              excerpt: "the deduction to be made under this regulation shall be"
     versions:
       - effective_from: '2026-04-01'
         formula: |-
@@ -636,6 +683,11 @@ rules:
             source:
               corpus_citation_path: uk/regulation/uksi/2006/213/70
               excerpt: "less any deductions in respect of non-dependants which fall to be made under regulation 74 (non-dependant deductions)"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2006/214/50
+              excerpt: "less any deductions in respect of non-dependants which fall to be made under regulation 55"
     versions:
       - effective_from: '2026-04-01'
         formula: |-
@@ -661,6 +713,11 @@ rules:
             kind: formula
             source:
               corpus_citation_path: uk/regulation/uksi/2006/213/71
+              excerpt: "percentage of excess of income over applicable amount which is deducted from maximum housing benefit) shall be 65 per cent"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2006/214/51
               excerpt: "percentage of excess of income over applicable amount which is deducted from maximum housing benefit) shall be 65 per cent"
     versions:
       - effective_from: '2026-04-01'
@@ -688,6 +745,16 @@ rules:
             source:
               corpus_citation_path: uk/regulation/uksi/2006/213/70
               excerpt: "shall be 100 per cent. of his eligible rent"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2006/214/50
+              excerpt: "shall be 100 per cent. of his eligible rent"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2006/214/51
+              excerpt: "percentage of excess of income over applicable amount which is deducted from maximum housing benefit"
     versions:
       - effective_from: '2026-04-01'
         formula: |-
@@ -718,6 +785,11 @@ rules:
             source:
               corpus_citation_path: uk/regulation/uksi/2006/213/70
               excerpt: "less any deductions in respect of non-dependants which fall to be made under regulation 74"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2006/214/50
+              excerpt: "less any deductions in respect of non-dependants which fall to be made under regulation 55"
     versions:
       - effective_from: '2026-04-01'
         formula: |-

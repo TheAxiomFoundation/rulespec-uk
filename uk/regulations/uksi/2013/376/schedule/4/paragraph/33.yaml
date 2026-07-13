@@ -23,23 +23,23 @@ rules:
             kind: formula
             source:
               corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/33
-              excerpt: "Formula: S - HCC"
+              excerpt: "Formula: S\n-"
           - path: versions[0].formula
             kind: definition
             source:
               corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/33
-              excerpt: "\"S\" is the amount resulting from whichever of paragraph 34 or 35 applies"
+              excerpt: "“S” is the amount resulting from whichever of paragraph 34 or 35 applies in the renter's case, and"
           - path: versions[0].formula
             kind: definition
             source:
               corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/33
-              excerpt: "\"HCC\" is the sum of the housing cost contributions (if any) under paragraph 13"
+              excerpt: "“HCC” is the sum of the housing cost contributions (if any) under paragraph 13."
           - path: versions[0].formula
             kind: import
             import:
               target: uk:regulations/uksi/2013/376/schedule/4/paragraph/14#total_housing_cost_contributions_to_be_deducted_in_renters_case
               output: total_housing_cost_contributions_to_be_deducted_in_renters_case
-              hash: sha256:cc2972ca3070dea62fcb35b08b2b0f28ea11804756b1a49dbace129cdbc0acae
+              hash: sha256:03fa6c1d7756810407f817f873bfb88c8063dbf560863fd16c6d6c1ff2563c79
     versions:
       - effective_from: '0001-01-01'
         formula: |-

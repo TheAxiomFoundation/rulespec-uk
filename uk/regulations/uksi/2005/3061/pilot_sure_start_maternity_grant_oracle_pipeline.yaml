@@ -3,21 +3,7 @@ module:
   proof_validation:
     required: true
   source_verification:
-    corpus_citation_paths:
-      - uk/regulation/uksi/2005/3061/5
-    upstream_source_check:
-      status: official_parameter_source
-      checked_paths:
-        - uk/regulation/uksi/2005/3061/5
-      rationale: |-
-        The single monetary literal is grounded in the Social Fund Maternity and
-        Funeral Expenses (General) Regulations 2005 (SI 2005/3061) regulation 5
-        corpus text: a payment of £500 to meet maternity expenses where the
-        regulation's conditions are satisfied. The pilot exposes that amount as a
-        Person-level annual entitlement so an end-to-end UKMOD bmamt_s comparison
-        is queryable for a passported recipient; it is the same £500 the existing
-        regulation-5 encoding (uk/regulations/uksi/2005/3061/5) carries as a
-        Year-period parameter.
+    corpus_citation_path: uk/regulation/uksi/2005/3061/5
   summary: |-
     Composed Sure Start Maternity Grant pipeline for the UKMOD UK_2026 oracle
     slice. The Sure Start Maternity Grant is a passported means-tested lump sum:

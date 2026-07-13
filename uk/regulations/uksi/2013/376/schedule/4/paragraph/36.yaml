@@ -96,7 +96,7 @@ rules:
             import:
               target: uk:regulations/uksi/2013/376/schedule/4/paragraph/10#bedroom_entitlement_after_schedule_adjustments
               output: bedroom_entitlement_after_schedule_adjustments
-              hash: sha256:ecf7f4383db61132206fe464c5cb9e7d6cf721e1c7a43f91aa58c9586ca24997
+              hash: sha256:ab88c27fd29a7c4b7432cc3401bb228e9dd7110399df55724c3592dd67a3637a
     versions:
       - effective_from: '0001-01-01'
         formula: |-
@@ -115,12 +115,12 @@ rules:
             kind: formula
             source:
               corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/36
-              excerpt: "B is the relevant percentage"
+              excerpt: "“B” is the relevant percentage."
           - path: versions[0].formula
             kind: parameter
             source:
               corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/36
-              excerpt: "14%... one excess bedroom... 25%... two or more excess bedrooms"
+              excerpt: "The relevant percentage is 14% in the case of one excess bedroom.\nThe relevant percentage is 25% in the case of two or more excess bedrooms."
     versions:
       - effective_from: '0001-01-01'
         formula: |-
@@ -139,7 +139,7 @@ rules:
             kind: exception
             source:
               corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/36
-              excerpt: "No deduction for under occupation is to be made... where"
+              excerpt: "No deduction for under occupation is to be made in calculating the amount of a renter’s housing cost element under this part where—"
           - path: versions[0].formula
             kind: definition
             source:
@@ -172,7 +172,7 @@ rules:
             kind: exception
             source:
               corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/36
-              excerpt: "No deduction... shared ownership"
+              excerpt: "No deduction for under-occupation is to be made in calculating the amount of the renter's housing costs element under this Part in any case to which regulation 26(4) to (6) (shared ownership) applies."
           - path: versions[0].formula
             kind: exception
             source:
@@ -199,12 +199,12 @@ rules:
             kind: formula
             source:
               corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/36
-              excerpt: "the amount of the deduction is to be determined by the formula— A x B"
+              excerpt: "Where a deduction is to be made, the amount of the deduction is to be determined by the formula—"
           - path: versions[0].formula
             kind: definition
             source:
               corpus_citation_path: uk/regulation/uksi/2013/376/schedule/4/paragraph/36
-              excerpt: "A... amount resulting from step 2 or 3... B is the relevant percentage"
+              excerpt: "in relation to any deduction under paragraph 35(3), is the amount resulting from step 3 in paragraph 35(2);\n“B” is the relevant percentage."
     versions:
       - effective_from: '0001-01-01'
         formula: |-

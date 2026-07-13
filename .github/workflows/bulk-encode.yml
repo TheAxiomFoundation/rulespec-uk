@@ -202,14 +202,12 @@ jobs:
         working-directory: _axiom/axiom-rules-engine
         run: cargo build --verbose
 
-      - name: Expose engine and sibling checkouts
+      - name: Expose engine binary
         shell: bash
         run: |
           set -euo pipefail
           echo "$GITHUB_WORKSPACE/_axiom/axiom-rules-engine/target/debug" >> "$GITHUB_PATH"
-          # Sibling layout the resolver's default checkout discovery expects.
-          ln -sfn "$GITHUB_WORKSPACE/_axiom/axiom-rules-engine" "$GITHUB_WORKSPACE/../axiom-rules-engine"
-          ln -sfn "$GITHUB_WORKSPACE/_axiom/axiom-corpus" "$GITHUB_WORKSPACE/../axiom-corpus"
+          # The encoder receives both exact checkout paths explicitly below.
 
       - name: Encode --apply and run the gate battery
         id: encode
@@ -220,8 +218,6 @@ jobs:
           MODEL: ${{ matrix.item.model }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           AXIOM_ENCODE_APPLY_SIGNING_KEY: ${{ secrets.AXIOM_ENCODE_APPLY_SIGNING_KEY }}
-          AXIOM_CORPUS_REPO: ${{ github.workspace }}/_axiom/axiom-corpus
-          AXIOM_RULESPEC_REPO_ROOTS: ${{ github.workspace }}
         run: |
           set -euo pipefail
           start=$(date +%s)
@@ -250,7 +246,6 @@ jobs:
           # jurisdiction directories (two-letter code, optional -suffix) so the
           # sibling checkouts under _axiom/ and any build artifacts are never
           # picked up.
-          slug='${{ matrix.item.slug }}'
           # -uall (untracked-files=all): a brand-new module path creates a new
           # nested untracked dir; without -uall, `git status --porcelain`
           # COLLAPSES it to the bare dir entry (e.g. `?? uk/statutes/ukpga/2003/1/`),
@@ -259,7 +254,7 @@ jobs:
           # rulespec-be/rulespec-gh fix.
           mapfile -t applied < <(git -C "$GITHUB_WORKSPACE" status --porcelain -uall \
             | sed 's/^...//' \
-            | grep -E '^[a-z]{2}(-[a-z0-9-]+)?/(statutes|regulations|policies)/.*\.yaml$' \
+            | grep -E '^[a-z]{2}(-[a-z0-9]+)*/(legislation|policies|regulations|statutes)/.*\.yaml$' \
             | grep -v '\.test\.yaml$' || true)
 
           if [ "$apply_status" -ne 0 ] || [ "${#applied[@]}" -eq 0 ]; then
@@ -269,70 +264,52 @@ jobs:
           fi
 
           module="${applied[0]}"
-          base="$(basename "${module%.yaml}")"
 
           # Derive the companion test and the signed apply manifest path
           # DETERMINISTICALLY from the module path (as rulespec-us does).
-          # `encode --apply` writes the manifest at one of two module-path-
-          # mirrored locations, chosen by what this repo's repository-structure
-          # layout gate permits (axiom-encode#1078):
-          #   Config A (co-located):  <juris>/.axiom/encoding-manifests/<rest>.json
-          #     used when the gate allows .json under <juris>/** (e.g. rulespec-us).
-          #   Config C (root mirror): .axiom/encoding-manifests/<juris>/<rest>.json
-          #     used when the gate forbids .json under <juris>/** -- rulespec-uk
-          #     (uk/** allows only .yaml), rulespec-be, rulespec-gh. This is the
-          #     ONLY manifest layout that merges here, since the layout gate
-          #     rejects a .json under uk/**.
-          # Both are guard-generated-valid: A maps back via root_prefix=<juris>,
-          # C via root_prefix="" with jurisdiction-prefixed applied_files.
+          # `encode --apply` writes exactly one country-root manifest mirror:
+          # .axiom/encoding-manifests/<juris>/<atomic-root>/<rest>.json.
+          # Co-located and repository-root atomic mirrors are removed layouts.
           # Deriving the path (never a whole-tree basename `find`) is REQUIRED:
           # WRA 2012 (ukpga/2012/5) and the UC Regs (uksi/2013/376) are both
           # densely encoded, so `find -name "<section>.json"` matched an
           # unrelated same-numbered statute's manifest and pushed a manifest-less
-          # PR. Detect whichever exact mirror the encoder wrote; prefer the
-          # mergeable Config C when both are present.
+          # PR.
           juris="${module%%/*}"
           rest="${module#*/}"
           test_file="${module%.yaml}.test.yaml"
-          manifest_a="$juris/.axiom/encoding-manifests/${rest%.yaml}.json"
-          manifest_c=".axiom/encoding-manifests/$juris/${rest%.yaml}.json"
-          if [ -f "$GITHUB_WORKSPACE/$manifest_c" ]; then
-            manifest_rel="$manifest_c"
-          elif [ -f "$GITHUB_WORKSPACE/$manifest_a" ]; then
-            manifest_rel="$manifest_a"
-          else
+          manifest_rel=".axiom/encoding-manifests/$juris/${rest%.yaml}.json"
+          if [ ! -f "$GITHUB_WORKSPACE/$manifest_rel" ]; then
             echo "status=failed" >> "$GITHUB_OUTPUT"
-            echo "::error::apply wrote no signed manifest at $manifest_c or $manifest_a for $CITATION -- apply was blocked (see encode.log; a *.repair.json was written under $RUNNER_TEMP/encode-out). Not opening a PR." >&2
+            echo "::error::apply wrote no signed manifest at $manifest_rel for $CITATION -- apply was blocked (see encode.log; a *.repair.json was written under $RUNNER_TEMP/encode-out). Not opening a PR." >&2
             exit 1
           fi
-          echo "module=$module" >> "$GITHUB_OUTPUT"
-          echo "test_file=$test_file" >> "$GITHUB_OUTPUT"
-          echo "manifest=$manifest_rel" >> "$GITHUB_OUTPUT"
+          {
+            echo "module=$module"
+            echo "test_file=$test_file"
+            echo "manifest=$manifest_rel"
+          } >> "$GITHUB_OUTPUT"
           echo "Applied module: $module"
           echo "Applied test: $test_file"
           echo "Applied manifest: $manifest_rel"
 
-          # --- Oracle-coverage pending lane (dispatcher step) ---
-          # A freshly encoded output is `unmapped` until axiom-oracles gains a
-          # mapping. Rather than block this PR on a per-output cross-repo pin
-          # dance, declare the repo's currently-unmapped outputs in
-          # oracle-coverage-pending.yaml so the gate reclassifies them to
-          # pending_classification (accountable, not silently unmapped). The
-          # periodic classification sweep drains them into real mappings and the
-          # ratchet forces stale declarations out. See bulk/README.md section 4.
-          axiom-encode oracle-coverage-pending sync \
-            --root "$GITHUB_WORKSPACE/.." \
-            --repo rulespec-uk \
-            --source bulk
+          # Pending oracle classifications are blockers, not dispatcher-authored
+          # exceptions. The bulk lane cannot create or extend pending debt.
+          axiom-encode oracle-coverage \
+            --root "$GITHUB_WORKSPACE" \
+            --fail-on-unmapped \
+            --fail-on-pending \
+            --fail-on-stale-pending \
+            --limit 50
 
           # --- Gate battery (fail-closed pre-check; mirrors PR CI order) ---
           # 1. guard-generated: applied files must carry a valid signed manifest.
           # Stage ONLY the applied module, its companion test, its signed
-          # manifest, and the pending declaration -- never `git add -A`, which
+          # manifest -- never `git add -A`, which
           # would commit the _axiom/ sibling checkouts and build artifacts. (No
           # reverse index in this repo.)
           git -C "$GITHUB_WORKSPACE" add -- \
-            "$module" "$test_file" "$manifest_rel" oracle-coverage-pending.yaml
+            "$module" "$test_file" "$manifest_rel"
           git -C "$GITHUB_WORKSPACE" -c user.email=bulk-encode@axiom \
             -c user.name="bulk-encode" commit -q -m "wip: $CITATION"
           axiom-encode guard-generated \
@@ -406,7 +383,7 @@ jobs:
             echo "### Manifest summary"
             echo '```json'
             # Use the exact manifest the encode step located deterministically
-            # (uk/.axiom/encoding-manifests/<rest>.json), not a basename search
+            # (.axiom/encoding-manifests/uk/<rest>.json), not a basename search
             # that could surface an unrelated same-numbered statute's manifest.
             manifest=""
             [ -n "$MANIFEST" ] && [ -f "$GITHUB_WORKSPACE/$MANIFEST" ] && manifest="$(cat "$GITHUB_WORKSPACE/$MANIFEST")"

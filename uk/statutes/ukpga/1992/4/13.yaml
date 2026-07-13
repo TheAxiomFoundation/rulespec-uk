@@ -3,34 +3,7 @@ module:
   proof_validation:
     required: true
   source_verification:
-    corpus_citation_paths:
-      - uk/statute/ukpga/1992/4/13
-      - uk/guidance/govuk/national-insurance-rates/rates-and-allowances/block-11
-      - uk/guidance/govuk/national-insurance-rates/rates-and-allowances/block-13
-    upstream_source_check:
-      status: official_parameter_source
-      checked_paths:
-        - uk/statute/ukpga/1992/4/13
-        - uk/guidance/govuk/national-insurance-rates/rates-and-allowances/block-11
-        - uk/guidance/govuk/national-insurance-rates/rates-and-allowances/block-13
-      rationale: |-
-        The statute was checked first: SSCBA 1992 s.13(1) is the charging
-        provision for the Class 3 weekly amount, and its current
-        legislation.gov.uk expression grounds the 2025-04-06 version verbatim
-        ("shall be £17.75"). That base text carries only the 2025-26 figure:
-        the annual re-rating is made by administrative order and is not
-        consolidated into the s.13 text, so no statute or regulation text in
-        the corpus contains the 2026-27 amount. The GOV.UK "Rates and
-        allowances: National Insurance contributions" page is the official
-        HMRC parameter source for the re-rated weekly amount ("Class 3 rate
-        £18.40" in the "£ per week 2026 to 2027" column, block-11), with the
-        effective date grounded by block-13 ("new National Insurance rates
-        and thresholds from 6 April 2026") and the amount cross-checked by
-        the page's own 2026-27 Direct Debit schedule (4-week months £73.60 =
-        4 x £18.40, 5-week months £92.00 = 5 x £18.40). This mirrors the
-        student-loan-repayments and Scottish-rate-resolution pattern of
-        grounding administratively set parameter values to official guidance
-        while the charging provision stays grounded to statute.
+    corpus_citation_path: uk/statute/ukpga/1992/4/13
   summary: |-
     Class 3 National Insurance contributions are voluntary flat-rate
     contributions. Section 13 of the Social Security Contributions and Benefits

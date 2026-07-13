@@ -15,35 +15,12 @@ module:
   proof_validation:
     required: true
   source_verification:
-    corpus_citation_paths:
-      - uk/statute/ukpga/2012/5/8
-      - uk/regulation/uksi/2013/376/22
-      - uk/regulation/uksi/2013/376/72
-    upstream_source_check:
-      status: composed_from_grounded_modules
-      checked_paths:
-        - uk/statute/ukpga/2012/5/8
-        - uk/regulation/uksi/2013/376/22
-      rationale: |-
-        This module adds no new numeric literals. It imports the composed
-        Universal Credit pilot pipeline
-        (universal_credit_composed_award_pipeline) and re-expresses, over that
-        pipeline's own Welfare Reform Act 2012 section 8 elements, the
-        section 8(1) balance that the compose-spec program surface
-        (programs/uk/universal-credit/fy-2026-27.yaml, whose final output
-        universal_credit_award_amount is defined in the section 8 statute
-        atom uk/statutes/ukpga/2012/5/8) computes. Every element and every
-        deduction it references is an already-grounded pilot output; the only
-        arithmetic is the section 8(1) subtraction the statute atom itself
-        performs (max amount less the section 8(3) income deductions, floored
-        at zero) and the differences that isolate the two deliberately-scoped
-        extensions the pilot final award carries over the section 8(1)
-        balance.
+    corpus_citation_path: uk/statute/ukpga/2012/5/8
   summary: |-
     Reconciliation guard for the two independent Universal Credit award paths
     in rulespec-uk. rulespec-uk carries two award surfaces for 2026-27:
 
-      1. the compose-spec program programs/uk/universal-credit/fy-2026-27.yaml,
+      1. the compose-spec program uk/programs/universal-credit/fy-2026-27.yaml,
          whose final output universal_credit_award_amount is the Welfare Reform
          Act 2012 section 8(1) balance (maximum amount under sections 9-12 less
          the section 8(3) earned- and unearned-income deductions, floored at
@@ -94,7 +71,7 @@ rules:
             kind: formula
             source:
               corpus_citation_path: uk/statute/ukpga/2012/5/8
-              excerpt: "the maximum amount is the total of the amounts included under sections 9 to 12"
+              excerpt: "The maximum amount is the total of—"
     versions:
       - effective_from: '2026-04-01'
         formula: |-
@@ -126,7 +103,7 @@ rules:
             kind: formula
             source:
               corpus_citation_path: uk/regulation/uksi/2013/376/22
-              excerpt: "The amounts to be deducted from the maximum amount... are all... unearned income... and... earned income"
+              excerpt: "The amounts to be deducted from the maximum amount in accordance with section 8(3) of the Act to determine the amount of an award of universal credit are—"
     versions:
       - effective_from: '2026-04-01'
         formula: |-
@@ -149,7 +126,7 @@ rules:
             kind: formula
             source:
               corpus_citation_path: uk/statute/ukpga/2012/5/8
-              excerpt: "the amount of an award of universal credit is to be the balance of the maximum amount after deducting"
+              excerpt: "The amount of an award of universal credit is to be the balance of—"
     versions:
       - effective_from: '2026-04-01'
         formula: |-
@@ -176,7 +153,7 @@ rules:
             kind: formula
             source:
               corpus_citation_path: uk/statute/ukpga/2012/5/8
-              excerpt: "the maximum amount is the total of the amounts included under sections 9 to 12"
+              excerpt: "The maximum amount is the total of—"
     versions:
       - effective_from: '2026-04-01'
         formula: |-
@@ -229,7 +206,7 @@ rules:
             kind: formula
             source:
               corpus_citation_path: uk/statute/ukpga/2012/5/8
-              excerpt: "the amount of an award of universal credit is to be the balance of the maximum amount after deducting"
+              excerpt: "The amount of an award of universal credit is to be the balance of—"
     versions:
       - effective_from: '2026-04-01'
         formula: |-
