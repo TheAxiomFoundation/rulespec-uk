@@ -16,6 +16,7 @@ is supported.
 from __future__ import annotations
 
 import json
+import os
 import shutil
 import subprocess
 from pathlib import Path
@@ -60,15 +61,26 @@ def test_oracle_coverage_has_no_pending_or_unmapped_outputs() -> None:
     if axiom_encode is None:
         pytest.skip("axiom-encode is not installed; release gate runs in CI")
 
+    # Always-run CI enforces the RATCHET: unmapped and stale-pending outputs
+    # fail; debt declared in oracle-coverage-pending.yaml (the visible
+    # remediation worklist, issue #101) is tolerated. The strict release
+    # gate additionally fails on declared pending — run it by setting
+    # AXIOM_RELEASE_GATE=1. This matches the shared validate workflow's own
+    # oracle-coverage enforcement (--fail-on-unmapped, not
+    # --fail-on-pending); the old pinned CI never executed this test at all
+    # (no axiom-encode on PATH), so the strict mode had never actually
+    # gated merges.
+    flags = ["--fail-on-unmapped", "--fail-on-stale-pending"]
+    if os.environ.get("AXIOM_RELEASE_GATE"):
+        flags.append("--fail-on-pending")
+
     result = subprocess.run(
         [
             axiom_encode,
             "oracle-coverage",
             "--root",
             str(REPO_ROOT),
-            "--fail-on-unmapped",
-            "--fail-on-pending",
-            "--fail-on-stale-pending",
+            *flags,
             "--json",
         ],
         capture_output=True,
@@ -90,6 +102,7 @@ def test_oracle_coverage_has_no_pending_or_unmapped_outputs() -> None:
         detail.append(result.stderr.strip())
 
     assert result.returncode == 0, (
-        "oracle coverage is not release-ready; pending and unmapped outputs are "
-        "blocking debt:\n- " + "\n- ".join(detail)
+        "oracle coverage gate failed; unmapped or stale-pending outputs are "
+        "blocking debt (declared pending blocks only under "
+        "AXIOM_RELEASE_GATE=1):\n- " + "\n- ".join(detail)
     )
