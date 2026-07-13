@@ -3,6 +3,30 @@ module:
   proof_validation:
     required: true
   source_verification:
+    upstream_source_check:
+      status: delegated_parameter_source
+      checked_paths:
+        - uk/statutes/ukpga/1992/14/13A
+        - uk/regulations/uksi/2012/2885
+        - uk/regulations/uksi/2012/2886
+      rationale: >-
+        The Local Government Finance Act 1992 section 13A and Schedule 1A
+        (inserted by the Local Government Finance Act 2012) require every
+        English billing authority to make its own Council Tax Reduction scheme
+        and delegate the design of the working-age scheme to the authority. The
+        Council Tax Reduction Schemes (Prescribed Requirements) (England)
+        Regulations 2012 (SI 2012/2885) prescribe the pension-age scheme in full
+        together with the base personal allowances, premiums, and non-dependant
+        deduction amounts, and the Council Tax Reduction Schemes (Default Scheme)
+        (England) Regulations 2012 (SI 2012/2886) supply the working-age scheme
+        structure; neither instrument fixes the delegated working-age award
+        values encoded here. Kingston's published 2026-2027 scheme sets those
+        itself - the 100 per cent maximum reduction, the capital limit and tariff
+        income, the excess-income taper, and working-age non-dependant deductions
+        set 8.5 per cent above the prescribed-requirements allowances - so the
+        council's published scheme document is the controlling source for these
+        values. The higher statute and regulations were checked and do not
+        contain the local working-age parameters.
     corpus_citation_paths:
       - uk-kingston-upon-thames/manual/council-tax-reduction-scheme-2026-2027/page-2
       - uk-kingston-upon-thames/manual/council-tax-reduction-scheme-2026-2027/page-26
