@@ -154,7 +154,12 @@ def test_rulespec_files_have_companion_tests() -> None:
         if not path.with_name(f"{path.stem}.test.yaml").exists()
     ]
 
-    assert apply_gap_ratchet("missing_companion_tests", missing) == []
+    # uk/regulations/uksi/2013/376/23.yaml has zero executable rules; its []
+    # companion lands with the canonical-provenance migration (#133), whose
+    # workflow permits the content change. The legacy waiver categories are
+    # deleted ahead of that migration's strict base parse, so the one known
+    # gap is pinned here explicitly until #133 adds the companion.
+    assert missing == ["uk/regulations/uksi/2013/376/23.yaml"]
 
 
 def test_companion_tests_have_rulespec_files() -> None:
