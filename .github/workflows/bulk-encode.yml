@@ -65,10 +65,17 @@ on:
         required: false
         type: boolean
         default: true
+      run_encode:
+        description: "Run the signed encode leg (attach the external apply signer, encode --apply, open PRs). Requires the apply signing secret. Schedule runs always encode."
+        required: false
+        type: boolean
+        default: false
 
 permissions:
   contents: read
 
+# The plan job serialises whole dispatches; the encode job declares its own
+# single-flight signing group so a signed apply transaction never overlaps.
 concurrency:
   group: bulk-encode-plan
   cancel-in-progress: false
@@ -360,3 +367,275 @@ jobs:
               exit 1
             }
           echo "Signed release provenance $release_commit authenticated against the corpus default branch and the pinned checkout."
+
+  # ------------------------------------------------------------------------
+  # Signed encode leg (Path B, lane O; rulespec-uk#140). Attaches to the plan
+  # seam: fans out over the planner's matrix and, for each entry, provisions the
+  # trusted signing supervisor with an ATTACHED production external apply signer
+  # (axiom-encode `cmd/axiom-encode-apply-signer`), runs `encode --apply` under
+  # it to produce a v5/Ed25519 module + manifest, and opens one PR per module.
+  #
+  # Secret exposure discipline: this workflow triggers ONLY on workflow_dispatch
+  # and schedule (never pull_request), so fork- or PR-modified workflow text can
+  # never see AXIOM_ENCODE_APPLY_SIGNER_ED25519_PRIVATE_KEY. The signer also binds
+  # to this repository + the main-branch workflow ref + those two events, and
+  # refuses pull_request unconditionally, enforcing the same rule a second time.
+  # The private key is passed to the signer over a pipe by the launcher, which
+  # clears it from the environment before the supervised encoder starts.
+  encode:
+    name: encode
+    needs: plan
+    if: ${{ needs.plan.outputs.count != '0' && (github.event_name == 'schedule' || inputs.run_encode) }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    concurrency:
+      # One signed apply transaction at a time: a single signer, a single
+      # apply-manifest install.
+      group: bulk-encode-sign
+      cancel-in-progress: false
+    strategy:
+      fail-fast: false
+      max-parallel: 1
+      matrix:
+        item: ${{ fromJSON(needs.plan.outputs.matrix).include }}
+    steps:
+      - name: Checkout rules repository
+        uses: actions/checkout@v6.0.2
+        with:
+          # BULK_ENCODE_TOKEN so the opened PR triggers the required validate CI.
+          token: ${{ secrets.BULK_ENCODE_TOKEN }}
+          persist-credentials: true
+
+      - name: Guard checkout leaf directory
+        shell: bash
+        run: |
+          set -euo pipefail
+          base="$(basename "$GITHUB_WORKSPACE")"
+          if [ "$base" != "rulespec-uk" ]; then
+            echo "::error::--apply resolver requires the checkout leaf dir to be 'rulespec-uk' (got '$base')." >&2
+            exit 1
+          fi
+
+      - name: Checkout axiom-encode (pinned; includes the apply signer)
+        uses: actions/checkout@v6.0.2
+        with:
+          repository: TheAxiomFoundation/axiom-encode
+          ref: ${{ env.AXIOM_ENCODE_REF }}
+          path: _axiom/axiom-encode
+          persist-credentials: false
+
+      - name: Checkout axiom-rules-engine (pinned)
+        uses: actions/checkout@v6.0.2
+        with:
+          repository: TheAxiomFoundation/axiom-rules-engine
+          ref: ${{ env.AXIOM_RULES_ENGINE_REF }}
+          path: _axiom/axiom-rules-engine
+          persist-credentials: false
+
+      - name: Checkout axiom-corpus (pinned)
+        uses: actions/checkout@v6.0.2
+        with:
+          repository: TheAxiomFoundation/axiom-corpus
+          ref: ${{ env.AXIOM_CORPUS_REF }}
+          path: _axiom/axiom-corpus
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Checkout rulespec-us (pinned; encode target)
+        uses: actions/checkout@v6.0.2
+        with:
+          repository: TheAxiomFoundation/rulespec-us
+          ref: ${{ env.RULESPEC_US_REF }}
+          path: _axiom/rulespec-us
+          persist-credentials: false
+
+      - name: Set up Go 1.26.1
+        uses: actions/setup-go@v6.5.0
+        with:
+          go-version: 1.26.1
+          cache: false
+
+      - name: Set up Python
+        uses: actions/setup-python@v6.2.0
+        with:
+          python-version: "3.13"
+
+      - name: Install axiom-encode into a build venv (site-packages source)
+        working-directory: _axiom/axiom-encode
+        run: |
+          set -euo pipefail
+          python -m venv "$RUNNER_TEMP/axiom-encode-venv"
+          "$RUNNER_TEMP/axiom-encode-venv/bin/pip" install --quiet --upgrade pip
+          "$RUNNER_TEMP/axiom-encode-venv/bin/pip" install --quiet .
+
+      - name: Build axiom-rules-engine
+        working-directory: _axiom/axiom-rules-engine
+        run: cargo build --verbose
+
+      - name: Expose engine and sibling checkouts
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "$GITHUB_WORKSPACE/_axiom/axiom-rules-engine/target/debug" >> "$GITHUB_PATH"
+          ln -sfn "$GITHUB_WORKSPACE/_axiom/axiom-rules-engine" "$GITHUB_WORKSPACE/../axiom-rules-engine"
+          ln -sfn "$GITHUB_WORKSPACE/_axiom/axiom-corpus" "$GITHUB_WORKSPACE/../axiom-corpus"
+          ln -sfn "$GITHUB_WORKSPACE/_axiom/rulespec-us" "$GITHUB_WORKSPACE/../rulespec-us"
+
+      - name: Build the signing supervisor and external apply signer
+        working-directory: _axiom/axiom-encode
+        env:
+          CGO_ENABLED: "0"
+        run: |
+          set -euo pipefail
+          go build -trimpath -buildvcs=false -ldflags='-buildid=' \
+            -o "$RUNNER_TEMP/axiom-encode-signing-supervisor" \
+            ./cmd/axiom-encode-signing-supervisor
+          go build -trimpath -buildvcs=false -ldflags='-buildid=' \
+            -o "$RUNNER_TEMP/axiom-encode-apply-signer" \
+            ./cmd/axiom-encode-apply-signer
+          test "$("$RUNNER_TEMP/axiom-encode-apply-signer" --build-kind)" = production
+          test "$("$RUNNER_TEMP/axiom-encode-signing-supervisor" --build-kind)" = production
+
+      - name: Provision the protected signing supervisor (root-owned)
+        working-directory: _axiom/axiom-encode
+        env:
+          TRUST_APPLY_ROOT: ${{ vars.AXIOM_ENCODE_APPLY_SIGNING_PUBLIC_KEY }}
+          TRUST_EVAL_ROOT: ${{ vars.AXIOM_ENCODE_EVAL_SIGNING_PUBLIC_KEY }}
+          TRUST_CORPUS_RELEASE_ROOT: ${{ vars.AXIOM_CORPUS_RELEASE_PUBLIC_KEY }}
+        run: |
+          set -euo pipefail
+          test -n "$TRUST_APPLY_ROOT" && test -n "$TRUST_EVAL_ROOT" && test -n "$TRUST_CORPUS_RELEASE_ROOT"
+          # The provisioner copies the invoking interpreter's sys.base_prefix and
+          # the given site-packages into a self-contained, root-owned runtime.
+          # sudo resets PATH, so resolve the setup-python interpreter here and
+          # pass its absolute path through.
+          PYTHON="$(command -v python)"
+          # The build venv's site-packages (contains axiom_encode + its deps) is
+          # the source tree the provisioner seals into the root-owned runtime.
+          SITE_PACKAGES="$RUNNER_TEMP/axiom-encode-venv/lib/python3.13/site-packages"
+          test -d "$SITE_PACKAGES"
+          sudo rm -rf /opt/axiom-signing
+          sudo "$PYTHON" scripts/provision_verification_supervisor.py \
+            --destination /opt/axiom-signing \
+            --supervisor "$RUNNER_TEMP/axiom-encode-signing-supervisor" \
+            --site-packages "$SITE_PACKAGES" \
+            --apply-root "$TRUST_APPLY_ROOT" --eval-root "$TRUST_EVAL_ROOT" \
+            --corpus-release-root "$TRUST_CORPUS_RELEASE_ROOT"
+          sudo chown -R 0:0 /opt/axiom-signing
+          sudo chmod -R go-w /opt/axiom-signing
+          # `encode --apply` shells out to git for provenance; install it into the
+          # trusted runtime's bin (the supervised child's PATH = that bin dir).
+          sudo install -m 0755 "$(command -v git)" \
+            "/opt/axiom-signing/python/bin/git"
+          sudo chown root:root /opt
+          sudo chmod go-w /opt
+
+      - name: Encode --apply under the attached external apply signer
+        id: encode
+        shell: bash
+        env:
+          CITATION: ${{ matrix.item.citation }}
+          TARGET: ${{ matrix.item.target }}
+          BACKEND: ${{ matrix.item.backend }}
+          MODEL: ${{ matrix.item.model }}
+          # Model backend key (parent-only allowlist the supervisor forwards to
+          # generation subprocesses).
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          # The Ed25519 apply private key. Delivered ONLY to this step's env; the
+          # launcher reads it, clears it, and streams it to the signer over a
+          # pipe. Never reaches the supervised encoder's environment.
+          AXIOM_ENCODE_APPLY_SIGNER_ED25519_PRIVATE_KEY: ${{ secrets.AXIOM_ENCODE_APPLY_SIGNER_ED25519_PRIVATE_KEY }}
+          AXIOM_CORPUS_REPO: ${{ github.workspace }}/_axiom/axiom-corpus
+          AXIOM_RULESPEC_REPO_ROOTS: ${{ github.workspace }}
+        run: |
+          set -euo pipefail
+          ref="${CITATION:-$TARGET}"
+          if [ -z "$ref" ]; then
+            echo "::error::worklist entry has neither citation nor target." >&2
+            exit 1
+          fi
+          # Runtime python version is fixed by the setup-python step above (3.13);
+          # the provisioned tree carries python3.13 lib paths.
+          site="/opt/axiom-signing/python/lib/python3.13/site-packages"
+
+          set +e
+          "$RUNNER_TEMP/axiom-encode-apply-signer" run \
+            --scope apply_ed25519 \
+            --key-env AXIOM_ENCODE_APPLY_SIGNER_ED25519_PRIVATE_KEY \
+            --supervisor /opt/axiom-signing/axiom-encode-signing-supervisor \
+            --trusted-signing-roots /opt/axiom-signing/signing-trust-roots.json \
+            --trusted-python-runtime-root /opt/axiom-signing/python \
+            --trusted-python-import-root "$site" \
+            --trusted-python-package-root "$site/axiom_encode" \
+            --expected-github-repository "$GITHUB_REPOSITORY" \
+            --allowed-workflow-ref "${GITHUB_REPOSITORY}/.github/workflows/bulk-encode.yml@refs/heads/${GITHUB_REF_NAME}" \
+            --allowed-event-name workflow_dispatch \
+            --allowed-event-name schedule \
+            -- /opt/axiom-signing/axiom-encode encode "$ref" \
+               --backend "$BACKEND" --model "$MODEL" \
+               --policy-repo-path "$GITHUB_WORKSPACE" \
+               --axiom-rules-engine-path "$GITHUB_WORKSPACE/_axiom/axiom-rules-engine" \
+               --corpus-path "$GITHUB_WORKSPACE/_axiom/axiom-corpus" \
+               --output "$RUNNER_TEMP/encode-out" \
+               --apply --no-sync 2>&1 | tee "$RUNNER_TEMP/encode.log"
+          apply_status=${PIPESTATUS[0]}
+          set -e
+
+          mapfile -t applied < <(git -C "$GITHUB_WORKSPACE" status --porcelain -uall \
+            | sed 's/^...//' \
+            | grep -E '^[a-z]{2}(-[a-z0-9-]+)?/(statutes|regulations|policies)/.*\.yaml$' \
+            | grep -v '\.test\.yaml$' || true)
+          if [ "$apply_status" -ne 0 ] || [ "${#applied[@]}" -eq 0 ]; then
+            echo "::error::encode --apply failed or wrote no module (status=$apply_status)." >&2
+            echo "status=failed" >> "$GITHUB_OUTPUT"
+            exit 1
+          fi
+          echo "status=green" >> "$GITHUB_OUTPUT"
+          echo "applied=${applied[0]}" >> "$GITHUB_OUTPUT"
+
+      - name: Open PR
+        if: ${{ steps.encode.outputs.status == 'green' }}
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.BULK_ENCODE_TOKEN }}
+          REF: ${{ matrix.item.citation || matrix.item.target }}
+          SLUG: ${{ matrix.item.slug }}
+          BACKEND: ${{ matrix.item.backend }}
+          MODEL: ${{ matrix.item.model }}
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+        run: |
+          set -euo pipefail
+          branch="bulk/$SLUG"
+          gh label create bulk-encode --repo "$GITHUB_REPOSITORY" \
+            --color 1f6feb --description "Opened by the signed bulk-encode leg" 2>/dev/null || true
+          body="$RUNNER_TEMP/pr-body.md"
+          {
+            echo "Produced by \`axiom-encode encode $REF --apply\` under the trusted signing"
+            echo "supervisor with an attached external Ed25519 apply signer (backend $BACKEND,"
+            echo "model $MODEL). Values are the encoder's; this PR is plumbing."
+            echo
+            echo "The apply manifest is signed \`ed25519-domain-v1\` over"
+            echo "\`axiom-encode/applied-rulespec/v5\`. The authoritative gate is the required"
+            echo "\`validate / validate\` check on this PR."
+          } > "$body"
+          git -C "$GITHUB_WORKSPACE" -c user.email=bulk-encode@axiom \
+            -c user.name="bulk-encode" add -A
+          git -C "$GITHUB_WORKSPACE" -c user.email=bulk-encode@axiom \
+            -c user.name="bulk-encode" commit -q \
+            -m "Encode $REF via the signed bulk-encode leg" \
+            -m "" \
+            -m "Produced by axiom-encode encode $REF --apply (backend $BACKEND, model $MODEL)." \
+            -m "" \
+            -m "Co-Authored-By: Claude Fable 5 <noreply@anthropic.com>"
+          git -C "$GITHUB_WORKSPACE" push -f origin "HEAD:$branch"
+          pr_state="$(gh pr view "$branch" --repo "$GITHUB_REPOSITORY" --json state -q .state 2>/dev/null || true)"
+          if [ "$pr_state" = "OPEN" ]; then
+            gh pr edit "$branch" --repo "$GITHUB_REPOSITORY" \
+              --title "Encode $REF (bulk)" --body-file "$body" --add-label bulk-encode
+          else
+            gh pr create --repo "$GITHUB_REPOSITORY" \
+              --base "$DEFAULT_BRANCH" --head "$branch" \
+              --title "Encode $REF (bulk)" --body-file "$body" --label bulk-encode
+          fi
+          echo "PR ready for $REF on branch $branch."

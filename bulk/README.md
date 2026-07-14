@@ -25,16 +25,17 @@ private key into the runner, which is exactly what the hard cut removes.
 axiom-encode's own bulk lane was cut to routing-only for the same reason. So the
 migration split the old workflow in two:
 
-- **This workflow (the planner)** — selects the batch and resolves the pinned
-  toolchain / signed corpus release. Landed.
-- **The signed encode leg (Path B)** — a signer-attached CI job that provisions
-  the trusted signing supervisor with a **production external apply signer** and
-  runs `encode --apply` under it. Being built in axiom-encode (lane O; tracked
-  in rulespec-uk#140). It attaches on top of this planner via the handoff below.
+- **This workflow's `plan` / `verify-release` jobs (the planner)** — select the
+  batch and resolve the pinned toolchain / signed corpus release. No secrets.
+- **The signed encode leg (Path B), the `encode` job** — a signer-attached job
+  that provisions the trusted signing supervisor with a **production external
+  apply signer** (`cmd/axiom-encode-apply-signer` in axiom-encode) and runs
+  `encode --apply` under it, producing a `v5`/Ed25519 module + manifest and
+  opening one PR per module. Fans out over the `plan` job's matrix seam. Gated:
+  it runs on `schedule`, or on `workflow_dispatch` with `-f run_encode=true`.
 
-Until the signed leg lands, the same plan can be consumed by a privileged
-operator session that holds the signer (interim, documentation-only — not the
-target model).
+The `encode` job is the only part that uses the apply signing secret; a plain
+plan dispatch (`run_encode` unset) never touches it.
 
 ## Pieces
 
@@ -63,13 +64,32 @@ the pinned signed corpus release object from R2; it **fails closed** until the
 release is published (set `-f verify_release=false` to skip it while a release
 rebind is pending). A `concurrency` group serialises whole dispatches.
 
-The planner uses **no** repository secrets. `OPENAI_API_KEY` (generation) and
-`BULK_ENCODE_TOKEN` (PR creation) remain for the Path B signed encode leg; this
-workflow references neither. `AXIOM_ENCODE_APPLY_SIGNING_KEY` is **obsolete**: it
-is the pre-#1108 HMAC env-var signing key, now fatal at encoder startup. The
-signed leg signs through an externally attached broker (an external Ed25519
-signer on `--apply-signer-fd`), never an environment key — so this secret should
-be **deleted** from the repo.
+The `plan` and `verify-release` jobs use **no** repository secrets. The `encode`
+job uses three: `OPENAI_API_KEY` (generation), `BULK_ENCODE_TOKEN` (PR creation),
+and `AXIOM_ENCODE_APPLY_SIGNER_ED25519_PRIVATE_KEY` — the raw 32-byte Ed25519
+apply seed (base64), delivered only to the one signing step's `env:`. The
+launcher reads it, clears it from the environment, and streams it to the signer
+over a pipe, so the supervised encoder never sees it. Because this workflow
+triggers only on `workflow_dispatch`/`schedule` (never `pull_request`), a fork or
+PR-modified workflow can never see the secret.
+
+`AXIOM_ENCODE_APPLY_SIGNING_KEY` (the pre-#1108 HMAC env-var key) is **obsolete**:
+it is fatal at encoder startup and no job references it. Delete it from the repo.
+
+### Running the signed encode leg
+
+```bash
+# Plan + sign + open PRs for the England-pensioner CTR batch:
+gh workflow run bulk-encode.yml -f batch=CTR-ENP -f limit=8 -f run_encode=true \
+  --repo TheAxiomFoundation/rulespec-uk
+```
+
+Prerequisites (one-time, operator):
+- `AXIOM_ENCODE_APPLY_SIGNER_ED25519_PRIVATE_KEY` set as a repository (or org)
+  Actions secret to the base64 raw-32 Ed25519 apply seed whose public half is the
+  `AXIOM_ENCODE_APPLY_SIGNING_PUBLIC_KEY` Actions variable.
+- `AXIOM_ENCODE_REF` (here and in `repository-checks.yml`, in lockstep) pinned to
+  an axiom-encode commit that contains `cmd/axiom-encode-apply-signer`.
 
 ## What each job does
 
