@@ -417,7 +417,13 @@ jobs:
             exit 1
           fi
 
-      - name: Checkout axiom-encode (pinned; includes the apply signer)
+      - name: Checkout axiom-encode (inherits the proven AXIOM_ENCODE_REF)
+        # Resolves the workflow-level AXIOM_ENCODE_REF unchanged. The external
+        # apply signer (cmd/axiom-encode-apply-signer) exists only in commits at
+        # or after axiom-encode#1135 (c04e8608). Until Max's CODEOWNERS-gated
+        # lockstep re-pin bumps AXIOM_ENCODE_REF (here and in
+        # repository-checks.yml) to such a commit, this leg is inert: the build
+        # step below fails closed with a clear message. This PR never bumps it.
         uses: actions/checkout@v6.0.2
         with:
           repository: TheAxiomFoundation/axiom-encode
@@ -488,6 +494,14 @@ jobs:
           CGO_ENABLED: "0"
         run: |
           set -euo pipefail
+          # Fail closed with an actionable message when the pinned encoder
+          # predates the apply signer (axiom-encode#1135 / c04e8608). This leg
+          # is inert until Max's CODEOWNERS-gated lockstep re-pin bumps
+          # AXIOM_ENCODE_REF; this workflow never bumps it.
+          if [ ! -d ./cmd/axiom-encode-apply-signer ]; then
+            echo "::error::Pinned axiom-encode ($AXIOM_ENCODE_REF) has no cmd/axiom-encode-apply-signer. The signed encode leg is inert until the CODEOWNERS-gated lockstep re-pin bumps AXIOM_ENCODE_REF (here and in repository-checks.yml) to a commit >= c04e8608 that contains the external apply signer." >&2
+            exit 1
+          fi
           go build -trimpath -buildvcs=false -ldflags='-buildid=' \
             -o "$RUNNER_TEMP/axiom-encode-signing-supervisor" \
             ./cmd/axiom-encode-signing-supervisor
