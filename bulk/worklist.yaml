@@ -7,6 +7,18 @@ defaults:
 # YAML tree on main, filtered for self-containment (low external cross-reference
 # density, substantive body text). Skips cross-reference-heavy provisions
 # (encode#1058). Values are the encoder's; this queue never invents them.
+#
+# Each entry sets EXACTLY ONE encode target:
+#   citation: <corpus citation path>   # standard case, e.g. uk/regulation/uksi/2012/2885/11
+#   target:   <module path | council scope>  # council / re-emission entries
+# `target` lets a council policy module (grounded on an ingested manual rather
+# than a corpus citation) be queued and planned; e.g. the Kingston CTR closeout
+# (rulespec-uk#46, #140) would add:
+#   - target: uk-kingston-upon-thames/policies/kingston-upon-thames/council-tax-reduction.yaml
+#     batch: D
+#     status: pending
+# The planner selects and hands off such entries; the signer-attached encode leg
+# (Path B, lane O) owns how each is encoded. See bulk/README.md.
 entries:
 # --- Batch A: pilot (cleanest, lowest cross-reference density) ---
 - citation: uk/statute/ukpga/2003/1/681B
