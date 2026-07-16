@@ -456,6 +456,68 @@ jobs:
           path: _axiom/rulespec-us
           persist-credentials: false
 
+      - name: Resolve corpus release identity (encode leg)
+        id: release-identity
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          import tomllib
+          from pathlib import Path
+
+          t = tomllib.loads(Path(".axiom/toolchain.toml").read_text())["toolchain"]
+          print(f"release={t['axiom_corpus_release']}")
+          print(f"content_sha256={t['axiom_corpus_release_content_sha256']}")
+          PY
+
+      - name: Fetch and verify the pinned signed corpus release object (encode leg)
+        # Jobs do not share workspaces: verify-release proved publication, but
+        # this leg's corpus checkout needs the object locally for the encoder's
+        # release resolver (the supervisor re-verifies the signature in-session).
+        shell: bash
+        env:
+          RELEASE_BASE_URL: ${{ env.CORPUS_RELEASE_BASE_URL }}
+          RELEASE_NAME: ${{ steps.release-identity.outputs.release }}
+          RELEASE_CONTENT_SHA256: ${{ steps.release-identity.outputs.content_sha256 }}
+        run: |
+          set -euo pipefail
+          # Mirrors the shared validate-rulespec resolution (name + content hash).
+          # The Ed25519 signature and full grounding are verified by the
+          # supervised PR CI and the operator session; this proves the pinned
+          # release is published and content-consistent before a session starts.
+          destination="_axiom/axiom-corpus/releases/$RELEASE_NAME/$RELEASE_CONTENT_SHA256.json"
+          mkdir -p "$(dirname "$destination")"
+          url="${RELEASE_BASE_URL%/}/releases/$RELEASE_NAME/$RELEASE_CONTENT_SHA256.json"
+          if ! curl --fail --silent --show-error --location --proto '=https' --tlsv1.2 \
+              --output "$destination.tmp" "$url"; then
+            echo "::error::Pinned signed corpus release '$RELEASE_NAME' is not published at $url yet (release rebind pending). The plan is still valid; re-run verify-release once the release lands." >&2
+            exit 1
+          fi
+          python - "$destination.tmp" "$RELEASE_NAME" "$RELEASE_CONTENT_SHA256" <<'PY'
+          import hashlib
+          import json
+          import sys
+          from pathlib import Path
+
+          path, expected_name, expected_sha = Path(sys.argv[1]), sys.argv[2], sys.argv[3]
+          try:
+              payload = json.loads(path.read_bytes())
+          except (OSError, json.JSONDecodeError) as exc:
+              raise SystemExit(f"Corpus release object is not valid JSON: {exc}")
+          if payload.get("release") != expected_name:
+              raise SystemExit("Corpus release object: release name mismatch")
+          content = payload.get("content")
+          if not isinstance(content, dict):
+              raise SystemExit("Corpus release object: missing content object")
+          actual = hashlib.sha256(
+              json.dumps(content, sort_keys=True, separators=(",", ":"), ensure_ascii=True).encode()
+          ).hexdigest()
+          if payload.get("content_sha256") != actual or actual != expected_sha:
+              raise SystemExit(f"Corpus release object: content sha256 mismatch ({actual} != {expected_sha})")
+          path.replace(path.with_suffix(""))
+          print(f"Verified signed corpus release '{expected_name}' content sha256 {expected_sha}.")
+          PY
+
       - name: Set up Go 1.26.1
         uses: actions/setup-go@v6.5.0
         with:
