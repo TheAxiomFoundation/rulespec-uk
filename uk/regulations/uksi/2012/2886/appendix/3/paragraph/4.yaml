@@ -1,0 +1,195 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2012/2886/appendix/3/paragraph/4
+  summary: |-
+    For a family with at least one child or young person, the amount is £22.20 where the applicant is a qualifying lone parent and £17.40 in any other case. The higher amount depends on the historical entitlement, lone-parent, benefit-continuity, and premium/component conditions in sub-paragraphs (2) to (4).
+rules:
+  - name: protected_lone_parent_family_amount
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: U.K. S.I. 2012/2886, Appendix 3, paragraph 4(1)(a)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/appendix/3/paragraph/4
+              excerpt: "where the applicant is a lone parent to whom sub-paragraph (2) applies, £22.20"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          22.20
+
+  - name: other_family_amount
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: U.K. S.I. 2012/2886, Appendix 3, paragraph 4(1)(b)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/appendix/3/paragraph/4
+              excerpt: "in any other case, £17.40"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          17.40
+
+  - name: applicant_treated_as_entitled_to_council_tax_benefit_for_relevant_period
+    kind: derived
+    entity: Family
+    dtype: Judgment
+    period: Week
+    source: U.K. S.I. 2012/2886, Appendix 3, paragraph 4(4)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/appendix/3/paragraph/4
+              excerpt: "an applicant is to be treated as entitled to council tax benefit during any period where he was not, or had ceased to be, so entitled"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          applicant_was_not_or_had_ceased_to_be_entitled_to_council_tax_benefit
+          and (
+            (
+              housing_benefit_was_awarded_throughout_relevant_period
+              and housing_benefit_applicable_amount_included_lone_parent_family_premium_throughout_relevant_period
+            )
+            or (
+              relevant_period_was_rent_free
+              and housing_benefit_would_have_been_awarded_but_for_rent_free_period
+              and housing_benefit_applicable_amount_would_have_included_lone_parent_family_premium_throughout_relevant_period
+            )
+          )
+
+  - name: protected_lone_parent_continuity_conditions_apply
+    kind: derived
+    entity: Family
+    dtype: Judgment
+    period: Week
+    source: U.K. S.I. 2012/2886, Appendix 3, paragraph 4(3)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/appendix/3/paragraph/4
+              excerpt: "The conditions specified for the purposes of sub-paragraph (2) are that, in respect of the period commencing on 6th April 1998"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          applicant_has_not_ceased_council_tax_benefit_or_scheme_reduction_entitlement
+          and applicant_has_not_ceased_to_be_a_lone_parent
+          and (
+            (
+              applicant_was_entitled_to_income_support_or_income_based_jobseekers_allowance_on_5_april_1998
+              and applicant_has_continuously_received_a_specified_income_replacement_benefit
+            )
+            or (
+              not applicant_was_entitled_to_income_support_or_income_based_jobseekers_allowance_on_5_april_1998
+              and not applicant_has_become_entitled_to_income_support
+              and not applicant_has_become_entitled_to_income_based_jobseekers_allowance
+              and not applicant_has_become_entitled_to_income_related_employment_and_support_allowance
+            )
+          )
+          and not paragraph_9_premium_has_become_applicable
+          and not paragraph_21_component_has_become_applicable
+          and not paragraph_22_component_has_become_applicable
+
+  - name: protected_lone_parent_amount_applies
+    kind: derived
+    entity: Family
+    dtype: Judgment
+    period: Week
+    source: U.K. S.I. 2012/2886, Appendix 3, paragraph 4(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/appendix/3/paragraph/4
+              excerpt: "The amount in sub-paragraph (1)(a) is applicable to a lone parent"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2012/2886/appendix/3/paragraph/4#applicant_treated_as_entitled_to_council_tax_benefit_for_relevant_period
+              output: applicant_treated_as_entitled_to_council_tax_benefit_for_relevant_period
+              hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2012/2886/appendix/3/paragraph/4#protected_lone_parent_continuity_conditions_apply
+              output: protected_lone_parent_continuity_conditions_apply
+              hash: sha256:local
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          applicant_is_lone_parent
+          and protected_lone_parent_continuity_conditions_apply
+          and (
+            (
+              applicant_was_entitled_to_council_tax_benefit_on_5_april_1998
+              and applicable_amount_included_qualifying_lone_parent_family_premium_on_5_april_1998
+            )
+            or (
+              applicant_is_becoming_entitled_to_council_tax_benefit
+              and applicant_treated_as_entitled_to_council_tax_benefit_for_relevant_period
+              and (
+                applicant_was_entitled_to_housing_benefit_on_council_tax_benefit_claim_date
+                or applicant_would_have_been_entitled_to_housing_benefit_but_claim_date_was_in_rent_free_period
+              )
+            )
+          )
+
+  - name: family_with_child_or_young_person_weekly_amount
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: U.K. S.I. 2012/2886, Appendix 3, paragraph 4(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/appendix/3/paragraph/4
+              excerpt: "in respect of a family of which at least one member is a child or young person"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2012/2886/appendix/3/paragraph/4#protected_lone_parent_family_amount
+              output: protected_lone_parent_family_amount
+              hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2012/2886/appendix/3/paragraph/4#other_family_amount
+              output: other_family_amount
+              hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2012/2886/appendix/3/paragraph/4#protected_lone_parent_amount_applies
+              output: protected_lone_parent_amount_applies
+              hash: sha256:local
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if family_has_at_least_one_child_or_young_person: (if protected_lone_parent_amount_applies: protected_lone_parent_family_amount else: other_family_amount) else: 0
