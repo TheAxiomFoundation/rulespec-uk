@@ -1,0 +1,65 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/wsi/2013/3029/schedule/2/paragraph/2
+  summary: |-
+    “beginning on that person’s date of birth and ending on the day preceding the first Monday in September following that person’s sixteenth birthday” — £87.88; “beginning on the first Monday in September following that person’s sixteenth birthday and ending on the day preceding that person’s twentieth birthday” — £87.88.
+rules:
+  - name: amount_before_first_monday_in_september_after_sixteenth_birthday
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: WSI 2013/3029, Schedule 2, paragraph 2(1), table
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/wsi/2013/3029/schedule/2/paragraph/2
+              excerpt: "ending on the day preceding the first Monday in September following that person’s sixteenth birthday; | £87.88;"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          87.88
+  - name: amount_from_first_monday_in_september_after_sixteenth_to_twentieth_birthday
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: WSI 2013/3029, Schedule 2, paragraph 2(1), table
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/wsi/2013/3029/schedule/2/paragraph/2
+              excerpt: "beginning on the first Monday in September following that person’s sixteenth birthday and ending on the day preceding that person’s twentieth birthday. | £87.88."
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          87.88
+  - name: child_or_young_person_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: WSI 2013/3029, Schedule 2, paragraph 2(1), table
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter_table
+            source:
+              corpus_citation_path: uk/regulation/wsi/2013/3029/schedule/2/paragraph/2
+              table:
+                header: "Child or young person / Amount"
+                row_key: "relevant period"
+                column_key: "Amount"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if person_is_between_birth_and_day_before_first_monday_in_september_after_sixteenth_birthday: amount_before_first_monday_in_september_after_sixteenth_birthday else: if person_is_between_first_monday_in_september_after_sixteenth_birthday_and_day_before_twentieth_birthday: amount_from_first_monday_in_september_after_sixteenth_to_twentieth_birthday else: 0
