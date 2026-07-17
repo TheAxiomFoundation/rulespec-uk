@@ -1,0 +1,27 @@
+- name: schedule 1 pensioner below capital threshold must be included
+  period: 2024-01
+  input:
+    uk:regulations/uksi/2012/2885/11#input.person_is_pensioner_described_in_schedule_1_paragraph_1: true
+    uk:regulations/uksi/2012/2885/11#input.person_is_pensioner: true
+    uk:regulations/uksi/2012/2885/11#input.pensioner_capital_calculated_in_accordance_with_part_6_of_schedule_1: 15000
+  output:
+    uk:regulations/uksi/2012/2885/11#pensioner_must_be_included_in_authority_scheme: holds
+    uk:regulations/uksi/2012/2885/11#pensioner_must_not_be_included_in_authority_scheme: not_holds
+- name: schedule 1 pensioner at capital threshold must be included
+  period: 2024-01
+  input:
+    uk:regulations/uksi/2012/2885/11#input.person_is_pensioner_described_in_schedule_1_paragraph_1: true
+    uk:regulations/uksi/2012/2885/11#input.person_is_pensioner: true
+    uk:regulations/uksi/2012/2885/11#input.pensioner_capital_calculated_in_accordance_with_part_6_of_schedule_1: 16000
+  output:
+    uk:regulations/uksi/2012/2885/11#pensioner_must_be_included_in_authority_scheme: holds
+    uk:regulations/uksi/2012/2885/11#pensioner_must_not_be_included_in_authority_scheme: not_holds
+- name: pensioner above capital threshold must not be included
+  period: 2024-01
+  input:
+    uk:regulations/uksi/2012/2885/11#input.person_is_pensioner_described_in_schedule_1_paragraph_1: true
+    uk:regulations/uksi/2012/2885/11#input.person_is_pensioner: true
+    uk:regulations/uksi/2012/2885/11#input.pensioner_capital_calculated_in_accordance_with_part_6_of_schedule_1: 16001
+  output:
+    uk:regulations/uksi/2012/2885/11#pensioner_must_be_included_in_authority_scheme: not_holds
+    uk:regulations/uksi/2012/2885/11#pensioner_must_not_be_included_in_authority_scheme: holds
