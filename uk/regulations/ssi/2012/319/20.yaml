@@ -1,0 +1,53 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/ssi/2012/319/20
+  summary: |-
+    An applicant's applicable amount is the aggregate of applicable personal allowances, child or young person allowances, disability premiums, and £19.48 where entitled to a transitional family premium under regulation 2 of the 2016 Amendment Regulations.
+  deferred_outputs:
+    - output: uk:regulations/ssi/2012/319/20#applicable_amount
+      reason: The aggregate also requires allowances and premiums determined under Schedule 1, but no executable exports for those cross-referenced amounts are supplied.
+rules:
+  - name: transitional_family_premium_amount
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: regulation 20
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/ssi/2012/319/20
+              excerpt: "the amount of £19.48"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          19.48
+  - name: transitional_family_premium_contribution
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: regulation 20
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/ssi/2012/319/20
+              excerpt: "if the applicant is entitled to an amount (“a transitional family premium”) by virtue of regulation 2"
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/ssi/2012/319/20
+              excerpt: "the amount of £19.48"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if transitional_family_premium_entitlement_under_regulation_2: transitional_family_premium_amount else: 0

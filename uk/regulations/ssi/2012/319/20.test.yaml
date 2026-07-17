@@ -1,0 +1,20 @@
+- name: transitional_family_premium_is_included_when_entitled
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2026-01-12'
+    end: '2026-01-18'
+  input:
+    uk:regulations/ssi/2012/319/20#input.transitional_family_premium_entitlement_under_regulation_2: true
+  output:
+    uk:regulations/ssi/2012/319/20#transitional_family_premium_contribution: 19.48
+- name: transitional_family_premium_is_zero_when_not_entitled
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2026-01-12'
+    end: '2026-01-18'
+  input:
+    uk:regulations/ssi/2012/319/20#input.transitional_family_premium_entitlement_under_regulation_2: false
+  output:
+    uk:regulations/ssi/2012/319/20#transitional_family_premium_contribution: 0
