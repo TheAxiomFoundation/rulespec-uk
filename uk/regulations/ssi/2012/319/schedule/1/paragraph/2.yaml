@@ -1,0 +1,119 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/ssi/2012/319/schedule/1/paragraph/2
+  summary: |-
+    The amount specified in column (2) for each person, couple or member of a polygamous marriage in column (1) is specified for regulation 20(a).
+rules:
+  - name: single_pension_age_applicant_amount
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Schedule 1 paragraph 2, table row (1)(b)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/ssi/2012/319/schedule/1/paragraph/2
+              excerpt: "who has attained the qualifying age for state pension credit | £256.00"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          256.00
+
+  - name: couple_pension_age_amount
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Schedule 1 paragraph 2, table row (2)(b)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/ssi/2012/319/schedule/1/paragraph/2
+              excerpt: "where one or both members have attained the qualifying age for state pension credit | £383.35"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          383.35
+
+  - name: polygamous_marriage_applicant_and_one_other_amount
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Schedule 1 paragraph 2, table row (4)(a)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/ssi/2012/319/schedule/1/paragraph/2
+              excerpt: "afor the applicant and one other party to the marriage; | £383.35"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          383.35
+
+  - name: polygamous_marriage_each_additional_household_party_amount
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Schedule 1 paragraph 2, table row (4)(b)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/ssi/2012/319/schedule/1/paragraph/2
+              excerpt: "bfor each additional party to the marriage who is a member of the same household as the applicant. | £127.35"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          127.35
+
+  - name: applicable_amount_for_regulation_20_a
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Schedule 1 paragraph 2
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/ssi/2012/319/schedule/1/paragraph/2
+              excerpt: "is the amount specified for the purposes of regulation"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/ssi/2012/319/schedule/1/paragraph/2
+              excerpt: "who has attained the qualifying age for state pension credit"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/ssi/2012/319/schedule/1/paragraph/2
+              excerpt: "where one or both members have attained the qualifying age for state pension credit"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/ssi/2012/319/schedule/1/paragraph/2
+              excerpt: "for each additional party to the marriage who is a member of the same household as the applicant."
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if applicant_is_single_or_lone_parent_and_has_attained_qualifying_age_for_state_pension_credit: single_pension_age_applicant_amount else: if couple_has_one_or_both_members_at_qualifying_age_for_state_pension_credit: couple_pension_age_amount else: if applicant_is_member_of_polygamous_marriage_with_one_or_more_members_at_qualifying_age_for_state_pension_credit: polygamous_marriage_applicant_and_one_other_amount + (additional_parties_to_polygamous_marriage_in_applicant_household * polygamous_marriage_each_additional_household_party_amount) else: 0
