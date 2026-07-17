@@ -1,0 +1,39 @@
+- name: amount_before_first_monday_in_september_after_sixteenth_birthday
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2026-01-05'
+    end: '2026-01-11'
+  input:
+    ? uk:regulations/wsi/2013/3029/schedule/2/paragraph/2#input.person_is_between_birth_and_day_before_first_monday_in_september_after_sixteenth_birthday
+    : true
+    ? uk:regulations/wsi/2013/3029/schedule/2/paragraph/2#input.person_is_between_first_monday_in_september_after_sixteenth_birthday_and_day_before_twentieth_birthday
+    : false
+  output:
+    uk:regulations/wsi/2013/3029/schedule/2/paragraph/2#child_or_young_person_amount: 87.88
+- name: amount_from_first_monday_in_september_after_sixteenth_to_twentieth_birthday
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2026-01-05'
+    end: '2026-01-11'
+  input:
+    ? uk:regulations/wsi/2013/3029/schedule/2/paragraph/2#input.person_is_between_birth_and_day_before_first_monday_in_september_after_sixteenth_birthday
+    : false
+    ? uk:regulations/wsi/2013/3029/schedule/2/paragraph/2#input.person_is_between_first_monday_in_september_after_sixteenth_birthday_and_day_before_twentieth_birthday
+    : true
+  output:
+    uk:regulations/wsi/2013/3029/schedule/2/paragraph/2#child_or_young_person_amount: 87.88
+- name: amount_outside_specified_periods
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2026-01-05'
+    end: '2026-01-11'
+  input:
+    ? uk:regulations/wsi/2013/3029/schedule/2/paragraph/2#input.person_is_between_birth_and_day_before_first_monday_in_september_after_sixteenth_birthday
+    : false
+    ? uk:regulations/wsi/2013/3029/schedule/2/paragraph/2#input.person_is_between_first_monday_in_september_after_sixteenth_birthday_and_day_before_twentieth_birthday
+    : false
+  output:
+    uk:regulations/wsi/2013/3029/schedule/2/paragraph/2#child_or_young_person_amount: 0
