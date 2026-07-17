@@ -1,0 +1,144 @@
+format: rulespec/v1
+module:
+  status: deferred
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2012/2886/appendix/4/paragraph/1
+  summary: |-
+    “Subject to paragraphs 2 and 3”, the Table specifies alternative maximum council tax reductions of 25 per cent, 15 per cent, 7.5 per cent, or 100 per cent of council tax due.
+  deferred_outputs:
+    - output: uk:regulations/uksi/2012/2886/appendix/4/paragraph/1#alternative_maximum_council_tax_reduction
+      reason: The operative table is expressly subject to paragraphs 2 and 3, whose executable displacement rules were not supplied.
+      source_values:
+        - uk:regulations/uksi/2012/2886/appendix/4/paragraph/1#income_support_rate
+        - uk:regulations/uksi/2012/2886/appendix/4/paragraph/1#lower_income_band_threshold
+        - uk:regulations/uksi/2012/2886/appendix/4/paragraph/1#lower_income_band_rate
+        - uk:regulations/uksi/2012/2886/appendix/4/paragraph/1#upper_income_band_threshold
+        - uk:regulations/uksi/2012/2886/appendix/4/paragraph/1#upper_income_band_rate
+        - uk:regulations/uksi/2012/2886/appendix/4/paragraph/1#sole_occupancy_rate
+rules:
+  - name: income_support_rate
+    kind: parameter
+    dtype: Rate
+    source: Appendix 4 paragraph 1 table, column (2)(a)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: table_cell
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/appendix/4/paragraph/1
+              excerpt: "25 per cent"
+              table:
+                header: Alternative maximum council tax reduction
+                row: "(a) income support, income-related employment and support allowance, state pension credit or income-based jobseeker’s allowance"
+                column: "(2)"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          0.25
+  - name: lower_income_band_threshold
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    period: Week
+    source: Appendix 4 paragraph 1 table, column (1)(b)(i)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: table_cell
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/appendix/4/paragraph/1
+              excerpt: "less than £183.00 per week"
+              table:
+                header: Second adult
+                row: "(b)(i)"
+                column: "(1)"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          183.00
+  - name: lower_income_band_rate
+    kind: parameter
+    dtype: Rate
+    source: Appendix 4 paragraph 1 table, column (2)(b)(i)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: table_cell
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/appendix/4/paragraph/1
+              excerpt: "15 per cent"
+              table:
+                header: Alternative maximum council tax reduction
+                row: "(b)(i) less than £183.00 per week"
+                column: "(2)"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          0.15
+  - name: upper_income_band_threshold
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    period: Week
+    source: Appendix 4 paragraph 1 table, column (1)(b)(ii)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: table_cell
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/appendix/4/paragraph/1
+              excerpt: "not less than £183.00 per week but less than £239.00 per week"
+              table:
+                header: Second adult
+                row: "(b)(ii)"
+                column: "(1)"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          239.00
+  - name: upper_income_band_rate
+    kind: parameter
+    dtype: Rate
+    source: Appendix 4 paragraph 1 table, column (2)(b)(ii)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: table_cell
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/appendix/4/paragraph/1
+              excerpt: "7.5 per cent"
+              table:
+                header: Alternative maximum council tax reduction
+                row: "(b)(ii) not less than £183.00 per week but less than £239.00 per week"
+                column: "(2)"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          0.075
+  - name: sole_occupancy_rate
+    kind: parameter
+    dtype: Rate
+    source: Appendix 4 paragraph 1 table, column (2)(c)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: table_cell
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/appendix/4/paragraph/1
+              excerpt: "100 per cent"
+              table:
+                header: Alternative maximum council tax reduction
+                row: "(c) dwelling would be wholly occupied by persons to whom paragraph 75(1) applies but for qualifying second adults"
+                column: "(2)"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          1
