@@ -1,0 +1,115 @@
+- name: single person below the lower income limit receives maximum reduction
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:regulations/ssi/2021/249/14#input.person_is_liable_to_pay_council_tax_for_the_day: true
+    uk:regulations/ssi/2021/249/14#input.dwelling_is_in_valuation_band_e_f_g_or_h: true
+    uk:regulations/ssi/2021/249/14#input.dwelling_is_persons_sole_or_main_residence: true
+    uk:regulations/ssi/2021/249/14#input.person_is_member_of_a_couple: false
+    uk:regulations/ssi/2021/249/14#input.person_is_responsible_for_child_or_young_person: false
+    uk:regulations/ssi/2021/249/14#input.weekly_income: 300
+    uk:regulations/ssi/2021/249/14#input.appropriate_maximum_council_tax_reduction: 15
+    uk:regulations/ssi/2021/249/14#input.council_tax_reduction_calculated_under_regulation_13: 10
+  output:
+    uk:regulations/ssi/2021/249/14#single_person_without_child_weekly_income_limit: 321
+    uk:regulations/ssi/2021/249/14#other_person_weekly_income_limit: 479
+    uk:regulations/ssi/2021/249/14#band_e_to_h_dwelling_condition_satisfied: holds
+    uk:regulations/ssi/2021/249/14#paragraph_6_applies: holds
+    uk:regulations/ssi/2021/249/14#relevant_person_has_no_weekly_income: not_holds
+    uk:regulations/ssi/2021/249/14#weekly_income_does_not_exceed_applicable_limit: holds
+    uk:regulations/ssi/2021/249/14#band_e_to_h_amount_b: 0
+    uk:regulations/ssi/2021/249/14#appropriate_maximum_reduction_exceeds_amount_b: holds
+    uk:regulations/ssi/2021/249/14#council_tax_reduction_amount_under_band_e_to_h_route: 15
+    uk:regulations/ssi/2021/249/14#band_e_to_h_reduction_exceeds_regulation_13_reduction: holds
+- name: excess income is tapered by ten pounds
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:regulations/ssi/2021/249/14#input.person_is_liable_to_pay_council_tax_for_the_day: false
+    uk:regulations/ssi/2021/249/14#input.dwelling_is_in_valuation_band_e_f_g_or_h: true
+    uk:regulations/ssi/2021/249/14#input.dwelling_is_persons_sole_or_main_residence: true
+    uk:regulations/ssi/2021/249/14#input.person_is_member_of_a_couple: false
+    uk:regulations/ssi/2021/249/14#input.person_is_responsible_for_child_or_young_person: false
+    uk:regulations/ssi/2021/249/14#input.weekly_income: 671
+    uk:regulations/ssi/2021/249/14#input.appropriate_maximum_council_tax_reduction: 15
+    uk:regulations/ssi/2021/249/14#input.council_tax_reduction_calculated_under_regulation_13: 4
+  output:
+    uk:regulations/ssi/2021/249/14#band_e_to_h_dwelling_condition_satisfied: not_holds
+    uk:regulations/ssi/2021/249/14#paragraph_6_applies: holds
+    uk:regulations/ssi/2021/249/14#relevant_person_has_no_weekly_income: not_holds
+    uk:regulations/ssi/2021/249/14#weekly_income_does_not_exceed_applicable_limit: not_holds
+    uk:regulations/ssi/2021/249/14#band_e_to_h_amount_b: 10
+    uk:regulations/ssi/2021/249/14#appropriate_maximum_reduction_exceeds_amount_b: holds
+    uk:regulations/ssi/2021/249/14#council_tax_reduction_amount_under_band_e_to_h_route: 5
+    uk:regulations/ssi/2021/249/14#band_e_to_h_reduction_exceeds_regulation_13_reduction: holds
+- name: couple uses the other-person income limit
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:regulations/ssi/2021/249/14#input.person_is_liable_to_pay_council_tax_for_the_day: true
+    uk:regulations/ssi/2021/249/14#input.dwelling_is_in_valuation_band_e_f_g_or_h: false
+    uk:regulations/ssi/2021/249/14#input.dwelling_is_persons_sole_or_main_residence: true
+    uk:regulations/ssi/2021/249/14#input.person_is_member_of_a_couple: true
+    uk:regulations/ssi/2021/249/14#input.person_is_responsible_for_child_or_young_person: false
+    uk:regulations/ssi/2021/249/14#input.weekly_income: 479
+    uk:regulations/ssi/2021/249/14#input.appropriate_maximum_council_tax_reduction: 15
+    uk:regulations/ssi/2021/249/14#input.council_tax_reduction_calculated_under_regulation_13: 15
+  output:
+    uk:regulations/ssi/2021/249/14#band_e_to_h_dwelling_condition_satisfied: not_holds
+    uk:regulations/ssi/2021/249/14#paragraph_6_applies: not_holds
+    uk:regulations/ssi/2021/249/14#relevant_person_has_no_weekly_income: not_holds
+    uk:regulations/ssi/2021/249/14#weekly_income_does_not_exceed_applicable_limit: holds
+    uk:regulations/ssi/2021/249/14#band_e_to_h_amount_b: 0
+    uk:regulations/ssi/2021/249/14#appropriate_maximum_reduction_exceeds_amount_b: holds
+    uk:regulations/ssi/2021/249/14#council_tax_reduction_amount_under_band_e_to_h_route: 15
+    uk:regulations/ssi/2021/249/14#band_e_to_h_reduction_exceeds_regulation_13_reduction: not_holds
+- name: no income satisfies the income route but child responsibility prevents paragraph
+    6
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:regulations/ssi/2021/249/14#input.person_is_liable_to_pay_council_tax_for_the_day: true
+    uk:regulations/ssi/2021/249/14#input.dwelling_is_in_valuation_band_e_f_g_or_h: true
+    uk:regulations/ssi/2021/249/14#input.dwelling_is_persons_sole_or_main_residence: false
+    uk:regulations/ssi/2021/249/14#input.person_is_member_of_a_couple: false
+    uk:regulations/ssi/2021/249/14#input.person_is_responsible_for_child_or_young_person: true
+    uk:regulations/ssi/2021/249/14#input.weekly_income: 0
+    uk:regulations/ssi/2021/249/14#input.appropriate_maximum_council_tax_reduction: 15
+    uk:regulations/ssi/2021/249/14#input.council_tax_reduction_calculated_under_regulation_13: 16
+  output:
+    uk:regulations/ssi/2021/249/14#band_e_to_h_dwelling_condition_satisfied: not_holds
+    uk:regulations/ssi/2021/249/14#paragraph_6_applies: not_holds
+    uk:regulations/ssi/2021/249/14#relevant_person_has_no_weekly_income: holds
+    uk:regulations/ssi/2021/249/14#weekly_income_does_not_exceed_applicable_limit: holds
+    uk:regulations/ssi/2021/249/14#band_e_to_h_amount_b: 0
+    uk:regulations/ssi/2021/249/14#appropriate_maximum_reduction_exceeds_amount_b: holds
+    uk:regulations/ssi/2021/249/14#council_tax_reduction_amount_under_band_e_to_h_route: 15
+    uk:regulations/ssi/2021/249/14#band_e_to_h_reduction_exceeds_regulation_13_reduction: not_holds
+- name: auto_zero_council_tax_reduction_amount_under_band_e_to_h_route
+  period:
+    period_kind: tax_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:regulations/ssi/2021/249/14#input.appropriate_maximum_council_tax_reduction: 0
+    uk:regulations/ssi/2021/249/14#input.council_tax_reduction_calculated_under_regulation_13: 0
+    uk:regulations/ssi/2021/249/14#input.dwelling_is_in_valuation_band_e_f_g_or_h: false
+    uk:regulations/ssi/2021/249/14#input.dwelling_is_persons_sole_or_main_residence: false
+    uk:regulations/ssi/2021/249/14#input.person_is_liable_to_pay_council_tax_for_the_day: false
+    uk:regulations/ssi/2021/249/14#input.person_is_member_of_a_couple: false
+    uk:regulations/ssi/2021/249/14#input.person_is_responsible_for_child_or_young_person: false
+    uk:regulations/ssi/2021/249/14#input.weekly_income: 0
+  output:
+    uk:regulations/ssi/2021/249/14#council_tax_reduction_amount_under_band_e_to_h_route: 0
