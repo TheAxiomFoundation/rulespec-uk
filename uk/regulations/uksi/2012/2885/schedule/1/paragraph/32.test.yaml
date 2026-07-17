@@ -1,0 +1,45 @@
+- name: sale expenses and secured encumbrance are deducted
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  tables:
+    Asset:
+    - uk:regulations/uksi/2012/2885/schedule/1/paragraph/32#input.current_market_or_surrender_value: 1000
+      uk:regulations/uksi/2012/2885/schedule/1/paragraph/32#input.sale_would_have_attributable_expenses: true
+      uk:regulations/uksi/2012/2885/schedule/1/paragraph/32#input.secured_encumbrance_amount: 200
+  input: {}
+  output:
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/32#applicant_uk_asset_capital_value:
+    - 700
+- name: no sale-expense deduction where sale would have no attributable expenses
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  tables:
+    Asset:
+    - uk:regulations/uksi/2012/2885/schedule/1/paragraph/32#input.current_market_or_surrender_value: 1000
+      uk:regulations/uksi/2012/2885/schedule/1/paragraph/32#input.sale_would_have_attributable_expenses: false
+      uk:regulations/uksi/2012/2885/schedule/1/paragraph/32#input.secured_encumbrance_amount: 200
+  input: {}
+  output:
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/32#applicant_uk_asset_capital_value:
+    - 800
+- name: sale-expense deduction applies without an encumbrance
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  tables:
+    Asset:
+    - uk:regulations/uksi/2012/2885/schedule/1/paragraph/32#input.current_market_or_surrender_value: 500
+      uk:regulations/uksi/2012/2885/schedule/1/paragraph/32#input.sale_would_have_attributable_expenses: true
+      uk:regulations/uksi/2012/2885/schedule/1/paragraph/32#input.secured_encumbrance_amount: 0
+  input: {}
+  output:
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/32#applicant_uk_asset_capital_value:
+    - 450

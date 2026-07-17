@@ -1,0 +1,46 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2012/2885/schedule/1/paragraph/32
+  summary: |-
+    Capital possessed in the United Kingdom is calculated at current market or surrender value, less 10 per cent where sale expenses would arise and less any secured encumbrance.
+rules:
+  - name: attributable_sale_expense_deduction_rate
+    kind: parameter
+    dtype: Rate
+    source: Schedule 1, paragraph 32
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2885/schedule/1/paragraph/32
+              excerpt: "where there would be expenses attributable to the sale, 10 per cent"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          0.10
+
+  - name: applicant_uk_asset_capital_value
+    kind: derived
+    entity: Asset
+    dtype: Money
+    unit: GBP
+    period: Day
+    source: Schedule 1, paragraph 32
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2885/schedule/1/paragraph/32
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          current_market_or_surrender_value
+          - (if sale_would_have_attributable_expenses: current_market_or_surrender_value * attributable_sale_expense_deduction_rate else: 0)
+          - secured_encumbrance_amount
