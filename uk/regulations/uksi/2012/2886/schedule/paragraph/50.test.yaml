@@ -1,0 +1,36 @@
+- name: payment periods are converted to weekly amounts
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2024-01-01'
+    end: '2024-01-07'
+  tables:
+    Payment:
+    - uk:regulations/uksi/2012/2886/schedule/paragraph/50#input.payment_amount: 100
+      uk:regulations/uksi/2012/2886/schedule/paragraph/50#input.payment_period_does_not_exceed_week: true
+      uk:regulations/uksi/2012/2886/schedule/paragraph/50#input.payment_period_is_month: false
+      uk:regulations/uksi/2012/2886/schedule/paragraph/50#input.number_of_days_in_payment_period: 7
+    - uk:regulations/uksi/2012/2886/schedule/paragraph/50#input.payment_amount: 520
+      uk:regulations/uksi/2012/2886/schedule/paragraph/50#input.payment_period_does_not_exceed_week: false
+      uk:regulations/uksi/2012/2886/schedule/paragraph/50#input.payment_period_is_month: true
+      uk:regulations/uksi/2012/2886/schedule/paragraph/50#input.number_of_days_in_payment_period: 30
+    - uk:regulations/uksi/2012/2886/schedule/paragraph/50#input.payment_amount: 140
+      uk:regulations/uksi/2012/2886/schedule/paragraph/50#input.payment_period_does_not_exceed_week: false
+      uk:regulations/uksi/2012/2886/schedule/paragraph/50#input.payment_period_is_month: false
+      uk:regulations/uksi/2012/2886/schedule/paragraph/50#input.number_of_days_in_payment_period: 14
+  output:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/50#weekly_amount_of_payment_for_paragraphs_47_49_and_59:
+    - 100
+    - 120
+    - 70
+- name: self-employed earnings are averaged over the assessment period
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2024-01-01'
+    end: '2024-01-07'
+  input:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/50#input.earnings_over_assessment_period: 1400
+    uk:regulations/uksi/2012/2886/schedule/paragraph/50#input.number_of_days_in_assessment_period: 14
+  output:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/50#weekly_earnings_of_self_employed_applicant: 700
