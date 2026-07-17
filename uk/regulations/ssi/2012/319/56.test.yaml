@@ -1,0 +1,32 @@
+- name: division applies for jointly liable resident applicant
+  period: 2026-01
+  input:
+    uk:regulations/ssi/2012/319/56#input.applicant_is_jointly_and_severally_liable_for_council_tax: true
+    uk:regulations/ssi/2012/319/56#input.applicant_is_resident_with_one_or_more_other_persons: true
+    uk:regulations/ssi/2012/319/56#input.liability_with_partner_is_only_by_virtue_of_sections_77_or_77a: false
+  output:
+    uk:regulations/ssi/2012/319/56#joint_liability_division_applies: holds
+- name: division does not apply without joint liability
+  period: 2026-01
+  input:
+    uk:regulations/ssi/2012/319/56#input.applicant_is_jointly_and_severally_liable_for_council_tax: false
+    uk:regulations/ssi/2012/319/56#input.applicant_is_resident_with_one_or_more_other_persons: true
+    uk:regulations/ssi/2012/319/56#input.liability_with_partner_is_only_by_virtue_of_sections_77_or_77a: false
+  output:
+    uk:regulations/ssi/2012/319/56#joint_liability_division_applies: not_holds
+- name: division does not apply without shared residence
+  period: 2026-01
+  input:
+    uk:regulations/ssi/2012/319/56#input.applicant_is_jointly_and_severally_liable_for_council_tax: true
+    uk:regulations/ssi/2012/319/56#input.applicant_is_resident_with_one_or_more_other_persons: false
+    uk:regulations/ssi/2012/319/56#input.liability_with_partner_is_only_by_virtue_of_sections_77_or_77a: false
+  output:
+    uk:regulations/ssi/2012/319/56#joint_liability_division_applies: not_holds
+- name: spouse or civil partner liability exception displaces division
+  period: 2026-01
+  input:
+    uk:regulations/ssi/2012/319/56#input.applicant_is_jointly_and_severally_liable_for_council_tax: true
+    uk:regulations/ssi/2012/319/56#input.applicant_is_resident_with_one_or_more_other_persons: true
+    uk:regulations/ssi/2012/319/56#input.liability_with_partner_is_only_by_virtue_of_sections_77_or_77a: true
+  output:
+    uk:regulations/ssi/2012/319/56#joint_liability_division_applies: not_holds
