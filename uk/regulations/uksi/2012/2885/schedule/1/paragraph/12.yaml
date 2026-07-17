@@ -1,0 +1,48 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2012/2885/schedule/1/paragraph/12
+  summary: |-
+    Where an authority considers that an applicant and non-dependant arranged to take advantage of its scheme, and the non-dependant has more income and capital, the applicant is treated as possessing that income and capital unless on guarantee credit; the non-dependant's income and capital are calculated as for the applicant.
+rules:
+  - name: non_dependant_income_and_capital_treated_as_applicant_income_and_capital
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Month
+    source: Schedule 1, paragraph 12(1)-(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2885/schedule/1/paragraph/12
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          authority_considers_applicant_and_non_dependant_arranged_to_take_advantage_of_scheme
+          and non_dependant_has_more_income_and_capital_than_applicant
+          and not applicant_is_on_guarantee_credit
+
+  - name: non_dependant_income_and_capital_calculated_as_for_applicant
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Month
+    source: Schedule 1, paragraph 12(3)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2885/schedule/1/paragraph/12
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          authority_considers_applicant_and_non_dependant_arranged_to_take_advantage_of_scheme
+          and non_dependant_has_more_income_and_capital_than_applicant
+          and not applicant_is_on_guarantee_credit
