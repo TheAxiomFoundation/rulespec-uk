@@ -1,0 +1,172 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/ssi/2021/249/schedule/1/paragraph/1
+  summary: |-
+    “A single applicant aged under 25, where no child premium is included” — £75.65; “aged 25 or over” — £95.55; “A lone parent” — £95.55; a qualifying single applicant entitled to main phase employment and support allowance or universal credit with limited capability — £95.55; “A couple” — £150.15. Where a person falls within two categories, the higher amount applies. Main phase employment and support allowance entitlement arises if paragraph 18 or 19 is satisfied.
+rules:
+  - name: single_applicant_age_threshold
+    kind: parameter
+    dtype: Integer
+    source: Schedule 1, paragraph 1, table, column (1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/regulation/ssi/2021/249/schedule/1/paragraph/1
+              excerpt: "A single applicant aged under 25"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          25
+
+  - name: single_applicant_under_age_threshold_amount
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: Schedule 1, paragraph 1, table, first row
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/ssi/2021/249/schedule/1/paragraph/1
+              excerpt: "A single applicant aged under 25, where no child premium is included under regulation 35(b) and paragraph (2). | £75.65"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          75.65
+
+  - name: single_applicant_at_or_over_age_threshold_amount
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: Schedule 1, paragraph 1, table, second row
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/ssi/2021/249/schedule/1/paragraph/1
+              excerpt: "A single applicant aged 25 or over, where no child premium is included under regulation 35(b) and paragraph (2). | £95.55"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          95.55
+
+  - name: lone_parent_amount
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: Schedule 1, paragraph 1, table, third row
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/ssi/2021/249/schedule/1/paragraph/1
+              excerpt: "A lone parent. | £95.55"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          95.55
+
+  - name: single_applicant_main_phase_or_limited_capability_amount
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: Schedule 1, paragraph 1, table, fourth row
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/ssi/2021/249/schedule/1/paragraph/1
+              excerpt: "A single applicant who is entitled to main phase employment and support allowance or who has an award of universal credit and has limited capability for work"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          95.55
+
+  - name: couple_amount
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: Schedule 1, paragraph 1, table, fifth row
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/ssi/2021/249/schedule/1/paragraph/1
+              excerpt: "A couple. | £150.15"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          150.15
+
+  - name: applicant_entitled_to_main_phase_employment_and_support_allowance
+    kind: derived
+    entity: Family
+    dtype: Judgment
+    period: Month
+    source: Schedule 1, paragraph 1(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/regulation/ssi/2021/249/schedule/1/paragraph/1
+              excerpt: "an applicant is entitled to main phase employment and support allowance if either of paragraphs 18 or 19 (components) is satisfied"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          paragraph_18_components_satisfied
+          or paragraph_19_components_satisfied
+
+  - name: applicable_amount_for_person_or_couple
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Schedule 1, paragraph 1(1), table
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/ssi/2021/249/schedule/1/paragraph/1
+              excerpt: "The amount specified in column (2) below in respect of each person or couple specified in column (1)"
+          - path: versions[0].formula
+            kind: ordering
+            source:
+              corpus_citation_path: uk/regulation/ssi/2021/249/schedule/1/paragraph/1
+              excerpt: "where a person falls within two categories in column (1), the higher of those amounts"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          max(
+            if is_single_applicant and no_child_premium_is_included_under_regulation_35_b_and_paragraph_2 and applicant_age < single_applicant_age_threshold: single_applicant_under_age_threshold_amount else: 0,
+            max(
+              if is_single_applicant and no_child_premium_is_included_under_regulation_35_b_and_paragraph_2 and applicant_age >= single_applicant_age_threshold: single_applicant_at_or_over_age_threshold_amount else: 0,
+              max(
+                if is_lone_parent: lone_parent_amount else: 0,
+                max(
+                  if is_single_applicant and (applicant_entitled_to_main_phase_employment_and_support_allowance or (applicant_has_universal_credit_award and (applicant_has_limited_capability_for_work_under_regulation_39_1 or applicant_has_limited_capability_for_work_and_work_related_activity_under_regulation_40_1))): single_applicant_main_phase_or_limited_capability_amount else: 0,
+                  if is_couple: couple_amount else: 0
+                )
+              )
+            )
+          )
