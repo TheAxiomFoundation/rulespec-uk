@@ -1,0 +1,28 @@
+- name: birth_to_sixteenth_birthday_period
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2024-01-01'
+    end: '2024-01-07'
+  input:
+    ? uk:regulations/uksi/2012/2886/appendix/3/paragraph/3#input.person_is_in_birth_to_first_monday_after_sixteenth_birthday_period
+    : true
+    ? uk:regulations/uksi/2012/2886/appendix/3/paragraph/3#input.person_is_in_first_monday_after_sixteenth_to_twentieth_birthday_period
+    : false
+  output:
+    uk:regulations/uksi/2012/2886/appendix/3/paragraph/3#child_birth_to_sixteenth_birthday_weekly_amount: 65.62
+    uk:regulations/uksi/2012/2886/appendix/3/paragraph/3#young_person_sixteenth_to_twentieth_birthday_weekly_amount: 0
+- name: sixteenth_to_twentieth_birthday_period
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2024-01-01'
+    end: '2024-01-07'
+  input:
+    ? uk:regulations/uksi/2012/2886/appendix/3/paragraph/3#input.person_is_in_birth_to_first_monday_after_sixteenth_birthday_period
+    : false
+    ? uk:regulations/uksi/2012/2886/appendix/3/paragraph/3#input.person_is_in_first_monday_after_sixteenth_to_twentieth_birthday_period
+    : true
+  output:
+    uk:regulations/uksi/2012/2886/appendix/3/paragraph/3#child_birth_to_sixteenth_birthday_weekly_amount: 0
+    uk:regulations/uksi/2012/2886/appendix/3/paragraph/3#young_person_sixteenth_to_twentieth_birthday_weekly_amount: 65.62
