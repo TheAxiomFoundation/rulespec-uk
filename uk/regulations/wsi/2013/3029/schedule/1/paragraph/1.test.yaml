@@ -1,0 +1,47 @@
+- name: aggregates_applicable_amount_components
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2024-01-01'
+    end: '2024-01-07'
+  input:
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/1#input.personal_allowance_amount: 100
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/1#input.child_or_young_person_amount: 50
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/1#input.family_premium_amount: 20
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/1#input.applicable_premiums_amount: 30
+  output:
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/1#pensioner_weekly_applicable_amount: 200
+- name: additional_spouse_when_both_definition_conditions_hold
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2024-01-01'
+    end: '2024-01-07'
+  input:
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/1#input.person_is_spouse_of_either_party_to_marriage: true
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/1#input.person_is_additional_to_other_party_to_marriage: true
+  output:
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/1#additional_spouse: holds
+- name: not_additional_spouse_without_spousal_status
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2024-01-01'
+    end: '2024-01-07'
+  input:
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/1#input.person_is_spouse_of_either_party_to_marriage: false
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/1#input.person_is_additional_to_other_party_to_marriage: true
+  output:
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/1#additional_spouse: not_holds
+- name: patient_receiving_free_in_patient_treatment_without_sentence
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2024-01-01'
+    end: '2024-01-07'
+  input:
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/1#input.person_receives_free_in_patient_treatment: true
+    ? uk:regulations/wsi/2013/3029/schedule/1/paragraph/1#input.person_is_serving_sentence_of_imprisonment_or_youth_custody_detention
+    : false
+  output:
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/1#patient: holds
