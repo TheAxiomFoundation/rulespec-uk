@@ -1,0 +1,17 @@
+- name: aggregates_all_applicable_weekly_amounts
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2021-04-05'
+    end: '2021-04-11'
+  input:
+    uk:regulations/ssi/2021/249/35#input.personal_allowance: 100
+    uk:regulations/ssi/2021/249/35#input.child_premium: 20
+    uk:regulations/ssi/2021/249/35#input.disabled_child_or_enhanced_disability_premium: 30
+    uk:regulations/ssi/2021/249/35#input.carer_premium: 40
+    uk:regulations/ssi/2021/249/35#input.disability_premiums: 50
+    uk:regulations/ssi/2021/249/35#input.applicable_component: 60
+    uk:regulations/ssi/2021/249/35#input.transitional_family_premium: 10
+    uk:regulations/ssi/2021/249/35#input.transitional_addition: 15
+  output:
+    uk:regulations/ssi/2021/249/35#weekly_applicable_amount: 325

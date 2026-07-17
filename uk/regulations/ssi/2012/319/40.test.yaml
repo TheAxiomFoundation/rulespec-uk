@@ -1,0 +1,12 @@
+- name: capital_at_limit_does_not_disqualify
+  period: 2026-01
+  input:
+    uk:regulations/ssi/2012/319/40#input.capital: 16000
+  output:
+    uk:regulations/ssi/2012/319/40#capital_does_not_disqualify_council_tax_reduction: holds
+- name: capital_above_limit_disqualifies
+  period: 2026-01
+  input:
+    uk:regulations/ssi/2012/319/40#input.capital: 16001
+  output:
+    uk:regulations/ssi/2012/319/40#capital_does_not_disqualify_council_tax_reduction: not_holds

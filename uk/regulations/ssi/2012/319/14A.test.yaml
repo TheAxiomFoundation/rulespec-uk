@@ -1,0 +1,126 @@
+- name: qualifying_person_with_excess_income_receives_reduced_amount
+  period:
+    period_kind: custom
+    name: day
+    start: '2026-01-15'
+    end: '2026-01-15'
+  input:
+    uk:regulations/ssi/2012/319/14A#input.relevant_person_is_liable_for_council_tax_for_dwelling: true
+    uk:regulations/ssi/2012/319/14A#input.dwelling_is_in_band_e_f_g_or_h_and_is_sole_or_main_residence: true
+    uk:regulations/ssi/2012/319/14A#input.regulation_15_applies: false
+    uk:regulations/ssi/2012/319/14A#input.regulation_16_applies: false
+    uk:regulations/ssi/2012/319/14A#input.regulation_19_applies: false
+    uk:regulations/ssi/2012/319/14A#input.relevant_person_has_made_application_in_accordance_with_part_9: true
+    uk:regulations/ssi/2012/319/14A#input.appropriate_maximum_council_tax_reduction_exists: true
+    uk:regulations/ssi/2012/319/14A#input.relevant_person_is_not_member_of_couple_or_polygamous_marriage: true
+    uk:regulations/ssi/2012/319/14A#input.relevant_person_is_not_responsible_for_child_or_young_person: true
+    uk:regulations/ssi/2012/319/14A#input.relevant_person_has_no_income: false
+    uk:regulations/ssi/2012/319/14A#input.relevant_person_weekly_income: 356
+    uk:regulations/ssi/2012/319/14A#input.appropriate_maximum_council_tax_reduction: 100
+    uk:regulations/ssi/2012/319/14A#input.entitlement_to_council_tax_reduction_has_commenced: true
+    uk:regulations/ssi/2012/319/14A#input.council_tax_reduction_under_regulation_14: 50
+  output:
+    uk:regulations/ssi/2012/319/14A#lower_income_limit_applies: holds
+    uk:regulations/ssi/2012/319/14A#qualifying_conditions_satisfied: holds
+    uk:regulations/ssi/2012/319/14A#income_excess_reduction_amount: 1
+    uk:regulations/ssi/2012/319/14A#income_condition_satisfied: holds
+    uk:regulations/ssi/2012/319/14A#council_tax_reduction_before_regulation_14_comparison: 99
+    uk:regulations/ssi/2012/319/14A#council_tax_reduction_entitlement: holds
+    uk:regulations/ssi/2012/319/14A#council_tax_reduction: 99
+- name: regulation_15_disqualifies_person
+  period:
+    period_kind: custom
+    name: day
+    start: '2026-01-15'
+    end: '2026-01-15'
+  input:
+    uk:regulations/ssi/2012/319/14A#input.relevant_person_is_liable_for_council_tax_for_dwelling: true
+    uk:regulations/ssi/2012/319/14A#input.dwelling_is_in_band_e_f_g_or_h_and_is_sole_or_main_residence: true
+    uk:regulations/ssi/2012/319/14A#input.regulation_15_applies: true
+    uk:regulations/ssi/2012/319/14A#input.regulation_16_applies: false
+    uk:regulations/ssi/2012/319/14A#input.regulation_19_applies: false
+    uk:regulations/ssi/2012/319/14A#input.relevant_person_has_made_application_in_accordance_with_part_9: true
+    uk:regulations/ssi/2012/319/14A#input.appropriate_maximum_council_tax_reduction_exists: true
+    uk:regulations/ssi/2012/319/14A#input.relevant_person_is_not_member_of_couple_or_polygamous_marriage: true
+    uk:regulations/ssi/2012/319/14A#input.relevant_person_is_not_responsible_for_child_or_young_person: true
+    uk:regulations/ssi/2012/319/14A#input.relevant_person_has_no_income: false
+    uk:regulations/ssi/2012/319/14A#input.relevant_person_weekly_income: 356
+    uk:regulations/ssi/2012/319/14A#input.appropriate_maximum_council_tax_reduction: 100
+    uk:regulations/ssi/2012/319/14A#input.entitlement_to_council_tax_reduction_has_commenced: true
+    uk:regulations/ssi/2012/319/14A#input.council_tax_reduction_under_regulation_14: 50
+  output:
+    uk:regulations/ssi/2012/319/14A#qualifying_conditions_satisfied: not_holds
+    uk:regulations/ssi/2012/319/14A#council_tax_reduction_entitlement: not_holds
+    uk:regulations/ssi/2012/319/14A#council_tax_reduction: 0
+- name: regulation_16_disqualifies_person
+  period:
+    period_kind: custom
+    name: day
+    start: '2026-01-15'
+    end: '2026-01-15'
+  input:
+    uk:regulations/ssi/2012/319/14A#input.relevant_person_is_liable_for_council_tax_for_dwelling: true
+    uk:regulations/ssi/2012/319/14A#input.dwelling_is_in_band_e_f_g_or_h_and_is_sole_or_main_residence: true
+    uk:regulations/ssi/2012/319/14A#input.regulation_15_applies: false
+    uk:regulations/ssi/2012/319/14A#input.regulation_16_applies: true
+    uk:regulations/ssi/2012/319/14A#input.regulation_19_applies: false
+    uk:regulations/ssi/2012/319/14A#input.relevant_person_has_made_application_in_accordance_with_part_9: true
+    uk:regulations/ssi/2012/319/14A#input.appropriate_maximum_council_tax_reduction_exists: true
+    uk:regulations/ssi/2012/319/14A#input.relevant_person_is_not_member_of_couple_or_polygamous_marriage: true
+    uk:regulations/ssi/2012/319/14A#input.relevant_person_is_not_responsible_for_child_or_young_person: true
+    uk:regulations/ssi/2012/319/14A#input.relevant_person_has_no_income: false
+    uk:regulations/ssi/2012/319/14A#input.relevant_person_weekly_income: 356
+    uk:regulations/ssi/2012/319/14A#input.appropriate_maximum_council_tax_reduction: 100
+    uk:regulations/ssi/2012/319/14A#input.entitlement_to_council_tax_reduction_has_commenced: true
+    uk:regulations/ssi/2012/319/14A#input.council_tax_reduction_under_regulation_14: 50
+  output:
+    uk:regulations/ssi/2012/319/14A#qualifying_conditions_satisfied: not_holds
+    uk:regulations/ssi/2012/319/14A#council_tax_reduction_entitlement: not_holds
+    uk:regulations/ssi/2012/319/14A#council_tax_reduction: 0
+- name: regulation_19_disqualifies_person
+  period:
+    period_kind: custom
+    name: day
+    start: '2026-01-15'
+    end: '2026-01-15'
+  input:
+    uk:regulations/ssi/2012/319/14A#input.relevant_person_is_liable_for_council_tax_for_dwelling: true
+    uk:regulations/ssi/2012/319/14A#input.dwelling_is_in_band_e_f_g_or_h_and_is_sole_or_main_residence: true
+    uk:regulations/ssi/2012/319/14A#input.regulation_15_applies: false
+    uk:regulations/ssi/2012/319/14A#input.regulation_16_applies: false
+    uk:regulations/ssi/2012/319/14A#input.regulation_19_applies: true
+    uk:regulations/ssi/2012/319/14A#input.relevant_person_has_made_application_in_accordance_with_part_9: true
+    uk:regulations/ssi/2012/319/14A#input.appropriate_maximum_council_tax_reduction_exists: true
+    uk:regulations/ssi/2012/319/14A#input.relevant_person_is_not_member_of_couple_or_polygamous_marriage: true
+    uk:regulations/ssi/2012/319/14A#input.relevant_person_is_not_responsible_for_child_or_young_person: true
+    uk:regulations/ssi/2012/319/14A#input.relevant_person_has_no_income: false
+    uk:regulations/ssi/2012/319/14A#input.relevant_person_weekly_income: 356
+    uk:regulations/ssi/2012/319/14A#input.appropriate_maximum_council_tax_reduction: 100
+    uk:regulations/ssi/2012/319/14A#input.entitlement_to_council_tax_reduction_has_commenced: true
+    uk:regulations/ssi/2012/319/14A#input.council_tax_reduction_under_regulation_14: 50
+  output:
+    uk:regulations/ssi/2012/319/14A#qualifying_conditions_satisfied: not_holds
+    uk:regulations/ssi/2012/319/14A#council_tax_reduction_entitlement: not_holds
+    uk:regulations/ssi/2012/319/14A#council_tax_reduction: 0
+- name: auto_zero_council_tax_reduction_before_regulation_14_comparison
+  period:
+    period_kind: tax_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:regulations/ssi/2012/319/14A#input.appropriate_maximum_council_tax_reduction: 0
+    uk:regulations/ssi/2012/319/14A#input.appropriate_maximum_council_tax_reduction_exists: false
+    uk:regulations/ssi/2012/319/14A#input.council_tax_reduction_under_regulation_14: 0
+    uk:regulations/ssi/2012/319/14A#input.dwelling_is_in_band_e_f_g_or_h_and_is_sole_or_main_residence: false
+    uk:regulations/ssi/2012/319/14A#input.entitlement_to_council_tax_reduction_has_commenced: false
+    uk:regulations/ssi/2012/319/14A#input.regulation_15_applies: false
+    uk:regulations/ssi/2012/319/14A#input.regulation_16_applies: false
+    uk:regulations/ssi/2012/319/14A#input.regulation_19_applies: false
+    uk:regulations/ssi/2012/319/14A#input.relevant_person_has_made_application_in_accordance_with_part_9: false
+    uk:regulations/ssi/2012/319/14A#input.relevant_person_has_no_income: false
+    uk:regulations/ssi/2012/319/14A#input.relevant_person_is_liable_for_council_tax_for_dwelling: false
+    uk:regulations/ssi/2012/319/14A#input.relevant_person_is_not_member_of_couple_or_polygamous_marriage: false
+    uk:regulations/ssi/2012/319/14A#input.relevant_person_is_not_responsible_for_child_or_young_person: false
+    uk:regulations/ssi/2012/319/14A#input.relevant_person_weekly_income: 0
+  output:
+    uk:regulations/ssi/2012/319/14A#council_tax_reduction_before_regulation_14_comparison: 0

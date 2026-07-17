@@ -1,0 +1,64 @@
+- name: rebate divided among jointly liable residents
+  period:
+    period_kind: custom
+    name: calendar_year
+    start: '2021-04-05'
+    end: '2022-04-04'
+  input:
+    uk:regulations/ssi/2021/249/91#input.conditions_of_entitlement_in_regulation_13_3_are_fulfilled: true
+    uk:regulations/ssi/2021/249/91#input.conditions_of_entitlement_in_regulation_13_7_are_fulfilled: true
+    ? uk:regulations/ssi/2021/249/91#input.applicant_is_jointly_and_severally_liable_and_resident_with_one_or_more_other_jointly_liable_persons
+    : true
+    uk:regulations/ssi/2021/249/91#input.applicant_is_jointly_and_severally_liable_only_with_applicants_partner: false
+    uk:regulations/ssi/2021/249/91#input.second_adult_rebate_amount_determined_in_accordance_with_schedule_2: 120
+    uk:regulations/ssi/2021/249/91#input.number_of_persons_jointly_and_severally_liable: 3
+  output:
+    uk:regulations/ssi/2021/249/91#second_adult_rebate: 40
+- name: partner-only joint liability is not divided
+  period:
+    period_kind: custom
+    name: calendar_year
+    start: '2021-04-05'
+    end: '2022-04-04'
+  input:
+    uk:regulations/ssi/2021/249/91#input.conditions_of_entitlement_in_regulation_13_3_are_fulfilled: true
+    uk:regulations/ssi/2021/249/91#input.conditions_of_entitlement_in_regulation_13_7_are_fulfilled: true
+    ? uk:regulations/ssi/2021/249/91#input.applicant_is_jointly_and_severally_liable_and_resident_with_one_or_more_other_jointly_liable_persons
+    : true
+    uk:regulations/ssi/2021/249/91#input.applicant_is_jointly_and_severally_liable_only_with_applicants_partner: true
+    uk:regulations/ssi/2021/249/91#input.second_adult_rebate_amount_determined_in_accordance_with_schedule_2: 120
+    uk:regulations/ssi/2021/249/91#input.number_of_persons_jointly_and_severally_liable: 2
+  output:
+    uk:regulations/ssi/2021/249/91#second_adult_rebate: 120
+- name: regulation 13 paragraph 3 conditions not fulfilled
+  period:
+    period_kind: custom
+    name: calendar_year
+    start: '2021-04-05'
+    end: '2022-04-04'
+  input:
+    uk:regulations/ssi/2021/249/91#input.conditions_of_entitlement_in_regulation_13_3_are_fulfilled: false
+    uk:regulations/ssi/2021/249/91#input.conditions_of_entitlement_in_regulation_13_7_are_fulfilled: true
+    ? uk:regulations/ssi/2021/249/91#input.applicant_is_jointly_and_severally_liable_and_resident_with_one_or_more_other_jointly_liable_persons
+    : true
+    uk:regulations/ssi/2021/249/91#input.applicant_is_jointly_and_severally_liable_only_with_applicants_partner: false
+    uk:regulations/ssi/2021/249/91#input.second_adult_rebate_amount_determined_in_accordance_with_schedule_2: 120
+    uk:regulations/ssi/2021/249/91#input.number_of_persons_jointly_and_severally_liable: 3
+  output:
+    uk:regulations/ssi/2021/249/91#second_adult_rebate: 0
+- name: regulation 13 paragraph 7 conditions not fulfilled
+  period:
+    period_kind: custom
+    name: calendar_year
+    start: '2021-04-05'
+    end: '2022-04-04'
+  input:
+    uk:regulations/ssi/2021/249/91#input.conditions_of_entitlement_in_regulation_13_3_are_fulfilled: true
+    uk:regulations/ssi/2021/249/91#input.conditions_of_entitlement_in_regulation_13_7_are_fulfilled: false
+    ? uk:regulations/ssi/2021/249/91#input.applicant_is_jointly_and_severally_liable_and_resident_with_one_or_more_other_jointly_liable_persons
+    : true
+    uk:regulations/ssi/2021/249/91#input.applicant_is_jointly_and_severally_liable_only_with_applicants_partner: false
+    uk:regulations/ssi/2021/249/91#input.second_adult_rebate_amount_determined_in_accordance_with_schedule_2: 120
+    uk:regulations/ssi/2021/249/91#input.number_of_persons_jointly_and_severally_liable: 3
+  output:
+    uk:regulations/ssi/2021/249/91#second_adult_rebate: 0

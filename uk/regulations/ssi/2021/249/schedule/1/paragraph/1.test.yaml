@@ -1,0 +1,92 @@
+- name: single_applicant_under_25_without_child_premium
+  period: 2026-07
+  input:
+    uk:regulations/ssi/2021/249/schedule/1/paragraph/1#input.is_single_applicant: true
+    ? uk:regulations/ssi/2021/249/schedule/1/paragraph/1#input.no_child_premium_is_included_under_regulation_35_b_and_paragraph_2
+    : true
+    uk:regulations/ssi/2021/249/schedule/1/paragraph/1#input.applicant_age: 24
+    uk:regulations/ssi/2021/249/schedule/1/paragraph/1#input.is_lone_parent: false
+    uk:regulations/ssi/2021/249/schedule/1/paragraph/1#input.is_couple: false
+    uk:regulations/ssi/2021/249/schedule/1/paragraph/1#input.paragraph_18_components_satisfied: false
+    uk:regulations/ssi/2021/249/schedule/1/paragraph/1#input.paragraph_19_components_satisfied: false
+    uk:regulations/ssi/2021/249/schedule/1/paragraph/1#input.applicant_has_universal_credit_award: false
+    uk:regulations/ssi/2021/249/schedule/1/paragraph/1#input.applicant_has_limited_capability_for_work_under_regulation_39_1: false
+    ? uk:regulations/ssi/2021/249/schedule/1/paragraph/1#input.applicant_has_limited_capability_for_work_and_work_related_activity_under_regulation_40_1
+    : false
+  output:
+    uk:regulations/ssi/2021/249/schedule/1/paragraph/1#applicant_entitled_to_main_phase_employment_and_support_allowance: not_holds
+    uk:regulations/ssi/2021/249/schedule/1/paragraph/1#applicable_amount_for_person_or_couple: 75.65
+- name: lone_parent_with_paragraph_19_component
+  period: 2026-07
+  input:
+    uk:regulations/ssi/2021/249/schedule/1/paragraph/1#input.is_single_applicant: false
+    ? uk:regulations/ssi/2021/249/schedule/1/paragraph/1#input.no_child_premium_is_included_under_regulation_35_b_and_paragraph_2
+    : false
+    uk:regulations/ssi/2021/249/schedule/1/paragraph/1#input.applicant_age: 30
+    uk:regulations/ssi/2021/249/schedule/1/paragraph/1#input.is_lone_parent: true
+    uk:regulations/ssi/2021/249/schedule/1/paragraph/1#input.is_couple: false
+    uk:regulations/ssi/2021/249/schedule/1/paragraph/1#input.paragraph_18_components_satisfied: false
+    uk:regulations/ssi/2021/249/schedule/1/paragraph/1#input.paragraph_19_components_satisfied: true
+    uk:regulations/ssi/2021/249/schedule/1/paragraph/1#input.applicant_has_universal_credit_award: false
+    uk:regulations/ssi/2021/249/schedule/1/paragraph/1#input.applicant_has_limited_capability_for_work_under_regulation_39_1: false
+    ? uk:regulations/ssi/2021/249/schedule/1/paragraph/1#input.applicant_has_limited_capability_for_work_and_work_related_activity_under_regulation_40_1
+    : false
+  output:
+    uk:regulations/ssi/2021/249/schedule/1/paragraph/1#applicant_entitled_to_main_phase_employment_and_support_allowance: holds
+    uk:regulations/ssi/2021/249/schedule/1/paragraph/1#applicable_amount_for_person_or_couple: 95.55
+- name: higher_amount_for_under_25_universal_credit_applicant_with_limited_capability
+  period: 2026-07
+  input:
+    uk:regulations/ssi/2021/249/schedule/1/paragraph/1#input.is_single_applicant: true
+    ? uk:regulations/ssi/2021/249/schedule/1/paragraph/1#input.no_child_premium_is_included_under_regulation_35_b_and_paragraph_2
+    : true
+    uk:regulations/ssi/2021/249/schedule/1/paragraph/1#input.applicant_age: 24
+    uk:regulations/ssi/2021/249/schedule/1/paragraph/1#input.is_lone_parent: false
+    uk:regulations/ssi/2021/249/schedule/1/paragraph/1#input.is_couple: false
+    uk:regulations/ssi/2021/249/schedule/1/paragraph/1#input.paragraph_18_components_satisfied: false
+    uk:regulations/ssi/2021/249/schedule/1/paragraph/1#input.paragraph_19_components_satisfied: false
+    uk:regulations/ssi/2021/249/schedule/1/paragraph/1#input.applicant_has_universal_credit_award: true
+    uk:regulations/ssi/2021/249/schedule/1/paragraph/1#input.applicant_has_limited_capability_for_work_under_regulation_39_1: true
+    ? uk:regulations/ssi/2021/249/schedule/1/paragraph/1#input.applicant_has_limited_capability_for_work_and_work_related_activity_under_regulation_40_1
+    : false
+  output:
+    uk:regulations/ssi/2021/249/schedule/1/paragraph/1#applicant_entitled_to_main_phase_employment_and_support_allowance: not_holds
+    uk:regulations/ssi/2021/249/schedule/1/paragraph/1#applicable_amount_for_person_or_couple: 95.55
+- name: couple_amount_and_paragraph_18_component
+  period: 2026-07
+  input:
+    uk:regulations/ssi/2021/249/schedule/1/paragraph/1#input.is_single_applicant: false
+    ? uk:regulations/ssi/2021/249/schedule/1/paragraph/1#input.no_child_premium_is_included_under_regulation_35_b_and_paragraph_2
+    : false
+    uk:regulations/ssi/2021/249/schedule/1/paragraph/1#input.applicant_age: 30
+    uk:regulations/ssi/2021/249/schedule/1/paragraph/1#input.is_lone_parent: false
+    uk:regulations/ssi/2021/249/schedule/1/paragraph/1#input.is_couple: true
+    uk:regulations/ssi/2021/249/schedule/1/paragraph/1#input.paragraph_18_components_satisfied: true
+    uk:regulations/ssi/2021/249/schedule/1/paragraph/1#input.paragraph_19_components_satisfied: false
+    uk:regulations/ssi/2021/249/schedule/1/paragraph/1#input.applicant_has_universal_credit_award: false
+    uk:regulations/ssi/2021/249/schedule/1/paragraph/1#input.applicant_has_limited_capability_for_work_under_regulation_39_1: false
+    ? uk:regulations/ssi/2021/249/schedule/1/paragraph/1#input.applicant_has_limited_capability_for_work_and_work_related_activity_under_regulation_40_1
+    : false
+  output:
+    uk:regulations/ssi/2021/249/schedule/1/paragraph/1#applicant_entitled_to_main_phase_employment_and_support_allowance: holds
+    uk:regulations/ssi/2021/249/schedule/1/paragraph/1#applicable_amount_for_person_or_couple: 150.15
+- name: auto_zero_applicable_amount_for_person_or_couple
+  period:
+    period_kind: tax_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:regulations/ssi/2021/249/schedule/1/paragraph/1#input.applicant_age: 26
+    ? uk:regulations/ssi/2021/249/schedule/1/paragraph/1#input.applicant_has_limited_capability_for_work_and_work_related_activity_under_regulation_40_1
+    : false
+    uk:regulations/ssi/2021/249/schedule/1/paragraph/1#input.applicant_has_limited_capability_for_work_under_regulation_39_1: false
+    uk:regulations/ssi/2021/249/schedule/1/paragraph/1#input.applicant_has_universal_credit_award: false
+    uk:regulations/ssi/2021/249/schedule/1/paragraph/1#input.is_couple: false
+    uk:regulations/ssi/2021/249/schedule/1/paragraph/1#input.is_lone_parent: false
+    uk:regulations/ssi/2021/249/schedule/1/paragraph/1#input.is_single_applicant: false
+    ? uk:regulations/ssi/2021/249/schedule/1/paragraph/1#input.no_child_premium_is_included_under_regulation_35_b_and_paragraph_2
+    : false
+    uk:regulations/ssi/2021/249/schedule/1/paragraph/1#input.paragraph_18_components_satisfied: false
+    uk:regulations/ssi/2021/249/schedule/1/paragraph/1#input.paragraph_19_components_satisfied: false
+  output:
+    uk:regulations/ssi/2021/249/schedule/1/paragraph/1#applicable_amount_for_person_or_couple: 0

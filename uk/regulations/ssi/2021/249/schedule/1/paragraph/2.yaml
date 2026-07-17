@@ -1,0 +1,45 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/ssi/2021/249/schedule/1/paragraph/2
+  summary: |-
+    The child premium is £109.85 for each child or young person.
+rules:
+  - name: child_premium_amount
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: Schedule 1, paragraph 2
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/ssi/2021/249/schedule/1/paragraph/2
+              excerpt: "£109.85 for each child or young person"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          109.85
+  - name: child_premium_for_child_or_young_person
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Schedule 1, paragraph 2
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/ssi/2021/249/schedule/1/paragraph/2
+              excerpt: "£109.85 for each child or young person"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          child_premium_amount
