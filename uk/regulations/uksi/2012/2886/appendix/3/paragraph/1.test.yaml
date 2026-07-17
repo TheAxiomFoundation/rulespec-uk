@@ -1,0 +1,79 @@
+- name: single applicant entitled to main phase employment and support allowance
+  period:
+    period_kind: custom
+    name: applicable_period
+    start: '2024-01-01'
+    end: '2024-01-07'
+  input:
+    uk:regulations/uksi/2012/2886/appendix/3/paragraph/1#input.applicant_is_single: true
+    ? uk:regulations/uksi/2012/2886/appendix/3/paragraph/1#input.applicant_is_entitled_to_main_phase_employment_and_support_allowance
+    : true
+    uk:regulations/uksi/2012/2886/appendix/3/paragraph/1#input.applicant_is_aged_not_less_than_25: false
+    uk:regulations/uksi/2012/2886/appendix/3/paragraph/1#input.applicant_is_aged_not_less_than_18_but_less_than_25: false
+    uk:regulations/uksi/2012/2886/appendix/3/paragraph/1#input.applicant_is_lone_parent: false
+    uk:regulations/uksi/2012/2886/appendix/3/paragraph/1#input.applicants_are_a_couple: false
+  output:
+    uk:regulations/uksi/2012/2886/appendix/3/paragraph/1#person_or_couple_applicable_amount: 71.7
+- name: single applicant aged at least 25
+  period:
+    period_kind: custom
+    name: applicable_period
+    start: '2024-01-01'
+    end: '2024-01-07'
+  input:
+    uk:regulations/uksi/2012/2886/appendix/3/paragraph/1#input.applicant_is_single: true
+    ? uk:regulations/uksi/2012/2886/appendix/3/paragraph/1#input.applicant_is_entitled_to_main_phase_employment_and_support_allowance
+    : false
+    uk:regulations/uksi/2012/2886/appendix/3/paragraph/1#input.applicant_is_aged_not_less_than_25: true
+    uk:regulations/uksi/2012/2886/appendix/3/paragraph/1#input.applicant_is_aged_not_less_than_18_but_less_than_25: false
+    uk:regulations/uksi/2012/2886/appendix/3/paragraph/1#input.applicant_is_lone_parent: false
+    uk:regulations/uksi/2012/2886/appendix/3/paragraph/1#input.applicants_are_a_couple: false
+  output:
+    uk:regulations/uksi/2012/2886/appendix/3/paragraph/1#person_or_couple_applicable_amount: 71.7
+- name: single applicant aged 18 to 24
+  period:
+    period_kind: custom
+    name: applicable_period
+    start: '2024-01-01'
+    end: '2024-01-07'
+  input:
+    uk:regulations/uksi/2012/2886/appendix/3/paragraph/1#input.applicant_is_single: true
+    ? uk:regulations/uksi/2012/2886/appendix/3/paragraph/1#input.applicant_is_entitled_to_main_phase_employment_and_support_allowance
+    : false
+    uk:regulations/uksi/2012/2886/appendix/3/paragraph/1#input.applicant_is_aged_not_less_than_25: false
+    uk:regulations/uksi/2012/2886/appendix/3/paragraph/1#input.applicant_is_aged_not_less_than_18_but_less_than_25: true
+    uk:regulations/uksi/2012/2886/appendix/3/paragraph/1#input.applicant_is_lone_parent: false
+    uk:regulations/uksi/2012/2886/appendix/3/paragraph/1#input.applicants_are_a_couple: false
+  output:
+    uk:regulations/uksi/2012/2886/appendix/3/paragraph/1#person_or_couple_applicable_amount: 56.8
+- name: lone parent and couple amounts
+  period:
+    period_kind: custom
+    name: applicable_period
+    start: '2024-01-01'
+    end: '2024-01-07'
+  input:
+    uk:regulations/uksi/2012/2886/appendix/3/paragraph/1#input.applicant_is_single: false
+    ? uk:regulations/uksi/2012/2886/appendix/3/paragraph/1#input.applicant_is_entitled_to_main_phase_employment_and_support_allowance
+    : false
+    uk:regulations/uksi/2012/2886/appendix/3/paragraph/1#input.applicant_is_aged_not_less_than_25: false
+    uk:regulations/uksi/2012/2886/appendix/3/paragraph/1#input.applicant_is_aged_not_less_than_18_but_less_than_25: false
+    uk:regulations/uksi/2012/2886/appendix/3/paragraph/1#input.applicant_is_lone_parent: false
+    uk:regulations/uksi/2012/2886/appendix/3/paragraph/1#input.applicants_are_a_couple: true
+  output:
+    uk:regulations/uksi/2012/2886/appendix/3/paragraph/1#person_or_couple_applicable_amount: 112.55
+- name: auto_zero_person_or_couple_applicable_amount
+  period:
+    period_kind: tax_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:regulations/uksi/2012/2886/appendix/3/paragraph/1#input.applicant_is_aged_not_less_than_18_but_less_than_25: false
+    uk:regulations/uksi/2012/2886/appendix/3/paragraph/1#input.applicant_is_aged_not_less_than_25: false
+    ? uk:regulations/uksi/2012/2886/appendix/3/paragraph/1#input.applicant_is_entitled_to_main_phase_employment_and_support_allowance
+    : false
+    uk:regulations/uksi/2012/2886/appendix/3/paragraph/1#input.applicant_is_lone_parent: false
+    uk:regulations/uksi/2012/2886/appendix/3/paragraph/1#input.applicant_is_single: false
+    uk:regulations/uksi/2012/2886/appendix/3/paragraph/1#input.applicants_are_a_couple: false
+  output:
+    uk:regulations/uksi/2012/2886/appendix/3/paragraph/1#person_or_couple_applicable_amount: 0

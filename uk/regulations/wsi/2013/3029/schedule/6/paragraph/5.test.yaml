@@ -1,0 +1,60 @@
+- name: adult non-dependant outside remunerative work
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/5#input.person_is_non_dependant: true
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/5#input.person_age: 18
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/5#input.person_is_in_remunerative_work: false
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/5#input.normal_gross_weekly_income: 0
+  output:
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/5#remunerative_work_income_band: 0
+    ? uk:regulations/wsi/2013/3029/schedule/6/paragraph/5#provisional_non_dependant_deduction_for_day_before_exceptions_and_grouping
+    : '0.9571428571428571428571428571'
+- name: remunerative work in first income band
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/5#input.person_is_non_dependant: true
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/5#input.person_age: 30
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/5#input.person_is_in_remunerative_work: true
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/5#input.normal_gross_weekly_income: 210
+  output:
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/5#remunerative_work_income_band: 0
+    ? uk:regulations/wsi/2013/3029/schedule/6/paragraph/5#provisional_non_dependant_deduction_for_day_before_exceptions_and_grouping
+    : '0.9571428571428571428571428571'
+- name: remunerative work in upper middle income band
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/5#input.person_is_non_dependant: true
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/5#input.person_age: 40
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/5#input.person_is_in_remunerative_work: true
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/5#input.normal_gross_weekly_income: 560
+  output:
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/5#remunerative_work_income_band: 2
+    ? uk:regulations/wsi/2013/3029/schedule/6/paragraph/5#provisional_non_dependant_deduction_for_day_before_exceptions_and_grouping
+    : 2.4
+- name: person below adult age threshold
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/5#input.person_is_non_dependant: true
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/5#input.person_age: 17
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/5#input.person_is_in_remunerative_work: true
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/5#input.normal_gross_weekly_income: 700
+  output:
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/5#remunerative_work_income_band: 3
+    ? uk:regulations/wsi/2013/3029/schedule/6/paragraph/5#provisional_non_dependant_deduction_for_day_before_exceptions_and_grouping
+    : 0

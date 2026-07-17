@@ -1,0 +1,98 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2012/2886/schedule/paragraph/29
+  summary: |-
+    “a person’s maximum council tax reduction amount in respect of a day is 100 per cent of the amount A/B”; account is taken of applicable discounts, other reductions under the 1992 Act, non-dependant deductions, joint and several liability, the partner-only exception, and the student exclusion.
+rules:
+  - name: maximum_council_tax_reduction_percentage
+    kind: parameter
+    dtype: Rate
+    source: Schedule, paragraph 29(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/schedule/paragraph/29
+              excerpt: "100 per cent"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          1
+
+  - name: adjusted_annual_council_tax_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    unit: GBP
+    period: Year
+    source: Schedule, paragraph 29(1)-(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/schedule/paragraph/29
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          max(0, council_tax_set_for_relevant_financial_year - appropriate_discount_under_1992_act - other_council_tax_reduction_under_1992_act)
+
+  - name: joint_liability_divisor
+    kind: derived
+    entity: Person
+    dtype: Count
+    source: Schedule, paragraph 29(3)-(5)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/schedule/paragraph/29
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if applicant_is_jointly_and_severally_liable_with_resident_other_persons and not applicant_is_jointly_and_severally_liable_only_with_partner: if applicant_is_not_a_pensioner: number_of_jointly_and_severally_liable_persons_excluding_students_to_whom_paragraph_75_1_applies else: number_of_jointly_and_severally_liable_persons else: 1
+
+  - name: maximum_council_tax_reduction_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    unit: GBP
+    period: Day
+    source: Schedule, paragraph 29
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/schedule/paragraph/29
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2012/2886/schedule/paragraph/29#maximum_council_tax_reduction_percentage
+              output: maximum_council_tax_reduction_percentage
+              hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2012/2886/schedule/paragraph/29#adjusted_annual_council_tax_amount
+              output: adjusted_annual_council_tax_amount
+              hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2012/2886/schedule/paragraph/29#joint_liability_divisor
+              output: joint_liability_divisor
+              hash: sha256:local
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          max(0, maximum_council_tax_reduction_percentage * adjusted_annual_council_tax_amount / joint_liability_divisor / number_of_days_in_relevant_financial_year - non_dependant_deductions_under_paragraph_30)

@@ -1,0 +1,56 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2012/2885/schedule/4/paragraph/4
+  summary: |-
+    If the applicant or partner is a carer, £20 of earnings is disregarded. Where both are carers, their earnings are aggregated and the disregard must not exceed £20.
+rules:
+  - name: carer_earnings_disregard_cap
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: Schedule 4 paragraph 4(1) and (2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2885/schedule/4/paragraph/4
+              excerpt: "£20 of any earnings"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          20
+
+  - name: carer_earnings_disregard
+    kind: derived
+    entity: Family
+    dtype: Money
+    unit: GBP
+    source: Schedule 4 paragraph 4
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2885/schedule/4/paragraph/4
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2885/schedule/4/paragraph/4
+              excerpt: "the applicant or his partner is a carer if paragraph 9 of Part 3 of Schedule 2"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          min(
+            max(
+              0,
+              (if applicant_is_carer_under_schedule_2_part_3_paragraph_9: applicant_employment_earnings else: 0)
+              + (if applicant_has_partner and partner_is_carer_under_schedule_2_part_3_paragraph_9: partner_employment_earnings else: 0)
+            ),
+            carer_earnings_disregard_cap
+          )

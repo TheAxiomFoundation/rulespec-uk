@@ -1,0 +1,185 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/ssi/2021/249/schedule/2/paragraph/1
+  summary: |-
+    Subject to paragraphs 2 and 3, the second adult rebate is 25%, 15%, 7.5%, or 100% of the council tax due for the day according to the second adults’ benefits, earned income, aggregate gross weekly income, and the dwelling’s student-occupation status.
+rules:
+  - name: lower_income_band_upper_threshold
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    period: Week
+    source: Schedule 2, paragraph 1, second adult rebate table
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/ssi/2021/249/schedule/2/paragraph/1
+              excerpt: "is less than £282.00 per week"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          282.00
+
+  - name: middle_income_band_lower_threshold
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    period: Week
+    source: Schedule 2, paragraph 1, second adult rebate table
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/ssi/2021/249/schedule/2/paragraph/1
+              excerpt: "is not less than £282.00 per week"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          282.00
+
+  - name: middle_income_band_upper_threshold
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    period: Week
+    source: Schedule 2, paragraph 1, second adult rebate table
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/ssi/2021/249/schedule/2/paragraph/1
+              excerpt: "but is less than £383.00 per week"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          383.00
+
+  - name: income_band_rebate_rate
+    kind: parameter
+    dtype: Rate
+    indexed_by: second_adult_income_band
+    source: Schedule 2, paragraph 1, second adult rebate table
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].values
+            kind: parameter_table
+            source:
+              corpus_citation_path: uk/regulation/ssi/2021/249/schedule/2/paragraph/1
+              table:
+                header: "Second adult rebate"
+                row_key: "gross income band"
+                column_key: "percentage of council tax due"
+    versions:
+      - effective_from: '0001-01-01'
+        values:
+          0: 0.15
+          1: 0.075
+
+  - name: qualifying_benefit_rebate_rate
+    kind: parameter
+    dtype: Rate
+    source: Schedule 2, paragraph 1, second adult rebate table
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/regulation/ssi/2021/249/schedule/2/paragraph/1
+              excerpt: "25 per cent of the council tax due in respect of that day"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          0.25
+
+  - name: student_dwelling_rebate_rate
+    kind: parameter
+    dtype: Rate
+    source: Schedule 2, paragraph 1, second adult rebate table
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/regulation/ssi/2021/249/schedule/2/paragraph/1
+              excerpt: "100 per cent of the council tax due in respect of that day"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          1
+
+  - name: second_adult_income_band
+    kind: derived
+    entity: Household
+    dtype: Integer
+    period: Day
+    source: Schedule 2, paragraph 1, gross-income rows of the second adult rebate table
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/ssi/2021/249/schedule/2/paragraph/1
+              excerpt: "is less than £282.00 per week"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/ssi/2021/249/schedule/2/paragraph/1
+              excerpt: "is not less than £282.00 per week but is less than £383.00 per week"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if relevant_second_adults_aggregate_gross_income_per_week < lower_income_band_upper_threshold: 0 else: if relevant_second_adults_aggregate_gross_income_per_week >= middle_income_band_lower_threshold and relevant_second_adults_aggregate_gross_income_per_week < middle_income_band_upper_threshold: 1 else: -1
+
+  - name: second_adult_rebate
+    kind: derived
+    entity: Household
+    dtype: Money
+    unit: GBP
+    period: Day
+    source: Schedule 2, paragraph 1, second adult rebate table, subject to paragraphs 2 and 3
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: exception
+            source:
+              corpus_citation_path: uk/regulation/ssi/2021/249/schedule/2/paragraph/1
+              excerpt: "Subject to paragraphs 2 and 3"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/ssi/2021/249/schedule/2/paragraph/1
+              excerpt: "25 per cent of the council tax due in respect of that day"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/ssi/2021/249/schedule/2/paragraph/1
+              excerpt: "15 per cent of the council tax due in respect of that day"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/ssi/2021/249/schedule/2/paragraph/1
+              excerpt: "7.5 per cent of the council tax due in respect of that day"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/ssi/2021/249/schedule/2/paragraph/1
+              excerpt: "100 per cent of the council tax due in respect of that day"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if paragraph_2_displaces_paragraph_1 or paragraph_3_displaces_paragraph_1: 0 else: if dwelling_would_be_wholly_occupied_by_students_but_for_second_adults and (one_or_more_second_adults_receive_qualifying_income_related_benefit_or_state_pension_credit or one_or_more_second_adults_receive_universal_credit_with_no_earned_income): council_tax_due_in_respect_of_day * student_dwelling_rebate_rate else: if all_second_adults_receive_qualifying_income_related_benefit_or_state_pension_credit: council_tax_due_in_respect_of_day * qualifying_benefit_rebate_rate else: if all_second_adults_receive_universal_credit_with_no_earned_income: council_tax_due_in_respect_of_day * qualifying_benefit_rebate_rate else: if second_adult_income_band >= 0: council_tax_due_in_respect_of_day * income_band_rebate_rate[second_adult_income_band] else: 0

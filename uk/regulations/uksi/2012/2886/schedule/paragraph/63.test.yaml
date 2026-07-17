@@ -1,0 +1,80 @@
+- name: pensioner includes qualifying arrears and applies Schedule 9 disregards
+  period:
+    period_kind: custom
+    name: calculation_period
+    start: '2024-01-01'
+    end: '2024-12-31'
+  input:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/63#input.applicant_is_pensioner: true
+    uk:regulations/uksi/2012/2886/schedule/paragraph/63#input.capital_calculated_in_accordance_with_this_part: 10000
+    uk:regulations/uksi/2012/2886/schedule/paragraph/63#input.child_tax_credit_arrears_for_period_with_prior_scheme_reduction: 300
+    ? uk:regulations/uksi/2012/2886/schedule/paragraph/63#input.working_tax_credit_arrears_for_period_with_prior_scheme_reduction
+    : 200
+    ? uk:regulations/uksi/2012/2886/schedule/paragraph/63#input.state_pension_credit_arrears_for_period_with_prior_scheme_reduction
+    : 500
+    uk:regulations/uksi/2012/2886/schedule/paragraph/63#input.income_treated_as_capital_under_paragraph_64: 0
+    uk:regulations/uksi/2012/2886/schedule/paragraph/63#input.capital_of_child_or_young_person_who_is_family_member: 0
+    uk:regulations/uksi/2012/2886/schedule/paragraph/63#input.capital_disregarded_under_schedule_9: 1500
+    uk:regulations/uksi/2012/2886/schedule/paragraph/63#input.capital_disregarded_under_schedule_10: 0
+  output:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/63#applicant_capital_taken_into_account: 9500
+- name: non-pensioner includes paragraph 64 income and excludes child capital
+  period:
+    period_kind: custom
+    name: calculation_period
+    start: '2024-01-01'
+    end: '2024-12-31'
+  input:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/63#input.applicant_is_pensioner: false
+    uk:regulations/uksi/2012/2886/schedule/paragraph/63#input.capital_calculated_in_accordance_with_this_part: 12000
+    uk:regulations/uksi/2012/2886/schedule/paragraph/63#input.child_tax_credit_arrears_for_period_with_prior_scheme_reduction: 0
+    ? uk:regulations/uksi/2012/2886/schedule/paragraph/63#input.working_tax_credit_arrears_for_period_with_prior_scheme_reduction
+    : 0
+    ? uk:regulations/uksi/2012/2886/schedule/paragraph/63#input.state_pension_credit_arrears_for_period_with_prior_scheme_reduction
+    : 0
+    uk:regulations/uksi/2012/2886/schedule/paragraph/63#input.income_treated_as_capital_under_paragraph_64: 1000
+    uk:regulations/uksi/2012/2886/schedule/paragraph/63#input.capital_of_child_or_young_person_who_is_family_member: 2000
+    uk:regulations/uksi/2012/2886/schedule/paragraph/63#input.capital_disregarded_under_schedule_9: 0
+    uk:regulations/uksi/2012/2886/schedule/paragraph/63#input.capital_disregarded_under_schedule_10: 500
+  output:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/63#applicant_capital_taken_into_account: 10500
+- name: pensioner does not include paragraph 64 income or exclude child capital
+  period:
+    period_kind: custom
+    name: calculation_period
+    start: '2024-01-01'
+    end: '2024-12-31'
+  input:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/63#input.applicant_is_pensioner: true
+    uk:regulations/uksi/2012/2886/schedule/paragraph/63#input.capital_calculated_in_accordance_with_this_part: 8000
+    uk:regulations/uksi/2012/2886/schedule/paragraph/63#input.child_tax_credit_arrears_for_period_with_prior_scheme_reduction: 0
+    ? uk:regulations/uksi/2012/2886/schedule/paragraph/63#input.working_tax_credit_arrears_for_period_with_prior_scheme_reduction
+    : 0
+    ? uk:regulations/uksi/2012/2886/schedule/paragraph/63#input.state_pension_credit_arrears_for_period_with_prior_scheme_reduction
+    : 0
+    uk:regulations/uksi/2012/2886/schedule/paragraph/63#input.income_treated_as_capital_under_paragraph_64: 1000
+    uk:regulations/uksi/2012/2886/schedule/paragraph/63#input.capital_of_child_or_young_person_who_is_family_member: 2000
+    uk:regulations/uksi/2012/2886/schedule/paragraph/63#input.capital_disregarded_under_schedule_9: 500
+    uk:regulations/uksi/2012/2886/schedule/paragraph/63#input.capital_disregarded_under_schedule_10: 3000
+  output:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/63#applicant_capital_taken_into_account: 7500
+- name: disregards cannot produce negative capital
+  period:
+    period_kind: custom
+    name: calculation_period
+    start: '2024-01-01'
+    end: '2024-12-31'
+  input:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/63#input.applicant_is_pensioner: false
+    uk:regulations/uksi/2012/2886/schedule/paragraph/63#input.capital_calculated_in_accordance_with_this_part: 1000
+    uk:regulations/uksi/2012/2886/schedule/paragraph/63#input.child_tax_credit_arrears_for_period_with_prior_scheme_reduction: 0
+    ? uk:regulations/uksi/2012/2886/schedule/paragraph/63#input.working_tax_credit_arrears_for_period_with_prior_scheme_reduction
+    : 0
+    ? uk:regulations/uksi/2012/2886/schedule/paragraph/63#input.state_pension_credit_arrears_for_period_with_prior_scheme_reduction
+    : 0
+    uk:regulations/uksi/2012/2886/schedule/paragraph/63#input.income_treated_as_capital_under_paragraph_64: 0
+    uk:regulations/uksi/2012/2886/schedule/paragraph/63#input.capital_of_child_or_young_person_who_is_family_member: 500
+    uk:regulations/uksi/2012/2886/schedule/paragraph/63#input.capital_disregarded_under_schedule_9: 0
+    uk:regulations/uksi/2012/2886/schedule/paragraph/63#input.capital_disregarded_under_schedule_10: 1000
+  output:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/63#applicant_capital_taken_into_account: 0

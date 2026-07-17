@@ -1,0 +1,40 @@
+- name: applicant carer without partner
+  period: 2026-07
+  input:
+    uk:regulations/uksi/2012/2885/schedule/4/paragraph/4#input.applicant_is_carer_under_schedule_2_part_3_paragraph_9: true
+    uk:regulations/uksi/2012/2885/schedule/4/paragraph/4#input.applicant_has_partner: false
+    uk:regulations/uksi/2012/2885/schedule/4/paragraph/4#input.partner_is_carer_under_schedule_2_part_3_paragraph_9: false
+    uk:regulations/uksi/2012/2885/schedule/4/paragraph/4#input.applicant_employment_earnings: 15
+    uk:regulations/uksi/2012/2885/schedule/4/paragraph/4#input.partner_employment_earnings: 0
+  output:
+    uk:regulations/uksi/2012/2885/schedule/4/paragraph/4#carer_earnings_disregard: 15
+- name: partnered applicant remains qualifying carer
+  period: 2026-07
+  input:
+    uk:regulations/uksi/2012/2885/schedule/4/paragraph/4#input.applicant_is_carer_under_schedule_2_part_3_paragraph_9: true
+    uk:regulations/uksi/2012/2885/schedule/4/paragraph/4#input.applicant_has_partner: true
+    uk:regulations/uksi/2012/2885/schedule/4/paragraph/4#input.partner_is_carer_under_schedule_2_part_3_paragraph_9: false
+    uk:regulations/uksi/2012/2885/schedule/4/paragraph/4#input.applicant_employment_earnings: 15
+    uk:regulations/uksi/2012/2885/schedule/4/paragraph/4#input.partner_employment_earnings: 100
+  output:
+    uk:regulations/uksi/2012/2885/schedule/4/paragraph/4#carer_earnings_disregard: 15
+- name: partner is the only carer
+  period: 2026-07
+  input:
+    uk:regulations/uksi/2012/2885/schedule/4/paragraph/4#input.applicant_is_carer_under_schedule_2_part_3_paragraph_9: false
+    uk:regulations/uksi/2012/2885/schedule/4/paragraph/4#input.applicant_has_partner: true
+    uk:regulations/uksi/2012/2885/schedule/4/paragraph/4#input.partner_is_carer_under_schedule_2_part_3_paragraph_9: true
+    uk:regulations/uksi/2012/2885/schedule/4/paragraph/4#input.applicant_employment_earnings: 100
+    uk:regulations/uksi/2012/2885/schedule/4/paragraph/4#input.partner_employment_earnings: 12
+  output:
+    uk:regulations/uksi/2012/2885/schedule/4/paragraph/4#carer_earnings_disregard: 12
+- name: both carers earnings aggregated and capped
+  period: 2026-07
+  input:
+    uk:regulations/uksi/2012/2885/schedule/4/paragraph/4#input.applicant_is_carer_under_schedule_2_part_3_paragraph_9: true
+    uk:regulations/uksi/2012/2885/schedule/4/paragraph/4#input.applicant_has_partner: true
+    uk:regulations/uksi/2012/2885/schedule/4/paragraph/4#input.partner_is_carer_under_schedule_2_part_3_paragraph_9: true
+    uk:regulations/uksi/2012/2885/schedule/4/paragraph/4#input.applicant_employment_earnings: 15
+    uk:regulations/uksi/2012/2885/schedule/4/paragraph/4#input.partner_employment_earnings: 12
+  output:
+    uk:regulations/uksi/2012/2885/schedule/4/paragraph/4#carer_earnings_disregard: 20

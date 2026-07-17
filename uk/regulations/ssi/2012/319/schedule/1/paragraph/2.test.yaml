@@ -1,0 +1,63 @@
+- name: single applicant at qualifying age
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2026-07-13'
+    end: '2026-07-19'
+  input:
+    ? uk:regulations/ssi/2012/319/schedule/1/paragraph/2#input.applicant_is_single_or_lone_parent_and_has_attained_qualifying_age_for_state_pension_credit
+    : true
+    ? uk:regulations/ssi/2012/319/schedule/1/paragraph/2#input.couple_has_one_or_both_members_at_qualifying_age_for_state_pension_credit
+    : false
+    ? uk:regulations/ssi/2012/319/schedule/1/paragraph/2#input.applicant_is_member_of_polygamous_marriage_with_one_or_more_members_at_qualifying_age_for_state_pension_credit
+    : false
+    uk:regulations/ssi/2012/319/schedule/1/paragraph/2#input.additional_parties_to_polygamous_marriage_in_applicant_household: 0
+  output:
+    uk:regulations/ssi/2012/319/schedule/1/paragraph/2#applicable_amount_for_regulation_20_a: 256.0
+- name: couple with one or both members at qualifying age
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2026-07-13'
+    end: '2026-07-19'
+  input:
+    ? uk:regulations/ssi/2012/319/schedule/1/paragraph/2#input.applicant_is_single_or_lone_parent_and_has_attained_qualifying_age_for_state_pension_credit
+    : false
+    ? uk:regulations/ssi/2012/319/schedule/1/paragraph/2#input.couple_has_one_or_both_members_at_qualifying_age_for_state_pension_credit
+    : true
+    ? uk:regulations/ssi/2012/319/schedule/1/paragraph/2#input.applicant_is_member_of_polygamous_marriage_with_one_or_more_members_at_qualifying_age_for_state_pension_credit
+    : false
+    uk:regulations/ssi/2012/319/schedule/1/paragraph/2#input.additional_parties_to_polygamous_marriage_in_applicant_household: 0
+  output:
+    uk:regulations/ssi/2012/319/schedule/1/paragraph/2#applicable_amount_for_regulation_20_a: 383.35
+- name: polygamous marriage with one additional household party
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2026-07-13'
+    end: '2026-07-19'
+  input:
+    ? uk:regulations/ssi/2012/319/schedule/1/paragraph/2#input.applicant_is_single_or_lone_parent_and_has_attained_qualifying_age_for_state_pension_credit
+    : false
+    ? uk:regulations/ssi/2012/319/schedule/1/paragraph/2#input.couple_has_one_or_both_members_at_qualifying_age_for_state_pension_credit
+    : false
+    ? uk:regulations/ssi/2012/319/schedule/1/paragraph/2#input.applicant_is_member_of_polygamous_marriage_with_one_or_more_members_at_qualifying_age_for_state_pension_credit
+    : true
+    uk:regulations/ssi/2012/319/schedule/1/paragraph/2#input.additional_parties_to_polygamous_marriage_in_applicant_household: 1
+  output:
+    uk:regulations/ssi/2012/319/schedule/1/paragraph/2#applicable_amount_for_regulation_20_a: 510.7
+- name: auto_zero_applicable_amount_for_regulation_20_a
+  period:
+    period_kind: tax_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:regulations/ssi/2012/319/schedule/1/paragraph/2#input.additional_parties_to_polygamous_marriage_in_applicant_household: 0
+    ? uk:regulations/ssi/2012/319/schedule/1/paragraph/2#input.applicant_is_member_of_polygamous_marriage_with_one_or_more_members_at_qualifying_age_for_state_pension_credit
+    : false
+    ? uk:regulations/ssi/2012/319/schedule/1/paragraph/2#input.applicant_is_single_or_lone_parent_and_has_attained_qualifying_age_for_state_pension_credit
+    : false
+    ? uk:regulations/ssi/2012/319/schedule/1/paragraph/2#input.couple_has_one_or_both_members_at_qualifying_age_for_state_pension_credit
+    : false
+  output:
+    uk:regulations/ssi/2012/319/schedule/1/paragraph/2#applicable_amount_for_regulation_20_a: 0

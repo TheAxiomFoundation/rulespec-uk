@@ -1,0 +1,388 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2012/2886/appendix/3/paragraph/17
+  summary: |-
+    Disability Premium where paragraph 9(a) or 9(b) is satisfied; Severe Disability Premium where paragraph 11(2)(a) or 11(2)(b) is satisfied; Disabled Child, Carer, and Enhanced Disability Premium amounts.
+rules:
+  - name: disability_premium_paragraph_9_a_amount
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    period: Week
+    source: Appendix 3, paragraph 17(1)(a)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/appendix/3/paragraph/17
+              excerpt: "where the applicant satisfies the condition in paragraph 9(a)"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          31.00
+
+  - name: disability_premium_paragraph_9_b_amount
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    period: Week
+    source: Appendix 3, paragraph 17(1)(b)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/appendix/3/paragraph/17
+              excerpt: "where the applicant satisfies the condition in paragraph 9(a);"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          44.20
+
+  - name: severe_disability_premium_paragraph_11_2_a_amount
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    period: Week
+    source: Appendix 3, paragraph 17(2)(a)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/appendix/3/paragraph/17
+              excerpt: "where the applicant satisfies the condition in paragraph 11(2)(a)"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          59.50
+
+  - name: severe_disability_premium_paragraph_11_2_b_i_amount
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    period: Week
+    source: Appendix 3, paragraph 17(2)(b)(i)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/appendix/3/paragraph/17
+              excerpt: "in a case where there is someone in receipt of a carer\u2019s allowance or if he or any partner satisfies that condition only by virtue of paragraph 11(5)"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          59.50
+
+  - name: severe_disability_premium_paragraph_11_2_b_ii_amount
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    period: Week
+    source: Appendix 3, paragraph 17(2)(b)(ii)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/appendix/3/paragraph/17
+              excerpt: "in a case where there is someone in receipt of a carer\u2019s allowance or if he or any partner satisfies that condition only by virtue of paragraph 11(5);"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          119.00
+
+  - name: disabled_child_premium_amount
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    period: Week
+    source: Appendix 3, paragraph 17(3)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/appendix/3/paragraph/17
+              excerpt: "£57.89 in respect of each child or young person in respect of whom the condition specified in paragraph 13 is satisfied"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          57.89
+
+  - name: carer_premium_amount
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    period: Week
+    source: Appendix 3, paragraph 17(4)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/appendix/3/paragraph/17
+              excerpt: "£33.30 in respect of each person who satisfies the condition specified in paragraph 14"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          33.30
+
+  - name: enhanced_disability_premium_child_amount
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    period: Week
+    source: Appendix 3, paragraph 17(5)(a)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/appendix/3/paragraph/17
+              excerpt: "£23.45 in respect of each child or young person in respect of whom the conditions specified in paragraph 12 are satisfied"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          23.45
+
+  - name: enhanced_disability_premium_single_person_amount
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    period: Week
+    source: Appendix 3, paragraph 17(5)(b)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/appendix/3/paragraph/17
+              excerpt: "|  | (ii) a member of a couple or a polygamous marriage, |"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          15.15
+
+  - name: enhanced_disability_premium_couple_amount
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    period: Week
+    source: Appendix 3, paragraph 17(5)(c)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/appendix/3/paragraph/17
+              excerpt: "£21.75 where the applicant is a member of a couple or a polygamous marriage and the conditions specified in paragraph 12 are satisfied in respect of a member"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          21.75
+
+  - name: disability_premium_paragraph_9_a_payable_amount
+    kind: derived
+    entity: Family
+    dtype: Money
+    unit: GBP
+    period: Week
+    source: Appendix 3, paragraph 17(1)(a)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/appendix/3/paragraph/17
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if applicant_satisfies_condition_in_paragraph_9_a: disability_premium_paragraph_9_a_amount else: 0
+
+  - name: disability_premium_paragraph_9_b_payable_amount
+    kind: derived
+    entity: Family
+    dtype: Money
+    unit: GBP
+    period: Week
+    source: Appendix 3, paragraph 17(1)(b)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/appendix/3/paragraph/17
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if applicant_satisfies_condition_in_paragraph_9_b: disability_premium_paragraph_9_b_amount else: 0
+
+  - name: severe_disability_premium_paragraph_11_2_a_payable_amount
+    kind: derived
+    entity: Family
+    dtype: Money
+    unit: GBP
+    period: Week
+    source: Appendix 3, paragraph 17(2)(a)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/appendix/3/paragraph/17
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if applicant_satisfies_condition_in_paragraph_11_2_a: severe_disability_premium_paragraph_11_2_a_amount else: 0
+
+  - name: severe_disability_premium_paragraph_11_2_b_i_payable_amount
+    kind: derived
+    entity: Family
+    dtype: Money
+    unit: GBP
+    period: Week
+    source: Appendix 3, paragraph 17(2)(b)(i)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/appendix/3/paragraph/17
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if applicant_satisfies_condition_in_paragraph_11_2_b and (someone_is_in_receipt_of_carers_allowance or applicant_or_partner_satisfies_paragraph_11_2_b_only_by_virtue_of_paragraph_11_5): severe_disability_premium_paragraph_11_2_b_i_amount else: 0
+
+  - name: severe_disability_premium_paragraph_11_2_b_ii_payable_amount
+    kind: derived
+    entity: Family
+    dtype: Money
+    unit: GBP
+    period: Week
+    source: Appendix 3, paragraph 17(2)(b)(ii)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/appendix/3/paragraph/17
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if applicant_satisfies_condition_in_paragraph_11_2_b and not someone_is_in_receipt_of_carers_allowance and not applicant_or_partner_satisfies_paragraph_11_2_b_only_by_virtue_of_paragraph_11_5: severe_disability_premium_paragraph_11_2_b_ii_amount else: 0
+
+  - name: disabled_child_premium_payable_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    unit: GBP
+    period: Week
+    source: Appendix 3, paragraph 17(3)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/appendix/3/paragraph/17
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if child_or_young_person_satisfies_condition_in_paragraph_13: disabled_child_premium_amount else: 0
+
+  - name: carer_premium_payable_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    unit: GBP
+    period: Week
+    source: Appendix 3, paragraph 17(4)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/appendix/3/paragraph/17
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if person_satisfies_condition_in_paragraph_14: carer_premium_amount else: 0
+
+  - name: enhanced_disability_premium_child_payable_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    unit: GBP
+    period: Week
+    source: Appendix 3, paragraph 17(5)(a)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/appendix/3/paragraph/17
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if person_is_child_or_young_person and person_satisfies_conditions_in_paragraph_12: enhanced_disability_premium_child_amount else: 0
+
+  - name: enhanced_disability_premium_single_person_payable_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    unit: GBP
+    period: Week
+    source: Appendix 3, paragraph 17(5)(b)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/appendix/3/paragraph/17
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if person_satisfies_conditions_in_paragraph_12 and not person_is_child_or_young_person and not person_is_member_of_couple_or_polygamous_marriage: enhanced_disability_premium_single_person_amount else: 0
+
+  - name: enhanced_disability_premium_couple_payable_amount
+    kind: derived
+    entity: Family
+    dtype: Money
+    unit: GBP
+    period: Week
+    source: Appendix 3, paragraph 17(5)(c)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/appendix/3/paragraph/17
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if applicant_is_member_of_couple_or_polygamous_marriage and member_of_couple_or_polygamous_marriage_satisfies_conditions_in_paragraph_12: enhanced_disability_premium_couple_amount else: 0

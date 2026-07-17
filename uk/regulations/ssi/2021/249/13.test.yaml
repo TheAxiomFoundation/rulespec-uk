@@ -1,0 +1,67 @@
+- name: income taper applies two and six-sevenths percent to weekly excess
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2024-01-15'
+    end: '2024-01-21'
+  input:
+    uk:regulations/ssi/2021/249/13#input.weekly_income_minus_applicable_amount: 700
+  output:
+    uk:regulations/ssi/2021/249/13#council_tax_reduction_income_taper_amount: 20
+- name: second adult rebate route yields the imported rebate
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:regulations/ssi/2021/249/13#input.no_other_counted_resident_is_liable_to_pay_rent_to_relevant_person: true
+    uk:regulations/ssi/2021/249/13#input.relevant_person_is_entitled_to_second_adult_rebate_because_of_counted_resident_income: true
+    uk:regulations/ssi/2021/249/91#input.conditions_of_entitlement_in_regulation_13_3_are_fulfilled: true
+    uk:regulations/ssi/2021/249/91#input.conditions_of_entitlement_in_regulation_13_7_are_fulfilled: true
+    ? uk:regulations/ssi/2021/249/91#input.applicant_is_jointly_and_severally_liable_and_resident_with_one_or_more_other_jointly_liable_persons
+    : false
+    uk:regulations/ssi/2021/249/91#input.applicant_is_jointly_and_severally_liable_only_with_applicants_partner: false
+    uk:regulations/ssi/2021/249/91#input.second_adult_rebate_amount_determined_in_accordance_with_schedule_2: 20
+    uk:regulations/ssi/2021/249/91#input.number_of_persons_jointly_and_severally_liable: 1
+  output:
+    uk:regulations/ssi/2021/249/13#second_adult_rebate_route_satisfied: holds
+    uk:regulations/ssi/2021/249/13#council_tax_reduction_amount_under_second_adult_rebate_route: 20
+- name: rent liability of another counted resident blocks the route
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:regulations/ssi/2021/249/13#input.no_other_counted_resident_is_liable_to_pay_rent_to_relevant_person: false
+    uk:regulations/ssi/2021/249/13#input.relevant_person_is_entitled_to_second_adult_rebate_because_of_counted_resident_income: true
+    uk:regulations/ssi/2021/249/91#input.conditions_of_entitlement_in_regulation_13_3_are_fulfilled: true
+    uk:regulations/ssi/2021/249/91#input.conditions_of_entitlement_in_regulation_13_7_are_fulfilled: true
+    ? uk:regulations/ssi/2021/249/91#input.applicant_is_jointly_and_severally_liable_and_resident_with_one_or_more_other_jointly_liable_persons
+    : false
+    uk:regulations/ssi/2021/249/91#input.applicant_is_jointly_and_severally_liable_only_with_applicants_partner: false
+    uk:regulations/ssi/2021/249/91#input.second_adult_rebate_amount_determined_in_accordance_with_schedule_2: 20
+    uk:regulations/ssi/2021/249/91#input.number_of_persons_jointly_and_severally_liable: 1
+  output:
+    uk:regulations/ssi/2021/249/13#second_adult_rebate_route_satisfied: not_holds
+    uk:regulations/ssi/2021/249/13#council_tax_reduction_amount_under_second_adult_rebate_route: 0
+- name: absence of income-based second adult rebate entitlement blocks the route
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:regulations/ssi/2021/249/13#input.no_other_counted_resident_is_liable_to_pay_rent_to_relevant_person: true
+    uk:regulations/ssi/2021/249/13#input.relevant_person_is_entitled_to_second_adult_rebate_because_of_counted_resident_income: false
+    uk:regulations/ssi/2021/249/91#input.conditions_of_entitlement_in_regulation_13_3_are_fulfilled: true
+    uk:regulations/ssi/2021/249/91#input.conditions_of_entitlement_in_regulation_13_7_are_fulfilled: true
+    ? uk:regulations/ssi/2021/249/91#input.applicant_is_jointly_and_severally_liable_and_resident_with_one_or_more_other_jointly_liable_persons
+    : false
+    uk:regulations/ssi/2021/249/91#input.applicant_is_jointly_and_severally_liable_only_with_applicants_partner: false
+    uk:regulations/ssi/2021/249/91#input.second_adult_rebate_amount_determined_in_accordance_with_schedule_2: 20
+    uk:regulations/ssi/2021/249/91#input.number_of_persons_jointly_and_severally_liable: 1
+  output:
+    uk:regulations/ssi/2021/249/13#second_adult_rebate_route_satisfied: not_holds
+    uk:regulations/ssi/2021/249/13#council_tax_reduction_amount_under_second_adult_rebate_route: 0

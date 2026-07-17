@@ -1,0 +1,319 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2012/2885/schedule/3/paragraph/1
+  summary: |-
+    Subject to paragraphs 2 and 3, the alternative maximum council tax reduction in respect of a day for the purpose of paragraph 9 of Schedule 1 is determined in accordance with the following Table
+rules:
+  - name: benefit_recipient_band_rate
+    kind: parameter
+    dtype: Rate
+    source: Schedule 3, paragraph 1, table
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: table_cell
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2885/schedule/3/paragraph/1
+              excerpt: 25 per cent of the council tax due in respect of that day;
+              table:
+                header: Alternative maximum council tax reduction
+                row: Second adult or all second adults receive specified benefits
+                column: Alternative maximum council tax reduction
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          0.25
+
+  - name: low_income_band_rate
+    kind: parameter
+    dtype: Rate
+    source: Schedule 3, paragraph 1, table
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: table_cell
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2885/schedule/3/paragraph/1
+              excerpt: 15 per cent of the council tax due in respect of that day;
+              table:
+                header: Alternative maximum council tax reduction
+                row: Gross income is less than £289.00 per week
+                column: Alternative maximum council tax reduction
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          0.15
+
+  - name: middle_income_band_rate
+    kind: parameter
+    dtype: Rate
+    source: Schedule 3, paragraph 1, table
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: table_cell
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2885/schedule/3/paragraph/1
+              excerpt: 7.5 per cent of the council tax due in respect of that day;
+              table:
+                header: Alternative maximum council tax reduction
+                row: Gross income is not less than £289.00 but less than £375.00 per week
+                column: Alternative maximum council tax reduction
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          0.075
+
+  - name: qualifying_occupancy_band_rate
+    kind: parameter
+    dtype: Rate
+    source: Schedule 3, paragraph 1, table
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: table_cell
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2885/schedule/3/paragraph/1
+              excerpt: 100 per cent of the council tax due in respect of that day.
+              table:
+                header: Alternative maximum council tax reduction
+                row: Dwelling otherwise wholly occupied by persons to whom paragraph 73(1) applies
+                column: Alternative maximum council tax reduction
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          1
+
+  - name: low_income_band_upper_bound
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    period: Week
+    source: Schedule 3, paragraph 1, table
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2885/schedule/3/paragraph/1
+              excerpt: is less than £289.00 per week;
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          289.00
+
+  - name: middle_income_band_lower_bound
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    period: Week
+    source: Schedule 3, paragraph 1, table
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2885/schedule/3/paragraph/1
+              excerpt: is not less than £289.00 per week but less than £375.00 per week;
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          289.00
+
+  - name: middle_income_band_upper_bound
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    period: Week
+    source: Schedule 3, paragraph 1, table
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2885/schedule/3/paragraph/1
+              excerpt: is not less than £289.00 per week but less than £375.00 per week;
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          375.00
+
+  - name: benefit_recipient_band_applies
+    kind: derived
+    entity: Family
+    dtype: Judgment
+    period: Day
+    source: Schedule 3, paragraph 1, table, first row
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2885/schedule/3/paragraph/1
+              excerpt: Where the second adult or all second adults are in receipt of income support, an income-related employment and support allowance or state pension credit or are persons on an income-based jobseeker’s allowance;
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          second_adult_or_all_second_adults_receive_specified_benefit
+
+  - name: low_income_band_applies
+    kind: derived
+    entity: Family
+    dtype: Judgment
+    period: Day
+    source: Schedule 3, paragraph 1, table, gross-income row
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2885/schedule/3/paragraph/1
+              excerpt: is less than £289.00 per week;
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2885/schedule/3/paragraph/1
+              excerpt: their aggregate gross income disregarding any income of persons on income support, an income-related employment and support allowance, state pension credit or an income-based jobseeker’s allowance—
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          not second_adult_or_all_second_adults_receive_specified_benefit
+          and second_adult_aggregate_gross_income_after_required_disregards < low_income_band_upper_bound
+
+  - name: middle_income_band_applies
+    kind: derived
+    entity: Family
+    dtype: Judgment
+    period: Day
+    source: Schedule 3, paragraph 1, table, gross-income row
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2885/schedule/3/paragraph/1
+              excerpt: is not less than £289.00 per week but less than £375.00 per week;
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2885/schedule/3/paragraph/1
+              excerpt: their aggregate gross income disregarding any income of persons on income support, an income-related employment and support allowance, state pension credit or an income-based jobseeker’s allowance—
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          second_adult_aggregate_gross_income_after_required_disregards >= middle_income_band_lower_bound
+          and second_adult_aggregate_gross_income_after_required_disregards < middle_income_band_upper_bound
+
+  - name: qualifying_occupancy_band_applies
+    kind: derived
+    entity: Family
+    dtype: Judgment
+    period: Day
+    source: Schedule 3, paragraph 1, table, final row
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2885/schedule/3/paragraph/1
+              excerpt: where the dwelling would be wholly occupied by one or more persons to whom paragraph 73(1) of Schedule 1 to the Default Scheme Regulations applies
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          dwelling_would_be_wholly_occupied_by_persons_to_whom_paragraph_73_1_applies
+          and one_or_more_second_adults_receive_specified_benefit
+
+  - name: council_tax_due_in_respect_of_day
+    kind: derived
+    entity: Family
+    dtype: Money
+    unit: GBP
+    period: Day
+    source: Schedule 3, paragraph 1, definition of council tax due
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2885/schedule/3/paragraph/1
+              excerpt: the council tax payable under section 10 of the 1992 Act less—
+          - path: versions[0].formula
+            kind: exception
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2885/schedule/3/paragraph/1
+              excerpt: in a case to which sub-paragraph (c) in column (1) of the table below applies, the amount of any discount which may be appropriate to the dwelling under the 1992 Act.
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          max(
+            0,
+            council_tax_payable_under_section_10
+            - reductions_under_the_1992_act_other_than_authority_scheme_reduction
+            - (if qualifying_occupancy_band_applies: appropriate_dwelling_discount_under_the_1992_act else: 0)
+          )
+
+  - name: alternative_maximum_council_tax_reduction
+    kind: derived
+    entity: Family
+    dtype: Money
+    unit: GBP
+    period: Day
+    source: Schedule 3, paragraph 1, table
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2885/schedule/3/paragraph/1
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2885/schedule/3/paragraph/1
+              excerpt: 25 per cent of the council tax due in respect of that day;
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2885/schedule/3/paragraph/1
+              excerpt: 15 per cent of the council tax due in respect of that day;
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2885/schedule/3/paragraph/1
+              excerpt: 7.5 per cent of the council tax due in respect of that day;
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2885/schedule/3/paragraph/1
+              excerpt: 100 per cent of the council tax due in respect of that day.
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if qualifying_occupancy_band_applies:
+            council_tax_due_in_respect_of_day * qualifying_occupancy_band_rate
+          else:
+            if benefit_recipient_band_applies:
+              council_tax_due_in_respect_of_day * benefit_recipient_band_rate
+            else:
+              if low_income_band_applies:
+                council_tax_due_in_respect_of_day * low_income_band_rate
+              else:
+                if middle_income_band_applies:
+                  council_tax_due_in_respect_of_day * middle_income_band_rate
+                else:
+                  0

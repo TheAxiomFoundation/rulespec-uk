@@ -1,0 +1,106 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/wsi/2013/3029/schedule/6/paragraph/4
+  summary: "\u201Cthe amount of a person\u2019s maximum council tax reduction in respect\
+    \ of a day is 100 per cent of the amount A/B ... less any deductions in respect\
+    \ of non-dependants\u201D; statutory reductions are taken into account, joint\
+    \ liability may divide amount A, liability only with a partner is excepted, and\
+    \ excluded students are not counted."
+rules:
+- name: maximum_council_tax_reduction_rate
+  kind: parameter
+  dtype: Rate
+  source: Schedule 6 paragraph 4(1)
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: parameter
+        source:
+          corpus_citation_path: uk/regulation/wsi/2013/3029/schedule/6/paragraph/4
+          excerpt: 100 per cent
+  versions:
+  - effective_from: '0001-01-01'
+    formula: '1.00'
+- name: council_tax_amount_a_after_statutory_reductions
+  kind: derived
+  entity: Person
+  dtype: Money
+  period: Year
+  unit: GBP
+  source: Schedule 6 paragraph 4(1)-(2)
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: uk/regulation/wsi/2013/3029/schedule/6/paragraph/4
+  versions:
+  - effective_from: '0001-01-01'
+    formula: "max(\n  0,\n  council_tax_set_for_relevant_financial_year\n  - appropriate_dwelling_discount_under_1992_act\n\
+      \  - other_council_tax_reductions_under_1992_act\n)"
+- name: joint_liability_divisor_for_amount_a
+  kind: derived
+  entity: Person
+  dtype: Count
+  source: Schedule 6 paragraph 4(3)-(5)
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: uk/regulation/wsi/2013/3029/schedule/6/paragraph/4
+      - path: versions[0].formula
+        kind: exception
+        source:
+          corpus_citation_path: uk/regulation/wsi/2013/3029/schedule/6/paragraph/4
+          excerpt: jointly and severally liable for council tax in respect of a dwelling
+            with only a partner
+  versions:
+  - effective_from: '0001-01-01'
+    formula: 'if applicant_is_jointly_and_severally_liable_with_other_persons and
+      not applicant_is_jointly_and_severally_liable_with_only_a_partner: max( 1, number_of_jointly_and_severally_liable_persons
+      - number_of_jointly_and_severally_liable_excluded_students ) else: 1'
+- name: maximum_council_tax_reduction_for_day
+  kind: derived
+  entity: Person
+  dtype: Money
+  period: Day
+  unit: GBP
+  source: Schedule 6 paragraph 4
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: uk/regulation/wsi/2013/3029/schedule/6/paragraph/4
+          excerpt: 100 per cent of the amount A/B
+      - path: versions[0].formula
+        kind: import
+        import:
+          target: uk:regulations/wsi/2013/3029/schedule/6/paragraph/4#maximum_council_tax_reduction_rate
+          output: maximum_council_tax_reduction_rate
+          hash: sha256:local
+      - path: versions[0].formula
+        kind: import
+        import:
+          target: uk:regulations/wsi/2013/3029/schedule/6/paragraph/4#council_tax_amount_a_after_statutory_reductions
+          output: council_tax_amount_a_after_statutory_reductions
+          hash: sha256:local
+      - path: versions[0].formula
+        kind: import
+        import:
+          target: uk:regulations/wsi/2013/3029/schedule/6/paragraph/4#joint_liability_divisor_for_amount_a
+          output: joint_liability_divisor_for_amount_a
+          hash: sha256:local
+  versions:
+  - effective_from: '0001-01-01'
+    formula: "max(\n  0,\n  maximum_council_tax_reduction_rate\n  * council_tax_amount_a_after_statutory_reductions\n\
+      \  / joint_liability_divisor_for_amount_a\n  / number_of_days_in_relevant_financial_year\n\
+      \  - non_dependant_deductions_under_paragraph_5\n)"

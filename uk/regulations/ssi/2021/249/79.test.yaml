@@ -1,0 +1,106 @@
+- name: sole liability and valuation band E
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:regulations/ssi/2021/249/79#input.valuation_band: E
+    uk:regulations/ssi/2021/249/79#input.annual_council_tax_for_dwelling: 3650
+    uk:regulations/ssi/2021/249/79#input.appropriate_dwelling_discount: 365
+    uk:regulations/ssi/2021/249/79#input.section_80_or_80a_liability_reduction_other_than_under_these_regulations: 0
+    ? uk:regulations/ssi/2021/249/79#input.applicant_is_jointly_and_severally_liable_and_resident_with_one_or_more_other_counted_persons
+    : false
+    uk:regulations/ssi/2021/249/79#input.applicant_is_jointly_and_severally_liable_only_with_applicants_partner: false
+    uk:regulations/ssi/2021/249/79#input.number_of_counted_persons_jointly_and_severally_liable: 1
+    uk:regulations/ssi/2021/249/79#input.number_of_days_in_financial_year: 365
+    uk:regulations/ssi/2021/249/79#input.daily_non_dependant_deductions_under_regulation_90: 1
+  output:
+    uk:regulations/ssi/2021/249/79#applicable_valuation_band_e_to_h_factor: 1.075
+    uk:regulations/ssi/2021/249/79#annual_council_tax_amount_a: 3285
+    uk:regulations/ssi/2021/249/79#annual_council_tax_amount_a_after_joint_liability_adjustment: 3285
+    uk:regulations/ssi/2021/249/79#maximum_council_tax_reduction_for_regulation_13: 8
+- name: joint liability division and valuation band F
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:regulations/ssi/2021/249/79#input.valuation_band: F
+    uk:regulations/ssi/2021/249/79#input.annual_council_tax_for_dwelling: 4380
+    uk:regulations/ssi/2021/249/79#input.appropriate_dwelling_discount: 0
+    uk:regulations/ssi/2021/249/79#input.section_80_or_80a_liability_reduction_other_than_under_these_regulations: 0
+    ? uk:regulations/ssi/2021/249/79#input.applicant_is_jointly_and_severally_liable_and_resident_with_one_or_more_other_counted_persons
+    : true
+    uk:regulations/ssi/2021/249/79#input.applicant_is_jointly_and_severally_liable_only_with_applicants_partner: false
+    uk:regulations/ssi/2021/249/79#input.number_of_counted_persons_jointly_and_severally_liable: 3
+    uk:regulations/ssi/2021/249/79#input.number_of_days_in_financial_year: 365
+    uk:regulations/ssi/2021/249/79#input.daily_non_dependant_deductions_under_regulation_90: 1
+  output:
+    uk:regulations/ssi/2021/249/79#applicable_valuation_band_e_to_h_factor: 1.125
+    uk:regulations/ssi/2021/249/79#annual_council_tax_amount_a: 4380
+    uk:regulations/ssi/2021/249/79#annual_council_tax_amount_a_after_joint_liability_adjustment: 1460
+    uk:regulations/ssi/2021/249/79#maximum_council_tax_reduction_for_regulation_13: 3
+- name: partner-only exception and valuation band G
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:regulations/ssi/2021/249/79#input.valuation_band: G
+    uk:regulations/ssi/2021/249/79#input.annual_council_tax_for_dwelling: 3650
+    uk:regulations/ssi/2021/249/79#input.appropriate_dwelling_discount: 0
+    uk:regulations/ssi/2021/249/79#input.section_80_or_80a_liability_reduction_other_than_under_these_regulations: 0
+    ? uk:regulations/ssi/2021/249/79#input.applicant_is_jointly_and_severally_liable_and_resident_with_one_or_more_other_counted_persons
+    : true
+    uk:regulations/ssi/2021/249/79#input.applicant_is_jointly_and_severally_liable_only_with_applicants_partner: true
+    uk:regulations/ssi/2021/249/79#input.number_of_counted_persons_jointly_and_severally_liable: 2
+    uk:regulations/ssi/2021/249/79#input.number_of_days_in_financial_year: 365
+    uk:regulations/ssi/2021/249/79#input.daily_non_dependant_deductions_under_regulation_90: 2
+  output:
+    uk:regulations/ssi/2021/249/79#applicable_valuation_band_e_to_h_factor: 1.175
+    uk:regulations/ssi/2021/249/79#annual_council_tax_amount_a: 3650
+    uk:regulations/ssi/2021/249/79#annual_council_tax_amount_a_after_joint_liability_adjustment: 3650
+    uk:regulations/ssi/2021/249/79#maximum_council_tax_reduction_for_regulation_13: 8
+- name: non-dependant deductions floor reduction at zero and valuation band H
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:regulations/ssi/2021/249/79#input.valuation_band: H
+    uk:regulations/ssi/2021/249/79#input.annual_council_tax_for_dwelling: 365
+    uk:regulations/ssi/2021/249/79#input.appropriate_dwelling_discount: 0
+    uk:regulations/ssi/2021/249/79#input.section_80_or_80a_liability_reduction_other_than_under_these_regulations: 0
+    ? uk:regulations/ssi/2021/249/79#input.applicant_is_jointly_and_severally_liable_and_resident_with_one_or_more_other_counted_persons
+    : false
+    uk:regulations/ssi/2021/249/79#input.applicant_is_jointly_and_severally_liable_only_with_applicants_partner: false
+    uk:regulations/ssi/2021/249/79#input.number_of_counted_persons_jointly_and_severally_liable: 1
+    uk:regulations/ssi/2021/249/79#input.number_of_days_in_financial_year: 365
+    uk:regulations/ssi/2021/249/79#input.daily_non_dependant_deductions_under_regulation_90: 2
+  output:
+    uk:regulations/ssi/2021/249/79#applicable_valuation_band_e_to_h_factor: 1.225
+    uk:regulations/ssi/2021/249/79#annual_council_tax_amount_a: 365
+    uk:regulations/ssi/2021/249/79#annual_council_tax_amount_a_after_joint_liability_adjustment: 365
+    uk:regulations/ssi/2021/249/79#maximum_council_tax_reduction_for_regulation_13: 0
+- name: auto_zero_applicable_valuation_band_e_to_h_factor
+  period:
+    period_kind: tax_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:regulations/ssi/2021/249/79#input.annual_council_tax_for_dwelling: 0
+    ? uk:regulations/ssi/2021/249/79#input.applicant_is_jointly_and_severally_liable_and_resident_with_one_or_more_other_counted_persons
+    : false
+    uk:regulations/ssi/2021/249/79#input.applicant_is_jointly_and_severally_liable_only_with_applicants_partner: false
+    uk:regulations/ssi/2021/249/79#input.appropriate_dwelling_discount: 0
+    uk:regulations/ssi/2021/249/79#input.daily_non_dependant_deductions_under_regulation_90: 0
+    uk:regulations/ssi/2021/249/79#input.number_of_counted_persons_jointly_and_severally_liable: 0
+    uk:regulations/ssi/2021/249/79#input.number_of_days_in_financial_year: 0
+    uk:regulations/ssi/2021/249/79#input.section_80_or_80a_liability_reduction_other_than_under_these_regulations: 0
+    uk:regulations/ssi/2021/249/79#input.valuation_band: ''
+  output:
+    uk:regulations/ssi/2021/249/79#applicable_valuation_band_e_to_h_factor: 0

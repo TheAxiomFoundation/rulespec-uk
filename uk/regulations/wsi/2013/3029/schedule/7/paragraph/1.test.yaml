@@ -1,0 +1,83 @@
+- name: single applicant entitled to main phase employment and support allowance
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2024-01-01'
+    end: '2024-01-07'
+  input:
+    uk:regulations/wsi/2013/3029/schedule/7/paragraph/1#input.is_single_applicant: true
+    uk:regulations/wsi/2013/3029/schedule/7/paragraph/1#input.is_entitled_to_main_phase_employment_and_support_allowance: true
+    uk:regulations/wsi/2013/3029/schedule/7/paragraph/1#input.age: 24
+    uk:regulations/wsi/2013/3029/schedule/7/paragraph/1#input.is_lone_parent: false
+    uk:regulations/wsi/2013/3029/schedule/7/paragraph/1#input.is_couple: false
+  output:
+    uk:regulations/wsi/2013/3029/schedule/7/paragraph/1#schedule_6_personal_allowance_amount: 101.85
+- name: single applicant aged not less than 25
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2024-01-01'
+    end: '2024-01-07'
+  input:
+    uk:regulations/wsi/2013/3029/schedule/7/paragraph/1#input.is_single_applicant: true
+    uk:regulations/wsi/2013/3029/schedule/7/paragraph/1#input.is_entitled_to_main_phase_employment_and_support_allowance: false
+    uk:regulations/wsi/2013/3029/schedule/7/paragraph/1#input.age: 25
+    uk:regulations/wsi/2013/3029/schedule/7/paragraph/1#input.is_lone_parent: false
+    uk:regulations/wsi/2013/3029/schedule/7/paragraph/1#input.is_couple: false
+  output:
+    uk:regulations/wsi/2013/3029/schedule/7/paragraph/1#schedule_6_personal_allowance_amount: 101.85
+- name: single applicant aged 18 to under 25
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2024-01-01'
+    end: '2024-01-07'
+  input:
+    uk:regulations/wsi/2013/3029/schedule/7/paragraph/1#input.is_single_applicant: true
+    uk:regulations/wsi/2013/3029/schedule/7/paragraph/1#input.is_entitled_to_main_phase_employment_and_support_allowance: false
+    uk:regulations/wsi/2013/3029/schedule/7/paragraph/1#input.age: 18
+    uk:regulations/wsi/2013/3029/schedule/7/paragraph/1#input.is_lone_parent: false
+    uk:regulations/wsi/2013/3029/schedule/7/paragraph/1#input.is_couple: false
+  output:
+    uk:regulations/wsi/2013/3029/schedule/7/paragraph/1#schedule_6_personal_allowance_amount: 80.6
+- name: lone parent
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2024-01-01'
+    end: '2024-01-07'
+  input:
+    uk:regulations/wsi/2013/3029/schedule/7/paragraph/1#input.is_single_applicant: false
+    uk:regulations/wsi/2013/3029/schedule/7/paragraph/1#input.is_entitled_to_main_phase_employment_and_support_allowance: false
+    uk:regulations/wsi/2013/3029/schedule/7/paragraph/1#input.age: 0
+    uk:regulations/wsi/2013/3029/schedule/7/paragraph/1#input.is_lone_parent: true
+    uk:regulations/wsi/2013/3029/schedule/7/paragraph/1#input.is_couple: false
+  output:
+    uk:regulations/wsi/2013/3029/schedule/7/paragraph/1#schedule_6_personal_allowance_amount: 101.85
+- name: couple
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2024-01-01'
+    end: '2024-01-07'
+  input:
+    uk:regulations/wsi/2013/3029/schedule/7/paragraph/1#input.is_single_applicant: false
+    uk:regulations/wsi/2013/3029/schedule/7/paragraph/1#input.is_entitled_to_main_phase_employment_and_support_allowance: false
+    uk:regulations/wsi/2013/3029/schedule/7/paragraph/1#input.age: 0
+    uk:regulations/wsi/2013/3029/schedule/7/paragraph/1#input.is_lone_parent: false
+    uk:regulations/wsi/2013/3029/schedule/7/paragraph/1#input.is_couple: true
+  output:
+    uk:regulations/wsi/2013/3029/schedule/7/paragraph/1#schedule_6_personal_allowance_amount: 159.85
+- name: auto_zero_schedule_6_personal_allowance_amount
+  period:
+    period_kind: tax_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:regulations/wsi/2013/3029/schedule/7/paragraph/1#input.age: 26
+    uk:regulations/wsi/2013/3029/schedule/7/paragraph/1#input.is_couple: false
+    uk:regulations/wsi/2013/3029/schedule/7/paragraph/1#input.is_entitled_to_main_phase_employment_and_support_allowance: false
+    uk:regulations/wsi/2013/3029/schedule/7/paragraph/1#input.is_lone_parent: false
+    uk:regulations/wsi/2013/3029/schedule/7/paragraph/1#input.is_single_applicant: false
+  output:
+    uk:regulations/wsi/2013/3029/schedule/7/paragraph/1#schedule_6_personal_allowance_amount: 0

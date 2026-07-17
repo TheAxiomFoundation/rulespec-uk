@@ -1,0 +1,60 @@
+- name: single applicant who has attained pensionable age
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2026-01-05'
+    end: '2026-01-11'
+  input:
+    uk:regulations/wsi/2013/3029/schedule/2/paragraph/1#input.applicant_is_member_of_polygamous_marriage: true
+    ? uk:regulations/wsi/2013/3029/schedule/2/paragraph/1#input.one_or_more_members_of_polygamous_marriage_have_attained_pensionable_age
+    : false
+    uk:regulations/wsi/2013/3029/schedule/2/paragraph/1#input.number_of_additional_spouses_in_same_household_as_applicant: 0
+    uk:regulations/wsi/2013/3029/schedule/2/paragraph/1#input.single_applicant_or_lone_parent_has_attained_pensionable_age: true
+    uk:regulations/wsi/2013/3029/schedule/2/paragraph/1#input.couple_has_one_or_both_members_who_have_attained_pensionable_age: false
+  output:
+    uk:regulations/wsi/2013/3029/schedule/2/paragraph/1#pensionable_age_person_couple_or_polygamous_marriage_amount: 256.0
+- name: couple with a member who has attained pensionable age
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2026-01-05'
+    end: '2026-01-11'
+  input:
+    uk:regulations/wsi/2013/3029/schedule/2/paragraph/1#input.applicant_is_member_of_polygamous_marriage: false
+    ? uk:regulations/wsi/2013/3029/schedule/2/paragraph/1#input.one_or_more_members_of_polygamous_marriage_have_attained_pensionable_age
+    : true
+    uk:regulations/wsi/2013/3029/schedule/2/paragraph/1#input.number_of_additional_spouses_in_same_household_as_applicant: 0
+    uk:regulations/wsi/2013/3029/schedule/2/paragraph/1#input.single_applicant_or_lone_parent_has_attained_pensionable_age: false
+    uk:regulations/wsi/2013/3029/schedule/2/paragraph/1#input.couple_has_one_or_both_members_who_have_attained_pensionable_age: true
+  output:
+    uk:regulations/wsi/2013/3029/schedule/2/paragraph/1#pensionable_age_person_couple_or_polygamous_marriage_amount: 383.35
+- name: polygamous marriage with two additional spouses in the household
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2026-01-05'
+    end: '2026-01-11'
+  input:
+    uk:regulations/wsi/2013/3029/schedule/2/paragraph/1#input.applicant_is_member_of_polygamous_marriage: true
+    ? uk:regulations/wsi/2013/3029/schedule/2/paragraph/1#input.one_or_more_members_of_polygamous_marriage_have_attained_pensionable_age
+    : true
+    uk:regulations/wsi/2013/3029/schedule/2/paragraph/1#input.number_of_additional_spouses_in_same_household_as_applicant: 2
+    uk:regulations/wsi/2013/3029/schedule/2/paragraph/1#input.single_applicant_or_lone_parent_has_attained_pensionable_age: false
+    uk:regulations/wsi/2013/3029/schedule/2/paragraph/1#input.couple_has_one_or_both_members_who_have_attained_pensionable_age: false
+  output:
+    uk:regulations/wsi/2013/3029/schedule/2/paragraph/1#pensionable_age_person_couple_or_polygamous_marriage_amount: 638.05
+- name: no listed pensionable-age category applies
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2026-01-05'
+    end: '2026-01-11'
+  input:
+    uk:regulations/wsi/2013/3029/schedule/2/paragraph/1#input.applicant_is_member_of_polygamous_marriage: false
+    ? uk:regulations/wsi/2013/3029/schedule/2/paragraph/1#input.one_or_more_members_of_polygamous_marriage_have_attained_pensionable_age
+    : false
+    uk:regulations/wsi/2013/3029/schedule/2/paragraph/1#input.number_of_additional_spouses_in_same_household_as_applicant: 0
+    uk:regulations/wsi/2013/3029/schedule/2/paragraph/1#input.single_applicant_or_lone_parent_has_attained_pensionable_age: false
+    uk:regulations/wsi/2013/3029/schedule/2/paragraph/1#input.couple_has_one_or_both_members_who_have_attained_pensionable_age: false
+  output:
+    uk:regulations/wsi/2013/3029/schedule/2/paragraph/1#pensionable_age_person_couple_or_polygamous_marriage_amount: 0
