@@ -1,0 +1,21 @@
+- name: lone_parent_cap
+  period: 2026-07
+  input:
+    uk:regulations/uksi/2012/2885/schedule/4/paragraph/1#input.two_or_more_of_paragraphs_2_to_5_apply: true
+    uk:regulations/uksi/2012/2885/schedule/4/paragraph/1#input.case_is_lone_parent: true
+  output:
+    uk:regulations/uksi/2012/2885/schedule/4/paragraph/1#overall_disregard_cap_when_multiple_paragraphs_apply: 25
+- name: other_case_cap
+  period: 2026-07
+  input:
+    uk:regulations/uksi/2012/2885/schedule/4/paragraph/1#input.two_or_more_of_paragraphs_2_to_5_apply: true
+    uk:regulations/uksi/2012/2885/schedule/4/paragraph/1#input.case_is_lone_parent: false
+  output:
+    uk:regulations/uksi/2012/2885/schedule/4/paragraph/1#overall_disregard_cap_when_multiple_paragraphs_apply: 20
+- name: cap_inapplicable_when_fewer_than_two_paragraphs_apply
+  period: 2026-07
+  input:
+    uk:regulations/uksi/2012/2885/schedule/4/paragraph/1#input.two_or_more_of_paragraphs_2_to_5_apply: false
+    uk:regulations/uksi/2012/2885/schedule/4/paragraph/1#input.case_is_lone_parent: true
+  output:
+    uk:regulations/uksi/2012/2885/schedule/4/paragraph/1#overall_disregard_cap_when_multiple_paragraphs_apply: 0
