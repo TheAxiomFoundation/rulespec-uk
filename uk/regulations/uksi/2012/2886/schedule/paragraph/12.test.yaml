@@ -1,0 +1,16 @@
+- name: person_described_in_paragraphs_is_entitled_and_uses_estimated_values
+  period: 2024-01
+  input:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/12#input.person_is_described_in_paragraphs_13_to_18: true
+    uk:regulations/uksi/2012/2886/schedule/paragraph/12#input.applicant_income_or_capital_cannot_be_accurately_determined: true
+  output:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/12#reduction_entitlement_for_person_described_in_paragraphs_13_to_18: holds
+    uk:regulations/uksi/2012/2886/schedule/paragraph/12#estimated_income_or_capital_is_included_for_applicant: holds
+- name: person_not_described_is_not_entitled_and_determined_values_are_not_estimated
+  period: 2024-01
+  input:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/12#input.person_is_described_in_paragraphs_13_to_18: false
+    uk:regulations/uksi/2012/2886/schedule/paragraph/12#input.applicant_income_or_capital_cannot_be_accurately_determined: false
+  output:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/12#reduction_entitlement_for_person_described_in_paragraphs_13_to_18: not_holds
+    uk:regulations/uksi/2012/2886/schedule/paragraph/12#estimated_income_or_capital_is_included_for_applicant: not_holds
