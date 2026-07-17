@@ -2,49 +2,29 @@ version: 1
 defaults:
   backend: openai
   model: gpt-5.5
-# UK bulk-encode worklist. Mechanically derived per bulk/README.md: the corpus
-# current_provisions view (jurisdiction uk) minus what is already encoded in the
-# YAML tree on main, filtered for self-containment (low external cross-reference
-# density, substantive body text). Skips cross-reference-heavy provisions
-# (encode#1058). Values are the encoder's; this queue never invents them.
-#
-# Each entry sets EXACTLY ONE encode target:
-#   citation: <corpus citation path>   # standard case, e.g. uk/regulation/uksi/2012/2885/11
-#   target:   <module path | council scope>  # council / re-emission entries
-# `target` lets a council policy module (grounded on an ingested manual rather
-# than a corpus citation) be queued and planned; e.g. the Kingston CTR closeout
-# (rulespec-uk#46, #140) would add:
-#   - target: uk-kingston-upon-thames/policies/kingston-upon-thames/council-tax-reduction.yaml
-#     batch: D
-#     status: pending
-# The planner selects and hands off such entries; the signer-attached encode leg
-# (Path B, lane O) owns how each is encoded. See bulk/README.md.
 entries:
-# --- Batch A: pilot (cleanest, lowest cross-reference density) ---
 - citation: uk/statute/ukpga/2003/1/681B
   repo: rulespec-uk
   batch: A
-  status: done  # reconciled 2026-07: encoded on main (uk/statutes/ukpga/2003/1/681B.yaml)
+  status: done
   heading: Liability for the high income child benefit charge (ITEPA s681B)
   class: charge
-  note: Self-contained HICBC liability test over adjusted net income above the
-    £60,000 threshold. In-chapter structure only.
+  note: Self-contained HICBC liability test over adjusted net income above the £60,000 threshold. In-chapter
+    structure only.
 - citation: uk/statute/ukpga/2003/1/681G
   repo: rulespec-uk
   batch: A
-  status: done  # reconciled 2026-07-13: PR #126 closed; encoded on main via batch PRs (uk/statutes/ukpga/2003/1/681G.yaml)
+  status: done
   heading: Meaning of "partner" for the high income child benefit charge (ITEPA s681G)
   class: definition
-  note: Self-contained partner definition (conditions A/B) for the HICBC chapter.
-    In-chapter text only.
+  note: Self-contained partner definition (conditions A/B) for the HICBC chapter. In-chapter text only.
 - citation: uk/statute/ukpga/2012/5/7
   repo: rulespec-uk
   batch: drain
   status: done
   heading: Universal credit basis of awards; assessment periods (WRA 2012 s7)
   class: mechanics
-  note: Self-contained; UC is payable per complete assessment period. In-Part
-    structure only.
+  note: Self-contained; UC is payable per complete assessment period. In-Part structure only.
 - citation: uk/statute/ukpga/2012/5/39
   repo: rulespec-uk
   batch: drain
@@ -52,23 +32,22 @@ entries:
   heading: Universal credit "couple" definition (WRA 2012 s39)
   class: definition
   note: Self-contained definition of "couple" for Part 1. In-Part text only.
-# --- Batch B: remaining ITEPA HICBC + WRA UC + SSCBA + HB Regs ---
 - citation: uk/statute/ukpga/2003/1/681C
   repo: rulespec-uk
   batch: B
   status: pending
   heading: Amount of the high income child benefit charge (ITEPA s681C)
   class: charge
-  note: Self-contained charge amount = appropriate percentage of the relevant
-    child benefit. In-chapter refs only.
+  note: Self-contained charge amount = appropriate percentage of the relevant child benefit. In-chapter
+    refs only.
 - citation: uk/statute/ukpga/2003/1/681H
   repo: rulespec-uk
   batch: B
-  status: done  # reconciled 2026-07: encoded on main (uk/statutes/ukpga/2003/1/681H.yaml)
+  status: done
   heading: Adjusted net income for the high income child benefit charge (ITEPA s681H)
   class: definition
-  note: Self-contained; adjusted net income has the ITA 2007 s58 meaning. One
-    in-chapter definitional ref.
+  note: Self-contained; adjusted net income has the ITA 2007 s58 meaning. One in-chapter definitional
+    ref.
 - citation: uk/statute/ukpga/2012/5/6
   repo: rulespec-uk
   batch: drain
@@ -82,83 +61,78 @@ entries:
   status: done
   heading: Housing element of state pension credit (WRA 2012 s34)
   class: mechanics
-  note: Self-contained; introduces Schedule 4 housing element on abolition of
-    housing benefit. In-Part refs only.
+  note: Self-contained; introduces Schedule 4 housing element on abolition of housing benefit. In-Part
+    refs only.
 - citation: uk/statute/ukpga/1992/4/166
   repo: rulespec-uk
   batch: B
-  status: done  # reconciled 2026-07: encoded on main (uk/statutes/ukpga/1992/4/166.yaml)
+  status: done
   heading: Rate of statutory maternity pay (SSCBA 1992 s166)
   class: rate
-  note: Self-contained SMP rate structure (earnings-related then prescribed
-    weekly rate). In-Part refs only.
+  note: Self-contained SMP rate structure (earnings-related then prescribed weekly rate). In-Part refs
+    only.
 - citation: uk/statute/ukpga/1992/4/171ZA
   repo: rulespec-uk
   batch: B
-  status: done  # reconciled 2026-07-13: PR #120 closed; encoded on main via batch PRs (uk/statutes/ukpga/1992/4/171ZA.yaml)
+  status: done
   heading: Entitlement to statutory paternity pay - birth (SSCBA 1992 s171ZA)
   class: entitlement
   note: Self-contained SPP entitlement conditions on birth. In-Part refs only.
 - citation: uk/regulation/uksi/2006/213/70
   repo: rulespec-uk
   batch: B
-  status: done  # reconciled 2026-07-13: PR #121 closed; encoded on main via batch PRs (uk/regulations/uksi/2006/213/70.yaml)
+  status: done
   heading: Appropriate maximum housing benefit (HB Regs 2006 reg 70)
   class: rate
-  note: Self-contained; maximum HB is 100 per cent of eligible rent, less
-    non-dependant deductions. In-instrument refs only.
+  note: Self-contained; maximum HB is 100 per cent of eligible rent, less non-dependant deductions. In-instrument
+    refs only.
 - citation: uk/regulation/uksi/2006/213/71
   repo: rulespec-uk
   batch: B
-  status: done  # reconciled 2026-07-13: PR #122 closed; encoded on main via batch PRs (uk/regulations/uksi/2006/213/71.yaml)
+  status: done
   heading: Prescribed taper percentage for housing benefit (HB Regs 2006 reg 71)
   class: rate
-  note: Self-contained taper percentage of excess income over the applicable
-    amount. In-instrument refs only.
+  note: Self-contained taper percentage of excess income over the applicable amount. In-instrument refs
+    only.
 - citation: uk/regulation/uksi/2006/214/50
   repo: rulespec-uk
   batch: B
   status: pending
   heading: Appropriate maximum housing benefit - state pension age (HB(SPC) Regs 2006 reg 50)
   class: rate
-  note: Self-contained; maximum HB is 100 per cent of eligible rent for
-    pension-age claimants. In-instrument refs only.
+  note: Self-contained; maximum HB is 100 per cent of eligible rent for pension-age claimants. In-instrument
+    refs only.
 - citation: uk/regulation/uksi/2006/214/51
   repo: rulespec-uk
   batch: B
   status: pending
   heading: Prescribed taper percentage - state pension age (HB(SPC) Regs 2006 reg 51)
   class: rate
-  note: Self-contained taper percentage for pension-age housing benefit. In-instrument
-    refs only.
+  note: Self-contained taper percentage for pension-age housing benefit. In-instrument refs only.
 - citation: uk/statute/ukpga/1998/46/80C
   repo: rulespec-uk
   batch: B
   status: pending
   heading: Scottish rate resolution (Scotland Act 1998 s80C)
   class: rate
-  note: Self-contained; the Scottish Parliament sets the Scottish rate(s) by
-    resolution. In-Part refs only.
-# --- Batch indirect-tax: standalone statute sections ingested for the VAT,
-# fuel-duty, and TV-licence composed pipelines (corpus 2026-07-07 UK indirect-tax
-# ingests). The pipelines re-inline the operative atoms; these entries let the
-# dispatcher land standalone statute modules too. Values are the encoder's.
+  note: Self-contained; the Scottish Parliament sets the Scottish rate(s) by resolution. In-Part refs
+    only.
 - citation: uk/statute/ukpga/1979/5/6
   repo: rulespec-uk
   batch: indirect-tax
   status: pending
   heading: Excise duty on hydrocarbon oil (HODA 1979 s.6)
   class: rate
-  note: Standing per-litre excise duty rates in s.6(1A). Self-contained rate
-    schedule; the temporary Budget-resolution cut is external to the text.
+  note: Standing per-litre excise duty rates in s.6(1A). Self-contained rate schedule; the temporary Budget-resolution
+    cut is external to the text.
 - citation: uk/regulation/uksi/2004/692/schedule/1
   repo: rulespec-uk
   batch: indirect-tax
-  status: done  # reconciled 2026-07: encoded on main (uk/regulations/uksi/2004/692/schedule/1.yaml)
+  status: done
   heading: TV licence fees (Communications (Television Licensing) Regs 2004 Sch 1)
   class: rate
-  note: Colour and black-and-white licence fee schedule (£180.00 colour for
-    2026-27). Self-contained fee table.
+  note: Colour and black-and-white licence fee schedule (£180.00 colour for 2026-27). Self-contained fee
+    table.
 - citation: uk/statute/ukpga/2003/21/365
   repo: rulespec-uk
   batch: indirect-tax
@@ -176,11 +150,11 @@ entries:
 - citation: uk/statute/ukpga/1994/23/2
   repo: rulespec-uk
   batch: indirect-tax
-  status: done  # reconciled 2026-07: encoded on main (uk/statutes/ukpga/1994/23/2.yaml)
+  status: done
   heading: Standard rate of VAT (VATA 1994 s.2)
   class: rate
-  note: Standard rate 20 per cent. Cross-references s.29A and the Treasury order
-    power; the encoder may pull neighbouring input-tax sections (watch encode#1058).
+  note: Standard rate 20 per cent. Cross-references s.29A and the Treasury order power; the encoder may
+    pull neighbouring input-tax sections (watch encode#1058).
 - citation: uk/statute/ukpga/1994/23/29A
   repo: rulespec-uk
   batch: indirect-tax
@@ -188,370 +162,358 @@ entries:
   heading: Reduced rate of VAT (VATA 1994 s.29A)
   class: rate
   note: Reduced rate 5 per cent for Schedule 7A supplies. References Schedule 7A.
-# --- Batch topup: corpus-verified un-encoded sections. Each was checked against the
-# Supabase current_provisions view (jurisdiction uk) to resolve to exactly one live,
-# non-repealed provision AND against the on-main encoded tree to be un-encoded, then
-# its body read to confirm a self-contained rule. Amendment sections (Finance/NIC Acts
-# that "substitute" figures into ITA/TCGA/SSCBA) skipped per encode#1079 — the direct
-# consolidated sections are queued instead. Cross-reference-heavy pointer sections
-# skipped per encode#1058. Validation year 2026 (eval >= 2026-04-06 where a vintage
-# matters). Completes started chapters (HICBC ITEPA ch. 8; NICs; CGT; pensions).
 - citation: uk/statute/ukpga/1992/4/9
   repo: rulespec-uk
   batch: topup
   status: pending
   heading: Calculation of secondary Class 1 NICs (SSCBA 1992 s9)
   class: rate
-  note: Self-contained — a secondary Class 1 contribution is the secondary percentage
-    of earnings above the secondary threshold; the in-section secondary percentage is
-    15 per cent. In-Act refs only. Validates 2026 (eval >= 2026-04-06).
+  note: Self-contained — a secondary Class 1 contribution is the secondary percentage of earnings above
+    the secondary threshold; the in-section secondary percentage is 15 per cent. In-Act refs only. Validates
+    2026 (eval >= 2026-04-06).
 - citation: uk/statute/ukpga/1992/4/11
   repo: rulespec-uk
   batch: topup
   status: pending
   heading: Class 2 contributions and the small profits threshold (SSCBA 1992 s11)
   class: rate
-  note: Self-contained — Class 2 liability keyed to the in-section small profits
-    threshold of £6,845, with a treated-as-paid credit above it. In-Act refs only.
+  note: Self-contained — Class 2 liability keyed to the in-section small profits threshold of £6,845,
+    with a treated-as-paid credit above it. In-Act refs only.
 - citation: uk/statute/ukpga/1992/4/142
   repo: rulespec-uk
   batch: topup
   status: pending
   heading: Meaning of "child" and "qualifying young person" (SSCBA 1992 s142)
   class: definition
-  note: Self-contained — a child is a person under 16; a qualifying young person is
-    under a prescribed greater age meeting prescribed conditions. In-section definition.
+  note: Self-contained — a child is a person under 16; a qualifying young person is under a prescribed
+    greater age meeting prescribed conditions. In-section definition.
 - citation: uk/statute/ukpga/1992/4/143
   repo: rulespec-uk
   batch: topup
   status: pending
   heading: Person responsible for a child or qualifying young person (SSCBA 1992 s143)
   class: definition
-  note: Self-contained — responsibility where the child lives with the person, or the
-    person contributes at least the weekly child-benefit rate; with a 56-days-in-16-
-    weeks absence rule and disregards. In-section arithmetic.
+  note: Self-contained — responsibility where the child lives with the person, or the person contributes
+    at least the weekly child-benefit rate; with a 56-days-in-16- weeks absence rule and disregards. In-section
+    arithmetic.
 - citation: uk/statute/ukpga/1992/12/1H
   repo: rulespec-uk
   batch: topup
   status: pending
   heading: Main rates of capital gains tax (TCGA 1992 s1H)
   class: rate
-  note: Self-contained — chargeable gains of individuals are taxed at 18 or 24 per
-    cent (which one per s1I), and gains of personal representatives and trustees at
-    24 per cent. In-Act refs only. Validates 2026 (eval >= 2026-04-06).
+  note: Self-contained — chargeable gains of individuals are taxed at 18 or 24 per cent (which one per
+    s1I), and gains of personal representatives and trustees at 24 per cent. In-Act refs only. Validates
+    2026 (eval >= 2026-04-06).
 - citation: uk/statute/ukpga/1992/12/1K
   repo: rulespec-uk
   batch: topup
   status: pending
   heading: Capital gains tax annual exempt amount (TCGA 1992 s1K)
   class: rate
-  note: Self-contained — the annual exempt amount is £3,000, deducted from chargeable
-    gains after current-year losses; unavailable where a foreign-gain or foreign-income
-    claim is made. In-Act refs only.
+  note: Self-contained — the annual exempt amount is £3,000, deducted from chargeable gains after current-year
+    losses; unavailable where a foreign-gain or foreign-income claim is made. In-Act refs only.
 - citation: uk/statute/ukpga/2004/12/228
   repo: rulespec-uk
   batch: topup
   status: pending
   heading: Pension annual allowance (FA 2004 s228)
   class: rate
-  note: Self-contained — the annual allowance for 2023-24 and each subsequent tax year
-    is £60,000, subject to Treasury order. In-section amount.
+  note: Self-contained — the annual allowance for 2023-24 and each subsequent tax year is £60,000, subject
+    to Treasury order. In-section amount.
 - citation: uk/statute/ukpga/2004/12/228ZA
   repo: rulespec-uk
   batch: topup
   status: pending
   heading: Tapered reduction of the annual allowance (FA 2004 s228ZA)
   class: mechanics
-  note: Self-contained — for a high-income individual the annual allowance is reduced
-    (but not below £10,000) by (adjusted income − £260,000) × ½, with the high-income
-    test on adjusted and threshold income. In-section arithmetic.
+  note: Self-contained — for a high-income individual the annual allowance is reduced (but not below £10,000)
+    by (adjusted income − £260,000) × ½, with the high-income test on adjusted and threshold income. In-section
+    arithmetic.
 - citation: uk/statute/ukpga/2004/12/190
   repo: rulespec-uk
   batch: topup
   status: pending
   heading: Annual limit for pension contribution relief (FA 2004 s190)
   class: mechanics
-  note: Self-contained — relief under s188 is capped at the individual's relevant UK
-    earnings chargeable to income tax, floored at the basic amount. In-Act refs only.
+  note: Self-contained — relief under s188 is capped at the individual's relevant UK earnings chargeable
+    to income tax, floored at the basic amount. In-Act refs only.
 - citation: uk/statute/ukpga/2007/3/58
   repo: rulespec-uk
   batch: topup
   status: pending
   heading: Meaning of "adjusted net income" (ITA 2007 s58)
   class: definition
-  note: Self-contained four-step calculation — net income less grossed-up gift-aid and
-    gross pension contributions, adding back union/police relief. Underpins the HICBC
-    and personal-allowance tapers. In-Act refs only.
+  note: Self-contained four-step calculation — net income less grossed-up gift-aid and gross pension contributions,
+    adding back union/police relief. Underpins the HICBC and personal-allowance tapers. In-Act refs only.
 - citation: uk/statute/ukpga/2003/1/11
   repo: rulespec-uk
   batch: topup
   status: pending
   heading: Calculation of net taxable earnings (ITEPA 2003 s11)
   class: mechanics
-  note: Self-contained — net taxable earnings equal taxable earnings (TE) minus allowed
-    deductions (DE), floored at nil, computed per employment. In-Act refs only.
+  note: Self-contained — net taxable earnings equal taxable earnings (TE) minus allowed deductions (DE),
+    floored at nil, computed per employment. In-Act refs only.
 - citation: uk/statute/ukpga/2003/1/681D
   repo: rulespec-uk
   batch: topup
   status: pending
   heading: HICBC where a child lives with another person (ITEPA 2003 s681D)
   class: mechanics
-  note: Self-contained — attributes a contributor's child-benefit amount to the person
-    the child lives with (the one with the highest adjusted net income), with a 52-week
-    continuity rule. In-chapter refs only.
+  note: Self-contained — attributes a contributor's child-benefit amount to the person the child lives
+    with (the one with the highest adjusted net income), with a 52-week continuity rule. In-chapter refs
+    only.
 - citation: uk/statute/ukpga/2003/1/681E
   repo: rulespec-uk
   batch: topup
   status: pending
   heading: HICBC disregarded amounts and partner tiebreak (ITEPA 2003 s681E)
   class: mechanics
-  note: Self-contained — disregards election-suspended and post-death child-benefit
-    amounts, and where two or more partners would be liable charges only the one with
-    the highest adjusted net income. In-chapter refs only.
+  note: Self-contained — disregards election-suspended and post-death child-benefit amounts, and where
+    two or more partners would be liable charges only the one with the highest adjusted net income. In-chapter
+    refs only.
 - citation: uk/statute/ukpga/2003/21/365A
   repo: rulespec-uk
   batch: topup
   status: pending
   heading: TV licence fee concessions by age (Communications Act 2003 s365A)
   class: mechanics
-  note: Self-contained — a BBC age concession under s365(1A) must require the licence
-    holder (or another person) to be at or above a specified age of 65 or higher by the
-    end of the issue month. Complements the s363/s365 TV-licence entries.
+  note: Self-contained — a BBC age concession under s365(1A) must require the licence holder (or another
+    person) to be at or above a specified age of 65 or higher by the end of the issue month. Complements
+    the s363/s365 TV-licence entries.
 - citation: uk/statute/asp/2013/11/24
   repo: rulespec-uk
   batch: topup
   status: pending
   heading: LBTT tax bands and rates structure (LBTT(S) Act 2013 s24)
   class: mechanics
-  note: Self-contained band-structure rule — Scottish Ministers set, by order, a nil-
-    rate (0 per cent) band and at least two further bands with strictly increasing rates
-    for residential and non-residential transactions; numeric bands sit in the linked
-    order (mirrors the composed LBTT pipeline).
+  note: Self-contained band-structure rule — Scottish Ministers set, by order, a nil- rate (0 per cent)
+    band and at least two further bands with strictly increasing rates for residential and non-residential
+    transactions; numeric bands sit in the linked order (mirrors the composed LBTT pipeline).
 - citation: uk/statute/anaw/2017/1/24
   repo: rulespec-uk
   batch: topup
   status: pending
   heading: LTT tax bands and rates structure (LTTA (Wales) 2017 s24)
   class: mechanics
-  note: Self-contained band-structure rule — Welsh Ministers set, by regulations, a
-    zero-rate band and two or more higher bands with increasing rates for residential,
-    higher-rates residential, and non-residential transactions; numeric bands sit in
-    the linked WSI (mirrors the composed LTT pipeline).
-# --- Batch CTR-ENP: England pensioner CTR award spine (SI 2012/2885),
-# ingested 2026-07-13 (lane A of #140). Complements Sch 1 paras 2/3/7/10/37
-# already on main. Sch 1 para 8 (non-dependant deductions) and Sch 2
-# applicable-amount parts deliberately absent: para 8 needs a manual split
-# (encode#1058 profile); Sch 2 parts blocked on axiom-corpus#322. Values are
-# the encoder's; this queue never invents them.
+  note: Self-contained band-structure rule — Welsh Ministers set, by regulations, a zero-rate band and
+    two or more higher bands with increasing rates for residential, higher-rates residential, and non-residential
+    transactions; numeric bands sit in the linked WSI (mirrors the composed LTT pipeline).
 - citation: uk/regulation/uksi/2012/2885/11
   repo: rulespec-uk
   batch: CTR-ENP
-  status: pending
-  heading: "Regulation 11 - Pensioners (prescribed classes; capital limit)"
+  status: done
+  heading: Regulation 11 - Pensioners (prescribed classes; capital limit)
   class: definition
-  note: "Self-contained: prescribes the pensioner classes and the GBP 16,000 capital limit (capital exceeding it must be excluded); references are external anchors (Sch 1A to the 1992 Act), not sibling-subsection imports."
+  note: 'Self-contained: prescribes the pensioner classes and the GBP 16,000 capital limit (capital exceeding
+    it must be excluded); references are external anchors (Sch 1A to the 1992 Act), not sibling-subsection
+    imports.'
 - citation: uk/regulation/uksi/2012/2885/schedule/1/paragraph/1
   repo: rulespec-uk
   batch: CTR-ENP
-  status: pending
-  heading: "Schedule 1 paragraph 1 - Classes of persons entitled to a reduction"
+  status: done
+  heading: Schedule 1 paragraph 1 - Classes of persons entitled to a reduction
   class: definition
-  note: "Short, self-contained: states classes in paras 2-4 are entitled and defines estimated income/capital; no sibling-subsection imports."
+  note: 'Short, self-contained: states classes in paras 2-4 are entitled and defines estimated income/capital;
+    no sibling-subsection imports.'
 - citation: uk/regulation/uksi/2012/2885/schedule/1/paragraph/4
   repo: rulespec-uk
   batch: CTR-ENP
-  status: pending
-  heading: "Schedule 1 paragraph 4 - Class C: alternative maximum council tax reduction"
+  status: done
+  heading: 'Schedule 1 paragraph 4 - Class C: alternative maximum council tax reduction'
   class: definition
-  note: "Class definition parallel to already-encoded Class A (p2)/Class B (p3); conditions self-contained within the paragraph; external refs to the 1992 Act only."
+  note: Class definition parallel to already-encoded Class A (p2)/Class B (p3); conditions self-contained
+    within the paragraph; external refs to the 1992 Act only.
 - citation: uk/regulation/uksi/2012/2885/schedule/1/paragraph/6
   repo: rulespec-uk
   batch: CTR-ENP
-  status: pending
-  heading: "Schedule 1 paragraph 6 - Applicable amounts"
+  status: done
+  heading: Schedule 1 paragraph 6 - Applicable amounts
   class: mechanics
-  note: "Aggregation head: applicable amount = personal allowance + child amounts + family premium + premiums; imports named Schedule 2 components (its purpose), no self-subsection recursion."
+  note: 'Aggregation head: applicable amount = personal allowance + child amounts + family premium + premiums;
+    imports named Schedule 2 components (its purpose), no self-subsection recursion.'
 - citation: uk/regulation/uksi/2012/2885/schedule/1/paragraph/9
   repo: rulespec-uk
   batch: CTR-ENP
-  status: pending
-  heading: "Schedule 1 paragraph 9 - Alternative maximum council tax reduction under a scheme"
+  status: done
+  heading: Schedule 1 paragraph 9 - Alternative maximum council tax reduction under a scheme
   class: mechanics
-  note: "Determines alt-max per Schedule 3 with joint-liability apportionment; self-contained mechanics, light external refs."
+  note: Determines alt-max per Schedule 3 with joint-liability apportionment; self-contained mechanics,
+    light external refs.
 - citation: uk/regulation/uksi/2012/2885/schedule/1/paragraph/11
   repo: rulespec-uk
   batch: CTR-ENP
-  status: pending
-  heading: "Schedule 1 paragraph 11 - Calculation of income and capital: family and polygamous marriages"
+  status: done
+  heading: 'Schedule 1 paragraph 11 - Calculation of income and capital: family and polygamous marriages'
   class: mechanics
-  note: "Zero cross-references: partner/polygamous income and capital treated as applicant's."
+  note: 'Zero cross-references: partner/polygamous income and capital treated as applicant''s.'
 - citation: uk/regulation/uksi/2012/2885/schedule/1/paragraph/12
   repo: rulespec-uk
   batch: CTR-ENP
-  status: pending
-  heading: "Schedule 1 paragraph 12 - Non-dependant income and capital treated as applicant's"
+  status: done
+  heading: Schedule 1 paragraph 12 - Non-dependant income and capital treated as applicant's
   class: mechanics
-  note: "Self-contained anti-avoidance attribution rule; only internal sub-paragraph references."
+  note: Self-contained anti-avoidance attribution rule; only internal sub-paragraph references.
 - citation: uk/regulation/uksi/2012/2885/schedule/1/paragraph/13
   repo: rulespec-uk
   batch: CTR-ENP
-  status: pending
-  heading: "Schedule 1 paragraph 13 - Applicant in receipt of guarantee credit"
+  status: done
+  heading: Schedule 1 paragraph 13 - Applicant in receipt of guarantee credit
   class: mechanics
-  note: "Tiny, zero cross-reference passporting rule: guarantee credit -> whole capital and income disregarded."
+  note: 'Tiny, zero cross-reference passporting rule: guarantee credit -> whole capital and income disregarded.'
 - citation: uk/regulation/uksi/2012/2885/schedule/1/paragraph/31
   repo: rulespec-uk
   batch: CTR-ENP
-  status: pending
-  heading: "Schedule 1 paragraph 31 - Calculation of capital"
+  status: done
+  heading: Schedule 1 paragraph 31 - Calculation of capital
   class: mechanics
-  note: "Capital head: whole capital less Schedule 6 disregards, plus CTC/WTC/SPC arrears treated as capital; concrete, low external refs."
+  note: 'Capital head: whole capital less Schedule 6 disregards, plus CTC/WTC/SPC arrears treated as capital;
+    concrete, low external refs.'
 - citation: uk/regulation/uksi/2012/2885/schedule/1/paragraph/32
   repo: rulespec-uk
   batch: CTR-ENP
-  status: pending
-  heading: "Schedule 1 paragraph 32 - Calculation of capital in the United Kingdom"
+  status: done
+  heading: Schedule 1 paragraph 32 - Calculation of capital in the United Kingdom
   class: mechanics
-  note: "Tiny, self-contained valuation rule: market/surrender value less 10 per cent sale costs and any encumbrance."
+  note: 'Tiny, self-contained valuation rule: market/surrender value less 10 per cent sale costs and any
+    encumbrance.'
 - citation: uk/regulation/uksi/2012/2885/schedule/1/paragraph/34
   repo: rulespec-uk
   batch: CTR-ENP
-  status: pending
-  heading: "Schedule 1 paragraph 34 - Notional capital"
+  status: done
+  heading: Schedule 1 paragraph 34 - Notional capital
   class: mechanics
-  note: "Deprivation-of-capital rule; self-contained principle with a single caveat reference to the diminishing-capital paragraph."
+  note: Deprivation-of-capital rule; self-contained principle with a single caveat reference to the diminishing-capital
+    paragraph.
 - citation: uk/regulation/uksi/2012/2885/schedule/1/paragraph/36
   repo: rulespec-uk
   batch: CTR-ENP
-  status: pending
-  heading: "Schedule 1 paragraph 36 - Capital jointly held"
+  status: done
+  heading: Schedule 1 paragraph 36 - Capital jointly held
   class: mechanics
-  note: "Self-contained equal-share rule for jointly held capital; one exception reference to notional-capital."
+  note: Self-contained equal-share rule for jointly held capital; one exception reference to notional-capital.
 - citation: uk/regulation/uksi/2012/2885/schedule/3/paragraph/1
   repo: rulespec-uk
   batch: CTR-ENP
   status: pending
-  heading: "Schedule 3 paragraph 1 - Amount of alternative maximum council tax reduction"
+  heading: Schedule 3 paragraph 1 - Amount of alternative maximum council tax reduction
   class: rate
-  note: "Second adult rebate table with concrete rates 25/15/7.5 per cent and gross-income thresholds GBP 289.00/375.00 (current 2026-27 values); self-contained table."
+  note: Second adult rebate table with concrete rates 25/15/7.5 per cent and gross-income thresholds GBP
+    289.00/375.00 (current 2026-27 values); self-contained table.
 - citation: uk/regulation/uksi/2012/2885/schedule/3/paragraph/3
   repo: rulespec-uk
   batch: CTR-ENP
-  status: pending
-  heading: "Schedule 3 paragraph 3 - Two or more second adults"
+  status: done
+  heading: Schedule 3 paragraph 3 - Two or more second adults
   class: mechanics
-  note: "Self-contained income-aggregation rule for multiple second adults; single external reference to the 1992 Act discount schedule."
+  note: Self-contained income-aggregation rule for multiple second adults; single external reference to
+    the 1992 Act discount schedule.
 - citation: uk/regulation/uksi/2012/2885/schedule/4/paragraph/1
   repo: rulespec-uk
   batch: CTR-ENP
-  status: pending
-  heading: "Schedule 4 paragraph 1 - Overall maximum earnings disregard"
+  status: done
+  heading: Schedule 4 paragraph 1 - Overall maximum earnings disregard
   class: deduction
-  note: "Concrete cap: GBP 25 (lone parent) / GBP 20 (other) overall earnings disregard; self-contained."
+  note: 'Concrete cap: GBP 25 (lone parent) / GBP 20 (other) overall earnings disregard; self-contained.'
 - citation: uk/regulation/uksi/2012/2885/schedule/4/paragraph/2
   repo: rulespec-uk
   batch: CTR-ENP
-  status: pending
-  heading: "Schedule 4 paragraph 2 - Lone parent earnings disregard"
+  status: done
+  heading: Schedule 4 paragraph 2 - Lone parent earnings disregard
   class: deduction
-  note: "Zero cross-reference: GBP 25 of earnings disregarded for a lone parent."
+  note: 'Zero cross-reference: GBP 25 of earnings disregarded for a lone parent.'
 - citation: uk/regulation/uksi/2012/2885/schedule/4/paragraph/4
   repo: rulespec-uk
   batch: CTR-ENP
   status: pending
-  heading: "Schedule 4 paragraph 4 - Carer earnings disregard"
+  heading: Schedule 4 paragraph 4 - Carer earnings disregard
   class: deduction
-  note: "Concrete GBP 20 carer earnings disregard with aggregation cap; single reference to the carer-premium condition."
+  note: Concrete GBP 20 carer earnings disregard with aggregation cap; single reference to the carer-premium
+    condition.
 - citation: uk/regulation/uksi/2012/2885/schedule/4/paragraph/9
   repo: rulespec-uk
   batch: CTR-ENP
-  status: pending
-  heading: "Schedule 4 paragraph 9 - Earnings from employment that has ended"
+  status: done
+  heading: Schedule 4 paragraph 9 - Earnings from employment that has ended
   class: deduction
-  note: "Self-contained full disregard of earnings from employment ended before entitlement; one carve-out reference."
+  note: Self-contained full disregard of earnings from employment ended before entitlement; one carve-out
+    reference.
 - citation: uk/regulation/uksi/2012/2885/schedule/5/paragraph/7
   repo: rulespec-uk
   batch: CTR-ENP
-  status: pending
-  heading: "Schedule 5 paragraph 7 - Widowed parent's allowance disregard"
+  status: done
+  heading: Schedule 5 paragraph 7 - Widowed parent's allowance disregard
   class: deduction
-  note: "Concrete GBP 15 disregard of widowed parent's allowance; external anchor to SSCBA s.39A only."
+  note: Concrete GBP 15 disregard of widowed parent's allowance; external anchor to SSCBA s.39A only.
 - citation: uk/regulation/uksi/2012/2885/schedule/5/paragraph/8
   repo: rulespec-uk
   batch: CTR-ENP
-  status: pending
-  heading: "Schedule 5 paragraph 8 - Widowed mother's allowance disregard"
+  status: done
+  heading: Schedule 5 paragraph 8 - Widowed mother's allowance disregard
   class: deduction
-  note: "Concrete GBP 15 disregard of widowed mother's allowance; external anchor to SSCBA s.37 only."
+  note: Concrete GBP 15 disregard of widowed mother's allowance; external anchor to SSCBA s.37 only.
 - citation: uk/regulation/uksi/2012/2885/schedule/6/paragraph/1
   repo: rulespec-uk
   batch: CTR-ENP
-  status: pending
-  heading: "Schedule 6 paragraph 1 - Premises to be occupied as home"
+  status: done
+  heading: Schedule 6 paragraph 1 - Premises to be occupied as home
   class: deduction
-  note: "Self-contained capital disregard: premises to be occupied within 26 weeks."
+  note: 'Self-contained capital disregard: premises to be occupied within 26 weeks.'
 - citation: uk/regulation/uksi/2012/2885/schedule/6/paragraph/8
   repo: rulespec-uk
   batch: CTR-ENP
-  status: pending
-  heading: "Schedule 6 paragraph 8 - Personal possessions"
+  status: done
+  heading: Schedule 6 paragraph 8 - Personal possessions
   class: deduction
-  note: "Zero cross-reference capital disregard: all personal possessions."
+  note: 'Zero cross-reference capital disregard: all personal possessions.'
 - citation: uk/regulation/uksi/2012/2885/schedule/6/paragraph/11
   repo: rulespec-uk
   batch: CTR-ENP
-  status: pending
-  heading: "Schedule 6 paragraph 11 - Surrender value of life insurance"
+  status: done
+  heading: Schedule 6 paragraph 11 - Surrender value of life insurance
   class: deduction
-  note: "Zero cross-reference capital disregard: surrender value of any life insurance policy."
+  note: 'Zero cross-reference capital disregard: surrender value of any life insurance policy.'
 - citation: uk/regulation/uksi/2012/2885/schedule/6/paragraph/26
   repo: rulespec-uk
   batch: CTR-ENP
-  status: pending
-  heading: "Schedule 6 paragraph 26 - Dwelling occupied as the home"
+  status: done
+  heading: Schedule 6 paragraph 26 - Dwelling occupied as the home
   class: deduction
-  note: "Self-contained capital disregard: the dwelling occupied as the home (one only)."
-# --- Batch CTR-SC: Scottish national CTR award spine (ingested 2026-07-13, PR for #140) ---
-# Working-age: Council Tax Reduction (Scotland) Regulations 2021 (SSI 2021/249).
-# Pension-age: Council Tax Reduction (State Pension Credit) (Scotland) Regulations 2012 (SSI 2012/319).
-# reg 90 (WA) and reg 48 (PA) non-dependant deductions are INGESTED but intentionally
-# NOT queued here: concrete rate tables but ~15+ external cross-references in the
-# exemption sub-paragraphs (benefits, 1973/1990/2006 Acts, 2013 Regs) => encode#1058 risk.
-# Queue them only after splitting the citation to the paras (1)-(2) rate table.
+  note: 'Self-contained capital disregard: the dwelling occupied as the home (one only).'
 - citation: uk/regulation/ssi/2021/249/13
   repo: rulespec-uk
   batch: CTR-SC
   status: pending
   heading: Conditions of entitlement to council tax reduction (CTR(S) Regs 2021 reg 13)
   class: entitlement
-  note: Working-age award spine. Entitlement conditions plus the amount formula -
-    max CTR where income <= applicable amount, else max CTR less amount B where
-    amount B is 2 6/7 per cent of (weekly income - applicable amount). References
-    sibling exclusion regs 15/16/19/20 and reg 66 as conditions, not value imports.
+  note: Working-age award spine. Entitlement conditions plus the amount formula - max CTR where income
+    <= applicable amount, else max CTR less amount B where amount B is 2 6/7 per cent of (weekly income
+    - applicable amount). References sibling exclusion regs 15/16/19/20 and reg 66 as conditions, not
+    value imports.
 - citation: uk/regulation/ssi/2021/249/14
   repo: rulespec-uk
   batch: CTR-SC
   status: pending
   heading: Conditions of entitlement - dwellings in bands E to H (CTR(S) Regs 2021 reg 14)
   class: entitlement
-  note: Higher-band variant of reg 13 with band income limits GBP 321 / GBP 479 and
-    the same 2 6/7 per cent taper; applies where its amount exceeds the reg 13 amount.
+  note: Higher-band variant of reg 13 with band income limits GBP 321 / GBP 479 and the same 2 6/7 per
+    cent taper; applies where its amount exceeds the reg 13 amount.
 - citation: uk/regulation/ssi/2021/249/35
   repo: rulespec-uk
   batch: CTR-SC
   status: pending
   heading: Applicable amount (CTR(S) Regs 2021 reg 35)
   class: mechanics
-  note: Weekly applicable amount = aggregate of personal allowance plus child, disabled
-    child, carer and other premiums, each determined under a Schedule 1 paragraph.
+  note: Weekly applicable amount = aggregate of personal allowance plus child, disabled child, carer and
+    other premiums, each determined under a Schedule 1 paragraph.
 - citation: uk/regulation/ssi/2021/249/63
   repo: rulespec-uk
   batch: CTR-SC
   status: pending
   heading: Assumed yield from capital / tariff income (CTR(S) Regs 2021 reg 63)
   class: mechanics
-  note: Self-contained tariff income - capital yields GBP 4.35/month (GBP 1/week) for
-    each GBP 250, or part, in excess of GBP 6,000.
+  note: Self-contained tariff income - capital yields GBP 4.35/month (GBP 1/week) for each GBP 250, or
+    part, in excess of GBP 6,000.
 - citation: uk/regulation/ssi/2021/249/66
   repo: rulespec-uk
   batch: CTR-SC
@@ -565,65 +527,63 @@ entries:
   status: pending
   heading: Maximum council tax reduction (CTR(S) Regs 2021 reg 79)
   class: mechanics
-  note: Maximum CTR = amount A / amount B, A = annual council tax for the dwelling,
-    B = days in the year, less non-dependant deductions; band multipliers 1.075-1.225
-    for bands E-H. References reg 90 for the deductions term.
+  note: Maximum CTR = amount A / amount B, A = annual council tax for the dwelling, B = days in the year,
+    less non-dependant deductions; band multipliers 1.075-1.225 for bands E-H. References reg 90 for the
+    deductions term.
 - citation: uk/regulation/ssi/2021/249/91
   repo: rulespec-uk
   batch: CTR-SC
   status: pending
   heading: Second adult rebate (CTR(S) Regs 2021 reg 91)
   class: mechanics
-  note: Second adult rebate where reg 13(3) and (7) are met, determined per Schedule 2,
-    apportioned across jointly and severally liable residents.
+  note: Second adult rebate where reg 13(3) and (7) are met, determined per Schedule 2, apportioned across
+    jointly and severally liable residents.
 - citation: uk/regulation/ssi/2021/249/schedule/1/paragraph/1
   repo: rulespec-uk
   batch: CTR-SC
   status: pending
   heading: Personal allowances table (CTR(S) Regs 2021 Sch 1 para 1)
   class: rate
-  note: Weekly personal allowance amounts - e.g. GBP 75.65 (single under 25),
-    GBP 95.55 (single 25+, or lone parent) for purposes of reg 35(a).
+  note: Weekly personal allowance amounts - e.g. GBP 75.65 (single under 25), GBP 95.55 (single 25+, or
+    lone parent) for purposes of reg 35(a).
 - citation: uk/regulation/ssi/2021/249/schedule/1/paragraph/2
   repo: rulespec-uk
   batch: CTR-SC
   status: pending
   heading: Child premium amount (CTR(S) Regs 2021 Sch 1 para 2)
   class: rate
-  note: Self-contained - child premium is GBP 109.85 for each child or young person
-    (reg 35(b)).
+  note: Self-contained - child premium is GBP 109.85 for each child or young person (reg 35(b)).
 - citation: uk/regulation/ssi/2021/249/schedule/2/paragraph/1
   repo: rulespec-uk
   batch: CTR-SC
   status: pending
   heading: Amount of second adult rebate table (CTR(S) Regs 2021 Sch 2 para 1)
   class: rate
-  note: Second adult rebate = 25 / 15 / 7.5 per cent of the day's council tax by the
-    second adult's benefit status and gross income bands (GBP 282 / GBP 383).
+  note: Second adult rebate = 25 / 15 / 7.5 per cent of the day's council tax by the second adult's benefit
+    status and gross income bands (GBP 282 / GBP 383).
 - citation: uk/regulation/ssi/2012/319/14
   repo: rulespec-uk
   batch: CTR-SC
   status: pending
   heading: Conditions of entitlement to council tax reduction (CTR(SPC)(S) Regs 2012 reg 14)
   class: entitlement
-  note: Pension-age award spine. Entitlement conditions plus amount formula with the
-    same 2 6/7 per cent taper of (weekly income - applicable amount) against daily max CTR.
+  note: Pension-age award spine. Entitlement conditions plus amount formula with the same 2 6/7 per cent
+    taper of (weekly income - applicable amount) against daily max CTR.
 - citation: uk/regulation/ssi/2012/319/14A
   repo: rulespec-uk
   batch: CTR-SC
   status: pending
   heading: Conditions of entitlement - dwellings in bands E to H (CTR(SPC)(S) Regs 2012 reg 14A)
   class: entitlement
-  note: Pension-age higher-band variant of reg 14; applies where its amount exceeds
-    the reg 14 amount.
+  note: Pension-age higher-band variant of reg 14; applies where its amount exceeds the reg 14 amount.
 - citation: uk/regulation/ssi/2012/319/20
   repo: rulespec-uk
   batch: CTR-SC
   status: pending
   heading: Applicable amount (CTR(SPC)(S) Regs 2012 reg 20)
   class: mechanics
-  note: Pension-age applicable amount = personal allowance (Sch 1 para 2) plus child
-    (para 3), premiums (Parts 3-4) and a GBP 19.48 transitional family amount.
+  note: Pension-age applicable amount = personal allowance (Sch 1 para 2) plus child (para 3), premiums
+    (Parts 3-4) and a GBP 19.48 transitional family amount.
 - citation: uk/regulation/ssi/2012/319/40
   repo: rulespec-uk
   batch: CTR-SC
@@ -637,167 +597,182 @@ entries:
   status: pending
   heading: Maximum council tax reduction (CTR(SPC)(S) Regs 2012 reg 47)
   class: mechanics
-  note: Pension-age maximum CTR = 100 per cent of amount A / amount B, less
-    non-dependant deductions (reg 48). A = annual council tax, B = days in the year.
+  note: Pension-age maximum CTR = 100 per cent of amount A / amount B, less non-dependant deductions (reg
+    48). A = annual council tax, B = days in the year.
 - citation: uk/regulation/ssi/2012/319/56
   repo: rulespec-uk
   batch: CTR-SC
   status: pending
   heading: Alternative maximum council tax reduction (CTR(SPC)(S) Regs 2012 reg 56)
   class: mechanics
-  note: Pension-age second adult rebate equivalent; amount determined per Schedule 5,
-    apportioned across jointly and severally liable residents.
+  note: Pension-age second adult rebate equivalent; amount determined per Schedule 5, apportioned across
+    jointly and severally liable residents.
 - citation: uk/regulation/ssi/2012/319/schedule/1/paragraph/2
   repo: rulespec-uk
   batch: CTR-SC
   status: pending
   heading: Personal allowances table (CTR(SPC)(S) Regs 2012 Sch 1 para 2)
   class: rate
-  note: Pension-age weekly personal allowances - e.g. GBP 256.00 (single at qualifying
-    age), GBP 383.35 (couple, one/both at qualifying age) for purposes of reg 20(a).
+  note: Pension-age weekly personal allowances - e.g. GBP 256.00 (single at qualifying age), GBP 383.35
+    (couple, one/both at qualifying age) for purposes of reg 20(a).
 - citation: uk/regulation/ssi/2012/319/schedule/5/paragraph/1
   repo: rulespec-uk
   batch: CTR-SC
   status: pending
-  heading: Amount of alternative maximum council tax reduction table (CTR(SPC)(S) Regs 2012 Sch 5 para 1)
+  heading: Amount of alternative maximum council tax reduction table (CTR(SPC)(S) Regs 2012 Sch 5 para
+    1)
   class: rate
-  note: Pension-age second adult rebate table = 25 / 15 / 7.5 per cent of the day's
-    council tax by the second adult's benefit status and gross income bands.
-# --- Batch CTR-WA: Welsh CTR award spine (SI 2013/3029), corpus 2026-07-13
-# wsi ingest (lane C of #140). Both prescribed age groups. Regulation 25
-# (Class D taper) is ingested but HELD from this queue: its corpus body
-# carries the flattened fraction '26/7 per cent' (axiom-corpus#321); queue it
-# after the normalizer fix + re-extraction. Values are the encoder's.
+  note: Pension-age second adult rebate table = 25 / 15 / 7.5 per cent of the day's council tax by the
+    second adult's benefit status and gross income bands.
 - citation: uk/regulation/wsi/2013/3029/22
   repo: rulespec-uk
   batch: CTR-WA
   status: pending
-  heading: "Class A - pensioners whose income is not greater than the applicable amount (CTR Wales reg 22)"
+  heading: Class A - pensioners whose income is not greater than the applicable amount (CTR Wales reg
+    22)
   class: entitlement
-  note: "Self-contained class-membership predicate (liable, resident, not excluded, income <= applicable amount, applied). In-instrument refs only."
+  note: Self-contained class-membership predicate (liable, resident, not excluded, income <= applicable
+    amount, applied). In-instrument refs only.
 - citation: uk/regulation/wsi/2013/3029/23
   repo: rulespec-uk
   batch: CTR-WA
   status: pending
-  heading: "Class B - pensioners whose income is greater than the applicable amount (CTR Wales reg 23)"
+  heading: Class B - pensioners whose income is greater than the applicable amount (CTR Wales reg 23)
   class: entitlement
-  note: "Self-contained; adds the taper - entitled where amount A (maximum reduction) exceeds amount B = 2 6/7 per cent of (income - applicable amount). In-instrument refs."
+  note: Self-contained; adds the taper - entitled where amount A (maximum reduction) exceeds amount B
+    = 2 6/7 per cent of (income - applicable amount). In-instrument refs.
 - citation: uk/regulation/wsi/2013/3029/24
   repo: rulespec-uk
   batch: CTR-WA
   status: pending
-  heading: "Class C - persons who are not pensioners whose income is less than the applicable amount (CTR Wales reg 24)"
+  heading: Class C - persons who are not pensioners whose income is less than the applicable amount (CTR
+    Wales reg 24)
   class: entitlement
-  note: "Self-contained working-age class-membership predicate. In-instrument refs only."
+  note: Self-contained working-age class-membership predicate. In-instrument refs only.
 - citation: uk/regulation/wsi/2013/3029/30
   repo: rulespec-uk
   batch: CTR-WA
   status: pending
-  heading: "Capital limit - persons whose capital exceeds GBP 16,000 (CTR Wales reg 30)"
+  heading: Capital limit - persons whose capital exceeds GBP 16,000 (CTR Wales reg 30)
   class: entitlement
-  note: "Self-contained exclusion - no reduction where capital exceeds 16,000. Capital calculated per Sch 1/Sch 6. In-instrument refs only."
+  note: Self-contained exclusion - no reduction where capital exceeds 16,000. Capital calculated per Sch
+    1/Sch 6. In-instrument refs only.
 - citation: uk/regulation/wsi/2013/3029/schedule/1/paragraph/1
   repo: rulespec-uk
   batch: CTR-WA
   status: pending
-  heading: "Applicable amount aggregation - pensioners (CTR Wales Sch 1 para 1)"
+  heading: Applicable amount aggregation - pensioners (CTR Wales Sch 1 para 1)
   class: mechanics
-  note: "Self-contained - applicable amount is the aggregate of personal allowance, child amounts, family premium and premiums (amounts in Schedule 2)."
+  note: Self-contained - applicable amount is the aggregate of personal allowance, child amounts, family
+    premium and premiums (amounts in Schedule 2).
 - citation: uk/regulation/wsi/2013/3029/schedule/1/paragraph/2
   repo: rulespec-uk
   batch: CTR-WA
   status: pending
-  heading: "Maximum council tax reduction - pensioners (CTR Wales Sch 1 para 2)"
+  heading: Maximum council tax reduction - pensioners (CTR Wales Sch 1 para 2)
   class: mechanics
-  note: "Self-contained - 100 per cent of daily council tax (A/B where A is annual liability net of discounts, B is days in year), less non-dependant deductions; with joint-liability apportionment."
+  note: Self-contained - 100 per cent of daily council tax (A/B where A is annual liability net of discounts,
+    B is days in year), less non-dependant deductions; with joint-liability apportionment.
 - citation: uk/regulation/wsi/2013/3029/schedule/1/paragraph/3
   repo: rulespec-uk
   batch: CTR-WA
   status: pending
-  heading: "Non-dependant deductions - pensioners (CTR Wales Sch 1 para 3)"
+  heading: Non-dependant deductions - pensioners (CTR Wales Sch 1 para 3)
   class: rate
-  note: "Self-contained daily deduction schedule (GBP 20.05 x 1/7 and GBP 6.70 x 1/7) banded by the non-dependant's gross weekly income. In-instrument refs only."
+  note: Self-contained daily deduction schedule (GBP 20.05 x 1/7 and GBP 6.70 x 1/7) banded by the non-dependant's
+    gross weekly income. In-instrument refs only.
 - citation: uk/regulation/wsi/2013/3029/schedule/1/paragraph/4
   repo: rulespec-uk
   batch: CTR-WA
   status: pending
-  heading: "Amount of reduction - Classes A and B (CTR Wales Sch 1 para 4)"
+  heading: Amount of reduction - Classes A and B (CTR Wales Sch 1 para 4)
   class: mechanics
-  note: "Self-contained - Class A gets the maximum reduction; Class B gets amount A minus amount B (taper) as defined in regulation 23."
+  note: Self-contained - Class A gets the maximum reduction; Class B gets amount A minus amount B (taper)
+    as defined in regulation 23.
 - citation: uk/regulation/wsi/2013/3029/schedule/1/paragraph/31
   repo: rulespec-uk
   batch: CTR-WA
   status: pending
-  heading: "Tariff income from capital - pensioners (CTR Wales Sch 1 para 31)"
+  heading: Tariff income from capital - pensioners (CTR Wales Sch 1 para 31)
   class: rate
-  note: "Self-contained - capital is treated as weekly income of GBP 1 per GBP 500 (or part) in excess of GBP 10,000 up to GBP 16,000. In-instrument figures."
+  note: Self-contained - capital is treated as weekly income of GBP 1 per GBP 500 (or part) in excess
+    of GBP 10,000 up to GBP 16,000. In-instrument figures.
 - citation: uk/regulation/wsi/2013/3029/schedule/2/paragraph/1
   repo: rulespec-uk
   batch: CTR-WA
   status: pending
-  heading: "Personal allowance - pensioners (CTR Wales Sch 2 para 1)"
+  heading: Personal allowance - pensioners (CTR Wales Sch 2 para 1)
   class: rate
-  note: "Self-contained figure table - GBP 256.00 (single/lone parent), GBP 383.35 (couple), GBP 127.35 (additional spouse)."
+  note: Self-contained figure table - GBP 256.00 (single/lone parent), GBP 383.35 (couple), GBP 127.35
+    (additional spouse).
 - citation: uk/regulation/wsi/2013/3029/schedule/2/paragraph/2
   repo: rulespec-uk
   batch: CTR-WA
   status: pending
-  heading: "Child or young person amounts - pensioners (CTR Wales Sch 2 para 2)"
+  heading: Child or young person amounts - pensioners (CTR Wales Sch 2 para 2)
   class: rate
-  note: "Self-contained - GBP 87.88 per child or young person over the specified periods. In-instrument figures."
+  note: Self-contained - GBP 87.88 per child or young person over the specified periods. In-instrument
+    figures.
 - citation: uk/regulation/wsi/2013/3029/schedule/2/paragraph/3
   repo: rulespec-uk
   batch: CTR-WA
   status: pending
-  heading: "Family premium - pensioners (CTR Wales Sch 2 para 3)"
+  heading: Family premium - pensioners (CTR Wales Sch 2 para 3)
   class: rate
-  note: "Self-contained - GBP 20.22 where a family includes at least one child or young person. In-instrument figure."
+  note: Self-contained - GBP 20.22 where a family includes at least one child or young person. In-instrument
+    figure.
 - citation: uk/regulation/wsi/2013/3029/schedule/6/paragraph/1
   repo: rulespec-uk
   batch: CTR-WA
   status: pending
-  heading: "Applicable amount aggregation - persons who are not pensioners (CTR Wales Sch 6 para 1)"
+  heading: Applicable amount aggregation - persons who are not pensioners (CTR Wales Sch 6 para 1)
   class: mechanics
-  note: "Self-contained - applicable amount is the aggregate of personal allowances, child amounts, family premium, premiums, components and transitional addition (Sch 7)."
+  note: Self-contained - applicable amount is the aggregate of personal allowances, child amounts, family
+    premium, premiums, components and transitional addition (Sch 7).
 - citation: uk/regulation/wsi/2013/3029/schedule/6/paragraph/3
   repo: rulespec-uk
   batch: CTR-WA
   status: pending
-  heading: "Applicable amount - non-pensioners with a universal credit award (CTR Wales Sch 6 para 3)"
+  heading: Applicable amount - non-pensioners with a universal credit award (CTR Wales Sch 6 para 3)
   class: mechanics
-  note: "Self-contained - use the UC maximum amount (WRA 2012 s8(2)) multiplied by 12 and divided by 52 to weekly. In-instrument arithmetic."
+  note: Self-contained - use the UC maximum amount (WRA 2012 s8(2)) multiplied by 12 and divided by 52
+    to weekly. In-instrument arithmetic.
 - citation: uk/regulation/wsi/2013/3029/schedule/6/paragraph/4
   repo: rulespec-uk
   batch: CTR-WA
   status: pending
-  heading: "Maximum council tax reduction - persons who are not pensioners (CTR Wales Sch 6 para 4)"
+  heading: Maximum council tax reduction - persons who are not pensioners (CTR Wales Sch 6 para 4)
   class: mechanics
-  note: "Self-contained - 100 per cent of daily council tax (A/B) less non-dependant deductions under paragraph 5; with joint-liability apportionment."
+  note: Self-contained - 100 per cent of daily council tax (A/B) less non-dependant deductions under paragraph
+    5; with joint-liability apportionment.
 - citation: uk/regulation/wsi/2013/3029/schedule/6/paragraph/5
   repo: rulespec-uk
   batch: CTR-WA
   status: pending
-  heading: "Non-dependant deductions - persons who are not pensioners (CTR Wales Sch 6 para 5)"
+  heading: Non-dependant deductions - persons who are not pensioners (CTR Wales Sch 6 para 5)
   class: rate
-  note: "Self-contained banded daily deduction schedule for working-age claimants. In-instrument refs only."
+  note: Self-contained banded daily deduction schedule for working-age claimants. In-instrument refs only.
 - citation: uk/regulation/wsi/2013/3029/schedule/6/paragraph/6
   repo: rulespec-uk
   batch: CTR-WA
   status: pending
-  heading: "Amount of reduction - Classes C and D (CTR Wales Sch 6 para 6)"
+  heading: Amount of reduction - Classes C and D (CTR Wales Sch 6 para 6)
   class: mechanics
-  note: "Self-contained - Class C gets the maximum reduction; Class D gets amount A minus amount B (taper) as defined in regulation 25."
+  note: Self-contained - Class C gets the maximum reduction; Class D gets amount A minus amount B (taper)
+    as defined in regulation 25.
 - citation: uk/regulation/wsi/2013/3029/schedule/6/paragraph/33
   repo: rulespec-uk
   batch: CTR-WA
   status: pending
-  heading: "Tariff income - persons who are not pensioners (CTR Wales Sch 6 para 33)"
+  heading: Tariff income - persons who are not pensioners (CTR Wales Sch 6 para 33)
   class: rate
-  note: "Self-contained tariff-income conversion from capital for working-age claimants. In-instrument figures."
+  note: Self-contained tariff-income conversion from capital for working-age claimants. In-instrument
+    figures.
 - citation: uk/regulation/wsi/2013/3029/schedule/7/paragraph/1
   repo: rulespec-uk
   batch: CTR-WA
   status: pending
-  heading: "Personal allowances - persons who are not pensioners (CTR Wales Sch 7 para 1)"
+  heading: Personal allowances - persons who are not pensioners (CTR Wales Sch 7 para 1)
   class: rate
-  note: "Self-contained figure table - GBP 101.85 (25+/ESA main phase/lone parent), GBP 80.60 (18-24), GBP 159.85 (couple)."
+  note: Self-contained figure table - GBP 101.85 (25+/ESA main phase/lone parent), GBP 80.60 (18-24),
+    GBP 159.85 (couple).
