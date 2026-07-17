@@ -1,0 +1,12 @@
+- name: personal_possession_is_disregarded
+  period: 2026-07
+  input:
+    uk:regulations/uksi/2012/2885/schedule/6/paragraph/8#input.asset_is_personal_possession: true
+  output:
+    uk:regulations/uksi/2012/2885/schedule/6/paragraph/8#personal_possession_disregarded_from_capital: holds
+- name: non_personal_possession_is_not_disregarded_under_this_paragraph
+  period: 2026-07
+  input:
+    uk:regulations/uksi/2012/2885/schedule/6/paragraph/8#input.asset_is_personal_possession: false
+  output:
+    uk:regulations/uksi/2012/2885/schedule/6/paragraph/8#personal_possession_disregarded_from_capital: not_holds

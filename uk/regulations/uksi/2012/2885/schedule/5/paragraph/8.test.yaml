@@ -1,0 +1,10 @@
+- name: entitled_allowance_exceeds_specified_portion
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2024-01-01'
+    end: '2024-01-07'
+  input:
+    uk:regulations/uksi/2012/2885/schedule/5/paragraph/8#input.widowed_mothers_allowance_entitlement: 30
+  output:
+    uk:regulations/uksi/2012/2885/schedule/5/paragraph/8#widowed_mothers_allowance_portion: 15

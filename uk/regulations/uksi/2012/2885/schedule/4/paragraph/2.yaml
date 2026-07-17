@@ -1,0 +1,50 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2012/2885/schedule/4/paragraph/2
+  summary: |-
+    In a case where an applicant is a lone parent, £25 of earnings.
+rules:
+  - name: lone_parent_earnings_disregard_amount
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: uk/regulation/uksi/2012/2885/schedule/4/paragraph/2
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2885/schedule/4/paragraph/2
+              excerpt: "£25 of earnings"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          25
+  - name: lone_parent_earnings_disregard
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: uk/regulation/uksi/2012/2885/schedule/4/paragraph/2
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2885/schedule/4/paragraph/2
+              excerpt: "where an applicant is a lone parent"
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2885/schedule/4/paragraph/2
+              excerpt: "£25 of earnings"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if applicant_is_lone_parent: lone_parent_earnings_disregard_amount else: 0

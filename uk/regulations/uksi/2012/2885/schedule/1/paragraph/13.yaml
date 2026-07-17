@@ -1,0 +1,27 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2012/2885/schedule/1/paragraph/13
+  summary: |-
+    Where an applicant or the applicant’s partner receives guarantee credit, the applicant’s whole capital and income must be disregarded.
+rules:
+  - name: applicant_income_and_capital_disregarded_due_to_guarantee_credit
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Month
+    source: Schedule 1, paragraph 13
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2885/schedule/1/paragraph/13
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          applicant_is_in_receipt_of_guarantee_credit
+          or partner_is_in_receipt_of_guarantee_credit

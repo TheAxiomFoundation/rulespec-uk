@@ -1,0 +1,43 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2012/2885/schedule/1/paragraph/9
+  summary: |-
+    Where the paragraph 4 conditions are fulfilled, the alternative maximum reduction is the Schedule 3 amount; it is divided among jointly and severally liable residents, except liability solely with a partner by virtue of section 9 of the 1992 Act.
+imports:
+  - uk:regulations/uksi/2012/2885/schedule/1/paragraph/4#person_is_in_class_c
+rules:
+  - name: alternative_maximum_council_tax_reduction
+    kind: derived
+    entity: Person
+    dtype: Money
+    unit: GBP
+    period: Day
+    source: Schedule 1, paragraph 9
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2885/schedule/1/paragraph/9
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2012/2885/schedule/1/paragraph/4#person_is_in_class_c
+              output: person_is_in_class_c
+              hash: sha256:bf08318df22b80b6f9585699f4bff02fd127ae9f4c3e99b9db830ba93c677e5e
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if person_is_in_class_c:
+            if applicant_is_jointly_and_severally_liable_for_council_tax
+              and applicant_is_resident_in_dwelling_with_other_persons
+              and not applicant_is_jointly_and_severally_liable_only_with_partner_by_virtue_of_section_9_of_1992_act:
+              amount_determined_in_accordance_with_schedule_3 / number_of_persons_jointly_and_severally_liable_for_council_tax
+            else:
+              amount_determined_in_accordance_with_schedule_3
+          else:
+            0

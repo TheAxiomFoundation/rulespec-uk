@@ -1,0 +1,13 @@
+format: rulespec/v1
+module:
+  status: deferred
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2012/2885/schedule/1/paragraph/6
+  summary: |-
+    “The applicable amount for a pensioner for a week is the aggregate” of the applicable personal allowance, child or young person amount, family premium, and premiums.
+  deferred_outputs:
+    - output: uk:regulations/uksi/2012/2885/schedule/1/paragraph/6#applicable_amount_for_pensioner
+      reason: The aggregate depends on Schedule 2 paragraph 2, paragraph 3, and Parts 3 and 4 amounts, for which no executable canonical imports are supplied.
+rules: []

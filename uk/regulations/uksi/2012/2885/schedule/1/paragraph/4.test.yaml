@@ -1,0 +1,68 @@
+- name: class_c_all_conditions_met
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/4#input.person_is_pensioner: true
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/4#input.person_is_liable_to_pay_council_tax_for_resident_dwelling: true
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/4#input.person_is_absent_from_dwelling_throughout_day: false
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/4#input.maximum_council_tax_reduction_amount_can_be_calculated: true
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/4#input.person_is_in_prescribed_class_excluded_from_authority_scheme: false
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/4#input.person_has_made_application: true
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/4#input.condition_in_subparagraph_2_is_met: true
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/4#input.paragraph_5_displaces_class_c: false
+  output:
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/4#person_is_in_class_c: holds
+- name: class_c_absence_blocks_membership
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/4#input.person_is_pensioner: true
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/4#input.person_is_liable_to_pay_council_tax_for_resident_dwelling: true
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/4#input.person_is_absent_from_dwelling_throughout_day: true
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/4#input.maximum_council_tax_reduction_amount_can_be_calculated: true
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/4#input.person_is_in_prescribed_class_excluded_from_authority_scheme: false
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/4#input.person_has_made_application: true
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/4#input.condition_in_subparagraph_2_is_met: true
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/4#input.paragraph_5_displaces_class_c: false
+  output:
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/4#person_is_in_class_c: not_holds
+- name: prescribed_class_blocks_membership
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/4#input.person_is_pensioner: true
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/4#input.person_is_liable_to_pay_council_tax_for_resident_dwelling: true
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/4#input.person_is_absent_from_dwelling_throughout_day: false
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/4#input.maximum_council_tax_reduction_amount_can_be_calculated: true
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/4#input.person_is_in_prescribed_class_excluded_from_authority_scheme: true
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/4#input.person_has_made_application: true
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/4#input.condition_in_subparagraph_2_is_met: true
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/4#input.paragraph_5_displaces_class_c: false
+  output:
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/4#person_is_in_class_c: not_holds
+- name: paragraph_5_displacement_blocks_membership
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/4#input.person_is_pensioner: true
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/4#input.person_is_liable_to_pay_council_tax_for_resident_dwelling: true
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/4#input.person_is_absent_from_dwelling_throughout_day: false
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/4#input.maximum_council_tax_reduction_amount_can_be_calculated: true
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/4#input.person_is_in_prescribed_class_excluded_from_authority_scheme: false
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/4#input.person_has_made_application: true
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/4#input.condition_in_subparagraph_2_is_met: true
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/4#input.paragraph_5_displaces_class_c: true
+  output:
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/4#person_is_in_class_c: not_holds

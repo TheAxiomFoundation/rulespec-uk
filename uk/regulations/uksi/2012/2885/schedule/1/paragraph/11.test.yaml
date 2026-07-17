@@ -1,0 +1,65 @@
+- name: applicant_income_and_capital_are_calculated
+  period: 2024-01
+  input:
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/11#input.person_is_applicant: true
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/11#input.person_is_partner_of_applicant: false
+    ? uk:regulations/uksi/2012/2885/schedule/1/paragraph/11#input.applicant_or_partner_is_married_polygamously_to_household_members
+    : false
+    ? uk:regulations/uksi/2012/2885/schedule/1/paragraph/11#input.person_is_household_member_of_polygamously_married_applicant_or_partner
+    : false
+  output:
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/11#income_and_capital_calculated_under_this_part: holds
+    ? uk:regulations/uksi/2012/2885/schedule/1/paragraph/11#polygamous_household_member_income_and_capital_treated_as_applicant_income_and_capital
+    : not_holds
+- name: partner_income_and_capital_are_calculated
+  period: 2024-01
+  input:
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/11#input.person_is_applicant: false
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/11#input.person_is_partner_of_applicant: true
+    ? uk:regulations/uksi/2012/2885/schedule/1/paragraph/11#input.applicant_or_partner_is_married_polygamously_to_household_members
+    : false
+    ? uk:regulations/uksi/2012/2885/schedule/1/paragraph/11#input.person_is_household_member_of_polygamously_married_applicant_or_partner
+    : false
+  output:
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/11#income_and_capital_calculated_under_this_part: holds
+    ? uk:regulations/uksi/2012/2885/schedule/1/paragraph/11#polygamous_household_member_income_and_capital_treated_as_applicant_income_and_capital
+    : not_holds
+- name: polygamous_household_member_is_calculated_and_treated_as_applicant_income_and_capital
+  period: 2024-01
+  input:
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/11#input.person_is_applicant: false
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/11#input.person_is_partner_of_applicant: false
+    ? uk:regulations/uksi/2012/2885/schedule/1/paragraph/11#input.applicant_or_partner_is_married_polygamously_to_household_members
+    : true
+    ? uk:regulations/uksi/2012/2885/schedule/1/paragraph/11#input.person_is_household_member_of_polygamously_married_applicant_or_partner
+    : true
+  output:
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/11#income_and_capital_calculated_under_this_part: holds
+    ? uk:regulations/uksi/2012/2885/schedule/1/paragraph/11#polygamous_household_member_income_and_capital_treated_as_applicant_income_and_capital
+    : holds
+- name: household_member_is_not_treated_without_polygamous_marriage
+  period: 2024-01
+  input:
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/11#input.person_is_applicant: false
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/11#input.person_is_partner_of_applicant: false
+    ? uk:regulations/uksi/2012/2885/schedule/1/paragraph/11#input.applicant_or_partner_is_married_polygamously_to_household_members
+    : false
+    ? uk:regulations/uksi/2012/2885/schedule/1/paragraph/11#input.person_is_household_member_of_polygamously_married_applicant_or_partner
+    : true
+  output:
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/11#income_and_capital_calculated_under_this_part: not_holds
+    ? uk:regulations/uksi/2012/2885/schedule/1/paragraph/11#polygamous_household_member_income_and_capital_treated_as_applicant_income_and_capital
+    : not_holds
+- name: non_household_member_is_not_treated_under_polygamous_rule
+  period: 2024-01
+  input:
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/11#input.person_is_applicant: false
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/11#input.person_is_partner_of_applicant: false
+    ? uk:regulations/uksi/2012/2885/schedule/1/paragraph/11#input.applicant_or_partner_is_married_polygamously_to_household_members
+    : true
+    ? uk:regulations/uksi/2012/2885/schedule/1/paragraph/11#input.person_is_household_member_of_polygamously_married_applicant_or_partner
+    : false
+  output:
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/11#income_and_capital_calculated_under_this_part: not_holds
+    ? uk:regulations/uksi/2012/2885/schedule/1/paragraph/11#polygamous_household_member_income_and_capital_treated_as_applicant_income_and_capital
+    : not_holds

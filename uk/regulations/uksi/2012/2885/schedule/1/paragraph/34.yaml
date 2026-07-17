@@ -1,0 +1,110 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2012/2885/schedule/1/paragraph/34
+  summary: |-
+    An applicant who deprives himself of capital to secure or increase a scheme reduction is treated as possessing it, subject to the diminishing notional capital rule. Debt repayment and reasonable expenditure on goods or services are not deprivation. Analogous company owners may have their holding disregarded and be treated as possessing company capital, which is disregarded while they undertake company business activities.
+  deferred_outputs:
+    - output: uk:regulations/uksi/2012/2885/schedule/1/paragraph/34#applicant_notional_capital_amount_after_diminishing_rule
+      reason: The amount must be reduced in accordance with paragraph 35, whose executable rule is not provided in copied context.
+rules:
+  - name: capital_disposal_is_not_deprivation
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Month
+    source: Schedule 1, paragraph 34(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: exception
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2885/schedule/1/paragraph/34
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          applicant_disposed_capital_to_reduce_or_pay_applicant_debt
+          or applicant_disposed_capital_to_purchase_goods_or_services_with_reasonable_expenditure
+
+  - name: applicant_capital_deprivation_for_scheme_reduction
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Month
+    source: Schedule 1, paragraph 34(1)-(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2885/schedule/1/paragraph/34
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          applicant_has_deprived_self_of_capital
+          and (
+            applicant_deprived_capital_to_secure_scheme_reduction_entitlement
+            or applicant_deprived_capital_to_increase_scheme_reduction
+          )
+          and not capital_disposal_is_not_deprivation
+
+  - name: company_holding_disregarded_under_analogous_ownership_treatment
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Month
+    source: Schedule 1, paragraph 34(3)(a)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2885/schedule/1/paragraph/34
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          applicant_has_position_analogous_to_company_sole_owner_or_partner
+          and authority_treats_applicant_as_company_sole_owner_or_partner
+
+  - name: company_capital_amount_treated_as_applicant_capital
+    kind: derived
+    entity: Person
+    dtype: Money
+    unit: GBP
+    period: Month
+    source: Schedule 1, paragraph 34(3)(b)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2885/schedule/1/paragraph/34
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if company_holding_disregarded_under_analogous_ownership_treatment: company_capital_value_or_applicant_share else: 0
+
+  - name: company_capital_amount_disregarded_while_business_activities_undertaken
+    kind: derived
+    entity: Person
+    dtype: Money
+    unit: GBP
+    period: Month
+    source: Schedule 1, paragraph 34(4)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: exception
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2885/schedule/1/paragraph/34
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if company_holding_disregarded_under_analogous_ownership_treatment and applicant_undertakes_activities_in_company_business: company_capital_value_or_applicant_share else: 0

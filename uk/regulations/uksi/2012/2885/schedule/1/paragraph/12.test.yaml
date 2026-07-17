@@ -1,0 +1,44 @@
+- name: qualifying_non_dependant_income_and_capital_are_treated_and_calculated_as_applicant_income_and_capital
+  period: 2024-01
+  input:
+    ? uk:regulations/uksi/2012/2885/schedule/1/paragraph/12#input.authority_considers_applicant_and_non_dependant_arranged_to_take_advantage_of_scheme
+    : true
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/12#input.non_dependant_has_more_income_and_capital_than_applicant: true
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/12#input.applicant_is_on_guarantee_credit: false
+  output:
+    ? uk:regulations/uksi/2012/2885/schedule/1/paragraph/12#non_dependant_income_and_capital_treated_as_applicant_income_and_capital
+    : holds
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/12#non_dependant_income_and_capital_calculated_as_for_applicant: holds
+- name: guarantee_credit_prevents_non_dependant_income_and_capital_treatment
+  period: 2024-01
+  input:
+    ? uk:regulations/uksi/2012/2885/schedule/1/paragraph/12#input.authority_considers_applicant_and_non_dependant_arranged_to_take_advantage_of_scheme
+    : true
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/12#input.non_dependant_has_more_income_and_capital_than_applicant: true
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/12#input.applicant_is_on_guarantee_credit: true
+  output:
+    ? uk:regulations/uksi/2012/2885/schedule/1/paragraph/12#non_dependant_income_and_capital_treated_as_applicant_income_and_capital
+    : not_holds
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/12#non_dependant_income_and_capital_calculated_as_for_applicant: not_holds
+- name: no_arrangement_prevents_non_dependant_income_and_capital_treatment
+  period: 2024-01
+  input:
+    ? uk:regulations/uksi/2012/2885/schedule/1/paragraph/12#input.authority_considers_applicant_and_non_dependant_arranged_to_take_advantage_of_scheme
+    : false
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/12#input.non_dependant_has_more_income_and_capital_than_applicant: true
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/12#input.applicant_is_on_guarantee_credit: false
+  output:
+    ? uk:regulations/uksi/2012/2885/schedule/1/paragraph/12#non_dependant_income_and_capital_treated_as_applicant_income_and_capital
+    : not_holds
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/12#non_dependant_income_and_capital_calculated_as_for_applicant: not_holds
+- name: no_income_and_capital_advantage_prevents_treatment
+  period: 2024-01
+  input:
+    ? uk:regulations/uksi/2012/2885/schedule/1/paragraph/12#input.authority_considers_applicant_and_non_dependant_arranged_to_take_advantage_of_scheme
+    : true
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/12#input.non_dependant_has_more_income_and_capital_than_applicant: false
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/12#input.applicant_is_on_guarantee_credit: false
+  output:
+    ? uk:regulations/uksi/2012/2885/schedule/1/paragraph/12#non_dependant_income_and_capital_treated_as_applicant_income_and_capital
+    : not_holds
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/12#non_dependant_income_and_capital_calculated_as_for_applicant: not_holds

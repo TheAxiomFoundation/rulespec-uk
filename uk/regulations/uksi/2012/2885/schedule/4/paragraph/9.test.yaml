@@ -1,0 +1,36 @@
+- name: pre_entitlement_employment_earnings_disregarded
+  period:
+    period_kind: custom
+    name: day
+    start: '2026-07-17'
+    end: '2026-07-17'
+  input:
+    uk:regulations/uksi/2012/2885/schedule/4/paragraph/9#input.payment_is_earnings_derived_from_employment: true
+    uk:regulations/uksi/2012/2885/schedule/4/paragraph/9#input.employment_ended_before_first_entitlement_day: true
+    uk:regulations/uksi/2012/2885/schedule/4/paragraph/9#input.payment_is_earnings_referred_to_in_schedule_1_paragraph_17_9_b: false
+  output:
+    uk:regulations/uksi/2012/2885/schedule/4/paragraph/9#earnings_from_pre_entitlement_employment_disregarded: holds
+- name: schedule_1_paragraph_17_exception_blocks_disregard
+  period:
+    period_kind: custom
+    name: day
+    start: '2026-07-17'
+    end: '2026-07-17'
+  input:
+    uk:regulations/uksi/2012/2885/schedule/4/paragraph/9#input.payment_is_earnings_derived_from_employment: true
+    uk:regulations/uksi/2012/2885/schedule/4/paragraph/9#input.employment_ended_before_first_entitlement_day: true
+    uk:regulations/uksi/2012/2885/schedule/4/paragraph/9#input.payment_is_earnings_referred_to_in_schedule_1_paragraph_17_9_b: true
+  output:
+    uk:regulations/uksi/2012/2885/schedule/4/paragraph/9#earnings_from_pre_entitlement_employment_disregarded: not_holds
+- name: employment_not_ended_before_entitlement_day
+  period:
+    period_kind: custom
+    name: day
+    start: '2026-07-17'
+    end: '2026-07-17'
+  input:
+    uk:regulations/uksi/2012/2885/schedule/4/paragraph/9#input.payment_is_earnings_derived_from_employment: true
+    uk:regulations/uksi/2012/2885/schedule/4/paragraph/9#input.employment_ended_before_first_entitlement_day: false
+    uk:regulations/uksi/2012/2885/schedule/4/paragraph/9#input.payment_is_earnings_referred_to_in_schedule_1_paragraph_17_9_b: false
+  output:
+    uk:regulations/uksi/2012/2885/schedule/4/paragraph/9#earnings_from_pre_entitlement_employment_disregarded: not_holds

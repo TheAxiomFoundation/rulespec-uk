@@ -1,0 +1,92 @@
+- name: schedule_3_amount_applies_when_not_jointly_liable
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/4#input.person_is_pensioner: true
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/4#input.person_is_liable_to_pay_council_tax_for_resident_dwelling: true
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/4#input.person_is_absent_from_dwelling_throughout_day: false
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/4#input.maximum_council_tax_reduction_amount_can_be_calculated: true
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/4#input.person_is_in_prescribed_class_excluded_from_authority_scheme: false
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/4#input.person_has_made_application: true
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/4#input.condition_in_subparagraph_2_is_met: true
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/4#input.paragraph_5_displaces_class_c: false
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/9#input.amount_determined_in_accordance_with_schedule_3: 12
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/9#input.applicant_is_jointly_and_severally_liable_for_council_tax: false
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/9#input.applicant_is_resident_in_dwelling_with_other_persons: false
+    ? uk:regulations/uksi/2012/2885/schedule/1/paragraph/9#input.applicant_is_jointly_and_severally_liable_only_with_partner_by_virtue_of_section_9_of_1992_act
+    : false
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/9#input.number_of_persons_jointly_and_severally_liable_for_council_tax: 1
+  output:
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/9#alternative_maximum_council_tax_reduction: 12
+- name: jointly_liable_residents_share_schedule_3_amount
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/4#input.person_is_pensioner: true
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/4#input.person_is_liable_to_pay_council_tax_for_resident_dwelling: true
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/4#input.person_is_absent_from_dwelling_throughout_day: false
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/4#input.maximum_council_tax_reduction_amount_can_be_calculated: true
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/4#input.person_is_in_prescribed_class_excluded_from_authority_scheme: false
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/4#input.person_has_made_application: true
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/4#input.condition_in_subparagraph_2_is_met: true
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/4#input.paragraph_5_displaces_class_c: false
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/9#input.amount_determined_in_accordance_with_schedule_3: 12
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/9#input.applicant_is_jointly_and_severally_liable_for_council_tax: true
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/9#input.applicant_is_resident_in_dwelling_with_other_persons: true
+    ? uk:regulations/uksi/2012/2885/schedule/1/paragraph/9#input.applicant_is_jointly_and_severally_liable_only_with_partner_by_virtue_of_section_9_of_1992_act
+    : false
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/9#input.number_of_persons_jointly_and_severally_liable_for_council_tax: 3
+  output:
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/9#alternative_maximum_council_tax_reduction: 4
+- name: partner_only_section_9_liability_does_not_reduce_amount
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/4#input.person_is_pensioner: true
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/4#input.person_is_liable_to_pay_council_tax_for_resident_dwelling: true
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/4#input.person_is_absent_from_dwelling_throughout_day: false
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/4#input.maximum_council_tax_reduction_amount_can_be_calculated: true
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/4#input.person_is_in_prescribed_class_excluded_from_authority_scheme: false
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/4#input.person_has_made_application: true
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/4#input.condition_in_subparagraph_2_is_met: true
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/4#input.paragraph_5_displaces_class_c: false
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/9#input.amount_determined_in_accordance_with_schedule_3: 12
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/9#input.applicant_is_jointly_and_severally_liable_for_council_tax: true
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/9#input.applicant_is_resident_in_dwelling_with_other_persons: true
+    ? uk:regulations/uksi/2012/2885/schedule/1/paragraph/9#input.applicant_is_jointly_and_severally_liable_only_with_partner_by_virtue_of_section_9_of_1992_act
+    : true
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/9#input.number_of_persons_jointly_and_severally_liable_for_council_tax: 2
+  output:
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/9#alternative_maximum_council_tax_reduction: 12
+- name: paragraph_4_conditions_not_met
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/4#input.person_is_pensioner: false
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/4#input.person_is_liable_to_pay_council_tax_for_resident_dwelling: true
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/4#input.person_is_absent_from_dwelling_throughout_day: false
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/4#input.maximum_council_tax_reduction_amount_can_be_calculated: true
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/4#input.person_is_in_prescribed_class_excluded_from_authority_scheme: false
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/4#input.person_has_made_application: true
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/4#input.condition_in_subparagraph_2_is_met: true
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/4#input.paragraph_5_displaces_class_c: false
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/9#input.amount_determined_in_accordance_with_schedule_3: 12
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/9#input.applicant_is_jointly_and_severally_liable_for_council_tax: false
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/9#input.applicant_is_resident_in_dwelling_with_other_persons: false
+    ? uk:regulations/uksi/2012/2885/schedule/1/paragraph/9#input.applicant_is_jointly_and_severally_liable_only_with_partner_by_virtue_of_section_9_of_1992_act
+    : false
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/9#input.number_of_persons_jointly_and_severally_liable_for_council_tax: 1
+  output:
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/9#alternative_maximum_council_tax_reduction: 0

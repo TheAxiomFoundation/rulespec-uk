@@ -1,0 +1,12 @@
+- name: lone_parent_earnings_disregard_applies
+  period: 2026-07
+  input:
+    uk:regulations/uksi/2012/2885/schedule/4/paragraph/2#input.applicant_is_lone_parent: true
+  output:
+    uk:regulations/uksi/2012/2885/schedule/4/paragraph/2#lone_parent_earnings_disregard: 25
+- name: lone_parent_earnings_disregard_does_not_apply
+  period: 2026-07
+  input:
+    uk:regulations/uksi/2012/2885/schedule/4/paragraph/2#input.applicant_is_lone_parent: false
+  output:
+    uk:regulations/uksi/2012/2885/schedule/4/paragraph/2#lone_parent_earnings_disregard: 0
