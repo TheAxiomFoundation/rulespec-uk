@@ -1,0 +1,156 @@
+- name: band E maximum with joint-liability division
+  period:
+    period_kind: custom
+    name: day
+    start: '2026-01-15'
+    end: '2026-01-15'
+  input:
+    uk:regulations/ssi/2012/319/47#input.person_is_liable_to_pay_council_tax_for_day: true
+    uk:regulations/ssi/2012/319/47#input.annual_council_tax_amount_after_discounts_and_other_reductions: 1460
+    uk:regulations/ssi/2012/319/47#input.number_of_days_in_financial_year: 365
+    uk:regulations/ssi/2012/319/47#input.non_dependant_deductions_under_regulation_48: 0
+    uk:regulations/ssi/2012/319/47#input.applicant_is_jointly_and_severally_liable_for_council_tax: true
+    uk:regulations/ssi/2012/319/47#input.applicant_is_resident_with_one_or_more_other_jointly_liable_persons: true
+    uk:regulations/ssi/2012/319/47#input.applicant_is_jointly_and_severally_liable_only_with_partner: false
+    uk:regulations/ssi/2012/319/47#input.number_of_jointly_and_severally_liable_persons_excluding_covered_students: 2
+    uk:regulations/ssi/2012/319/47#input.relevant_dwelling_is_in_valuation_band_e: true
+    uk:regulations/ssi/2012/319/47#input.relevant_dwelling_is_in_valuation_band_f: false
+    uk:regulations/ssi/2012/319/47#input.relevant_dwelling_is_in_valuation_band_g: false
+    uk:regulations/ssi/2012/319/47#input.relevant_dwelling_is_in_valuation_band_h: false
+  output:
+    uk:regulations/ssi/2012/319/47#applicable_annual_council_tax_amount_after_joint_liability_division: 730
+    uk:regulations/ssi/2012/319/47#regulation_14a_valuation_band_multiplier: 1.075
+    uk:regulations/ssi/2012/319/47#maximum_council_tax_reduction_for_regulation_14: 2
+    uk:regulations/ssi/2012/319/47#maximum_council_tax_reduction_for_regulation_14a: 2.15
+- name: partner-only liability exception preserves A
+  period:
+    period_kind: custom
+    name: day
+    start: '2026-01-15'
+    end: '2026-01-15'
+  input:
+    uk:regulations/ssi/2012/319/47#input.person_is_liable_to_pay_council_tax_for_day: true
+    uk:regulations/ssi/2012/319/47#input.annual_council_tax_amount_after_discounts_and_other_reductions: 730
+    uk:regulations/ssi/2012/319/47#input.number_of_days_in_financial_year: 365
+    uk:regulations/ssi/2012/319/47#input.non_dependant_deductions_under_regulation_48: 0
+    uk:regulations/ssi/2012/319/47#input.applicant_is_jointly_and_severally_liable_for_council_tax: true
+    uk:regulations/ssi/2012/319/47#input.applicant_is_resident_with_one_or_more_other_jointly_liable_persons: true
+    uk:regulations/ssi/2012/319/47#input.applicant_is_jointly_and_severally_liable_only_with_partner: true
+    uk:regulations/ssi/2012/319/47#input.number_of_jointly_and_severally_liable_persons_excluding_covered_students: 2
+    uk:regulations/ssi/2012/319/47#input.relevant_dwelling_is_in_valuation_band_e: false
+    uk:regulations/ssi/2012/319/47#input.relevant_dwelling_is_in_valuation_band_f: true
+    uk:regulations/ssi/2012/319/47#input.relevant_dwelling_is_in_valuation_band_g: false
+    uk:regulations/ssi/2012/319/47#input.relevant_dwelling_is_in_valuation_band_h: false
+  output:
+    uk:regulations/ssi/2012/319/47#applicable_annual_council_tax_amount_after_joint_liability_division: 730
+    uk:regulations/ssi/2012/319/47#regulation_14a_valuation_band_multiplier: 1.125
+    uk:regulations/ssi/2012/319/47#maximum_council_tax_reduction_for_regulation_14: 2
+    uk:regulations/ssi/2012/319/47#maximum_council_tax_reduction_for_regulation_14a: 2.25
+- name: band G maximum without joint liability
+  period:
+    period_kind: custom
+    name: day
+    start: '2026-01-15'
+    end: '2026-01-15'
+  input:
+    uk:regulations/ssi/2012/319/47#input.person_is_liable_to_pay_council_tax_for_day: true
+    uk:regulations/ssi/2012/319/47#input.annual_council_tax_amount_after_discounts_and_other_reductions: 730
+    uk:regulations/ssi/2012/319/47#input.number_of_days_in_financial_year: 365
+    uk:regulations/ssi/2012/319/47#input.non_dependant_deductions_under_regulation_48: 0
+    uk:regulations/ssi/2012/319/47#input.applicant_is_jointly_and_severally_liable_for_council_tax: false
+    uk:regulations/ssi/2012/319/47#input.applicant_is_resident_with_one_or_more_other_jointly_liable_persons: false
+    uk:regulations/ssi/2012/319/47#input.applicant_is_jointly_and_severally_liable_only_with_partner: false
+    uk:regulations/ssi/2012/319/47#input.number_of_jointly_and_severally_liable_persons_excluding_covered_students: 1
+    uk:regulations/ssi/2012/319/47#input.relevant_dwelling_is_in_valuation_band_e: false
+    uk:regulations/ssi/2012/319/47#input.relevant_dwelling_is_in_valuation_band_f: false
+    uk:regulations/ssi/2012/319/47#input.relevant_dwelling_is_in_valuation_band_g: true
+    uk:regulations/ssi/2012/319/47#input.relevant_dwelling_is_in_valuation_band_h: false
+  output:
+    uk:regulations/ssi/2012/319/47#applicable_annual_council_tax_amount_after_joint_liability_division: 730
+    uk:regulations/ssi/2012/319/47#regulation_14a_valuation_band_multiplier: 1.175
+    uk:regulations/ssi/2012/319/47#maximum_council_tax_reduction_for_regulation_14: 2
+    uk:regulations/ssi/2012/319/47#maximum_council_tax_reduction_for_regulation_14a: 2.35
+- name: band H maximum after non-dependant deduction
+  period:
+    period_kind: custom
+    name: day
+    start: '2026-01-15'
+    end: '2026-01-15'
+  input:
+    uk:regulations/ssi/2012/319/47#input.person_is_liable_to_pay_council_tax_for_day: true
+    uk:regulations/ssi/2012/319/47#input.annual_council_tax_amount_after_discounts_and_other_reductions: 730
+    uk:regulations/ssi/2012/319/47#input.number_of_days_in_financial_year: 365
+    uk:regulations/ssi/2012/319/47#input.non_dependant_deductions_under_regulation_48: 1
+    uk:regulations/ssi/2012/319/47#input.applicant_is_jointly_and_severally_liable_for_council_tax: false
+    uk:regulations/ssi/2012/319/47#input.applicant_is_resident_with_one_or_more_other_jointly_liable_persons: false
+    uk:regulations/ssi/2012/319/47#input.applicant_is_jointly_and_severally_liable_only_with_partner: false
+    uk:regulations/ssi/2012/319/47#input.number_of_jointly_and_severally_liable_persons_excluding_covered_students: 1
+    uk:regulations/ssi/2012/319/47#input.relevant_dwelling_is_in_valuation_band_e: false
+    uk:regulations/ssi/2012/319/47#input.relevant_dwelling_is_in_valuation_band_f: false
+    uk:regulations/ssi/2012/319/47#input.relevant_dwelling_is_in_valuation_band_g: false
+    uk:regulations/ssi/2012/319/47#input.relevant_dwelling_is_in_valuation_band_h: true
+  output:
+    uk:regulations/ssi/2012/319/47#applicable_annual_council_tax_amount_after_joint_liability_division: 730
+    uk:regulations/ssi/2012/319/47#regulation_14a_valuation_band_multiplier: 1.225
+    uk:regulations/ssi/2012/319/47#maximum_council_tax_reduction_for_regulation_14: 1
+    uk:regulations/ssi/2012/319/47#maximum_council_tax_reduction_for_regulation_14a: 1.45
+- name: auto_zero_regulation_14a_valuation_band_multiplier
+  period:
+    period_kind: tax_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:regulations/ssi/2012/319/47#input.annual_council_tax_amount_after_discounts_and_other_reductions: 0
+    uk:regulations/ssi/2012/319/47#input.applicant_is_jointly_and_severally_liable_for_council_tax: false
+    uk:regulations/ssi/2012/319/47#input.applicant_is_jointly_and_severally_liable_only_with_partner: false
+    uk:regulations/ssi/2012/319/47#input.applicant_is_resident_with_one_or_more_other_jointly_liable_persons: false
+    uk:regulations/ssi/2012/319/47#input.non_dependant_deductions_under_regulation_48: 0
+    uk:regulations/ssi/2012/319/47#input.number_of_days_in_financial_year: 0
+    uk:regulations/ssi/2012/319/47#input.number_of_jointly_and_severally_liable_persons_excluding_covered_students: 0
+    uk:regulations/ssi/2012/319/47#input.person_is_liable_to_pay_council_tax_for_day: false
+    uk:regulations/ssi/2012/319/47#input.relevant_dwelling_is_in_valuation_band_e: false
+    uk:regulations/ssi/2012/319/47#input.relevant_dwelling_is_in_valuation_band_f: false
+    uk:regulations/ssi/2012/319/47#input.relevant_dwelling_is_in_valuation_band_g: false
+    uk:regulations/ssi/2012/319/47#input.relevant_dwelling_is_in_valuation_band_h: false
+  output:
+    uk:regulations/ssi/2012/319/47#regulation_14a_valuation_band_multiplier: 0
+- name: auto_zero_maximum_council_tax_reduction_for_regulation_14
+  period:
+    period_kind: tax_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:regulations/ssi/2012/319/47#input.annual_council_tax_amount_after_discounts_and_other_reductions: 0
+    uk:regulations/ssi/2012/319/47#input.applicant_is_jointly_and_severally_liable_for_council_tax: false
+    uk:regulations/ssi/2012/319/47#input.applicant_is_jointly_and_severally_liable_only_with_partner: false
+    uk:regulations/ssi/2012/319/47#input.applicant_is_resident_with_one_or_more_other_jointly_liable_persons: false
+    uk:regulations/ssi/2012/319/47#input.non_dependant_deductions_under_regulation_48: 0
+    uk:regulations/ssi/2012/319/47#input.number_of_days_in_financial_year: 0
+    uk:regulations/ssi/2012/319/47#input.number_of_jointly_and_severally_liable_persons_excluding_covered_students: 0
+    uk:regulations/ssi/2012/319/47#input.person_is_liable_to_pay_council_tax_for_day: false
+    uk:regulations/ssi/2012/319/47#input.relevant_dwelling_is_in_valuation_band_e: false
+    uk:regulations/ssi/2012/319/47#input.relevant_dwelling_is_in_valuation_band_f: false
+    uk:regulations/ssi/2012/319/47#input.relevant_dwelling_is_in_valuation_band_g: false
+    uk:regulations/ssi/2012/319/47#input.relevant_dwelling_is_in_valuation_band_h: false
+  output:
+    uk:regulations/ssi/2012/319/47#maximum_council_tax_reduction_for_regulation_14: 0
+- name: auto_zero_maximum_council_tax_reduction_for_regulation_14a
+  period:
+    period_kind: tax_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:regulations/ssi/2012/319/47#input.annual_council_tax_amount_after_discounts_and_other_reductions: 0
+    uk:regulations/ssi/2012/319/47#input.applicant_is_jointly_and_severally_liable_for_council_tax: false
+    uk:regulations/ssi/2012/319/47#input.applicant_is_jointly_and_severally_liable_only_with_partner: false
+    uk:regulations/ssi/2012/319/47#input.applicant_is_resident_with_one_or_more_other_jointly_liable_persons: false
+    uk:regulations/ssi/2012/319/47#input.non_dependant_deductions_under_regulation_48: 0
+    uk:regulations/ssi/2012/319/47#input.number_of_days_in_financial_year: 0
+    uk:regulations/ssi/2012/319/47#input.number_of_jointly_and_severally_liable_persons_excluding_covered_students: 0
+    uk:regulations/ssi/2012/319/47#input.person_is_liable_to_pay_council_tax_for_day: false
+    uk:regulations/ssi/2012/319/47#input.relevant_dwelling_is_in_valuation_band_e: false
+    uk:regulations/ssi/2012/319/47#input.relevant_dwelling_is_in_valuation_band_f: false
+    uk:regulations/ssi/2012/319/47#input.relevant_dwelling_is_in_valuation_band_g: false
+    uk:regulations/ssi/2012/319/47#input.relevant_dwelling_is_in_valuation_band_h: false
+  output:
+    uk:regulations/ssi/2012/319/47#maximum_council_tax_reduction_for_regulation_14a: 0
