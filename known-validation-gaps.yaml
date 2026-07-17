@@ -2,12 +2,6 @@
 # Active records expire within 90 days; replacements require a protected-base
 # pending approval in a separate waiver-only pull request.
 validate_failures:
-  uk-kingston-upon-thames/policies/kingston-upon-thames/council-tax-reduction.yaml:
-    active:
-      expires: '2026-10-08'
-      fingerprint: sha256:044194c942d1a521bd671257c90d4dc1c00fa40f1cfd618ff7059c0cfc84494f
-      issue: https://github.com/TheAxiomFoundation/rulespec-uk/issues/46
-      owner: '@MaxGhenis'
   uk/policies/govuk/carer-support-payment.yaml:
     active:
       expires: '2026-10-08'
