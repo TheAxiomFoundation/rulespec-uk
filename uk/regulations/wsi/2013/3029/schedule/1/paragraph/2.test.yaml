@@ -1,0 +1,48 @@
+- name: sole_liability_after_reductions
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-01'
+    end: '2024-01-01'
+  input:
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/2#input.applicant_is_jointly_and_severally_liable_for_council_tax: false
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/2#input.applicant_is_jointly_and_severally_liable_only_with_partner: false
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/2#input.council_tax_liability_after_1992_act_reductions_and_discounts: 36500
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/2#input.days_in_relevant_financial_year: 365
+    ? uk:regulations/wsi/2013/3029/schedule/1/paragraph/2#input.jointly_and_severally_liable_person_count_excluding_schedule_11_paragraph_3_students
+    : 1
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/2#input.non_dependant_deductions_under_paragraph_3: 10
+  output:
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/2#daily_maximum_council_tax_reduction: 90
+- name: joint_liability_divides_liability
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-01'
+    end: '2024-01-01'
+  input:
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/2#input.applicant_is_jointly_and_severally_liable_for_council_tax: true
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/2#input.applicant_is_jointly_and_severally_liable_only_with_partner: false
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/2#input.council_tax_liability_after_1992_act_reductions_and_discounts: 36500
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/2#input.days_in_relevant_financial_year: 365
+    ? uk:regulations/wsi/2013/3029/schedule/1/paragraph/2#input.jointly_and_severally_liable_person_count_excluding_schedule_11_paragraph_3_students
+    : 2
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/2#input.non_dependant_deductions_under_paragraph_3: 10
+  output:
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/2#daily_maximum_council_tax_reduction: 40
+- name: joint_liability_only_with_partner_is_not_divided
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-01'
+    end: '2024-01-01'
+  input:
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/2#input.applicant_is_jointly_and_severally_liable_for_council_tax: true
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/2#input.applicant_is_jointly_and_severally_liable_only_with_partner: true
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/2#input.council_tax_liability_after_1992_act_reductions_and_discounts: 36500
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/2#input.days_in_relevant_financial_year: 365
+    ? uk:regulations/wsi/2013/3029/schedule/1/paragraph/2#input.jointly_and_severally_liable_person_count_excluding_schedule_11_paragraph_3_students
+    : 2
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/2#input.non_dependant_deductions_under_paragraph_3: 10
+  output:
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/2#daily_maximum_council_tax_reduction: 90
