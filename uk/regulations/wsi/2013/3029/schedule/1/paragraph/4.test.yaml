@@ -1,0 +1,63 @@
+- name: class_a_receives_daily_maximum_reduction
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-01'
+    end: '2024-01-01'
+  input:
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/4#input.pensioner_is_entitled_to_reduction_under_authority_scheme: true
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/4#input.pensioner_is_within_class_a: true
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/4#input.pensioner_is_within_class_b: false
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/4#input.amount_a_under_regulation_23: 0
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/4#input.amount_b_under_regulation_23: 0
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/2#input.applicant_is_jointly_and_severally_liable_for_council_tax: false
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/2#input.applicant_is_jointly_and_severally_liable_only_with_partner: false
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/2#input.council_tax_liability_after_1992_act_reductions_and_discounts: 36500
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/2#input.days_in_relevant_financial_year: 365
+    ? uk:regulations/wsi/2013/3029/schedule/1/paragraph/2#input.jointly_and_severally_liable_person_count_excluding_schedule_11_paragraph_3_students
+    : 1
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/2#input.non_dependant_deductions_under_paragraph_3: 10
+  output:
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/4#daily_council_tax_reduction: 90
+- name: class_b_reduction_deducts_amount_b_from_amount_a
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-01'
+    end: '2024-01-01'
+  input:
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/4#input.pensioner_is_entitled_to_reduction_under_authority_scheme: true
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/4#input.pensioner_is_within_class_a: false
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/4#input.pensioner_is_within_class_b: true
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/4#input.amount_a_under_regulation_23: 100
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/4#input.amount_b_under_regulation_23: 35
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/2#input.applicant_is_jointly_and_severally_liable_for_council_tax: false
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/2#input.applicant_is_jointly_and_severally_liable_only_with_partner: false
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/2#input.council_tax_liability_after_1992_act_reductions_and_discounts: 36500
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/2#input.days_in_relevant_financial_year: 365
+    ? uk:regulations/wsi/2013/3029/schedule/1/paragraph/2#input.jointly_and_severally_liable_person_count_excluding_schedule_11_paragraph_3_students
+    : 1
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/2#input.non_dependant_deductions_under_paragraph_3: 0
+  output:
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/4#daily_council_tax_reduction: 65
+- name: not_entitled_to_reduction
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-01'
+    end: '2024-01-01'
+  input:
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/4#input.pensioner_is_entitled_to_reduction_under_authority_scheme: false
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/4#input.pensioner_is_within_class_a: true
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/4#input.pensioner_is_within_class_b: false
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/4#input.amount_a_under_regulation_23: 100
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/4#input.amount_b_under_regulation_23: 35
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/2#input.applicant_is_jointly_and_severally_liable_for_council_tax: false
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/2#input.applicant_is_jointly_and_severally_liable_only_with_partner: false
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/2#input.council_tax_liability_after_1992_act_reductions_and_discounts: 36500
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/2#input.days_in_relevant_financial_year: 365
+    ? uk:regulations/wsi/2013/3029/schedule/1/paragraph/2#input.jointly_and_severally_liable_person_count_excluding_schedule_11_paragraph_3_students
+    : 1
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/2#input.non_dependant_deductions_under_paragraph_3: 0
+  output:
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/4#daily_council_tax_reduction: 0

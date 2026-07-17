@@ -1,0 +1,41 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/wsi/2013/3029/schedule/1/paragraph/4
+  summary: |-
+    Where a pensioner is entitled to a reduction, class A receives the maximum council tax reduction for the day; class B receives amount A less amount B, as defined in regulation 23.
+imports:
+  - uk:regulations/wsi/2013/3029/schedule/1/paragraph/2#daily_maximum_council_tax_reduction
+rules:
+  - name: daily_council_tax_reduction
+    kind: derived
+    entity: Person
+    dtype: Money
+    unit: GBP
+    period: Day
+    source: WSI 2013/3029, Sch. 1, para. 4
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/wsi/2013/3029/schedule/1/paragraph/4
+              excerpt: "Where a pensioner is entitled to a reduction under an authority’s scheme"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/wsi/2013/3029/schedule/1/paragraph/4
+              excerpt: "Where the person is within class B, that amount is the amount found by deducting amount B from amount A"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/wsi/2013/3029/schedule/1/paragraph/2#daily_maximum_council_tax_reduction
+              output: daily_maximum_council_tax_reduction
+              hash: sha256:ebece89aa5b7793c35763f6d85f8f3c55bcc1b318e6f3eeabd289a4ee9bb6f99
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if pensioner_is_entitled_to_reduction_under_authority_scheme and pensioner_is_within_class_a: daily_maximum_council_tax_reduction else: if pensioner_is_entitled_to_reduction_under_authority_scheme and pensioner_is_within_class_b: max(0, amount_a_under_regulation_23 - amount_b_under_regulation_23) else: 0
