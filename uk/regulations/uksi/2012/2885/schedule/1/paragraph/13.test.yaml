@@ -1,0 +1,21 @@
+- name: applicant_guarantee_credit_disregards_income_and_capital
+  period: 2024-01
+  input:
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/13#input.applicant_is_in_receipt_of_guarantee_credit: true
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/13#input.partner_is_in_receipt_of_guarantee_credit: false
+  output:
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/13#applicant_income_and_capital_disregarded_due_to_guarantee_credit: holds
+- name: partner_guarantee_credit_disregards_applicant_income_and_capital
+  period: 2024-01
+  input:
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/13#input.applicant_is_in_receipt_of_guarantee_credit: false
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/13#input.partner_is_in_receipt_of_guarantee_credit: true
+  output:
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/13#applicant_income_and_capital_disregarded_due_to_guarantee_credit: holds
+- name: no_guarantee_credit_does_not_disregard_income_and_capital_under_this_paragraph
+  period: 2024-01
+  input:
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/13#input.applicant_is_in_receipt_of_guarantee_credit: false
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/13#input.partner_is_in_receipt_of_guarantee_credit: false
+  output:
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/13#applicant_income_and_capital_disregarded_due_to_guarantee_credit: not_holds
