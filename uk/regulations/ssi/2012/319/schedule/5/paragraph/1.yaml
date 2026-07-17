@@ -1,0 +1,13 @@
+format: rulespec/v1
+module:
+  status: deferred
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/ssi/2012/319/schedule/5/paragraph/1
+  summary: |-
+    Subject to paragraphs 2 and 3, the alternative maximum council tax reduction in respect of a day is determined under the following table.
+  deferred_outputs:
+    - output: uk:regulations/ssi/2012/319/schedule/5/paragraph/1#alternative_maximum_council_tax_reduction
+      reason: The source makes the whole table expressly subject to paragraphs 2 and 3, but no executable RuleSpec outputs for those operative carve-outs were supplied.
+rules: []
