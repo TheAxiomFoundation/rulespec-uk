@@ -1,0 +1,113 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2012/2886/schedule/paragraph/28
+  summary: |-
+    For a non-pensioner with an individual or joint universal credit award, the authority must adjust the maximum amount by multiplying it by 12 and dividing by 52. In the stated polygamous-marriage circumstances, the husband-and-wife relationship is disregarded.
+rules:
+  - name: annualisation_months
+    kind: parameter
+    dtype: Count
+    source: Schedule, paragraph 28(3)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/schedule/paragraph/28
+              excerpt: multiply the maximum amount by 12
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          12
+
+  - name: weekly_conversion_weeks
+    kind: parameter
+    dtype: Count
+    source: Schedule, paragraph 28(3)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/schedule/paragraph/28
+              excerpt: divide the product by 52
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          52
+
+  - name: universal_credit_maximum_amount_applies
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Week
+    source: Schedule, paragraph 28(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/schedule/paragraph/28
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          applicant_is_not_a_pensioner
+          and (applicant_has_universal_credit_award or applicant_jointly_with_partner_has_universal_credit_award)
+
+  - name: applicable_amount_from_universal_credit_maximum_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    unit: GBP
+    period: Week
+    source: Schedule, paragraph 28(1) and (3)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/schedule/paragraph/28
+              excerpt: multiply the maximum amount by 12 and divide the product by 52
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2012/2886/schedule/paragraph/28#annualisation_months
+              output: annualisation_months
+              hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2012/2886/schedule/paragraph/28#weekly_conversion_weeks
+              output: weekly_conversion_weeks
+              hash: sha256:local
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if universal_credit_maximum_amount_applies: maximum_amount_calculated_by_secretary_of_state_under_section_8_2 * annualisation_months / weekly_conversion_weeks else: 0
+
+  - name: husband_and_wife_relationship_disregarded_for_polygamous_marriage
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Week
+    source: Schedule, paragraph 28(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/schedule/paragraph/28
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          applicant_is_member_of_polygamous_marriage
+          and one_spouse_is_party_to_earlier_marriage_that_still_subsists
+          and other_party_to_earlier_marriage_lives_in_same_household
