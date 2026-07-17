@@ -1,0 +1,26 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2012/2886/schedule/paragraph/22
+  summary: |-
+    Persons subject to immigration control are not entitled to a reduction under this scheme.
+rules:
+  - name: person_subject_to_immigration_control_is_not_entitled_to_reduction
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Week
+    source: U.K. S.I. 2012/2886, Schedule, paragraph 22
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/schedule/paragraph/22
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          person_is_subject_to_immigration_control
