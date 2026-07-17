@@ -1,0 +1,40 @@
+- name: occupation_intended_within_standard_period
+  period: 2024-01
+  input:
+    uk:regulations/uksi/2012/2885/schedule/6/paragraph/1#input.premises_acquired_for_occupation_by_applicant: true
+    uk:regulations/uksi/2012/2885/schedule/6/paragraph/1#input.applicant_intends_to_occupy_premises_as_home: true
+    uk:regulations/uksi/2012/2885/schedule/6/paragraph/1#input.intended_occupation_weeks_after_acquisition: 20
+    ? uk:regulations/uksi/2012/2885/schedule/6/paragraph/1#input.longer_period_is_reasonable_to_obtain_possession_and_commence_occupation
+    : false
+  output:
+    uk:regulations/uksi/2012/2885/schedule/6/paragraph/1#premises_qualify_for_home_occupation: holds
+- name: reasonable_longer_period_for_possession
+  period: 2024-01
+  input:
+    uk:regulations/uksi/2012/2885/schedule/6/paragraph/1#input.premises_acquired_for_occupation_by_applicant: true
+    uk:regulations/uksi/2012/2885/schedule/6/paragraph/1#input.applicant_intends_to_occupy_premises_as_home: true
+    uk:regulations/uksi/2012/2885/schedule/6/paragraph/1#input.intended_occupation_weeks_after_acquisition: 30
+    ? uk:regulations/uksi/2012/2885/schedule/6/paragraph/1#input.longer_period_is_reasonable_to_obtain_possession_and_commence_occupation
+    : true
+  output:
+    uk:regulations/uksi/2012/2885/schedule/6/paragraph/1#premises_qualify_for_home_occupation: holds
+- name: premises_not_acquired_for_applicant_occupation
+  period: 2024-01
+  input:
+    uk:regulations/uksi/2012/2885/schedule/6/paragraph/1#input.premises_acquired_for_occupation_by_applicant: false
+    uk:regulations/uksi/2012/2885/schedule/6/paragraph/1#input.applicant_intends_to_occupy_premises_as_home: true
+    uk:regulations/uksi/2012/2885/schedule/6/paragraph/1#input.intended_occupation_weeks_after_acquisition: 20
+    ? uk:regulations/uksi/2012/2885/schedule/6/paragraph/1#input.longer_period_is_reasonable_to_obtain_possession_and_commence_occupation
+    : false
+  output:
+    uk:regulations/uksi/2012/2885/schedule/6/paragraph/1#premises_qualify_for_home_occupation: not_holds
+- name: no_intention_to_occupy_as_home
+  period: 2024-01
+  input:
+    uk:regulations/uksi/2012/2885/schedule/6/paragraph/1#input.premises_acquired_for_occupation_by_applicant: true
+    uk:regulations/uksi/2012/2885/schedule/6/paragraph/1#input.applicant_intends_to_occupy_premises_as_home: false
+    uk:regulations/uksi/2012/2885/schedule/6/paragraph/1#input.intended_occupation_weeks_after_acquisition: 20
+    ? uk:regulations/uksi/2012/2885/schedule/6/paragraph/1#input.longer_period_is_reasonable_to_obtain_possession_and_commence_occupation
+    : false
+  output:
+    uk:regulations/uksi/2012/2885/schedule/6/paragraph/1#premises_qualify_for_home_occupation: not_holds
