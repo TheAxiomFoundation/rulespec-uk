@@ -1,0 +1,13 @@
+format: rulespec/v1
+module:
+  status: deferred
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/wsi/2013/3029/schedule/6/paragraph/1
+  summary: |-
+    Subject to paragraphs 2 and 3, the applicable weekly amount for a non-pensioner is the aggregate of applicable personal allowances, child or young person amounts, family premium, premiums, a component, and transitional addition, each determined under Schedule 7.
+  deferred_outputs:
+    - output: uk:regulations/wsi/2013/3029/schedule/6/paragraph/1#applicable_amount_for_non_pensioner
+      reason: The aggregate is expressly subject to paragraphs 2 and 3 and depends on amounts determined under Schedule 7; no executable RuleSpec exports for those operative cross-references were supplied.
+rules: []
