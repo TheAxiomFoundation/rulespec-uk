@@ -1,0 +1,120 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2012/2886/schedule/paragraph/37
+  summary: |-
+    Where an applicant has an award of universal credit, the authority must use the Secretary of State’s calculation or estimate of income and capital. Income and the universal credit award are adjusted by multiplying by 12 and dividing by 52.
+  deferred_outputs:
+    - output: uk:regulations/uksi/2012/2886/schedule/paragraph/37#adjusted_universal_credit_income
+      reason: The permitted further adjustments require the operative application of paragraph 34 and the discretionary reduction under section 13A(1)(c), neither of which is supplied as an executable dependency.
+rules:
+  - name: annual_conversion_month_count
+    kind: parameter
+    dtype: Count
+    source: UK SI 2012/2886, Schedule, paragraph 37(2) and (4)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/schedule/paragraph/37
+              excerpt: "multiplying the amount by 12"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          12
+  - name: annual_conversion_week_count
+    kind: parameter
+    dtype: Count
+    source: UK SI 2012/2886, Schedule, paragraph 37(2) and (4)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/schedule/paragraph/37
+              excerpt: "dividing the product by 52"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          52
+  - name: universal_credit_income_calculation_must_be_used
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Week
+    source: UK SI 2012/2886, Schedule, paragraph 37(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/schedule/paragraph/37
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          applicant_has_universal_credit_award
+  - name: weekly_universal_credit_income
+    kind: derived
+    entity: Person
+    dtype: Money
+    unit: GBP
+    period: Week
+    source: UK SI 2012/2886, Schedule, paragraph 37(1) and (2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/schedule/paragraph/37
+              excerpt: "multiplying the amount by 12 and dividing the product by 52"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if applicant_has_universal_credit_award:
+            (secretary_of_state_calculated_income_for_universal_credit * annual_conversion_month_count) / annual_conversion_week_count
+          else: 0
+  - name: weekly_universal_credit_award_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    unit: GBP
+    period: Week
+    source: UK SI 2012/2886, Schedule, paragraph 37(4)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/schedule/paragraph/37
+              excerpt: "multiplying the amount of the award of universal credit by 12 and dividing the product by 52"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if applicant_has_universal_credit_award:
+            (universal_credit_award_amount * annual_conversion_month_count) / annual_conversion_week_count
+          else: 0
+  - name: universal_credit_capital_calculation_must_be_used
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Week
+    source: UK SI 2012/2886, Schedule, paragraph 37(6)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/schedule/paragraph/37
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          applicant_has_universal_credit_award

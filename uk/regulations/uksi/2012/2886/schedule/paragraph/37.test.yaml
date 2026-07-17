@@ -1,0 +1,22 @@
+- name: universal_credit_income_and_award_are_converted_to_weekly_amounts
+  period: 2024-01
+  input:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/37#input.applicant_has_universal_credit_award: true
+    uk:regulations/uksi/2012/2886/schedule/paragraph/37#input.secretary_of_state_calculated_income_for_universal_credit: 520
+    uk:regulations/uksi/2012/2886/schedule/paragraph/37#input.universal_credit_award_amount: 260
+  output:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/37#universal_credit_income_calculation_must_be_used: holds
+    uk:regulations/uksi/2012/2886/schedule/paragraph/37#weekly_universal_credit_income: 120
+    uk:regulations/uksi/2012/2886/schedule/paragraph/37#weekly_universal_credit_award_amount: 60
+    uk:regulations/uksi/2012/2886/schedule/paragraph/37#universal_credit_capital_calculation_must_be_used: holds
+- name: no_universal_credit_award_does_not_trigger_the_universal_credit_method
+  period: 2024-01
+  input:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/37#input.applicant_has_universal_credit_award: false
+    uk:regulations/uksi/2012/2886/schedule/paragraph/37#input.secretary_of_state_calculated_income_for_universal_credit: 520
+    uk:regulations/uksi/2012/2886/schedule/paragraph/37#input.universal_credit_award_amount: 260
+  output:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/37#universal_credit_income_calculation_must_be_used: not_holds
+    uk:regulations/uksi/2012/2886/schedule/paragraph/37#weekly_universal_credit_income: 0
+    uk:regulations/uksi/2012/2886/schedule/paragraph/37#weekly_universal_credit_award_amount: 0
+    uk:regulations/uksi/2012/2886/schedule/paragraph/37#universal_credit_capital_calculation_must_be_used: not_holds
