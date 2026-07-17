@@ -1,0 +1,31 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2012/2885/schedule/3/paragraph/3
+  summary: |-
+    “his income is to be disregarded in determining the amount of any alternative maximum council tax reduction, unless that second adult is a member of a couple and his partner does not fall to be disregarded”
+rules:
+  - name: second_adult_income_disregarded_for_alternative_maximum_council_tax_reduction
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Month
+    source: Schedule 3, paragraph 3
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: exception
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2885/schedule/3/paragraph/3
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          two_or_more_second_adults_reside_with_applicant
+          and second_adult_is_disregarded_for_discount
+          and (
+            not second_adult_is_member_of_couple
+            or second_adult_partner_is_disregarded_for_discount
+          )

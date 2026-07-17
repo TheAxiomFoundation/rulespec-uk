@@ -1,0 +1,40 @@
+- name: disregards_income_of_qualifying_second_adult_with_disregarded_partner
+  period: 2026-07
+  input:
+    uk:regulations/uksi/2012/2885/schedule/3/paragraph/3#input.two_or_more_second_adults_reside_with_applicant: true
+    uk:regulations/uksi/2012/2885/schedule/3/paragraph/3#input.second_adult_is_disregarded_for_discount: true
+    uk:regulations/uksi/2012/2885/schedule/3/paragraph/3#input.second_adult_is_member_of_couple: true
+    uk:regulations/uksi/2012/2885/schedule/3/paragraph/3#input.second_adult_partner_is_disregarded_for_discount: true
+  output:
+    ? uk:regulations/uksi/2012/2885/schedule/3/paragraph/3#second_adult_income_disregarded_for_alternative_maximum_council_tax_reduction
+    : holds
+- name: does_not_disregard_income_when_partner_is_not_disregarded
+  period: 2026-07
+  input:
+    uk:regulations/uksi/2012/2885/schedule/3/paragraph/3#input.two_or_more_second_adults_reside_with_applicant: true
+    uk:regulations/uksi/2012/2885/schedule/3/paragraph/3#input.second_adult_is_disregarded_for_discount: true
+    uk:regulations/uksi/2012/2885/schedule/3/paragraph/3#input.second_adult_is_member_of_couple: true
+    uk:regulations/uksi/2012/2885/schedule/3/paragraph/3#input.second_adult_partner_is_disregarded_for_discount: false
+  output:
+    ? uk:regulations/uksi/2012/2885/schedule/3/paragraph/3#second_adult_income_disregarded_for_alternative_maximum_council_tax_reduction
+    : not_holds
+- name: disregards_income_of_qualifying_second_adult_not_in_couple
+  period: 2026-07
+  input:
+    uk:regulations/uksi/2012/2885/schedule/3/paragraph/3#input.two_or_more_second_adults_reside_with_applicant: true
+    uk:regulations/uksi/2012/2885/schedule/3/paragraph/3#input.second_adult_is_disregarded_for_discount: true
+    uk:regulations/uksi/2012/2885/schedule/3/paragraph/3#input.second_adult_is_member_of_couple: false
+    uk:regulations/uksi/2012/2885/schedule/3/paragraph/3#input.second_adult_partner_is_disregarded_for_discount: false
+  output:
+    ? uk:regulations/uksi/2012/2885/schedule/3/paragraph/3#second_adult_income_disregarded_for_alternative_maximum_council_tax_reduction
+    : holds
+- name: does_not_disregard_income_without_discount_disregard
+  period: 2026-07
+  input:
+    uk:regulations/uksi/2012/2885/schedule/3/paragraph/3#input.two_or_more_second_adults_reside_with_applicant: true
+    uk:regulations/uksi/2012/2885/schedule/3/paragraph/3#input.second_adult_is_disregarded_for_discount: false
+    uk:regulations/uksi/2012/2885/schedule/3/paragraph/3#input.second_adult_is_member_of_couple: false
+    uk:regulations/uksi/2012/2885/schedule/3/paragraph/3#input.second_adult_partner_is_disregarded_for_discount: false
+  output:
+    ? uk:regulations/uksi/2012/2885/schedule/3/paragraph/3#second_adult_income_disregarded_for_alternative_maximum_council_tax_reduction
+    : not_holds
