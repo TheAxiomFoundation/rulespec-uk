@@ -1,0 +1,208 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/ssi/2012/319/14A
+  summary: "A relevant person is entitled where the paragraph (3) to (5) conditions\
+    \ are met and the reduction calculated under this regulation exceeds that under\
+    \ regulation 14. Weekly income limits are \xA3321 for a person in paragraph (6)\
+    \ and \xA3479 otherwise; amount B is 2 6/7 per cent of excess income."
+rules:
+- name: income_limit_for_person_without_couple_or_child_responsibility
+  kind: parameter
+  dtype: Money
+  period: Week
+  unit: GBP
+  source: The Council Tax Reduction (Scotland) Regulations 2012, regulation 14A(5)(a)(ii)(aa)
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: amount
+        source:
+          corpus_citation_path: uk/regulation/ssi/2012/319/14A
+          excerpt: "\xA3321, in the case of a person to whom paragraph (6) applies"
+  versions:
+  - effective_from: '0001-01-01'
+    formula: '321'
+- name: income_limit_in_any_other_case
+  kind: parameter
+  dtype: Money
+  period: Week
+  unit: GBP
+  source: The Council Tax Reduction (Scotland) Regulations 2012, regulation 14A(5)(a)(ii)(bb)
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: amount
+        source:
+          corpus_citation_path: uk/regulation/ssi/2012/319/14A
+          excerpt: "\xA3479, in any other case"
+  versions:
+  - effective_from: '0001-01-01'
+    formula: '479'
+- name: income_excess_reduction_rate
+  kind: parameter
+  dtype: Rate
+  source: The Council Tax Reduction (Scotland) Regulations 2012, regulation 14A(5)(b)(ii)
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: uk/regulation/ssi/2012/319/14A
+          excerpt: amount B is 2 6/7 per cent of the difference
+  versions:
+  - effective_from: '0001-01-01'
+    formula: '0.02857142857142857142857142857'
+- name: lower_income_limit_applies
+  kind: derived
+  entity: Person
+  dtype: Judgment
+  period: Day
+  source: The Council Tax Reduction (Scotland) Regulations 2012, regulation 14A(6)
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: condition
+        source:
+          corpus_citation_path: uk/regulation/ssi/2012/319/14A
+  versions:
+  - effective_from: '0001-01-01'
+    formula: 'relevant_person_is_not_member_of_couple_or_polygamous_marriage
+
+      and relevant_person_is_not_responsible_for_child_or_young_person'
+- name: qualifying_conditions_satisfied
+  kind: derived
+  entity: Person
+  dtype: Judgment
+  period: Day
+  source: The Council Tax Reduction (Scotland) Regulations 2012, regulation 14A(3)-(4)
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: condition
+        source:
+          corpus_citation_path: uk/regulation/ssi/2012/319/14A
+  versions:
+  - effective_from: '0001-01-01'
+    formula: 'relevant_person_is_liable_for_council_tax_for_dwelling
+
+      and dwelling_is_in_band_e_f_g_or_h_and_is_sole_or_main_residence
+
+      and not regulation_15_applies
+
+      and not regulation_16_applies
+
+      and not regulation_19_applies
+
+      and relevant_person_has_made_application_in_accordance_with_part_9
+
+      and appropriate_maximum_council_tax_reduction_exists'
+- name: income_excess_reduction_amount
+  kind: derived
+  entity: Person
+  dtype: Money
+  period: Day
+  unit: GBP
+  source: The Council Tax Reduction (Scotland) Regulations 2012, regulation 14A(5)(b)
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: uk/regulation/ssi/2012/319/14A
+          excerpt: amount B is 2 6/7 per cent of the difference
+  versions:
+  - effective_from: '0001-01-01'
+    formula: 'income_excess_reduction_rate * max(0, relevant_person_weekly_income
+      - (if lower_income_limit_applies: income_limit_for_person_without_couple_or_child_responsibility
+      else: income_limit_in_any_other_case))'
+- name: income_condition_satisfied
+  kind: derived
+  entity: Person
+  dtype: Judgment
+  period: Day
+  source: The Council Tax Reduction (Scotland) Regulations 2012, regulation 14A(5)
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: condition
+        source:
+          corpus_citation_path: uk/regulation/ssi/2012/319/14A
+  versions:
+  - effective_from: '0001-01-01'
+    formula: "relevant_person_has_no_income or (((lower_income_limit_applies) and\
+      \ relevant_person_weekly_income <= (income_limit_for_person_without_couple_or_child_responsibility))\n\
+      \  or (not (lower_income_limit_applies) and relevant_person_weekly_income <=\
+      \ (income_limit_in_any_other_case))) or appropriate_maximum_council_tax_reduction\
+      \ > income_excess_reduction_amount"
+- name: council_tax_reduction_before_regulation_14_comparison
+  kind: derived
+  entity: Person
+  dtype: Money
+  period: Day
+  unit: GBP
+  source: The Council Tax Reduction (Scotland) Regulations 2012, regulation 14A(7)
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: uk/regulation/ssi/2012/319/14A
+  versions:
+  - effective_from: '0001-01-01'
+    formula: "if qualifying_conditions_satisfied and income_condition_satisfied:\n\
+      \  if relevant_person_has_no_income or relevant_person_weekly_income <= (if\
+      \ lower_income_limit_applies: income_limit_for_person_without_couple_or_child_responsibility\
+      \ else: income_limit_in_any_other_case):\n    appropriate_maximum_council_tax_reduction\n\
+      \  else:\n    max(0, appropriate_maximum_council_tax_reduction - income_excess_reduction_amount)\n\
+      else:\n  0"
+- name: council_tax_reduction_entitlement
+  kind: derived
+  entity: Person
+  dtype: Judgment
+  period: Day
+  source: The Council Tax Reduction (Scotland) Regulations 2012, regulation 14A(1)-(2)
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: condition
+        source:
+          corpus_citation_path: uk/regulation/ssi/2012/319/14A
+  versions:
+  - effective_from: '0001-01-01'
+    formula: 'qualifying_conditions_satisfied
+
+      and income_condition_satisfied
+
+      and entitlement_to_council_tax_reduction_has_commenced
+
+      and council_tax_reduction_before_regulation_14_comparison > council_tax_reduction_under_regulation_14'
+- name: council_tax_reduction
+  kind: derived
+  entity: Person
+  dtype: Money
+  period: Day
+  unit: GBP
+  source: The Council Tax Reduction (Scotland) Regulations 2012, regulation 14A(7)
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: uk/regulation/ssi/2012/319/14A
+  versions:
+  - effective_from: '0001-01-01'
+    formula: 'if council_tax_reduction_entitlement: council_tax_reduction_before_regulation_14_comparison
+      else: 0'
