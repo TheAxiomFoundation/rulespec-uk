@@ -3,31 +3,7 @@ module:
   proof_validation:
     required: true
   source_verification:
-    corpus_citation_paths:
-      - uk-kingston-upon-thames/manual/council-tax-reduction-scheme-2026-2027/page-2
-      - uk-kingston-upon-thames/manual/council-tax-reduction-scheme-2026-2027/page-26
-      - uk-kingston-upon-thames/manual/council-tax-reduction-scheme-2026-2027/page-28
-      - uk-kingston-upon-thames/manual/council-tax-reduction-scheme-2026-2027/page-38
-      - uk-kingston-upon-thames/manual/council-tax-reduction-scheme-2026-2027/page-40
-      - uk-kingston-upon-thames/manual/council-tax-reduction-scheme-2026-2027/page-41
-      - uk-kingston-upon-thames/manual/council-tax-reduction-scheme-2026-2027/page-42
-      - uk-kingston-upon-thames/manual/council-tax-reduction-scheme-2026-2027/page-43
-      - uk-kingston-upon-thames/manual/council-tax-reduction-scheme-2026-2027/page-76
-    upstream_source_check:
-      status: delegated_parameter_source
-      checked_paths:
-        - uk/statutes/ukpga/1992/14/13A
-        - uk/regulations/uksi/2012/2885
-        - uk/regulations/uksi/2012/2886
-      rationale: >-
-        Section 13A of and Schedule 1A to the Local Government Finance Act 1992
-        require every English billing authority to make its own council tax
-        reduction scheme and delegate the working-age scheme design to the
-        authority. The Prescribed Requirements Regulations (SI 2012/2885) fix
-        only the pension-age scheme, and the Default Scheme Regulations
-        (SI 2012/2886) apply only where an authority makes no scheme. Kingston
-        made its own 2026-2027 working-age scheme, so the adopted council
-        scheme document is the operative source for these locally set values.
+    corpus_citation_path: uk-kingston-upon-thames/manual/council-tax-reduction-scheme-2026-2027
   summary: |-
     Kingston upon Thames Council Tax Reduction working-age alignment surface for the 2026-2027 scheme: it applies the local maximum-liability award, working-age UC applicable-amount treatment, capital limit and tariff income, 20 percent excess-income taper, and working-age non-dependant deductions used by PolicyEngine UK's Kingston CTR implementation.
   deferred_outputs:
