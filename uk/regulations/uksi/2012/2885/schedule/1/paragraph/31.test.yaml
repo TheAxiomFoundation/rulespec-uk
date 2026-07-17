@@ -1,0 +1,22 @@
+- name: child_tax_credit_arrears_are_included
+  period: 2024-01
+  input:
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/31#input.payment_amount: 250
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/31#input.payment_is_arrears_of_child_tax_credit: true
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/31#input.payment_is_arrears_of_working_tax_credit: false
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/31#input.payment_is_arrears_of_state_pension_credit: false
+    ? uk:regulations/uksi/2012/2885/schedule/1/paragraph/31#input.payment_was_made_in_respect_of_period_with_prior_scheme_reduction
+    : true
+  output:
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/31#arrears_payment_amount_treated_as_applicant_capital: 250
+- name: qualifying_arrears_without_prior_reduction_are_not_included
+  period: 2024-01
+  input:
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/31#input.payment_amount: 250
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/31#input.payment_is_arrears_of_child_tax_credit: true
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/31#input.payment_is_arrears_of_working_tax_credit: false
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/31#input.payment_is_arrears_of_state_pension_credit: false
+    ? uk:regulations/uksi/2012/2885/schedule/1/paragraph/31#input.payment_was_made_in_respect_of_period_with_prior_scheme_reduction
+    : false
+  output:
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/31#arrears_payment_amount_treated_as_applicant_capital: 0
