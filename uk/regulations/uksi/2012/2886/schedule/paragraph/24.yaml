@@ -1,0 +1,30 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2012/2886/schedule/paragraph/24
+  summary: |-
+    The class consists of any student to whom paragraph 75(1) applies, except to the extent that the student may be entitled to an alternative maximum council tax reduction by virtue of paragraph 18.
+rules:
+  - name: student_without_alternative_maximum_reduction_entitlement
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    source: Schedule, paragraph 24
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/schedule/paragraph/24
+          - path: versions[0].formula
+            kind: exception
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/schedule/paragraph/24
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          student_is_person_to_whom_paragraph_75_1_applies
+          and not student_may_be_entitled_to_alternative_maximum_council_tax_reduction_by_virtue_of_paragraph_18

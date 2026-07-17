@@ -1,0 +1,36 @@
+- name: student within paragraph 75 and without alternative maximum reduction entitlement
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-07'
+    end: '2024-01-07'
+  input:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/24#input.student_is_person_to_whom_paragraph_75_1_applies: true
+    ? uk:regulations/uksi/2012/2886/schedule/paragraph/24#input.student_may_be_entitled_to_alternative_maximum_council_tax_reduction_by_virtue_of_paragraph_18
+    : false
+  output:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/24#student_without_alternative_maximum_reduction_entitlement: holds
+- name: person is not a student to whom paragraph 75 applies
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-07'
+    end: '2024-01-07'
+  input:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/24#input.student_is_person_to_whom_paragraph_75_1_applies: false
+    ? uk:regulations/uksi/2012/2886/schedule/paragraph/24#input.student_may_be_entitled_to_alternative_maximum_council_tax_reduction_by_virtue_of_paragraph_18
+    : false
+  output:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/24#student_without_alternative_maximum_reduction_entitlement: not_holds
+- name: paragraph 18 alternative maximum reduction entitlement displaces membership
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-07'
+    end: '2024-01-07'
+  input:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/24#input.student_is_person_to_whom_paragraph_75_1_applies: true
+    ? uk:regulations/uksi/2012/2886/schedule/paragraph/24#input.student_may_be_entitled_to_alternative_maximum_council_tax_reduction_by_virtue_of_paragraph_18
+    : true
+  output:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/24#student_without_alternative_maximum_reduction_entitlement: not_holds
