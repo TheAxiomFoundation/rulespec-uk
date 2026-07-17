@@ -1,0 +1,50 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2012/2885/schedule/1/paragraph/11
+  summary: |-
+    The income and capital of an applicant and any partner are calculated under this Part; a partner's income and capital are treated as the applicant's. In a polygamous household, income and capital of each such household member are treated as the applicant's and calculated likewise.
+rules:
+  - name: income_and_capital_calculated_under_this_part
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Month
+    source: Schedule 1, paragraph 11
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2885/schedule/1/paragraph/11
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          person_is_applicant
+          or person_is_partner_of_applicant
+          or (
+            applicant_or_partner_is_married_polygamously_to_household_members
+            and person_is_household_member_of_polygamously_married_applicant_or_partner
+          )
+
+  - name: polygamous_household_member_income_and_capital_treated_as_applicant_income_and_capital
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Month
+    source: Schedule 1, paragraph 11
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2885/schedule/1/paragraph/11
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          applicant_or_partner_is_married_polygamously_to_household_members
+          and person_is_household_member_of_polygamously_married_applicant_or_partner
