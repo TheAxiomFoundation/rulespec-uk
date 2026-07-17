@@ -1,0 +1,129 @@
+- name: qualifying arrangements deem the non-dependant amounts
+  period:
+    period_kind: custom
+    name: assessment_period
+    start: '2024-01-01'
+    end: '2024-12-31'
+  input:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/34#input.applicant_is_pensioner: false
+    uk:regulations/uksi/2012/2886/schedule/paragraph/34#input.applicant_is_on_guarantee_credit: false
+    uk:regulations/uksi/2012/2886/schedule/paragraph/34#input.applicant_is_on_income_support: false
+    uk:regulations/uksi/2012/2886/schedule/paragraph/34#input.applicant_is_on_income_based_jobseekers_allowance: false
+    uk:regulations/uksi/2012/2886/schedule/paragraph/34#input.applicant_is_on_income_related_employment_and_support_allowance: false
+    ? uk:regulations/uksi/2012/2886/schedule/paragraph/34#input.authority_considers_arrangements_were_entered_into_to_take_advantage_of_scheme
+    : true
+    uk:regulations/uksi/2012/2886/schedule/paragraph/34#input.non_dependant_has_more_income_and_capital_than_applicant: true
+    ? uk:regulations/uksi/2012/2886/schedule/paragraph/34#input.non_dependant_income_calculated_as_for_applicant_under_following_provisions_of_this_part
+    : 200
+    ? uk:regulations/uksi/2012/2886/schedule/paragraph/34#input.non_dependant_capital_calculated_as_for_applicant_under_following_provisions_of_this_part
+    : 2000
+  output:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/34#pensioner_guarantee_credit_exception_applies: not_holds
+    uk:regulations/uksi/2012/2886/schedule/paragraph/34#non_pensioner_income_related_benefit_exception_applies: not_holds
+    uk:regulations/uksi/2012/2886/schedule/paragraph/34#non_dependant_arrangements_deeming_applies: holds
+    uk:regulations/uksi/2012/2886/schedule/paragraph/34#non_dependant_income_treated_as_possessed_by_applicant: 200
+    uk:regulations/uksi/2012/2886/schedule/paragraph/34#non_dependant_capital_treated_as_possessed_by_applicant: 2000
+    ? uk:regulations/uksi/2012/2886/schedule/paragraph/34#applicant_own_income_and_capital_disregarded_under_non_dependant_arrangements_rule
+    : holds
+- name: pensioner on guarantee credit is excepted
+  period:
+    period_kind: custom
+    name: assessment_period
+    start: '2024-01-01'
+    end: '2024-12-31'
+  input:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/34#input.applicant_is_pensioner: true
+    uk:regulations/uksi/2012/2886/schedule/paragraph/34#input.applicant_is_on_guarantee_credit: true
+    uk:regulations/uksi/2012/2886/schedule/paragraph/34#input.applicant_is_on_income_support: false
+    uk:regulations/uksi/2012/2886/schedule/paragraph/34#input.applicant_is_on_income_based_jobseekers_allowance: false
+    uk:regulations/uksi/2012/2886/schedule/paragraph/34#input.applicant_is_on_income_related_employment_and_support_allowance: false
+    ? uk:regulations/uksi/2012/2886/schedule/paragraph/34#input.authority_considers_arrangements_were_entered_into_to_take_advantage_of_scheme
+    : true
+    uk:regulations/uksi/2012/2886/schedule/paragraph/34#input.non_dependant_has_more_income_and_capital_than_applicant: true
+    ? uk:regulations/uksi/2012/2886/schedule/paragraph/34#input.non_dependant_income_calculated_as_for_applicant_under_following_provisions_of_this_part
+    : 200
+    ? uk:regulations/uksi/2012/2886/schedule/paragraph/34#input.non_dependant_capital_calculated_as_for_applicant_under_following_provisions_of_this_part
+    : 2000
+  output:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/34#pensioner_guarantee_credit_exception_applies: holds
+    uk:regulations/uksi/2012/2886/schedule/paragraph/34#non_dependant_arrangements_deeming_applies: not_holds
+    uk:regulations/uksi/2012/2886/schedule/paragraph/34#non_dependant_income_treated_as_possessed_by_applicant: 0
+    uk:regulations/uksi/2012/2886/schedule/paragraph/34#non_dependant_capital_treated_as_possessed_by_applicant: 0
+    ? uk:regulations/uksi/2012/2886/schedule/paragraph/34#applicant_own_income_and_capital_disregarded_under_non_dependant_arrangements_rule
+    : not_holds
+- name: non-pensioner on income support is excepted
+  period:
+    period_kind: custom
+    name: assessment_period
+    start: '2024-01-01'
+    end: '2024-12-31'
+  input:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/34#input.applicant_is_pensioner: false
+    uk:regulations/uksi/2012/2886/schedule/paragraph/34#input.applicant_is_on_guarantee_credit: false
+    uk:regulations/uksi/2012/2886/schedule/paragraph/34#input.applicant_is_on_income_support: true
+    uk:regulations/uksi/2012/2886/schedule/paragraph/34#input.applicant_is_on_income_based_jobseekers_allowance: false
+    uk:regulations/uksi/2012/2886/schedule/paragraph/34#input.applicant_is_on_income_related_employment_and_support_allowance: false
+    ? uk:regulations/uksi/2012/2886/schedule/paragraph/34#input.authority_considers_arrangements_were_entered_into_to_take_advantage_of_scheme
+    : true
+    uk:regulations/uksi/2012/2886/schedule/paragraph/34#input.non_dependant_has_more_income_and_capital_than_applicant: true
+    ? uk:regulations/uksi/2012/2886/schedule/paragraph/34#input.non_dependant_income_calculated_as_for_applicant_under_following_provisions_of_this_part
+    : 200
+    ? uk:regulations/uksi/2012/2886/schedule/paragraph/34#input.non_dependant_capital_calculated_as_for_applicant_under_following_provisions_of_this_part
+    : 2000
+  output:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/34#non_pensioner_income_related_benefit_exception_applies: holds
+    uk:regulations/uksi/2012/2886/schedule/paragraph/34#non_dependant_arrangements_deeming_applies: not_holds
+    uk:regulations/uksi/2012/2886/schedule/paragraph/34#non_dependant_income_treated_as_possessed_by_applicant: 0
+    uk:regulations/uksi/2012/2886/schedule/paragraph/34#non_dependant_capital_treated_as_possessed_by_applicant: 0
+    ? uk:regulations/uksi/2012/2886/schedule/paragraph/34#applicant_own_income_and_capital_disregarded_under_non_dependant_arrangements_rule
+    : not_holds
+- name: no finding of advantage-seeking arrangements
+  period:
+    period_kind: custom
+    name: assessment_period
+    start: '2024-01-01'
+    end: '2024-12-31'
+  input:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/34#input.applicant_is_pensioner: false
+    uk:regulations/uksi/2012/2886/schedule/paragraph/34#input.applicant_is_on_guarantee_credit: false
+    uk:regulations/uksi/2012/2886/schedule/paragraph/34#input.applicant_is_on_income_support: false
+    uk:regulations/uksi/2012/2886/schedule/paragraph/34#input.applicant_is_on_income_based_jobseekers_allowance: false
+    uk:regulations/uksi/2012/2886/schedule/paragraph/34#input.applicant_is_on_income_related_employment_and_support_allowance: false
+    ? uk:regulations/uksi/2012/2886/schedule/paragraph/34#input.authority_considers_arrangements_were_entered_into_to_take_advantage_of_scheme
+    : false
+    uk:regulations/uksi/2012/2886/schedule/paragraph/34#input.non_dependant_has_more_income_and_capital_than_applicant: true
+    ? uk:regulations/uksi/2012/2886/schedule/paragraph/34#input.non_dependant_income_calculated_as_for_applicant_under_following_provisions_of_this_part
+    : 200
+    ? uk:regulations/uksi/2012/2886/schedule/paragraph/34#input.non_dependant_capital_calculated_as_for_applicant_under_following_provisions_of_this_part
+    : 2000
+  output:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/34#non_dependant_arrangements_deeming_applies: not_holds
+    uk:regulations/uksi/2012/2886/schedule/paragraph/34#non_dependant_income_treated_as_possessed_by_applicant: 0
+    uk:regulations/uksi/2012/2886/schedule/paragraph/34#non_dependant_capital_treated_as_possessed_by_applicant: 0
+    ? uk:regulations/uksi/2012/2886/schedule/paragraph/34#applicant_own_income_and_capital_disregarded_under_non_dependant_arrangements_rule
+    : not_holds
+- name: non-dependant does not have more income and capital
+  period:
+    period_kind: custom
+    name: assessment_period
+    start: '2024-01-01'
+    end: '2024-12-31'
+  input:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/34#input.applicant_is_pensioner: false
+    uk:regulations/uksi/2012/2886/schedule/paragraph/34#input.applicant_is_on_guarantee_credit: false
+    uk:regulations/uksi/2012/2886/schedule/paragraph/34#input.applicant_is_on_income_support: false
+    uk:regulations/uksi/2012/2886/schedule/paragraph/34#input.applicant_is_on_income_based_jobseekers_allowance: false
+    uk:regulations/uksi/2012/2886/schedule/paragraph/34#input.applicant_is_on_income_related_employment_and_support_allowance: false
+    ? uk:regulations/uksi/2012/2886/schedule/paragraph/34#input.authority_considers_arrangements_were_entered_into_to_take_advantage_of_scheme
+    : true
+    uk:regulations/uksi/2012/2886/schedule/paragraph/34#input.non_dependant_has_more_income_and_capital_than_applicant: false
+    ? uk:regulations/uksi/2012/2886/schedule/paragraph/34#input.non_dependant_income_calculated_as_for_applicant_under_following_provisions_of_this_part
+    : 200
+    ? uk:regulations/uksi/2012/2886/schedule/paragraph/34#input.non_dependant_capital_calculated_as_for_applicant_under_following_provisions_of_this_part
+    : 2000
+  output:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/34#non_dependant_arrangements_deeming_applies: not_holds
+    uk:regulations/uksi/2012/2886/schedule/paragraph/34#non_dependant_income_treated_as_possessed_by_applicant: 0
+    uk:regulations/uksi/2012/2886/schedule/paragraph/34#non_dependant_capital_treated_as_possessed_by_applicant: 0
+    ? uk:regulations/uksi/2012/2886/schedule/paragraph/34#applicant_own_income_and_capital_disregarded_under_non_dependant_arrangements_rule
+    : not_holds
