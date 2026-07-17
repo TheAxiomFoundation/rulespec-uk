@@ -1,0 +1,55 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2012/2885/schedule/1/paragraph/31
+  summary: |-
+    The applicant’s whole capital calculated in accordance with this Part is taken into account, subject to Schedule 6 capital disregards. Arrears of child tax credit, working tax credit, or state pension credit are included where a scheme reduction covered all or part of the period before the arrears were paid.
+rules:
+  - name: qualifying_credit_arrears_included_in_applicant_capital
+    kind: derived
+    entity: Person
+    dtype: Money
+    unit: GBP
+    source: Schedule 1, paragraph 31(3)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2885/schedule/1/paragraph/31
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          child_tax_credit_arrears_for_period_with_prior_scheme_reduction
+          + working_tax_credit_arrears_for_period_with_prior_scheme_reduction
+          + state_pension_credit_arrears_for_period_with_prior_scheme_reduction
+
+  - name: applicant_capital_taken_into_account
+    kind: derived
+    entity: Person
+    dtype: Money
+    unit: GBP
+    source: Schedule 1, paragraph 31(1)–(3)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2885/schedule/1/paragraph/31
+          - path: versions[0].formula
+            kind: exception
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2885/schedule/1/paragraph/31
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          max(
+            0,
+            applicant_capital_other_than_qualifying_credit_arrears_calculated_in_accordance_with_this_part
+            + qualifying_credit_arrears_included_in_applicant_capital
+            - applicant_capital_disregarded_under_schedule_6
+          )

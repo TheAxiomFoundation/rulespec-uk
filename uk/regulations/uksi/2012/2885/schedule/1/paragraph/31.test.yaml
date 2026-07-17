@@ -1,0 +1,57 @@
+- name: all qualifying arrears are included and Schedule 6 capital is disregarded
+  period:
+    period_kind: custom
+    name: assessment_day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    ? uk:regulations/uksi/2012/2885/schedule/1/paragraph/31#input.applicant_capital_other_than_qualifying_credit_arrears_calculated_in_accordance_with_this_part
+    : 10000
+    ? uk:regulations/uksi/2012/2885/schedule/1/paragraph/31#input.child_tax_credit_arrears_for_period_with_prior_scheme_reduction
+    : 300
+    ? uk:regulations/uksi/2012/2885/schedule/1/paragraph/31#input.working_tax_credit_arrears_for_period_with_prior_scheme_reduction
+    : 200
+    ? uk:regulations/uksi/2012/2885/schedule/1/paragraph/31#input.state_pension_credit_arrears_for_period_with_prior_scheme_reduction
+    : 100
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/31#input.applicant_capital_disregarded_under_schedule_6: 1000
+  output:
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/31#qualifying_credit_arrears_included_in_applicant_capital: 600
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/31#applicant_capital_taken_into_account: 9600
+- name: no qualifying arrears are included
+  period:
+    period_kind: custom
+    name: assessment_day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    ? uk:regulations/uksi/2012/2885/schedule/1/paragraph/31#input.applicant_capital_other_than_qualifying_credit_arrears_calculated_in_accordance_with_this_part
+    : 5000
+    ? uk:regulations/uksi/2012/2885/schedule/1/paragraph/31#input.child_tax_credit_arrears_for_period_with_prior_scheme_reduction
+    : 0
+    ? uk:regulations/uksi/2012/2885/schedule/1/paragraph/31#input.working_tax_credit_arrears_for_period_with_prior_scheme_reduction
+    : 0
+    ? uk:regulations/uksi/2012/2885/schedule/1/paragraph/31#input.state_pension_credit_arrears_for_period_with_prior_scheme_reduction
+    : 0
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/31#input.applicant_capital_disregarded_under_schedule_6: 750
+  output:
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/31#qualifying_credit_arrears_included_in_applicant_capital: 0
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/31#applicant_capital_taken_into_account: 4250
+- name: capital taken into account cannot fall below zero
+  period:
+    period_kind: custom
+    name: assessment_day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    ? uk:regulations/uksi/2012/2885/schedule/1/paragraph/31#input.applicant_capital_other_than_qualifying_credit_arrears_calculated_in_accordance_with_this_part
+    : 500
+    ? uk:regulations/uksi/2012/2885/schedule/1/paragraph/31#input.child_tax_credit_arrears_for_period_with_prior_scheme_reduction
+    : 0
+    ? uk:regulations/uksi/2012/2885/schedule/1/paragraph/31#input.working_tax_credit_arrears_for_period_with_prior_scheme_reduction
+    : 0
+    ? uk:regulations/uksi/2012/2885/schedule/1/paragraph/31#input.state_pension_credit_arrears_for_period_with_prior_scheme_reduction
+    : 0
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/31#input.applicant_capital_disregarded_under_schedule_6: 700
+  output:
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/31#qualifying_credit_arrears_included_in_applicant_capital: 0
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/31#applicant_capital_taken_into_account: 0
