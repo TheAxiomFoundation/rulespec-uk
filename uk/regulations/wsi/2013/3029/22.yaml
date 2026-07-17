@@ -1,0 +1,13 @@
+format: rulespec/v1
+module:
+  status: deferred
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/wsi/2013/3029/22
+  summary: |-
+    Class A consists of a pensioner liable for council tax for their resident dwelling who is not absent throughout the day, subject to regulation 26, meets the income and application conditions, and is not excluded under regulations 28 to 31.
+  deferred_outputs:
+    - output: uk:regulations/wsi/2013/3029/22#class_a
+      reason: The class-A condition is expressly subject to regulation 26, whose operative absence-period modifications are not supplied.
+rules: []
