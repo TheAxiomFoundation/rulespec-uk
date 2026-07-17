@@ -1,0 +1,80 @@
+- name: qualifying_deprivation_and_company_capital_treatment
+  period: 2024-01
+  input:
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/34#input.applicant_has_deprived_self_of_capital: true
+    ? uk:regulations/uksi/2012/2885/schedule/1/paragraph/34#input.applicant_deprived_capital_to_secure_scheme_reduction_entitlement
+    : true
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/34#input.applicant_deprived_capital_to_increase_scheme_reduction: false
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/34#input.applicant_disposed_capital_to_reduce_or_pay_applicant_debt: false
+    ? uk:regulations/uksi/2012/2885/schedule/1/paragraph/34#input.applicant_disposed_capital_to_purchase_goods_or_services_with_reasonable_expenditure
+    : false
+    ? uk:regulations/uksi/2012/2885/schedule/1/paragraph/34#input.applicant_has_position_analogous_to_company_sole_owner_or_partner
+    : true
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/34#input.authority_treats_applicant_as_company_sole_owner_or_partner: true
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/34#input.company_capital_value_or_applicant_share: 10000
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/34#input.applicant_undertakes_activities_in_company_business: false
+  output:
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/34#capital_disposal_is_not_deprivation: not_holds
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/34#applicant_capital_deprivation_for_scheme_reduction: holds
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/34#company_holding_disregarded_under_analogous_ownership_treatment: holds
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/34#company_capital_amount_treated_as_applicant_capital: 10000
+    ? uk:regulations/uksi/2012/2885/schedule/1/paragraph/34#company_capital_amount_disregarded_while_business_activities_undertaken
+    : 0
+- name: debt_repayment_is_not_capital_deprivation
+  period: 2024-01
+  input:
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/34#input.applicant_has_deprived_self_of_capital: true
+    ? uk:regulations/uksi/2012/2885/schedule/1/paragraph/34#input.applicant_deprived_capital_to_secure_scheme_reduction_entitlement
+    : true
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/34#input.applicant_deprived_capital_to_increase_scheme_reduction: false
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/34#input.applicant_disposed_capital_to_reduce_or_pay_applicant_debt: true
+    ? uk:regulations/uksi/2012/2885/schedule/1/paragraph/34#input.applicant_disposed_capital_to_purchase_goods_or_services_with_reasonable_expenditure
+    : false
+    ? uk:regulations/uksi/2012/2885/schedule/1/paragraph/34#input.applicant_has_position_analogous_to_company_sole_owner_or_partner
+    : true
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/34#input.authority_treats_applicant_as_company_sole_owner_or_partner: true
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/34#input.company_capital_value_or_applicant_share: 10000
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/34#input.applicant_undertakes_activities_in_company_business: false
+  output:
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/34#capital_disposal_is_not_deprivation: holds
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/34#applicant_capital_deprivation_for_scheme_reduction: not_holds
+- name: reasonable_expenditure_is_not_capital_deprivation
+  period: 2024-01
+  input:
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/34#input.applicant_has_deprived_self_of_capital: true
+    ? uk:regulations/uksi/2012/2885/schedule/1/paragraph/34#input.applicant_deprived_capital_to_secure_scheme_reduction_entitlement
+    : false
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/34#input.applicant_deprived_capital_to_increase_scheme_reduction: true
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/34#input.applicant_disposed_capital_to_reduce_or_pay_applicant_debt: false
+    ? uk:regulations/uksi/2012/2885/schedule/1/paragraph/34#input.applicant_disposed_capital_to_purchase_goods_or_services_with_reasonable_expenditure
+    : true
+    ? uk:regulations/uksi/2012/2885/schedule/1/paragraph/34#input.applicant_has_position_analogous_to_company_sole_owner_or_partner
+    : false
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/34#input.authority_treats_applicant_as_company_sole_owner_or_partner: false
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/34#input.company_capital_value_or_applicant_share: 10000
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/34#input.applicant_undertakes_activities_in_company_business: false
+  output:
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/34#capital_disposal_is_not_deprivation: holds
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/34#applicant_capital_deprivation_for_scheme_reduction: not_holds
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/34#company_holding_disregarded_under_analogous_ownership_treatment: not_holds
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/34#company_capital_amount_treated_as_applicant_capital: 0
+- name: company_capital_disregarded_while_business_activities_continue
+  period: 2024-01
+  input:
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/34#input.applicant_has_deprived_self_of_capital: true
+    ? uk:regulations/uksi/2012/2885/schedule/1/paragraph/34#input.applicant_deprived_capital_to_secure_scheme_reduction_entitlement
+    : true
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/34#input.applicant_deprived_capital_to_increase_scheme_reduction: false
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/34#input.applicant_disposed_capital_to_reduce_or_pay_applicant_debt: false
+    ? uk:regulations/uksi/2012/2885/schedule/1/paragraph/34#input.applicant_disposed_capital_to_purchase_goods_or_services_with_reasonable_expenditure
+    : false
+    ? uk:regulations/uksi/2012/2885/schedule/1/paragraph/34#input.applicant_has_position_analogous_to_company_sole_owner_or_partner
+    : true
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/34#input.authority_treats_applicant_as_company_sole_owner_or_partner: true
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/34#input.company_capital_value_or_applicant_share: 10000
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/34#input.applicant_undertakes_activities_in_company_business: true
+  output:
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/34#company_holding_disregarded_under_analogous_ownership_treatment: holds
+    uk:regulations/uksi/2012/2885/schedule/1/paragraph/34#company_capital_amount_treated_as_applicant_capital: 10000
+    ? uk:regulations/uksi/2012/2885/schedule/1/paragraph/34#company_capital_amount_disregarded_while_business_activities_undertaken
+    : 10000
