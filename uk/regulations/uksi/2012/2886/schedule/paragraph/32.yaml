@@ -1,0 +1,66 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2012/2886/schedule/paragraph/32
+  summary: |-
+    “Where the person is within class A or D” the reduction is the maximum council tax reduction; for class C or F it is the alternative maximum. Where both applicable branches apply, the greater amount is used.
+  deferred_outputs:
+    - output: uk:regulations/uksi/2012/2886/schedule/paragraph/32#reduction_amount_for_class_b_or_e
+      reason: The source directs use of amounts A and B having meanings given in paragraphs 14(f) or 17(f), but no copied context exports those amounts.
+    - output: uk:regulations/uksi/2012/2886/schedule/paragraph/32#council_tax_reduction_amount
+      reason: The final amount must incorporate the class B or E calculation, whose amount-A and amount-B dependencies are not available as executable exports.
+rules:
+  - name: reduction_amount_for_class_a_or_d
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Day
+    unit: GBP
+    source: U.K. S.I. 2012/2886, Schedule, paragraph 32(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/schedule/paragraph/32
+              excerpt: "Where the person is within class A or D, that amount is the amount which is the maximum council tax reduction"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2012/2886/schedule/paragraph/16#person_is_in_class_d
+              output: person_is_in_class_d
+              hash: sha256:322829d35e09fd423f4a41874d5be676fa9abc130835cf2c73af83cbcf2759f8
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if person_is_within_class_a or person_is_in_class_d:
+            maximum_council_tax_reduction_in_respect_of_day
+          else: 0
+
+  - name: alternative_reduction_amount_for_class_c_or_f
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Day
+    unit: GBP
+    source: U.K. S.I. 2012/2886, Schedule, paragraph 32(4)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/schedule/paragraph/32
+              excerpt: "Where the person is within class C or F, that amount is the amount which is the alternative maximum council tax reduction"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if person_is_within_class_c or person_is_within_class_f:
+            alternative_maximum_council_tax_reduction_in_respect_of_day
+          else: 0
+
+imports:
+  - uk:regulations/uksi/2012/2886/schedule/paragraph/16#person_is_in_class_d
