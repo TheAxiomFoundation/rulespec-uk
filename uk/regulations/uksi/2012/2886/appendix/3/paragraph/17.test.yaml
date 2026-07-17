@@ -1,0 +1,83 @@
+- name: applicant satisfies paragraph 9(a), paragraph 11(2)(a), and couple enhanced
+    conditions
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2024-01-01'
+    end: '2024-01-07'
+  input:
+    uk:regulations/uksi/2012/2886/appendix/3/paragraph/17#input.applicant_satisfies_condition_in_paragraph_9_a: true
+    uk:regulations/uksi/2012/2886/appendix/3/paragraph/17#input.applicant_satisfies_condition_in_paragraph_9_b: false
+    uk:regulations/uksi/2012/2886/appendix/3/paragraph/17#input.applicant_satisfies_condition_in_paragraph_11_2_a: true
+    uk:regulations/uksi/2012/2886/appendix/3/paragraph/17#input.applicant_satisfies_condition_in_paragraph_11_2_b: false
+    uk:regulations/uksi/2012/2886/appendix/3/paragraph/17#input.someone_is_in_receipt_of_carers_allowance: false
+    ? uk:regulations/uksi/2012/2886/appendix/3/paragraph/17#input.applicant_or_partner_satisfies_paragraph_11_2_b_only_by_virtue_of_paragraph_11_5
+    : false
+    uk:regulations/uksi/2012/2886/appendix/3/paragraph/17#input.applicant_is_member_of_couple_or_polygamous_marriage: true
+    ? uk:regulations/uksi/2012/2886/appendix/3/paragraph/17#input.member_of_couple_or_polygamous_marriage_satisfies_conditions_in_paragraph_12
+    : true
+  output:
+    uk:regulations/uksi/2012/2886/appendix/3/paragraph/17#disability_premium_paragraph_9_a_payable_amount: 31.0
+    uk:regulations/uksi/2012/2886/appendix/3/paragraph/17#disability_premium_paragraph_9_b_payable_amount: 0
+    uk:regulations/uksi/2012/2886/appendix/3/paragraph/17#severe_disability_premium_paragraph_11_2_a_payable_amount: 59.5
+    uk:regulations/uksi/2012/2886/appendix/3/paragraph/17#severe_disability_premium_paragraph_11_2_b_i_payable_amount: 0
+    uk:regulations/uksi/2012/2886/appendix/3/paragraph/17#severe_disability_premium_paragraph_11_2_b_ii_payable_amount: 0
+    uk:regulations/uksi/2012/2886/appendix/3/paragraph/17#enhanced_disability_premium_couple_payable_amount: 21.75
+- name: applicant satisfies paragraph 9(b) and paragraph 11(2)(b)(ii)
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2024-01-01'
+    end: '2024-01-07'
+  input:
+    uk:regulations/uksi/2012/2886/appendix/3/paragraph/17#input.applicant_satisfies_condition_in_paragraph_9_a: false
+    uk:regulations/uksi/2012/2886/appendix/3/paragraph/17#input.applicant_satisfies_condition_in_paragraph_9_b: true
+    uk:regulations/uksi/2012/2886/appendix/3/paragraph/17#input.applicant_satisfies_condition_in_paragraph_11_2_a: false
+    uk:regulations/uksi/2012/2886/appendix/3/paragraph/17#input.applicant_satisfies_condition_in_paragraph_11_2_b: true
+    uk:regulations/uksi/2012/2886/appendix/3/paragraph/17#input.someone_is_in_receipt_of_carers_allowance: false
+    ? uk:regulations/uksi/2012/2886/appendix/3/paragraph/17#input.applicant_or_partner_satisfies_paragraph_11_2_b_only_by_virtue_of_paragraph_11_5
+    : false
+    uk:regulations/uksi/2012/2886/appendix/3/paragraph/17#input.applicant_is_member_of_couple_or_polygamous_marriage: false
+    ? uk:regulations/uksi/2012/2886/appendix/3/paragraph/17#input.member_of_couple_or_polygamous_marriage_satisfies_conditions_in_paragraph_12
+    : false
+  output:
+    uk:regulations/uksi/2012/2886/appendix/3/paragraph/17#disability_premium_paragraph_9_a_payable_amount: 0
+    uk:regulations/uksi/2012/2886/appendix/3/paragraph/17#disability_premium_paragraph_9_b_payable_amount: 44.2
+    uk:regulations/uksi/2012/2886/appendix/3/paragraph/17#severe_disability_premium_paragraph_11_2_a_payable_amount: 0
+    uk:regulations/uksi/2012/2886/appendix/3/paragraph/17#severe_disability_premium_paragraph_11_2_b_i_payable_amount: 0
+    uk:regulations/uksi/2012/2886/appendix/3/paragraph/17#severe_disability_premium_paragraph_11_2_b_ii_payable_amount: 119.0
+    uk:regulations/uksi/2012/2886/appendix/3/paragraph/17#enhanced_disability_premium_couple_payable_amount: 0
+- name: child satisfies disabled-child and enhanced-disability conditions
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2024-01-01'
+    end: '2024-01-07'
+  input:
+    uk:regulations/uksi/2012/2886/appendix/3/paragraph/17#input.child_or_young_person_satisfies_condition_in_paragraph_13: true
+    uk:regulations/uksi/2012/2886/appendix/3/paragraph/17#input.person_satisfies_condition_in_paragraph_14: false
+    uk:regulations/uksi/2012/2886/appendix/3/paragraph/17#input.person_is_child_or_young_person: true
+    uk:regulations/uksi/2012/2886/appendix/3/paragraph/17#input.person_satisfies_conditions_in_paragraph_12: true
+    uk:regulations/uksi/2012/2886/appendix/3/paragraph/17#input.person_is_member_of_couple_or_polygamous_marriage: false
+  output:
+    uk:regulations/uksi/2012/2886/appendix/3/paragraph/17#disabled_child_premium_payable_amount: 57.89
+    uk:regulations/uksi/2012/2886/appendix/3/paragraph/17#carer_premium_payable_amount: 0
+    uk:regulations/uksi/2012/2886/appendix/3/paragraph/17#enhanced_disability_premium_child_payable_amount: 23.45
+    uk:regulations/uksi/2012/2886/appendix/3/paragraph/17#enhanced_disability_premium_single_person_payable_amount: 0
+- name: non-couple adult satisfies carer and enhanced-disability conditions
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2024-01-01'
+    end: '2024-01-07'
+  input:
+    uk:regulations/uksi/2012/2886/appendix/3/paragraph/17#input.child_or_young_person_satisfies_condition_in_paragraph_13: false
+    uk:regulations/uksi/2012/2886/appendix/3/paragraph/17#input.person_satisfies_condition_in_paragraph_14: true
+    uk:regulations/uksi/2012/2886/appendix/3/paragraph/17#input.person_is_child_or_young_person: false
+    uk:regulations/uksi/2012/2886/appendix/3/paragraph/17#input.person_satisfies_conditions_in_paragraph_12: true
+    uk:regulations/uksi/2012/2886/appendix/3/paragraph/17#input.person_is_member_of_couple_or_polygamous_marriage: false
+  output:
+    uk:regulations/uksi/2012/2886/appendix/3/paragraph/17#disabled_child_premium_payable_amount: 0
+    uk:regulations/uksi/2012/2886/appendix/3/paragraph/17#carer_premium_payable_amount: 33.3
+    uk:regulations/uksi/2012/2886/appendix/3/paragraph/17#enhanced_disability_premium_child_payable_amount: 0
+    uk:regulations/uksi/2012/2886/appendix/3/paragraph/17#enhanced_disability_premium_single_person_payable_amount: 15.15
