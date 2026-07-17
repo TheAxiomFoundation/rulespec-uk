@@ -1,0 +1,199 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/wsi/2013/3029/schedule/7/paragraph/1
+  summary: |-
+    The amounts specified in column (2) below in respect of each person or couple specified in column (1) are to be the amounts specified for the purposes of paragraphs 1(1)(a) and 2(2)(a) and (b) of Schedule 6.
+rules:
+  - name: single_applicant_main_phase_employment_and_support_allowance_amount
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Schedule 7 paragraph 1, column (2), item 1
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/wsi/2013/3029/schedule/7/paragraph/1
+              excerpt: "| is entitled to main phase employment and support allowance; | £101.85; |"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          101.85
+
+  - name: single_applicant_aged_not_less_than_25_amount
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Schedule 7 paragraph 1, column (2), item 1
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/wsi/2013/3029/schedule/7/paragraph/1
+              excerpt: "| is aged not less than 25; | £101.85; |"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          101.85
+
+  - name: single_applicant_aged_18_to_under_25_amount
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Schedule 7 paragraph 1, column (2), item 1
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/wsi/2013/3029/schedule/7/paragraph/1
+              excerpt: "| is aged not less than 18 but less than 25. | £80.60. |"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          80.60
+
+  - name: lone_parent_amount
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Schedule 7 paragraph 1, column (2), item 2
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/wsi/2013/3029/schedule/7/paragraph/1
+              excerpt: "| 2Lone parent. | £101.85. |"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          101.85
+
+  - name: couple_amount
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Schedule 7 paragraph 1, column (2), item 3
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/wsi/2013/3029/schedule/7/paragraph/1
+              excerpt: "| 3Couple. | £159.85. |"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          159.85
+
+  - name: single_applicant_minimum_age
+    kind: parameter
+    dtype: Integer
+    source: Schedule 7 paragraph 1, column (1), item 1
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/wsi/2013/3029/schedule/7/paragraph/1
+              excerpt: "| is aged not less than 18 but less than 25. | £80.60. |"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          18
+
+  - name: single_applicant_older_band_minimum_age
+    kind: parameter
+    dtype: Integer
+    source: Schedule 7 paragraph 1, column (1), item 1
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/wsi/2013/3029/schedule/7/paragraph/1
+              excerpt: "| is aged not less than 25; | £101.85; |"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          25
+
+  - name: single_applicant_younger_band_upper_age
+    kind: parameter
+    dtype: Integer
+    source: Schedule 7 paragraph 1, column (1), item 1
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/wsi/2013/3029/schedule/7/paragraph/1
+              excerpt: "| is aged not less than 18 but less than 25. | £80.60. |"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          25
+
+  - name: schedule_6_personal_allowance_amount
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Schedule 7 paragraph 1 table
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/wsi/2013/3029/schedule/7/paragraph/1
+              excerpt: "The amounts specified in column (2) below in respect of each person or couple specified in column (1) are to be the amounts specified for the purposes of paragraphs 1(1)(a) and 2(2)(a) and (b) of Schedule 6."
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/wsi/2013/3029/schedule/7/paragraph/1
+              excerpt: "| is entitled to main phase employment and support allowance; | £101.85; |"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/wsi/2013/3029/schedule/7/paragraph/1
+              excerpt: "| is aged not less than 25; | £101.85; |"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/wsi/2013/3029/schedule/7/paragraph/1
+              excerpt: "| is aged not less than 18 but less than 25. | £80.60. |"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/wsi/2013/3029/schedule/7/paragraph/1
+              excerpt: "| 2Lone parent. | £101.85. |"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/wsi/2013/3029/schedule/7/paragraph/1
+              excerpt: "| 3Couple. | £159.85. |"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if is_single_applicant and is_entitled_to_main_phase_employment_and_support_allowance: single_applicant_main_phase_employment_and_support_allowance_amount else: if is_single_applicant and age >= single_applicant_older_band_minimum_age: single_applicant_aged_not_less_than_25_amount else: if is_single_applicant and age >= single_applicant_minimum_age and age < single_applicant_younger_band_upper_age: single_applicant_aged_18_to_under_25_amount else: if is_lone_parent: lone_parent_amount else: if is_couple: couple_amount else: 0
