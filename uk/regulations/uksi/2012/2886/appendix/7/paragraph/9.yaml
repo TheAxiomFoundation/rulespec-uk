@@ -1,0 +1,168 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2012/2886/appendix/7/paragraph/9
+  summary: |-
+    Where paragraphs 4, 6, 7 and 9 do not apply to the applicant, £20 of earnings from listed part-time emergency-service, lifeboat, or reserve-force employments is disregarded; a partner's disregard is limited so the aggregate does not exceed £20, with a £10 limit for other employment.
+rules:
+  - name: listed_employment_earnings_disregard_limit
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: Appendix 7, paragraph 9(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/appendix/7/paragraph/9
+              excerpt: "£20 of earnings"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          20
+
+  - name: partner_other_employment_earnings_disregard_limit
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: Appendix 7, paragraph 9(2)(b)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/appendix/7/paragraph/9
+              excerpt: "earnings from that employment up to £10"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          10
+
+  - name: listed_employment_earnings_disregard_applies
+    kind: derived
+    entity: Family
+    dtype: Judgment
+    period: Week
+    source: Appendix 7, paragraph 9(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/appendix/7/paragraph/9
+              excerpt: "paragraphs 4, 6, 7 and 9 do not apply to the applicant"
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/appendix/7/paragraph/9
+              excerpt: "earnings derived from one or more employments as"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          applicant_has_earnings_from_listed_employment
+          and not paragraph_4_applies_to_applicant
+          and not paragraph_6_applies_to_applicant
+          and not paragraph_7_applies_to_applicant
+          and not paragraph_9_applies_to_applicant
+
+  - name: applicant_listed_employment_earnings_disregard
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Appendix 7, paragraph 9(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/appendix/7/paragraph/9
+              excerpt: "£20 of earnings derived from one or more employments"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#listed_employment_earnings_disregard_applies
+              output: listed_employment_earnings_disregard_applies
+              hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#listed_employment_earnings_disregard_limit
+              output: listed_employment_earnings_disregard_limit
+              hash: sha256:local
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if listed_employment_earnings_disregard_applies:
+            min(applicant_listed_employment_earnings, listed_employment_earnings_disregard_limit)
+          else: 0
+
+  - name: partner_earnings_disregard_under_paragraph_9
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Appendix 7, paragraph 9(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/appendix/7/paragraph/9
+              excerpt: "would not in aggregate with the amount of the applicant’s earnings disregarded under this paragraph exceed £20"
+          - path: versions[0].formula
+            kind: exception
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/appendix/7/paragraph/9
+              excerpt: "it must not apply to his partner except to the extent specified in sub-paragraph (2)"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#listed_employment_earnings_disregard_applies
+              output: listed_employment_earnings_disregard_applies
+              hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#applicant_listed_employment_earnings_disregard
+              output: applicant_listed_employment_earnings_disregard
+              hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#listed_employment_earnings_disregard_limit
+              output: listed_employment_earnings_disregard_limit
+              hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#partner_other_employment_earnings_disregard_limit
+              output: partner_other_employment_earnings_disregard_limit
+              hash: sha256:local
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if listed_employment_earnings_disregard_applies and applicant_has_partner:
+            if partner_has_listed_employment:
+              min(
+                partner_listed_employment_earnings,
+                max(0, listed_employment_earnings_disregard_limit - applicant_listed_employment_earnings_disregard)
+              )
+            else: if partner_has_other_employment:
+              min(
+                partner_other_employment_earnings,
+                partner_other_employment_earnings_disregard_limit,
+                max(0, listed_employment_earnings_disregard_limit - applicant_listed_employment_earnings_disregard)
+              )
+            else: 0
+          else: 0
