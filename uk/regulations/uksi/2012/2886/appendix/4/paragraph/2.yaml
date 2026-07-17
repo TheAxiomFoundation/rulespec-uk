@@ -1,0 +1,35 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2012/2886/appendix/4/paragraph/2
+  summary: |-
+    In determining a second adult’s gross income, attendance allowance, disability living allowance, personal independence payment, an AFIP, and the specified payments falling within Schedule 8 paragraph 28 or 41 must be disregarded.
+rules:
+  - name: second_adult_gross_income_disregarded_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    unit: GBP
+    period: Week
+    source: Appendix 4 paragraph 2
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/appendix/4/paragraph/2
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          max(
+            0,
+            attendance_allowance_amount
+            + disability_living_allowance_amount
+            + personal_independence_payment_under_part_4_amount
+            + afip_amount
+            + named_compensation_body_payments_disregarded_under_schedule_8_paragraph_28
+            + payments_disregarded_under_schedule_8_paragraph_41
+          )

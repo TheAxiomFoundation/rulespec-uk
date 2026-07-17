@@ -1,0 +1,32 @@
+- name: all specified payments are disregarded
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2026-07-13'
+    end: '2026-07-19'
+  input:
+    uk:regulations/uksi/2012/2886/appendix/4/paragraph/2#input.attendance_allowance_amount: 10
+    uk:regulations/uksi/2012/2886/appendix/4/paragraph/2#input.disability_living_allowance_amount: 20
+    uk:regulations/uksi/2012/2886/appendix/4/paragraph/2#input.personal_independence_payment_under_part_4_amount: 30
+    uk:regulations/uksi/2012/2886/appendix/4/paragraph/2#input.afip_amount: 40
+    ? uk:regulations/uksi/2012/2886/appendix/4/paragraph/2#input.named_compensation_body_payments_disregarded_under_schedule_8_paragraph_28
+    : 50
+    uk:regulations/uksi/2012/2886/appendix/4/paragraph/2#input.payments_disregarded_under_schedule_8_paragraph_41: 60
+  output:
+    uk:regulations/uksi/2012/2886/appendix/4/paragraph/2#second_adult_gross_income_disregarded_amount: 210
+- name: no specified payments
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2026-07-20'
+    end: '2026-07-26'
+  input:
+    uk:regulations/uksi/2012/2886/appendix/4/paragraph/2#input.attendance_allowance_amount: 0
+    uk:regulations/uksi/2012/2886/appendix/4/paragraph/2#input.disability_living_allowance_amount: 0
+    uk:regulations/uksi/2012/2886/appendix/4/paragraph/2#input.personal_independence_payment_under_part_4_amount: 0
+    uk:regulations/uksi/2012/2886/appendix/4/paragraph/2#input.afip_amount: 0
+    ? uk:regulations/uksi/2012/2886/appendix/4/paragraph/2#input.named_compensation_body_payments_disregarded_under_schedule_8_paragraph_28
+    : 0
+    uk:regulations/uksi/2012/2886/appendix/4/paragraph/2#input.payments_disregarded_under_schedule_8_paragraph_41: 0
+  output:
+    uk:regulations/uksi/2012/2886/appendix/4/paragraph/2#second_adult_gross_income_disregarded_amount: 0
