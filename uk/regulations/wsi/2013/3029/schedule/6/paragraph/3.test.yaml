@@ -1,0 +1,76 @@
+- name: individual universal credit award
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2026-07-13'
+    end: '2026-07-19'
+  input:
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/3#input.applicant_is_not_pensioner: true
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/3#input.applicant_has_universal_credit_award: true
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/3#input.applicant_and_partner_jointly_have_universal_credit_award: false
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/3#input.applicant_is_member_of_polygamous_marriage: false
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/3#input.one_spouse_is_party_to_earlier_marriage_that_still_subsists: true
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/3#input.other_party_to_earlier_marriage_lives_in_same_household: true
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/3#input.maximum_amount_calculated_by_secretary_of_state: 520
+    ? uk:regulations/wsi/2013/3029/schedule/6/paragraph/3#input.maximum_amount_calculated_with_husband_and_wife_status_disregarded
+    : 1300
+  output:
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/3#husband_and_wife_status_disregarded_for_applicable_amount: not_holds
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/3#applicable_amount_for_universal_credit_award: 120
+- name: joint universal credit award
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2026-07-13'
+    end: '2026-07-19'
+  input:
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/3#input.applicant_is_not_pensioner: true
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/3#input.applicant_has_universal_credit_award: false
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/3#input.applicant_and_partner_jointly_have_universal_credit_award: true
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/3#input.applicant_is_member_of_polygamous_marriage: true
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/3#input.one_spouse_is_party_to_earlier_marriage_that_still_subsists: false
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/3#input.other_party_to_earlier_marriage_lives_in_same_household: true
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/3#input.maximum_amount_calculated_by_secretary_of_state: 1040
+    ? uk:regulations/wsi/2013/3029/schedule/6/paragraph/3#input.maximum_amount_calculated_with_husband_and_wife_status_disregarded
+    : 1300
+  output:
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/3#husband_and_wife_status_disregarded_for_applicable_amount: not_holds
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/3#applicable_amount_for_universal_credit_award: 240
+- name: polygamous marriage disregard
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2026-07-13'
+    end: '2026-07-19'
+  input:
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/3#input.applicant_is_not_pensioner: true
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/3#input.applicant_has_universal_credit_award: true
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/3#input.applicant_and_partner_jointly_have_universal_credit_award: false
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/3#input.applicant_is_member_of_polygamous_marriage: true
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/3#input.one_spouse_is_party_to_earlier_marriage_that_still_subsists: true
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/3#input.other_party_to_earlier_marriage_lives_in_same_household: true
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/3#input.maximum_amount_calculated_by_secretary_of_state: 520
+    ? uk:regulations/wsi/2013/3029/schedule/6/paragraph/3#input.maximum_amount_calculated_with_husband_and_wife_status_disregarded
+    : 1300
+  output:
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/3#husband_and_wife_status_disregarded_for_applicable_amount: holds
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/3#applicable_amount_for_universal_credit_award: 300
+- name: pensioner outside paragraph
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2026-07-13'
+    end: '2026-07-19'
+  input:
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/3#input.applicant_is_not_pensioner: false
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/3#input.applicant_has_universal_credit_award: false
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/3#input.applicant_and_partner_jointly_have_universal_credit_award: false
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/3#input.applicant_is_member_of_polygamous_marriage: true
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/3#input.one_spouse_is_party_to_earlier_marriage_that_still_subsists: true
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/3#input.other_party_to_earlier_marriage_lives_in_same_household: false
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/3#input.maximum_amount_calculated_by_secretary_of_state: 520
+    ? uk:regulations/wsi/2013/3029/schedule/6/paragraph/3#input.maximum_amount_calculated_with_husband_and_wife_status_disregarded
+    : 1300
+  output:
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/3#husband_and_wife_status_disregarded_for_applicable_amount: not_holds
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/3#applicable_amount_for_universal_credit_award: 0
