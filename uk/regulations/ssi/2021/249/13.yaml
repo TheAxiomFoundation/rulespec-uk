@@ -1,0 +1,171 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/ssi/2021/249/13
+  summary: "Entitlement requires the relevant person\u2019s capital not to exceed\
+    \ the regulation 66 limit and either the maximum-reduction route or the second-adult-rebate\
+    \ route. Amount B is \u201C2 6/7 per cent of the difference\u201D between weekly\
+    \ income and the applicable amount. The second-adult route requires that no other\
+    \ counted resident is liable to pay rent to the relevant person and that the relevant\
+    \ person is entitled to second adult rebate because of resident income."
+  deferred_outputs:
+  - output: uk:regulations/ssi/2021/249/13#council_tax_reduction_entitlement
+    reason: The complete entitlement determination depends on operative results from
+      regulations 14, 15, 16, 19, 20, and 33 and on the appropriate maximum council
+      tax reduction, none of which is supplied as an executable copied export for
+      this target.
+    source_values:
+    - uk:regulations/ssi/2021/249/13#council_tax_reduction_excess_income_taper_rate
+  - output: uk:regulations/ssi/2021/249/13#council_tax_reduction_amount
+    reason: The complete amount requires the appropriate maximum council tax reduction
+      and resolution of the regulation 14 comparison and entitlement commencement
+      conditions, for which no executable copied exports are supplied.
+    source_values:
+    - uk:regulations/ssi/2021/249/13#council_tax_reduction_excess_income_taper_rate
+imports:
+- uk:regulations/ssi/2021/249/91#second_adult_rebate
+rules:
+- name: council_tax_reduction_excess_income_taper_rate_scalar_limit
+  kind: parameter
+  dtype: Count
+  source: SSI 2021/249, regulation 13(6)(c)(ii)
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: parameter
+        source:
+          corpus_citation_path: uk/regulation/ssi/2021/249/13
+          excerpt: amount B is 2 6/7 per cent of the difference
+  versions:
+  - effective_from: '2021-04-05'
+    formula: '0.02'
+- name: council_tax_reduction_excess_income_taper_rate_scalar_limit_2
+  kind: parameter
+  dtype: Count
+  source: SSI 2021/249, regulation 13(6)(c)(ii)
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: parameter
+        source:
+          corpus_citation_path: uk/regulation/ssi/2021/249/13
+          excerpt: amount B is 2 6/7 per cent of the difference
+  versions:
+  - effective_from: '2021-04-05'
+    formula: '0.06'
+- name: council_tax_reduction_excess_income_taper_rate_scalar_limit_3
+  kind: parameter
+  dtype: Count
+  source: SSI 2021/249, regulation 13(6)(c)(ii)
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: parameter
+        source:
+          corpus_citation_path: uk/regulation/ssi/2021/249/13
+          excerpt: amount B is 2 6/7 per cent of the difference
+  versions:
+  - effective_from: '2021-04-05'
+    formula: '7'
+- name: council_tax_reduction_excess_income_taper_rate
+  kind: parameter
+  dtype: Rate
+  source: SSI 2021/249, regulation 13(6)(c)(ii)
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: parameter
+        source:
+          corpus_citation_path: uk/regulation/ssi/2021/249/13
+          excerpt: amount B is 2 6/7 per cent of the difference
+      - path: versions[0].formula
+        kind: import
+        import:
+          target: uk:regulations/ssi/2021/249/13#council_tax_reduction_excess_income_taper_rate_scalar_limit
+          output: council_tax_reduction_excess_income_taper_rate_scalar_limit
+          hash: sha256:local
+      - path: versions[0].formula
+        kind: import
+        import:
+          target: uk:regulations/ssi/2021/249/13#council_tax_reduction_excess_income_taper_rate_scalar_limit_2
+          output: council_tax_reduction_excess_income_taper_rate_scalar_limit_2
+          hash: sha256:local
+      - path: versions[0].formula
+        kind: import
+        import:
+          target: uk:regulations/ssi/2021/249/13#council_tax_reduction_excess_income_taper_rate_scalar_limit_3
+          output: council_tax_reduction_excess_income_taper_rate_scalar_limit_3
+          hash: sha256:local
+  versions:
+  - effective_from: '2021-04-05'
+    formula: council_tax_reduction_excess_income_taper_rate_scalar_limit + (council_tax_reduction_excess_income_taper_rate_scalar_limit_2
+      / council_tax_reduction_excess_income_taper_rate_scalar_limit_3)
+- name: council_tax_reduction_income_taper_amount
+  kind: derived
+  entity: Person
+  dtype: Money
+  unit: GBP
+  period: Week
+  source: SSI 2021/249, regulation 13(6)(c)(ii)
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: uk/regulation/ssi/2021/249/13
+          excerpt: "amount B is 2 6/7 per cent of the difference between the person\u2019\
+            s income in respect of the week in which the day falls and the applicable\
+            \ amount"
+  versions:
+  - effective_from: '2021-04-05'
+    formula: 'council_tax_reduction_excess_income_taper_rate
+
+      * max(0, weekly_income_minus_applicable_amount)'
+- name: second_adult_rebate_route_satisfied
+  kind: derived
+  entity: Person
+  dtype: Judgment
+  period: Day
+  source: SSI 2021/249, regulation 13(7) and (8)
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: condition
+        source:
+          corpus_citation_path: uk/regulation/ssi/2021/249/13
+  versions:
+  - effective_from: '2021-04-05'
+    formula: 'no_other_counted_resident_is_liable_to_pay_rent_to_relevant_person
+
+      and relevant_person_is_entitled_to_second_adult_rebate_because_of_counted_resident_income'
+- name: council_tax_reduction_amount_under_second_adult_rebate_route
+  kind: derived
+  entity: Person
+  dtype: Money
+  unit: GBP
+  period: Day
+  source: SSI 2021/249, regulation 13(9)(c)
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: uk/regulation/ssi/2021/249/13
+      - path: versions[0].formula
+        kind: import
+        import:
+          target: uk:regulations/ssi/2021/249/91#second_adult_rebate
+          output: second_adult_rebate
+          hash: sha256:1867f43b6583a0bd82322db62a1277aab93a0f83c3616d7920f5e992f062f8e1
+  versions:
+  - effective_from: '2021-04-05'
+    formula: 'if second_adult_rebate_route_satisfied: second_adult_rebate else: 0'
