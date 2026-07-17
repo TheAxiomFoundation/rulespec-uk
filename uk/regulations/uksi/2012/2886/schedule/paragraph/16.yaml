@@ -1,0 +1,32 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2012/2886/schedule/paragraph/16
+  summary: |-
+    “On any day class D consists of any person who is not a pensioner” and satisfies the listed council-tax, residence, reduction, income and application conditions.
+rules:
+  - name: person_is_in_class_d
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Day
+    source: U.K. S.I. 2012/2886, Schedule, paragraph 16
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/schedule/paragraph/16
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          not person_is_a_pensioner
+          and person_is_liable_to_pay_council_tax_for_resident_dwelling
+          and person_is_not_absent_from_dwelling_throughout_day_subject_to_paragraph_19
+          and maximum_council_tax_reduction_amount_can_be_calculated
+          and not person_falls_within_class_not_entitled_to_reduction
+          and income_for_relevant_week_is_less_than_applicable_amount
+          and person_has_made_application
