@@ -1,0 +1,20 @@
+- name: capital_exceeds_limit
+  period:
+    period_kind: custom
+    name: calendar_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:regulations/wsi/2013/3029/30#input.capital: 16001
+  output:
+    uk:regulations/wsi/2013/3029/30#person_has_capital_exceeding_limit: holds
+- name: capital_at_limit
+  period:
+    period_kind: custom
+    name: calendar_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:regulations/wsi/2013/3029/30#input.capital: 16000
+  output:
+    uk:regulations/wsi/2013/3029/30#person_has_capital_exceeding_limit: not_holds

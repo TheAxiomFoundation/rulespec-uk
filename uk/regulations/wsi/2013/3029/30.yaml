@@ -1,0 +1,43 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/wsi/2013/3029/30
+  summary: |-
+    The class of person consists of any person whose capital exceeds £16,000. Capital is calculated in accordance with Schedule 1 or Schedule 6.
+rules:
+  - name: capital_limit
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: WSI 2013/3029, regulation 30(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/wsi/2013/3029/30
+              excerpt: "capital exceeds £16,000"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          16000
+  - name: person_has_capital_exceeding_limit
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Year
+    source: WSI 2013/3029, regulation 30(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/wsi/2013/3029/30
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          capital > capital_limit
