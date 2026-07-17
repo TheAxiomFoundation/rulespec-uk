@@ -1,0 +1,20 @@
+- name: capital_at_limit_is_not_in_class
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2024-01-01'
+    end: '2024-01-07'
+  input:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/23#input.capital_calculated_in_accordance_with_part_10: 16000
+  output:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/23#person_is_in_capital_exceeding_class: not_holds
+- name: capital_above_limit_is_in_class
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2024-01-01'
+    end: '2024-01-07'
+  input:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/23#input.capital_calculated_in_accordance_with_part_10: 16000.01
+  output:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/23#person_is_in_capital_exceeding_class: holds

@@ -1,0 +1,15 @@
+format: rulespec/v1
+module:
+  status: entity_not_supported
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2012/2886/schedule/paragraph/33
+  summary: |-
+    “The income and capital of any partner of the applicant is to be treated as income and capital of the applicant.” Except where paragraph 37 applies, income and capital of each relevant polygamous household member is also treated as the applicant's.
+  deferred_outputs:
+    - output: uk:regulations/uksi/2012/2886/schedule/paragraph/33#partner_income_and_capital_treated_as_applicant_income_and_capital
+      reason: The required applicant-to-partner attribution of income and capital cannot be represented faithfully without an applicant assessment entity and source-grounded person-to-applicant relationship carrying the attributable amounts.
+    - output: uk:regulations/uksi/2012/2886/schedule/paragraph/33#polygamous_household_member_income_and_capital_treated_as_applicant_income_and_capital
+      reason: The provision requires attributable amounts across a polygamous household-member relationship and is expressly displaced where paragraph 37 applies; no executable paragraph 37 dependency or source-grounded relationship model is supplied.
+rules: []

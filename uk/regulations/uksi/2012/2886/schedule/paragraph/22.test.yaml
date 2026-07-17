@@ -1,0 +1,20 @@
+- name: person_subject_to_immigration_control_is_not_entitled
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2024-01-01'
+    end: '2024-01-07'
+  input:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/22#input.person_is_subject_to_immigration_control: true
+  output:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/22#person_subject_to_immigration_control_is_not_entitled_to_reduction: holds
+- name: person_not_subject_to_immigration_control_is_not_excluded_by_this_paragraph
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2024-01-01'
+    end: '2024-01-07'
+  input:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/22#input.person_is_subject_to_immigration_control: false
+  output:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/22#person_subject_to_immigration_control_is_not_entitled_to_reduction: not_holds

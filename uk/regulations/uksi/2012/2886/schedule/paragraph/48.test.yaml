@@ -1,0 +1,90 @@
+- name: applicable estimation satisfies all requirements
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2024-01-01'
+    end: '2024-01-07'
+  input:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/48#input.applicant_is_not_a_pensioner: true
+    ? uk:regulations/uksi/2012/2886/schedule/paragraph/48#input.applicant_income_consists_of_earnings_from_employment_as_self_employed_earner
+    : true
+    ? uk:regulations/uksi/2012/2886/schedule/paragraph/48#input.estimation_period_is_appropriate_for_accurate_average_weekly_earnings
+    : true
+    uk:regulations/uksi/2012/2886/schedule/paragraph/48#input.estimation_period_does_not_exceed_one_year: true
+    ? uk:regulations/uksi/2012/2886/schedule/paragraph/48#input.applicant_earnings_are_calculated_in_accordance_with_paragraphs_53_61_and_62
+    : true
+  output:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/48#self_employed_average_weekly_earnings_estimation_applies: holds
+    uk:regulations/uksi/2012/2886/schedule/paragraph/48#self_employed_average_weekly_earnings_estimation_requirement_satisfied: holds
+- name: requirement is inapplicable to a pensioner
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2024-01-01'
+    end: '2024-01-07'
+  input:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/48#input.applicant_is_not_a_pensioner: false
+    ? uk:regulations/uksi/2012/2886/schedule/paragraph/48#input.applicant_income_consists_of_earnings_from_employment_as_self_employed_earner
+    : true
+    ? uk:regulations/uksi/2012/2886/schedule/paragraph/48#input.estimation_period_is_appropriate_for_accurate_average_weekly_earnings
+    : false
+    uk:regulations/uksi/2012/2886/schedule/paragraph/48#input.estimation_period_does_not_exceed_one_year: false
+    ? uk:regulations/uksi/2012/2886/schedule/paragraph/48#input.applicant_earnings_are_calculated_in_accordance_with_paragraphs_53_61_and_62
+    : false
+  output:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/48#self_employed_average_weekly_earnings_estimation_applies: not_holds
+    uk:regulations/uksi/2012/2886/schedule/paragraph/48#self_employed_average_weekly_earnings_estimation_requirement_satisfied: holds
+- name: applicable estimation uses an inaccurate period
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2024-01-01'
+    end: '2024-01-07'
+  input:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/48#input.applicant_is_not_a_pensioner: true
+    ? uk:regulations/uksi/2012/2886/schedule/paragraph/48#input.applicant_income_consists_of_earnings_from_employment_as_self_employed_earner
+    : true
+    ? uk:regulations/uksi/2012/2886/schedule/paragraph/48#input.estimation_period_is_appropriate_for_accurate_average_weekly_earnings
+    : false
+    uk:regulations/uksi/2012/2886/schedule/paragraph/48#input.estimation_period_does_not_exceed_one_year: true
+    ? uk:regulations/uksi/2012/2886/schedule/paragraph/48#input.applicant_earnings_are_calculated_in_accordance_with_paragraphs_53_61_and_62
+    : true
+  output:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/48#self_employed_average_weekly_earnings_estimation_applies: holds
+    uk:regulations/uksi/2012/2886/schedule/paragraph/48#self_employed_average_weekly_earnings_estimation_requirement_satisfied: not_holds
+- name: applicable estimation period exceeds one year
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2024-01-01'
+    end: '2024-01-07'
+  input:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/48#input.applicant_is_not_a_pensioner: true
+    ? uk:regulations/uksi/2012/2886/schedule/paragraph/48#input.applicant_income_consists_of_earnings_from_employment_as_self_employed_earner
+    : true
+    ? uk:regulations/uksi/2012/2886/schedule/paragraph/48#input.estimation_period_is_appropriate_for_accurate_average_weekly_earnings
+    : true
+    uk:regulations/uksi/2012/2886/schedule/paragraph/48#input.estimation_period_does_not_exceed_one_year: false
+    ? uk:regulations/uksi/2012/2886/schedule/paragraph/48#input.applicant_earnings_are_calculated_in_accordance_with_paragraphs_53_61_and_62
+    : true
+  output:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/48#self_employed_average_weekly_earnings_estimation_applies: holds
+    uk:regulations/uksi/2012/2886/schedule/paragraph/48#self_employed_average_weekly_earnings_estimation_requirement_satisfied: not_holds
+- name: applicable estimation does not use earnings calculated under cited paragraphs
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2024-01-01'
+    end: '2024-01-07'
+  input:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/48#input.applicant_is_not_a_pensioner: true
+    ? uk:regulations/uksi/2012/2886/schedule/paragraph/48#input.applicant_income_consists_of_earnings_from_employment_as_self_employed_earner
+    : true
+    ? uk:regulations/uksi/2012/2886/schedule/paragraph/48#input.estimation_period_is_appropriate_for_accurate_average_weekly_earnings
+    : true
+    uk:regulations/uksi/2012/2886/schedule/paragraph/48#input.estimation_period_does_not_exceed_one_year: true
+    ? uk:regulations/uksi/2012/2886/schedule/paragraph/48#input.applicant_earnings_are_calculated_in_accordance_with_paragraphs_53_61_and_62
+    : false
+  output:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/48#self_employed_average_weekly_earnings_estimation_applies: holds
+    uk:regulations/uksi/2012/2886/schedule/paragraph/48#self_employed_average_weekly_earnings_estimation_requirement_satisfied: not_holds

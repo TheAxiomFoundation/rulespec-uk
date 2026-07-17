@@ -1,0 +1,19 @@
+format: rulespec/v1
+module:
+  status: deferred
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2012/2886/schedule/paragraph/31
+  summary: |-
+    The alternative maximum council tax reduction is the amount determined under Schedule 4, divided by the number of jointly and severally liable persons, except where the applicant is liable only with a partner solely by virtue of section 9 of the 1992 Act.
+  deferred_outputs:
+    - output: uk:regulations/uksi/2012/2886/schedule/paragraph/31#alternative_maximum_council_tax_reduction
+      reason: >-
+        The amount must be determined in accordance with Schedule 4 and depends
+        on fulfillment of the conditions in paragraph 15 or 18. No copied
+        RuleSpec context supplies those referenced computations, so the final
+        amount, including the joint-liability division and partner-only
+        exception, cannot be encoded faithfully without inventing upstream
+        numeric or eligibility inputs.
+rules: []

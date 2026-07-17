@@ -1,0 +1,154 @@
+- name: listed_employment_with_listed_employed_partner
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2026-01-05'
+    end: '2026-01-11'
+  input:
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#input.applicant_has_earnings_from_listed_employment: true
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#input.paragraph_4_applies_to_applicant: false
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#input.paragraph_6_applies_to_applicant: false
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#input.paragraph_7_applies_to_applicant: false
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#input.paragraph_9_applies_to_applicant: false
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#input.applicant_listed_employment_earnings: 12
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#input.applicant_has_partner: true
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#input.partner_has_listed_employment: true
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#input.partner_has_other_employment: false
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#input.partner_listed_employment_earnings: 15
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#input.partner_other_employment_earnings: 0
+  output:
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#listed_employment_earnings_disregard_applies: holds
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#applicant_listed_employment_earnings_disregard: 12
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#partner_earnings_disregard_under_paragraph_9: 8
+- name: paragraph_4_displaces_disregard
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2026-01-05'
+    end: '2026-01-11'
+  input:
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#input.applicant_has_earnings_from_listed_employment: true
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#input.paragraph_4_applies_to_applicant: true
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#input.paragraph_6_applies_to_applicant: false
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#input.paragraph_7_applies_to_applicant: false
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#input.paragraph_9_applies_to_applicant: false
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#input.applicant_listed_employment_earnings: 12
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#input.applicant_has_partner: true
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#input.partner_has_listed_employment: true
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#input.partner_has_other_employment: false
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#input.partner_listed_employment_earnings: 15
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#input.partner_other_employment_earnings: 0
+  output:
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#listed_employment_earnings_disregard_applies: not_holds
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#applicant_listed_employment_earnings_disregard: 0
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#partner_earnings_disregard_under_paragraph_9: 0
+- name: paragraph_6_displaces_disregard
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2026-01-05'
+    end: '2026-01-11'
+  input:
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#input.applicant_has_earnings_from_listed_employment: true
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#input.paragraph_4_applies_to_applicant: false
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#input.paragraph_6_applies_to_applicant: true
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#input.paragraph_7_applies_to_applicant: false
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#input.paragraph_9_applies_to_applicant: false
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#input.applicant_listed_employment_earnings: 12
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#input.applicant_has_partner: true
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#input.partner_has_listed_employment: true
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#input.partner_has_other_employment: false
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#input.partner_listed_employment_earnings: 15
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#input.partner_other_employment_earnings: 0
+  output:
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#listed_employment_earnings_disregard_applies: not_holds
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#applicant_listed_employment_earnings_disregard: 0
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#partner_earnings_disregard_under_paragraph_9: 0
+- name: paragraph_7_displaces_disregard
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2026-01-05'
+    end: '2026-01-11'
+  input:
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#input.applicant_has_earnings_from_listed_employment: true
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#input.paragraph_4_applies_to_applicant: false
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#input.paragraph_6_applies_to_applicant: false
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#input.paragraph_7_applies_to_applicant: true
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#input.paragraph_9_applies_to_applicant: false
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#input.applicant_listed_employment_earnings: 12
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#input.applicant_has_partner: true
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#input.partner_has_listed_employment: true
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#input.partner_has_other_employment: false
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#input.partner_listed_employment_earnings: 15
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#input.partner_other_employment_earnings: 0
+  output:
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#listed_employment_earnings_disregard_applies: not_holds
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#applicant_listed_employment_earnings_disregard: 0
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#partner_earnings_disregard_under_paragraph_9: 0
+- name: paragraph_9_displaces_disregard
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2026-01-05'
+    end: '2026-01-11'
+  input:
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#input.applicant_has_earnings_from_listed_employment: true
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#input.paragraph_4_applies_to_applicant: false
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#input.paragraph_6_applies_to_applicant: false
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#input.paragraph_7_applies_to_applicant: false
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#input.paragraph_9_applies_to_applicant: true
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#input.applicant_listed_employment_earnings: 12
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#input.applicant_has_partner: true
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#input.partner_has_listed_employment: true
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#input.partner_has_other_employment: false
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#input.partner_listed_employment_earnings: 15
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#input.partner_other_employment_earnings: 0
+  output:
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#listed_employment_earnings_disregard_applies: not_holds
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#applicant_listed_employment_earnings_disregard: 0
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#partner_earnings_disregard_under_paragraph_9: 0
+- name: non_listed_employment_does_not_qualify
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2026-01-05'
+    end: '2026-01-11'
+  input:
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#input.applicant_has_earnings_from_listed_employment: false
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#input.paragraph_4_applies_to_applicant: false
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#input.paragraph_6_applies_to_applicant: false
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#input.paragraph_7_applies_to_applicant: false
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#input.paragraph_9_applies_to_applicant: false
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#input.applicant_listed_employment_earnings: 12
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#input.applicant_has_partner: true
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#input.partner_has_listed_employment: true
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#input.partner_has_other_employment: false
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#input.partner_listed_employment_earnings: 15
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#input.partner_other_employment_earnings: 0
+  output:
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#listed_employment_earnings_disregard_applies: not_holds
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#applicant_listed_employment_earnings_disregard: 0
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#partner_earnings_disregard_under_paragraph_9: 0
+- name: partner_other_employment_is_limited_to_ten_pounds
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2026-01-05'
+    end: '2026-01-11'
+  input:
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#input.applicant_has_earnings_from_listed_employment: true
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#input.paragraph_4_applies_to_applicant: false
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#input.paragraph_6_applies_to_applicant: false
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#input.paragraph_7_applies_to_applicant: false
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#input.paragraph_9_applies_to_applicant: false
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#input.applicant_listed_employment_earnings: 5
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#input.applicant_has_partner: true
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#input.partner_has_listed_employment: false
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#input.partner_has_other_employment: true
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#input.partner_listed_employment_earnings: 0
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#input.partner_other_employment_earnings: 18
+  output:
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#listed_employment_earnings_disregard_applies: holds
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#applicant_listed_employment_earnings_disregard: 5
+    uk:regulations/uksi/2012/2886/appendix/7/paragraph/9#partner_earnings_disregard_under_paragraph_9: 10

@@ -1,0 +1,27 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2012/2886/appendix/3/paragraph/23
+  summary: |-
+    The amount of the work-related activity component is £28.45.
+rules:
+  - name: work_related_activity_component_amount
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    period: Week
+    source: uksi/2012/2886, Appendix 3, paragraph 23
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/appendix/3/paragraph/23
+              excerpt: "The amount of the work-related activity component is £28.45."
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          28.45

@@ -1,0 +1,179 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2012/2886/schedule/paragraph/47
+  summary: |-
+    “5 weeks, if he is paid weekly”; “2 months, if he is paid monthly”; and where earnings change, the likely-earnings reference period “must not in any case exceed 52 weeks”.
+rules:
+  - name: weekly_payment_reference_period_weeks
+    kind: parameter
+    dtype: Count
+    source: U.K. S.I. 2012/2886, Schedule, paragraph 47(1)(a)(i)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/schedule/paragraph/47
+              excerpt: "5 weeks, if he is paid weekly"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          5
+
+  - name: monthly_payment_reference_period_months
+    kind: parameter
+    dtype: Count
+    source: U.K. S.I. 2012/2886, Schedule, paragraph 47(1)(a)(ii)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/schedule/paragraph/47
+              excerpt: "2 months, if he is paid monthly"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          2
+
+  - name: maximum_likely_earnings_reference_period_weeks
+    kind: parameter
+    dtype: Count
+    source: U.K. S.I. 2012/2886, Schedule, paragraph 47(3)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/schedule/paragraph/47
+              excerpt: "must not in any case exceed 52 weeks"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          52
+
+  - name: weekly_payment_reference_period_requirement_is_met
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Week
+    source: U.K. S.I. 2012/2886, Schedule, paragraph 47(1)(a)(i)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/schedule/paragraph/47
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          applicant_is_not_a_pensioner
+          and applicant_income_consists_of_employed_earner_earnings
+          and applicant_is_paid_weekly
+          and reference_period_immediately_precedes_reduction_week
+          and reference_period_length_in_weeks == weekly_payment_reference_period_weeks
+
+  - name: monthly_payment_reference_period_requirement_is_met
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Week
+    source: U.K. S.I. 2012/2886, Schedule, paragraph 47(1)(a)(ii)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/schedule/paragraph/47
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          applicant_is_not_a_pensioner
+          and applicant_income_consists_of_employed_earner_earnings
+          and applicant_is_paid_monthly
+          and reference_period_immediately_precedes_reduction_week
+          and reference_period_length_in_months == monthly_payment_reference_period_months
+
+  - name: fluctuating_earnings_alternative_reference_period_requirement_is_met
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Week
+    source: U.K. S.I. 2012/2886, Schedule, paragraph 47(1)(b)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/schedule/paragraph/47
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          applicant_is_not_a_pensioner
+          and applicant_income_consists_of_employed_earner_earnings
+          and applicant_earnings_fluctuate
+          and alternative_reference_period_precedes_reduction_week
+          and alternative_reference_period_enables_more_accurate_estimate
+
+  - name: short_employment_average_earnings_estimation_requirement_is_met
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Week
+    source: U.K. S.I. 2012/2886, Schedule, paragraph 47(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/schedule/paragraph/47
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          not employment_has_lasted_less_than_applicable_reference_period
+          or (
+            applicant_has_received_earnings_in_employment
+            and received_earnings_are_likely_to_represent_average_weekly_earnings
+            and average_weekly_earnings_are_estimated_by_reference_to_received_earnings
+          )
+          or (
+            not applicant_has_received_earnings_in_employment
+            and authority_estimates_average_weekly_earnings
+          )
+          or (
+            not received_earnings_are_likely_to_represent_average_weekly_earnings
+            and authority_estimates_average_weekly_earnings
+          )
+
+  - name: changed_earnings_likely_earnings_estimation_requirement_is_met
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Week
+    source: U.K. S.I. 2012/2886, Schedule, paragraph 47(3)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/schedule/paragraph/47
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          not applicant_earnings_amount_has_changed
+          or (
+            average_weekly_earnings_are_estimated_by_reference_to_likely_earnings
+            and likely_earnings_reference_period_is_appropriate_for_accurate_estimation
+            and likely_earnings_reference_period_length_in_weeks <= maximum_likely_earnings_reference_period_weeks
+          )

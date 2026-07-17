@@ -1,0 +1,81 @@
+- name: weekly_payment_uses_five_week_reference_period
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2024-01-01'
+    end: '2024-01-07'
+  input:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/47#input.applicant_is_not_a_pensioner: true
+    uk:regulations/uksi/2012/2886/schedule/paragraph/47#input.applicant_income_consists_of_employed_earner_earnings: true
+    uk:regulations/uksi/2012/2886/schedule/paragraph/47#input.applicant_is_paid_weekly: true
+    uk:regulations/uksi/2012/2886/schedule/paragraph/47#input.reference_period_immediately_precedes_reduction_week: true
+    uk:regulations/uksi/2012/2886/schedule/paragraph/47#input.reference_period_length_in_weeks: 5
+  output:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/47#weekly_payment_reference_period_requirement_is_met: holds
+- name: monthly_payment_uses_two_month_reference_period
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2024-01-01'
+    end: '2024-01-07'
+  input:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/47#input.applicant_is_not_a_pensioner: true
+    uk:regulations/uksi/2012/2886/schedule/paragraph/47#input.applicant_income_consists_of_employed_earner_earnings: true
+    uk:regulations/uksi/2012/2886/schedule/paragraph/47#input.applicant_is_paid_monthly: true
+    uk:regulations/uksi/2012/2886/schedule/paragraph/47#input.reference_period_immediately_precedes_reduction_week: true
+    uk:regulations/uksi/2012/2886/schedule/paragraph/47#input.reference_period_length_in_months: 2
+  output:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/47#monthly_payment_reference_period_requirement_is_met: holds
+- name: fluctuating_earnings_use_more_accurate_alternative_period
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2024-01-01'
+    end: '2024-01-07'
+  input:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/47#input.applicant_is_not_a_pensioner: true
+    uk:regulations/uksi/2012/2886/schedule/paragraph/47#input.applicant_income_consists_of_employed_earner_earnings: true
+    uk:regulations/uksi/2012/2886/schedule/paragraph/47#input.applicant_earnings_fluctuate: true
+    uk:regulations/uksi/2012/2886/schedule/paragraph/47#input.alternative_reference_period_precedes_reduction_week: true
+    uk:regulations/uksi/2012/2886/schedule/paragraph/47#input.alternative_reference_period_enables_more_accurate_estimate: true
+  output:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/47#fluctuating_earnings_alternative_reference_period_requirement_is_met: holds
+- name: short_employment_representative_earnings_are_used
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2024-01-01'
+    end: '2024-01-07'
+  input:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/47#input.employment_has_lasted_less_than_applicable_reference_period: true
+    uk:regulations/uksi/2012/2886/schedule/paragraph/47#input.applicant_has_received_earnings_in_employment: true
+    ? uk:regulations/uksi/2012/2886/schedule/paragraph/47#input.received_earnings_are_likely_to_represent_average_weekly_earnings
+    : true
+    ? uk:regulations/uksi/2012/2886/schedule/paragraph/47#input.average_weekly_earnings_are_estimated_by_reference_to_received_earnings
+    : true
+    uk:regulations/uksi/2012/2886/schedule/paragraph/47#input.authority_estimates_average_weekly_earnings: false
+  output:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/47#short_employment_average_earnings_estimation_requirement_is_met: holds
+- name: changed_earnings_are_estimated_from_likely_earnings_within_limit
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2024-01-01'
+    end: '2024-01-07'
+  input:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/47#input.employment_has_lasted_less_than_applicable_reference_period: true
+    uk:regulations/uksi/2012/2886/schedule/paragraph/47#input.applicant_has_received_earnings_in_employment: false
+    ? uk:regulations/uksi/2012/2886/schedule/paragraph/47#input.received_earnings_are_likely_to_represent_average_weekly_earnings
+    : false
+    ? uk:regulations/uksi/2012/2886/schedule/paragraph/47#input.average_weekly_earnings_are_estimated_by_reference_to_received_earnings
+    : false
+    uk:regulations/uksi/2012/2886/schedule/paragraph/47#input.authority_estimates_average_weekly_earnings: true
+    uk:regulations/uksi/2012/2886/schedule/paragraph/47#input.applicant_earnings_amount_has_changed: true
+    ? uk:regulations/uksi/2012/2886/schedule/paragraph/47#input.average_weekly_earnings_are_estimated_by_reference_to_likely_earnings
+    : true
+    ? uk:regulations/uksi/2012/2886/schedule/paragraph/47#input.likely_earnings_reference_period_is_appropriate_for_accurate_estimation
+    : true
+    uk:regulations/uksi/2012/2886/schedule/paragraph/47#input.likely_earnings_reference_period_length_in_weeks: 52
+  output:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/47#short_employment_average_earnings_estimation_requirement_is_met: holds
+    uk:regulations/uksi/2012/2886/schedule/paragraph/47#changed_earnings_likely_earnings_estimation_requirement_is_met: holds

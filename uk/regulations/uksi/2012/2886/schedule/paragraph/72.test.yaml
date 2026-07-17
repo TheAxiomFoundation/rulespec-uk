@@ -1,0 +1,44 @@
+- name: capital at threshold produces no treated weekly income
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2024-01-01'
+    end: '2024-01-07'
+  input:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/72#input.applicant_is_a_pensioner: false
+    uk:regulations/uksi/2012/2886/schedule/paragraph/72#input.capital_calculated_in_accordance_with_this_part: 6000
+  output:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/72#weekly_income_treated_as_from_non_pensioner_capital: 0
+- name: incomplete capital band is counted as a complete tariff band
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2024-01-01'
+    end: '2024-01-07'
+  input:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/72#input.applicant_is_a_pensioner: false
+    uk:regulations/uksi/2012/2886/schedule/paragraph/72#input.capital_calculated_in_accordance_with_this_part: 6751
+  output:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/72#weekly_income_treated_as_from_non_pensioner_capital: 4
+- name: capital counted for tariff income is limited to sixteen thousand pounds
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2024-01-01'
+    end: '2024-01-07'
+  input:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/72#input.applicant_is_a_pensioner: false
+    uk:regulations/uksi/2012/2886/schedule/paragraph/72#input.capital_calculated_in_accordance_with_this_part: 17000
+  output:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/72#weekly_income_treated_as_from_non_pensioner_capital: 40
+- name: pensioner capital is outside this paragraph
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2024-01-01'
+    end: '2024-01-07'
+  input:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/72#input.applicant_is_a_pensioner: true
+    uk:regulations/uksi/2012/2886/schedule/paragraph/72#input.capital_calculated_in_accordance_with_this_part: 6751
+  output:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/72#weekly_income_treated_as_from_non_pensioner_capital: 0

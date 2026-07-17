@@ -1,0 +1,92 @@
+- name: class_a_receives_maximum_reduction
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-07'
+    end: '2024-01-07'
+  input:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/32#input.person_is_within_class_a: true
+    uk:regulations/uksi/2012/2886/schedule/paragraph/32#input.person_is_within_class_c: false
+    uk:regulations/uksi/2012/2886/schedule/paragraph/32#input.person_is_within_class_f: false
+    uk:regulations/uksi/2012/2886/schedule/paragraph/32#input.maximum_council_tax_reduction_in_respect_of_day: 100
+    uk:regulations/uksi/2012/2886/schedule/paragraph/32#input.alternative_maximum_council_tax_reduction_in_respect_of_day: 70
+    uk:regulations/uksi/2012/2886/schedule/paragraph/16#input.person_is_a_pensioner: true
+    uk:regulations/uksi/2012/2886/schedule/paragraph/16#input.person_is_liable_to_pay_council_tax_for_resident_dwelling: true
+    ? uk:regulations/uksi/2012/2886/schedule/paragraph/16#input.person_is_not_absent_from_dwelling_throughout_day_subject_to_paragraph_19
+    : true
+    uk:regulations/uksi/2012/2886/schedule/paragraph/16#input.maximum_council_tax_reduction_amount_can_be_calculated: true
+    uk:regulations/uksi/2012/2886/schedule/paragraph/16#input.person_falls_within_class_not_entitled_to_reduction: false
+    uk:regulations/uksi/2012/2886/schedule/paragraph/16#input.income_for_relevant_week_is_less_than_applicable_amount: true
+    uk:regulations/uksi/2012/2886/schedule/paragraph/16#input.person_has_made_application: true
+  output:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/32#reduction_amount_for_class_a_or_d: 100
+    uk:regulations/uksi/2012/2886/schedule/paragraph/32#alternative_reduction_amount_for_class_c_or_f: 0
+- name: class_d_receives_maximum_reduction
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-07'
+    end: '2024-01-07'
+  input:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/32#input.person_is_within_class_a: false
+    uk:regulations/uksi/2012/2886/schedule/paragraph/32#input.person_is_within_class_c: false
+    uk:regulations/uksi/2012/2886/schedule/paragraph/32#input.person_is_within_class_f: false
+    uk:regulations/uksi/2012/2886/schedule/paragraph/32#input.maximum_council_tax_reduction_in_respect_of_day: 100
+    uk:regulations/uksi/2012/2886/schedule/paragraph/32#input.alternative_maximum_council_tax_reduction_in_respect_of_day: 70
+    uk:regulations/uksi/2012/2886/schedule/paragraph/16#input.person_is_a_pensioner: false
+    uk:regulations/uksi/2012/2886/schedule/paragraph/16#input.person_is_liable_to_pay_council_tax_for_resident_dwelling: true
+    ? uk:regulations/uksi/2012/2886/schedule/paragraph/16#input.person_is_not_absent_from_dwelling_throughout_day_subject_to_paragraph_19
+    : true
+    uk:regulations/uksi/2012/2886/schedule/paragraph/16#input.maximum_council_tax_reduction_amount_can_be_calculated: true
+    uk:regulations/uksi/2012/2886/schedule/paragraph/16#input.person_falls_within_class_not_entitled_to_reduction: false
+    uk:regulations/uksi/2012/2886/schedule/paragraph/16#input.income_for_relevant_week_is_less_than_applicable_amount: true
+    uk:regulations/uksi/2012/2886/schedule/paragraph/16#input.person_has_made_application: true
+  output:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/32#reduction_amount_for_class_a_or_d: 100
+    uk:regulations/uksi/2012/2886/schedule/paragraph/32#alternative_reduction_amount_for_class_c_or_f: 0
+- name: class_c_receives_alternative_maximum_reduction
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-07'
+    end: '2024-01-07'
+  input:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/32#input.person_is_within_class_a: false
+    uk:regulations/uksi/2012/2886/schedule/paragraph/32#input.person_is_within_class_c: true
+    uk:regulations/uksi/2012/2886/schedule/paragraph/32#input.person_is_within_class_f: false
+    uk:regulations/uksi/2012/2886/schedule/paragraph/32#input.maximum_council_tax_reduction_in_respect_of_day: 100
+    uk:regulations/uksi/2012/2886/schedule/paragraph/32#input.alternative_maximum_council_tax_reduction_in_respect_of_day: 70
+    uk:regulations/uksi/2012/2886/schedule/paragraph/16#input.person_is_a_pensioner: true
+    uk:regulations/uksi/2012/2886/schedule/paragraph/16#input.person_is_liable_to_pay_council_tax_for_resident_dwelling: true
+    ? uk:regulations/uksi/2012/2886/schedule/paragraph/16#input.person_is_not_absent_from_dwelling_throughout_day_subject_to_paragraph_19
+    : true
+    uk:regulations/uksi/2012/2886/schedule/paragraph/16#input.maximum_council_tax_reduction_amount_can_be_calculated: true
+    uk:regulations/uksi/2012/2886/schedule/paragraph/16#input.person_falls_within_class_not_entitled_to_reduction: false
+    uk:regulations/uksi/2012/2886/schedule/paragraph/16#input.income_for_relevant_week_is_less_than_applicable_amount: true
+    uk:regulations/uksi/2012/2886/schedule/paragraph/16#input.person_has_made_application: true
+  output:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/32#reduction_amount_for_class_a_or_d: 0
+    uk:regulations/uksi/2012/2886/schedule/paragraph/32#alternative_reduction_amount_for_class_c_or_f: 70
+- name: class_f_receives_alternative_maximum_reduction
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-07'
+    end: '2024-01-07'
+  input:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/32#input.person_is_within_class_a: false
+    uk:regulations/uksi/2012/2886/schedule/paragraph/32#input.person_is_within_class_c: false
+    uk:regulations/uksi/2012/2886/schedule/paragraph/32#input.person_is_within_class_f: true
+    uk:regulations/uksi/2012/2886/schedule/paragraph/32#input.maximum_council_tax_reduction_in_respect_of_day: 100
+    uk:regulations/uksi/2012/2886/schedule/paragraph/32#input.alternative_maximum_council_tax_reduction_in_respect_of_day: 70
+    uk:regulations/uksi/2012/2886/schedule/paragraph/16#input.person_is_a_pensioner: true
+    uk:regulations/uksi/2012/2886/schedule/paragraph/16#input.person_is_liable_to_pay_council_tax_for_resident_dwelling: true
+    ? uk:regulations/uksi/2012/2886/schedule/paragraph/16#input.person_is_not_absent_from_dwelling_throughout_day_subject_to_paragraph_19
+    : true
+    uk:regulations/uksi/2012/2886/schedule/paragraph/16#input.maximum_council_tax_reduction_amount_can_be_calculated: true
+    uk:regulations/uksi/2012/2886/schedule/paragraph/16#input.person_falls_within_class_not_entitled_to_reduction: false
+    uk:regulations/uksi/2012/2886/schedule/paragraph/16#input.income_for_relevant_week_is_less_than_applicable_amount: true
+    uk:regulations/uksi/2012/2886/schedule/paragraph/16#input.person_has_made_application: true
+  output:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/32#reduction_amount_for_class_a_or_d: 0
+    uk:regulations/uksi/2012/2886/schedule/paragraph/32#alternative_reduction_amount_for_class_c_or_f: 70

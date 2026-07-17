@@ -1,0 +1,50 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2012/2886/schedule/paragraph/48
+  summary: |-
+    Where a non-pensioner applicant’s income consists of earnings from employment as a self-employed earner, average weekly earnings must be estimated over an appropriate period that permits accurate estimation and does not exceed a year. Earnings must be calculated in accordance with paragraphs 53, 61 and 62.
+rules:
+  - name: self_employed_average_weekly_earnings_estimation_applies
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Week
+    source: Schedule, paragraph 48, first sentence
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/schedule/paragraph/48
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          applicant_is_not_a_pensioner
+          and applicant_income_consists_of_earnings_from_employment_as_self_employed_earner
+
+  - name: self_employed_average_weekly_earnings_estimation_requirement_satisfied
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Week
+    source: Schedule, paragraph 48
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/schedule/paragraph/48
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          not self_employed_average_weekly_earnings_estimation_applies
+          or (
+            estimation_period_is_appropriate_for_accurate_average_weekly_earnings
+            and estimation_period_does_not_exceed_one_year
+            and applicant_earnings_are_calculated_in_accordance_with_paragraphs_53_61_and_62
+          )

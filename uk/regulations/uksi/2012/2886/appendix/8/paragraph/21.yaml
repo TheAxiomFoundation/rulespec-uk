@@ -1,0 +1,31 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2012/2886/appendix/8/paragraph/21
+  summary: |-
+    “Subject to paragraph 40, £15” of widowed mother’s allowance and widowed parent’s allowance.
+  deferred_outputs:
+    - output: uk:regulations/uksi/2012/2886/appendix/8/paragraph/21#widowed_allowance_income_disregard
+      reason: Paragraph 40 is an operative “Subject to” limitation, but its executable RuleSpec output was not supplied in copied context.
+      source_values:
+        - uk:regulations/uksi/2012/2886/appendix/8/paragraph/21#widowed_allowance_disregard_cap
+rules:
+  - name: widowed_allowance_disregard_cap
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: U.K. SI 2012/2886, Sch. 8, para. 21
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/appendix/8/paragraph/21
+              excerpt: "£15 of any"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          15

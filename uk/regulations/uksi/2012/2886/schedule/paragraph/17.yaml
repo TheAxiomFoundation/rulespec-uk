@@ -1,0 +1,50 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2012/2886/schedule/paragraph/17
+  summary: |-
+    “On any day class E consists of any person who is not a pensioner” and satisfies the listed council-tax, residence, reduction, income, amount-A-exceeds-amount-B, and application conditions.
+rules:
+  - name: income_excess_reduction_percentage
+    kind: parameter
+    dtype: Rate
+    source: U.K. S.I. 2012/2886, Schedule, paragraph 17
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/schedule/paragraph/17
+              excerpt: "2 6/7 per cent"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          0.02857142857142857
+
+  - name: person_is_in_class_e
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Day
+    source: U.K. S.I. 2012/2886, Schedule, paragraph 17
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/schedule/paragraph/17
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          not person_is_a_pensioner
+          and person_is_liable_to_pay_council_tax_for_resident_dwelling
+          and person_is_not_absent_from_dwelling_throughout_day_subject_to_paragraph_19
+          and maximum_council_tax_reduction_amount_can_be_calculated
+          and not person_falls_within_class_not_entitled_to_reduction
+          and income_for_relevant_week > applicable_amount
+          and maximum_council_tax_reduction > income_excess_reduction_percentage * (income_for_relevant_week - applicable_amount)
+          and person_has_made_application

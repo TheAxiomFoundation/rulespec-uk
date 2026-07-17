@@ -1,0 +1,31 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2012/2886/appendix/8/paragraph/20
+  summary: |-
+    “Subject to paragraph 40, £10 of” specified war pensions, analogous foreign pensions, and National Socialist persecution pensions is disregarded.
+  deferred_outputs:
+    - output: uk:regulations/uksi/2012/2886/appendix/8/paragraph/20#specified_pension_income_disregard
+      reason: Paragraph 40 is an operative “Subject to” limitation, but its executable RuleSpec output was not supplied in copied context.
+      source_values:
+        - uk:regulations/uksi/2012/2886/appendix/8/paragraph/20#specified_pension_disregard_cap
+rules:
+  - name: specified_pension_disregard_cap
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: U.K. SI 2012/2886, Sch. 8, para. 20
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/appendix/8/paragraph/20
+              excerpt: "£10 of any of the following"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          10

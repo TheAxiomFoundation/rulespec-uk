@@ -1,0 +1,51 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2012/2886/appendix/3/paragraph/24
+  summary: |-
+    The amount of the support component is £34.80.
+rules:
+  - name: support_component_amount
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: U.K. S.I. 2012/2886, Appendix 3, paragraph 24
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/appendix/3/paragraph/24
+              excerpt: "The amount of the support component is £34.80."
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          34.80
+  - name: support_component_payable_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: U.K. S.I. 2012/2886, Appendix 3, paragraph 24
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/appendix/3/paragraph/24
+              excerpt: "The amount of the support component is £34.80."
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk:regulations/uksi/2012/2886/appendix/3/paragraph/24#support_component_amount
+              output: support_component_amount
+              hash: sha256:local
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          support_component_amount

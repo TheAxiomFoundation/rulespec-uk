@@ -1,0 +1,43 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2012/2886/schedule/paragraph/12
+  summary: |-
+    The classes of person described in paragraphs 13 to 18 are entitled to a reduction under this scheme. References to the applicant’s income or capital include estimated income or capital where it cannot accurately be determined.
+rules:
+  - name: reduction_entitlement_for_person_described_in_paragraphs_13_to_18
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Month
+    source: UK SI 2012/2886, Schedule, paragraph 12
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/schedule/paragraph/12
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          person_is_described_in_paragraphs_13_to_18
+  - name: estimated_income_or_capital_is_included_for_applicant
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Month
+    source: UK SI 2012/2886, Schedule, paragraph 12
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/schedule/paragraph/12
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          applicant_income_or_capital_cannot_be_accurately_determined

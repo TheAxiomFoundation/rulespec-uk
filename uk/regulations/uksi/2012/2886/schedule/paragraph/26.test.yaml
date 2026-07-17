@@ -1,0 +1,36 @@
+- name: patient_receiving_free_in_patient_treatment
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2024-01-01'
+    end: '2024-01-07'
+  input:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/26#input.person_is_regarded_as_receiving_free_in_patient_treatment: true
+    ? uk:regulations/uksi/2012/2886/schedule/paragraph/26#input.person_is_serving_sentence_of_imprisonment_or_detained_in_youth_custody_institution
+    : false
+  output:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/26#patient: holds
+- name: imprisoned_person_is_not_patient
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2024-01-01'
+    end: '2024-01-07'
+  input:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/26#input.person_is_regarded_as_receiving_free_in_patient_treatment: true
+    ? uk:regulations/uksi/2012/2886/schedule/paragraph/26#input.person_is_serving_sentence_of_imprisonment_or_detained_in_youth_custody_institution
+    : true
+  output:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/26#patient: not_holds
+- name: person_not_receiving_free_in_patient_treatment_is_not_patient
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2024-01-01'
+    end: '2024-01-07'
+  input:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/26#input.person_is_regarded_as_receiving_free_in_patient_treatment: false
+    ? uk:regulations/uksi/2012/2886/schedule/paragraph/26#input.person_is_serving_sentence_of_imprisonment_or_detained_in_youth_custody_institution
+    : false
+  output:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/26#patient: not_holds

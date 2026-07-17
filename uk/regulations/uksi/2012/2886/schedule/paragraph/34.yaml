@@ -1,0 +1,117 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2012/2886/schedule/paragraph/34
+  summary: "Where the authority considers that an applicant and non-dependant arranged\
+    \ to take advantage of the scheme, and the non-dependant has more income and capital,\
+    \ the applicant must generally be treated as possessing the non-dependant\u2019\
+    s income and capital while the applicant\u2019s own income and capital are disregarded.\
+    \ This does not apply to specified pensioners on guarantee credit or non-pensioners\
+    \ receiving specified income-related benefits."
+rules:
+- name: pensioner_guarantee_credit_exception_applies
+  kind: derived
+  entity: Person
+  dtype: Judgment
+  source: Schedule, paragraph 34
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: exception
+        source:
+          corpus_citation_path: uk/regulation/uksi/2012/2886/schedule/paragraph/34
+  versions:
+  - effective_from: '0001-01-01'
+    formula: 'applicant_is_pensioner
+
+      and applicant_is_on_guarantee_credit'
+- name: non_pensioner_income_related_benefit_exception_applies
+  kind: derived
+  entity: Person
+  dtype: Judgment
+  source: Schedule, paragraph 34
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: exception
+        source:
+          corpus_citation_path: uk/regulation/uksi/2012/2886/schedule/paragraph/34
+  versions:
+  - effective_from: '0001-01-01'
+    formula: "not applicant_is_pensioner\nand (\n  applicant_is_on_income_support\n\
+      \  or applicant_is_on_income_based_jobseekers_allowance\n  or applicant_is_on_income_related_employment_and_support_allowance\n\
+      )"
+- name: non_dependant_arrangements_deeming_applies
+  kind: derived
+  entity: Person
+  dtype: Judgment
+  source: Schedule, paragraph 34
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: predicate
+        source:
+          corpus_citation_path: uk/regulation/uksi/2012/2886/schedule/paragraph/34
+  versions:
+  - effective_from: '0001-01-01'
+    formula: 'authority_considers_arrangements_were_entered_into_to_take_advantage_of_scheme
+
+      and non_dependant_has_more_income_and_capital_than_applicant
+
+      and not pensioner_guarantee_credit_exception_applies
+
+      and not non_pensioner_income_related_benefit_exception_applies'
+- name: non_dependant_income_treated_as_possessed_by_applicant
+  kind: derived
+  entity: Person
+  dtype: Money
+  unit: GBP
+  source: Schedule, paragraph 34
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: uk/regulation/uksi/2012/2886/schedule/paragraph/34
+  versions:
+  - effective_from: '0001-01-01'
+    formula: 'if non_dependant_arrangements_deeming_applies: non_dependant_income_calculated_as_for_applicant_under_following_provisions_of_this_part
+      else: 0'
+- name: non_dependant_capital_treated_as_possessed_by_applicant
+  kind: derived
+  entity: Person
+  dtype: Money
+  unit: GBP
+  source: Schedule, paragraph 34
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: uk/regulation/uksi/2012/2886/schedule/paragraph/34
+  versions:
+  - effective_from: '0001-01-01'
+    formula: 'if non_dependant_arrangements_deeming_applies: non_dependant_capital_calculated_as_for_applicant_under_following_provisions_of_this_part
+      else: 0'
+- name: applicant_own_income_and_capital_disregarded_under_non_dependant_arrangements_rule
+  kind: derived
+  entity: Person
+  dtype: Judgment
+  source: Schedule, paragraph 34
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: predicate
+        source:
+          corpus_citation_path: uk/regulation/uksi/2012/2886/schedule/paragraph/34
+  versions:
+  - effective_from: '0001-01-01'
+    formula: non_dependant_arrangements_deeming_applies

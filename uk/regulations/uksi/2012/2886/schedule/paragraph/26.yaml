@@ -1,0 +1,32 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2012/2886/schedule/paragraph/26
+  summary: |-
+    “Subject to paragraphs 27 and 28, the applicable amount for a week for a person who is not a pensioner is the aggregate” of specified Schedule 3 amounts. In Schedule 3, “patient” means a person, other than one serving imprisonment or detained in a youth custody institution, who is regarded as receiving free in-patient treatment.
+  deferred_outputs:
+    - output: uk:regulations/uksi/2012/2886/schedule/paragraph/26#applicable_amount_for_non_pensioner
+      reason: The aggregate requires Schedule 3 amounts and the operative paragraphs 27 and 28 carve-outs, none of which are supplied as executable context.
+rules:
+  - name: patient
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Week
+    source: U.K. S.I. 2012/2886, Schedule, paragraph 26, definition of “patient”
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2886/schedule/paragraph/26
+              excerpt: "“patient” means a person (other than a person who is serving a sentence of imprisonment or detention in a youth custody institution) who is regarded as receiving free in-patient treatment"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          person_is_regarded_as_receiving_free_in_patient_treatment
+          and
+          not person_is_serving_sentence_of_imprisonment_or_detained_in_youth_custody_institution

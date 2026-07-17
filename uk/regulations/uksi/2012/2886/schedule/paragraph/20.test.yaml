@@ -1,0 +1,20 @@
+- name: described_person_is_not_entitled
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2024-01-01'
+    end: '2024-01-07'
+  input:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/20#input.person_is_described_in_paragraphs_21_to_24: true
+  output:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/20#person_described_in_paragraphs_21_to_24_is_not_entitled_to_reduction: holds
+- name: person_not_in_described_classes_is_not_subject_to_this_exclusion
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2024-01-01'
+    end: '2024-01-07'
+  input:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/20#input.person_is_described_in_paragraphs_21_to_24: false
+  output:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/20#person_described_in_paragraphs_21_to_24_is_not_entitled_to_reduction: not_holds
