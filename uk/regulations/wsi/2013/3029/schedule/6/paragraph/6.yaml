@@ -1,0 +1,41 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/wsi/2013/3029/schedule/6/paragraph/6
+  summary: |-
+    “Where the person is within class C,” the reduction is the maximum council tax reduction for the day. “Where the person is within class D,” it is amount A less amount B.
+rules:
+  - name: council_tax_reduction_amount_for_day
+    kind: derived
+    entity: Person
+    dtype: Money
+    unit: GBP
+    period: Day
+    source: Schedule 6, paragraph 6
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/wsi/2013/3029/schedule/6/paragraph/6
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/wsi/2013/3029/schedule/6/paragraph/6
+              excerpt: amount found by deducting amount B from amount A
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if person_is_entitled_to_reduction_under_authority_scheme_for_day:
+            if person_is_within_class_c:
+              maximum_council_tax_reduction_for_day
+            else:
+              if person_is_within_class_d:
+                max(0, amount_a_under_regulation_25 - amount_b_under_regulation_25)
+              else:
+                0
+          else:
+            0

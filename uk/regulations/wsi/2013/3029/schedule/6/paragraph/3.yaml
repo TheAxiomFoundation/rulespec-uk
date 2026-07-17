@@ -1,0 +1,91 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/wsi/2013/3029/schedule/6/paragraph/3
+  summary: |-
+    For a non-pensioner with an individual or joint universal credit award, the authority uses the maximum amount, adjusted by multiplying it by 12 and dividing by 52. For a member of a polygamous marriage, husband-and-wife status is disregarded where one spouse has an earlier subsisting marriage and the other party to that marriage lives in the same household.
+rules:
+  - name: annualisation_multiplier
+    kind: parameter
+    dtype: Integer
+    source: Schedule 6 paragraph 3(3)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/regulation/wsi/2013/3029/schedule/6/paragraph/3
+              excerpt: multiply the maximum amount by 12
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          12
+
+  - name: weekly_conversion_divisor
+    kind: parameter
+    dtype: Integer
+    source: Schedule 6 paragraph 3(3)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/regulation/wsi/2013/3029/schedule/6/paragraph/3
+              excerpt: divide the product by 52
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          52
+
+  - name: husband_and_wife_status_disregarded_for_applicable_amount
+    kind: derived
+    entity: Family
+    dtype: Judgment
+    period: Week
+    source: Schedule 6 paragraph 3(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: exception
+            source:
+              corpus_citation_path: uk/regulation/wsi/2013/3029/schedule/6/paragraph/3
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          applicant_is_member_of_polygamous_marriage
+          and one_spouse_is_party_to_earlier_marriage_that_still_subsists
+          and other_party_to_earlier_marriage_lives_in_same_household
+
+  - name: applicable_amount_for_universal_credit_award
+    kind: derived
+    entity: Family
+    dtype: Money
+    unit: GBP
+    period: Week
+    source: Schedule 6 paragraph 3(1) to (4)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/wsi/2013/3029/schedule/6/paragraph/3
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/wsi/2013/3029/schedule/6/paragraph/3
+              excerpt: multiply the maximum amount by 12 and divide the product by 52
+          - path: versions[0].formula
+            kind: definition
+            source:
+              corpus_citation_path: uk/regulation/wsi/2013/3029/schedule/6/paragraph/3
+              excerpt: maximum amount calculated by the Secretary of State in accordance with section 8(2) of the Welfare Reform Act 2012
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if applicant_is_not_pensioner and (applicant_has_universal_credit_award or applicant_and_partner_jointly_have_universal_credit_award): (if husband_and_wife_status_disregarded_for_applicable_amount: maximum_amount_calculated_with_husband_and_wife_status_disregarded else: maximum_amount_calculated_by_secretary_of_state) * annualisation_multiplier / weekly_conversion_divisor else: 0

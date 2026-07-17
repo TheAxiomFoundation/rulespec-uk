@@ -1,0 +1,45 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/wsi/2013/3029/schedule/2/paragraph/3
+  summary: |-
+    The amount in respect of a family with at least one child or young person is £20.22.
+rules:
+  - name: family_child_or_young_person_amount
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: Schedule 2, paragraph 3
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/wsi/2013/3029/schedule/2/paragraph/3
+              excerpt: "is £20.22"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          20.22
+  - name: family_amount_with_child_or_young_person
+    kind: derived
+    entity: Family
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Schedule 2, paragraph 3
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/wsi/2013/3029/schedule/2/paragraph/3
+              excerpt: "in respect of a family of which at least one member is a child or young person"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if family_has_member_who_is_child_or_young_person: family_child_or_young_person_amount else: 0

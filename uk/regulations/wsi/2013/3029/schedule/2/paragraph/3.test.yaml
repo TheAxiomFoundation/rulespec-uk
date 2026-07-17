@@ -1,0 +1,19 @@
+- name: family_with_child_or_young_person
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2026-01-05'
+    end: '2026-01-11'
+  input:
+    uk:regulations/wsi/2013/3029/schedule/2/paragraph/3#input.family_has_member_who_is_child_or_young_person: true
+  output:
+    uk:regulations/wsi/2013/3029/schedule/2/paragraph/3#family_amount_with_child_or_young_person: 20.22
+- name: auto_zero_family_amount_with_child_or_young_person
+  period:
+    period_kind: tax_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:regulations/wsi/2013/3029/schedule/2/paragraph/3#input.family_has_member_who_is_child_or_young_person: false
+  output:
+    uk:regulations/wsi/2013/3029/schedule/2/paragraph/3#family_amount_with_child_or_young_person: 0
