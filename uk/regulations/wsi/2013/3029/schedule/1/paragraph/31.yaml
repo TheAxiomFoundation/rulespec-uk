@@ -1,0 +1,114 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/wsi/2013/3029/schedule/1/paragraph/31
+  summary: |-
+    A pensioner's capital is treated as weekly income of £1 for each £500, including any incomplete £500, above £10,000 and not exceeding £16,000.
+rules:
+  - name: pensioner_capital_weekly_income_amount_per_band
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Schedule 1, paragraph 31
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/wsi/2013/3029/schedule/1/paragraph/31
+              excerpt: "£1 for each £500"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          1
+
+  - name: pensioner_capital_income_band_size
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: Schedule 1, paragraph 31
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/wsi/2013/3029/schedule/1/paragraph/31
+              excerpt: "for each £500"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          500
+
+  - name: pensioner_capital_income_threshold
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: Schedule 1, paragraph 31
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/regulation/wsi/2013/3029/schedule/1/paragraph/31
+              excerpt: "in excess of £10,000"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          10000
+
+  - name: pensioner_capital_income_upper_limit
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: Schedule 1, paragraph 31
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/regulation/wsi/2013/3029/schedule/1/paragraph/31
+              excerpt: "not exceeding £16,000"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          16000
+
+  - name: pensioner_weekly_income_from_capital
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Schedule 1, paragraph 31
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/wsi/2013/3029/schedule/1/paragraph/31
+              excerpt: "£1 for any excess which is not a complete £500"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if applicant_is_pensioner:
+            pensioner_capital_weekly_income_amount_per_band
+            * ceil(
+                max(
+                  0,
+                  min(
+                    applicant_capital_calculated_in_accordance_with_schedule,
+                    pensioner_capital_income_upper_limit
+                  )
+                  - pensioner_capital_income_threshold
+                )
+                / pensioner_capital_income_band_size
+              )
+          else: 0
