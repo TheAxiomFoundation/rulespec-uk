@@ -1,0 +1,44 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/uksi/2012/2885/schedule/6/paragraph/26
+  summary: |-
+    The dwelling occupied as the home; but only one dwelling may be disregarded under this paragraph.
+rules:
+  - name: maximum_dwellings_disregarded_under_this_paragraph
+    kind: parameter
+    dtype: Count
+    period: Month
+    source: UKSI 2012/2885, Schedule 6, paragraph 26
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2885/schedule/6/paragraph/26
+              excerpt: "only one dwelling may be disregarded"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          1
+  - name: home_occupied_dwelling_disregarded_from_capital
+    kind: derived
+    entity: Asset
+    dtype: Judgment
+    period: Month
+    source: UKSI 2012/2885, Schedule 6, paragraph 26
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/uksi/2012/2885/schedule/6/paragraph/26
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          asset_is_dwelling_occupied_as_home
+          and number_of_other_dwellings_disregarded_under_this_paragraph < maximum_dwellings_disregarded_under_this_paragraph
