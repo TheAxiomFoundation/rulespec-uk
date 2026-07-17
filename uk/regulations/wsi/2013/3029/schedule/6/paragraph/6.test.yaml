@@ -1,0 +1,45 @@
+- name: class C receives maximum council tax reduction
+  period:
+    period_kind: custom
+    name: day
+    start: '2026-07-13'
+    end: '2026-07-13'
+  input:
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/6#input.person_is_entitled_to_reduction_under_authority_scheme_for_day: true
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/6#input.person_is_within_class_c: true
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/6#input.person_is_within_class_d: false
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/6#input.maximum_council_tax_reduction_for_day: 20
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/6#input.amount_a_under_regulation_25: 100
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/6#input.amount_b_under_regulation_25: 30
+  output:
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/6#council_tax_reduction_amount_for_day: 20
+- name: class D receives amount A less amount B
+  period:
+    period_kind: custom
+    name: day
+    start: '2026-07-13'
+    end: '2026-07-13'
+  input:
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/6#input.person_is_entitled_to_reduction_under_authority_scheme_for_day: true
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/6#input.person_is_within_class_c: false
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/6#input.person_is_within_class_d: true
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/6#input.maximum_council_tax_reduction_for_day: 20
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/6#input.amount_a_under_regulation_25: 100
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/6#input.amount_b_under_regulation_25: 30
+  output:
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/6#council_tax_reduction_amount_for_day: 70
+- name: no reduction without entitlement for the day
+  period:
+    period_kind: custom
+    name: day
+    start: '2026-07-13'
+    end: '2026-07-13'
+  input:
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/6#input.person_is_entitled_to_reduction_under_authority_scheme_for_day: false
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/6#input.person_is_within_class_c: true
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/6#input.person_is_within_class_d: false
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/6#input.maximum_council_tax_reduction_for_day: 20
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/6#input.amount_a_under_regulation_25: 100
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/6#input.amount_b_under_regulation_25: 30
+  output:
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/6#council_tax_reduction_amount_for_day: 0
