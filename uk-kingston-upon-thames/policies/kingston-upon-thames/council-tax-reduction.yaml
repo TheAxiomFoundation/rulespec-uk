@@ -135,24 +135,7 @@ rules:
     versions:
       - effective_from: '2026-04-01'
         formula: |-
-          0.02857142857142857
-
-  - name: kingston_upon_thames_council_tax_reduction_annual_taper_denominator
-    kind: parameter
-    dtype: Number
-    source: Kingston upon Thames Council Tax Reduction Scheme 2026-2027 annualized class E amount B percentage
-    metadata:
-      proof:
-        atoms:
-          - path: versions[0].formula
-            kind: formula
-            source:
-              corpus_citation_path: uk-kingston-upon-thames/manual/council-tax-reduction-scheme-2026-2027/page-28
-              excerpt: "amount B is 2 6/7 per cent"
-    versions:
-      - effective_from: '2026-04-01'
-        formula: |-
-          5
+          0.02857142857142857142857142857
 
   - name: kingston_upon_thames_council_tax_reduction_withdrawal_rate
     kind: parameter
@@ -169,7 +152,7 @@ rules:
     versions:
       - effective_from: '2026-04-01'
         formula: |-
-          1 / kingston_upon_thames_council_tax_reduction_annual_taper_denominator
+          kingston_upon_thames_council_tax_reduction_daily_taper_rate * kingston_upon_thames_council_tax_reduction_days_per_week
 
   - name: kingston_upon_thames_council_tax_reduction_remunerative_work_hours
     kind: parameter
