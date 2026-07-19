@@ -1,0 +1,64 @@
+- name: incomplete capital band is counted and due actual income becomes capital
+  period: 2021-05
+  input:
+    uk:regulations/ssi/2021/249/63#input.applicant_capital: 6501
+    uk:regulations/ssi/2021/249/63#input.capital_is_disregarded: false
+    ? uk:regulations/ssi/2021/249/63#input.actual_income_from_capital_is_taken_into_account_as_annuity_income_under_regulation_57_1_j
+    : false
+    ? uk:regulations/ssi/2021/249/63#input.actual_income_from_capital_is_taken_into_account_as_trust_income_under_regulation_57_1_k
+    : false
+    uk:regulations/ssi/2021/249/63#input.actual_income_from_capital_is_due_to_be_paid_to_applicant_on_or_before_day: true
+    uk:regulations/ssi/2021/249/63#input.actual_income_derived_from_capital: 25
+  output:
+    uk:regulations/ssi/2021/249/63#capital_is_treated_as_yielding_income: holds
+    uk:regulations/ssi/2021/249/63#monthly_income_treated_as_yielded_by_capital: 13.05
+    uk:regulations/ssi/2021/249/63#weekly_income_treated_as_yielded_by_capital: 3
+    uk:regulations/ssi/2021/249/63#actual_income_from_yielding_capital_treated_as_capital: 25
+- name: annuity-income exception prevents tariff income
+  period: 2021-05
+  input:
+    uk:regulations/ssi/2021/249/63#input.applicant_capital: 6501
+    uk:regulations/ssi/2021/249/63#input.capital_is_disregarded: false
+    ? uk:regulations/ssi/2021/249/63#input.actual_income_from_capital_is_taken_into_account_as_annuity_income_under_regulation_57_1_j
+    : true
+    ? uk:regulations/ssi/2021/249/63#input.actual_income_from_capital_is_taken_into_account_as_trust_income_under_regulation_57_1_k
+    : false
+    uk:regulations/ssi/2021/249/63#input.actual_income_from_capital_is_due_to_be_paid_to_applicant_on_or_before_day: true
+    uk:regulations/ssi/2021/249/63#input.actual_income_derived_from_capital: 25
+  output:
+    uk:regulations/ssi/2021/249/63#capital_is_treated_as_yielding_income: not_holds
+    uk:regulations/ssi/2021/249/63#monthly_income_treated_as_yielded_by_capital: 0
+    uk:regulations/ssi/2021/249/63#weekly_income_treated_as_yielded_by_capital: 0
+    uk:regulations/ssi/2021/249/63#actual_income_from_yielding_capital_treated_as_capital: 0
+- name: trust-income exception prevents tariff income
+  period: 2021-05
+  input:
+    uk:regulations/ssi/2021/249/63#input.applicant_capital: 6501
+    uk:regulations/ssi/2021/249/63#input.capital_is_disregarded: false
+    ? uk:regulations/ssi/2021/249/63#input.actual_income_from_capital_is_taken_into_account_as_annuity_income_under_regulation_57_1_j
+    : false
+    ? uk:regulations/ssi/2021/249/63#input.actual_income_from_capital_is_taken_into_account_as_trust_income_under_regulation_57_1_k
+    : true
+    uk:regulations/ssi/2021/249/63#input.actual_income_from_capital_is_due_to_be_paid_to_applicant_on_or_before_day: true
+    uk:regulations/ssi/2021/249/63#input.actual_income_derived_from_capital: 25
+  output:
+    uk:regulations/ssi/2021/249/63#capital_is_treated_as_yielding_income: not_holds
+    uk:regulations/ssi/2021/249/63#monthly_income_treated_as_yielded_by_capital: 0
+    uk:regulations/ssi/2021/249/63#weekly_income_treated_as_yielded_by_capital: 0
+    uk:regulations/ssi/2021/249/63#actual_income_from_yielding_capital_treated_as_capital: 0
+- name: disregarded capital is not treated as yielding income
+  period: 2021-05
+  input:
+    uk:regulations/ssi/2021/249/63#input.applicant_capital: 6501
+    uk:regulations/ssi/2021/249/63#input.capital_is_disregarded: true
+    ? uk:regulations/ssi/2021/249/63#input.actual_income_from_capital_is_taken_into_account_as_annuity_income_under_regulation_57_1_j
+    : false
+    ? uk:regulations/ssi/2021/249/63#input.actual_income_from_capital_is_taken_into_account_as_trust_income_under_regulation_57_1_k
+    : false
+    uk:regulations/ssi/2021/249/63#input.actual_income_from_capital_is_due_to_be_paid_to_applicant_on_or_before_day: true
+    uk:regulations/ssi/2021/249/63#input.actual_income_derived_from_capital: 25
+  output:
+    uk:regulations/ssi/2021/249/63#capital_is_treated_as_yielding_income: not_holds
+    uk:regulations/ssi/2021/249/63#monthly_income_treated_as_yielded_by_capital: 0
+    uk:regulations/ssi/2021/249/63#weekly_income_treated_as_yielded_by_capital: 0
+    uk:regulations/ssi/2021/249/63#actual_income_from_yielding_capital_treated_as_capital: 0

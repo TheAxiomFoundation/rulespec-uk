@@ -1,0 +1,116 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/wsi/2013/3029/schedule/6/paragraph/33
+  summary: |-
+    An applicant who is not a pensioner is treated as receiving weekly income of £1 for each complete £250 of capital above £6,000 up to £16,000, plus £1 for any incomplete £250 excess.
+rules:
+  - name: capital_lower_threshold
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: Schedule 6, paragraph 33
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/wsi/2013/3029/schedule/6/paragraph/33
+              excerpt: "in excess of £6,000"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          6000
+
+  - name: capital_upper_limit
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: Schedule 6, paragraph 33
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/wsi/2013/3029/schedule/6/paragraph/33
+              excerpt: "not exceeding £16,000"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          16000
+
+  - name: capital_band_size
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: Schedule 6, paragraph 33
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/wsi/2013/3029/schedule/6/paragraph/33
+              excerpt: "for each complete £250"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          250
+
+  - name: weekly_income_per_capital_band
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    period: Week
+    source: Schedule 6, paragraph 33
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/wsi/2013/3029/schedule/6/paragraph/33
+              excerpt: "£1 for each complete £250"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          1
+
+  - name: weekly_income_treated_as_from_capital
+    kind: derived
+    entity: Person
+    dtype: Money
+    unit: GBP
+    period: Week
+    source: Schedule 6, paragraph 33
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/wsi/2013/3029/schedule/6/paragraph/33
+              excerpt: "£1 for any excess which is not a complete £250"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/wsi/2013/3029/schedule/6/paragraph/33
+              excerpt: "an applicant who is not a pensioner"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if applicant_is_not_pensioner:
+            ceil(
+              max(
+                0,
+                min(
+                  applicant_capital_calculated_in_accordance_with_schedule,
+                  capital_upper_limit
+                ) - capital_lower_threshold
+              ) / capital_band_size
+            ) * weekly_income_per_capital_band
+          else: 0

@@ -1,0 +1,80 @@
+- name: annual discounts statutory reductions and non-dependant deductions are applied
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/4#input.council_tax_set_for_relevant_financial_year: 3650
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/4#input.appropriate_dwelling_discount_under_1992_act: 365
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/4#input.other_council_tax_reductions_under_1992_act: 365
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/4#input.applicant_is_jointly_and_severally_liable_with_other_persons: false
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/4#input.applicant_is_jointly_and_severally_liable_with_only_a_partner: false
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/4#input.number_of_jointly_and_severally_liable_persons: 1
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/4#input.number_of_jointly_and_severally_liable_excluded_students: 0
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/4#input.number_of_days_in_relevant_financial_year: 365
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/4#input.non_dependant_deductions_under_paragraph_5: 1
+  output:
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/4#council_tax_amount_a_after_statutory_reductions: 2920
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/4#joint_liability_divisor_for_amount_a: 1
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/4#maximum_council_tax_reduction_for_day: 7
+- name: joint liability divides amount A among liable persons
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/4#input.council_tax_set_for_relevant_financial_year: 10950
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/4#input.appropriate_dwelling_discount_under_1992_act: 0
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/4#input.other_council_tax_reductions_under_1992_act: 0
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/4#input.applicant_is_jointly_and_severally_liable_with_other_persons: true
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/4#input.applicant_is_jointly_and_severally_liable_with_only_a_partner: false
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/4#input.number_of_jointly_and_severally_liable_persons: 3
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/4#input.number_of_jointly_and_severally_liable_excluded_students: 0
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/4#input.number_of_days_in_relevant_financial_year: 365
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/4#input.non_dependant_deductions_under_paragraph_5: 0
+  output:
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/4#council_tax_amount_a_after_statutory_reductions: 10950
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/4#joint_liability_divisor_for_amount_a: 3
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/4#maximum_council_tax_reduction_for_day: 10
+- name: liability with only a partner does not divide amount A
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/4#input.council_tax_set_for_relevant_financial_year: 3650
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/4#input.appropriate_dwelling_discount_under_1992_act: 0
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/4#input.other_council_tax_reductions_under_1992_act: 0
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/4#input.applicant_is_jointly_and_severally_liable_with_other_persons: true
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/4#input.applicant_is_jointly_and_severally_liable_with_only_a_partner: true
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/4#input.number_of_jointly_and_severally_liable_persons: 2
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/4#input.number_of_jointly_and_severally_liable_excluded_students: 0
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/4#input.number_of_days_in_relevant_financial_year: 365
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/4#input.non_dependant_deductions_under_paragraph_5: 0
+  output:
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/4#council_tax_amount_a_after_statutory_reductions: 3650
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/4#joint_liability_divisor_for_amount_a: 1
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/4#maximum_council_tax_reduction_for_day: 10
+- name: excluded student is omitted from the joint liability divisor
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/4#input.council_tax_set_for_relevant_financial_year: 7300
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/4#input.appropriate_dwelling_discount_under_1992_act: 0
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/4#input.other_council_tax_reductions_under_1992_act: 0
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/4#input.applicant_is_jointly_and_severally_liable_with_other_persons: true
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/4#input.applicant_is_jointly_and_severally_liable_with_only_a_partner: false
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/4#input.number_of_jointly_and_severally_liable_persons: 3
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/4#input.number_of_jointly_and_severally_liable_excluded_students: 1
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/4#input.number_of_days_in_relevant_financial_year: 365
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/4#input.non_dependant_deductions_under_paragraph_5: 0
+  output:
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/4#council_tax_amount_a_after_statutory_reductions: 7300
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/4#joint_liability_divisor_for_amount_a: 2
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/4#maximum_council_tax_reduction_for_day: 10

@@ -1,0 +1,44 @@
+- name: capital at threshold produces no weekly income
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2024-01-01'
+    end: '2024-01-07'
+  input:
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/31#input.applicant_is_pensioner: true
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/31#input.applicant_capital_calculated_in_accordance_with_schedule: 10000
+  output:
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/31#pensioner_weekly_income_from_capital: 0
+- name: complete capital bands produce one pound each
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2024-01-01'
+    end: '2024-01-07'
+  input:
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/31#input.applicant_is_pensioner: true
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/31#input.applicant_capital_calculated_in_accordance_with_schedule: 16000
+  output:
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/31#pensioner_weekly_income_from_capital: 12
+- name: incomplete capital band adds one pound
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2024-01-01'
+    end: '2024-01-07'
+  input:
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/31#input.applicant_is_pensioner: true
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/31#input.applicant_capital_calculated_in_accordance_with_schedule: 10750
+  output:
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/31#pensioner_weekly_income_from_capital: 2
+- name: non-pensioner does not receive this deemed weekly income
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2024-01-01'
+    end: '2024-01-07'
+  input:
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/31#input.applicant_is_pensioner: false
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/31#input.applicant_capital_calculated_in_accordance_with_schedule: 10750
+  output:
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/31#pensioner_weekly_income_from_capital: 0

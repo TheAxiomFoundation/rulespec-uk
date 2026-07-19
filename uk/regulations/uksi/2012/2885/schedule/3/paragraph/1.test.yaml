@@ -1,0 +1,109 @@
+- name: benefit_recipient_band_produces_twenty_five_percent_reduction
+  period:
+    period_kind: custom
+    name: day
+    start: '2026-07-17'
+    end: '2026-07-17'
+  input:
+    uk:regulations/uksi/2012/2885/schedule/3/paragraph/1#input.second_adult_or_all_second_adults_receive_specified_benefit: true
+    uk:regulations/uksi/2012/2885/schedule/3/paragraph/1#input.second_adult_aggregate_gross_income_after_required_disregards: 0
+    ? uk:regulations/uksi/2012/2885/schedule/3/paragraph/1#input.dwelling_would_be_wholly_occupied_by_persons_to_whom_paragraph_73_1_applies
+    : false
+    uk:regulations/uksi/2012/2885/schedule/3/paragraph/1#input.one_or_more_second_adults_receive_specified_benefit: true
+    uk:regulations/uksi/2012/2885/schedule/3/paragraph/1#input.council_tax_payable_under_section_10: 7.0
+    ? uk:regulations/uksi/2012/2885/schedule/3/paragraph/1#input.reductions_under_the_1992_act_other_than_authority_scheme_reduction
+    : 0
+    uk:regulations/uksi/2012/2885/schedule/3/paragraph/1#input.appropriate_dwelling_discount_under_the_1992_act: 0
+  output:
+    uk:regulations/uksi/2012/2885/schedule/3/paragraph/1#benefit_recipient_band_applies: holds
+    uk:regulations/uksi/2012/2885/schedule/3/paragraph/1#low_income_band_applies: not_holds
+    uk:regulations/uksi/2012/2885/schedule/3/paragraph/1#middle_income_band_applies: not_holds
+    uk:regulations/uksi/2012/2885/schedule/3/paragraph/1#qualifying_occupancy_band_applies: not_holds
+    uk:regulations/uksi/2012/2885/schedule/3/paragraph/1#council_tax_due_in_respect_of_day: 7.0
+    uk:regulations/uksi/2012/2885/schedule/3/paragraph/1#alternative_maximum_council_tax_reduction: 1.75
+- name: low_income_band_produces_fifteen_percent_reduction
+  period:
+    period_kind: custom
+    name: day
+    start: '2026-07-17'
+    end: '2026-07-17'
+  input:
+    uk:regulations/uksi/2012/2885/schedule/3/paragraph/1#input.second_adult_or_all_second_adults_receive_specified_benefit: false
+    uk:regulations/uksi/2012/2885/schedule/3/paragraph/1#input.second_adult_aggregate_gross_income_after_required_disregards: 200.0
+    ? uk:regulations/uksi/2012/2885/schedule/3/paragraph/1#input.dwelling_would_be_wholly_occupied_by_persons_to_whom_paragraph_73_1_applies
+    : false
+    uk:regulations/uksi/2012/2885/schedule/3/paragraph/1#input.one_or_more_second_adults_receive_specified_benefit: false
+    uk:regulations/uksi/2012/2885/schedule/3/paragraph/1#input.council_tax_payable_under_section_10: 7.0
+    ? uk:regulations/uksi/2012/2885/schedule/3/paragraph/1#input.reductions_under_the_1992_act_other_than_authority_scheme_reduction
+    : 0
+    uk:regulations/uksi/2012/2885/schedule/3/paragraph/1#input.appropriate_dwelling_discount_under_the_1992_act: 0
+  output:
+    uk:regulations/uksi/2012/2885/schedule/3/paragraph/1#benefit_recipient_band_applies: not_holds
+    uk:regulations/uksi/2012/2885/schedule/3/paragraph/1#low_income_band_applies: holds
+    uk:regulations/uksi/2012/2885/schedule/3/paragraph/1#middle_income_band_applies: not_holds
+    uk:regulations/uksi/2012/2885/schedule/3/paragraph/1#qualifying_occupancy_band_applies: not_holds
+    uk:regulations/uksi/2012/2885/schedule/3/paragraph/1#council_tax_due_in_respect_of_day: 7.0
+    uk:regulations/uksi/2012/2885/schedule/3/paragraph/1#alternative_maximum_council_tax_reduction: 1.05
+- name: middle_income_band_produces_seven_and_a_half_percent_reduction
+  period:
+    period_kind: custom
+    name: day
+    start: '2026-07-17'
+    end: '2026-07-17'
+  input:
+    uk:regulations/uksi/2012/2885/schedule/3/paragraph/1#input.second_adult_or_all_second_adults_receive_specified_benefit: false
+    uk:regulations/uksi/2012/2885/schedule/3/paragraph/1#input.second_adult_aggregate_gross_income_after_required_disregards: 300.0
+    ? uk:regulations/uksi/2012/2885/schedule/3/paragraph/1#input.dwelling_would_be_wholly_occupied_by_persons_to_whom_paragraph_73_1_applies
+    : false
+    uk:regulations/uksi/2012/2885/schedule/3/paragraph/1#input.one_or_more_second_adults_receive_specified_benefit: false
+    uk:regulations/uksi/2012/2885/schedule/3/paragraph/1#input.council_tax_payable_under_section_10: 7.0
+    ? uk:regulations/uksi/2012/2885/schedule/3/paragraph/1#input.reductions_under_the_1992_act_other_than_authority_scheme_reduction
+    : 0
+    uk:regulations/uksi/2012/2885/schedule/3/paragraph/1#input.appropriate_dwelling_discount_under_the_1992_act: 0
+  output:
+    uk:regulations/uksi/2012/2885/schedule/3/paragraph/1#benefit_recipient_band_applies: not_holds
+    uk:regulations/uksi/2012/2885/schedule/3/paragraph/1#low_income_band_applies: not_holds
+    uk:regulations/uksi/2012/2885/schedule/3/paragraph/1#middle_income_band_applies: holds
+    uk:regulations/uksi/2012/2885/schedule/3/paragraph/1#qualifying_occupancy_band_applies: not_holds
+    uk:regulations/uksi/2012/2885/schedule/3/paragraph/1#council_tax_due_in_respect_of_day: 7.0
+    uk:regulations/uksi/2012/2885/schedule/3/paragraph/1#alternative_maximum_council_tax_reduction: 0.525
+- name: qualifying_occupancy_band_deducts_discount_and_produces_full_reduction
+  period:
+    period_kind: custom
+    name: day
+    start: '2026-07-17'
+    end: '2026-07-17'
+  input:
+    uk:regulations/uksi/2012/2885/schedule/3/paragraph/1#input.second_adult_or_all_second_adults_receive_specified_benefit: true
+    uk:regulations/uksi/2012/2885/schedule/3/paragraph/1#input.second_adult_aggregate_gross_income_after_required_disregards: 0
+    ? uk:regulations/uksi/2012/2885/schedule/3/paragraph/1#input.dwelling_would_be_wholly_occupied_by_persons_to_whom_paragraph_73_1_applies
+    : true
+    uk:regulations/uksi/2012/2885/schedule/3/paragraph/1#input.one_or_more_second_adults_receive_specified_benefit: true
+    uk:regulations/uksi/2012/2885/schedule/3/paragraph/1#input.council_tax_payable_under_section_10: 7.0
+    ? uk:regulations/uksi/2012/2885/schedule/3/paragraph/1#input.reductions_under_the_1992_act_other_than_authority_scheme_reduction
+    : 1.0
+    uk:regulations/uksi/2012/2885/schedule/3/paragraph/1#input.appropriate_dwelling_discount_under_the_1992_act: 2.0
+  output:
+    uk:regulations/uksi/2012/2885/schedule/3/paragraph/1#benefit_recipient_band_applies: holds
+    uk:regulations/uksi/2012/2885/schedule/3/paragraph/1#low_income_band_applies: not_holds
+    uk:regulations/uksi/2012/2885/schedule/3/paragraph/1#middle_income_band_applies: not_holds
+    uk:regulations/uksi/2012/2885/schedule/3/paragraph/1#qualifying_occupancy_band_applies: holds
+    uk:regulations/uksi/2012/2885/schedule/3/paragraph/1#council_tax_due_in_respect_of_day: 4.0
+    uk:regulations/uksi/2012/2885/schedule/3/paragraph/1#alternative_maximum_council_tax_reduction: 4.0
+- name: auto_zero_alternative_maximum_council_tax_reduction
+  period:
+    period_kind: tax_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:regulations/uksi/2012/2885/schedule/3/paragraph/1#input.appropriate_dwelling_discount_under_the_1992_act: false
+    uk:regulations/uksi/2012/2885/schedule/3/paragraph/1#input.council_tax_payable_under_section_10: 0
+    ? uk:regulations/uksi/2012/2885/schedule/3/paragraph/1#input.dwelling_would_be_wholly_occupied_by_persons_to_whom_paragraph_73_1_applies
+    : false
+    uk:regulations/uksi/2012/2885/schedule/3/paragraph/1#input.one_or_more_second_adults_receive_specified_benefit: false
+    ? uk:regulations/uksi/2012/2885/schedule/3/paragraph/1#input.reductions_under_the_1992_act_other_than_authority_scheme_reduction
+    : 0
+    uk:regulations/uksi/2012/2885/schedule/3/paragraph/1#input.second_adult_aggregate_gross_income_after_required_disregards: 376
+    uk:regulations/uksi/2012/2885/schedule/3/paragraph/1#input.second_adult_or_all_second_adults_receive_specified_benefit: false
+  output:
+    uk:regulations/uksi/2012/2885/schedule/3/paragraph/1#alternative_maximum_council_tax_reduction: 0

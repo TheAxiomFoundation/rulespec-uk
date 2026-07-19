@@ -1,0 +1,30 @@
+- name: one child has the weekly single-child deduction cap
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2024-01-01'
+    end: '2024-01-07'
+  input:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/57#input.number_of_children_for_whom_relevant_child_care_charges_are_paid: 1
+  output:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/57#maximum_relevant_child_care_charge_deduction: 175.0
+- name: more than one child has the weekly multiple-child deduction cap
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2024-01-01'
+    end: '2024-01-07'
+  input:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/57#input.number_of_children_for_whom_relevant_child_care_charges_are_paid: 2
+  output:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/57#maximum_relevant_child_care_charge_deduction: 300
+- name: no relevant child care child gives no deduction cap
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2024-01-01'
+    end: '2024-01-07'
+  input:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/57#input.number_of_children_for_whom_relevant_child_care_charges_are_paid: 0
+  output:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/57#maximum_relevant_child_care_charge_deduction: 0

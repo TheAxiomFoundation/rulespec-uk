@@ -1,0 +1,298 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/regulation/wsi/2013/3029/schedule/1/paragraph/3
+  summary: |-
+    For a non-dependant aged 18 or over, the daily deduction is £20.05 × 1/7
+    when in remunerative work and £6.70 × 1/7 otherwise. For remunerative work,
+    lower deductions apply where normal gross weekly income is less than £605.00,
+    subject to the stated income disregards, exemptions, couple coordination,
+    and apportionment rules.
+  deferred_outputs:
+    - output: uk:regulations/wsi/2013/3029/schedule/1/paragraph/3#final_daily_non_dependant_deduction
+      reason: >-
+        The final deduction requires person-to-applicant, couple or polygamous-marriage,
+        dwelling-resident, and jointly-liable-person relations so that all exemptions,
+        the single higher deduction for a couple or marriage, joint weekly gross income,
+        and equal apportionment among liable persons can be applied without replacing
+        those legal relationships with aggregate placeholders.
+    - output: uk:regulations/wsi/2013/3029/schedule/1/paragraph/3#normal_gross_weekly_income_after_disregards
+      reason: >-
+        Computing the adjusted income requires payment-level amounts and provenance
+        sufficient to identify every payment category listed in sub-paragraph (9).
+rules:
+  - name: non_dependant_minimum_age
+    kind: parameter
+    dtype: Integer
+    source: Schedule 1 paragraph 3(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/regulation/wsi/2013/3029/schedule/1/paragraph/3
+              excerpt: "a non-dependant aged 18 or over"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          18
+
+  - name: days_in_week_for_non_dependant_deduction
+    kind: parameter
+    dtype: Count
+    source: Schedule 1 paragraph 3(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: unit
+            source:
+              corpus_citation_path: uk/regulation/wsi/2013/3029/schedule/1/paragraph/3
+              excerpt: "£20.05 x 1/7"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          7
+
+  - name: non_remunerative_work_weekly_deduction
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Schedule 1 paragraph 3(1)(b)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/regulation/wsi/2013/3029/schedule/1/paragraph/3
+              excerpt: "£6.70 x 1/7"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          6.70
+
+  - name: first_income_band_upper_limit
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Schedule 1 paragraph 3(2)(a)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/regulation/wsi/2013/3029/schedule/1/paragraph/3
+              excerpt: "less than £279.00"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          279.00
+
+  - name: second_income_band_lower_limit
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Schedule 1 paragraph 3(2)(b)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/regulation/wsi/2013/3029/schedule/1/paragraph/3
+              excerpt: "not less than £279.00"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          279.00
+
+  - name: second_income_band_upper_limit
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Schedule 1 paragraph 3(2)(b)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/regulation/wsi/2013/3029/schedule/1/paragraph/3
+              excerpt: "less than £485.00"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          485.00
+
+  - name: third_income_band_lower_limit
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Schedule 1 paragraph 3(2)(c)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/regulation/wsi/2013/3029/schedule/1/paragraph/3
+              excerpt: "not less than £485.00"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          485.00
+
+  - name: third_income_band_upper_limit
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Schedule 1 paragraph 3(2)(c)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/regulation/wsi/2013/3029/schedule/1/paragraph/3
+              excerpt: "less than £605.00"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          605.00
+
+  - name: highest_income_band_lower_limit
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Schedule 1 paragraph 3(1)(a) and (2)(c)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: ordering
+            source:
+              corpus_citation_path: uk/regulation/wsi/2013/3029/schedule/1/paragraph/3
+              excerpt: "not less than £485.00 but less than £605.00"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          605.00
+
+  - name: remunerative_work_weekly_deduction_by_income_band
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    indexed_by: non_dependant_weekly_income_band
+    source: Schedule 1 paragraph 3(1)(a), (1)(b), and (2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].values
+            kind: parameter_table
+            source:
+              corpus_citation_path: uk/regulation/wsi/2013/3029/schedule/1/paragraph/3
+              table:
+                header: "Normal gross weekly income and weekly non-dependant deduction"
+                row_key: "normal gross weekly income band"
+                column_key: "weekly deduction before multiplication by 1/7"
+              excerpt: "in respect of a non-dependant aged 18 or over in remunerative work, \u00a320.05 x 1/7;\nin respect of a non-dependant aged 18 or over to whom paragraph (a) does not apply, \u00a36.70 x 1/7.\nIn the case of a non-dependant aged 18 or over to whom sub-paragraph (1)(a) applies, where it is shown to the authority that that non-dependant\u2019s normal gross weekly income is\u2014\nless than \u00a3279.00, the deduction to be made under this paragraph is that specified in sub-paragraph (1)(b);\nnot less than \u00a3279.00 but less than \u00a3485.00, the deduction to be made under this paragraph is \u00a313.35 x 1/7;\nnot less than \u00a3485.00 but less than \u00a3605.00, the deduction to be made under this paragraph is \u00a316.80 x 1/7."
+    versions:
+      - effective_from: '0001-01-01'
+        values:
+          0: 6.70
+          1: 13.35
+          2: 16.80
+          3: 20.05
+
+  - name: patient_absence_deduction_exclusion_period
+    kind: parameter
+    dtype: Count
+    period: Week
+    source: Schedule 1 paragraph 3(7)(d)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/regulation/wsi/2013/3029/schedule/1/paragraph/3
+              excerpt: "a patient for a period in excess of 52 weeks"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          52
+
+  - name: maximum_patient_period_gap
+    kind: parameter
+    dtype: Count
+    period: Day
+    source: Schedule 1 paragraph 3(7)(d)(ii)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk/regulation/wsi/2013/3029/schedule/1/paragraph/3
+              excerpt: "intervals each not exceeding 28 days"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          28
+
+  - name: non_dependant_weekly_income_band
+    kind: derived
+    entity: Person
+    dtype: Integer
+    period: Week
+    source: Schedule 1 paragraph 3(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: ordering
+            source:
+              corpus_citation_path: uk/regulation/wsi/2013/3029/schedule/1/paragraph/3
+              excerpt: "less than \u00a3279.00"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if normal_gross_weekly_income_after_subparagraph_9_disregards < first_income_band_upper_limit: 0 else: if normal_gross_weekly_income_after_subparagraph_9_disregards >= second_income_band_lower_limit and normal_gross_weekly_income_after_subparagraph_9_disregards < second_income_band_upper_limit: 1 else: if normal_gross_weekly_income_after_subparagraph_9_disregards >= third_income_band_lower_limit and normal_gross_weekly_income_after_subparagraph_9_disregards < third_income_band_upper_limit: 2 else: 3
+
+  - name: daily_non_dependant_deduction_before_exemptions_and_coordination
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Day
+    unit: GBP
+    source: Schedule 1 paragraph 3(1) and (2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/regulation/wsi/2013/3029/schedule/1/paragraph/3
+              excerpt: "\u00a320.05 x 1/7"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/regulation/wsi/2013/3029/schedule/1/paragraph/3
+              excerpt: "a non-dependant aged 18 or over in remunerative work"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if non_dependant_age < non_dependant_minimum_age: 0 else: if non_dependant_is_in_remunerative_work: remunerative_work_weekly_deduction_by_income_band[non_dependant_weekly_income_band] / days_in_week_for_non_dependant_deduction else: non_remunerative_work_weekly_deduction / days_in_week_for_non_dependant_deduction

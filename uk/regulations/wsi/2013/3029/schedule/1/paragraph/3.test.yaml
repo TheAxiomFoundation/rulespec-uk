@@ -1,0 +1,76 @@
+- name: non-dependant not in remunerative work
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/3#input.non_dependant_age: 18
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/3#input.non_dependant_is_in_remunerative_work: false
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/3#input.normal_gross_weekly_income_after_subparagraph_9_disregards: 200
+  output:
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/3#non_dependant_weekly_income_band: 0
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/3#daily_non_dependant_deduction_before_exemptions_and_coordination: '0.9571428571428571428571428571'
+- name: remunerative work in first income band
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/3#input.non_dependant_age: 18
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/3#input.non_dependant_is_in_remunerative_work: true
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/3#input.normal_gross_weekly_income_after_subparagraph_9_disregards: 200
+  output:
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/3#non_dependant_weekly_income_band: 0
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/3#daily_non_dependant_deduction_before_exemptions_and_coordination: '0.9571428571428571428571428571'
+- name: remunerative work in second income band
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/3#input.non_dependant_age: 18
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/3#input.non_dependant_is_in_remunerative_work: true
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/3#input.normal_gross_weekly_income_after_subparagraph_9_disregards: 300
+  output:
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/3#non_dependant_weekly_income_band: 1
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/3#daily_non_dependant_deduction_before_exemptions_and_coordination: '1.9071428571428571428571428571'
+- name: remunerative work in third income band
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/3#input.non_dependant_age: 18
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/3#input.non_dependant_is_in_remunerative_work: true
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/3#input.normal_gross_weekly_income_after_subparagraph_9_disregards: 500
+  output:
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/3#non_dependant_weekly_income_band: 2
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/3#daily_non_dependant_deduction_before_exemptions_and_coordination: 2.4
+- name: remunerative work in highest income band
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/3#input.non_dependant_age: 18
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/3#input.non_dependant_is_in_remunerative_work: true
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/3#input.normal_gross_weekly_income_after_subparagraph_9_disregards: 700
+  output:
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/3#non_dependant_weekly_income_band: 3
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/3#daily_non_dependant_deduction_before_exemptions_and_coordination: '2.8642857142857142857142857143'
+- name: auto_zero_daily_non_dependant_deduction_before_exemptions_and_coordination
+  period:
+    period_kind: tax_year
+    start: '2026-01-01'
+    end: '2026-12-31'
+  input:
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/3#input.non_dependant_age: 17
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/3#input.non_dependant_is_in_remunerative_work: false
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/3#input.normal_gross_weekly_income_after_subparagraph_9_disregards: 606
+  output:
+    uk:regulations/wsi/2013/3029/schedule/1/paragraph/3#daily_non_dependant_deduction_before_exemptions_and_coordination: 0

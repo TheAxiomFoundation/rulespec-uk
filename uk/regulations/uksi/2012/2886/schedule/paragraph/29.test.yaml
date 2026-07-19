@@ -1,0 +1,69 @@
+- name: sole liability with statutory reductions and non-dependant deduction
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/29#input.council_tax_set_for_relevant_financial_year: 36500
+    uk:regulations/uksi/2012/2886/schedule/paragraph/29#input.appropriate_discount_under_1992_act: 3650
+    uk:regulations/uksi/2012/2886/schedule/paragraph/29#input.other_council_tax_reduction_under_1992_act: 3650
+    ? uk:regulations/uksi/2012/2886/schedule/paragraph/29#input.applicant_is_jointly_and_severally_liable_with_resident_other_persons
+    : false
+    uk:regulations/uksi/2012/2886/schedule/paragraph/29#input.applicant_is_jointly_and_severally_liable_only_with_partner: false
+    uk:regulations/uksi/2012/2886/schedule/paragraph/29#input.applicant_is_not_a_pensioner: false
+    uk:regulations/uksi/2012/2886/schedule/paragraph/29#input.number_of_jointly_and_severally_liable_persons: 1
+    ? uk:regulations/uksi/2012/2886/schedule/paragraph/29#input.number_of_jointly_and_severally_liable_persons_excluding_students_to_whom_paragraph_75_1_applies
+    : 1
+    uk:regulations/uksi/2012/2886/schedule/paragraph/29#input.number_of_days_in_relevant_financial_year: 365
+    uk:regulations/uksi/2012/2886/schedule/paragraph/29#input.non_dependant_deductions_under_paragraph_30: 10
+  output:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/29#adjusted_annual_council_tax_amount: 29200
+    uk:regulations/uksi/2012/2886/schedule/paragraph/29#joint_liability_divisor: 1
+    uk:regulations/uksi/2012/2886/schedule/paragraph/29#maximum_council_tax_reduction_amount: 70
+- name: liability only with partner is not divided
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/29#input.council_tax_set_for_relevant_financial_year: 36500
+    uk:regulations/uksi/2012/2886/schedule/paragraph/29#input.appropriate_discount_under_1992_act: 3650
+    uk:regulations/uksi/2012/2886/schedule/paragraph/29#input.other_council_tax_reduction_under_1992_act: 3650
+    ? uk:regulations/uksi/2012/2886/schedule/paragraph/29#input.applicant_is_jointly_and_severally_liable_with_resident_other_persons
+    : true
+    uk:regulations/uksi/2012/2886/schedule/paragraph/29#input.applicant_is_jointly_and_severally_liable_only_with_partner: true
+    uk:regulations/uksi/2012/2886/schedule/paragraph/29#input.applicant_is_not_a_pensioner: true
+    uk:regulations/uksi/2012/2886/schedule/paragraph/29#input.number_of_jointly_and_severally_liable_persons: 2
+    ? uk:regulations/uksi/2012/2886/schedule/paragraph/29#input.number_of_jointly_and_severally_liable_persons_excluding_students_to_whom_paragraph_75_1_applies
+    : 2
+    uk:regulations/uksi/2012/2886/schedule/paragraph/29#input.number_of_days_in_relevant_financial_year: 365
+    uk:regulations/uksi/2012/2886/schedule/paragraph/29#input.non_dependant_deductions_under_paragraph_30: 10
+  output:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/29#adjusted_annual_council_tax_amount: 29200
+    uk:regulations/uksi/2012/2886/schedule/paragraph/29#joint_liability_divisor: 1
+    uk:regulations/uksi/2012/2886/schedule/paragraph/29#maximum_council_tax_reduction_amount: 70
+- name: non-pensioner joint liability excludes qualifying student
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/29#input.council_tax_set_for_relevant_financial_year: 36500
+    uk:regulations/uksi/2012/2886/schedule/paragraph/29#input.appropriate_discount_under_1992_act: 3650
+    uk:regulations/uksi/2012/2886/schedule/paragraph/29#input.other_council_tax_reduction_under_1992_act: 3650
+    ? uk:regulations/uksi/2012/2886/schedule/paragraph/29#input.applicant_is_jointly_and_severally_liable_with_resident_other_persons
+    : true
+    uk:regulations/uksi/2012/2886/schedule/paragraph/29#input.applicant_is_jointly_and_severally_liable_only_with_partner: false
+    uk:regulations/uksi/2012/2886/schedule/paragraph/29#input.applicant_is_not_a_pensioner: true
+    uk:regulations/uksi/2012/2886/schedule/paragraph/29#input.number_of_jointly_and_severally_liable_persons: 3
+    ? uk:regulations/uksi/2012/2886/schedule/paragraph/29#input.number_of_jointly_and_severally_liable_persons_excluding_students_to_whom_paragraph_75_1_applies
+    : 2
+    uk:regulations/uksi/2012/2886/schedule/paragraph/29#input.number_of_days_in_relevant_financial_year: 365
+    uk:regulations/uksi/2012/2886/schedule/paragraph/29#input.non_dependant_deductions_under_paragraph_30: 10
+  output:
+    uk:regulations/uksi/2012/2886/schedule/paragraph/29#adjusted_annual_council_tax_amount: 29200
+    uk:regulations/uksi/2012/2886/schedule/paragraph/29#joint_liability_divisor: 2
+    uk:regulations/uksi/2012/2886/schedule/paragraph/29#maximum_council_tax_reduction_amount: 30

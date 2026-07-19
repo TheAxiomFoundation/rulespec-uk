@@ -1,0 +1,44 @@
+- name: capital_at_lower_threshold_produces_no_weekly_income
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2024-01-15'
+    end: '2024-01-21'
+  input:
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/33#input.applicant_is_not_pensioner: true
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/33#input.applicant_capital_calculated_in_accordance_with_schedule: 6000
+  output:
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/33#weekly_income_treated_as_from_capital: 0
+- name: one_complete_capital_band
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2024-01-15'
+    end: '2024-01-21'
+  input:
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/33#input.applicant_is_not_pensioner: true
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/33#input.applicant_capital_calculated_in_accordance_with_schedule: 6250
+  output:
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/33#weekly_income_treated_as_from_capital: 1
+- name: incomplete_capital_band_is_counted
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2024-01-15'
+    end: '2024-01-21'
+  input:
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/33#input.applicant_is_not_pensioner: true
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/33#input.applicant_capital_calculated_in_accordance_with_schedule: 6751
+  output:
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/33#weekly_income_treated_as_from_capital: 4
+- name: pensioner_is_outside_the_rule
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2024-01-15'
+    end: '2024-01-21'
+  input:
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/33#input.applicant_is_not_pensioner: false
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/33#input.applicant_capital_calculated_in_accordance_with_schedule: 16000
+  output:
+    uk:regulations/wsi/2013/3029/schedule/6/paragraph/33#weekly_income_treated_as_from_capital: 0

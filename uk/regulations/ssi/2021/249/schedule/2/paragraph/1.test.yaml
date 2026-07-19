@@ -1,0 +1,115 @@
+- name: lower income band receives fifteen percent rebate
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:regulations/ssi/2021/249/schedule/2/paragraph/1#input.paragraph_2_displaces_paragraph_1: false
+    uk:regulations/ssi/2021/249/schedule/2/paragraph/1#input.paragraph_3_displaces_paragraph_1: false
+    ? uk:regulations/ssi/2021/249/schedule/2/paragraph/1#input.dwelling_would_be_wholly_occupied_by_students_but_for_second_adults
+    : false
+    ? uk:regulations/ssi/2021/249/schedule/2/paragraph/1#input.one_or_more_second_adults_receive_qualifying_income_related_benefit_or_state_pension_credit
+    : false
+    ? uk:regulations/ssi/2021/249/schedule/2/paragraph/1#input.one_or_more_second_adults_receive_universal_credit_with_no_earned_income
+    : false
+    ? uk:regulations/ssi/2021/249/schedule/2/paragraph/1#input.all_second_adults_receive_qualifying_income_related_benefit_or_state_pension_credit
+    : false
+    uk:regulations/ssi/2021/249/schedule/2/paragraph/1#input.all_second_adults_receive_universal_credit_with_no_earned_income: false
+    uk:regulations/ssi/2021/249/schedule/2/paragraph/1#input.relevant_second_adults_aggregate_gross_income_per_week: 200
+    uk:regulations/ssi/2021/249/schedule/2/paragraph/1#input.council_tax_due_in_respect_of_day: 20
+  output:
+    uk:regulations/ssi/2021/249/schedule/2/paragraph/1#second_adult_income_band: 0
+    uk:regulations/ssi/2021/249/schedule/2/paragraph/1#second_adult_rebate: 3
+- name: middle income band receives seven point five percent rebate
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-16'
+    end: '2024-01-16'
+  input:
+    uk:regulations/ssi/2021/249/schedule/2/paragraph/1#input.paragraph_2_displaces_paragraph_1: false
+    uk:regulations/ssi/2021/249/schedule/2/paragraph/1#input.paragraph_3_displaces_paragraph_1: false
+    ? uk:regulations/ssi/2021/249/schedule/2/paragraph/1#input.dwelling_would_be_wholly_occupied_by_students_but_for_second_adults
+    : false
+    ? uk:regulations/ssi/2021/249/schedule/2/paragraph/1#input.one_or_more_second_adults_receive_qualifying_income_related_benefit_or_state_pension_credit
+    : false
+    ? uk:regulations/ssi/2021/249/schedule/2/paragraph/1#input.one_or_more_second_adults_receive_universal_credit_with_no_earned_income
+    : false
+    ? uk:regulations/ssi/2021/249/schedule/2/paragraph/1#input.all_second_adults_receive_qualifying_income_related_benefit_or_state_pension_credit
+    : false
+    uk:regulations/ssi/2021/249/schedule/2/paragraph/1#input.all_second_adults_receive_universal_credit_with_no_earned_income: false
+    uk:regulations/ssi/2021/249/schedule/2/paragraph/1#input.relevant_second_adults_aggregate_gross_income_per_week: 300
+    uk:regulations/ssi/2021/249/schedule/2/paragraph/1#input.council_tax_due_in_respect_of_day: 40
+  output:
+    uk:regulations/ssi/2021/249/schedule/2/paragraph/1#second_adult_income_band: 1
+    uk:regulations/ssi/2021/249/schedule/2/paragraph/1#second_adult_rebate: 3
+- name: paragraph 2 displacement blocks otherwise qualifying rebate
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-17'
+    end: '2024-01-17'
+  input:
+    uk:regulations/ssi/2021/249/schedule/2/paragraph/1#input.paragraph_2_displaces_paragraph_1: true
+    uk:regulations/ssi/2021/249/schedule/2/paragraph/1#input.paragraph_3_displaces_paragraph_1: false
+    ? uk:regulations/ssi/2021/249/schedule/2/paragraph/1#input.dwelling_would_be_wholly_occupied_by_students_but_for_second_adults
+    : false
+    ? uk:regulations/ssi/2021/249/schedule/2/paragraph/1#input.one_or_more_second_adults_receive_qualifying_income_related_benefit_or_state_pension_credit
+    : false
+    ? uk:regulations/ssi/2021/249/schedule/2/paragraph/1#input.one_or_more_second_adults_receive_universal_credit_with_no_earned_income
+    : false
+    ? uk:regulations/ssi/2021/249/schedule/2/paragraph/1#input.all_second_adults_receive_qualifying_income_related_benefit_or_state_pension_credit
+    : true
+    uk:regulations/ssi/2021/249/schedule/2/paragraph/1#input.all_second_adults_receive_universal_credit_with_no_earned_income: false
+    uk:regulations/ssi/2021/249/schedule/2/paragraph/1#input.relevant_second_adults_aggregate_gross_income_per_week: 400
+    uk:regulations/ssi/2021/249/schedule/2/paragraph/1#input.council_tax_due_in_respect_of_day: 20
+  output:
+    uk:regulations/ssi/2021/249/schedule/2/paragraph/1#second_adult_income_band: -1
+    uk:regulations/ssi/2021/249/schedule/2/paragraph/1#second_adult_rebate: 0
+- name: paragraph 3 displacement blocks otherwise qualifying rebate
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-18'
+    end: '2024-01-18'
+  input:
+    uk:regulations/ssi/2021/249/schedule/2/paragraph/1#input.paragraph_2_displaces_paragraph_1: false
+    uk:regulations/ssi/2021/249/schedule/2/paragraph/1#input.paragraph_3_displaces_paragraph_1: true
+    ? uk:regulations/ssi/2021/249/schedule/2/paragraph/1#input.dwelling_would_be_wholly_occupied_by_students_but_for_second_adults
+    : false
+    ? uk:regulations/ssi/2021/249/schedule/2/paragraph/1#input.one_or_more_second_adults_receive_qualifying_income_related_benefit_or_state_pension_credit
+    : false
+    ? uk:regulations/ssi/2021/249/schedule/2/paragraph/1#input.one_or_more_second_adults_receive_universal_credit_with_no_earned_income
+    : false
+    ? uk:regulations/ssi/2021/249/schedule/2/paragraph/1#input.all_second_adults_receive_qualifying_income_related_benefit_or_state_pension_credit
+    : true
+    uk:regulations/ssi/2021/249/schedule/2/paragraph/1#input.all_second_adults_receive_universal_credit_with_no_earned_income: false
+    uk:regulations/ssi/2021/249/schedule/2/paragraph/1#input.relevant_second_adults_aggregate_gross_income_per_week: 400
+    uk:regulations/ssi/2021/249/schedule/2/paragraph/1#input.council_tax_due_in_respect_of_day: 20
+  output:
+    uk:regulations/ssi/2021/249/schedule/2/paragraph/1#second_adult_income_band: -1
+    uk:regulations/ssi/2021/249/schedule/2/paragraph/1#second_adult_rebate: 0
+- name: qualifying second adult in otherwise student dwelling receives full rebate
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-19'
+    end: '2024-01-19'
+  input:
+    uk:regulations/ssi/2021/249/schedule/2/paragraph/1#input.paragraph_2_displaces_paragraph_1: false
+    uk:regulations/ssi/2021/249/schedule/2/paragraph/1#input.paragraph_3_displaces_paragraph_1: false
+    ? uk:regulations/ssi/2021/249/schedule/2/paragraph/1#input.dwelling_would_be_wholly_occupied_by_students_but_for_second_adults
+    : true
+    ? uk:regulations/ssi/2021/249/schedule/2/paragraph/1#input.one_or_more_second_adults_receive_qualifying_income_related_benefit_or_state_pension_credit
+    : true
+    ? uk:regulations/ssi/2021/249/schedule/2/paragraph/1#input.one_or_more_second_adults_receive_universal_credit_with_no_earned_income
+    : false
+    ? uk:regulations/ssi/2021/249/schedule/2/paragraph/1#input.all_second_adults_receive_qualifying_income_related_benefit_or_state_pension_credit
+    : false
+    uk:regulations/ssi/2021/249/schedule/2/paragraph/1#input.all_second_adults_receive_universal_credit_with_no_earned_income: false
+    uk:regulations/ssi/2021/249/schedule/2/paragraph/1#input.relevant_second_adults_aggregate_gross_income_per_week: 400
+    uk:regulations/ssi/2021/249/schedule/2/paragraph/1#input.council_tax_due_in_respect_of_day: 20
+  output:
+    uk:regulations/ssi/2021/249/schedule/2/paragraph/1#second_adult_income_band: -1
+    uk:regulations/ssi/2021/249/schedule/2/paragraph/1#second_adult_rebate: 20
