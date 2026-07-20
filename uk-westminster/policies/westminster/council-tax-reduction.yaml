@@ -1,0 +1,353 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk-westminster/manual/council-tax-reduction-scheme-2026-2027/page-3
+  summary: |-
+    “Class 1 – a person whose income falls below their applicable amount is entitled to a 100% reduction less any appropriate non-dependant deductions”
+    “Class 2 – a person whose income exceeds their applicable amount is entitled to their full liability less 20% of the difference between their income and their applicable amount and any appropriate non-dependant deductions”
+    “War Pensions will also be disregarded in full when calculating a person’s entitlement for working-age claimants.”
+    On the text's strict wording, income equal to the applicable amount is neither below it nor in excess of it.
+  deferred_outputs:
+    - output: uk-westminster:policies/westminster/council-tax-reduction/class-3#class_3_reduction
+      reason: The source prints four possible Class 3 rates but does not specify the second-adult circumstances selecting each rate.
+      source_values:
+        - uk-westminster:policies/westminster/council-tax-reduction#class_3_full_reduction_rate
+        - uk-westminster:policies/westminster/council-tax-reduction#class_3_twenty_five_percent_reduction_rate
+        - uk-westminster:policies/westminster/council-tax-reduction#class_3_fifteen_percent_reduction_rate
+        - uk-westminster:policies/westminster/council-tax-reduction#class_3_seven_point_five_percent_reduction_rate
+    - output: uk-westminster:policies/westminster/council-tax-reduction/appendix-a#non_dependant_deduction
+      reason: This source says the deduction levels are in Appendix A but does not print those levels.
+    - output: uk-westminster:policies/westminster/council-tax-reduction/appendix-a#non_universal_credit_applicable_amount
+      reason: This source describes the components of the applicable amount but does not print the Appendix A allowance and premium amounts.
+rules:
+  - name: class_1_reduction_rate
+    kind: parameter
+    dtype: Rate
+    source: Council Tax Reduction Scheme 2026-2027, page 3, Class 1
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk-westminster/manual/council-tax-reduction-scheme-2026-2027/page-3
+              excerpt: "entitled to a 100% reduction less any appropriate non-dependant deductions"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          1.00
+
+  - name: class_2_excess_income_taper_rate
+    kind: parameter
+    dtype: Rate
+    source: Council Tax Reduction Scheme 2026-2027, page 3, Class 2
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk-westminster/manual/council-tax-reduction-scheme-2026-2027/page-3
+              excerpt: "less 20% of the difference between their income and their applicable amount"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          0.20
+
+  - name: class_3_minimum_second_adults
+    kind: parameter
+    dtype: Count
+    source: Council Tax Reduction Scheme 2026-2027, page 3, Class 3
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk-westminster/manual/council-tax-reduction-scheme-2026-2027/page-3
+              excerpt: "a person who has at least one second adult living with them"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          1
+
+  - name: class_3_full_reduction_rate
+    kind: parameter
+    dtype: Rate
+    source: Council Tax Reduction Scheme 2026-2027, page 3, Class 3
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk-westminster/manual/council-tax-reduction-scheme-2026-2027/page-3
+              excerpt: "a reduction of 100%, 25%, 15% or 7.5% of the Council Tax liability"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          1.00
+
+  - name: class_3_twenty_five_percent_reduction_rate
+    kind: parameter
+    dtype: Rate
+    source: Council Tax Reduction Scheme 2026-2027, page 3, Class 3
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk-westminster/manual/council-tax-reduction-scheme-2026-2027/page-3
+              excerpt: "a reduction of 100%, 25%, 15% or 7.5% of the Council Tax liability"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          0.25
+
+  - name: class_3_fifteen_percent_reduction_rate
+    kind: parameter
+    dtype: Rate
+    source: Council Tax Reduction Scheme 2026-2027, page 3, Class 3
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk-westminster/manual/council-tax-reduction-scheme-2026-2027/page-3
+              excerpt: "a reduction of 100%, 25%, 15% or 7.5% of the Council Tax liability"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          0.15
+
+  - name: class_3_seven_point_five_percent_reduction_rate
+    kind: parameter
+    dtype: Rate
+    source: Council Tax Reduction Scheme 2026-2027, page 3, Class 3
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk-westminster/manual/council-tax-reduction-scheme-2026-2027/page-3
+              excerpt: "a reduction of 100%, 25%, 15% or 7.5% of the Council Tax liability"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          0.075
+
+  - name: working_age_war_pension_disregard_rate
+    kind: parameter
+    dtype: Rate
+    source: Council Tax Reduction Scheme 2026-2027, page 3, War Pensions
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk-westminster/manual/council-tax-reduction-scheme-2026-2027/page-3
+              excerpt: "War Pensions will also be disregarded in full"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          1.00
+
+  - name: pensioner_maximum_backdating_months
+    kind: parameter
+    dtype: Count
+    source: Council Tax Reduction Scheme 2026-2027, page 3, Claims
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk-westminster/manual/council-tax-reduction-scheme-2026-2027/page-3
+              excerpt: "CTS can be awarded from up to 3 months before the claim is made"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          3
+
+  - name: working_age_assessable_income
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Council Tax Reduction Scheme 2026-2027, page 3, War Pensions
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk-westminster/manual/council-tax-reduction-scheme-2026-2027/page-3
+              excerpt: "War Pensions will also be disregarded in full when calculating a person’s entitlement for working-age claimants."
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk-westminster:policies/westminster/council-tax-reduction#working_age_war_pension_disregard_rate
+              output: working_age_war_pension_disregard_rate
+              hash: sha256:local
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          max(0, working_age_income_before_war_pension_disregard - (working_age_war_pension_disregard_rate * war_pension_income))
+
+  - name: working_age_applicable_amount
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Council Tax Reduction Scheme 2026-2027, page 3, applicable amounts
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk-westminster/manual/council-tax-reduction-scheme-2026-2027/page-3
+              excerpt: "For a working age household receiving Universal Credit, the applicable amount is the maximum rate of universal credit a household could receive."
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk-westminster/manual/council-tax-reduction-scheme-2026-2027/page-3
+              excerpt: "For a working age household not receiving Universal Credit, the applicable amount is made up of personal allowances for the person claiming, their partner and children along with additional premiums if members of the household are disabled."
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if household_receives_universal_credit: maximum_universal_credit_rate else: non_universal_credit_applicable_amount
+
+  - name: class_1_applies
+    kind: derived
+    entity: Household
+    dtype: Judgment
+    period: Month
+    source: Council Tax Reduction Scheme 2026-2027, page 3, Class 1
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk-westminster/manual/council-tax-reduction-scheme-2026-2027/page-3
+              excerpt: "a person whose income falls below their applicable amount"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk-westminster:policies/westminster/council-tax-reduction#working_age_assessable_income
+              output: working_age_assessable_income
+              hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk-westminster:policies/westminster/council-tax-reduction#working_age_applicable_amount
+              output: working_age_applicable_amount
+              hash: sha256:local
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          working_age_assessable_income < working_age_applicable_amount
+
+  - name: class_2_applies
+    kind: derived
+    entity: Household
+    dtype: Judgment
+    period: Month
+    source: Council Tax Reduction Scheme 2026-2027, page 3, Class 2
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk-westminster/manual/council-tax-reduction-scheme-2026-2027/page-3
+              excerpt: "a person whose income exceeds their applicable amount"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk-westminster:policies/westminster/council-tax-reduction#working_age_assessable_income
+              output: working_age_assessable_income
+              hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk-westminster:policies/westminster/council-tax-reduction#working_age_applicable_amount
+              output: working_age_applicable_amount
+              hash: sha256:local
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          working_age_assessable_income > working_age_applicable_amount
+
+  - name: class_1_council_tax_reduction
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Council Tax Reduction Scheme 2026-2027, page 3, Class 1
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk-westminster/manual/council-tax-reduction-scheme-2026-2027/page-3
+              excerpt: "entitled to a 100% reduction less any appropriate non-dependant deductions"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk-westminster:policies/westminster/council-tax-reduction#class_1_reduction_rate
+              output: class_1_reduction_rate
+              hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk-westminster:policies/westminster/council-tax-reduction#class_1_applies
+              output: class_1_applies
+              hash: sha256:local
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if class_1_applies: max(0, (council_tax_liability * class_1_reduction_rate) - appropriate_non_dependant_deductions) else: 0
+
+  - name: class_2_council_tax_reduction
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Month
+    unit: GBP
+    source: Council Tax Reduction Scheme 2026-2027, page 3, Class 2
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk-westminster/manual/council-tax-reduction-scheme-2026-2027/page-3
+              excerpt: "entitled to their full liability less 20% of the difference between their income and their applicable amount and any appropriate non-dependant deductions"
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk-westminster:policies/westminster/council-tax-reduction#class_2_excess_income_taper_rate
+              output: class_2_excess_income_taper_rate
+              hash: sha256:local
+          - path: versions[0].formula
+            kind: import
+            import:
+              target: uk-westminster:policies/westminster/council-tax-reduction#class_2_applies
+              output: class_2_applies
+              hash: sha256:local
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if class_2_applies: max(0, council_tax_liability - (class_2_excess_income_taper_rate * (working_age_assessable_income - working_age_applicable_amount)) - appropriate_non_dependant_deductions) else: 0
