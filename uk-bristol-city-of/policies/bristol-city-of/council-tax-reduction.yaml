@@ -1,0 +1,273 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk-bristol-city-of/manual/council-tax-reduction-scheme-2026-2027/page-5
+  summary: |-
+    “Where a pensioner is receiving the guarantee part of State Pension Credit, their income and capital are ignored for the purposes of council tax reduction, so the pensioner receives a 100% reduction on their council tax bill.” Working-age applicants may receive 100% support, support reduced by 20% of excess income, or a second-adult reduction of 7.5%, 15%, 25% or 100%. Overall conditions include capital not exceeding £16,000.
+rules:
+  - name: pension_credit_guarantee_reduction_rate
+    kind: parameter
+    dtype: Rate
+    source: paragraph 6
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk-bristol-city-of/manual/council-tax-reduction-scheme-2026-2027/page-5
+              excerpt: "the pensioner receives a 100% reduction on their council tax bill"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          1.00
+
+  - name: working_age_maximum_support_rate
+    kind: parameter
+    dtype: Rate
+    source: paragraph 8, first working-age group
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk-bristol-city-of/manual/council-tax-reduction-scheme-2026-2027/page-5
+              excerpt: "these working-age applicants qualify for 100% reduction on their council tax bill"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          1.00
+
+  - name: excess_income_taper_rate
+    kind: parameter
+    dtype: Rate
+    source: paragraph 8, second working-age group
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk-bristol-city-of/manual/council-tax-reduction-scheme-2026-2027/page-5
+              excerpt: "20% of the difference between their income and the amount for living expenses deducted"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          0.20
+
+  - name: working_age_capital_limit
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    source: paragraph 9
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk-bristol-city-of/manual/council-tax-reduction-scheme-2026-2027/page-5
+              excerpt: "have capital not exceeding £16,000"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          16000
+
+  - name: second_adult_lower_rebate_rate
+    kind: parameter
+    dtype: Rate
+    source: paragraph 8, third working-age group
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk-bristol-city-of/manual/council-tax-reduction-scheme-2026-2027/page-5
+              excerpt: "either 7.5%, 15%, 25% or 100%"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          0.075
+
+  - name: second_adult_middle_rebate_rate
+    kind: parameter
+    dtype: Rate
+    source: paragraph 8, third working-age group
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk-bristol-city-of/manual/council-tax-reduction-scheme-2026-2027/page-5
+              excerpt: "either 7.5%, 15%, 25% or 100%"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          0.15
+
+  - name: second_adult_higher_rebate_rate
+    kind: parameter
+    dtype: Rate
+    source: paragraph 8, third working-age group
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk-bristol-city-of/manual/council-tax-reduction-scheme-2026-2027/page-5
+              excerpt: "either 7.5%, 15%, 25% or 100%"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          0.25
+
+  - name: second_adult_full_rebate_rate
+    kind: parameter
+    dtype: Rate
+    source: paragraph 8, third working-age group
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk-bristol-city-of/manual/council-tax-reduction-scheme-2026-2027/page-5
+              excerpt: "either 7.5%, 15%, 25% or 100%"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          1.00
+
+  - name: working_age_overall_conditions_met
+    kind: derived
+    entity: Household
+    dtype: Judgment
+    period: Year
+    source: paragraph 9
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk-bristol-city-of/manual/council-tax-reduction-scheme-2026-2027/page-5
+              excerpt: "live in the property as their main home"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk-bristol-city-of/manual/council-tax-reduction-scheme-2026-2027/page-5
+              excerpt: "are liable to pay council tax"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk-bristol-city-of/manual/council-tax-reduction-scheme-2026-2027/page-5
+              excerpt: "meet the residence rules"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk-bristol-city-of/manual/council-tax-reduction-scheme-2026-2027/page-5
+              excerpt: "have capital not exceeding £16,000"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk-bristol-city-of/manual/council-tax-reduction-scheme-2026-2027/page-5
+              excerpt: "have income at or below a certain amount"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk-bristol-city-of/manual/council-tax-reduction-scheme-2026-2027/page-5
+              excerpt: "have made an application for assistance from the scheme"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          property_is_main_home
+          and applicant_is_liable_for_council_tax
+          and applicant_meets_residence_rules
+          and applicant_capital <= working_age_capital_limit
+          and applicant_income_is_at_or_below_scheme_maximum
+          and applicant_has_applied_for_assistance
+
+  - name: applicable_second_adult_rebate_rate
+    kind: derived
+    entity: Household
+    dtype: Rate
+    period: Year
+    source: paragraph 8, third working-age group
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk-bristol-city-of/manual/council-tax-reduction-scheme-2026-2027/page-5
+              excerpt: "either 7.5%, 15%, 25% or 100%, depending on the circumstances of the second adult living in the household"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          if second_adult_qualifies_for_full_rebate: second_adult_full_rebate_rate else: if second_adult_qualifies_for_higher_rebate: second_adult_higher_rebate_rate else: if second_adult_qualifies_for_middle_rebate: second_adult_middle_rebate_rate else: second_adult_lower_rebate_rate
+
+  - name: pension_credit_guarantee_council_tax_reduction
+    kind: derived
+    entity: Household
+    dtype: Money
+    unit: GBP
+    period: Year
+    source: paragraph 6
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk-bristol-city-of/manual/council-tax-reduction-scheme-2026-2027/page-5
+              excerpt: "Where a pensioner is receiving the guarantee part of State Pension Credit"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk-bristol-city-of/manual/council-tax-reduction-scheme-2026-2027/page-5
+              excerpt: "the pensioner receives a 100% reduction on their council tax bill"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          if pensioner_receives_state_pension_credit_guarantee_part: max(0, council_tax_liability * pension_credit_guarantee_reduction_rate) else: 0
+
+  - name: working_age_council_tax_reduction
+    kind: derived
+    entity: Household
+    dtype: Money
+    unit: GBP
+    period: Year
+    source: paragraphs 8-9
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk-bristol-city-of/manual/council-tax-reduction-scheme-2026-2027/page-5
+              excerpt: "Subject to some overall conditions (see paragraph 9 below), there are three groups of working-age applicants in financial need who the scheme is designed to help"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk-bristol-city-of/manual/council-tax-reduction-scheme-2026-2027/page-5
+              excerpt: "these working-age applicants qualify for 100% reduction on their council tax bill"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk-bristol-city-of/manual/council-tax-reduction-scheme-2026-2027/page-5
+              excerpt: "20% of the difference between their income and the amount for living expenses deducted from the maximum amount of council tax reduction that would otherwise be payable"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk-bristol-city-of/manual/council-tax-reduction-scheme-2026-2027/page-5
+              excerpt: "these working-age applicants will see a reduction in their council tax bill of either 7.5%, 15%, 25% or 100%"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          if not working_age_overall_conditions_met: 0 else: if second_adult_rebate_path_applies: max(0, council_tax_liability * applicable_second_adult_rebate_rate) else: if income_is_no_greater_than_allowed_living_expenses: max(0, maximum_council_tax_reduction * working_age_maximum_support_rate) else: max(0, maximum_council_tax_reduction - (excess_income_over_allowed_living_expenses * excess_income_taper_rate))
