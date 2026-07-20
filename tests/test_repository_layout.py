@@ -115,10 +115,33 @@ def canonical_rule_id(path: Path, rule_name: str) -> str:
 
 
 def test_has_only_canonical_uk_jurisdiction_namespaces() -> None:
-    assert [path.name for path in jurisdiction_dirs()] == [
-        "uk",
-        "uk-kingston-upon-thames",
-    ]
+    """Every jurisdiction namespace is `uk` or a registered English billing
+    authority (`uk-<slug>` per data/councils/registry.csv), and every
+    registered namespace is admitted by .axiom/repository-structure.yaml —
+    so a stray or typo'd directory still fails, but registered councils land
+    without editing this test."""
+    import csv
+
+    with open(ROOT / "data" / "councils" / "registry.csv") as fh:
+        registered = {f"uk-{row['slug']}" for row in csv.DictReader(fh)}
+    assert registered, "council registry must not be empty"
+
+    detected = [path.name for path in jurisdiction_dirs()]
+    allowed = {"uk"} | registered
+    strays = [name for name in detected if name not in allowed]
+    assert strays == [], f"unregistered jurisdiction namespaces: {strays}"
+
+    structure = (ROOT / ".axiom" / "repository-structure.yaml").read_text()
+    admitted_dirs = {
+        line.strip().removeprefix("- ")
+        for line in structure.splitlines()
+        if line.strip().startswith("- ")
+    }
+    unadmitted = sorted(registered - admitted_dirs)
+    assert unadmitted == [], (
+        "registered councils missing from repository-structure.yaml: "
+        f"{unadmitted[:5]}{'…' if len(unadmitted) > 5 else ''}"
+    )
 
 
 def test_five_filesystem_roots_and_four_atomic_roots_are_distinct() -> None:
