@@ -1,0 +1,37 @@
+- name: liability below Band B cap
+  period:
+    period_kind: custom
+    name: calendar_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-derby:policies/derby/council-tax-reduction#input.council_tax_due: 1000
+    uk-derby:policies/derby/council-tax-reduction#input.band_b_property_yearly_charge: 1500
+  output:
+    uk-derby:policies/derby/council-tax-reduction#maximum_council_tax_support_rate: 0.8
+    uk-derby:policies/derby/council-tax-reduction#maximum_eligible_council_tax: 1000
+    uk-derby:policies/derby/council-tax-reduction#maximum_council_tax_support_award: 800
+- name: liability capped at Band B charge
+  period:
+    period_kind: custom
+    name: calendar_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-derby:policies/derby/council-tax-reduction#input.council_tax_due: 2000
+    uk-derby:policies/derby/council-tax-reduction#input.band_b_property_yearly_charge: 1500
+  output:
+    uk-derby:policies/derby/council-tax-reduction#maximum_eligible_council_tax: 1500
+    uk-derby:policies/derby/council-tax-reduction#maximum_council_tax_support_award: 1200
+- name: zero liability produces zero maximum award
+  period:
+    period_kind: custom
+    name: calendar_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-derby:policies/derby/council-tax-reduction#input.council_tax_due: 0
+    uk-derby:policies/derby/council-tax-reduction#input.band_b_property_yearly_charge: 1500
+  output:
+    uk-derby:policies/derby/council-tax-reduction#maximum_eligible_council_tax: 0
+    uk-derby:policies/derby/council-tax-reduction#maximum_council_tax_support_award: 0

@@ -1,0 +1,86 @@
+- name: class A pensioner receives maximum reduction
+  period:
+    period_kind: custom
+    name: day
+    start: '2026-04-01'
+    end: '2026-04-01'
+  input:
+    uk-coventry:policies/coventry/council-tax-reduction#input.person_is_pensioner: true
+    uk-coventry:policies/coventry/council-tax-reduction#input.person_is_liable_for_council_tax_for_resident_dwelling: true
+    ? uk-coventry:policies/coventry/council-tax-reduction#input.person_is_not_absent_from_dwelling_throughout_day_subject_to_schedule_1_paragraph_5
+    : true
+    uk-coventry:policies/coventry/council-tax-reduction#input.maximum_council_tax_reduction_can_be_calculated: true
+    uk-coventry:policies/coventry/council-tax-reduction#input.person_is_in_excluded_prescribed_class: false
+    uk-coventry:policies/coventry/council-tax-reduction#input.income_for_relevant_week: 100
+    uk-coventry:policies/coventry/council-tax-reduction#input.applicable_amount: 120
+    uk-coventry:policies/coventry/council-tax-reduction#input.capital_savings: 16000
+    uk-coventry:policies/coventry/council-tax-reduction#input.person_has_made_reduction_application: true
+    uk-coventry:policies/coventry/council-tax-reduction#input.maximum_council_tax_reduction_amount: 20
+  output:
+    uk-coventry:policies/coventry/council-tax-reduction#pensioner_class_a_applies: holds
+    uk-coventry:policies/coventry/council-tax-reduction#pensioner_class_a_council_tax_reduction: 20
+- name: class A capital above limit prevents reduction
+  period:
+    period_kind: custom
+    name: day
+    start: '2026-04-01'
+    end: '2026-04-01'
+  input:
+    uk-coventry:policies/coventry/council-tax-reduction#input.person_is_pensioner: true
+    uk-coventry:policies/coventry/council-tax-reduction#input.person_is_liable_for_council_tax_for_resident_dwelling: true
+    ? uk-coventry:policies/coventry/council-tax-reduction#input.person_is_not_absent_from_dwelling_throughout_day_subject_to_schedule_1_paragraph_5
+    : true
+    uk-coventry:policies/coventry/council-tax-reduction#input.maximum_council_tax_reduction_can_be_calculated: true
+    uk-coventry:policies/coventry/council-tax-reduction#input.person_is_in_excluded_prescribed_class: false
+    uk-coventry:policies/coventry/council-tax-reduction#input.income_for_relevant_week: 100
+    uk-coventry:policies/coventry/council-tax-reduction#input.applicable_amount: 120
+    uk-coventry:policies/coventry/council-tax-reduction#input.capital_savings: 16001
+    uk-coventry:policies/coventry/council-tax-reduction#input.person_has_made_reduction_application: true
+    uk-coventry:policies/coventry/council-tax-reduction#input.maximum_council_tax_reduction_amount: 20
+  output:
+    uk-coventry:policies/coventry/council-tax-reduction#pensioner_class_a_applies: not_holds
+    uk-coventry:policies/coventry/council-tax-reduction#pensioner_class_a_council_tax_reduction: 0
+- name: class B taper reduces maximum award
+  period:
+    period_kind: custom
+    name: day
+    start: '2026-04-01'
+    end: '2026-04-01'
+  input:
+    uk-coventry:policies/coventry/council-tax-reduction#input.person_is_pensioner: true
+    uk-coventry:policies/coventry/council-tax-reduction#input.person_is_liable_for_council_tax_for_resident_dwelling: true
+    ? uk-coventry:policies/coventry/council-tax-reduction#input.person_is_not_absent_from_dwelling_throughout_day_subject_to_schedule_1_paragraph_5
+    : true
+    uk-coventry:policies/coventry/council-tax-reduction#input.maximum_council_tax_reduction_can_be_calculated: true
+    uk-coventry:policies/coventry/council-tax-reduction#input.person_is_in_excluded_prescribed_class: false
+    uk-coventry:policies/coventry/council-tax-reduction#input.income_for_relevant_week: 190
+    uk-coventry:policies/coventry/council-tax-reduction#input.applicable_amount: 120
+    uk-coventry:policies/coventry/council-tax-reduction#input.capital_savings: 16000
+    uk-coventry:policies/coventry/council-tax-reduction#input.person_has_made_reduction_application: true
+    uk-coventry:policies/coventry/council-tax-reduction#input.maximum_council_tax_reduction_amount: 20
+  output:
+    uk-coventry:policies/coventry/council-tax-reduction#class_b_excess_income_reduction: 2
+    uk-coventry:policies/coventry/council-tax-reduction#pensioner_class_b_applies: holds
+    uk-coventry:policies/coventry/council-tax-reduction#pensioner_class_b_council_tax_reduction: 18
+- name: class B amount B equal to amount A produces zero award
+  period:
+    period_kind: custom
+    name: day
+    start: '2026-04-01'
+    end: '2026-04-01'
+  input:
+    uk-coventry:policies/coventry/council-tax-reduction#input.person_is_pensioner: true
+    uk-coventry:policies/coventry/council-tax-reduction#input.person_is_liable_for_council_tax_for_resident_dwelling: true
+    ? uk-coventry:policies/coventry/council-tax-reduction#input.person_is_not_absent_from_dwelling_throughout_day_subject_to_schedule_1_paragraph_5
+    : true
+    uk-coventry:policies/coventry/council-tax-reduction#input.maximum_council_tax_reduction_can_be_calculated: true
+    uk-coventry:policies/coventry/council-tax-reduction#input.person_is_in_excluded_prescribed_class: false
+    uk-coventry:policies/coventry/council-tax-reduction#input.income_for_relevant_week: 820
+    uk-coventry:policies/coventry/council-tax-reduction#input.applicable_amount: 120
+    uk-coventry:policies/coventry/council-tax-reduction#input.capital_savings: 16000
+    uk-coventry:policies/coventry/council-tax-reduction#input.person_has_made_reduction_application: true
+    uk-coventry:policies/coventry/council-tax-reduction#input.maximum_council_tax_reduction_amount: 20
+  output:
+    uk-coventry:policies/coventry/council-tax-reduction#class_b_excess_income_reduction: 20
+    uk-coventry:policies/coventry/council-tax-reduction#pensioner_class_b_applies: not_holds
+    uk-coventry:policies/coventry/council-tax-reduction#pensioner_class_b_council_tax_reduction: 0

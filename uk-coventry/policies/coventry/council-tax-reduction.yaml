@@ -1,0 +1,175 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk-coventry/manual/council-tax-reduction-scheme-2026-2027/page-6
+  summary: |-
+    “Class A: pensioners whose income is less than the applicable amount.”
+    “Class B: pensioners whose income is greater than the applicable amount.”
+    Both classes require capital savings not above £16,000. For Class B, amount B is “2 6/7 per cent of the difference between his income for the relevant week and his applicable amount”.
+rules:
+  - name: class_a_capital_limit
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    period: Day
+    source: Class A, paragraph (e)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk-coventry/manual/council-tax-reduction-scheme-2026-2027/page-6
+              excerpt: "not have capital savings above £16,000"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          16000
+
+  - name: class_b_capital_limit
+    kind: parameter
+    dtype: Money
+    unit: GBP
+    period: Day
+    source: Class B, paragraph (g)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk-coventry/manual/council-tax-reduction-scheme-2026-2027/page-6
+              excerpt: "not have capital savings above £16,000"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          16000
+
+  - name: class_b_excess_income_taper_rate
+    kind: parameter
+    dtype: Rate
+    period: Day
+    source: Class B, paragraph (e)(ii)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk-coventry/manual/council-tax-reduction-scheme-2026-2027/page-6
+              excerpt: "amount B is 2 6/7 per cent of the difference between his income for the relevant week and his applicable amount"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          0.0285714285714285714285714286
+
+  - name: pensioner_class_a_applies
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Day
+    source: Class A, paragraphs (a)-(f)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: predicate
+            source:
+              corpus_citation_path: uk-coventry/manual/council-tax-reduction-scheme-2026-2027/page-6
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          person_is_pensioner
+          and person_is_liable_for_council_tax_for_resident_dwelling
+          and person_is_not_absent_from_dwelling_throughout_day_subject_to_schedule_1_paragraph_5
+          and maximum_council_tax_reduction_can_be_calculated
+          and not person_is_in_excluded_prescribed_class
+          and income_for_relevant_week <= applicable_amount
+          and capital_savings <= class_a_capital_limit
+          and person_has_made_reduction_application
+
+  - name: pensioner_class_a_council_tax_reduction
+    kind: derived
+    entity: Person
+    dtype: Money
+    unit: GBP
+    period: Day
+    source: Class A
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk-coventry/manual/council-tax-reduction-scheme-2026-2027/page-6
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if pensioner_class_a_applies: max(0, maximum_council_tax_reduction_amount) else: 0
+
+  - name: class_b_excess_income_reduction
+    kind: derived
+    entity: Person
+    dtype: Money
+    unit: GBP
+    period: Day
+    source: Class B, paragraph (e)(ii)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk-coventry/manual/council-tax-reduction-scheme-2026-2027/page-6
+              excerpt: "amount B is 2 6/7 per cent of the difference between his income for the relevant week and his applicable amount"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          class_b_excess_income_taper_rate * max(0, income_for_relevant_week - applicable_amount)
+
+  - name: pensioner_class_b_applies
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Day
+    source: Class B, paragraphs (a)-(h)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: predicate
+            source:
+              corpus_citation_path: uk-coventry/manual/council-tax-reduction-scheme-2026-2027/page-6
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          person_is_pensioner
+          and person_is_liable_for_council_tax_for_resident_dwelling
+          and person_is_not_absent_from_dwelling_throughout_day_subject_to_schedule_1_paragraph_5
+          and maximum_council_tax_reduction_can_be_calculated
+          and not person_is_in_excluded_prescribed_class
+          and income_for_relevant_week > applicable_amount
+          and maximum_council_tax_reduction_amount > class_b_excess_income_reduction
+          and capital_savings <= class_b_capital_limit
+          and person_has_made_reduction_application
+
+  - name: pensioner_class_b_council_tax_reduction
+    kind: derived
+    entity: Person
+    dtype: Money
+    unit: GBP
+    period: Day
+    source: Class B, paragraph (e)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk-coventry/manual/council-tax-reduction-scheme-2026-2027/page-6
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if pensioner_class_b_applies: max(0, maximum_council_tax_reduction_amount - class_b_excess_income_reduction) else: 0
