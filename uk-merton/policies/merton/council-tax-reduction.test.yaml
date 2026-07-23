@@ -1,0 +1,145 @@
+- name: merton_ctr_full_liability_award
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-merton:policies/merton/council-tax-reduction#input.local_authority_is_merton: true
+    uk-merton:policies/merton/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-merton:policies/merton/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: false
+    uk-merton:policies/merton/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-merton:policies/merton/council-tax-reduction#input.merton_council_tax_reduction_assessed_capital_for_year: 0
+    uk-merton:policies/merton/council-tax-reduction#input.merton_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+    uk-merton:policies/merton/council-tax-reduction#input.merton_council_tax_reduction_universal_credit_for_year: 0
+    uk-merton:policies/merton/council-tax-reduction#input.merton_council_tax_reduction_uc_maximum_amount_for_year: 0
+    uk-merton:policies/merton/council-tax-reduction#input.merton_council_tax_reduction_legacy_applicable_amount_for_year: 0
+    uk-merton:policies/merton/council-tax-reduction#input.merton_council_tax_reduction_applicable_income_for_year: 0
+    uk-merton:policies/merton/council-tax-reduction#input.merton_council_tax_reduction_relevant_income_based_benefit: false
+    uk-merton:policies/merton/council-tax-reduction#input.merton_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-merton:policies/merton/council-tax-reduction#merton_council_tax_reduction_working_age_scheme_applies: holds
+    uk-merton:policies/merton/council-tax-reduction#merton_council_tax_reduction_has_universal_credit_award: not_holds
+    uk-merton:policies/merton/council-tax-reduction#merton_council_tax_reduction_capital_eligible: holds
+    uk-merton:policies/merton/council-tax-reduction#simulated_merton_council_tax_reduction_annual_amount: 1800
+    uk-merton:policies/merton/council-tax-reduction#merton_council_tax_reduction_annual_amount: 1800
+
+- name: merton_ctr_capital_over_limit_is_nil
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-merton:policies/merton/council-tax-reduction#input.local_authority_is_merton: true
+    uk-merton:policies/merton/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-merton:policies/merton/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: false
+    uk-merton:policies/merton/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-merton:policies/merton/council-tax-reduction#input.merton_council_tax_reduction_assessed_capital_for_year: 16001
+    uk-merton:policies/merton/council-tax-reduction#input.merton_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+    uk-merton:policies/merton/council-tax-reduction#input.merton_council_tax_reduction_universal_credit_for_year: 0
+    uk-merton:policies/merton/council-tax-reduction#input.merton_council_tax_reduction_uc_maximum_amount_for_year: 0
+    uk-merton:policies/merton/council-tax-reduction#input.merton_council_tax_reduction_legacy_applicable_amount_for_year: 0
+    uk-merton:policies/merton/council-tax-reduction#input.merton_council_tax_reduction_applicable_income_for_year: 0
+    uk-merton:policies/merton/council-tax-reduction#input.merton_council_tax_reduction_relevant_income_based_benefit: false
+    uk-merton:policies/merton/council-tax-reduction#input.merton_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-merton:policies/merton/council-tax-reduction#merton_council_tax_reduction_capital_eligible: not_holds
+    uk-merton:policies/merton/council-tax-reduction#simulated_merton_council_tax_reduction_annual_amount: 0
+    uk-merton:policies/merton/council-tax-reduction#merton_council_tax_reduction_annual_amount: 0
+
+- name: merton_ctr_tariff_income_reduces_award
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-merton:policies/merton/council-tax-reduction#input.local_authority_is_merton: true
+    uk-merton:policies/merton/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-merton:policies/merton/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: false
+    uk-merton:policies/merton/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-merton:policies/merton/council-tax-reduction#input.merton_council_tax_reduction_assessed_capital_for_year: 9000
+    uk-merton:policies/merton/council-tax-reduction#input.merton_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+    uk-merton:policies/merton/council-tax-reduction#input.merton_council_tax_reduction_universal_credit_for_year: 0
+    uk-merton:policies/merton/council-tax-reduction#input.merton_council_tax_reduction_uc_maximum_amount_for_year: 0
+    uk-merton:policies/merton/council-tax-reduction#input.merton_council_tax_reduction_legacy_applicable_amount_for_year: 0
+    uk-merton:policies/merton/council-tax-reduction#input.merton_council_tax_reduction_applicable_income_for_year: 0
+    uk-merton:policies/merton/council-tax-reduction#input.merton_council_tax_reduction_relevant_income_based_benefit: false
+    uk-merton:policies/merton/council-tax-reduction#input.merton_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-merton:policies/merton/council-tax-reduction#merton_council_tax_reduction_tariff_income_for_year: 624
+    uk-merton:policies/merton/council-tax-reduction#merton_council_tax_reduction_applicable_income_with_tariff_for_year: 624
+    uk-merton:policies/merton/council-tax-reduction#merton_council_tax_reduction_excess_income_for_year: 624
+    uk-merton:policies/merton/council-tax-reduction#merton_council_tax_reduction_income_taper_deduction_for_year: 124.8
+    uk-merton:policies/merton/council-tax-reduction#merton_council_tax_reduction_annual_amount: 1675.2
+
+- name: merton_ctr_universal_credit_uses_uc_maximum_amount
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-merton:policies/merton/council-tax-reduction#input.local_authority_is_merton: true
+    uk-merton:policies/merton/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-merton:policies/merton/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: false
+    uk-merton:policies/merton/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-merton:policies/merton/council-tax-reduction#input.merton_council_tax_reduction_assessed_capital_for_year: 9000
+    uk-merton:policies/merton/council-tax-reduction#input.merton_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+    uk-merton:policies/merton/council-tax-reduction#input.merton_council_tax_reduction_universal_credit_for_year: 12000
+    uk-merton:policies/merton/council-tax-reduction#input.merton_council_tax_reduction_uc_maximum_amount_for_year: 12000
+    uk-merton:policies/merton/council-tax-reduction#input.merton_council_tax_reduction_legacy_applicable_amount_for_year: 0
+    uk-merton:policies/merton/council-tax-reduction#input.merton_council_tax_reduction_applicable_income_for_year: 12000
+    uk-merton:policies/merton/council-tax-reduction#input.merton_council_tax_reduction_relevant_income_based_benefit: false
+    uk-merton:policies/merton/council-tax-reduction#input.merton_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-merton:policies/merton/council-tax-reduction#merton_council_tax_reduction_has_universal_credit_award: holds
+    uk-merton:policies/merton/council-tax-reduction#merton_council_tax_reduction_applicable_amount_for_year: 12000
+    uk-merton:policies/merton/council-tax-reduction#merton_council_tax_reduction_tariff_income_for_year: 0
+    uk-merton:policies/merton/council-tax-reduction#merton_council_tax_reduction_excess_income_for_year: 0
+    uk-merton:policies/merton/council-tax-reduction#merton_council_tax_reduction_annual_amount: 1800
+
+- name: merton_ctr_non_dependant_top_band_reduces_award
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-merton:policies/merton/council-tax-reduction#input.local_authority_is_merton: true
+    uk-merton:policies/merton/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-merton:policies/merton/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: false
+    uk-merton:policies/merton/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-merton:policies/merton/council-tax-reduction#input.merton_council_tax_reduction_assessed_capital_for_year: 0
+    uk-merton:policies/merton/council-tax-reduction#input.merton_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+    uk-merton:policies/merton/council-tax-reduction#input.merton_council_tax_reduction_universal_credit_for_year: 0
+    uk-merton:policies/merton/council-tax-reduction#input.merton_council_tax_reduction_uc_maximum_amount_for_year: 0
+    uk-merton:policies/merton/council-tax-reduction#input.merton_council_tax_reduction_legacy_applicable_amount_for_year: 0
+    uk-merton:policies/merton/council-tax-reduction#input.merton_council_tax_reduction_applicable_income_for_year: 0
+    uk-merton:policies/merton/council-tax-reduction#input.merton_council_tax_reduction_relevant_income_based_benefit: false
+    uk-merton:policies/merton/council-tax-reduction#input.merton_council_tax_reduction_non_dependant_deductions_for_year: 829.4
+  output:
+    uk-merton:policies/merton/council-tax-reduction#merton_council_tax_reduction_annual_amount: 970.6
+
+- name: merton_ctr_non_dependant_top_band_individual_deduction
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-merton:policies/merton/council-tax-reduction#input.merton_council_tax_reduction_is_non_dependant: true
+    uk-merton:policies/merton/council-tax-reduction#input.merton_council_tax_reduction_non_dependant_exempt: false
+    uk-merton:policies/merton/council-tax-reduction#input.merton_council_tax_reduction_non_dependant_weekly_hours: 16
+    uk-merton:policies/merton/council-tax-reduction#input.merton_council_tax_reduction_non_dependant_normal_gross_weekly_income: 605
+  output:
+    uk-merton:policies/merton/council-tax-reduction#merton_council_tax_reduction_non_dependant_in_remunerative_work: holds
+    uk-merton:policies/merton/council-tax-reduction#merton_council_tax_reduction_individual_non_dependant_deduction_for_year: 829.4
+
+- name: merton_ctr_exempt_non_dependant_has_no_deduction
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-merton:policies/merton/council-tax-reduction#input.merton_council_tax_reduction_is_non_dependant: true
+    uk-merton:policies/merton/council-tax-reduction#input.merton_council_tax_reduction_non_dependant_exempt: true
+    uk-merton:policies/merton/council-tax-reduction#input.merton_council_tax_reduction_non_dependant_weekly_hours: 16
+    uk-merton:policies/merton/council-tax-reduction#input.merton_council_tax_reduction_non_dependant_normal_gross_weekly_income: 605
+  output:
+    uk-merton:policies/merton/council-tax-reduction#merton_council_tax_reduction_individual_non_dependant_deduction_for_year: 0

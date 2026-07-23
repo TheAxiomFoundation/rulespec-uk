@@ -1,0 +1,532 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk-merton/manual/council-tax-reduction-scheme-2026-2027/page-58
+  summary: 'Merton Council Tax Reduction working-age alignment surface for the 2026-2027 scheme: it applies the local maximum-liability award, working-age UC applicable-amount treatment, capital limit and tariff income, 20 percent excess-income taper, and working-age non-dependant deductions used by PolicyEngine UK''s Kingston CTR implementation.'
+  deferred_outputs:
+  - output: uk-merton:policies/merton/council-tax-reduction/e#applicable_premiums_amount
+    reason: Page 38(e) adds premiums determined under Parts 3 and 4 of the applicable-amount Schedule. This module does not encode those category-specific premium eligibility and amount schedules, so the premium component is deferred rather than treated as zero or inferred from an unrelated amount.
+rules:
+- name: merton_council_tax_reduction_maximum_support_rate
+  kind: parameter
+  dtype: Rate
+  source: Merton Council Tax Reduction Scheme 2026-2027 paragraph 29
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: amount
+        source:
+          corpus_citation_path: uk-merton/manual/council-tax-reduction-scheme-2026-2027/page-58
+          excerpt: 100 per cent of the amount A/B
+  versions:
+  - effective_from: '2026-04-01'
+    formula: '1'
+- name: merton_council_tax_reduction_capital_limit
+  kind: parameter
+  dtype: Money
+  period: Year
+  unit: GBP
+  source: Merton Council Tax Reduction Scheme 2026-2027 tariff-income upper capital bound
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: amount
+        source:
+          corpus_citation_path: uk-merton/manual/council-tax-reduction-scheme-2026-2027/page-120
+          excerpt: not exceeding £16,000
+  versions:
+  - effective_from: '2026-04-01'
+    formula: '16000'
+- name: merton_council_tax_reduction_tariff_income_threshold
+  kind: parameter
+  dtype: Money
+  period: Year
+  unit: GBP
+  source: Merton Council Tax Reduction Scheme 2026-2027 paragraph 72
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: amount
+        source:
+          corpus_citation_path: uk-merton/manual/council-tax-reduction-scheme-2026-2027/page-120
+          excerpt: in excess of £6,000
+  versions:
+  - effective_from: '2026-04-01'
+    formula: '6000'
+- name: merton_council_tax_reduction_tariff_income_step
+  kind: parameter
+  dtype: Money
+  period: Year
+  unit: GBP
+  source: Merton Council Tax Reduction Scheme 2026-2027 paragraph 72
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: amount
+        source:
+          corpus_citation_path: uk-merton/manual/council-tax-reduction-scheme-2026-2027/page-120
+          excerpt: each £250
+  versions:
+  - effective_from: '2026-04-01'
+    formula: '250'
+- name: merton_council_tax_reduction_tariff_income_weekly_amount_per_step
+  kind: parameter
+  dtype: Money
+  period: Week
+  unit: GBP
+  source: Merton Council Tax Reduction Scheme 2026-2027 paragraph 72
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: amount
+        source:
+          corpus_citation_path: uk-merton/manual/council-tax-reduction-scheme-2026-2027/page-120
+          excerpt: £1 for each £250
+  versions:
+  - effective_from: '2026-04-01'
+    formula: '1'
+- name: merton_council_tax_reduction_days_per_week
+  kind: parameter
+  dtype: Number
+  source: Merton Council Tax Reduction Scheme 2026-2027 daily deduction conversion
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: amount
+        source:
+          corpus_citation_path: uk-merton/manual/council-tax-reduction-scheme-2026-2027/page-58
+          excerpt: £5.20 x 1/7
+  versions:
+  - effective_from: '2026-04-01'
+    formula: '7'
+- name: merton_council_tax_reduction_daily_taper_rate
+  kind: parameter
+  dtype: Rate
+  source: Merton Council Tax Reduction Scheme 2026-2027 class E amount B percentage
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: amount
+        source:
+          corpus_citation_path: uk-merton/manual/council-tax-reduction-scheme-2026-2027/page-39
+          excerpt: 2 6/7 per cent
+  versions:
+  - effective_from: '2026-04-01'
+    formula: '0.02857142857142857142857142857'
+- name: merton_council_tax_reduction_withdrawal_rate
+  kind: parameter
+  dtype: Rate
+  source: Merton Council Tax Reduction Scheme 2026-2027 class E excess-income percentage
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: uk-merton/manual/council-tax-reduction-scheme-2026-2027/page-39
+          excerpt: 2 6/7 per cent
+  versions:
+  - effective_from: '2026-04-01'
+    formula: merton_council_tax_reduction_daily_taper_rate * merton_council_tax_reduction_days_per_week
+- name: merton_council_tax_reduction_remunerative_work_hours
+  kind: parameter
+  dtype: Number
+  source: Merton Council Tax Reduction Scheme 2026-2027 paragraph 10
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: amount
+        source:
+          corpus_citation_path: uk-merton/manual/council-tax-reduction-scheme-2026-2027/page-36
+          excerpt: not less than 16 hours a week
+  versions:
+  - effective_from: '2026-04-01'
+    formula: '16'
+- name: merton_council_tax_reduction_weeks_per_year
+  kind: parameter
+  dtype: Number
+  source: Merton Council Tax Reduction Scheme 2026-2027 weekly-to-annual conversion denominator
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: amount
+        source:
+          corpus_citation_path: uk-merton/manual/council-tax-reduction-scheme-2026-2027/page-55
+          excerpt: divide the product by 52
+  versions:
+  - effective_from: '2026-04-01'
+    formula: '52'
+- name: merton_council_tax_reduction_low_non_dependant_deduction_weekly
+  kind: parameter
+  dtype: Money
+  period: Week
+  unit: GBP
+  source: Merton Council Tax Reduction Scheme 2026-2027 paragraph 30A
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: amount
+        source:
+          corpus_citation_path: uk-merton/manual/council-tax-reduction-scheme-2026-2027/page-58
+          excerpt: £5.20 x 1/7
+  versions:
+  - effective_from: '2026-04-01'
+    formula: '5.20'
+- name: merton_council_tax_reduction_mid_non_dependant_deduction_weekly
+  kind: parameter
+  dtype: Money
+  period: Week
+  unit: GBP
+  source: Merton Council Tax Reduction Scheme 2026-2027 paragraph 30A
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: amount
+        source:
+          corpus_citation_path: uk-merton/manual/council-tax-reduction-scheme-2026-2027/page-59
+          excerpt: £10.60
+  versions:
+  - effective_from: '2026-04-01'
+    formula: '10.60'
+- name: merton_council_tax_reduction_high_non_dependant_deduction_weekly
+  kind: parameter
+  dtype: Money
+  period: Week
+  unit: GBP
+  source: Merton Council Tax Reduction Scheme 2026-2027 paragraph 30A
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: amount
+        source:
+          corpus_citation_path: uk-merton/manual/council-tax-reduction-scheme-2026-2027/page-59
+          excerpt: £13.30
+  versions:
+  - effective_from: '2026-04-01'
+    formula: '13.30'
+- name: merton_council_tax_reduction_top_non_dependant_deduction_weekly
+  kind: parameter
+  dtype: Money
+  period: Week
+  unit: GBP
+  source: Merton Council Tax Reduction Scheme 2026-2027 paragraph 30A
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: amount
+        source:
+          corpus_citation_path: uk-merton/manual/council-tax-reduction-scheme-2026-2027/page-58
+          excerpt: £15.95 x 1/7
+  versions:
+  - effective_from: '2026-04-01'
+    formula: '15.95'
+- name: merton_council_tax_reduction_non_dependant_mid_income_threshold_weekly
+  kind: parameter
+  dtype: Money
+  period: Week
+  unit: GBP
+  source: Merton Council Tax Reduction Scheme 2026-2027 paragraph 30A
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: amount
+        source:
+          corpus_citation_path: uk-merton/manual/council-tax-reduction-scheme-2026-2027/page-59
+          excerpt: not less than £279.00
+  versions:
+  - effective_from: '2026-04-01'
+    formula: '279'
+- name: merton_council_tax_reduction_non_dependant_high_income_threshold_weekly
+  kind: parameter
+  dtype: Money
+  period: Week
+  unit: GBP
+  source: Merton Council Tax Reduction Scheme 2026-2027 paragraph 30A
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: amount
+        source:
+          corpus_citation_path: uk-merton/manual/council-tax-reduction-scheme-2026-2027/page-59
+          excerpt: not less than £485.00
+  versions:
+  - effective_from: '2026-04-01'
+    formula: '485'
+- name: merton_council_tax_reduction_non_dependant_top_income_threshold_weekly
+  kind: parameter
+  dtype: Money
+  period: Week
+  unit: GBP
+  source: Merton Council Tax Reduction Scheme 2026-2027 paragraph 30A
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: amount
+        source:
+          corpus_citation_path: uk-merton/manual/council-tax-reduction-scheme-2026-2027/page-59
+          excerpt: less than £605.00
+  versions:
+  - effective_from: '2026-04-01'
+    formula: '605'
+- name: merton_council_tax_reduction_working_age_scheme_applies
+  kind: derived
+  entity: Household
+  dtype: Judgment
+  period: Year
+  source: Merton Council Tax Reduction Scheme 2026-2027 working-age class D and E eligibility surface
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: condition
+        source:
+          corpus_citation_path: uk-merton/manual/council-tax-reduction-scheme-2026-2027/page-6
+          excerpt: persons who are not pensioners
+  versions:
+  - effective_from: '2026-04-01'
+    formula: local_authority_is_merton and council_tax_reduction_household_in_england and not council_tax_reduction_household_has_pensioner
+- name: merton_council_tax_reduction_has_universal_credit_award
+  kind: derived
+  entity: Household
+  dtype: Judgment
+  period: Year
+  source: Merton Council Tax Reduction Scheme 2026-2027 UC applicable-amount condition
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: condition
+        source:
+          corpus_citation_path: uk-merton/manual/council-tax-reduction-scheme-2026-2027/page-70
+          excerpt: has, an award of universal credit,
+  versions:
+  - effective_from: '2026-04-01'
+    formula: merton_council_tax_reduction_universal_credit_for_year > 0
+- name: merton_council_tax_reduction_applicable_amount_for_year
+  kind: derived
+  entity: Household
+  dtype: Money
+  period: Year
+  unit: GBP
+  source: Merton Council Tax Reduction Scheme 2026-2027 applicable amount for working-age UC cases
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: uk-merton/manual/council-tax-reduction-scheme-2026-2027/page-55
+          excerpt: the authority must use the calculation or estimate of the maximum amount
+  versions:
+  - effective_from: '2026-04-01'
+    formula: 'if merton_council_tax_reduction_has_universal_credit_award: merton_council_tax_reduction_uc_maximum_amount_for_year else: merton_council_tax_reduction_legacy_applicable_amount_for_year'
+- name: merton_council_tax_reduction_capital_eligible
+  kind: derived
+  entity: Household
+  dtype: Judgment
+  period: Year
+  source: Merton Council Tax Reduction Scheme 2026-2027 working-age capital upper bound
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: condition
+        source:
+          corpus_citation_path: uk-merton/manual/council-tax-reduction-scheme-2026-2027/page-120
+          excerpt: not exceeding £16,000
+  versions:
+  - effective_from: '2026-04-01'
+    formula: merton_council_tax_reduction_assessed_capital_for_year <= merton_council_tax_reduction_capital_limit
+- name: merton_council_tax_reduction_tariff_income_for_year
+  kind: derived
+  entity: Household
+  dtype: Money
+  period: Year
+  unit: GBP
+  source: Merton Council Tax Reduction Scheme 2026-2027 paragraph 72 working-age tariff income
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: uk-merton/manual/council-tax-reduction-scheme-2026-2027/page-120
+          excerpt: £1 for any excess which is not a complete £250
+  versions:
+  - effective_from: '2026-04-01'
+    formula: 'if merton_council_tax_reduction_has_universal_credit_award: 0 else: merton_council_tax_reduction_tariff_income_weekly_amount_per_step * ceil(max(0, merton_council_tax_reduction_assessed_capital_for_year - merton_council_tax_reduction_tariff_income_threshold) / merton_council_tax_reduction_tariff_income_step) * merton_council_tax_reduction_weeks_per_year'
+- name: merton_council_tax_reduction_applicable_income_with_tariff_for_year
+  kind: derived
+  entity: Household
+  dtype: Money
+  period: Year
+  unit: GBP
+  source: Merton Council Tax Reduction Scheme 2026-2027 income calculation including capital tariff
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: uk-merton/manual/council-tax-reduction-scheme-2026-2027/page-120
+          excerpt: is to be treated as if it were a weekly income
+  versions:
+  - effective_from: '2026-04-01'
+    formula: merton_council_tax_reduction_applicable_income_for_year + merton_council_tax_reduction_tariff_income_for_year
+- name: merton_council_tax_reduction_excess_income_for_year
+  kind: derived
+  entity: Household
+  dtype: Money
+  period: Year
+  unit: GBP
+  source: Merton Council Tax Reduction Scheme 2026-2027 class E excess-income amount B
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: uk-merton/manual/council-tax-reduction-scheme-2026-2027/page-39
+          excerpt: difference between his income for the relevant week and his applicable amount
+  versions:
+  - effective_from: '2026-04-01'
+    formula: 'if merton_council_tax_reduction_relevant_income_based_benefit: 0 else: max(0, merton_council_tax_reduction_applicable_income_with_tariff_for_year - merton_council_tax_reduction_applicable_amount_for_year)'
+- name: merton_council_tax_reduction_income_taper_deduction_for_year
+  kind: derived
+  entity: Household
+  dtype: Money
+  period: Year
+  unit: GBP
+  source: Merton Council Tax Reduction Scheme 2026-2027 class E amount B
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: uk-merton/manual/council-tax-reduction-scheme-2026-2027/page-39
+          excerpt: amount B is 2 6/7 per cent
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: uk-merton/manual/council-tax-reduction-scheme-2026-2027/page-65
+          excerpt: deducting amount B from amount A
+  versions:
+  - effective_from: '2026-04-01'
+    formula: merton_council_tax_reduction_excess_income_for_year * merton_council_tax_reduction_withdrawal_rate
+- name: merton_council_tax_reduction_non_dependant_in_remunerative_work
+  kind: derived
+  entity: Person
+  dtype: Judgment
+  period: Year
+  source: Merton Council Tax Reduction Scheme 2026-2027 remunerative-work definition
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: condition
+        source:
+          corpus_citation_path: uk-merton/manual/council-tax-reduction-scheme-2026-2027/page-36
+          excerpt: not less than 16 hours a week
+  versions:
+  - effective_from: '2026-04-01'
+    formula: merton_council_tax_reduction_non_dependant_weekly_hours >= merton_council_tax_reduction_remunerative_work_hours
+- name: merton_council_tax_reduction_individual_non_dependant_deduction_for_year
+  kind: derived
+  entity: Person
+  dtype: Money
+  period: Year
+  unit: GBP
+  source: Merton Council Tax Reduction Scheme 2026-2027 paragraph 30A working-age non-dependant deductions
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: uk-merton/manual/council-tax-reduction-scheme-2026-2027/page-60
+          excerpt: No deduction is to be made in respect of a non-dependant
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: uk-merton/manual/council-tax-reduction-scheme-2026-2027/page-59
+          excerpt: normal gross weekly income
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: uk-merton/manual/council-tax-reduction-scheme-2026-2027/page-60
+          excerpt: No deduction is to be made in respect of a non-dependant
+  versions:
+  - effective_from: '2026-04-01'
+    formula: 'if not merton_council_tax_reduction_is_non_dependant or merton_council_tax_reduction_non_dependant_exempt: 0 else: (if merton_council_tax_reduction_non_dependant_in_remunerative_work and merton_council_tax_reduction_non_dependant_normal_gross_weekly_income >= merton_council_tax_reduction_non_dependant_top_income_threshold_weekly: merton_council_tax_reduction_top_non_dependant_deduction_weekly else: (if merton_council_tax_reduction_non_dependant_in_remunerative_work and merton_council_tax_reduction_non_dependant_normal_gross_weekly_income >= merton_council_tax_reduction_non_dependant_high_income_threshold_weekly: merton_council_tax_reduction_high_non_dependant_deduction_weekly else: (if merton_council_tax_reduction_non_dependant_in_remunerative_work and merton_council_tax_reduction_non_dependant_normal_gross_weekly_income >= merton_council_tax_reduction_non_dependant_mid_income_threshold_weekly: merton_council_tax_reduction_mid_non_dependant_deduction_weekly else: merton_council_tax_reduction_low_non_dependant_deduction_weekly)))
+      * merton_council_tax_reduction_weeks_per_year'
+- name: simulated_merton_council_tax_reduction_annual_amount
+  kind: derived
+  entity: Household
+  dtype: Money
+  period: Year
+  unit: GBP
+  source: Merton Council Tax Reduction Scheme 2026-2027 working-age classes D and E amount calculation
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: amount
+        source:
+          corpus_citation_path: uk-merton/manual/council-tax-reduction-scheme-2026-2027/page-26
+          excerpt: less any deductions in respect of non-dependants
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: uk-merton/manual/council-tax-reduction-scheme-2026-2027/page-65
+          excerpt: deducting amount B from amount A
+      - path: versions[0].formula
+        kind: condition
+        source:
+          corpus_citation_path: uk-merton/manual/council-tax-reduction-scheme-2026-2027/page-16
+          excerpt: who has made an application
+  versions:
+  - effective_from: '2026-04-01'
+    formula: 'if merton_council_tax_reduction_working_age_scheme_applies and would_claim_council_tax_reduction and merton_council_tax_reduction_capital_eligible: max(0, merton_council_tax_reduction_maximum_eligible_liability_for_year * merton_council_tax_reduction_maximum_support_rate - merton_council_tax_reduction_income_taper_deduction_for_year - merton_council_tax_reduction_non_dependant_deductions_for_year) else: 0'
+- name: merton_council_tax_reduction_annual_amount
+  kind: derived
+  entity: Household
+  dtype: Money
+  period: Year
+  unit: GBP
+  source: Merton Council Tax Reduction Scheme 2026-2027 final working-age local award surface
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: uk-merton/manual/council-tax-reduction-scheme-2026-2027/page-65
+          excerpt: deducting amount B from amount A
+  versions:
+  - effective_from: '2026-04-01'
+    formula: simulated_merton_council_tax_reduction_annual_amount
+- name: merton_paragraph_22_immigration_control_restatement
+  kind: source_relation
+  source_relation:
+    type: restates
+    target: uk:regulations/uksi/2012/2886/schedule/paragraph/22#person_subject_to_immigration_control_is_not_entitled_to_reduction
+  source: Merton Council Tax Reduction Scheme 2026-2027 paragraph 22

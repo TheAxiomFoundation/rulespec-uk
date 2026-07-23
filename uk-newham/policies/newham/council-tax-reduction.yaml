@@ -1,0 +1,532 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk-newham/manual/council-tax-reduction-scheme-2026-2027/page-69
+  summary: 'Newham Council Tax Reduction working-age alignment surface for the 2026-2027 scheme: it applies the local maximum-liability award, working-age UC applicable-amount treatment, capital limit and tariff income, 20 percent excess-income taper, and working-age non-dependant deductions used by PolicyEngine UK''s Kingston CTR implementation.'
+  deferred_outputs:
+  - output: uk-newham:policies/newham/council-tax-reduction/e#applicable_premiums_amount
+    reason: Page 38(e) adds premiums determined under Parts 3 and 4 of the applicable-amount Schedule. This module does not encode those category-specific premium eligibility and amount schedules, so the premium component is deferred rather than treated as zero or inferred from an unrelated amount.
+rules:
+- name: newham_council_tax_reduction_maximum_support_rate
+  kind: parameter
+  dtype: Rate
+  source: Newham Council Tax Reduction Scheme 2026-2027 paragraph 29
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: amount
+        source:
+          corpus_citation_path: uk-newham/manual/council-tax-reduction-scheme-2026-2027/page-69
+          excerpt: 70 per cent of the amount A/B
+  versions:
+  - effective_from: '2026-04-01'
+    formula: '0.70'
+- name: newham_council_tax_reduction_capital_limit
+  kind: parameter
+  dtype: Money
+  period: Year
+  unit: GBP
+  source: Newham Council Tax Reduction Scheme 2026-2027 tariff-income upper capital bound
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: amount
+        source:
+          corpus_citation_path: uk-newham/manual/council-tax-reduction-scheme-2026-2027/page-171
+          excerpt: not exceeding £16,000
+  versions:
+  - effective_from: '2026-04-01'
+    formula: '16000'
+- name: newham_council_tax_reduction_tariff_income_threshold
+  kind: parameter
+  dtype: Money
+  period: Year
+  unit: GBP
+  source: Newham Council Tax Reduction Scheme 2026-2027 paragraph 72
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: amount
+        source:
+          corpus_citation_path: uk-newham/manual/council-tax-reduction-scheme-2026-2027/page-172
+          excerpt: in excess of £6,000
+  versions:
+  - effective_from: '2026-04-01'
+    formula: '6000'
+- name: newham_council_tax_reduction_tariff_income_step
+  kind: parameter
+  dtype: Money
+  period: Year
+  unit: GBP
+  source: Newham Council Tax Reduction Scheme 2026-2027 paragraph 72
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: amount
+        source:
+          corpus_citation_path: uk-newham/manual/council-tax-reduction-scheme-2026-2027/page-172
+          excerpt: each £250
+  versions:
+  - effective_from: '2026-04-01'
+    formula: '250'
+- name: newham_council_tax_reduction_tariff_income_weekly_amount_per_step
+  kind: parameter
+  dtype: Money
+  period: Week
+  unit: GBP
+  source: Newham Council Tax Reduction Scheme 2026-2027 paragraph 72
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: amount
+        source:
+          corpus_citation_path: uk-newham/manual/council-tax-reduction-scheme-2026-2027/page-172
+          excerpt: £1 for each £250
+  versions:
+  - effective_from: '2026-04-01'
+    formula: '1'
+- name: newham_council_tax_reduction_days_per_week
+  kind: parameter
+  dtype: Number
+  source: Newham Council Tax Reduction Scheme 2026-2027 daily deduction conversion
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: amount
+        source:
+          corpus_citation_path: uk-newham/manual/council-tax-reduction-scheme-2026-2027/page-78
+          excerpt: £7.54 x 1/7
+  versions:
+  - effective_from: '2026-04-01'
+    formula: '7'
+- name: newham_council_tax_reduction_daily_taper_rate
+  kind: parameter
+  dtype: Rate
+  source: Newham Council Tax Reduction Scheme 2026-2027 class E amount B percentage
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: amount
+        source:
+          corpus_citation_path: uk-newham/manual/council-tax-reduction-scheme-2026-2027/page-46
+          excerpt: 3 4/7 per cent
+  versions:
+  - effective_from: '2026-04-01'
+    formula: '0.03571428571428571428571428571'
+- name: newham_council_tax_reduction_withdrawal_rate
+  kind: parameter
+  dtype: Rate
+  source: Newham Council Tax Reduction Scheme 2026-2027 class E excess-income percentage
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: uk-newham/manual/council-tax-reduction-scheme-2026-2027/page-46
+          excerpt: 3 4/7 per cent
+  versions:
+  - effective_from: '2026-04-01'
+    formula: newham_council_tax_reduction_daily_taper_rate * newham_council_tax_reduction_days_per_week
+- name: newham_council_tax_reduction_remunerative_work_hours
+  kind: parameter
+  dtype: Number
+  source: Newham Council Tax Reduction Scheme 2026-2027 paragraph 10
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: amount
+        source:
+          corpus_citation_path: uk-newham/manual/council-tax-reduction-scheme-2026-2027/page-40
+          excerpt: not less than 16 hours a week
+  versions:
+  - effective_from: '2026-04-01'
+    formula: '16'
+- name: newham_council_tax_reduction_weeks_per_year
+  kind: parameter
+  dtype: Number
+  source: Newham Council Tax Reduction Scheme 2026-2027 weekly-to-annual conversion denominator
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: amount
+        source:
+          corpus_citation_path: uk-newham/manual/council-tax-reduction-scheme-2026-2027/page-68
+          excerpt: divide the product by 52
+  versions:
+  - effective_from: '2026-04-01'
+    formula: '52'
+- name: newham_council_tax_reduction_low_non_dependant_deduction_weekly
+  kind: parameter
+  dtype: Money
+  period: Week
+  unit: GBP
+  source: Newham Council Tax Reduction Scheme 2026-2027 paragraph 30A
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: amount
+        source:
+          corpus_citation_path: uk-newham/manual/council-tax-reduction-scheme-2026-2027/page-78
+          excerpt: £7.54 x 1/7
+  versions:
+  - effective_from: '2026-04-01'
+    formula: '7.54'
+- name: newham_council_tax_reduction_mid_non_dependant_deduction_weekly
+  kind: parameter
+  dtype: Money
+  period: Week
+  unit: GBP
+  source: Newham Council Tax Reduction Scheme 2026-2027 paragraph 30A
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: amount
+        source:
+          corpus_citation_path: uk-newham/manual/council-tax-reduction-scheme-2026-2027/page-78
+          excerpt: £14.96
+  versions:
+  - effective_from: '2026-04-01'
+    formula: '14.96'
+- name: newham_council_tax_reduction_high_non_dependant_deduction_weekly
+  kind: parameter
+  dtype: Money
+  period: Week
+  unit: GBP
+  source: Newham Council Tax Reduction Scheme 2026-2027 paragraph 30A
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: amount
+        source:
+          corpus_citation_path: uk-newham/manual/council-tax-reduction-scheme-2026-2027/page-78
+          excerpt: £18.84
+  versions:
+  - effective_from: '2026-04-01'
+    formula: '18.84'
+- name: newham_council_tax_reduction_top_non_dependant_deduction_weekly
+  kind: parameter
+  dtype: Money
+  period: Week
+  unit: GBP
+  source: Newham Council Tax Reduction Scheme 2026-2027 paragraph 30A
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: amount
+        source:
+          corpus_citation_path: uk-newham/manual/council-tax-reduction-scheme-2026-2027/page-78
+          excerpt: £22.61 x 1/7
+  versions:
+  - effective_from: '2026-04-01'
+    formula: '22.61'
+- name: newham_council_tax_reduction_non_dependant_mid_income_threshold_weekly
+  kind: parameter
+  dtype: Money
+  period: Week
+  unit: GBP
+  source: Newham Council Tax Reduction Scheme 2026-2027 paragraph 30A
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: amount
+        source:
+          corpus_citation_path: uk-newham/manual/council-tax-reduction-scheme-2026-2027/page-78
+          excerpt: not less than £183.00
+  versions:
+  - effective_from: '2026-04-01'
+    formula: '183'
+- name: newham_council_tax_reduction_non_dependant_high_income_threshold_weekly
+  kind: parameter
+  dtype: Money
+  period: Week
+  unit: GBP
+  source: Newham Council Tax Reduction Scheme 2026-2027 paragraph 30A
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: amount
+        source:
+          corpus_citation_path: uk-newham/manual/council-tax-reduction-scheme-2026-2027/page-78
+          excerpt: not less than £316.00
+  versions:
+  - effective_from: '2026-04-01'
+    formula: '316'
+- name: newham_council_tax_reduction_non_dependant_top_income_threshold_weekly
+  kind: parameter
+  dtype: Money
+  period: Week
+  unit: GBP
+  source: Newham Council Tax Reduction Scheme 2026-2027 paragraph 30A
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: amount
+        source:
+          corpus_citation_path: uk-newham/manual/council-tax-reduction-scheme-2026-2027/page-78
+          excerpt: less than £394.00
+  versions:
+  - effective_from: '2026-04-01'
+    formula: '394'
+- name: newham_council_tax_reduction_working_age_scheme_applies
+  kind: derived
+  entity: Household
+  dtype: Judgment
+  period: Year
+  source: Newham Council Tax Reduction Scheme 2026-2027 working-age class D and E eligibility surface
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: condition
+        source:
+          corpus_citation_path: uk-newham/manual/council-tax-reduction-scheme-2026-2027/page-3
+          excerpt: persons who are not pensioners
+  versions:
+  - effective_from: '2026-04-01'
+    formula: local_authority_is_newham and council_tax_reduction_household_in_england and not council_tax_reduction_household_has_pensioner
+- name: newham_council_tax_reduction_has_universal_credit_award
+  kind: derived
+  entity: Household
+  dtype: Judgment
+  period: Year
+  source: Newham Council Tax Reduction Scheme 2026-2027 UC applicable-amount condition
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: condition
+        source:
+          corpus_citation_path: uk-newham/manual/council-tax-reduction-scheme-2026-2027/page-68
+          excerpt: entitled to universal credit
+  versions:
+  - effective_from: '2026-04-01'
+    formula: newham_council_tax_reduction_universal_credit_for_year > 0
+- name: newham_council_tax_reduction_applicable_amount_for_year
+  kind: derived
+  entity: Household
+  dtype: Money
+  period: Year
+  unit: GBP
+  source: Newham Council Tax Reduction Scheme 2026-2027 applicable amount for working-age UC cases
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: uk-newham/manual/council-tax-reduction-scheme-2026-2027/page-68
+          excerpt: maximum amount of the applicant
+  versions:
+  - effective_from: '2026-04-01'
+    formula: 'if newham_council_tax_reduction_has_universal_credit_award: newham_council_tax_reduction_uc_maximum_amount_for_year else: newham_council_tax_reduction_legacy_applicable_amount_for_year'
+- name: newham_council_tax_reduction_capital_eligible
+  kind: derived
+  entity: Household
+  dtype: Judgment
+  period: Year
+  source: Newham Council Tax Reduction Scheme 2026-2027 working-age capital upper bound
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: condition
+        source:
+          corpus_citation_path: uk-newham/manual/council-tax-reduction-scheme-2026-2027/page-171
+          excerpt: not exceeding £16,000
+  versions:
+  - effective_from: '2026-04-01'
+    formula: newham_council_tax_reduction_assessed_capital_for_year <= newham_council_tax_reduction_capital_limit
+- name: newham_council_tax_reduction_tariff_income_for_year
+  kind: derived
+  entity: Household
+  dtype: Money
+  period: Year
+  unit: GBP
+  source: Newham Council Tax Reduction Scheme 2026-2027 paragraph 72 working-age tariff income
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: uk-newham/manual/council-tax-reduction-scheme-2026-2027/page-172
+          excerpt: £1 for any excess which is not a complete £250
+  versions:
+  - effective_from: '2026-04-01'
+    formula: 'if newham_council_tax_reduction_has_universal_credit_award: 0 else: newham_council_tax_reduction_tariff_income_weekly_amount_per_step * ceil(max(0, newham_council_tax_reduction_assessed_capital_for_year - newham_council_tax_reduction_tariff_income_threshold) / newham_council_tax_reduction_tariff_income_step) * newham_council_tax_reduction_weeks_per_year'
+- name: newham_council_tax_reduction_applicable_income_with_tariff_for_year
+  kind: derived
+  entity: Household
+  dtype: Money
+  period: Year
+  unit: GBP
+  source: Newham Council Tax Reduction Scheme 2026-2027 income calculation including capital tariff
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: uk-newham/manual/council-tax-reduction-scheme-2026-2027/page-171
+          excerpt: is to be treated as if it were a weekly income
+  versions:
+  - effective_from: '2026-04-01'
+    formula: newham_council_tax_reduction_applicable_income_for_year + newham_council_tax_reduction_tariff_income_for_year
+- name: newham_council_tax_reduction_excess_income_for_year
+  kind: derived
+  entity: Household
+  dtype: Money
+  period: Year
+  unit: GBP
+  source: Newham Council Tax Reduction Scheme 2026-2027 class E excess-income amount B
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: uk-newham/manual/council-tax-reduction-scheme-2026-2027/page-43
+          excerpt: difference between his income for the relevant week and his applicable amount
+  versions:
+  - effective_from: '2026-04-01'
+    formula: 'if newham_council_tax_reduction_relevant_income_based_benefit: 0 else: max(0, newham_council_tax_reduction_applicable_income_with_tariff_for_year - newham_council_tax_reduction_applicable_amount_for_year)'
+- name: newham_council_tax_reduction_income_taper_deduction_for_year
+  kind: derived
+  entity: Household
+  dtype: Money
+  period: Year
+  unit: GBP
+  source: Newham Council Tax Reduction Scheme 2026-2027 class E amount B
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: uk-newham/manual/council-tax-reduction-scheme-2026-2027/page-43
+          excerpt: amount B is 2 6/7 per cent
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: uk-newham/manual/council-tax-reduction-scheme-2026-2027/page-85
+          excerpt: deducting amount B from amount A
+  versions:
+  - effective_from: '2026-04-01'
+    formula: newham_council_tax_reduction_excess_income_for_year * newham_council_tax_reduction_withdrawal_rate
+- name: newham_council_tax_reduction_non_dependant_in_remunerative_work
+  kind: derived
+  entity: Person
+  dtype: Judgment
+  period: Year
+  source: Newham Council Tax Reduction Scheme 2026-2027 remunerative-work definition
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: condition
+        source:
+          corpus_citation_path: uk-newham/manual/council-tax-reduction-scheme-2026-2027/page-40
+          excerpt: not less than 16 hours a week
+  versions:
+  - effective_from: '2026-04-01'
+    formula: newham_council_tax_reduction_non_dependant_weekly_hours >= newham_council_tax_reduction_remunerative_work_hours
+- name: newham_council_tax_reduction_individual_non_dependant_deduction_for_year
+  kind: derived
+  entity: Person
+  dtype: Money
+  period: Year
+  unit: GBP
+  source: Newham Council Tax Reduction Scheme 2026-2027 paragraph 30A working-age non-dependant deductions
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: uk-newham/manual/council-tax-reduction-scheme-2026-2027/page-72
+          excerpt: No deduction is to be made in respect of a non-dependant
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: uk-newham/manual/council-tax-reduction-scheme-2026-2027/page-70
+          excerpt: normal gross weekly income
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: uk-newham/manual/council-tax-reduction-scheme-2026-2027/page-72
+          excerpt: No deduction is to be made in respect of a non-dependant
+  versions:
+  - effective_from: '2026-04-01'
+    formula: 'if not newham_council_tax_reduction_is_non_dependant or newham_council_tax_reduction_non_dependant_exempt: 0 else: (if newham_council_tax_reduction_non_dependant_in_remunerative_work and newham_council_tax_reduction_non_dependant_normal_gross_weekly_income >= newham_council_tax_reduction_non_dependant_top_income_threshold_weekly: newham_council_tax_reduction_top_non_dependant_deduction_weekly else: (if newham_council_tax_reduction_non_dependant_in_remunerative_work and newham_council_tax_reduction_non_dependant_normal_gross_weekly_income >= newham_council_tax_reduction_non_dependant_high_income_threshold_weekly: newham_council_tax_reduction_high_non_dependant_deduction_weekly else: (if newham_council_tax_reduction_non_dependant_in_remunerative_work and newham_council_tax_reduction_non_dependant_normal_gross_weekly_income >= newham_council_tax_reduction_non_dependant_mid_income_threshold_weekly: newham_council_tax_reduction_mid_non_dependant_deduction_weekly else: newham_council_tax_reduction_low_non_dependant_deduction_weekly)))
+      * newham_council_tax_reduction_weeks_per_year'
+- name: simulated_newham_council_tax_reduction_annual_amount
+  kind: derived
+  entity: Household
+  dtype: Money
+  period: Year
+  unit: GBP
+  source: Newham Council Tax Reduction Scheme 2026-2027 working-age classes D and E amount calculation
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: amount
+        source:
+          corpus_citation_path: uk-newham/manual/council-tax-reduction-scheme-2026-2027/page-26
+          excerpt: less any deductions in respect of non-dependants
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: uk-newham/manual/council-tax-reduction-scheme-2026-2027/page-85
+          excerpt: deducting amount B from amount A
+      - path: versions[0].formula
+        kind: condition
+        source:
+          corpus_citation_path: uk-newham/manual/council-tax-reduction-scheme-2026-2027/page-14
+          excerpt: who has made an application
+  versions:
+  - effective_from: '2026-04-01'
+    formula: 'if newham_council_tax_reduction_working_age_scheme_applies and would_claim_council_tax_reduction and newham_council_tax_reduction_capital_eligible: max(0, newham_council_tax_reduction_maximum_eligible_liability_for_year * newham_council_tax_reduction_maximum_support_rate - newham_council_tax_reduction_income_taper_deduction_for_year - newham_council_tax_reduction_non_dependant_deductions_for_year) else: 0'
+- name: newham_council_tax_reduction_annual_amount
+  kind: derived
+  entity: Household
+  dtype: Money
+  period: Year
+  unit: GBP
+  source: Newham Council Tax Reduction Scheme 2026-2027 final working-age local award surface
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: uk-newham/manual/council-tax-reduction-scheme-2026-2027/page-85
+          excerpt: deducting amount B from amount A
+  versions:
+  - effective_from: '2026-04-01'
+    formula: simulated_newham_council_tax_reduction_annual_amount
+- name: newham_paragraph_63_capital_restatement
+  kind: source_relation
+  source_relation:
+    type: restates
+    target: uk:regulations/uksi/2012/2886/schedule/paragraph/63#applicant_capital_taken_into_account
+  source: Newham Council Tax Reduction Scheme 2026-2027 paragraph 63
