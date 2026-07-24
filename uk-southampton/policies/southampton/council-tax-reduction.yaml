@@ -1,0 +1,107 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk-southampton/manual/council-tax-reduction-scheme-2026-2027/page-27
+  summary: |-
+    “amount B is 2 6/7 per cent of the difference between his income for the relevant week and his applicable amount”
+    and working-age class E requires the applicant to satisfy conditions (c) through (g).
+
+rules:
+  - name: class_b_excess_income_rate_whole_percentage_component
+    kind: parameter
+    dtype: Rate
+    source: paragraph 17(f)(ii)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk-southampton/manual/council-tax-reduction-scheme-2026-2027/page-27
+              excerpt: "amount B is 2 6/7 per cent of the difference"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          0.02
+
+  - name: class_b_excess_income_rate_fractional_percentage_numerator
+    kind: parameter
+    dtype: Rate
+    source: paragraph 17(f)(ii)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk-southampton/manual/council-tax-reduction-scheme-2026-2027/page-27
+              excerpt: "amount B is 2 6/7 per cent of the difference"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          0.06
+
+  - name: class_b_excess_income_rate_fraction_denominator
+    kind: parameter
+    dtype: Decimal
+    source: paragraph 17(f)(ii)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk-southampton/manual/council-tax-reduction-scheme-2026-2027/page-27
+              excerpt: "amount B is 2 6/7 per cent of the difference"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          7
+
+  - name: class_b_excess_income_reduction_rate
+    kind: parameter
+    dtype: Rate
+    source: paragraph 17(f)(ii)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk-southampton/manual/council-tax-reduction-scheme-2026-2027/page-27
+              excerpt: "amount B is 2 6/7 per cent of the difference between his income for the relevant week and his applicable amount"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          class_b_excess_income_rate_whole_percentage_component
+          + class_b_excess_income_rate_fractional_percentage_numerator
+          / class_b_excess_income_rate_fraction_denominator
+
+  - name: class_b_conditions_c_through_g_satisfied
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Day
+    source: paragraph 17(c)-(g)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk-southampton/manual/council-tax-reduction-scheme-2026-2027/page-27
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk-southampton/manual/council-tax-reduction-scheme-2026-2027/page-27
+              excerpt: "amount B is 2 6/7 per cent of the difference between his income for the relevant week and his applicable amount"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          maximum_council_tax_reduction_amount_can_be_calculated
+          and person_does_not_fall_within_class_not_entitled_to_reduction
+          and income_for_relevant_week > applicable_amount
+          and maximum_council_tax_reduction_for_day > class_b_excess_income_reduction_rate * (income_for_relevant_week - applicable_amount)
+          and person_has_made_application

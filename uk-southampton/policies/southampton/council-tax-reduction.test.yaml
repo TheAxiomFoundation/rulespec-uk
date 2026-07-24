@@ -1,0 +1,96 @@
+- name: class B conditions c through g all satisfied
+  period:
+    period_kind: custom
+    name: day
+    start: '2026-04-15'
+    end: '2026-04-15'
+  input:
+    uk-southampton:policies/southampton/council-tax-reduction#input.maximum_council_tax_reduction_amount_can_be_calculated: true
+    ? uk-southampton:policies/southampton/council-tax-reduction#input.person_does_not_fall_within_class_not_entitled_to_reduction
+    : true
+    uk-southampton:policies/southampton/council-tax-reduction#input.income_for_relevant_week: 200
+    uk-southampton:policies/southampton/council-tax-reduction#input.applicable_amount: 100
+    uk-southampton:policies/southampton/council-tax-reduction#input.maximum_council_tax_reduction_for_day: 3
+    uk-southampton:policies/southampton/council-tax-reduction#input.person_has_made_application: true
+  output:
+    uk-southampton:policies/southampton/council-tax-reduction#class_b_conditions_c_through_g_satisfied: holds
+- name: class B condition c fails
+  period:
+    period_kind: custom
+    name: day
+    start: '2026-04-15'
+    end: '2026-04-15'
+  input:
+    uk-southampton:policies/southampton/council-tax-reduction#input.maximum_council_tax_reduction_amount_can_be_calculated: false
+    ? uk-southampton:policies/southampton/council-tax-reduction#input.person_does_not_fall_within_class_not_entitled_to_reduction
+    : true
+    uk-southampton:policies/southampton/council-tax-reduction#input.income_for_relevant_week: 200
+    uk-southampton:policies/southampton/council-tax-reduction#input.applicable_amount: 100
+    uk-southampton:policies/southampton/council-tax-reduction#input.maximum_council_tax_reduction_for_day: 3
+    uk-southampton:policies/southampton/council-tax-reduction#input.person_has_made_application: true
+  output:
+    uk-southampton:policies/southampton/council-tax-reduction#class_b_conditions_c_through_g_satisfied: not_holds
+- name: class B condition d fails
+  period:
+    period_kind: custom
+    name: day
+    start: '2026-04-15'
+    end: '2026-04-15'
+  input:
+    uk-southampton:policies/southampton/council-tax-reduction#input.maximum_council_tax_reduction_amount_can_be_calculated: true
+    ? uk-southampton:policies/southampton/council-tax-reduction#input.person_does_not_fall_within_class_not_entitled_to_reduction
+    : false
+    uk-southampton:policies/southampton/council-tax-reduction#input.income_for_relevant_week: 200
+    uk-southampton:policies/southampton/council-tax-reduction#input.applicable_amount: 100
+    uk-southampton:policies/southampton/council-tax-reduction#input.maximum_council_tax_reduction_for_day: 3
+    uk-southampton:policies/southampton/council-tax-reduction#input.person_has_made_application: true
+  output:
+    uk-southampton:policies/southampton/council-tax-reduction#class_b_conditions_c_through_g_satisfied: not_holds
+- name: class B condition e fails
+  period:
+    period_kind: custom
+    name: day
+    start: '2026-04-15'
+    end: '2026-04-15'
+  input:
+    uk-southampton:policies/southampton/council-tax-reduction#input.maximum_council_tax_reduction_amount_can_be_calculated: true
+    ? uk-southampton:policies/southampton/council-tax-reduction#input.person_does_not_fall_within_class_not_entitled_to_reduction
+    : true
+    uk-southampton:policies/southampton/council-tax-reduction#input.income_for_relevant_week: 100
+    uk-southampton:policies/southampton/council-tax-reduction#input.applicable_amount: 100
+    uk-southampton:policies/southampton/council-tax-reduction#input.maximum_council_tax_reduction_for_day: 3
+    uk-southampton:policies/southampton/council-tax-reduction#input.person_has_made_application: true
+  output:
+    uk-southampton:policies/southampton/council-tax-reduction#class_b_conditions_c_through_g_satisfied: not_holds
+- name: class B amount A does not exceed amount B
+  period:
+    period_kind: custom
+    name: day
+    start: '2026-04-15'
+    end: '2026-04-15'
+  input:
+    uk-southampton:policies/southampton/council-tax-reduction#input.maximum_council_tax_reduction_amount_can_be_calculated: true
+    ? uk-southampton:policies/southampton/council-tax-reduction#input.person_does_not_fall_within_class_not_entitled_to_reduction
+    : true
+    uk-southampton:policies/southampton/council-tax-reduction#input.income_for_relevant_week: 200
+    uk-southampton:policies/southampton/council-tax-reduction#input.applicable_amount: 100
+    uk-southampton:policies/southampton/council-tax-reduction#input.maximum_council_tax_reduction_for_day: 2
+    uk-southampton:policies/southampton/council-tax-reduction#input.person_has_made_application: true
+  output:
+    uk-southampton:policies/southampton/council-tax-reduction#class_b_conditions_c_through_g_satisfied: not_holds
+- name: class B condition g fails
+  period:
+    period_kind: custom
+    name: day
+    start: '2026-04-15'
+    end: '2026-04-15'
+  input:
+    uk-southampton:policies/southampton/council-tax-reduction#input.maximum_council_tax_reduction_amount_can_be_calculated: true
+    ? uk-southampton:policies/southampton/council-tax-reduction#input.person_does_not_fall_within_class_not_entitled_to_reduction
+    : true
+    uk-southampton:policies/southampton/council-tax-reduction#input.income_for_relevant_week: 200
+    uk-southampton:policies/southampton/council-tax-reduction#input.applicable_amount: 100
+    uk-southampton:policies/southampton/council-tax-reduction#input.maximum_council_tax_reduction_for_day: 3
+    uk-southampton:policies/southampton/council-tax-reduction#input.person_has_made_application: false
+  output:
+    uk-southampton:policies/southampton/council-tax-reduction#class_b_conditions_c_through_g_satisfied: not_holds
