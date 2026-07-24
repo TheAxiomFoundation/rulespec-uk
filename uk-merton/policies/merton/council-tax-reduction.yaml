@@ -530,3 +530,21 @@ rules:
     type: restates
     target: uk:regulations/uksi/2012/2886/schedule/paragraph/22#person_subject_to_immigration_control_is_not_entitled_to_reduction
   source: Merton Council Tax Reduction Scheme 2026-2027 paragraph 22
+- name: merton_reduction_amount_for_class_a_or_d_restatement
+  kind: source_relation
+  source_relation:
+    type: restates
+    target: uk:regulations/uksi/2012/2886/schedule/paragraph/32#reduction_amount_for_class_a_or_d
+  source: 'Paragraph 32'
+  metadata:
+    match:
+      corpus_citation_path: uk-merton/manual/council-tax-reduction-scheme-2026-2027/page-65
+- name: merton_alternative_reduction_amount_for_class_c_or_f_restatement
+  kind: source_relation
+  source_relation:
+    type: restates
+    target: uk:regulations/uksi/2012/2886/schedule/paragraph/32#alternative_reduction_amount_for_class_c_or_f
+  source: 'Paragraph 32'
+  metadata:
+    match:
+      corpus_citation_path: uk-merton/manual/council-tax-reduction-scheme-2026-2027/page-65
