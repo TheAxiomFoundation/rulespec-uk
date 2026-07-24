@@ -29,18 +29,18 @@ rules:
   dtype: Money
   period: Year
   unit: GBP
-  source: Newham Council Tax Reduction Scheme 2026-2027 tariff-income upper capital bound
+  source: Newham Council Tax Reduction Scheme 2026-2027 working-age capital exclusion
   metadata:
     proof:
       atoms:
       - path: versions[0].formula
         kind: amount
         source:
-          corpus_citation_path: uk-newham/manual/council-tax-reduction-scheme-2026-2027/page-171
-          excerpt: not exceeding £16,000
+          corpus_citation_path: uk-newham/manual/council-tax-reduction-scheme-2026-2027/page-64
+          excerpt: not a pensioner whose capital exceeds £6,000
   versions:
   - effective_from: '2026-04-01'
-    formula: '16000'
+    formula: '6000'
 - name: newham_council_tax_reduction_tariff_income_threshold
   kind: parameter
   dtype: Money
@@ -121,7 +121,7 @@ rules:
           excerpt: 3 4/7 per cent
   versions:
   - effective_from: '2026-04-01'
-    formula: '0.03571428571428571428571428571'
+    formula: (3 + 4 / 7) / 100
 - name: newham_council_tax_reduction_withdrawal_rate
   kind: parameter
   dtype: Rate
@@ -136,7 +136,7 @@ rules:
           excerpt: 3 4/7 per cent
   versions:
   - effective_from: '2026-04-01'
-    formula: newham_council_tax_reduction_daily_taper_rate * newham_council_tax_reduction_days_per_week
+    formula: (3 * newham_council_tax_reduction_days_per_week + 4) / 100
 - name: newham_council_tax_reduction_remunerative_work_hours
   kind: parameter
   dtype: Number
@@ -350,8 +350,8 @@ rules:
       - path: versions[0].formula
         kind: condition
         source:
-          corpus_citation_path: uk-newham/manual/council-tax-reduction-scheme-2026-2027/page-171
-          excerpt: not exceeding £16,000
+          corpus_citation_path: uk-newham/manual/council-tax-reduction-scheme-2026-2027/page-64
+          excerpt: not a pensioner whose capital exceeds £6,000
   versions:
   - effective_from: '2026-04-01'
     formula: newham_council_tax_reduction_assessed_capital_for_year <= newham_council_tax_reduction_capital_limit
@@ -422,8 +422,8 @@ rules:
       - path: versions[0].formula
         kind: formula
         source:
-          corpus_citation_path: uk-newham/manual/council-tax-reduction-scheme-2026-2027/page-43
-          excerpt: amount B is 2 6/7 per cent
+          corpus_citation_path: uk-newham/manual/council-tax-reduction-scheme-2026-2027/page-46
+          excerpt: amount B is 3 4/7 per cent of the difference between his income for the relevant week and his applicable amount
       - path: versions[0].formula
         kind: formula
         source:
@@ -530,3 +530,93 @@ rules:
     type: restates
     target: uk:regulations/uksi/2012/2886/schedule/paragraph/63#applicant_capital_taken_into_account
   source: Newham Council Tax Reduction Scheme 2026-2027 paragraph 63
+- name: newham_person_subject_to_immigration_control_is_not_entitled_to_reduction_restatement
+  kind: source_relation
+  source_relation:
+    type: restates
+    target: uk:regulations/uksi/2012/2886/schedule/paragraph/22#person_subject_to_immigration_control_is_not_entitled_to_reduction
+  source: 'Class of person excluded from this scheme: persons subject to immigration control'
+  metadata:
+    match:
+      corpus_citation_path: uk-newham/manual/council-tax-reduction-scheme-2026-2027/page-63
+- name: newham_reduction_amount_for_class_a_or_d_restatement
+  kind: source_relation
+  source_relation:
+    type: restates
+    target: uk:regulations/uksi/2012/2886/schedule/paragraph/32#reduction_amount_for_class_a_or_d
+  source: 'Amount of reduction under this scheme: Classes A to E'
+  metadata:
+    match:
+      corpus_citation_path: uk-newham/manual/council-tax-reduction-scheme-2026-2027/page-85
+- name: newham_alternative_reduction_amount_for_class_c_or_f_restatement
+  kind: source_relation
+  source_relation:
+    type: restates
+    target: uk:regulations/uksi/2012/2886/schedule/paragraph/32#alternative_reduction_amount_for_class_c_or_f
+  source: 'Amount of reduction under this scheme: Classes A to E'
+  metadata:
+    match:
+      corpus_citation_path: uk-newham/manual/council-tax-reduction-scheme-2026-2027/page-85
+- name: newham_self_employed_average_weekly_earnings_estimation_applies_restatement
+  kind: source_relation
+  source_relation:
+    type: restates
+    target: uk:regulations/uksi/2012/2886/schedule/paragraph/48#self_employed_average_weekly_earnings_estimation_applies
+  source: 'Average weekly earnings of self-employed earners: persons who are not pensioners'
+  metadata:
+    match:
+      corpus_citation_path: uk-newham/manual/council-tax-reduction-scheme-2026-2027/page-113
+- name: newham_self_employed_average_weekly_earnings_estimation_requirement_satisfied_restatement
+  kind: source_relation
+  source_relation:
+    type: restates
+    target: uk:regulations/uksi/2012/2886/schedule/paragraph/48#self_employed_average_weekly_earnings_estimation_requirement_satisfied
+  source: 'Average weekly earnings of self-employed earners: persons who are not pensioners'
+  metadata:
+    match:
+      corpus_citation_path: uk-newham/manual/council-tax-reduction-scheme-2026-2027/page-113
+- name: newham_months_in_annual_weekly_conversion_restatement
+  kind: source_relation
+  source_relation:
+    type: restates
+    target: uk:regulations/uksi/2012/2886/schedule/paragraph/50#months_in_annual_weekly_conversion
+  source: 'Calculation of weekly income of employed earners: persons who are not pensioners'
+  metadata:
+    match:
+      corpus_citation_path: uk-newham/manual/council-tax-reduction-scheme-2026-2027/page-114
+- name: newham_weeks_in_annual_weekly_conversion_restatement
+  kind: source_relation
+  source_relation:
+    type: restates
+    target: uk:regulations/uksi/2012/2886/schedule/paragraph/50#weeks_in_annual_weekly_conversion
+  source: 'Calculation of weekly income of employed earners: persons who are not pensioners'
+  metadata:
+    match:
+      corpus_citation_path: uk-newham/manual/council-tax-reduction-scheme-2026-2027/page-114
+- name: newham_days_in_weekly_conversion_restatement
+  kind: source_relation
+  source_relation:
+    type: restates
+    target: uk:regulations/uksi/2012/2886/schedule/paragraph/50#days_in_weekly_conversion
+  source: 'Calculation of weekly income of employed earners: persons who are not pensioners'
+  metadata:
+    match:
+      corpus_citation_path: uk-newham/manual/council-tax-reduction-scheme-2026-2027/page-114
+- name: newham_weekly_amount_of_payment_for_paragraphs_47_49_and_59_restatement
+  kind: source_relation
+  source_relation:
+    type: restates
+    target: uk:regulations/uksi/2012/2886/schedule/paragraph/50#weekly_amount_of_payment_for_paragraphs_47_49_and_59
+  source: 'Calculation of weekly income of employed earners: persons who are not pensioners'
+  metadata:
+    match:
+      corpus_citation_path: uk-newham/manual/council-tax-reduction-scheme-2026-2027/page-114
+- name: newham_weekly_earnings_of_self_employed_applicant_restatement
+  kind: source_relation
+  source_relation:
+    type: restates
+    target: uk:regulations/uksi/2012/2886/schedule/paragraph/50#weekly_earnings_of_self_employed_applicant
+  source: 'Calculation of weekly income of employed earners: persons who are not pensioners'
+  metadata:
+    match:
+      corpus_citation_path: uk-newham/manual/council-tax-reduction-scheme-2026-2027/page-114
