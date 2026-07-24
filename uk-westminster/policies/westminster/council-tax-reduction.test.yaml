@@ -1,0 +1,85 @@
+- name: class 1 applies below applicable amount
+  period: 2026-04
+  input:
+    uk-westminster:policies/westminster/council-tax-reduction#input.household_receives_universal_credit: false
+    uk-westminster:policies/westminster/council-tax-reduction#input.maximum_universal_credit_rate: 0
+    uk-westminster:policies/westminster/council-tax-reduction#input.non_universal_credit_applicable_amount: 1000
+    uk-westminster:policies/westminster/council-tax-reduction#input.working_age_income_before_war_pension_disregard: 1000
+    uk-westminster:policies/westminster/council-tax-reduction#input.war_pension_income: 100
+    uk-westminster:policies/westminster/council-tax-reduction#input.council_tax_liability: 200
+    uk-westminster:policies/westminster/council-tax-reduction#input.appropriate_non_dependant_deductions: 20
+  output:
+    uk-westminster:policies/westminster/council-tax-reduction#working_age_assessable_income: 900
+    uk-westminster:policies/westminster/council-tax-reduction#working_age_applicable_amount: 1000
+    uk-westminster:policies/westminster/council-tax-reduction#class_1_applies: holds
+    uk-westminster:policies/westminster/council-tax-reduction#class_2_applies: not_holds
+    uk-westminster:policies/westminster/council-tax-reduction#class_1_council_tax_reduction: 180
+    uk-westminster:policies/westminster/council-tax-reduction#class_2_council_tax_reduction: 0
+- name: class 2 taper applies above applicable amount
+  period: 2026-04
+  input:
+    uk-westminster:policies/westminster/council-tax-reduction#input.household_receives_universal_credit: false
+    uk-westminster:policies/westminster/council-tax-reduction#input.maximum_universal_credit_rate: 0
+    uk-westminster:policies/westminster/council-tax-reduction#input.non_universal_credit_applicable_amount: 1000
+    uk-westminster:policies/westminster/council-tax-reduction#input.working_age_income_before_war_pension_disregard: 1300
+    uk-westminster:policies/westminster/council-tax-reduction#input.war_pension_income: 100
+    uk-westminster:policies/westminster/council-tax-reduction#input.council_tax_liability: 200
+    uk-westminster:policies/westminster/council-tax-reduction#input.appropriate_non_dependant_deductions: 20
+  output:
+    uk-westminster:policies/westminster/council-tax-reduction#working_age_assessable_income: 1200
+    uk-westminster:policies/westminster/council-tax-reduction#working_age_applicable_amount: 1000
+    uk-westminster:policies/westminster/council-tax-reduction#class_1_applies: not_holds
+    uk-westminster:policies/westminster/council-tax-reduction#class_2_applies: holds
+    uk-westminster:policies/westminster/council-tax-reduction#class_1_council_tax_reduction: 0
+    uk-westminster:policies/westminster/council-tax-reduction#class_2_council_tax_reduction: 140
+- name: universal credit maximum supplies applicable amount
+  period: 2026-04
+  input:
+    uk-westminster:policies/westminster/council-tax-reduction#input.household_receives_universal_credit: true
+    uk-westminster:policies/westminster/council-tax-reduction#input.maximum_universal_credit_rate: 1200
+    uk-westminster:policies/westminster/council-tax-reduction#input.non_universal_credit_applicable_amount: 0
+    uk-westminster:policies/westminster/council-tax-reduction#input.working_age_income_before_war_pension_disregard: 1100
+    uk-westminster:policies/westminster/council-tax-reduction#input.war_pension_income: 100
+    uk-westminster:policies/westminster/council-tax-reduction#input.council_tax_liability: 200
+    uk-westminster:policies/westminster/council-tax-reduction#input.appropriate_non_dependant_deductions: 0
+  output:
+    uk-westminster:policies/westminster/council-tax-reduction#working_age_assessable_income: 1000
+    uk-westminster:policies/westminster/council-tax-reduction#working_age_applicable_amount: 1200
+    uk-westminster:policies/westminster/council-tax-reduction#class_1_applies: holds
+    uk-westminster:policies/westminster/council-tax-reduction#class_2_applies: not_holds
+    uk-westminster:policies/westminster/council-tax-reduction#class_1_council_tax_reduction: 200
+    uk-westminster:policies/westminster/council-tax-reduction#class_2_council_tax_reduction: 0
+- name: income equal to applicable amount is neither class 1 nor class 2
+  period: 2026-04
+  input:
+    uk-westminster:policies/westminster/council-tax-reduction#input.household_receives_universal_credit: false
+    uk-westminster:policies/westminster/council-tax-reduction#input.maximum_universal_credit_rate: 0
+    uk-westminster:policies/westminster/council-tax-reduction#input.non_universal_credit_applicable_amount: 1000
+    uk-westminster:policies/westminster/council-tax-reduction#input.working_age_income_before_war_pension_disregard: 1100
+    uk-westminster:policies/westminster/council-tax-reduction#input.war_pension_income: 100
+    uk-westminster:policies/westminster/council-tax-reduction#input.council_tax_liability: 200
+    uk-westminster:policies/westminster/council-tax-reduction#input.appropriate_non_dependant_deductions: 20
+  output:
+    uk-westminster:policies/westminster/council-tax-reduction#working_age_assessable_income: 1000
+    uk-westminster:policies/westminster/council-tax-reduction#working_age_applicable_amount: 1000
+    uk-westminster:policies/westminster/council-tax-reduction#class_1_applies: not_holds
+    uk-westminster:policies/westminster/council-tax-reduction#class_2_applies: not_holds
+    uk-westminster:policies/westminster/council-tax-reduction#class_1_council_tax_reduction: 0
+    uk-westminster:policies/westminster/council-tax-reduction#class_2_council_tax_reduction: 0
+- name: class 3 rates, minimum second adults, and pensioner backdating are as printed
+  period: 2026-04
+  input:
+    uk-westminster:policies/westminster/council-tax-reduction#input.household_receives_universal_credit: false
+    uk-westminster:policies/westminster/council-tax-reduction#input.maximum_universal_credit_rate: 0
+    uk-westminster:policies/westminster/council-tax-reduction#input.non_universal_credit_applicable_amount: 1000
+    uk-westminster:policies/westminster/council-tax-reduction#input.working_age_income_before_war_pension_disregard: 1100
+    uk-westminster:policies/westminster/council-tax-reduction#input.war_pension_income: 100
+    uk-westminster:policies/westminster/council-tax-reduction#input.council_tax_liability: 200
+    uk-westminster:policies/westminster/council-tax-reduction#input.appropriate_non_dependant_deductions: 20
+  output:
+    uk-westminster:policies/westminster/council-tax-reduction#class_3_full_reduction_rate: 1
+    uk-westminster:policies/westminster/council-tax-reduction#class_3_twenty_five_percent_reduction_rate: 0.25
+    uk-westminster:policies/westminster/council-tax-reduction#class_3_fifteen_percent_reduction_rate: 0.15
+    uk-westminster:policies/westminster/council-tax-reduction#class_3_seven_point_five_percent_reduction_rate: 0.075
+    uk-westminster:policies/westminster/council-tax-reduction#class_3_minimum_second_adults: 1
+    uk-westminster:policies/westminster/council-tax-reduction#pensioner_maximum_backdating_months: 3
