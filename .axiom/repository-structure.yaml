@@ -335,6 +335,10 @@ path_rules:
     allow_filenames:
       - "CODEOWNERS"
   - patterns:
+      - "data/councils/*"
+    allow_filenames:
+      - "registry.csv"
+  - patterns:
       - "data/**"
     allow_extensions:
       - ".json"
