@@ -121,7 +121,7 @@ rules:
           excerpt: 3 4/7 per cent
   versions:
   - effective_from: '2026-04-01'
-    formula: (3 + 4 / 7) / 100
+    formula: '0.03571428571428571428571428571'
 - name: newham_council_tax_reduction_withdrawal_rate
   kind: parameter
   dtype: Rate
@@ -136,7 +136,7 @@ rules:
           excerpt: 3 4/7 per cent
   versions:
   - effective_from: '2026-04-01'
-    formula: (3 * newham_council_tax_reduction_days_per_week + 4) / 100
+    formula: newham_council_tax_reduction_daily_taper_rate * newham_council_tax_reduction_days_per_week
 - name: newham_council_tax_reduction_remunerative_work_hours
   kind: parameter
   dtype: Number
