@@ -218,6 +218,7 @@ rules:
     dtype: Money
     unit: GBP
     period: Year
+    rounding: half_up
     source: paragraph 6
     metadata:
       proof:
@@ -232,6 +233,11 @@ rules:
             source:
               corpus_citation_path: uk-bristol-city-of/manual/council-tax-reduction-scheme-2026-2027/page-5
               excerpt: "the pensioner receives a 100% reduction on their council tax bill"
+          - path: rounding
+            kind: formula
+            source:
+              corpus_citation_path: uk-bristol-city-of/manual/council-tax-reduction-scheme-2026-2027/page-10
+              excerpt: "In calculating the amount of council tax reduction, fractions of less than half a penny are rounded down and fractions of half a penny or more are rounded up."
     versions:
       - effective_from: '2026-04-01'
         formula: |-
@@ -243,10 +249,16 @@ rules:
     dtype: Money
     unit: GBP
     period: Year
-    source: paragraphs 8-9
+    rounding: half_up
+    source: paragraphs 8-9 and paragraph 36
     metadata:
       proof:
         atoms:
+          - path: rounding
+            kind: formula
+            source:
+              corpus_citation_path: uk-bristol-city-of/manual/council-tax-reduction-scheme-2026-2027/page-10
+              excerpt: "In calculating the amount of council tax reduction, fractions of less than half a penny are rounded down and fractions of half a penny or more are rounded up."
           - path: versions[0].formula
             kind: condition
             source:

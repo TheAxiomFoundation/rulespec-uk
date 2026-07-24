@@ -110,3 +110,55 @@
     uk-bristol-city-of:policies/bristol-city-of/council-tax-reduction#applicable_second_adult_rebate_rate: 1.0
     uk-bristol-city-of:policies/bristol-city-of/council-tax-reduction#pension_credit_guarantee_council_tax_reduction: 1000
     uk-bristol-city-of:policies/bristol-city-of/council-tax-reduction#working_age_council_tax_reduction: 1000
+- name: paragraph 36 rounds a fraction of half a penny or more up
+  period:
+    period_kind: custom
+    name: calendar_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-bristol-city-of:policies/bristol-city-of/council-tax-reduction#input.property_is_main_home: true
+    uk-bristol-city-of:policies/bristol-city-of/council-tax-reduction#input.applicant_is_liable_for_council_tax: true
+    uk-bristol-city-of:policies/bristol-city-of/council-tax-reduction#input.applicant_meets_residence_rules: true
+    uk-bristol-city-of:policies/bristol-city-of/council-tax-reduction#input.applicant_capital: 10000
+    uk-bristol-city-of:policies/bristol-city-of/council-tax-reduction#input.applicant_income_is_at_or_below_scheme_maximum: true
+    uk-bristol-city-of:policies/bristol-city-of/council-tax-reduction#input.applicant_has_applied_for_assistance: true
+    uk-bristol-city-of:policies/bristol-city-of/council-tax-reduction#input.second_adult_qualifies_for_full_rebate: false
+    uk-bristol-city-of:policies/bristol-city-of/council-tax-reduction#input.second_adult_qualifies_for_higher_rebate: false
+    uk-bristol-city-of:policies/bristol-city-of/council-tax-reduction#input.second_adult_qualifies_for_middle_rebate: false
+    ? uk-bristol-city-of:policies/bristol-city-of/council-tax-reduction#input.pensioner_receives_state_pension_credit_guarantee_part
+    : false
+    uk-bristol-city-of:policies/bristol-city-of/council-tax-reduction#input.council_tax_liability: 1000
+    uk-bristol-city-of:policies/bristol-city-of/council-tax-reduction#input.second_adult_rebate_path_applies: false
+    uk-bristol-city-of:policies/bristol-city-of/council-tax-reduction#input.income_is_no_greater_than_allowed_living_expenses: false
+    uk-bristol-city-of:policies/bristol-city-of/council-tax-reduction#input.maximum_council_tax_reduction: 800
+    uk-bristol-city-of:policies/bristol-city-of/council-tax-reduction#input.excess_income_over_allowed_living_expenses: 3.17
+  output:
+    uk-bristol-city-of:policies/bristol-city-of/council-tax-reduction#working_age_overall_conditions_met: holds
+    uk-bristol-city-of:policies/bristol-city-of/council-tax-reduction#working_age_council_tax_reduction: 799.37
+- name: paragraph 36 rounds a fraction below half a penny down
+  period:
+    period_kind: custom
+    name: calendar_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-bristol-city-of:policies/bristol-city-of/council-tax-reduction#input.property_is_main_home: true
+    uk-bristol-city-of:policies/bristol-city-of/council-tax-reduction#input.applicant_is_liable_for_council_tax: true
+    uk-bristol-city-of:policies/bristol-city-of/council-tax-reduction#input.applicant_meets_residence_rules: true
+    uk-bristol-city-of:policies/bristol-city-of/council-tax-reduction#input.applicant_capital: 10000
+    uk-bristol-city-of:policies/bristol-city-of/council-tax-reduction#input.applicant_income_is_at_or_below_scheme_maximum: true
+    uk-bristol-city-of:policies/bristol-city-of/council-tax-reduction#input.applicant_has_applied_for_assistance: true
+    uk-bristol-city-of:policies/bristol-city-of/council-tax-reduction#input.second_adult_qualifies_for_full_rebate: false
+    uk-bristol-city-of:policies/bristol-city-of/council-tax-reduction#input.second_adult_qualifies_for_higher_rebate: false
+    uk-bristol-city-of:policies/bristol-city-of/council-tax-reduction#input.second_adult_qualifies_for_middle_rebate: false
+    ? uk-bristol-city-of:policies/bristol-city-of/council-tax-reduction#input.pensioner_receives_state_pension_credit_guarantee_part
+    : false
+    uk-bristol-city-of:policies/bristol-city-of/council-tax-reduction#input.council_tax_liability: 1000
+    uk-bristol-city-of:policies/bristol-city-of/council-tax-reduction#input.second_adult_rebate_path_applies: false
+    uk-bristol-city-of:policies/bristol-city-of/council-tax-reduction#input.income_is_no_greater_than_allowed_living_expenses: false
+    uk-bristol-city-of:policies/bristol-city-of/council-tax-reduction#input.maximum_council_tax_reduction: 800
+    uk-bristol-city-of:policies/bristol-city-of/council-tax-reduction#input.excess_income_over_allowed_living_expenses: 3.18
+  output:
+    uk-bristol-city-of:policies/bristol-city-of/council-tax-reduction#working_age_overall_conditions_met: holds
+    uk-bristol-city-of:policies/bristol-city-of/council-tax-reduction#working_age_council_tax_reduction: 799.36
