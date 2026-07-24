@@ -1,0 +1,243 @@
+- name: newham_ctr_full_liability_award
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-newham:policies/newham/council-tax-reduction#input.local_authority_is_newham: true
+    uk-newham:policies/newham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-newham:policies/newham/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: false
+    uk-newham:policies/newham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-newham:policies/newham/council-tax-reduction#input.newham_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-newham:policies/newham/council-tax-reduction#input.newham_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+    uk-newham:policies/newham/council-tax-reduction#input.newham_council_tax_reduction_universal_credit_for_year: 0
+    uk-newham:policies/newham/council-tax-reduction#input.newham_council_tax_reduction_uc_maximum_amount_for_year: 0
+    uk-newham:policies/newham/council-tax-reduction#input.newham_council_tax_reduction_legacy_applicable_amount_for_year: 0
+    uk-newham:policies/newham/council-tax-reduction#input.newham_council_tax_reduction_applicable_income_for_year: 0
+    uk-newham:policies/newham/council-tax-reduction#input.newham_council_tax_reduction_relevant_income_based_benefit: false
+    uk-newham:policies/newham/council-tax-reduction#input.newham_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-newham:policies/newham/council-tax-reduction#newham_council_tax_reduction_working_age_scheme_applies: holds
+    uk-newham:policies/newham/council-tax-reduction#newham_council_tax_reduction_has_universal_credit_award: not_holds
+    uk-newham:policies/newham/council-tax-reduction#newham_council_tax_reduction_capital_eligible: holds
+    uk-newham:policies/newham/council-tax-reduction#simulated_newham_council_tax_reduction_annual_amount: 1260
+    uk-newham:policies/newham/council-tax-reduction#newham_council_tax_reduction_annual_amount: 1260
+- name: newham_ctr_capital_over_limit_is_nil
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-newham:policies/newham/council-tax-reduction#input.local_authority_is_newham: true
+    uk-newham:policies/newham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-newham:policies/newham/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: false
+    uk-newham:policies/newham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-newham:policies/newham/council-tax-reduction#input.newham_council_tax_reduction_assessed_capital_for_year: 6001
+    uk-newham:policies/newham/council-tax-reduction#input.newham_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+    uk-newham:policies/newham/council-tax-reduction#input.newham_council_tax_reduction_universal_credit_for_year: 0
+    uk-newham:policies/newham/council-tax-reduction#input.newham_council_tax_reduction_uc_maximum_amount_for_year: 0
+    uk-newham:policies/newham/council-tax-reduction#input.newham_council_tax_reduction_legacy_applicable_amount_for_year: 0
+    uk-newham:policies/newham/council-tax-reduction#input.newham_council_tax_reduction_applicable_income_for_year: 0
+    uk-newham:policies/newham/council-tax-reduction#input.newham_council_tax_reduction_relevant_income_based_benefit: false
+    uk-newham:policies/newham/council-tax-reduction#input.newham_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-newham:policies/newham/council-tax-reduction#newham_council_tax_reduction_capital_eligible: not_holds
+    uk-newham:policies/newham/council-tax-reduction#simulated_newham_council_tax_reduction_annual_amount: 0
+    uk-newham:policies/newham/council-tax-reduction#newham_council_tax_reduction_annual_amount: 0
+- name: newham_ctr_capital_limit_has_no_tariff_income
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-newham:policies/newham/council-tax-reduction#input.local_authority_is_newham: true
+    uk-newham:policies/newham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-newham:policies/newham/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: false
+    uk-newham:policies/newham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-newham:policies/newham/council-tax-reduction#input.newham_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-newham:policies/newham/council-tax-reduction#input.newham_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+    uk-newham:policies/newham/council-tax-reduction#input.newham_council_tax_reduction_universal_credit_for_year: 0
+    uk-newham:policies/newham/council-tax-reduction#input.newham_council_tax_reduction_uc_maximum_amount_for_year: 0
+    uk-newham:policies/newham/council-tax-reduction#input.newham_council_tax_reduction_legacy_applicable_amount_for_year: 0
+    uk-newham:policies/newham/council-tax-reduction#input.newham_council_tax_reduction_applicable_income_for_year: 0
+    uk-newham:policies/newham/council-tax-reduction#input.newham_council_tax_reduction_relevant_income_based_benefit: false
+    uk-newham:policies/newham/council-tax-reduction#input.newham_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-newham:policies/newham/council-tax-reduction#newham_council_tax_reduction_capital_eligible: holds
+    uk-newham:policies/newham/council-tax-reduction#newham_council_tax_reduction_tariff_income_for_year: 0
+    uk-newham:policies/newham/council-tax-reduction#newham_council_tax_reduction_applicable_income_with_tariff_for_year: 0
+    uk-newham:policies/newham/council-tax-reduction#newham_council_tax_reduction_excess_income_for_year: 0
+    uk-newham:policies/newham/council-tax-reduction#newham_council_tax_reduction_income_taper_deduction_for_year: 0
+    uk-newham:policies/newham/council-tax-reduction#newham_council_tax_reduction_annual_amount: 1260
+- name: newham_ctr_universal_credit_uses_uc_maximum_amount
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-newham:policies/newham/council-tax-reduction#input.local_authority_is_newham: true
+    uk-newham:policies/newham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-newham:policies/newham/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: false
+    uk-newham:policies/newham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-newham:policies/newham/council-tax-reduction#input.newham_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-newham:policies/newham/council-tax-reduction#input.newham_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+    uk-newham:policies/newham/council-tax-reduction#input.newham_council_tax_reduction_universal_credit_for_year: 12000
+    uk-newham:policies/newham/council-tax-reduction#input.newham_council_tax_reduction_uc_maximum_amount_for_year: 12000
+    uk-newham:policies/newham/council-tax-reduction#input.newham_council_tax_reduction_legacy_applicable_amount_for_year: 0
+    uk-newham:policies/newham/council-tax-reduction#input.newham_council_tax_reduction_applicable_income_for_year: 12000
+    uk-newham:policies/newham/council-tax-reduction#input.newham_council_tax_reduction_relevant_income_based_benefit: false
+    uk-newham:policies/newham/council-tax-reduction#input.newham_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-newham:policies/newham/council-tax-reduction#newham_council_tax_reduction_has_universal_credit_award: holds
+    uk-newham:policies/newham/council-tax-reduction#newham_council_tax_reduction_applicable_amount_for_year: 12000
+    uk-newham:policies/newham/council-tax-reduction#newham_council_tax_reduction_tariff_income_for_year: 0
+    uk-newham:policies/newham/council-tax-reduction#newham_council_tax_reduction_excess_income_for_year: 0
+    uk-newham:policies/newham/council-tax-reduction#newham_council_tax_reduction_annual_amount: 1260
+- name: newham_ctr_non_dependant_top_band_reduces_award
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-newham:policies/newham/council-tax-reduction#input.local_authority_is_newham: true
+    uk-newham:policies/newham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-newham:policies/newham/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: false
+    uk-newham:policies/newham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-newham:policies/newham/council-tax-reduction#input.newham_council_tax_reduction_assessed_capital_for_year: 0
+    uk-newham:policies/newham/council-tax-reduction#input.newham_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+    uk-newham:policies/newham/council-tax-reduction#input.newham_council_tax_reduction_universal_credit_for_year: 0
+    uk-newham:policies/newham/council-tax-reduction#input.newham_council_tax_reduction_uc_maximum_amount_for_year: 0
+    uk-newham:policies/newham/council-tax-reduction#input.newham_council_tax_reduction_legacy_applicable_amount_for_year: 0
+    uk-newham:policies/newham/council-tax-reduction#input.newham_council_tax_reduction_applicable_income_for_year: 0
+    uk-newham:policies/newham/council-tax-reduction#input.newham_council_tax_reduction_relevant_income_based_benefit: false
+    uk-newham:policies/newham/council-tax-reduction#input.newham_council_tax_reduction_non_dependant_deductions_for_year: 1175.72
+  output:
+    uk-newham:policies/newham/council-tax-reduction#newham_council_tax_reduction_annual_amount: 84.28
+- name: newham_ctr_non_dependant_top_band_individual_deduction
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-newham:policies/newham/council-tax-reduction#input.newham_council_tax_reduction_is_non_dependant: true
+    uk-newham:policies/newham/council-tax-reduction#input.newham_council_tax_reduction_non_dependant_exempt: false
+    uk-newham:policies/newham/council-tax-reduction#input.newham_council_tax_reduction_non_dependant_weekly_hours: 16
+    ? uk-newham:policies/newham/council-tax-reduction#input.newham_council_tax_reduction_non_dependant_normal_gross_weekly_income
+    : 605
+  output:
+    uk-newham:policies/newham/council-tax-reduction#newham_council_tax_reduction_non_dependant_in_remunerative_work: holds
+    uk-newham:policies/newham/council-tax-reduction#newham_council_tax_reduction_individual_non_dependant_deduction_for_year: 1175.72
+- name: newham_ctr_exempt_non_dependant_has_no_deduction
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-newham:policies/newham/council-tax-reduction#input.newham_council_tax_reduction_is_non_dependant: true
+    uk-newham:policies/newham/council-tax-reduction#input.newham_council_tax_reduction_non_dependant_exempt: true
+    uk-newham:policies/newham/council-tax-reduction#input.newham_council_tax_reduction_non_dependant_weekly_hours: 16
+    ? uk-newham:policies/newham/council-tax-reduction#input.newham_council_tax_reduction_non_dependant_normal_gross_weekly_income
+    : 605
+  output:
+    uk-newham:policies/newham/council-tax-reduction#newham_council_tax_reduction_individual_non_dependant_deduction_for_year: 0
+- name: newham_ctr_parameters
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  output:
+    uk-newham:policies/newham/council-tax-reduction#newham_council_tax_reduction_maximum_support_rate: 0.70
+    uk-newham:policies/newham/council-tax-reduction#newham_council_tax_reduction_capital_limit: 6000
+    uk-newham:policies/newham/council-tax-reduction#newham_council_tax_reduction_tariff_income_threshold: 6000
+    uk-newham:policies/newham/council-tax-reduction#newham_council_tax_reduction_tariff_income_step: 250
+    uk-newham:policies/newham/council-tax-reduction#newham_council_tax_reduction_tariff_income_weekly_amount_per_step: 1
+    uk-newham:policies/newham/council-tax-reduction#newham_council_tax_reduction_days_per_week: 7
+    uk-newham:policies/newham/council-tax-reduction#newham_council_tax_reduction_daily_taper_rate: '0.0357142857142857142857142857'
+    uk-newham:policies/newham/council-tax-reduction#newham_council_tax_reduction_withdrawal_rate: 0.25
+    uk-newham:policies/newham/council-tax-reduction#newham_council_tax_reduction_remunerative_work_hours: 16
+    uk-newham:policies/newham/council-tax-reduction#newham_council_tax_reduction_weeks_per_year: 52
+    uk-newham:policies/newham/council-tax-reduction#newham_council_tax_reduction_low_non_dependant_deduction_weekly: 7.54
+    uk-newham:policies/newham/council-tax-reduction#newham_council_tax_reduction_mid_non_dependant_deduction_weekly: 14.96
+    uk-newham:policies/newham/council-tax-reduction#newham_council_tax_reduction_high_non_dependant_deduction_weekly: 18.84
+    uk-newham:policies/newham/council-tax-reduction#newham_council_tax_reduction_top_non_dependant_deduction_weekly: 22.61
+    uk-newham:policies/newham/council-tax-reduction#newham_council_tax_reduction_non_dependant_mid_income_threshold_weekly: 183
+    uk-newham:policies/newham/council-tax-reduction#newham_council_tax_reduction_non_dependant_high_income_threshold_weekly: 316
+    uk-newham:policies/newham/council-tax-reduction#newham_council_tax_reduction_non_dependant_top_income_threshold_weekly: 394
+- name: newham_ctr_taper_zero_excess_boundary
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-newham:policies/newham/council-tax-reduction#input.local_authority_is_newham: true
+    uk-newham:policies/newham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-newham:policies/newham/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: false
+    uk-newham:policies/newham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-newham:policies/newham/council-tax-reduction#input.newham_council_tax_reduction_assessed_capital_for_year: 0
+    uk-newham:policies/newham/council-tax-reduction#input.newham_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+    uk-newham:policies/newham/council-tax-reduction#input.newham_council_tax_reduction_universal_credit_for_year: 0
+    uk-newham:policies/newham/council-tax-reduction#input.newham_council_tax_reduction_uc_maximum_amount_for_year: 0
+    uk-newham:policies/newham/council-tax-reduction#input.newham_council_tax_reduction_legacy_applicable_amount_for_year: 100
+    uk-newham:policies/newham/council-tax-reduction#input.newham_council_tax_reduction_applicable_income_for_year: 100
+    uk-newham:policies/newham/council-tax-reduction#input.newham_council_tax_reduction_relevant_income_based_benefit: false
+    uk-newham:policies/newham/council-tax-reduction#input.newham_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-newham:policies/newham/council-tax-reduction#newham_council_tax_reduction_excess_income_for_year: 0
+    uk-newham:policies/newham/council-tax-reduction#newham_council_tax_reduction_income_taper_deduction_for_year: 0
+- name: newham_ctr_taper_positive_excess_boundary
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-newham:policies/newham/council-tax-reduction#input.local_authority_is_newham: true
+    uk-newham:policies/newham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-newham:policies/newham/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: false
+    uk-newham:policies/newham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-newham:policies/newham/council-tax-reduction#input.newham_council_tax_reduction_assessed_capital_for_year: 0
+    uk-newham:policies/newham/council-tax-reduction#input.newham_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+    uk-newham:policies/newham/council-tax-reduction#input.newham_council_tax_reduction_universal_credit_for_year: 0
+    uk-newham:policies/newham/council-tax-reduction#input.newham_council_tax_reduction_uc_maximum_amount_for_year: 0
+    uk-newham:policies/newham/council-tax-reduction#input.newham_council_tax_reduction_legacy_applicable_amount_for_year: 100
+    uk-newham:policies/newham/council-tax-reduction#input.newham_council_tax_reduction_applicable_income_for_year: 104
+    uk-newham:policies/newham/council-tax-reduction#input.newham_council_tax_reduction_relevant_income_based_benefit: false
+    uk-newham:policies/newham/council-tax-reduction#input.newham_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-newham:policies/newham/council-tax-reduction#newham_council_tax_reduction_excess_income_for_year: 4
+    uk-newham:policies/newham/council-tax-reduction#newham_council_tax_reduction_income_taper_deduction_for_year: 1
+- name: newham_ctr_non_dependant_low_band
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-newham:policies/newham/council-tax-reduction#input.newham_council_tax_reduction_is_non_dependant: true
+    uk-newham:policies/newham/council-tax-reduction#input.newham_council_tax_reduction_non_dependant_exempt: false
+    uk-newham:policies/newham/council-tax-reduction#input.newham_council_tax_reduction_non_dependant_weekly_hours: 16
+    uk-newham:policies/newham/council-tax-reduction#input.newham_council_tax_reduction_non_dependant_normal_gross_weekly_income: 100
+  output:
+    uk-newham:policies/newham/council-tax-reduction#newham_council_tax_reduction_individual_non_dependant_deduction_for_year: 392.08
+- name: newham_ctr_non_dependant_mid_band
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-newham:policies/newham/council-tax-reduction#input.newham_council_tax_reduction_is_non_dependant: true
+    uk-newham:policies/newham/council-tax-reduction#input.newham_council_tax_reduction_non_dependant_exempt: false
+    uk-newham:policies/newham/council-tax-reduction#input.newham_council_tax_reduction_non_dependant_weekly_hours: 16
+    uk-newham:policies/newham/council-tax-reduction#input.newham_council_tax_reduction_non_dependant_normal_gross_weekly_income: 183
+  output:
+    uk-newham:policies/newham/council-tax-reduction#newham_council_tax_reduction_individual_non_dependant_deduction_for_year: 777.92
+- name: newham_ctr_non_dependant_high_band
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-newham:policies/newham/council-tax-reduction#input.newham_council_tax_reduction_is_non_dependant: true
+    uk-newham:policies/newham/council-tax-reduction#input.newham_council_tax_reduction_non_dependant_exempt: false
+    uk-newham:policies/newham/council-tax-reduction#input.newham_council_tax_reduction_non_dependant_weekly_hours: 16
+    uk-newham:policies/newham/council-tax-reduction#input.newham_council_tax_reduction_non_dependant_normal_gross_weekly_income: 316
+  output:
+    uk-newham:policies/newham/council-tax-reduction#newham_council_tax_reduction_individual_non_dependant_deduction_for_year: 979.68
