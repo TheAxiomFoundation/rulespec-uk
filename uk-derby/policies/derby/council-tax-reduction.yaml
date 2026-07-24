@@ -1,0 +1,90 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk-derby/manual/council-tax-reduction-scheme-2026-2027/page-4
+  summary: |-
+    The maximum award is capped by the yearly Band B property charge. The minimum contribution that all CTS claimants have to pay towards their Council Tax is 20%.
+rules:
+  - name: minimum_claimant_contribution_rate
+    kind: parameter
+    dtype: Rate
+    period: Year
+    source: Derby CTS Scheme 2026–2027, section 3, page 4
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter
+            source:
+              corpus_citation_path: uk-derby/manual/council-tax-reduction-scheme-2026-2027/page-4
+              excerpt: The minimum contribution that all CTS claimants have to pay towards their Council Tax is 20%.
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          0.20
+
+  - name: maximum_council_tax_support_rate
+    kind: derived
+    entity: Person
+    dtype: Rate
+    period: Year
+    source: Derby CTS Scheme 2026–2027, section 3, page 4
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk-derby/manual/council-tax-reduction-scheme-2026-2027/page-4
+              excerpt: The minimum contribution that all CTS claimants have to pay towards their Council Tax is 20%.
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          1 - minimum_claimant_contribution_rate
+
+  - name: maximum_eligible_council_tax
+    kind: derived
+    entity: Person
+    dtype: Money
+    unit: GBP
+    period: Year
+    source: Derby CTS Scheme 2026–2027, section 3(1), page 4
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk-derby/manual/council-tax-reduction-scheme-2026-2027/page-4
+              excerpt: Capped at the yearly rate of a Band B property charge due under the Local Government Finance Act 1992.
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          min(max(0, council_tax_due), max(0, band_b_property_yearly_charge))
+
+  - name: maximum_council_tax_support_award
+    kind: derived
+    entity: Person
+    dtype: Money
+    unit: GBP
+    period: Year
+    source: Derby CTS Scheme 2026–2027, section 3(1)–(2), page 4
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk-derby/manual/council-tax-reduction-scheme-2026-2027/page-4
+              excerpt: The maximum amount of Council Tax which is eligible for the CTS Scheme and which may be the maximum award under this Scheme is set at a percentage of the total Council Tax due as calculated at (1) above.
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk-derby/manual/council-tax-reduction-scheme-2026-2027/page-4
+              excerpt: The minimum contribution that all CTS claimants have to pay towards their Council Tax is 20%.
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          max(0, maximum_eligible_council_tax * maximum_council_tax_support_rate)
