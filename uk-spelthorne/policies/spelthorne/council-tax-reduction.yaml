@@ -1,0 +1,679 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk-spelthorne/manual/council-tax-reduction-scheme-2026-2027/page-54
+  summary: |-
+    Spelthorne's operative 2026-27 working-age scheme applies a 75% maximum reduction, or 90% for Class G additional-financial-assistance applicants. It applies the printed 20% weekly excess-income taper, £16,000 capital cliff, £6,000/£250 tariff-income rule, and non-dependant deductions. The Class E award is explicitly amount A less amount B, so the taper is deducted from the defined maximum.
+  deferred_outputs:
+    - output: uk-spelthorne:policies/spelthorne/council-tax-reduction/part-11-and-schedule-1#applicable_amount
+      reason: Detailed applicable-amount and premium schedules are outside this award-surface module.
+    - output: uk-spelthorne:policies/spelthorne/council-tax-reduction/paragraph-48#non_dependant_exemption_and_apportionment
+      reason: This module consumes the exemption and household apportionment result while encoding the printed deduction bands.
+rules:
+  - name: spelthorne_council_tax_reduction_maximum_support_rate
+    kind: parameter
+    dtype: Rate
+    source: Spelthorne Council Tax Reduction Scheme 2026-2027 paragraph 47(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk-spelthorne/manual/council-tax-reduction-scheme-2026-2027/page-50
+              excerpt: "is 75 per cent of the amount A/B where -"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          0.75
+
+  - name: spelthorne_council_tax_reduction_additional_assistance_support_rate
+    kind: parameter
+    dtype: Rate
+    source: Spelthorne Council Tax Reduction Scheme 2026-2027 paragraph 47(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk-spelthorne/manual/council-tax-reduction-scheme-2026-2027/page-51
+              excerpt: "is 90 per cent of the amount A/B where -"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          0.90
+
+  - name: spelthorne_council_tax_reduction_capital_limit
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Spelthorne Council Tax Reduction Scheme 2026-2027 tariff-income upper capital bound
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk-spelthorne/manual/council-tax-reduction-scheme-2026-2027/page-44
+              excerpt: "Who does not possess capital of more than £16,000"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          16000
+
+  - name: spelthorne_council_tax_reduction_tariff_income_threshold
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Spelthorne Council Tax Reduction Scheme 2026-2027 paragraph 76
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk-spelthorne/manual/council-tax-reduction-scheme-2026-2027/page-83
+              excerpt: "in excess of £6,000, but not exceeding -"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          6000
+
+  - name: spelthorne_council_tax_reduction_tariff_income_step
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Spelthorne Council Tax Reduction Scheme 2026-2027 paragraph 72
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk-spelthorne/manual/council-tax-reduction-scheme-2026-2027/page-83
+              excerpt: "each complete £250 in excess of £6,000"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          250
+
+  - name: spelthorne_council_tax_reduction_tariff_income_weekly_amount_per_step
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Spelthorne Council Tax Reduction Scheme 2026-2027 paragraph 72
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk-spelthorne/manual/council-tax-reduction-scheme-2026-2027/page-83
+              excerpt: "£1 for each complete £250 in excess of £6,000"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          1
+
+  - name: spelthorne_council_tax_reduction_days_per_week
+    kind: parameter
+    dtype: Number
+    source: Spelthorne Council Tax Reduction Scheme 2026-2027 daily deduction conversion
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk-spelthorne/manual/council-tax-reduction-scheme-2026-2027/page-51
+              excerpt: "£15.95 x 1/7."
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          7
+
+  - name: spelthorne_council_tax_reduction_daily_taper_rate
+    kind: parameter
+    dtype: Rate
+    source: Spelthorne Council Tax Reduction Scheme 2026-2027 class E amount B percentage
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk-spelthorne/manual/council-tax-reduction-scheme-2026-2027/page-44
+              excerpt: "Amount B is 2/6/7 per cent of the difference between his income for the relevant week and his applicable amount."
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          0.02857142857142857142857142857
+
+  - name: spelthorne_council_tax_reduction_withdrawal_rate
+    kind: parameter
+    dtype: Rate
+    source: Spelthorne Council Tax Reduction Scheme 2026-2027 class E excess-income percentage
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk-spelthorne/manual/council-tax-reduction-scheme-2026-2027/page-44
+              excerpt: "Amount B is 2/6/7 per cent of the difference between his income for the relevant week and his applicable amount."
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          spelthorne_council_tax_reduction_daily_taper_rate * spelthorne_council_tax_reduction_days_per_week
+
+  - name: spelthorne_council_tax_reduction_remunerative_work_hours
+    kind: parameter
+    dtype: Number
+    source: Spelthorne Council Tax Reduction Scheme 2026-2027 paragraph 10
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk-spelthorne/manual/council-tax-reduction-scheme-2026-2027/page-28
+              excerpt: "for not less than 16 hours a week, in work for which payment is made"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          16
+
+  - name: spelthorne_council_tax_reduction_weeks_per_year
+    kind: parameter
+    dtype: Number
+    source: Spelthorne Council Tax Reduction Scheme 2026-2027 weekly-to-annual conversion denominator
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk-spelthorne/manual/council-tax-reduction-scheme-2026-2027/page-50
+              excerpt: "multiply the maximum amount by 12 and divide the product by 52"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          52
+
+  - name: spelthorne_council_tax_reduction_low_housing_costs_contribution_weekly
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Spelthorne Council Tax Reduction Scheme 2026-2027 paragraph 48
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk-spelthorne/manual/council-tax-reduction-scheme-2026-2027/page-51
+              excerpt: "£5.20 x 1/7."
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          5.20
+
+  - name: spelthorne_council_tax_reduction_mid_housing_costs_contribution_weekly
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Spelthorne Council Tax Reduction Scheme 2026-2027 paragraph 48
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk-spelthorne/manual/council-tax-reduction-scheme-2026-2027/page-51
+              excerpt: "is £10.60."
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          10.60
+
+  - name: spelthorne_council_tax_reduction_high_housing_costs_contribution_weekly
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Spelthorne Council Tax Reduction Scheme 2026-2027 paragraph 48
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk-spelthorne/manual/council-tax-reduction-scheme-2026-2027/page-51
+              excerpt: "is £13.30."
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          13.30
+
+  - name: spelthorne_council_tax_reduction_top_housing_costs_contribution_weekly
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Spelthorne Council Tax Reduction Scheme 2026-2027 paragraph 48
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk-spelthorne/manual/council-tax-reduction-scheme-2026-2027/page-51
+              excerpt: "£15.95 x 1/7."
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          15.95
+
+  - name: spelthorne_council_tax_reduction_weekly_housing_costs_contribution_by_band
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    indexed_by: spelthorne_council_tax_reduction_non_dependant_deduction_band
+    source: Spelthorne Council Tax Reduction Scheme 2026-2027 paragraph 48
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].values
+            kind: parameter_table
+            source:
+              corpus_citation_path: uk-spelthorne/manual/council-tax-reduction-scheme-2026-2027/page-51
+              excerpt: |-
+                £15.95 x 1/7.
+
+                (b) in respect of a non-dependent aged 18 or over to whom sub-paragraph (a) does not apply, £5.20 x 1/7.
+
+                (c) in respect of a non-dependent who receives a state pension credit, £0.00.
+
+                (2) In the case of a non-dependent aged 18 or over to whom paragraph (1)(a) applies, where it is shown to the appropriate authority that his normal gross weekly income is -
+
+                (a) less than £279.00, the housing costs contribution to be made under this paragraph is the amount specified in sub-paragraph (1)(b).
+
+                (b) not less than £279.00 but less than £485.00, the housing costs contribution to be made under this paragraph is £10.60. (c) not less than £485.00 but less than £605.00, the housing costs contribution to be made under this paragraph is £13.30.
+              table:
+                header: Non-dependant weekly deductions
+                row_key: deduction band
+                column_key: weekly deduction
+    versions:
+      - effective_from: '2026-04-01'
+        values:
+          0: 0
+          1: 5.2
+          2: 10.6
+          3: 13.3
+          4: 15.95
+
+  - name: spelthorne_council_tax_reduction_housing_costs_contribution_mid_income_threshold_weekly
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Spelthorne Council Tax Reduction Scheme 2026-2027 paragraph 48
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk-spelthorne/manual/council-tax-reduction-scheme-2026-2027/page-51
+              excerpt: "(b) not less than £279.00 but less than £485.00, the housing costs contribution to be made under this paragraph is £10.60."
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          279
+
+  - name: spelthorne_council_tax_reduction_housing_costs_contribution_high_income_threshold_weekly
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Spelthorne Council Tax Reduction Scheme 2026-2027 paragraph 48
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk-spelthorne/manual/council-tax-reduction-scheme-2026-2027/page-51
+              excerpt: "(c) not less than £485.00 but less than £605.00, the housing costs contribution to be made under this paragraph is £13.30."
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          485
+
+  - name: spelthorne_council_tax_reduction_housing_costs_contribution_top_income_threshold_weekly
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Spelthorne Council Tax Reduction Scheme 2026-2027 paragraph 48
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk-spelthorne/manual/council-tax-reduction-scheme-2026-2027/page-51
+              excerpt: "(c) not less than £485.00 but less than £605.00, the housing costs contribution to be made under this paragraph is £13.30."
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          605
+
+  - name: spelthorne_council_tax_reduction_working_age_scheme_applies
+    kind: derived
+    entity: Household
+    dtype: Judgment
+    period: Year
+    source: Spelthorne Council Tax Reduction Scheme 2026-2027 working-age class D and E eligibility surface
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk-spelthorne/manual/council-tax-reduction-scheme-2026-2027/page-43
+              excerpt: "persons who are not pensioners whose income is less than the applicable amount36"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          local_authority_is_spelthorne and council_tax_reduction_household_in_england and not council_tax_reduction_household_has_pensioner
+
+  - name: spelthorne_council_tax_reduction_requires_additional_financial_assistance
+    kind: derived
+    entity: Household
+    dtype: Judgment
+    period: Year
+    source: Spelthorne Council Tax Reduction Scheme 2026-2027 paragraph 39
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk-spelthorne/manual/council-tax-reduction-scheme-2026-2027/page-45
+              excerpt: "39. Class G: Persons who the authority consider requires additional financial assistance (1)"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          spelthorne_council_tax_reduction_additional_financial_assistance_class
+
+  - name: spelthorne_council_tax_reduction_applicable_maximum_support_rate
+    kind: derived
+    entity: Household
+    dtype: Rate
+    period: Year
+    source: Spelthorne Council Tax Reduction Scheme 2026-2027 paragraph 47
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk-spelthorne/manual/council-tax-reduction-scheme-2026-2027/page-51
+              excerpt: "Where an applicant falls within paragraph 39 (Class G: Persons who the authority considers require additional financial assistance), the amount of a person’s maximum council tax reduction in respect of a day is 90 per cent of the amount A/B where -"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          if spelthorne_council_tax_reduction_requires_additional_financial_assistance: spelthorne_council_tax_reduction_additional_assistance_support_rate else: spelthorne_council_tax_reduction_maximum_support_rate
+
+  - name: spelthorne_council_tax_reduction_has_universal_credit_award
+    kind: derived
+    entity: Household
+    dtype: Judgment
+    period: Year
+    source: Spelthorne Council Tax Reduction Scheme 2026-2027 UC applicable-amount condition
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk-spelthorne/manual/council-tax-reduction-scheme-2026-2027/page-50
+              excerpt: "Applicable amount: persons who have an award of universal credit"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          spelthorne_council_tax_reduction_universal_credit_for_year > 0
+
+  - name: spelthorne_council_tax_reduction_applicable_amount_for_year
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Spelthorne Council Tax Reduction Scheme 2026-2027 applicable amount for working-age UC cases
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk-spelthorne/manual/council-tax-reduction-scheme-2026-2027/page-50
+              excerpt: "the authority must use the calculation or estimate of the maximum amount of the applicant, or the applicant and his partner jointly (as the case may be), subject to the adjustment described in sub-paragraph (3)."
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          if spelthorne_council_tax_reduction_has_universal_credit_award: spelthorne_council_tax_reduction_uc_maximum_amount_for_year else: spelthorne_council_tax_reduction_legacy_applicable_amount_for_year
+
+  - name: spelthorne_council_tax_reduction_capital_eligible
+    kind: derived
+    entity: Household
+    dtype: Judgment
+    period: Year
+    source: Spelthorne Council Tax Reduction Scheme 2026-2027 working-age capital upper bound
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk-spelthorne/manual/council-tax-reduction-scheme-2026-2027/page-44
+              excerpt: "Who does not possess capital of more than £16,000"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          spelthorne_council_tax_reduction_assessed_capital_for_year <= spelthorne_council_tax_reduction_capital_limit
+
+  - name: spelthorne_council_tax_reduction_tariff_income_for_year
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Spelthorne Council Tax Reduction Scheme 2026-2027 paragraph 72 working-age tariff income
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk-spelthorne/manual/council-tax-reduction-scheme-2026-2027/page-83
+              excerpt: "£1 for any excess which in not a complete £250"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          if spelthorne_council_tax_reduction_has_universal_credit_award: 0 else: spelthorne_council_tax_reduction_tariff_income_weekly_amount_per_step * ceil(max(0, spelthorne_council_tax_reduction_assessed_capital_for_year - spelthorne_council_tax_reduction_tariff_income_threshold) / spelthorne_council_tax_reduction_tariff_income_step) * spelthorne_council_tax_reduction_weeks_per_year
+
+  - name: spelthorne_council_tax_reduction_applicable_income_with_tariff_for_year
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Spelthorne Council Tax Reduction Scheme 2026-2027 income calculation including capital tariff
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk-spelthorne/manual/council-tax-reduction-scheme-2026-2027/page-83
+              excerpt: "is to be treated as if it were a weekly income"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          spelthorne_council_tax_reduction_applicable_income_for_year + spelthorne_council_tax_reduction_tariff_income_for_year
+
+  - name: spelthorne_council_tax_reduction_excess_income_for_year
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Spelthorne Council Tax Reduction Scheme 2026-2027 class E excess-income amount B
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk-spelthorne/manual/council-tax-reduction-scheme-2026-2027/page-44
+              excerpt: "Amount B is 2/6/7 per cent of the difference between his income for the relevant week and his applicable amount."
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          if spelthorne_council_tax_reduction_relevant_income_based_benefit: 0 else: max(0, spelthorne_council_tax_reduction_applicable_income_with_tariff_for_year - spelthorne_council_tax_reduction_applicable_amount_for_year)
+
+  - name: spelthorne_council_tax_reduction_income_taper_deduction_for_year
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Spelthorne Council Tax Reduction Scheme 2026-2027 class E amount B
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk-spelthorne/manual/council-tax-reduction-scheme-2026-2027/page-44
+              excerpt: "Amount B is 2/6/7 per cent of the difference between his income for the relevant week and his applicable amount."
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk-spelthorne/manual/council-tax-reduction-scheme-2026-2027/page-54
+              excerpt: "the amount found by deducting amount B from amount A, where “amount A” and “amount B” have the meanings given in paragraph 38(f)."
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          spelthorne_council_tax_reduction_excess_income_for_year * spelthorne_council_tax_reduction_withdrawal_rate
+
+  - name: spelthorne_council_tax_reduction_non_dependant_in_remunerative_work
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Year
+    source: Spelthorne Council Tax Reduction Scheme 2026-2027 remunerative-work definition
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk-spelthorne/manual/council-tax-reduction-scheme-2026-2027/page-28
+              excerpt: "for not less than 16 hours a week, in work for which payment is made"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          spelthorne_council_tax_reduction_non_dependant_weekly_hours >= spelthorne_council_tax_reduction_remunerative_work_hours
+
+  - name: spelthorne_council_tax_reduction_individual_non_dependant_deduction_for_year
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Spelthorne Council Tax Reduction Scheme 2026-2027 paragraph 48 working-age non-dependant contribution table on corpus page 51
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk-spelthorne/manual/council-tax-reduction-scheme-2026-2027/page-51
+              excerpt: "(a) in respect of a non-dependent aged 18 or over in remunerative work, £15.95 x 1/7."
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk-spelthorne/manual/council-tax-reduction-scheme-2026-2027/page-51
+              excerpt: "is £10.60."
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk-spelthorne/manual/council-tax-reduction-scheme-2026-2027/page-51
+              excerpt: "(c) not less than £485.00 but less than £605.00, the housing costs contribution to be made under this paragraph is £13.30."
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          if not spelthorne_council_tax_reduction_is_non_dependant or spelthorne_council_tax_reduction_non_dependant_exempt: 0 else: (if spelthorne_council_tax_reduction_non_dependant_in_remunerative_work and spelthorne_council_tax_reduction_non_dependant_normal_gross_weekly_income >= spelthorne_council_tax_reduction_housing_costs_contribution_top_income_threshold_weekly: spelthorne_council_tax_reduction_top_housing_costs_contribution_weekly else: (if spelthorne_council_tax_reduction_non_dependant_in_remunerative_work and spelthorne_council_tax_reduction_non_dependant_normal_gross_weekly_income >= spelthorne_council_tax_reduction_housing_costs_contribution_high_income_threshold_weekly: spelthorne_council_tax_reduction_high_housing_costs_contribution_weekly else: (if spelthorne_council_tax_reduction_non_dependant_in_remunerative_work and spelthorne_council_tax_reduction_non_dependant_normal_gross_weekly_income >= spelthorne_council_tax_reduction_housing_costs_contribution_mid_income_threshold_weekly: spelthorne_council_tax_reduction_mid_housing_costs_contribution_weekly else: spelthorne_council_tax_reduction_low_housing_costs_contribution_weekly))) * spelthorne_council_tax_reduction_weeks_per_year
+
+  - name: simulated_spelthorne_council_tax_reduction_annual_amount
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Spelthorne Council Tax Reduction Scheme 2026-2027 working-age classes D and E amount calculation
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk-spelthorne/manual/council-tax-reduction-scheme-2026-2027/page-50
+              excerpt: "Less any deductions in respect of non-dependents which fall to be made under paragraph 48 (non- dependent housing costs contribution)."
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk-spelthorne/manual/council-tax-reduction-scheme-2026-2027/page-54
+              excerpt: "the amount found by deducting amount B from amount A, where “amount A” and “amount B” have the meanings given in paragraph 38(f)."
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk-spelthorne/manual/council-tax-reduction-scheme-2026-2027/page-44
+              excerpt: "Who has made an application, or is treated as having made an application, for a reduction under this scheme;"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          if spelthorne_council_tax_reduction_working_age_scheme_applies and would_claim_council_tax_reduction and spelthorne_council_tax_reduction_capital_eligible: max(0, spelthorne_council_tax_reduction_maximum_eligible_liability_for_year * spelthorne_council_tax_reduction_applicable_maximum_support_rate - spelthorne_council_tax_reduction_income_taper_deduction_for_year - spelthorne_council_tax_reduction_non_dependant_deductions_for_year) else: 0
+
+  - name: spelthorne_council_tax_reduction_annual_amount
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Spelthorne Council Tax Reduction Scheme 2026-2027 final working-age local award surface
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk-spelthorne/manual/council-tax-reduction-scheme-2026-2027/page-54
+              excerpt: "Where a person is entitled to a reduction under this scheme in respect of a day, the amount of the reduction to which he is entitled is as follows."
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          simulated_spelthorne_council_tax_reduction_annual_amount

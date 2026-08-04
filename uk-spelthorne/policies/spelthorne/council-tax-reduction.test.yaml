@@ -1,0 +1,161 @@
+- name: spelthorne_ctr_full_liability_award
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#input.local_authority_is_spelthorne: true
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: false
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#input.spelthorne_council_tax_reduction_additional_financial_assistance_class: false
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#input.spelthorne_council_tax_reduction_assessed_capital_for_year: 0
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#input.spelthorne_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#input.spelthorne_council_tax_reduction_universal_credit_for_year: 0
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#input.spelthorne_council_tax_reduction_uc_maximum_amount_for_year: 0
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#input.spelthorne_council_tax_reduction_legacy_applicable_amount_for_year: 0
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#input.spelthorne_council_tax_reduction_applicable_income_for_year: 0
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#input.spelthorne_council_tax_reduction_relevant_income_based_benefit: false
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#input.spelthorne_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#spelthorne_council_tax_reduction_working_age_scheme_applies: holds
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#spelthorne_council_tax_reduction_has_universal_credit_award: not_holds
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#spelthorne_council_tax_reduction_capital_eligible: holds
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#simulated_spelthorne_council_tax_reduction_annual_amount: 1350
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#spelthorne_council_tax_reduction_annual_amount: 1350
+
+- name: spelthorne_ctr_capital_over_limit_is_nil
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#input.local_authority_is_spelthorne: true
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: false
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#input.spelthorne_council_tax_reduction_additional_financial_assistance_class: false
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#input.spelthorne_council_tax_reduction_assessed_capital_for_year: 16001
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#input.spelthorne_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#input.spelthorne_council_tax_reduction_universal_credit_for_year: 0
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#input.spelthorne_council_tax_reduction_uc_maximum_amount_for_year: 0
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#input.spelthorne_council_tax_reduction_legacy_applicable_amount_for_year: 0
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#input.spelthorne_council_tax_reduction_applicable_income_for_year: 0
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#input.spelthorne_council_tax_reduction_relevant_income_based_benefit: false
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#input.spelthorne_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#spelthorne_council_tax_reduction_capital_eligible: not_holds
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#simulated_spelthorne_council_tax_reduction_annual_amount: 0
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#spelthorne_council_tax_reduction_annual_amount: 0
+
+- name: spelthorne_ctr_standard_rate_without_additional_assistance
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#input.spelthorne_council_tax_reduction_additional_financial_assistance_class: false
+  output:
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#spelthorne_council_tax_reduction_requires_additional_financial_assistance: not_holds
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#spelthorne_council_tax_reduction_applicable_maximum_support_rate: 0.75
+
+- name: spelthorne_ctr_tariff_income_reduces_award
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#input.local_authority_is_spelthorne: true
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: false
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#input.spelthorne_council_tax_reduction_additional_financial_assistance_class: false
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#input.spelthorne_council_tax_reduction_assessed_capital_for_year: 9000
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#input.spelthorne_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#input.spelthorne_council_tax_reduction_universal_credit_for_year: 0
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#input.spelthorne_council_tax_reduction_uc_maximum_amount_for_year: 0
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#input.spelthorne_council_tax_reduction_legacy_applicable_amount_for_year: 0
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#input.spelthorne_council_tax_reduction_applicable_income_for_year: 0
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#input.spelthorne_council_tax_reduction_relevant_income_based_benefit: false
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#input.spelthorne_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#spelthorne_council_tax_reduction_tariff_income_for_year: 624
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#spelthorne_council_tax_reduction_applicable_income_with_tariff_for_year: 624
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#spelthorne_council_tax_reduction_excess_income_for_year: 624
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#spelthorne_council_tax_reduction_income_taper_deduction_for_year: 124.8
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#spelthorne_council_tax_reduction_annual_amount: 1225.2
+
+- name: spelthorne_ctr_universal_credit_uses_uc_maximum_amount
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#input.local_authority_is_spelthorne: true
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: false
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#input.spelthorne_council_tax_reduction_additional_financial_assistance_class: false
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#input.spelthorne_council_tax_reduction_assessed_capital_for_year: 9000
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#input.spelthorne_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#input.spelthorne_council_tax_reduction_universal_credit_for_year: 12000
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#input.spelthorne_council_tax_reduction_uc_maximum_amount_for_year: 12000
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#input.spelthorne_council_tax_reduction_legacy_applicable_amount_for_year: 0
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#input.spelthorne_council_tax_reduction_applicable_income_for_year: 12000
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#input.spelthorne_council_tax_reduction_relevant_income_based_benefit: false
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#input.spelthorne_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#spelthorne_council_tax_reduction_has_universal_credit_award: holds
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#spelthorne_council_tax_reduction_applicable_amount_for_year: 12000
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#spelthorne_council_tax_reduction_tariff_income_for_year: 0
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#spelthorne_council_tax_reduction_excess_income_for_year: 0
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#spelthorne_council_tax_reduction_annual_amount: 1350
+
+- name: spelthorne_ctr_non_dependant_top_band_reduces_award
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#input.local_authority_is_spelthorne: true
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: false
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#input.spelthorne_council_tax_reduction_additional_financial_assistance_class: false
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#input.spelthorne_council_tax_reduction_assessed_capital_for_year: 0
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#input.spelthorne_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#input.spelthorne_council_tax_reduction_universal_credit_for_year: 0
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#input.spelthorne_council_tax_reduction_uc_maximum_amount_for_year: 0
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#input.spelthorne_council_tax_reduction_legacy_applicable_amount_for_year: 0
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#input.spelthorne_council_tax_reduction_applicable_income_for_year: 0
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#input.spelthorne_council_tax_reduction_relevant_income_based_benefit: false
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#input.spelthorne_council_tax_reduction_non_dependant_deductions_for_year: 829.40
+  output:
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#spelthorne_council_tax_reduction_annual_amount: 520.60
+
+- name: spelthorne_ctr_non_dependant_top_band_individual_deduction
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#input.spelthorne_council_tax_reduction_is_non_dependant: true
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#input.spelthorne_council_tax_reduction_non_dependant_exempt: false
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#input.spelthorne_council_tax_reduction_non_dependant_weekly_hours: 16
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#input.spelthorne_council_tax_reduction_non_dependant_normal_gross_weekly_income: 605
+  output:
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#spelthorne_council_tax_reduction_non_dependant_in_remunerative_work: holds
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#spelthorne_council_tax_reduction_individual_non_dependant_deduction_for_year: 829.4
+
+- name: spelthorne_ctr_exempt_non_dependant_has_no_deduction
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#input.spelthorne_council_tax_reduction_is_non_dependant: true
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#input.spelthorne_council_tax_reduction_non_dependant_exempt: true
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#input.spelthorne_council_tax_reduction_non_dependant_weekly_hours: 16
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#input.spelthorne_council_tax_reduction_non_dependant_normal_gross_weekly_income: 605
+  output:
+    uk-spelthorne:policies/spelthorne/council-tax-reduction#spelthorne_council_tax_reduction_individual_non_dependant_deduction_for_year: 0
