@@ -1,0 +1,1625 @@
+- name: wirral_parameter_assertions_and_base_calculation
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wirral:policies/wirral/council-tax-reduction#input.local_authority_is_wirral: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_is_working_age: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_weekly_net_income: 100
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_band_d_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_financial_year_days: 365
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_partner: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_one_dependant: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_support: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_related_esa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_based_jsa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_universal_credit: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_non_dependant_deduction_units_after_person_exemptions: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_or_partner_is_protected_from_non_dependant_deductions: false
+  output:
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_maximum_support_rate: 0.50
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_capital_limit: 6000
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_days_per_week: 7
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_weekly_non_dependant_deduction: 5
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_applicant_is_in_local_working_age_scheme_class: holds
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_working_age_scheme_applies: holds
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_family_category: 0
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_passported_to_band_1: not_holds
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_income_band: 0
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_selected_support_rate: 0.50
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_capital_eligible: holds
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_band_d_capped_eligible_liability_for_year: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_non_dependant_deduction_not_protected: holds
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_daily_non_dependant_deduction_before_protection: 0
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_daily_non_dependant_deduction: 0
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_annual_non_dependant_deduction: 0
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_maximum_amount_before_non_dependant_deduction_for_year: 500
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_maximum_amount_exceeds_non_dependant_deduction: holds
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_maximum_amount_for_year: 500
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_amount_before_award_conditions_for_year: 250
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_award_conditions_met: holds
+    uk-wirral:policies/wirral/council-tax-reduction#simulated_wirral_council_tax_reduction_annual_amount: 250
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_annual_amount: 250
+- name: wirral_single_b2_below
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wirral:policies/wirral/council-tax-reduction#input.local_authority_is_wirral: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_is_working_age: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_weekly_net_income: 130.00
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_band_d_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_financial_year_days: 365
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_partner: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_one_dependant: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_support: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_related_esa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_based_jsa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_universal_credit: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_non_dependant_deduction_units_after_person_exemptions: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_or_partner_is_protected_from_non_dependant_deductions: false
+  output:
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_family_category: 0
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_income_band: 0
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_selected_support_rate: 0.50
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_annual_amount: 250
+- name: wirral_single_b2_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wirral:policies/wirral/council-tax-reduction#input.local_authority_is_wirral: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_is_working_age: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_weekly_net_income: 130.01
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_band_d_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_financial_year_days: 365
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_partner: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_one_dependant: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_support: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_related_esa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_based_jsa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_universal_credit: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_non_dependant_deduction_units_after_person_exemptions: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_or_partner_is_protected_from_non_dependant_deductions: false
+  output:
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_family_category: 0
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_income_band: 1
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_selected_support_rate: 0.40
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_annual_amount: 200
+- name: wirral_single_b3_below
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wirral:policies/wirral/council-tax-reduction#input.local_authority_is_wirral: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_is_working_age: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_weekly_net_income: 182.00
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_band_d_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_financial_year_days: 365
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_partner: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_one_dependant: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_support: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_related_esa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_based_jsa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_universal_credit: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_non_dependant_deduction_units_after_person_exemptions: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_or_partner_is_protected_from_non_dependant_deductions: false
+  output:
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_family_category: 0
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_income_band: 1
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_selected_support_rate: 0.40
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_annual_amount: 200
+- name: wirral_single_b3_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wirral:policies/wirral/council-tax-reduction#input.local_authority_is_wirral: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_is_working_age: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_weekly_net_income: 182.01
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_band_d_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_financial_year_days: 365
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_partner: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_one_dependant: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_support: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_related_esa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_based_jsa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_universal_credit: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_non_dependant_deduction_units_after_person_exemptions: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_or_partner_is_protected_from_non_dependant_deductions: false
+  output:
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_family_category: 0
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_income_band: 2
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_selected_support_rate: 0.30
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_annual_amount: 150
+- name: wirral_single_b4_below
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wirral:policies/wirral/council-tax-reduction#input.local_authority_is_wirral: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_is_working_age: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_weekly_net_income: 234.00
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_band_d_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_financial_year_days: 365
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_partner: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_one_dependant: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_support: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_related_esa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_based_jsa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_universal_credit: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_non_dependant_deduction_units_after_person_exemptions: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_or_partner_is_protected_from_non_dependant_deductions: false
+  output:
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_family_category: 0
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_income_band: 2
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_selected_support_rate: 0.30
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_annual_amount: 150
+- name: wirral_single_b4_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wirral:policies/wirral/council-tax-reduction#input.local_authority_is_wirral: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_is_working_age: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_weekly_net_income: 234.01
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_band_d_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_financial_year_days: 365
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_partner: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_one_dependant: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_support: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_related_esa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_based_jsa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_universal_credit: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_non_dependant_deduction_units_after_person_exemptions: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_or_partner_is_protected_from_non_dependant_deductions: false
+  output:
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_family_category: 0
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_income_band: 3
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_selected_support_rate: 0.20
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_annual_amount: 100
+- name: wirral_single_b5_below
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wirral:policies/wirral/council-tax-reduction#input.local_authority_is_wirral: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_is_working_age: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_weekly_net_income: 286.00
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_band_d_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_financial_year_days: 365
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_partner: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_one_dependant: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_support: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_related_esa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_based_jsa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_universal_credit: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_non_dependant_deduction_units_after_person_exemptions: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_or_partner_is_protected_from_non_dependant_deductions: false
+  output:
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_family_category: 0
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_income_band: 3
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_selected_support_rate: 0.20
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_annual_amount: 100
+- name: wirral_single_b5_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wirral:policies/wirral/council-tax-reduction#input.local_authority_is_wirral: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_is_working_age: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_weekly_net_income: 286.01
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_band_d_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_financial_year_days: 365
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_partner: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_one_dependant: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_support: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_related_esa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_based_jsa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_universal_credit: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_non_dependant_deduction_units_after_person_exemptions: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_or_partner_is_protected_from_non_dependant_deductions: false
+  output:
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_family_category: 0
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_income_band: 4
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_selected_support_rate: 0
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_annual_amount: 0
+- name: wirral_single_one_dependant_b2_below
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wirral:policies/wirral/council-tax-reduction#input.local_authority_is_wirral: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_is_working_age: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_weekly_net_income: 182.00
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_band_d_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_financial_year_days: 365
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_partner: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_one_dependant: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_support: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_related_esa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_based_jsa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_universal_credit: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_non_dependant_deduction_units_after_person_exemptions: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_or_partner_is_protected_from_non_dependant_deductions: false
+  output:
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_family_category: 1
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_income_band: 0
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_selected_support_rate: 0.50
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_annual_amount: 250
+- name: wirral_single_one_dependant_b2_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wirral:policies/wirral/council-tax-reduction#input.local_authority_is_wirral: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_is_working_age: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_weekly_net_income: 182.01
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_band_d_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_financial_year_days: 365
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_partner: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_one_dependant: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_support: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_related_esa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_based_jsa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_universal_credit: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_non_dependant_deduction_units_after_person_exemptions: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_or_partner_is_protected_from_non_dependant_deductions: false
+  output:
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_family_category: 1
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_income_band: 1
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_selected_support_rate: 0.40
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_annual_amount: 200
+- name: wirral_single_one_dependant_b3_below
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wirral:policies/wirral/council-tax-reduction#input.local_authority_is_wirral: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_is_working_age: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_weekly_net_income: 234.00
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_band_d_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_financial_year_days: 365
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_partner: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_one_dependant: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_support: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_related_esa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_based_jsa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_universal_credit: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_non_dependant_deduction_units_after_person_exemptions: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_or_partner_is_protected_from_non_dependant_deductions: false
+  output:
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_family_category: 1
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_income_band: 1
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_selected_support_rate: 0.40
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_annual_amount: 200
+- name: wirral_single_one_dependant_b3_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wirral:policies/wirral/council-tax-reduction#input.local_authority_is_wirral: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_is_working_age: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_weekly_net_income: 234.01
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_band_d_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_financial_year_days: 365
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_partner: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_one_dependant: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_support: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_related_esa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_based_jsa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_universal_credit: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_non_dependant_deduction_units_after_person_exemptions: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_or_partner_is_protected_from_non_dependant_deductions: false
+  output:
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_family_category: 1
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_income_band: 2
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_selected_support_rate: 0.30
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_annual_amount: 150
+- name: wirral_single_one_dependant_b4_below
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wirral:policies/wirral/council-tax-reduction#input.local_authority_is_wirral: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_is_working_age: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_weekly_net_income: 286.00
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_band_d_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_financial_year_days: 365
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_partner: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_one_dependant: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_support: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_related_esa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_based_jsa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_universal_credit: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_non_dependant_deduction_units_after_person_exemptions: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_or_partner_is_protected_from_non_dependant_deductions: false
+  output:
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_family_category: 1
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_income_band: 2
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_selected_support_rate: 0.30
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_annual_amount: 150
+- name: wirral_single_one_dependant_b4_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wirral:policies/wirral/council-tax-reduction#input.local_authority_is_wirral: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_is_working_age: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_weekly_net_income: 286.01
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_band_d_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_financial_year_days: 365
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_partner: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_one_dependant: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_support: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_related_esa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_based_jsa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_universal_credit: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_non_dependant_deduction_units_after_person_exemptions: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_or_partner_is_protected_from_non_dependant_deductions: false
+  output:
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_family_category: 1
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_income_band: 3
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_selected_support_rate: 0.20
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_annual_amount: 100
+- name: wirral_single_one_dependant_b5_below
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wirral:policies/wirral/council-tax-reduction#input.local_authority_is_wirral: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_is_working_age: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_weekly_net_income: 338.00
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_band_d_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_financial_year_days: 365
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_partner: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_one_dependant: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_support: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_related_esa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_based_jsa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_universal_credit: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_non_dependant_deduction_units_after_person_exemptions: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_or_partner_is_protected_from_non_dependant_deductions: false
+  output:
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_family_category: 1
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_income_band: 3
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_selected_support_rate: 0.20
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_annual_amount: 100
+- name: wirral_single_one_dependant_b5_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wirral:policies/wirral/council-tax-reduction#input.local_authority_is_wirral: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_is_working_age: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_weekly_net_income: 338.01
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_band_d_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_financial_year_days: 365
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_partner: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_one_dependant: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_support: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_related_esa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_based_jsa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_universal_credit: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_non_dependant_deduction_units_after_person_exemptions: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_or_partner_is_protected_from_non_dependant_deductions: false
+  output:
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_family_category: 1
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_income_band: 4
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_selected_support_rate: 0
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_annual_amount: 0
+- name: wirral_single_two_or_more_dependants_b2_below
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wirral:policies/wirral/council-tax-reduction#input.local_authority_is_wirral: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_is_working_age: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_weekly_net_income: 250.00
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_band_d_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_financial_year_days: 365
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_partner: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_one_dependant: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_two_or_more_dependants: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_support: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_related_esa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_based_jsa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_universal_credit: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_non_dependant_deduction_units_after_person_exemptions: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_or_partner_is_protected_from_non_dependant_deductions: false
+  output:
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_family_category: 2
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_income_band: 0
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_selected_support_rate: 0.50
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_annual_amount: 250
+- name: wirral_single_two_or_more_dependants_b2_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wirral:policies/wirral/council-tax-reduction#input.local_authority_is_wirral: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_is_working_age: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_weekly_net_income: 250.01
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_band_d_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_financial_year_days: 365
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_partner: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_one_dependant: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_two_or_more_dependants: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_support: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_related_esa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_based_jsa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_universal_credit: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_non_dependant_deduction_units_after_person_exemptions: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_or_partner_is_protected_from_non_dependant_deductions: false
+  output:
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_family_category: 2
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_income_band: 1
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_selected_support_rate: 0.40
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_annual_amount: 200
+- name: wirral_single_two_or_more_dependants_b3_below
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wirral:policies/wirral/council-tax-reduction#input.local_authority_is_wirral: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_is_working_age: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_weekly_net_income: 286.00
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_band_d_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_financial_year_days: 365
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_partner: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_one_dependant: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_two_or_more_dependants: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_support: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_related_esa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_based_jsa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_universal_credit: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_non_dependant_deduction_units_after_person_exemptions: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_or_partner_is_protected_from_non_dependant_deductions: false
+  output:
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_family_category: 2
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_income_band: 1
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_selected_support_rate: 0.40
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_annual_amount: 200
+- name: wirral_single_two_or_more_dependants_b3_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wirral:policies/wirral/council-tax-reduction#input.local_authority_is_wirral: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_is_working_age: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_weekly_net_income: 286.01
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_band_d_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_financial_year_days: 365
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_partner: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_one_dependant: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_two_or_more_dependants: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_support: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_related_esa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_based_jsa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_universal_credit: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_non_dependant_deduction_units_after_person_exemptions: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_or_partner_is_protected_from_non_dependant_deductions: false
+  output:
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_family_category: 2
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_income_band: 2
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_selected_support_rate: 0.30
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_annual_amount: 150
+- name: wirral_single_two_or_more_dependants_b4_below
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wirral:policies/wirral/council-tax-reduction#input.local_authority_is_wirral: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_is_working_age: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_weekly_net_income: 338.00
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_band_d_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_financial_year_days: 365
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_partner: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_one_dependant: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_two_or_more_dependants: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_support: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_related_esa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_based_jsa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_universal_credit: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_non_dependant_deduction_units_after_person_exemptions: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_or_partner_is_protected_from_non_dependant_deductions: false
+  output:
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_family_category: 2
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_income_band: 2
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_selected_support_rate: 0.30
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_annual_amount: 150
+- name: wirral_single_two_or_more_dependants_b4_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wirral:policies/wirral/council-tax-reduction#input.local_authority_is_wirral: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_is_working_age: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_weekly_net_income: 338.01
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_band_d_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_financial_year_days: 365
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_partner: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_one_dependant: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_two_or_more_dependants: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_support: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_related_esa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_based_jsa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_universal_credit: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_non_dependant_deduction_units_after_person_exemptions: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_or_partner_is_protected_from_non_dependant_deductions: false
+  output:
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_family_category: 2
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_income_band: 3
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_selected_support_rate: 0.20
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_annual_amount: 100
+- name: wirral_single_two_or_more_dependants_b5_below
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wirral:policies/wirral/council-tax-reduction#input.local_authority_is_wirral: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_is_working_age: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_weekly_net_income: 390.00
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_band_d_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_financial_year_days: 365
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_partner: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_one_dependant: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_two_or_more_dependants: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_support: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_related_esa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_based_jsa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_universal_credit: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_non_dependant_deduction_units_after_person_exemptions: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_or_partner_is_protected_from_non_dependant_deductions: false
+  output:
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_family_category: 2
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_income_band: 3
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_selected_support_rate: 0.20
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_annual_amount: 100
+- name: wirral_single_two_or_more_dependants_b5_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wirral:policies/wirral/council-tax-reduction#input.local_authority_is_wirral: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_is_working_age: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_weekly_net_income: 390.01
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_band_d_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_financial_year_days: 365
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_partner: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_one_dependant: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_two_or_more_dependants: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_support: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_related_esa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_based_jsa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_universal_credit: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_non_dependant_deduction_units_after_person_exemptions: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_or_partner_is_protected_from_non_dependant_deductions: false
+  output:
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_family_category: 2
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_income_band: 4
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_selected_support_rate: 0
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_annual_amount: 0
+- name: wirral_couple_b2_below
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wirral:policies/wirral/council-tax-reduction#input.local_authority_is_wirral: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_is_working_age: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_weekly_net_income: 182.00
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_band_d_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_financial_year_days: 365
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_partner: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_one_dependant: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_support: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_related_esa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_based_jsa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_universal_credit: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_non_dependant_deduction_units_after_person_exemptions: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_or_partner_is_protected_from_non_dependant_deductions: false
+  output:
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_family_category: 3
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_income_band: 0
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_selected_support_rate: 0.50
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_annual_amount: 250
+- name: wirral_couple_b2_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wirral:policies/wirral/council-tax-reduction#input.local_authority_is_wirral: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_is_working_age: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_weekly_net_income: 182.01
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_band_d_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_financial_year_days: 365
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_partner: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_one_dependant: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_support: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_related_esa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_based_jsa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_universal_credit: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_non_dependant_deduction_units_after_person_exemptions: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_or_partner_is_protected_from_non_dependant_deductions: false
+  output:
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_family_category: 3
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_income_band: 1
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_selected_support_rate: 0.40
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_annual_amount: 200
+- name: wirral_couple_b3_below
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wirral:policies/wirral/council-tax-reduction#input.local_authority_is_wirral: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_is_working_age: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_weekly_net_income: 234.00
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_band_d_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_financial_year_days: 365
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_partner: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_one_dependant: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_support: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_related_esa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_based_jsa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_universal_credit: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_non_dependant_deduction_units_after_person_exemptions: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_or_partner_is_protected_from_non_dependant_deductions: false
+  output:
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_family_category: 3
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_income_band: 1
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_selected_support_rate: 0.40
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_annual_amount: 200
+- name: wirral_couple_b3_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wirral:policies/wirral/council-tax-reduction#input.local_authority_is_wirral: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_is_working_age: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_weekly_net_income: 234.01
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_band_d_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_financial_year_days: 365
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_partner: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_one_dependant: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_support: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_related_esa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_based_jsa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_universal_credit: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_non_dependant_deduction_units_after_person_exemptions: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_or_partner_is_protected_from_non_dependant_deductions: false
+  output:
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_family_category: 3
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_income_band: 2
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_selected_support_rate: 0.30
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_annual_amount: 150
+- name: wirral_couple_b4_below
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wirral:policies/wirral/council-tax-reduction#input.local_authority_is_wirral: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_is_working_age: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_weekly_net_income: 286.00
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_band_d_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_financial_year_days: 365
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_partner: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_one_dependant: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_support: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_related_esa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_based_jsa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_universal_credit: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_non_dependant_deduction_units_after_person_exemptions: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_or_partner_is_protected_from_non_dependant_deductions: false
+  output:
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_family_category: 3
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_income_band: 2
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_selected_support_rate: 0.30
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_annual_amount: 150
+- name: wirral_couple_b4_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wirral:policies/wirral/council-tax-reduction#input.local_authority_is_wirral: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_is_working_age: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_weekly_net_income: 286.01
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_band_d_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_financial_year_days: 365
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_partner: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_one_dependant: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_support: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_related_esa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_based_jsa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_universal_credit: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_non_dependant_deduction_units_after_person_exemptions: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_or_partner_is_protected_from_non_dependant_deductions: false
+  output:
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_family_category: 3
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_income_band: 3
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_selected_support_rate: 0.20
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_annual_amount: 100
+- name: wirral_couple_b5_below
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wirral:policies/wirral/council-tax-reduction#input.local_authority_is_wirral: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_is_working_age: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_weekly_net_income: 338.00
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_band_d_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_financial_year_days: 365
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_partner: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_one_dependant: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_support: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_related_esa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_based_jsa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_universal_credit: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_non_dependant_deduction_units_after_person_exemptions: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_or_partner_is_protected_from_non_dependant_deductions: false
+  output:
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_family_category: 3
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_income_band: 3
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_selected_support_rate: 0.20
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_annual_amount: 100
+- name: wirral_couple_b5_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wirral:policies/wirral/council-tax-reduction#input.local_authority_is_wirral: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_is_working_age: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_weekly_net_income: 338.01
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_band_d_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_financial_year_days: 365
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_partner: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_one_dependant: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_support: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_related_esa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_based_jsa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_universal_credit: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_non_dependant_deduction_units_after_person_exemptions: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_or_partner_is_protected_from_non_dependant_deductions: false
+  output:
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_family_category: 3
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_income_band: 4
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_selected_support_rate: 0
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_annual_amount: 0
+- name: wirral_couple_one_dependant_b2_below
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wirral:policies/wirral/council-tax-reduction#input.local_authority_is_wirral: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_is_working_age: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_weekly_net_income: 236.00
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_band_d_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_financial_year_days: 365
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_partner: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_one_dependant: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_support: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_related_esa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_based_jsa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_universal_credit: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_non_dependant_deduction_units_after_person_exemptions: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_or_partner_is_protected_from_non_dependant_deductions: false
+  output:
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_family_category: 4
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_income_band: 0
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_selected_support_rate: 0.50
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_annual_amount: 250
+- name: wirral_couple_one_dependant_b2_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wirral:policies/wirral/council-tax-reduction#input.local_authority_is_wirral: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_is_working_age: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_weekly_net_income: 236.01
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_band_d_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_financial_year_days: 365
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_partner: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_one_dependant: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_support: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_related_esa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_based_jsa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_universal_credit: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_non_dependant_deduction_units_after_person_exemptions: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_or_partner_is_protected_from_non_dependant_deductions: false
+  output:
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_family_category: 4
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_income_band: 1
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_selected_support_rate: 0.40
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_annual_amount: 200
+- name: wirral_couple_one_dependant_b3_below
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wirral:policies/wirral/council-tax-reduction#input.local_authority_is_wirral: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_is_working_age: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_weekly_net_income: 286.00
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_band_d_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_financial_year_days: 365
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_partner: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_one_dependant: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_support: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_related_esa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_based_jsa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_universal_credit: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_non_dependant_deduction_units_after_person_exemptions: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_or_partner_is_protected_from_non_dependant_deductions: false
+  output:
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_family_category: 4
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_income_band: 1
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_selected_support_rate: 0.40
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_annual_amount: 200
+- name: wirral_couple_one_dependant_b3_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wirral:policies/wirral/council-tax-reduction#input.local_authority_is_wirral: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_is_working_age: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_weekly_net_income: 286.01
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_band_d_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_financial_year_days: 365
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_partner: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_one_dependant: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_support: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_related_esa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_based_jsa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_universal_credit: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_non_dependant_deduction_units_after_person_exemptions: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_or_partner_is_protected_from_non_dependant_deductions: false
+  output:
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_family_category: 4
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_income_band: 2
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_selected_support_rate: 0.30
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_annual_amount: 150
+- name: wirral_couple_one_dependant_b4_below
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wirral:policies/wirral/council-tax-reduction#input.local_authority_is_wirral: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_is_working_age: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_weekly_net_income: 338.00
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_band_d_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_financial_year_days: 365
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_partner: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_one_dependant: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_support: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_related_esa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_based_jsa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_universal_credit: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_non_dependant_deduction_units_after_person_exemptions: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_or_partner_is_protected_from_non_dependant_deductions: false
+  output:
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_family_category: 4
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_income_band: 2
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_selected_support_rate: 0.30
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_annual_amount: 150
+- name: wirral_couple_one_dependant_b4_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wirral:policies/wirral/council-tax-reduction#input.local_authority_is_wirral: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_is_working_age: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_weekly_net_income: 338.01
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_band_d_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_financial_year_days: 365
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_partner: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_one_dependant: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_support: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_related_esa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_based_jsa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_universal_credit: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_non_dependant_deduction_units_after_person_exemptions: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_or_partner_is_protected_from_non_dependant_deductions: false
+  output:
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_family_category: 4
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_income_band: 3
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_selected_support_rate: 0.20
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_annual_amount: 100
+- name: wirral_couple_one_dependant_b5_below
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wirral:policies/wirral/council-tax-reduction#input.local_authority_is_wirral: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_is_working_age: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_weekly_net_income: 390.00
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_band_d_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_financial_year_days: 365
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_partner: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_one_dependant: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_support: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_related_esa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_based_jsa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_universal_credit: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_non_dependant_deduction_units_after_person_exemptions: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_or_partner_is_protected_from_non_dependant_deductions: false
+  output:
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_family_category: 4
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_income_band: 3
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_selected_support_rate: 0.20
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_annual_amount: 100
+- name: wirral_couple_one_dependant_b5_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wirral:policies/wirral/council-tax-reduction#input.local_authority_is_wirral: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_is_working_age: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_weekly_net_income: 390.01
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_band_d_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_financial_year_days: 365
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_partner: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_one_dependant: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_support: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_related_esa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_based_jsa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_universal_credit: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_non_dependant_deduction_units_after_person_exemptions: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_or_partner_is_protected_from_non_dependant_deductions: false
+  output:
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_family_category: 4
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_income_band: 4
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_selected_support_rate: 0
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_annual_amount: 0
+- name: wirral_couple_two_or_more_dependants_b2_below
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wirral:policies/wirral/council-tax-reduction#input.local_authority_is_wirral: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_is_working_age: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_weekly_net_income: 306.00
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_band_d_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_financial_year_days: 365
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_partner: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_one_dependant: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_two_or_more_dependants: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_support: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_related_esa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_based_jsa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_universal_credit: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_non_dependant_deduction_units_after_person_exemptions: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_or_partner_is_protected_from_non_dependant_deductions: false
+  output:
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_family_category: 5
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_income_band: 0
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_selected_support_rate: 0.50
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_annual_amount: 250
+- name: wirral_couple_two_or_more_dependants_b2_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wirral:policies/wirral/council-tax-reduction#input.local_authority_is_wirral: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_is_working_age: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_weekly_net_income: 306.01
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_band_d_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_financial_year_days: 365
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_partner: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_one_dependant: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_two_or_more_dependants: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_support: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_related_esa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_based_jsa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_universal_credit: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_non_dependant_deduction_units_after_person_exemptions: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_or_partner_is_protected_from_non_dependant_deductions: false
+  output:
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_family_category: 5
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_income_band: 1
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_selected_support_rate: 0.40
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_annual_amount: 200
+- name: wirral_couple_two_or_more_dependants_b3_below
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wirral:policies/wirral/council-tax-reduction#input.local_authority_is_wirral: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_is_working_age: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_weekly_net_income: 338.00
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_band_d_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_financial_year_days: 365
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_partner: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_one_dependant: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_two_or_more_dependants: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_support: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_related_esa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_based_jsa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_universal_credit: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_non_dependant_deduction_units_after_person_exemptions: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_or_partner_is_protected_from_non_dependant_deductions: false
+  output:
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_family_category: 5
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_income_band: 1
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_selected_support_rate: 0.40
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_annual_amount: 200
+- name: wirral_couple_two_or_more_dependants_b3_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wirral:policies/wirral/council-tax-reduction#input.local_authority_is_wirral: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_is_working_age: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_weekly_net_income: 338.01
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_band_d_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_financial_year_days: 365
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_partner: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_one_dependant: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_two_or_more_dependants: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_support: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_related_esa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_based_jsa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_universal_credit: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_non_dependant_deduction_units_after_person_exemptions: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_or_partner_is_protected_from_non_dependant_deductions: false
+  output:
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_family_category: 5
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_income_band: 2
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_selected_support_rate: 0.30
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_annual_amount: 150
+- name: wirral_couple_two_or_more_dependants_b4_below
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wirral:policies/wirral/council-tax-reduction#input.local_authority_is_wirral: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_is_working_age: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_weekly_net_income: 390.00
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_band_d_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_financial_year_days: 365
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_partner: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_one_dependant: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_two_or_more_dependants: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_support: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_related_esa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_based_jsa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_universal_credit: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_non_dependant_deduction_units_after_person_exemptions: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_or_partner_is_protected_from_non_dependant_deductions: false
+  output:
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_family_category: 5
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_income_band: 2
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_selected_support_rate: 0.30
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_annual_amount: 150
+- name: wirral_couple_two_or_more_dependants_b4_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wirral:policies/wirral/council-tax-reduction#input.local_authority_is_wirral: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_is_working_age: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_weekly_net_income: 390.01
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_band_d_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_financial_year_days: 365
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_partner: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_one_dependant: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_two_or_more_dependants: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_support: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_related_esa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_based_jsa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_universal_credit: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_non_dependant_deduction_units_after_person_exemptions: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_or_partner_is_protected_from_non_dependant_deductions: false
+  output:
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_family_category: 5
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_income_band: 3
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_selected_support_rate: 0.20
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_annual_amount: 100
+- name: wirral_couple_two_or_more_dependants_b5_below
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wirral:policies/wirral/council-tax-reduction#input.local_authority_is_wirral: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_is_working_age: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_weekly_net_income: 442.00
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_band_d_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_financial_year_days: 365
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_partner: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_one_dependant: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_two_or_more_dependants: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_support: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_related_esa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_based_jsa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_universal_credit: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_non_dependant_deduction_units_after_person_exemptions: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_or_partner_is_protected_from_non_dependant_deductions: false
+  output:
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_family_category: 5
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_income_band: 3
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_selected_support_rate: 0.20
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_annual_amount: 100
+- name: wirral_couple_two_or_more_dependants_b5_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wirral:policies/wirral/council-tax-reduction#input.local_authority_is_wirral: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_is_working_age: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_weekly_net_income: 442.01
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_band_d_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_financial_year_days: 365
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_partner: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_one_dependant: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_two_or_more_dependants: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_support: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_related_esa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_based_jsa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_universal_credit: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_non_dependant_deduction_units_after_person_exemptions: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_or_partner_is_protected_from_non_dependant_deductions: false
+  output:
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_family_category: 5
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_income_band: 4
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_selected_support_rate: 0
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_annual_amount: 0
+- name: wirral_capital_just_below_cliff
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wirral:policies/wirral/council-tax-reduction#input.local_authority_is_wirral: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_is_working_age: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_capital_for_year: 5999
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_weekly_net_income: 100
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_band_d_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_financial_year_days: 365
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_partner: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_one_dependant: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_support: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_related_esa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_based_jsa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_universal_credit: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_non_dependant_deduction_units_after_person_exemptions: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_or_partner_is_protected_from_non_dependant_deductions: false
+  output:
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_capital_eligible: holds
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_award_conditions_met: holds
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_annual_amount: 250
+- name: wirral_capital_at_cliff_zero_award
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wirral:policies/wirral/council-tax-reduction#input.local_authority_is_wirral: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_is_working_age: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_weekly_net_income: 100
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_band_d_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_financial_year_days: 365
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_partner: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_one_dependant: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_support: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_related_esa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_based_jsa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_universal_credit: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_non_dependant_deduction_units_after_person_exemptions: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_or_partner_is_protected_from_non_dependant_deductions: false
+  output:
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_capital_eligible: not_holds
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_award_conditions_met: not_holds
+    uk-wirral:policies/wirral/council-tax-reduction#simulated_wirral_council_tax_reduction_annual_amount: 0
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_annual_amount: 0
+- name: wirral_band_d_cap_limits_eligible_liability
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wirral:policies/wirral/council-tax-reduction#input.local_authority_is_wirral: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_is_working_age: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_weekly_net_income: 100
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_council_tax_liability_after_statutory_discounts_and_apportionment: 1200
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_band_d_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_financial_year_days: 365
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_partner: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_one_dependant: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_support: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_related_esa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_based_jsa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_universal_credit: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_non_dependant_deduction_units_after_person_exemptions: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_or_partner_is_protected_from_non_dependant_deductions: false
+  output:
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_band_d_capped_eligible_liability_for_year: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_maximum_amount_before_non_dependant_deduction_for_year: 500
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_maximum_amount_for_year: 500
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_annual_amount: 250
+- name: wirral_non_dependant_daily_deduction_composes_inside_maximum
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wirral:policies/wirral/council-tax-reduction#input.local_authority_is_wirral: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_is_working_age: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_weekly_net_income: 130.01
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_band_d_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_financial_year_days: 365
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_partner: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_one_dependant: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_support: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_related_esa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_based_jsa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_universal_credit: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_non_dependant_deduction_units_after_person_exemptions: 1
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_or_partner_is_protected_from_non_dependant_deductions: false
+  output:
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_income_band: 1
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_selected_support_rate: 0.40
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_non_dependant_deduction_not_protected: holds
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_daily_non_dependant_deduction_before_protection: '0.7142857142857142857142857143'
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_daily_non_dependant_deduction: '0.7142857142857142857142857143'
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_annual_non_dependant_deduction: '260.71428571428571428571428572'
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_maximum_amount_before_non_dependant_deduction_for_year: 500
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_maximum_amount_exceeds_non_dependant_deduction: holds
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_maximum_amount_for_year: '239.28571428571428571428571428'
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_amount_before_award_conditions_for_year: '95.71428571428571428571428571'
+    uk-wirral:policies/wirral/council-tax-reduction#simulated_wirral_council_tax_reduction_annual_amount: '95.71428571428571428571428571'
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_annual_amount: '95.71428571428571428571428571'
+- name: wirral_non_dependant_protection_suppresses_deduction
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wirral:policies/wirral/council-tax-reduction#input.local_authority_is_wirral: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_is_working_age: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_weekly_net_income: 100
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_band_d_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_financial_year_days: 365
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_partner: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_one_dependant: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_support: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_related_esa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_based_jsa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_universal_credit: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_non_dependant_deduction_units_after_person_exemptions: 1
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_or_partner_is_protected_from_non_dependant_deductions: true
+  output:
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_non_dependant_deduction_not_protected: not_holds
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_daily_non_dependant_deduction_before_protection: '0.7142857142857142857142857143'
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_daily_non_dependant_deduction: 0
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_annual_non_dependant_deduction: 0
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_annual_amount: 250
+- name: wirral_passported_income_support_routes_to_band_1
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wirral:policies/wirral/council-tax-reduction#input.local_authority_is_wirral: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_is_working_age: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_weekly_net_income: 999
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_band_d_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_financial_year_days: 365
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_partner: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_one_dependant: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_support: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_related_esa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_based_jsa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_universal_credit: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_non_dependant_deduction_units_after_person_exemptions: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_or_partner_is_protected_from_non_dependant_deductions: false
+  output:
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_passported_to_band_1: holds
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_income_band: 0
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_selected_support_rate: 0.50
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_annual_amount: 250
+- name: wirral_passported_income_related_esa_routes_to_band_1
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wirral:policies/wirral/council-tax-reduction#input.local_authority_is_wirral: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_is_working_age: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_weekly_net_income: 999
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_band_d_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_financial_year_days: 365
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_partner: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_one_dependant: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_support: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_related_esa: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_based_jsa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_universal_credit: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_non_dependant_deduction_units_after_person_exemptions: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_or_partner_is_protected_from_non_dependant_deductions: false
+  output:
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_passported_to_band_1: holds
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_income_band: 0
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_selected_support_rate: 0.50
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_annual_amount: 250
+- name: wirral_passported_income_based_jsa_routes_to_band_1
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wirral:policies/wirral/council-tax-reduction#input.local_authority_is_wirral: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_is_working_age: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_weekly_net_income: 999
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_band_d_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_financial_year_days: 365
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_partner: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_one_dependant: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_support: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_related_esa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_based_jsa: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_universal_credit: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_non_dependant_deduction_units_after_person_exemptions: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_or_partner_is_protected_from_non_dependant_deductions: false
+  output:
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_passported_to_band_1: holds
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_income_band: 0
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_selected_support_rate: 0.50
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_annual_amount: 250
+- name: wirral_pension_credit_age_without_qualifying_benefit_zero_award
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wirral:policies/wirral/council-tax-reduction#input.local_authority_is_wirral: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_is_working_age: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_weekly_net_income: 100
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_band_d_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_financial_year_days: 365
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_partner: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_one_dependant: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_support: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_related_esa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_based_jsa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_universal_credit: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_non_dependant_deduction_units_after_person_exemptions: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_or_partner_is_protected_from_non_dependant_deductions: false
+  output:
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_applicant_is_in_local_working_age_scheme_class: not_holds
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_working_age_scheme_applies: not_holds
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_award_conditions_met: not_holds
+    uk-wirral:policies/wirral/council-tax-reduction#simulated_wirral_council_tax_reduction_annual_amount: 0
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_annual_amount: 0
+
+- name: wirral_pension_credit_age_with_universal_credit_is_in_local_scheme
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wirral:policies/wirral/council-tax-reduction#input.local_authority_is_wirral: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_is_working_age: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_weekly_net_income: 100
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_band_d_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_financial_year_days: 365
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_partner: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_one_dependant: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_support: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_related_esa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_based_jsa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_universal_credit: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_non_dependant_deduction_units_after_person_exemptions: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_or_partner_is_protected_from_non_dependant_deductions: false
+  output:
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_applicant_is_in_local_working_age_scheme_class: holds
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_working_age_scheme_applies: holds
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_passported_to_band_1: not_holds
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_income_band: 0
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_selected_support_rate: 0.50
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_award_conditions_met: holds
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_annual_amount: 250
+
+- name: wirral_passported_income_support_at_capital_cliff_has_zero_award
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wirral:policies/wirral/council-tax-reduction#input.local_authority_is_wirral: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_is_working_age: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_weekly_net_income: 999
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_band_d_council_tax_liability_after_statutory_discounts_and_apportionment: 1000
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_financial_year_days: 365
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_partner: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_one_dependant: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_support: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_related_esa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_based_jsa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_universal_credit: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_non_dependant_deduction_units_after_person_exemptions: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_or_partner_is_protected_from_non_dependant_deductions: false
+  output:
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_applicant_is_in_local_working_age_scheme_class: holds
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_passported_to_band_1: holds
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_income_band: 0
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_capital_eligible: not_holds
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_award_conditions_met: not_holds
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_annual_amount: 0
+
+- name: wirral_non_dependant_deduction_cannot_make_maximum_negative
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wirral:policies/wirral/council-tax-reduction#input.local_authority_is_wirral: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_is_working_age: true
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_assessed_weekly_net_income: 100
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_council_tax_liability_after_statutory_discounts_and_apportionment: 100
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_annual_band_d_council_tax_liability_after_statutory_discounts_and_apportionment: 100
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_financial_year_days: 365
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_partner: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_one_dependant: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_support: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_related_esa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_income_based_jsa: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_receives_universal_credit: false
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_non_dependant_deduction_units_after_person_exemptions: 1
+    uk-wirral:policies/wirral/council-tax-reduction#input.wirral_council_tax_reduction_applicant_or_partner_is_protected_from_non_dependant_deductions: false
+  output:
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_daily_non_dependant_deduction: '0.7142857142857142857142857143'
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_annual_non_dependant_deduction: '260.71428571428571428571428572'
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_maximum_amount_before_non_dependant_deduction_for_year: 50
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_maximum_amount_exceeds_non_dependant_deduction: not_holds
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_maximum_amount_for_year: 0
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_amount_before_award_conditions_for_year: 0
+    uk-wirral:policies/wirral/council-tax-reduction#wirral_council_tax_reduction_annual_amount: 0

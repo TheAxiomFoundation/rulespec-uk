@@ -1,0 +1,715 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk-wirral/manual/council-tax-reduction-scheme-2026-2027/page-63
+    # upstream_source_check:
+    #   status: delegated_scheme
+    #   checked_paths: [uk/statutes/ukpga/1992/14/13A, uk/regulations/uksi/2012/2885, uk/regulations/uksi/2012/2886]
+    #   rationale: LGFA 1992 section 13A delegates the working-age scheme to Wirral Metropolitan Borough Council, so the adopted scheme document is operative. The pinned singular source-verification contract strips this attestation as a live field.
+  summary: |-
+    Wirral's operative 2026-27 local working-age Council Tax Reduction scheme is a five-band weekly-income grid. Its defined maximum is 50 percent of actual discounted liability capped at Band D, less the daily £5/7 deduction for each non-dependant after the printed protections and coordination rules. The Schedule 1 linkage bases the selected 50, 40, 30, 20, or zero percent band on that defined maximum, so this module composes the band rate onto the maximum after the non-dependant deduction. Capital of £6,000 or more is a cliff. Income Support, income-related ESA, and income-based JSA route an applicant or partner to Band 1, while capital still excludes the award. The local working-age scheme also covers a pension-credit-age applicant or partner with one of the qualifying benefits named in section 1.7, including Universal Credit; Universal Credit is not separately stated to passport the Schedule 1 band. The working-age text prints no tariff-income rule or minimum-entitlement floor. Pension-age provisions, including their taper, are out of scope.
+  deferred_outputs:
+    - output: uk-wirral:policies/wirral/council-tax-reduction/sections-11-to-25-and-schedules-2-and-4#assessed_weekly_net_income
+      reason: Detailed income assessment, disregards, attribution, and family definitions feed the Schedule 1 weekly-income input and remain outside this award-surface module.
+    - output: uk-wirral:policies/wirral/council-tax-reduction/sections-26-to-34-and-schedule-3#assessed_capital_for_year
+      reason: Detailed capital valuation, attribution, and disregard rules remain outside this module; this module applies the printed £6,000 cliff.
+    - output: uk-wirral:policies/wirral/council-tax-reduction/paragraphs-48.0-to-48.3#annual_council_tax_liability_after_statutory_discounts_and_apportionment
+      reason: The award surface applies the printed Band D cap to a liability already adjusted for statutory discounts and joint-liability apportionment.
+    - output: uk-wirral:policies/wirral/council-tax-reduction/paragraphs-48A.2-to-48A.6#non_dependant_deduction_units_after_person_exemptions
+      reason: Couple coordination, resident-level exemptions, and apportionment determine the non-dependant units consumed by this award surface.
+    - output: uk-wirral:policies/wirral/council-tax-reduction/section-1.7#pension_credit_age_applicant_or_partner_has_qualifying_benefit
+      reason: The state-pension-credit-age and applicant-or-partner benefit classification determines section 1.7's exception to the ordinary local working-age class.
+    - output: uk-wirral:policies/wirral/council-tax-reduction/class-c#alternative_maximum_council_tax_reduction
+      reason: The pension-age Class C alternative maximum reduction is a separate calculation outside this working-age local award surface.
+
+rules:
+  - name: wirral_council_tax_reduction_maximum_support_rate
+    kind: parameter
+    dtype: Rate
+    source: Wirral Council Tax Reduction Scheme 2026/27 paragraph 48.0
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk-wirral/manual/council-tax-reduction-scheme-2026-2027/page-46
+              excerpt: "shall be 50% per cent, of the amount A divided by B less C where;"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          0.50
+
+  - name: wirral_council_tax_reduction_capital_limit
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Wirral Council Tax Reduction Scheme 2026/27 paragraph 26.1
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk-wirral/manual/council-tax-reduction-scheme-2026-2027/page-35
+              excerpt: "the prescribed amount is £6,000 and no reduction shall be granted when the applicant has an amount of £6,000 or greater."
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          6000
+
+  - name: wirral_council_tax_reduction_days_per_week
+    kind: parameter
+    dtype: Number
+    source: Wirral Council Tax Reduction Scheme 2026/27 paragraph 48A.1
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk-wirral/manual/council-tax-reduction-scheme-2026-2027/page-46
+              excerpt: "shall be £5 xl/7 for each non dependant who resides within the premises."
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          7
+
+  - name: wirral_council_tax_reduction_family_category_codes
+    kind: parameter
+    dtype: Number
+    indexed_by: wirral_council_tax_reduction_family_category
+    source: Wirral Council Tax Reduction Scheme 2026/27 Schedule 1 Table 1
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].values
+            kind: parameter_table
+            source: &grid_source
+              corpus_citation_path: uk-wirral/manual/council-tax-reduction-scheme-2026-2027/page-63
+              excerpt: &grid_excerpt |-
+                Table 1
+
+                Discount Weekly Net Income Single Single with 1 dependant Single with 2+ dependants Couple Couple with 1 dependant Couple with 2+ dependants Band 1 50% £0.00 to £130.00 £0.00 to £182.00 £0.00 to £250.00 £0.00 to £182.00 £0.00 to £236.00 £0.00 to £306.00 Band 2 40% £130.01 to £182.00 £182.01 to £234.00 £250.01 to £286.00 £182.01 to £234.00 £236.01 to £286.00 £306.01 to £338.00 Band 3 30% £182.01 to £234.00 £234.01 to £286.00 £286.01 to £338.00 £234.01 to £286.00 £286.01 to £338.00 £338.01 to £390.00 Band 4 20% £234.01 to £286.00 £286.01 to £338.00 £338.01 to £390.00 £286.01 to £338.00 £338.01 to £390.00 £390.01 to £442.00 Band 5 0% £286.01 or more £338.01 or more £390.01 or more £338.01 or more £390.01 or more £442.01 or more
+              table: &grid_table
+                header: Table 1
+                row_key: discount band
+                column_key: weekly net income by family category
+    versions:
+      - effective_from: '2026-04-01'
+        values: {0: 0, 1: 1, 2: 2, 3: 3, 4: 4, 5: 5}
+
+  - name: wirral_council_tax_reduction_income_band_codes
+    kind: parameter
+    dtype: Number
+    indexed_by: wirral_council_tax_reduction_income_band
+    source: Wirral Council Tax Reduction Scheme 2026/27 Schedule 1 Table 1
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].values
+            kind: parameter_table
+            source: *grid_source
+    versions:
+      - effective_from: '2026-04-01'
+        values: {0: 0, 1: 1, 2: 2, 3: 3, 4: 4}
+
+  - name: wirral_council_tax_reduction_support_rate_by_income_band
+    kind: parameter
+    dtype: Rate
+    indexed_by: wirral_council_tax_reduction_income_band
+    source: Wirral Council Tax Reduction Scheme 2026/27 Schedule 1 Table 1
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].values
+            kind: parameter_table
+            source: *grid_source
+    versions:
+      - effective_from: '2026-04-01'
+        values: {0: 0.50, 1: 0.40, 2: 0.30, 3: 0.20, 4: 0}
+
+  - name: wirral_council_tax_reduction_band_2_lower_income_by_family
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    indexed_by: wirral_council_tax_reduction_family_category
+    source: Wirral Council Tax Reduction Scheme 2026/27 Schedule 1 Table 1
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].values
+            kind: parameter_table
+            source: *grid_source
+    versions:
+      - effective_from: '2026-04-01'
+        values: {0: 130.01, 1: 182.01, 2: 250.01, 3: 182.01, 4: 236.01, 5: 306.01}
+
+  - name: wirral_council_tax_reduction_band_3_lower_income_by_family
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    indexed_by: wirral_council_tax_reduction_family_category
+    source: Wirral Council Tax Reduction Scheme 2026/27 Schedule 1 Table 1
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].values
+            kind: parameter_table
+            source: *grid_source
+    versions:
+      - effective_from: '2026-04-01'
+        values: {0: 182.01, 1: 234.01, 2: 286.01, 3: 234.01, 4: 286.01, 5: 338.01}
+
+  - name: wirral_council_tax_reduction_band_4_lower_income_by_family
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    indexed_by: wirral_council_tax_reduction_family_category
+    source: Wirral Council Tax Reduction Scheme 2026/27 Schedule 1 Table 1
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].values
+            kind: parameter_table
+            source: *grid_source
+    versions:
+      - effective_from: '2026-04-01'
+        values: {0: 234.01, 1: 286.01, 2: 338.01, 3: 286.01, 4: 338.01, 5: 390.01}
+
+  - name: wirral_council_tax_reduction_band_5_lower_income_by_family
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    indexed_by: wirral_council_tax_reduction_family_category
+    source: Wirral Council Tax Reduction Scheme 2026/27 Schedule 1 Table 1
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].values
+            kind: parameter_table
+            source: *grid_source
+    versions:
+      - effective_from: '2026-04-01'
+        values: {0: 286.01, 1: 338.01, 2: 390.01, 3: 338.01, 4: 390.01, 5: 442.01}
+
+  - name: wirral_council_tax_reduction_weekly_non_dependant_deduction
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Wirral Council Tax Reduction Scheme 2026/27 paragraph 48A.1
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk-wirral/manual/council-tax-reduction-scheme-2026-2027/page-46
+              excerpt: "48A.1 Subject to the following provisions of this paragraph, the non-dependant deductions in respect of a day referred to in section 48 (Maximum Council Tax Reduction) shall be £5 xl/7 for each non dependant who resides within the premises."
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          5
+
+  - name: wirral_council_tax_reduction_applicant_is_in_local_working_age_scheme_class
+    kind: derived
+    entity: Household
+    dtype: Judgment
+    period: Year
+    source: Wirral Council Tax Reduction Scheme 2026/27 section 1.7
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk-wirral/manual/council-tax-reduction-scheme-2026-2027/page-7
+              excerpt: "this scheme only applies to a person who; (a) has not attained the qualifying age for state pension credit; or (b) has attained the qualifying age for state pension credit if he, or his partner, is a person on income support, on an income-based jobseeker's allowance, on an income-related employment and support allowance or on universal credit."
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          wirral_council_tax_reduction_applicant_is_working_age
+          or wirral_council_tax_reduction_receives_income_support
+          or wirral_council_tax_reduction_receives_income_related_esa
+          or wirral_council_tax_reduction_receives_income_based_jsa
+          or wirral_council_tax_reduction_receives_universal_credit
+
+  - name: wirral_council_tax_reduction_working_age_scheme_applies
+    kind: derived
+    entity: Household
+    dtype: Judgment
+    period: Year
+    source: Wirral Council Tax Reduction Scheme 2026/27 sections 1.6-1.7
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk-wirral/manual/council-tax-reduction-scheme-2026-2027/page-7
+              excerpt: "THE SCHEME FOR WORKING AGE APPLICANTS -THE COUNCIL'S LOCAL SCHEME"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk-wirral/manual/council-tax-reduction-scheme-2026-2027/page-7
+              excerpt: "this scheme only applies to a person who; (a) has not attained the qualifying age for state pension credit; or (b) has attained the qualifying age for state pension credit if he, or his partner, is a person on income support, on an income-based jobseeker's allowance, on an income-related employment and support allowance or on universal credit."
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk-wirral/manual/council-tax-reduction-scheme-2026-2027/page-7
+              excerpt: "have made a valid application for reduction."
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          local_authority_is_wirral
+          and council_tax_reduction_household_in_england
+          and wirral_council_tax_reduction_applicant_is_in_local_working_age_scheme_class
+          and would_claim_council_tax_reduction
+
+  - name: wirral_council_tax_reduction_family_category
+    kind: derived
+    entity: Household
+    dtype: Number
+    period: Year
+    source: Wirral Council Tax Reduction Scheme 2026/27 Schedule 1 Table 1
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter_table
+            source: *grid_source
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          if wirral_council_tax_reduction_has_partner: if wirral_council_tax_reduction_has_two_or_more_dependants: wirral_council_tax_reduction_family_category_codes[5] else: if wirral_council_tax_reduction_has_one_dependant: wirral_council_tax_reduction_family_category_codes[4] else: wirral_council_tax_reduction_family_category_codes[3] else: if wirral_council_tax_reduction_has_two_or_more_dependants: wirral_council_tax_reduction_family_category_codes[2] else: if wirral_council_tax_reduction_has_one_dependant: wirral_council_tax_reduction_family_category_codes[1] else: wirral_council_tax_reduction_family_category_codes[0]
+
+  - name: wirral_council_tax_reduction_passported_to_band_1
+    kind: derived
+    entity: Household
+    dtype: Judgment
+    period: Year
+    source: Wirral Council Tax Reduction Scheme 2026/27 Schedule 1 paragraph 7
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: exception
+            source:
+              corpus_citation_path: uk-wirral/manual/council-tax-reduction-scheme-2026-2027/page-63
+              excerpt: "Where an applicant or partner is in receipt of Income Support, Income Related Employment and Support Allowance or Income Based Jobseeker's Allowance (passported benefit), discount will be awarded at Band 1 level."
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          wirral_council_tax_reduction_receives_income_support
+          or wirral_council_tax_reduction_receives_income_related_esa
+          or wirral_council_tax_reduction_receives_income_based_jsa
+
+  - name: wirral_council_tax_reduction_income_band
+    kind: derived
+    entity: Household
+    dtype: Number
+    period: Week
+    source: Wirral Council Tax Reduction Scheme 2026/27 Schedule 1 Table 1 and paragraph 7
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter_table
+            source: *grid_source
+          - path: versions[0].formula
+            kind: exception
+            source:
+              corpus_citation_path: uk-wirral/manual/council-tax-reduction-scheme-2026-2027/page-63
+              excerpt: "discount will be awarded at Band 1 level."
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          if wirral_council_tax_reduction_passported_to_band_1: wirral_council_tax_reduction_income_band_codes[0] else: if wirral_council_tax_reduction_assessed_weekly_net_income >= wirral_council_tax_reduction_band_5_lower_income_by_family[wirral_council_tax_reduction_family_category]: wirral_council_tax_reduction_income_band_codes[4] else: if wirral_council_tax_reduction_assessed_weekly_net_income >= wirral_council_tax_reduction_band_4_lower_income_by_family[wirral_council_tax_reduction_family_category]: wirral_council_tax_reduction_income_band_codes[3] else: if wirral_council_tax_reduction_assessed_weekly_net_income >= wirral_council_tax_reduction_band_3_lower_income_by_family[wirral_council_tax_reduction_family_category]: wirral_council_tax_reduction_income_band_codes[2] else: if wirral_council_tax_reduction_assessed_weekly_net_income >= wirral_council_tax_reduction_band_2_lower_income_by_family[wirral_council_tax_reduction_family_category]: wirral_council_tax_reduction_income_band_codes[1] else: wirral_council_tax_reduction_income_band_codes[0]
+
+  - name: wirral_council_tax_reduction_selected_support_rate
+    kind: derived
+    entity: Household
+    dtype: Rate
+    period: Year
+    source: Wirral Council Tax Reduction Scheme 2026/27 Schedule 1 Table 1
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter_table
+            source: *grid_source
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          wirral_council_tax_reduction_support_rate_by_income_band[wirral_council_tax_reduction_income_band]
+
+  - name: wirral_council_tax_reduction_capital_eligible
+    kind: derived
+    entity: Household
+    dtype: Judgment
+    period: Year
+    source: Wirral Council Tax Reduction Scheme 2026/27 paragraph 26.1
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk-wirral/manual/council-tax-reduction-scheme-2026-2027/page-35
+              excerpt: "no reduction shall be granted when the applicant has an amount of £6,000 or greater."
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          wirral_council_tax_reduction_assessed_capital_for_year < wirral_council_tax_reduction_capital_limit
+
+  - name: wirral_council_tax_reduction_band_d_capped_eligible_liability_for_year
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Wirral Council Tax Reduction Scheme 2026/27 paragraph 48.0
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk-wirral/manual/council-tax-reduction-scheme-2026-2027/page-46
+              excerpt: "A is the amount set by the authority as the council tax for the relevant financial year in respect of the dwelling in which he is a resident and for which he is liable, subject to any discount which may be appropriate to that dwelling under the 1992 Act; This amount is capped at Band D liability."
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          if wirral_council_tax_reduction_annual_council_tax_liability_after_statutory_discounts_and_apportionment <= wirral_council_tax_reduction_annual_band_d_council_tax_liability_after_statutory_discounts_and_apportionment: wirral_council_tax_reduction_annual_council_tax_liability_after_statutory_discounts_and_apportionment else: wirral_council_tax_reduction_annual_band_d_council_tax_liability_after_statutory_discounts_and_apportionment
+
+  - name: wirral_council_tax_reduction_non_dependant_deduction_not_protected
+    kind: derived
+    entity: Household
+    dtype: Judgment
+    period: Year
+    source: Wirral Council Tax Reduction Scheme 2026/27 paragraph 48A.4
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: exception
+            source:
+              corpus_citation_path: uk-wirral/manual/council-tax-reduction-scheme-2026-2027/page-47
+              excerpt: "48A.4 No deduction shall be made in respect of any non-dependants occupying an applicant's dwelling if the applicant or his partner is-"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          not wirral_council_tax_reduction_applicant_or_partner_is_protected_from_non_dependant_deductions
+
+  - name: wirral_council_tax_reduction_daily_non_dependant_deduction_before_protection
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Day
+    unit: GBP
+    source: Wirral Council Tax Reduction Scheme 2026/27 paragraph 48A.1
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk-wirral/manual/council-tax-reduction-scheme-2026-2027/page-46
+              excerpt: "48A.1 Subject to the following provisions of this paragraph, the non-dependant deductions in respect of a day referred to in section 48 (Maximum Council Tax Reduction) shall be £5 xl/7 for each non dependant who resides within the premises."
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          wirral_council_tax_reduction_weekly_non_dependant_deduction * wirral_council_tax_reduction_non_dependant_deduction_units_after_person_exemptions / wirral_council_tax_reduction_days_per_week
+
+  - name: wirral_council_tax_reduction_daily_non_dependant_deduction
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Day
+    unit: GBP
+    source: Wirral Council Tax Reduction Scheme 2026/27 paragraphs 48A.1 and 48A.4
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk-wirral/manual/council-tax-reduction-scheme-2026-2027/page-46
+              excerpt: "48A.1 Subject to the following provisions of this paragraph, the non-dependant deductions in respect of a day referred to in section 48 (Maximum Council Tax Reduction) shall be £5 xl/7 for each non dependant who resides within the premises."
+          - path: versions[0].formula
+            kind: exception
+            source:
+              corpus_citation_path: uk-wirral/manual/council-tax-reduction-scheme-2026-2027/page-47
+              excerpt: "48A.4 No deduction shall be made in respect of any non-dependants occupying an applicant's dwelling if the applicant or his partner is-"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          if wirral_council_tax_reduction_non_dependant_deduction_not_protected: wirral_council_tax_reduction_daily_non_dependant_deduction_before_protection else: wirral_council_tax_reduction_daily_non_dependant_deduction_before_protection - wirral_council_tax_reduction_daily_non_dependant_deduction_before_protection
+
+  - name: wirral_council_tax_reduction_annual_non_dependant_deduction
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Wirral Council Tax Reduction Scheme 2026/27 paragraph 48A.1
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk-wirral/manual/council-tax-reduction-scheme-2026-2027/page-46
+              excerpt: "the non-dependant deductions in respect of a day referred to in section 48 (Maximum Council Tax Reduction)"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk-wirral/manual/council-tax-reduction-scheme-2026-2027/page-46
+              excerpt: "Bis the number of days in that financial year"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          wirral_council_tax_reduction_daily_non_dependant_deduction * wirral_council_tax_reduction_financial_year_days
+
+  - name: wirral_council_tax_reduction_maximum_amount_before_non_dependant_deduction_for_year
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Wirral Council Tax Reduction Scheme 2026/27 paragraph 48.0
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk-wirral/manual/council-tax-reduction-scheme-2026-2027/page-46
+              excerpt: "shall be 50% per cent, of the amount A divided by B less C where;"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          wirral_council_tax_reduction_band_d_capped_eligible_liability_for_year * wirral_council_tax_reduction_maximum_support_rate
+
+  - name: wirral_council_tax_reduction_maximum_amount_exceeds_non_dependant_deduction
+    kind: derived
+    entity: Household
+    dtype: Judgment
+    period: Year
+    source: Wirral Council Tax Reduction Scheme 2026/27 paragraph 48.0
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk-wirral/manual/council-tax-reduction-scheme-2026-2027/page-46
+              excerpt: "shall be 50% per cent, of the amount A divided by B less C where;"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          wirral_council_tax_reduction_maximum_amount_before_non_dependant_deduction_for_year > wirral_council_tax_reduction_annual_non_dependant_deduction
+
+  - name: wirral_council_tax_reduction_maximum_amount_for_year
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Wirral Council Tax Reduction Scheme 2026/27 paragraph 48.0
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk-wirral/manual/council-tax-reduction-scheme-2026-2027/page-46
+              excerpt: "shall be 50% per cent, of the amount A divided by B less C where;"
+          - path: versions[0].formula
+            kind: ordering
+            source:
+              corpus_citation_path: uk-wirral/manual/council-tax-reduction-scheme-2026-2027/page-46
+              excerpt: "LESS (c) C is any non-dependant deduction calculated in accordance with 48A"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          if wirral_council_tax_reduction_maximum_amount_exceeds_non_dependant_deduction: wirral_council_tax_reduction_maximum_amount_before_non_dependant_deduction_for_year - wirral_council_tax_reduction_annual_non_dependant_deduction else: wirral_council_tax_reduction_maximum_amount_before_non_dependant_deduction_for_year - wirral_council_tax_reduction_maximum_amount_before_non_dependant_deduction_for_year
+
+  - name: wirral_council_tax_reduction_amount_before_award_conditions_for_year
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Wirral Council Tax Reduction Scheme 2026/27 Schedule 1 paragraph 2
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk-wirral/manual/council-tax-reduction-scheme-2026-2027/page-63
+              excerpt: |-
+                2. In all cases (Table 1), the amount of reduction to be granted is to be based on the following factors:
+
+                (a) The maximum Council Tax Reduction as defined within this scheme; (b) The council tax family as defined within this scheme; (c) The income of the applicant and partner as defined within this scheme; (d) The capital of the applicant and partner as defined within this scheme.
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          wirral_council_tax_reduction_maximum_amount_for_year * wirral_council_tax_reduction_selected_support_rate
+
+  - name: wirral_council_tax_reduction_award_conditions_met
+    kind: derived
+    entity: Household
+    dtype: Judgment
+    period: Year
+    source: Wirral Council Tax Reduction Scheme 2026/27 Class D and Schedule 1
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk-wirral/manual/council-tax-reduction-scheme-2026-2027/page-7
+              excerpt: "Class D To obtain a reduction the individual (or partner) must:"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk-wirral/manual/council-tax-reduction-scheme-2026-2027/page-63
+              excerpt: "Any applicant whose capital is £6,000 or above shall not be entitled to any Council Tax Reduction whatsoever."
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          wirral_council_tax_reduction_working_age_scheme_applies
+          and wirral_council_tax_reduction_capital_eligible
+
+  - name: simulated_wirral_council_tax_reduction_annual_amount
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Wirral Council Tax Reduction Scheme 2026/27 Schedule 1
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk-wirral/manual/council-tax-reduction-scheme-2026-2027/page-63
+              excerpt: "1 The authority's Council Tax Reduction Scheme from 2026/27 shall be calculated on the basis of the following banded support scheme:"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          if wirral_council_tax_reduction_award_conditions_met: wirral_council_tax_reduction_amount_before_award_conditions_for_year else: wirral_council_tax_reduction_amount_before_award_conditions_for_year - wirral_council_tax_reduction_amount_before_award_conditions_for_year
+
+  - name: wirral_council_tax_reduction_annual_amount
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Wirral Council Tax Reduction Scheme 2026/27 operative working-age award
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].effective_from
+            kind: effective_period
+            source:
+              corpus_citation_path: uk-wirral/manual/council-tax-reduction-scheme-2026-2027/page-4
+              excerpt: "1.1 The following has been adopted by the Council and details the Council Tax Reduction Scheme for the period from 1st April 2026."
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk-wirral/manual/council-tax-reduction-scheme-2026-2027/page-63
+              excerpt: "1 The authority's Council Tax Reduction Scheme from 2026/27 shall be calculated on the basis of the following banded support scheme:"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          simulated_wirral_council_tax_reduction_annual_amount
+
+inputs:
+  - name: local_authority_is_wirral
+    entity: Household
+    dtype: Boolean
+    period: Year
+  - name: council_tax_reduction_household_in_england
+    entity: Household
+    dtype: Boolean
+    period: Year
+  - name: would_claim_council_tax_reduction
+    entity: Household
+    dtype: Boolean
+    period: Year
+  - name: wirral_council_tax_reduction_applicant_is_working_age
+    entity: Household
+    dtype: Boolean
+    period: Year
+  - name: wirral_council_tax_reduction_assessed_capital_for_year
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+  - name: wirral_council_tax_reduction_assessed_weekly_net_income
+    entity: Household
+    dtype: Money
+    period: Week
+    unit: GBP
+  - name: wirral_council_tax_reduction_annual_council_tax_liability_after_statutory_discounts_and_apportionment
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+  - name: wirral_council_tax_reduction_annual_band_d_council_tax_liability_after_statutory_discounts_and_apportionment
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+  - name: wirral_council_tax_reduction_financial_year_days
+    entity: Household
+    dtype: Number
+    period: Year
+  - name: wirral_council_tax_reduction_has_partner
+    entity: Household
+    dtype: Boolean
+    period: Year
+  - name: wirral_council_tax_reduction_has_one_dependant
+    entity: Household
+    dtype: Boolean
+    period: Year
+  - name: wirral_council_tax_reduction_has_two_or_more_dependants
+    entity: Household
+    dtype: Boolean
+    period: Year
+  - name: wirral_council_tax_reduction_receives_income_support
+    entity: Household
+    dtype: Boolean
+    period: Year
+  - name: wirral_council_tax_reduction_receives_income_related_esa
+    entity: Household
+    dtype: Boolean
+    period: Year
+  - name: wirral_council_tax_reduction_receives_income_based_jsa
+    entity: Household
+    dtype: Boolean
+    period: Year
+  - name: wirral_council_tax_reduction_receives_universal_credit
+    entity: Household
+    dtype: Boolean
+    period: Year
+  - name: wirral_council_tax_reduction_non_dependant_deduction_units_after_person_exemptions
+    entity: Household
+    dtype: Number
+    period: Year
+  - name: wirral_council_tax_reduction_applicant_or_partner_is_protected_from_non_dependant_deductions
+    entity: Household
+    dtype: Boolean
+    period: Year
