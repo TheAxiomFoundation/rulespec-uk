@@ -1,0 +1,327 @@
+- name: warwick_ctr_legacy_baseline
+  period: &period
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    <<: &household_defaults
+      uk-warwick:policies/warwick/council-tax-reduction#input.local_authority_is_warwick: true
+      uk-warwick:policies/warwick/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+      uk-warwick:policies/warwick/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: false
+      uk-warwick:policies/warwick/council-tax-reduction#input.would_claim_council_tax_reduction: true
+      uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_applicant_or_partner_has_been_assessed_for_universal_credit: false
+      uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_applicant_or_partner_has_been_awarded_universal_credit: false
+      uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_applicant_or_partner_would_have_been_awarded_universal_credit_other_than_for_any_amendments_pre_payments_sanctions_or_waiting_days: false
+      uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+      uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_non_dependant_deductions_for_year: 0
+      uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_class_f_applicant_has_partner: false
+      uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_class_f_number_of_children_or_young_people: 0
+      uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_class_f_weekly_income_after_schedule_10_disregards: 0
+    uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_assessed_capital_for_year: 0
+    uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_assessed_income_for_year: 0
+    uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_applicable_amount_for_year: 0
+  output:
+    uk-warwick:policies/warwick/council-tax-reduction#warwick_council_tax_reduction_working_age_scheme_applies: holds
+    uk-warwick:policies/warwick/council-tax-reduction#warwick_council_tax_reduction_class_f_applies: not_holds
+    uk-warwick:policies/warwick/council-tax-reduction#warwick_council_tax_reduction_capital_eligible: holds
+    uk-warwick:policies/warwick/council-tax-reduction#warwick_council_tax_reduction_tariff_income_for_year: 0
+    uk-warwick:policies/warwick/council-tax-reduction#warwick_council_tax_reduction_excess_income_for_year: 0
+    uk-warwick:policies/warwick/council-tax-reduction#warwick_council_tax_reduction_income_taper_deduction_for_year: 0
+    uk-warwick:policies/warwick/council-tax-reduction#warwick_council_tax_reduction_class_f_family_category: 0
+    uk-warwick:policies/warwick/council-tax-reduction#warwick_council_tax_reduction_uc_discount_band: 1
+    uk-warwick:policies/warwick/council-tax-reduction#warwick_council_tax_reduction_annual_amount: 1800
+
+- name: warwick_ctr_legacy_taper_and_tariff
+  period: *period
+  input:
+    <<: *household_defaults
+    uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_assessed_capital_for_year: 6250
+    uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_assessed_income_for_year: 10000
+    uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_applicable_amount_for_year: 9000
+  output:
+    uk-warwick:policies/warwick/council-tax-reduction#warwick_council_tax_reduction_tariff_income_for_year: 52
+    uk-warwick:policies/warwick/council-tax-reduction#warwick_council_tax_reduction_excess_income_for_year: 1052
+    uk-warwick:policies/warwick/council-tax-reduction#warwick_council_tax_reduction_income_taper_deduction_for_year: 210.4
+    uk-warwick:policies/warwick/council-tax-reduction#warwick_council_tax_reduction_annual_amount: 1589.6
+
+- name: warwick_ctr_legacy_capital_limit_inclusive
+  period: *period
+  input:
+    <<: *household_defaults
+    uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_assessed_capital_for_year: 16000
+  output:
+    uk-warwick:policies/warwick/council-tax-reduction#warwick_council_tax_reduction_capital_eligible: holds
+
+- name: warwick_ctr_legacy_capital_cliff
+  period: *period
+  input:
+    <<: *household_defaults
+    uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_assessed_capital_for_year: 16000.01
+  output:
+    uk-warwick:policies/warwick/council-tax-reduction#warwick_council_tax_reduction_capital_eligible: not_holds
+
+- name: warwick_ctr_class_f_capital_limit_inclusive
+  period: *period
+  input:
+    <<: &class_f_household_defaults
+      uk-warwick:policies/warwick/council-tax-reduction#input.local_authority_is_warwick: true
+      uk-warwick:policies/warwick/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+      uk-warwick:policies/warwick/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: false
+      uk-warwick:policies/warwick/council-tax-reduction#input.would_claim_council_tax_reduction: true
+      uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_applicant_or_partner_has_been_assessed_for_universal_credit: true
+      uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_applicant_or_partner_has_been_awarded_universal_credit: true
+      uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_applicant_or_partner_would_have_been_awarded_universal_credit_other_than_for_any_amendments_pre_payments_sanctions_or_waiting_days: false
+      uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+      uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_non_dependant_deductions_for_year: 0
+      uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_assessed_income_for_year: 0
+      uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_applicable_amount_for_year: 0
+    uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_class_f_applicant_has_partner: false
+    uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_class_f_number_of_children_or_young_people: 0
+    uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_class_f_weekly_income_after_schedule_10_disregards: 0
+  output:
+    uk-warwick:policies/warwick/council-tax-reduction#warwick_council_tax_reduction_capital_eligible: holds
+
+- name: warwick_ctr_zero_paid_would_have_class_f_capital_cliff
+  period: *period
+  input:
+    uk-warwick:policies/warwick/council-tax-reduction#input.local_authority_is_warwick: true
+    uk-warwick:policies/warwick/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-warwick:policies/warwick/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: false
+    uk-warwick:policies/warwick/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_applicant_or_partner_has_been_assessed_for_universal_credit: true
+    uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_applicant_or_partner_has_been_awarded_universal_credit: false
+    uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_applicant_or_partner_would_have_been_awarded_universal_credit_other_than_for_any_amendments_pre_payments_sanctions_or_waiting_days: true
+    uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+    uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_non_dependant_deductions_for_year: 0
+    uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_assessed_capital_for_year: 6000.01
+    uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_assessed_income_for_year: 0
+    uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_applicable_amount_for_year: 0
+    uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_class_f_applicant_has_partner: false
+    uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_class_f_number_of_children_or_young_people: 0
+    uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_class_f_weekly_income_after_schedule_10_disregards: 0
+  output:
+    uk-warwick:policies/warwick/council-tax-reduction#warwick_council_tax_reduction_class_f_applies: holds
+    uk-warwick:policies/warwick/council-tax-reduction#warwick_council_tax_reduction_capital_eligible: not_holds
+    uk-warwick:policies/warwick/council-tax-reduction#warwick_council_tax_reduction_annual_amount: 0
+
+- name: warwick_ctr_class_f_capital_cliff
+  period: *period
+  input:
+    <<: *class_f_household_defaults
+    uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_assessed_capital_for_year: 6000.01
+    uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_class_f_applicant_has_partner: false
+    uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_class_f_number_of_children_or_young_people: 0
+    uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_class_f_weekly_income_after_schedule_10_disregards: 0
+  output:
+    uk-warwick:policies/warwick/council-tax-reduction#warwick_council_tax_reduction_capital_eligible: not_holds
+
+- name: warwick_ctr_same_capital_without_class_f_uses_legacy_limit
+  period: *period
+  input:
+    <<: *household_defaults
+    uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_assessed_capital_for_year: 6000.01
+  output:
+    uk-warwick:policies/warwick/council-tax-reduction#warwick_council_tax_reduction_capital_eligible: holds
+
+- name: warwick_ctr_tariff_threshold_has_no_tariff_income
+  period: *period
+  input:
+    <<: *household_defaults
+    uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_assessed_capital_for_year: 6000
+  output:
+    uk-warwick:policies/warwick/council-tax-reduction#warwick_council_tax_reduction_tariff_income_for_year: 0
+
+- name: warwick_ctr_first_partial_tariff_step
+  period: *period
+  input:
+    <<: *household_defaults
+    uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_assessed_capital_for_year: 6000.01
+  output:
+    uk-warwick:policies/warwick/council-tax-reduction#warwick_council_tax_reduction_tariff_income_for_year: 52
+
+- name: warwick_ctr_first_complete_tariff_step
+  period: *period
+  input:
+    <<: *household_defaults
+    uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_assessed_capital_for_year: 6250
+  output:
+    uk-warwick:policies/warwick/council-tax-reduction#warwick_council_tax_reduction_tariff_income_for_year: 52
+
+- name: warwick_ctr_second_partial_tariff_step
+  period: *period
+  input:
+    <<: *household_defaults
+    uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_assessed_capital_for_year: 6250.01
+  output:
+    uk-warwick:policies/warwick/council-tax-reduction#warwick_council_tax_reduction_tariff_income_for_year: 104
+
+- name: warwick_ctr_class_f_single_band_1
+  period: *period
+  input:
+    <<: *class_f_household_defaults
+    uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_assessed_capital_for_year: 0
+    uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_class_f_applicant_has_partner: false
+    uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_class_f_number_of_children_or_young_people: 0
+    uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_class_f_weekly_income_after_schedule_10_disregards: 0
+  output:
+    uk-warwick:policies/warwick/council-tax-reduction#warwick_council_tax_reduction_class_f_family_category: 0
+    uk-warwick:policies/warwick/council-tax-reduction#warwick_council_tax_reduction_uc_discount_band: 1
+    uk-warwick:policies/warwick/council-tax-reduction#warwick_council_tax_reduction_annual_amount: 1800
+
+- name: warwick_ctr_class_f_lone_parent_one_child_band_2
+  period: *period
+  input:
+    <<: *class_f_household_defaults
+    uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_assessed_capital_for_year: 0
+    uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_class_f_applicant_has_partner: false
+    uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_class_f_number_of_children_or_young_people: 1
+    uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_class_f_weekly_income_after_schedule_10_disregards: 180.01
+  output:
+    uk-warwick:policies/warwick/council-tax-reduction#warwick_council_tax_reduction_class_f_family_category: 1
+    uk-warwick:policies/warwick/council-tax-reduction#warwick_council_tax_reduction_uc_discount_band: 2
+    uk-warwick:policies/warwick/council-tax-reduction#warwick_council_tax_reduction_annual_amount: 1350
+
+- name: warwick_ctr_class_f_lone_parent_two_children_band_3
+  period: *period
+  input:
+    <<: *class_f_household_defaults
+    uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_assessed_capital_for_year: 0
+    uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_class_f_applicant_has_partner: false
+    uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_class_f_number_of_children_or_young_people: 2
+    uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_class_f_weekly_income_after_schedule_10_disregards: 311.01
+  output:
+    uk-warwick:policies/warwick/council-tax-reduction#warwick_council_tax_reduction_class_f_family_category: 2
+    uk-warwick:policies/warwick/council-tax-reduction#warwick_council_tax_reduction_uc_discount_band: 3
+    uk-warwick:policies/warwick/council-tax-reduction#warwick_council_tax_reduction_annual_amount: 900
+
+- name: warwick_ctr_class_f_couple_band_4
+  period: *period
+  input:
+    <<: *class_f_household_defaults
+    uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_assessed_capital_for_year: 0
+    uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_class_f_applicant_has_partner: true
+    uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_class_f_number_of_children_or_young_people: 0
+    uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_class_f_weekly_income_after_schedule_10_disregards: 254.01
+  output:
+    uk-warwick:policies/warwick/council-tax-reduction#warwick_council_tax_reduction_class_f_family_category: 3
+    uk-warwick:policies/warwick/council-tax-reduction#warwick_council_tax_reduction_uc_discount_band: 4
+    uk-warwick:policies/warwick/council-tax-reduction#warwick_council_tax_reduction_annual_amount: 450
+
+- name: warwick_ctr_class_f_couple_one_child_band_5
+  period: *period
+  input:
+    <<: *class_f_household_defaults
+    uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_assessed_capital_for_year: 0
+    uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_class_f_applicant_has_partner: true
+    uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_class_f_number_of_children_or_young_people: 1
+    uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_class_f_weekly_income_after_schedule_10_disregards: 386.01
+  output:
+    uk-warwick:policies/warwick/council-tax-reduction#warwick_council_tax_reduction_class_f_family_category: 4
+    uk-warwick:policies/warwick/council-tax-reduction#warwick_council_tax_reduction_uc_discount_band: 5
+    uk-warwick:policies/warwick/council-tax-reduction#warwick_council_tax_reduction_annual_amount: 180
+
+- name: warwick_ctr_class_f_couple_two_children_final_band_upper_bound
+  period: *period
+  input:
+    <<: *class_f_household_defaults
+    uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_assessed_capital_for_year: 0
+    uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_class_f_applicant_has_partner: true
+    uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_class_f_number_of_children_or_young_people: 2
+    uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_class_f_weekly_income_after_schedule_10_disregards: 517
+  output:
+    uk-warwick:policies/warwick/council-tax-reduction#warwick_council_tax_reduction_class_f_family_category: 5
+    uk-warwick:policies/warwick/council-tax-reduction#warwick_council_tax_reduction_uc_discount_band: 5
+    uk-warwick:policies/warwick/council-tax-reduction#warwick_council_tax_reduction_annual_amount: 180
+
+- name: warwick_ctr_class_f_couple_two_children_above_final_band
+  period: *period
+  input:
+    <<: *class_f_household_defaults
+    uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_assessed_capital_for_year: 0
+    uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_class_f_applicant_has_partner: true
+    uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_class_f_number_of_children_or_young_people: 2
+    uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_class_f_weekly_income_after_schedule_10_disregards: 517.01
+  output:
+    uk-warwick:policies/warwick/council-tax-reduction#warwick_council_tax_reduction_class_f_family_category: 5
+    uk-warwick:policies/warwick/council-tax-reduction#warwick_council_tax_reduction_uc_discount_band: 0
+    uk-warwick:policies/warwick/council-tax-reduction#warwick_council_tax_reduction_annual_amount: 0
+
+- name: warwick_ctr_nondependant_below_first_working_threshold
+  period: *period
+  input:
+    <<: &non_dependant_defaults
+      uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_is_non_dependant: true
+      uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_non_dependant_exempt: false
+      uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_non_dependant_in_remunerative_work: true
+    uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_non_dependant_normal_gross_weekly_income: 202.84
+  output:
+    uk-warwick:policies/warwick/council-tax-reduction#warwick_council_tax_reduction_non_dependant_deduction_band: 1
+    uk-warwick:policies/warwick/council-tax-reduction#warwick_council_tax_reduction_individual_non_dependant_deduction_for_year: 202.8
+
+- name: warwick_ctr_nondependant_at_first_working_threshold
+  period: *period
+  input:
+    <<: *non_dependant_defaults
+    uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_non_dependant_normal_gross_weekly_income: 202.85
+  output:
+    uk-warwick:policies/warwick/council-tax-reduction#warwick_council_tax_reduction_non_dependant_deduction_band: 2
+    uk-warwick:policies/warwick/council-tax-reduction#warwick_council_tax_reduction_individual_non_dependant_deduction_for_year: 410.8
+
+- name: warwick_ctr_nondependant_below_second_working_threshold
+  period: *period
+  input:
+    <<: *non_dependant_defaults
+    uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_non_dependant_normal_gross_weekly_income: 351.64
+  output:
+    uk-warwick:policies/warwick/council-tax-reduction#warwick_council_tax_reduction_non_dependant_deduction_band: 2
+    uk-warwick:policies/warwick/council-tax-reduction#warwick_council_tax_reduction_individual_non_dependant_deduction_for_year: 410.8
+
+- name: warwick_ctr_nondependant_at_second_working_threshold
+  period: *period
+  input:
+    <<: *non_dependant_defaults
+    uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_non_dependant_normal_gross_weekly_income: 351.65
+  output:
+    uk-warwick:policies/warwick/council-tax-reduction#warwick_council_tax_reduction_non_dependant_deduction_band: 3
+    uk-warwick:policies/warwick/council-tax-reduction#warwick_council_tax_reduction_individual_non_dependant_deduction_for_year: 517.4
+
+- name: warwick_ctr_nondependant_below_top_working_threshold
+  period: *period
+  input:
+    <<: *non_dependant_defaults
+    uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_non_dependant_normal_gross_weekly_income: 436.89
+  output:
+    uk-warwick:policies/warwick/council-tax-reduction#warwick_council_tax_reduction_non_dependant_deduction_band: 3
+    uk-warwick:policies/warwick/council-tax-reduction#warwick_council_tax_reduction_individual_non_dependant_deduction_for_year: 517.4
+
+- name: warwick_ctr_nondependant_at_top_working_threshold
+  period: *period
+  input:
+    <<: *non_dependant_defaults
+    uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_non_dependant_normal_gross_weekly_income: 436.90
+  output:
+    uk-warwick:policies/warwick/council-tax-reduction#warwick_council_tax_reduction_non_dependant_deduction_band: 4
+    uk-warwick:policies/warwick/council-tax-reduction#warwick_council_tax_reduction_individual_non_dependant_deduction_for_year: 618.8
+
+- name: warwick_ctr_nondependant_not_in_remunerative_work
+  period: *period
+  input:
+    uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_is_non_dependant: true
+    uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_non_dependant_exempt: false
+    uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_non_dependant_in_remunerative_work: false
+    uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_non_dependant_normal_gross_weekly_income: 500
+  output:
+    uk-warwick:policies/warwick/council-tax-reduction#warwick_council_tax_reduction_non_dependant_deduction_band: 1
+    uk-warwick:policies/warwick/council-tax-reduction#warwick_council_tax_reduction_individual_non_dependant_deduction_for_year: 202.8
+
+- name: warwick_ctr_exempt_nondependant_zero
+  period: *period
+  input:
+    uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_is_non_dependant: true
+    uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_non_dependant_exempt: true
+    uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_non_dependant_in_remunerative_work: true
+    uk-warwick:policies/warwick/council-tax-reduction#input.warwick_council_tax_reduction_non_dependant_normal_gross_weekly_income: 500
+  output:
+    uk-warwick:policies/warwick/council-tax-reduction#warwick_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-warwick:policies/warwick/council-tax-reduction#warwick_council_tax_reduction_individual_non_dependant_deduction_for_year: 0
