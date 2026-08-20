@@ -1,0 +1,361 @@
+- name: worthing_ctr_printed_scalar_parameters
+  period: &benefit_week
+    period_kind: benefit_week
+    start: '2026-04-06'
+    end: '2026-04-12'
+  input: {}
+  output:
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_maximum_support_rate: 1
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_daily_taper_rate: '0.0285714285714285714285714286'
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_taper_whole_percentage_points: 2
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_taper_fraction_numerator: 6
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_taper_fraction_denominator: 7
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_percent_divisor: 100
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_days_per_week: 7
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_weekly_taper_rate: 0.2
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_capital_limit: 16000
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_tariff_income_threshold: 6000
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_tariff_income_capital_step: 250
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_tariff_income_weekly_amount_per_step: 1
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_remunerative_work_hours: 16
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_non_dependant_low_income_threshold: 279
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_non_dependant_middle_income_threshold: 485
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_non_dependant_high_income_threshold: 605
+
+- name: worthing_ctr_non_dependant_table_no_deduction_band
+  period: *benefit_week
+  input:
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_non_dependant_resolved_deduction_band: 0
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_is_adult_non_dependant: true
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_non_dependant_is_exempt: true
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_non_dependant_weekly_hours: 16
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_non_dependant_normal_gross_weekly_income: 605
+  output:
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_non_dependant_weekly_deduction_by_resolved_band: 0
+
+- name: worthing_ctr_non_dependant_table_non_remunerative_band
+  period: *benefit_week
+  input:
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_non_dependant_resolved_deduction_band: 1
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_is_adult_non_dependant: true
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_non_dependant_is_exempt: false
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_non_dependant_weekly_hours: 15.99
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_non_dependant_normal_gross_weekly_income: 605
+  output:
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_non_dependant_weekly_deduction_by_resolved_band: 5.20
+
+- name: worthing_ctr_non_dependant_table_279_to_484_99_band
+  period: *benefit_week
+  input:
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_non_dependant_resolved_deduction_band: 3
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_is_adult_non_dependant: true
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_non_dependant_is_exempt: false
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_non_dependant_weekly_hours: 16
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_non_dependant_normal_gross_weekly_income: 279
+  output:
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_non_dependant_weekly_deduction_by_resolved_band: 10.60
+
+- name: worthing_ctr_non_dependant_table_485_to_604_99_band
+  period: *benefit_week
+  input:
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_non_dependant_resolved_deduction_band: 4
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_is_adult_non_dependant: true
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_non_dependant_is_exempt: false
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_non_dependant_weekly_hours: 16
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_non_dependant_normal_gross_weekly_income: 485
+  output:
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_non_dependant_weekly_deduction_by_resolved_band: 13.30
+
+- name: worthing_ctr_non_dependant_table_605_or_more_band
+  period: *benefit_week
+  input:
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_non_dependant_resolved_deduction_band: 5
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_is_adult_non_dependant: true
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_non_dependant_is_exempt: false
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_non_dependant_weekly_hours: 16
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_non_dependant_normal_gross_weekly_income: 605
+  output:
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_non_dependant_weekly_deduction_by_resolved_band: 15.95
+
+- name: worthing_ctr_tariff_at_threshold
+  period: *benefit_week
+  input:
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_assessed_capital: 6000
+  output:
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_tariff_income_weekly: 0
+
+- name: worthing_ctr_tariff_first_partial_step
+  period: *benefit_week
+  input:
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_assessed_capital: 6000.01
+  output:
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_tariff_income_weekly: 1
+
+- name: worthing_ctr_tariff_at_6250
+  period: *benefit_week
+  input:
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_assessed_capital: 6250
+  output:
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_tariff_income_weekly: 1
+
+- name: worthing_ctr_tariff_first_penny_over_6250
+  period: *benefit_week
+  input:
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_assessed_capital: 6250.01
+  output:
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_tariff_income_weekly: 2
+
+- name: worthing_ctr_income_including_tariff_equals_applicable_amount
+  period: *benefit_week
+  input:
+    uk-worthing:policies/worthing/council-tax-reduction#input.local_authority_is_worthing: true
+    uk-worthing:policies/worthing/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-worthing:policies/worthing/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_eligible_liability_weekly: 100
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_is_adult_non_dependant: false
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_non_dependant_is_exempt: false
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_non_dependant_weekly_hours: 0
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_non_dependant_normal_gross_weekly_income: 0
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_low_remunerative_income_deduction_weekly: 0
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_non_dependant_is_selected_for_household_deduction: false
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_assessed_capital: 6250
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_assessed_income_weekly: 99
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_applicable_amount_weekly: 100
+    uk-worthing:policies/worthing/council-tax-reduction#relation.worthing_council_tax_reduction_household_member: []
+  output:
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_income_including_tariff_weekly: 100
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_excess_income_weekly: 0
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_income_taper_deduction_weekly: 0
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_award_conditions_met: holds
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_maximum_weekly_amount: 100
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_weekly_amount: 100
+
+- name: worthing_ctr_capital_at_limit_has_maximum_award
+  period: *benefit_week
+  input:
+    <<: &household_award_inputs
+      uk-worthing:policies/worthing/council-tax-reduction#input.local_authority_is_worthing: true
+      uk-worthing:policies/worthing/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+      uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_applicant_is_in_working_age_class: true
+      uk-worthing:policies/worthing/council-tax-reduction#input.would_claim_council_tax_reduction: true
+      uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_eligible_liability_weekly: 100
+      uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_is_adult_non_dependant: false
+      uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_non_dependant_is_exempt: false
+      uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_non_dependant_weekly_hours: 0
+      uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_non_dependant_normal_gross_weekly_income: 0
+      uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_low_remunerative_income_deduction_weekly: 0
+      uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_non_dependant_is_selected_for_household_deduction: false
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_assessed_capital: 16000
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_assessed_income_weekly: 100
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_applicable_amount_weekly: 141
+    uk-worthing:policies/worthing/council-tax-reduction#relation.worthing_council_tax_reduction_household_member: []
+  output:
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_working_age_scheme_applies: holds
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_capital_eligible: holds
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_tariff_income_weekly: 40
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_income_including_tariff_weekly: 140
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_excess_income_weekly: 0
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_income_taper_deduction_weekly: 0
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_non_dependant_deductions_weekly: 0
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_maximum_weekly_amount: 100
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_award_conditions_met: holds
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_weekly_amount: 100
+
+- name: worthing_ctr_capital_first_penny_over_is_zero
+  period: *benefit_week
+  input:
+    <<: *household_award_inputs
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_assessed_capital: 16000.01
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_assessed_income_weekly: 100
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_applicable_amount_weekly: 141
+  output:
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_capital_eligible: not_holds
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_tariff_income_weekly: 0
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_award_conditions_met: not_holds
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_weekly_amount: 0
+
+- name: worthing_ctr_weekly_taper_reduces_award
+  period: *benefit_week
+  input:
+    <<: *household_award_inputs
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_assessed_capital: 0
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_assessed_income_weekly: 200
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_applicable_amount_weekly: 100
+  output:
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_income_including_tariff_weekly: 200
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_excess_income_weekly: 100
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_income_taper_deduction_weekly: 20
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_award_conditions_met: holds
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_weekly_amount: 80
+
+- name: worthing_ctr_taper_exhausts_award_zero_branch
+  period: *benefit_week
+  input:
+    <<: *household_award_inputs
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_assessed_capital: 0
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_assessed_income_weekly: 600
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_applicable_amount_weekly: 100
+  output:
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_income_taper_deduction_weekly: 100
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_award_conditions_met: not_holds
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_weekly_amount: 0
+
+- name: worthing_ctr_non_dependant_deduction_is_inside_maximum
+  period: *benefit_week
+  input:
+    <<: *household_award_inputs
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_assessed_capital: 0
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_assessed_income_weekly: 200
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_applicable_amount_weekly: 100
+    uk-worthing:policies/worthing/council-tax-reduction#relation.worthing_council_tax_reduction_household_member:
+      - uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_is_adult_non_dependant: true
+        uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_non_dependant_is_exempt: false
+        uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_non_dependant_weekly_hours: 16
+        uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_non_dependant_normal_gross_weekly_income: 279
+        uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_non_dependant_is_selected_for_household_deduction: true
+  output:
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_non_dependant_deductions_weekly: 10.60
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_maximum_weekly_amount: 89.40
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_income_taper_deduction_weekly: 20
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_weekly_amount: 69.40
+
+- name: worthing_ctr_selected_non_dependant_deductions_aggregate
+  period: *benefit_week
+  input:
+    <<: *household_award_inputs
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_assessed_capital: 0
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_assessed_income_weekly: 0
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_applicable_amount_weekly: 100
+    uk-worthing:policies/worthing/council-tax-reduction#relation.worthing_council_tax_reduction_household_member:
+      - uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_is_adult_non_dependant: true
+        uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_non_dependant_is_exempt: false
+        uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_non_dependant_weekly_hours: 16
+        uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_non_dependant_normal_gross_weekly_income: 279
+        uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_non_dependant_is_selected_for_household_deduction: true
+      - uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_is_adult_non_dependant: true
+        uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_non_dependant_is_exempt: false
+        uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_non_dependant_weekly_hours: 16
+        uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_non_dependant_normal_gross_weekly_income: 605
+        uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_non_dependant_is_selected_for_household_deduction: true
+  output:
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_non_dependant_deductions_weekly: 26.55
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_maximum_weekly_amount: 73.45
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_weekly_amount: 73.45
+
+- name: worthing_ctr_couple_selection_uses_one_higher_deduction
+  period: *benefit_week
+  input:
+    <<: *household_award_inputs
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_assessed_capital: 0
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_assessed_income_weekly: 0
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_applicable_amount_weekly: 100
+    uk-worthing:policies/worthing/council-tax-reduction#relation.worthing_council_tax_reduction_household_member:
+      - uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_is_adult_non_dependant: true
+        uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_non_dependant_is_exempt: false
+        uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_non_dependant_weekly_hours: 16
+        uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_non_dependant_normal_gross_weekly_income: 279
+        uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_non_dependant_is_selected_for_household_deduction: false
+      - uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_is_adult_non_dependant: true
+        uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_non_dependant_is_exempt: false
+        uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_non_dependant_weekly_hours: 16
+        uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_non_dependant_normal_gross_weekly_income: 605
+        uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_non_dependant_is_selected_for_household_deduction: true
+  output:
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_non_dependant_deductions_weekly: 15.95
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_maximum_weekly_amount: 84.05
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_weekly_amount: 84.05
+
+- name: worthing_ctr_non_dependant_not_in_remunerative_work
+  period: *benefit_week
+  input:
+    <<: &non_dependant_inputs
+      uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_is_adult_non_dependant: true
+      uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_non_dependant_is_exempt: false
+      uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_low_remunerative_income_deduction_weekly: 0
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_non_dependant_weekly_hours: 15.99
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_non_dependant_normal_gross_weekly_income: 700
+  output:
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_non_dependant_in_remunerative_work: not_holds
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_non_dependant_deduction_applies: holds
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_non_dependant_resolved_deduction_band: 1
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_individual_non_dependant_deduction_weekly: 5.20
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_individual_non_dependant_deduction_daily: '0.7428571428571428571428571429'
+
+- name: worthing_ctr_low_working_row_has_no_printed_monetary_amount
+  period: *benefit_week
+  input:
+    <<: *non_dependant_inputs
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_non_dependant_weekly_hours: 16
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_non_dependant_normal_gross_weekly_income: 278.99
+  output:
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_non_dependant_in_remunerative_work: holds
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_low_remunerative_income_cross_reference_applies: holds
+
+- name: worthing_ctr_non_dependant_at_279
+  period: *benefit_week
+  input:
+    <<: *non_dependant_inputs
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_non_dependant_weekly_hours: 16
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_non_dependant_normal_gross_weekly_income: 279
+  output:
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_low_remunerative_income_cross_reference_applies: not_holds
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_non_dependant_resolved_deduction_band: 3
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_individual_non_dependant_deduction_weekly: 10.60
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_individual_non_dependant_deduction_daily: '1.5142857142857142857142857143'
+
+- name: worthing_ctr_non_dependant_just_below_485
+  period: *benefit_week
+  input:
+    <<: *non_dependant_inputs
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_non_dependant_weekly_hours: 16
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_non_dependant_normal_gross_weekly_income: 484.99
+  output:
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_non_dependant_resolved_deduction_band: 3
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_individual_non_dependant_deduction_weekly: 10.60
+
+- name: worthing_ctr_non_dependant_at_485
+  period: *benefit_week
+  input:
+    <<: *non_dependant_inputs
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_non_dependant_weekly_hours: 16
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_non_dependant_normal_gross_weekly_income: 485
+  output:
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_non_dependant_resolved_deduction_band: 4
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_individual_non_dependant_deduction_weekly: 13.30
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_individual_non_dependant_deduction_daily: 1.9
+
+- name: worthing_ctr_non_dependant_just_below_605
+  period: *benefit_week
+  input:
+    <<: *non_dependant_inputs
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_non_dependant_weekly_hours: 16
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_non_dependant_normal_gross_weekly_income: 604.99
+  output:
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_non_dependant_resolved_deduction_band: 4
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_individual_non_dependant_deduction_weekly: 13.30
+
+- name: worthing_ctr_non_dependant_at_605
+  period: *benefit_week
+  input:
+    <<: *non_dependant_inputs
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_non_dependant_weekly_hours: 16
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_non_dependant_normal_gross_weekly_income: 605
+  output:
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_non_dependant_resolved_deduction_band: 5
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_individual_non_dependant_deduction_weekly: 15.95
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_individual_non_dependant_deduction_daily: '2.2785714285714285714285714286'
+
+- name: worthing_ctr_exempt_non_dependant_has_zero_deduction
+  period: *benefit_week
+  input:
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_is_adult_non_dependant: true
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_non_dependant_is_exempt: true
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_low_remunerative_income_deduction_weekly: 0
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_non_dependant_weekly_hours: 16
+    uk-worthing:policies/worthing/council-tax-reduction#input.worthing_council_tax_reduction_non_dependant_normal_gross_weekly_income: 605
+  output:
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_non_dependant_deduction_applies: not_holds
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_non_dependant_resolved_deduction_band: 0
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_individual_non_dependant_deduction_weekly: 0
+    uk-worthing:policies/worthing/council-tax-reduction#worthing_council_tax_reduction_individual_non_dependant_deduction_daily: 0
