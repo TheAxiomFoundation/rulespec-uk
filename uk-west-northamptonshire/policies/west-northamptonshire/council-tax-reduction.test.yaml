@@ -8,28 +8,317 @@
     uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#west_northamptonshire_council_tax_reduction_days_per_week: 7
     uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#west_northamptonshire_council_tax_reduction_per_cent_unit: 0.01
     uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#west_northamptonshire_council_tax_reduction_weekly_taper_rate: '0.0285714285714285714285714286'
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#west_northamptonshire_council_tax_reduction_annual_taper_rate: '0.0285714285714285714285714286'
     uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#west_northamptonshire_council_tax_reduction_capital_limit: 16000
     uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#west_northamptonshire_council_tax_reduction_tariff_income_threshold: 6000
     uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#west_northamptonshire_council_tax_reduction_tariff_income_step: 250
     uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#west_northamptonshire_council_tax_reduction_tariff_income_weekly_amount_per_step: 1
     uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#west_northamptonshire_council_tax_reduction_weeks_per_year: 52
-- name: west_northamptonshire_ctr_standard_taper
+- name: west_northamptonshire_ctr_standard_rate
   period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
-  input: {uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_applicant_is_not_pensioner: true, uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.would_claim_council_tax_reduction: true, uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_is_care_leaver_under_25: false, uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_receives_war_pension: false, uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_assessed_capital_for_year: 0, uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_actual_liability_for_year: 1000, uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_assessed_income_for_year: 520, uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_applicable_amount_for_year: 0, uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_non_dependant_deductions_for_year: 0}
-  output: {uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#west_northamptonshire_council_tax_reduction_support_rate: 0.80, uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#west_northamptonshire_council_tax_reduction_capital_eligible: holds, uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#west_northamptonshire_council_tax_reduction_tariff_income_for_year: 0, uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#west_northamptonshire_council_tax_reduction_maximum_for_year: 800, uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#west_northamptonshire_council_tax_reduction_excess_income_for_year: 520, uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#west_northamptonshire_council_tax_reduction_taper_deduction_for_year: '14.857142857142857142857142872', uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#west_northamptonshire_council_tax_reduction_award_conditions_met: holds, uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#west_northamptonshire_council_tax_reduction_annual_amount: '785.14285714285714285714285713'}
+  input:
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_is_care_leaver_under_25: false
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_receives_war_pension: false
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_assessed_capital_for_year: 0
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_actual_liability_for_year: 1000
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_assessed_income_for_year: 520
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_applicable_amount_for_year: 0
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_non_dependant_deductions_for_year: 0
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_non_dependant_deduction_band: 0
+  output: {uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#west_northamptonshire_council_tax_reduction_support_rate: 0.80}
+- name: west_northamptonshire_ctr_war_pension_protected_rate
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_is_care_leaver_under_25: false
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_receives_war_pension: true
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_assessed_capital_for_year: 0
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_actual_liability_for_year: 1000
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_assessed_income_for_year: 520
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_applicable_amount_for_year: 0
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_non_dependant_deductions_for_year: 0
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_non_dependant_deduction_band: 0
+  output: {uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#west_northamptonshire_council_tax_reduction_support_rate: 1}
 - name: west_northamptonshire_ctr_care_leaver_protected_rate
   period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
-  input: {uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_applicant_is_not_pensioner: true, uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.would_claim_council_tax_reduction: true, uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_is_care_leaver_under_25: true, uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_receives_war_pension: false, uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_assessed_capital_for_year: 0, uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_actual_liability_for_year: 1000, uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_assessed_income_for_year: 520, uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_applicable_amount_for_year: 0, uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_non_dependant_deductions_for_year: 0}
-  output: {uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#west_northamptonshire_council_tax_reduction_annual_amount: '985.1428571428571428571428571'}
-- name: west_northamptonshire_ctr_capital_limit_and_tariff
+  input:
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_is_care_leaver_under_25: true
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_receives_war_pension: false
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_assessed_capital_for_year: 0
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_actual_liability_for_year: 1000
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_assessed_income_for_year: 520
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_applicable_amount_for_year: 0
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_non_dependant_deductions_for_year: 0
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_non_dependant_deduction_band: 0
+  output: {uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#west_northamptonshire_council_tax_reduction_support_rate: 1}
+- name: west_northamptonshire_ctr_capital_limit_eligible
   period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
-  input: {uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_applicant_is_not_pensioner: true, uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.would_claim_council_tax_reduction: true, uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_is_care_leaver_under_25: false, uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_receives_war_pension: false, uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_assessed_capital_for_year: 16000, uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_actual_liability_for_year: 1000, uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_assessed_income_for_year: 0, uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_applicable_amount_for_year: 2081, uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_non_dependant_deductions_for_year: 0}
-  output: {uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#west_northamptonshire_council_tax_reduction_annual_amount: 800}
-- name: west_northamptonshire_ctr_capital_cliff_zero_award
+  input:
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_is_care_leaver_under_25: false
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_receives_war_pension: false
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_assessed_capital_for_year: 16000
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_actual_liability_for_year: 1000
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_assessed_income_for_year: 520
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_applicable_amount_for_year: 0
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_non_dependant_deductions_for_year: 0
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_non_dependant_deduction_band: 0
+  output: {uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#west_northamptonshire_council_tax_reduction_capital_eligible: holds}
+- name: west_northamptonshire_ctr_capital_cliff_ineligible
   period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
-  input: {uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_applicant_is_not_pensioner: true, uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.would_claim_council_tax_reduction: true, uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_is_care_leaver_under_25: false, uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_receives_war_pension: false, uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_assessed_capital_for_year: 16000.01, uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_actual_liability_for_year: 1000, uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_assessed_income_for_year: 0, uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_applicable_amount_for_year: 1, uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_non_dependant_deductions_for_year: 0}
+  input:
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_is_care_leaver_under_25: false
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_receives_war_pension: false
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_assessed_capital_for_year: 16000.01
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_actual_liability_for_year: 1000
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_assessed_income_for_year: 520
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_applicable_amount_for_year: 0
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_non_dependant_deductions_for_year: 0
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_non_dependant_deduction_band: 0
+  output: {uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#west_northamptonshire_council_tax_reduction_capital_eligible: not_holds}
+- name: west_northamptonshire_ctr_tariff_6250
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_is_care_leaver_under_25: false
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_receives_war_pension: false
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_assessed_capital_for_year: 6250
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_actual_liability_for_year: 1000
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_assessed_income_for_year: 520
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_applicable_amount_for_year: 0
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_non_dependant_deductions_for_year: 0
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_non_dependant_deduction_band: 0
+  output: {uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#west_northamptonshire_council_tax_reduction_tariff_income_for_year: 52}
+- name: west_northamptonshire_ctr_tariff_6250_01
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_is_care_leaver_under_25: false
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_receives_war_pension: false
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_assessed_capital_for_year: 6250.01
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_actual_liability_for_year: 1000
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_assessed_income_for_year: 520
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_applicable_amount_for_year: 0
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_non_dependant_deductions_for_year: 0
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_non_dependant_deduction_band: 0
+  output: {uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#west_northamptonshire_council_tax_reduction_tariff_income_for_year: 104}
+- name: west_northamptonshire_ctr_maximum
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_is_care_leaver_under_25: false
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_receives_war_pension: false
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_assessed_capital_for_year: 0
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_actual_liability_for_year: 1000
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_assessed_income_for_year: 520
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_applicable_amount_for_year: 0
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_non_dependant_deductions_for_year: 0
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_non_dependant_deduction_band: 0
+  output: {uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#west_northamptonshire_council_tax_reduction_maximum_for_year: 800}
+- name: west_northamptonshire_ctr_excess_income_below
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_is_care_leaver_under_25: false
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_receives_war_pension: false
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_assessed_capital_for_year: 0
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_actual_liability_for_year: 1000
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_assessed_income_for_year: 0
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_applicable_amount_for_year: 520
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_non_dependant_deductions_for_year: 0
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_non_dependant_deduction_band: 0
+  output: {uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#west_northamptonshire_council_tax_reduction_excess_income_for_year: 0}
+- name: west_northamptonshire_ctr_excess_income_equality
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_is_care_leaver_under_25: false
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_receives_war_pension: false
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_assessed_capital_for_year: 0
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_actual_liability_for_year: 1000
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_assessed_income_for_year: 520
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_applicable_amount_for_year: 520
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_non_dependant_deductions_for_year: 0
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_non_dependant_deduction_band: 0
+  output: {uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#west_northamptonshire_council_tax_reduction_excess_income_for_year: 0}
+- name: west_northamptonshire_ctr_excess_income_above
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_is_care_leaver_under_25: false
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_receives_war_pension: false
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_assessed_capital_for_year: 0
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_actual_liability_for_year: 1000
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_assessed_income_for_year: 520
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_applicable_amount_for_year: 0
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_non_dependant_deductions_for_year: 0
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_non_dependant_deduction_band: 0
+  output: {uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#west_northamptonshire_council_tax_reduction_excess_income_for_year: 520}
+- name: west_northamptonshire_ctr_above_applicable_taper
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_is_care_leaver_under_25: false
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_receives_war_pension: false
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_assessed_capital_for_year: 0
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_actual_liability_for_year: 1000
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_assessed_income_for_year: 520
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_applicable_amount_for_year: 0
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_non_dependant_deductions_for_year: 0
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_non_dependant_deduction_band: 0
+  output: {uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#west_northamptonshire_council_tax_reduction_taper_deduction_for_year: '14.857142857142857142857142872'}
+- name: west_northamptonshire_ctr_award_conditions_hold
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_is_care_leaver_under_25: false
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_receives_war_pension: false
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_assessed_capital_for_year: 0
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_actual_liability_for_year: 1000
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_assessed_income_for_year: 520
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_applicable_amount_for_year: 0
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_non_dependant_deductions_for_year: 0
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_non_dependant_deduction_band: 0
+  output: {uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#west_northamptonshire_council_tax_reduction_award_conditions_met: holds}
+- name: west_northamptonshire_ctr_standard_taper_award
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_is_care_leaver_under_25: false
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_receives_war_pension: false
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_assessed_capital_for_year: 0
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_actual_liability_for_year: 1000
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_assessed_income_for_year: 520
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_applicable_amount_for_year: 0
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_non_dependant_deductions_for_year: 0
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_non_dependant_deduction_band: 0
+  output: {uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#west_northamptonshire_council_tax_reduction_annual_amount: '785.14285714285714285714285713'}
+- name: west_northamptonshire_ctr_income_equality_zero_award
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_is_care_leaver_under_25: false
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_receives_war_pension: false
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_assessed_capital_for_year: 0
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_actual_liability_for_year: 1000
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_assessed_income_for_year: 520
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_applicable_amount_for_year: 520
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_non_dependant_deductions_for_year: 0
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_non_dependant_deduction_band: 0
   output: {uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#west_northamptonshire_council_tax_reduction_annual_amount: 0}
-- name: west_northamptonshire_ctr_income_equality_drafting_gap
+- name: west_northamptonshire_ctr_taper_exhaustion_zero_award
   period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
-  input: {uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_applicant_is_not_pensioner: true, uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.would_claim_council_tax_reduction: true, uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_is_care_leaver_under_25: false, uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_receives_war_pension: false, uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_assessed_capital_for_year: 0, uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_actual_liability_for_year: 1000, uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_assessed_income_for_year: 0, uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_applicable_amount_for_year: 0, uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_non_dependant_deductions_for_year: 0}
+  input:
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_is_care_leaver_under_25: false
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_receives_war_pension: false
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_assessed_capital_for_year: 0
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_actual_liability_for_year: 1000
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_assessed_income_for_year: 28000
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_applicable_amount_for_year: 0
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_non_dependant_deductions_for_year: 0
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_non_dependant_deduction_band: 0
   output: {uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#west_northamptonshire_council_tax_reduction_annual_amount: 0}
+- name: west_northamptonshire_ctr_non_dependant_deduction_exhausts_award
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_is_care_leaver_under_25: false
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_receives_war_pension: false
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_assessed_capital_for_year: 0
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_actual_liability_for_year: 1000
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_assessed_income_for_year: 0
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_applicable_amount_for_year: 520
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_non_dependant_deductions_for_year: 800
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_non_dependant_deduction_band: 0
+  output: {uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#west_northamptonshire_council_tax_reduction_annual_amount: 0}
+- name: west_northamptonshire_ctr_non_dependant_band_0
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_is_care_leaver_under_25: false
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_receives_war_pension: false
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_assessed_capital_for_year: 0
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_actual_liability_for_year: 1000
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_assessed_income_for_year: 520
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_applicable_amount_for_year: 0
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_non_dependant_deductions_for_year: 0
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_non_dependant_deduction_band: 0
+  output: {uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#west_northamptonshire_council_tax_reduction_non_dependant_weekly_deduction_by_band: 0}
+- name: west_northamptonshire_ctr_non_dependant_band_1
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_is_care_leaver_under_25: false
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_receives_war_pension: false
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_assessed_capital_for_year: 0
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_actual_liability_for_year: 1000
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_assessed_income_for_year: 520
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_applicable_amount_for_year: 0
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_non_dependant_deductions_for_year: 0
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_non_dependant_deduction_band: 1
+  output: {uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#west_northamptonshire_council_tax_reduction_non_dependant_weekly_deduction_by_band: 5.20}
+- name: west_northamptonshire_ctr_non_dependant_band_2
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_is_care_leaver_under_25: false
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_receives_war_pension: false
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_assessed_capital_for_year: 0
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_actual_liability_for_year: 1000
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_assessed_income_for_year: 520
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_applicable_amount_for_year: 0
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_non_dependant_deductions_for_year: 0
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_non_dependant_deduction_band: 2
+  output: {uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#west_northamptonshire_council_tax_reduction_non_dependant_weekly_deduction_by_band: 10.60}
+- name: west_northamptonshire_ctr_non_dependant_band_3
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_is_care_leaver_under_25: false
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_receives_war_pension: false
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_assessed_capital_for_year: 0
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_actual_liability_for_year: 1000
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_assessed_income_for_year: 520
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_applicable_amount_for_year: 0
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_non_dependant_deductions_for_year: 0
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_non_dependant_deduction_band: 3
+  output: {uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#west_northamptonshire_council_tax_reduction_non_dependant_weekly_deduction_by_band: 13.30}
+- name: west_northamptonshire_ctr_non_dependant_band_4
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_is_care_leaver_under_25: false
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_receives_war_pension: false
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_assessed_capital_for_year: 0
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_actual_liability_for_year: 1000
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_assessed_income_for_year: 520
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_applicable_amount_for_year: 0
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_non_dependant_deductions_for_year: 0
+    uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#input.west_northamptonshire_council_tax_reduction_non_dependant_deduction_band: 4
+  output: {uk-west-northamptonshire:policies/west-northamptonshire/council-tax-reduction#west_northamptonshire_council_tax_reduction_non_dependant_weekly_deduction_by_band: 15.95}

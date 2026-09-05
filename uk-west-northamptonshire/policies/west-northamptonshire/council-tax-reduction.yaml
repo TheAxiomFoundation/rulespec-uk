@@ -110,6 +110,13 @@ rules:
     source: West Northamptonshire Council Tax Reduction Scheme 2026-27 paragraph 17(f)(ii), derived from its printed mixed-number percentage
     metadata: {proof: {atoms: [{path: "versions[0].formula", kind: formula, source: {corpus_citation_path: uk-west-northamptonshire/manual/council-tax-reduction-scheme-2026-2027/page-17, excerpt: "amount B is 2 6/7 per cent of the difference between his income for the relevant week and his applicable amount"}}]}}
     versions: [{effective_from: '2026-04-01', formula: "(west_northamptonshire_council_tax_reduction_taper_whole_percentage_points + west_northamptonshire_council_tax_reduction_taper_fraction_numerator / west_northamptonshire_council_tax_reduction_days_per_week) * west_northamptonshire_council_tax_reduction_per_cent_unit"}]
+  - name: west_northamptonshire_council_tax_reduction_annual_taper_rate
+    kind: parameter
+    dtype: Rate
+    period: Year
+    source: West Northamptonshire Council Tax Reduction Scheme 2026-27 paragraph 17(f)(ii), annualized from its printed weekly mixed-number percentage
+    metadata: {proof: {atoms: [{path: "versions[0].formula", kind: formula, source: {corpus_citation_path: uk-west-northamptonshire/manual/council-tax-reduction-scheme-2026-2027/page-17, excerpt: "amount B is 2 6/7 per cent of the difference between his income for the relevant week and his applicable amount"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: "west_northamptonshire_council_tax_reduction_weekly_taper_rate * west_northamptonshire_council_tax_reduction_weeks_per_year / west_northamptonshire_council_tax_reduction_weeks_per_year"}]
   - name: west_northamptonshire_council_tax_reduction_support_rate
     kind: derived
     entity: Household
@@ -161,7 +168,7 @@ rules:
     unit: GBP
     source: West Northamptonshire Council Tax Reduction Scheme 2026-27 paragraph 17(f)(ii)
     metadata: {proof: {atoms: [{path: "versions[0].formula", kind: formula, source: {corpus_citation_path: uk-west-northamptonshire/manual/council-tax-reduction-scheme-2026-2027/page-17, excerpt: "amount B is 2 6/7 per cent of the difference between his income for the relevant week and his applicable amount"}}]}}
-    versions: [{effective_from: '2026-04-01', formula: "west_northamptonshire_council_tax_reduction_excess_income_for_year * west_northamptonshire_council_tax_reduction_weekly_taper_rate"}]
+    versions: [{effective_from: '2026-04-01', formula: "west_northamptonshire_council_tax_reduction_excess_income_for_year * west_northamptonshire_council_tax_reduction_annual_taper_rate"}]
   - name: west_northamptonshire_council_tax_reduction_award_conditions_met
     kind: derived
     entity: Household
@@ -189,3 +196,4 @@ inputs:
   - {name: west_northamptonshire_council_tax_reduction_assessed_income_for_year, entity: Household, dtype: Money, period: Year, unit: GBP}
   - {name: west_northamptonshire_council_tax_reduction_applicable_amount_for_year, entity: Household, dtype: Money, period: Year, unit: GBP}
   - {name: west_northamptonshire_council_tax_reduction_non_dependant_deductions_for_year, entity: Household, dtype: Money, period: Year, unit: GBP}
+  - {name: west_northamptonshire_council_tax_reduction_non_dependant_deduction_band, entity: Household, dtype: Number, period: Week}
