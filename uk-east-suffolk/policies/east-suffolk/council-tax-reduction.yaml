@@ -11,7 +11,7 @@ module:
         # - uk/regulations/uksi/2012/2885
         # - uk/regulations/uksi/2012/2886
       # rationale: Section 13A delegates the working-age scheme to East Suffolk Council, so its adopted scheme document is the operative legal source for locally set working-age values.
-  summary: East Suffolk's 2026-27 working-age award is 91.5 percent of liability, less the statutory mixed-number excess-income deduction and its locally specified capital and non-dependant rules. Pension-age provisions are outside this module.
+  summary: East Suffolk's 2026-27 working-age award applies only to an East Suffolk household in England whose applicant is not a pensioner. Class D strictly requires income below the applicable amount and Class E strictly requires income above it and a positive amount after taper; equality is not assigned to either printed class. The award is 91.5 percent of liability, less the statutory mixed-number excess-income deduction and its locally specified capital and non-dependant rules. Pension-age provisions are outside this module.
   deferred_outputs:
     - output: uk-east-suffolk:policies/east-suffolk/council-tax-reduction/part-6#applicable_amount
       reason: Category-specific applicable amounts and premiums are not encoded by this award-surface module.
@@ -184,6 +184,25 @@ rules:
         formula: |-
           0
 
+  - name: east_suffolk_council_tax_reduction_working_age_scheme_applies
+    kind: derived
+    entity: Household
+    dtype: Judgment
+    period: Year
+    source: East Suffolk Council Tax Reduction Scheme 2026-27 paragraph 3.0(1)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk-east-suffolk/manual/council-tax-reduction-scheme-2026-2027/page-17
+              excerpt: "persons who are not pensioners who fall within any of classes D to F."
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          local_authority_is_east_suffolk and council_tax_reduction_household_in_england and east_suffolk_council_tax_reduction_applicant_is_person_who_is_not_pensioner
+
   - name: east_suffolk_council_tax_reduction_capital_eligible
     kind: derived
     entity: Household
@@ -243,6 +262,84 @@ rules:
         formula: |-
           east_suffolk_council_tax_reduction_excess_income_for_year * east_suffolk_council_tax_reduction_weekly_taper_rate
 
+  - name: east_suffolk_council_tax_reduction_maximum_amount_for_year
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: East Suffolk Council Tax Reduction Scheme 2026-27 paragraph 29A
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk-east-suffolk/manual/council-tax-reduction-scheme-2026-2027/page-37
+              excerpt: "91.5 per cent of the amount A/B"
+          - path: versions[0].formula
+            kind: ordering
+            source:
+              corpus_citation_path: uk-east-suffolk/manual/council-tax-reduction-scheme-2026-2027/page-37
+              excerpt: "less any deductions in respect of non-dependants"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          max(0, east_suffolk_council_tax_reduction_liability_for_year * east_suffolk_council_tax_reduction_maximum_support_rate - east_suffolk_council_tax_reduction_non_dependant_deductions_for_year)
+
+  - name: east_suffolk_council_tax_reduction_class_d_conditions_met
+    kind: derived
+    entity: Household
+    dtype: Judgment
+    period: Year
+    source: East Suffolk Council Tax Reduction Scheme 2026-27 class D
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk-east-suffolk/manual/council-tax-reduction-scheme-2026-2027/page-23
+              excerpt: "whose income (if any) for the relevant week is less than his applicable amount"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk-east-suffolk/manual/council-tax-reduction-scheme-2026-2027/page-23
+              excerpt: "who has made an application."
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          east_suffolk_council_tax_reduction_working_age_scheme_applies and would_claim_council_tax_reduction and east_suffolk_council_tax_reduction_capital_eligible and east_suffolk_council_tax_reduction_assessed_income_for_year < east_suffolk_council_tax_reduction_applicable_amount_for_year
+
+  - name: east_suffolk_council_tax_reduction_class_e_conditions_met
+    kind: derived
+    entity: Household
+    dtype: Judgment
+    period: Year
+    source: East Suffolk Council Tax Reduction Scheme 2026-27 class E
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk-east-suffolk/manual/council-tax-reduction-scheme-2026-2027/page-23
+              excerpt: "whose income for the relevant week is greater than his applicable amount"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk-east-suffolk/manual/council-tax-reduction-scheme-2026-2027/page-23
+              excerpt: "in respect of whom amount A exceeds amount B where—"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk-east-suffolk/manual/council-tax-reduction-scheme-2026-2027/page-23
+              excerpt: "who has made an application."
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          east_suffolk_council_tax_reduction_working_age_scheme_applies and would_claim_council_tax_reduction and east_suffolk_council_tax_reduction_capital_eligible and east_suffolk_council_tax_reduction_assessed_income_for_year > east_suffolk_council_tax_reduction_applicable_amount_for_year and east_suffolk_council_tax_reduction_maximum_amount_for_year > east_suffolk_council_tax_reduction_income_taper_deduction_for_year
+
   - name: east_suffolk_council_tax_reduction_annual_amount
     kind: derived
     entity: Household
@@ -266,4 +363,47 @@ rules:
     versions:
       - effective_from: '2026-04-01'
         formula: |-
-          if east_suffolk_council_tax_reduction_capital_eligible and would_claim_council_tax_reduction: max(0, east_suffolk_council_tax_reduction_liability_for_year * east_suffolk_council_tax_reduction_maximum_support_rate - east_suffolk_council_tax_reduction_income_taper_deduction_for_year - east_suffolk_council_tax_reduction_non_dependant_deductions_for_year) else: 0
+          if east_suffolk_council_tax_reduction_class_d_conditions_met or east_suffolk_council_tax_reduction_class_e_conditions_met: east_suffolk_council_tax_reduction_maximum_amount_for_year - east_suffolk_council_tax_reduction_income_taper_deduction_for_year else: 0
+
+inputs:
+  - name: local_authority_is_east_suffolk
+    entity: Household
+    dtype: Boolean
+    period: Year
+  - name: council_tax_reduction_household_in_england
+    entity: Household
+    dtype: Boolean
+    period: Year
+  - name: east_suffolk_council_tax_reduction_applicant_is_person_who_is_not_pensioner
+    entity: Household
+    dtype: Boolean
+    period: Year
+  - name: would_claim_council_tax_reduction
+    entity: Household
+    dtype: Boolean
+    period: Year
+  - name: east_suffolk_council_tax_reduction_assessed_capital_for_year
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+  - name: east_suffolk_council_tax_reduction_liability_for_year
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+  - name: east_suffolk_council_tax_reduction_assessed_income_for_year
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+  - name: east_suffolk_council_tax_reduction_applicable_amount_for_year
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+  - name: east_suffolk_council_tax_reduction_non_dependant_deductions_for_year
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP

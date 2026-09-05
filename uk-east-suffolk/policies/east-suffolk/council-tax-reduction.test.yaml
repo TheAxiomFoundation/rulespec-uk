@@ -1,8 +1,13 @@
 - name: east_suffolk_ctr_printed_parameters
-  period:
+  period: &tax_year
     period_kind: tax_year
     start: '2026-04-01'
     end: '2027-03-31'
+  input: &scope_inputs
+    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.local_authority_is_east_suffolk: true
+    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.east_suffolk_council_tax_reduction_applicant_is_person_who_is_not_pensioner: true
+    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.would_claim_council_tax_reduction: true
   output:
     uk-east-suffolk:policies/east-suffolk/council-tax-reduction#east_suffolk_council_tax_reduction_maximum_support_rate: 0.915
     uk-east-suffolk:policies/east-suffolk/council-tax-reduction#east_suffolk_council_tax_reduction_taper_whole_percentage_points: 2
@@ -14,57 +19,189 @@
     uk-east-suffolk:policies/east-suffolk/council-tax-reduction#east_suffolk_council_tax_reduction_non_dependant_deduction_weekly: 7.4
 
 - name: east_suffolk_ctr_no_working_age_tariff_income
-  period:
-    period_kind: tax_year
-    start: '2026-04-01'
-    end: '2027-03-31'
+  period: *tax_year
   output:
     uk-east-suffolk:policies/east-suffolk/council-tax-reduction#east_suffolk_council_tax_reduction_tariff_income_for_year: 0
 
-- name: east_suffolk_ctr_positive_taper_and_non_dependant_deduction
-  period:
-    period_kind: tax_year
-    start: '2026-04-01'
-    end: '2027-03-31'
+- name: east_suffolk_ctr_working_age_local_authority_scope
+  period: *tax_year
   input:
-    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    <<: *scope_inputs
+    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.east_suffolk_council_tax_reduction_assessed_capital_for_year: 10000
+    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.east_suffolk_council_tax_reduction_liability_for_year: 1000
+    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.east_suffolk_council_tax_reduction_assessed_income_for_year: 0
+    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.east_suffolk_council_tax_reduction_applicable_amount_for_year: 1
+    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.east_suffolk_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#east_suffolk_council_tax_reduction_working_age_scheme_applies: holds
+
+- name: east_suffolk_ctr_class_d_below_applicable
+  period: *tax_year
+  input:
+    <<: *scope_inputs
+    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.east_suffolk_council_tax_reduction_assessed_capital_for_year: 10000
+    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.east_suffolk_council_tax_reduction_liability_for_year: 1000
+    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.east_suffolk_council_tax_reduction_assessed_income_for_year: 0
+    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.east_suffolk_council_tax_reduction_applicable_amount_for_year: 1
+    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.east_suffolk_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#east_suffolk_council_tax_reduction_class_d_conditions_met: holds
+
+- name: east_suffolk_ctr_class_d_below_applicable_award
+  period: *tax_year
+  input:
+    <<: *scope_inputs
+    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.east_suffolk_council_tax_reduction_assessed_capital_for_year: 10000
+    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.east_suffolk_council_tax_reduction_liability_for_year: 1000
+    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.east_suffolk_council_tax_reduction_assessed_income_for_year: 0
+    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.east_suffolk_council_tax_reduction_applicable_amount_for_year: 1
+    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.east_suffolk_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#east_suffolk_council_tax_reduction_annual_amount: 915
+
+- name: east_suffolk_ctr_capital_at_limit_is_eligible
+  period: *tax_year
+  input:
+    <<: *scope_inputs
+    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.east_suffolk_council_tax_reduction_assessed_capital_for_year: 10000
+    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.east_suffolk_council_tax_reduction_liability_for_year: 1000
+    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.east_suffolk_council_tax_reduction_assessed_income_for_year: 0
+    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.east_suffolk_council_tax_reduction_applicable_amount_for_year: 1
+    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.east_suffolk_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#east_suffolk_council_tax_reduction_capital_eligible: holds
+
+- name: east_suffolk_ctr_maximum_amount_calculation
+  period: *tax_year
+  input:
+    <<: *scope_inputs
+    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.east_suffolk_council_tax_reduction_assessed_capital_for_year: 10000
+    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.east_suffolk_council_tax_reduction_liability_for_year: 1000
+    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.east_suffolk_council_tax_reduction_assessed_income_for_year: 0
+    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.east_suffolk_council_tax_reduction_applicable_amount_for_year: 1
+    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.east_suffolk_council_tax_reduction_non_dependant_deductions_for_year: 100
+  output:
+    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#east_suffolk_council_tax_reduction_maximum_amount_for_year: 815
+
+- name: east_suffolk_ctr_non_dependant_deduction_affects_award
+  period: *tax_year
+  input:
+    <<: *scope_inputs
+    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.east_suffolk_council_tax_reduction_assessed_capital_for_year: 10000
+    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.east_suffolk_council_tax_reduction_liability_for_year: 1000
+    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.east_suffolk_council_tax_reduction_assessed_income_for_year: 0
+    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.east_suffolk_council_tax_reduction_applicable_amount_for_year: 1
+    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.east_suffolk_council_tax_reduction_non_dependant_deductions_for_year: 100
+  output:
+    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#east_suffolk_council_tax_reduction_annual_amount: 815
+
+- name: east_suffolk_ctr_class_e_positive_taper
+  period: *tax_year
+  input: &positive_taper_inputs
+    <<: *scope_inputs
     uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.east_suffolk_council_tax_reduction_assessed_capital_for_year: 10000
     uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.east_suffolk_council_tax_reduction_liability_for_year: 1000
     uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.east_suffolk_council_tax_reduction_assessed_income_for_year: 520
     uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.east_suffolk_council_tax_reduction_applicable_amount_for_year: 0
     uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.east_suffolk_council_tax_reduction_non_dependant_deductions_for_year: 100
   output:
-    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#east_suffolk_council_tax_reduction_capital_eligible: holds
+    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#east_suffolk_council_tax_reduction_class_e_conditions_met: holds
+
+- name: east_suffolk_ctr_positive_taper_excess_income
+  period: *tax_year
+  input:
+    <<: *positive_taper_inputs
+  output:
     uk-east-suffolk:policies/east-suffolk/council-tax-reduction#east_suffolk_council_tax_reduction_excess_income_for_year: 520
+
+- name: east_suffolk_ctr_positive_taper_deduction
+  period: *tax_year
+  input:
+    <<: *positive_taper_inputs
+  output:
     uk-east-suffolk:policies/east-suffolk/council-tax-reduction#east_suffolk_council_tax_reduction_income_taper_deduction_for_year: '14.857142857142857142857142872'
+
+- name: east_suffolk_ctr_positive_taper_award
+  period: *tax_year
+  input:
+    <<: *positive_taper_inputs
+  output:
     uk-east-suffolk:policies/east-suffolk/council-tax-reduction#east_suffolk_council_tax_reduction_annual_amount: '800.1428571428571428571428571'
 
-- name: east_suffolk_ctr_capital_cliff
-  period:
-    period_kind: tax_year
-    start: '2026-04-01'
-    end: '2027-03-31'
+- name: east_suffolk_ctr_income_equality_is_unassigned_and_zero
+  period: *tax_year
   input:
-    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.would_claim_council_tax_reduction: true
-    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.east_suffolk_council_tax_reduction_assessed_capital_for_year: 10000.01
+    <<: *scope_inputs
+    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.east_suffolk_council_tax_reduction_assessed_capital_for_year: 10000
     uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.east_suffolk_council_tax_reduction_liability_for_year: 1000
-    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.east_suffolk_council_tax_reduction_assessed_income_for_year: 0
+    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.east_suffolk_council_tax_reduction_assessed_income_for_year: 100
+    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.east_suffolk_council_tax_reduction_applicable_amount_for_year: 100
+    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.east_suffolk_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#east_suffolk_council_tax_reduction_annual_amount: 0
+
+- name: east_suffolk_ctr_taper_immediately_before_exhaustion
+  period: *tax_year
+  input:
+    <<: *scope_inputs
+    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.east_suffolk_council_tax_reduction_assessed_capital_for_year: 10000
+    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.east_suffolk_council_tax_reduction_liability_for_year: 1000
+    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.east_suffolk_council_tax_reduction_assessed_income_for_year: 32024
+    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.east_suffolk_council_tax_reduction_applicable_amount_for_year: 0
+    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.east_suffolk_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#east_suffolk_council_tax_reduction_annual_amount: '0.0285714285714285714285705'
+
+- name: east_suffolk_ctr_taper_exhaustion_zero_award
+  period: *tax_year
+  input:
+    <<: *scope_inputs
+    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.east_suffolk_council_tax_reduction_assessed_capital_for_year: 10000
+    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.east_suffolk_council_tax_reduction_liability_for_year: 1000
+    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.east_suffolk_council_tax_reduction_assessed_income_for_year: 32025
     uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.east_suffolk_council_tax_reduction_applicable_amount_for_year: 0
     uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.east_suffolk_council_tax_reduction_non_dependant_deductions_for_year: 0
   output:
     uk-east-suffolk:policies/east-suffolk/council-tax-reduction#east_suffolk_council_tax_reduction_annual_amount: 0
 
-- name: east_suffolk_ctr_taper_exhaustion_zero_award
-  period:
-    period_kind: tax_year
-    start: '2026-04-01'
-    end: '2027-03-31'
+- name: east_suffolk_ctr_capital_cliff
+  period: *tax_year
   input:
-    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.would_claim_council_tax_reduction: true
-    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.east_suffolk_council_tax_reduction_assessed_capital_for_year: 0
+    <<: *scope_inputs
+    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.east_suffolk_council_tax_reduction_assessed_capital_for_year: 10000.01
     uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.east_suffolk_council_tax_reduction_liability_for_year: 1000
-    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.east_suffolk_council_tax_reduction_assessed_income_for_year: 32025
-    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.east_suffolk_council_tax_reduction_applicable_amount_for_year: 0
+    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.east_suffolk_council_tax_reduction_assessed_income_for_year: 0
+    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.east_suffolk_council_tax_reduction_applicable_amount_for_year: 1
+    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.east_suffolk_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#east_suffolk_council_tax_reduction_annual_amount: 0
+
+- name: east_suffolk_ctr_no_claim_zero_award
+  period: *tax_year
+  input:
+    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.local_authority_is_east_suffolk: true
+    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.east_suffolk_council_tax_reduction_applicant_is_person_who_is_not_pensioner: true
+    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.would_claim_council_tax_reduction: false
+    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.east_suffolk_council_tax_reduction_assessed_capital_for_year: 10000
+    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.east_suffolk_council_tax_reduction_liability_for_year: 1000
+    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.east_suffolk_council_tax_reduction_assessed_income_for_year: 0
+    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.east_suffolk_council_tax_reduction_applicable_amount_for_year: 1
+    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.east_suffolk_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#east_suffolk_council_tax_reduction_annual_amount: 0
+
+- name: east_suffolk_ctr_wrong_authority_zero_award
+  period: *tax_year
+  input:
+    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.local_authority_is_east_suffolk: false
+    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.east_suffolk_council_tax_reduction_applicant_is_person_who_is_not_pensioner: true
+    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.east_suffolk_council_tax_reduction_assessed_capital_for_year: 10000
+    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.east_suffolk_council_tax_reduction_liability_for_year: 1000
+    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.east_suffolk_council_tax_reduction_assessed_income_for_year: 0
+    uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.east_suffolk_council_tax_reduction_applicable_amount_for_year: 1
     uk-east-suffolk:policies/east-suffolk/council-tax-reduction#input.east_suffolk_council_tax_reduction_non_dependant_deductions_for_year: 0
   output:
     uk-east-suffolk:policies/east-suffolk/council-tax-reduction#east_suffolk_council_tax_reduction_annual_amount: 0
