@@ -58,6 +58,12 @@ rules:
             kind: parameter_table
             source:
               corpus_citation_path: uk-arun/manual/council-tax-reduction-scheme-2026-2027/page-28
+              excerpt: "Income (net) LCTRS Income Banding Percentage award of net liability £0 - £219.99 A 100%"
+              table: {header: Income banding, row_key: income band, column_key: percentage award}
+          - path: 'versions[0].values'
+            kind: parameter_table
+            source:
+              corpus_citation_path: uk-arun/manual/council-tax-reduction-scheme-2026-2027/page-28
               excerpt: "the non-dependant deduction in respect of every non-dependant ages 18 or over is £5.00 x 1/7 where any of the following apply: (a) Where any non-dependant is in remunerative work; or (b) Where any non-dependant receives no income whatsoever."
               table: {header: Non-dependant deductions, row_key: deduction band, column_key: weekly deduction}
     versions: [{effective_from: '2026-04-01', values: {0: 0, 1: 5}}]
@@ -100,7 +106,7 @@ rules:
     kind: parameter
     dtype: Number
     source: Arun Council Tax Reduction Scheme 2026/27 paragraph 23.3
-    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-arun/manual/council-tax-reduction-scheme-2026-2027/page-81, excerpt: "Schedule 4 Not used Council Tax Reduction Scheme 2026/27 81"}}]}}
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-arun/manual/council-tax-reduction-scheme-2026-2027/page-29, excerpt: "£346.00 - £405.99 D 30%"}}]}}
     versions: [{effective_from: '2026-04-01', formula: "arun_council_tax_reduction_band_3 + arun_council_tax_reduction_band_1"}]
   - name: arun_council_tax_reduction_band_5
     kind: parameter
