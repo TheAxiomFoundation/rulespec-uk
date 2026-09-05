@@ -1,5 +1,16 @@
 - name: westmorland_and_furness_ctr_printed_parameters
   period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
+  input:
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.local_authority_is_westmorland_and_furness: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_assessed_capital: 0
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_assessed_income: 0
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_applicable_amount: 100
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_weekly_liability: 100
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_non_dependant_deductions: 0
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_non_dependant_deduction_band: 0
   output:
     uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#westmorland_and_furness_council_tax_reduction_maximum_support_rate: 1
     uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#westmorland_and_furness_council_tax_reduction_per_cent_unit: 0.01
@@ -14,30 +25,71 @@
 - name: westmorland_and_furness_ctr_tariff_edges
   period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
   input:
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.local_authority_is_westmorland_and_furness: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_assessed_income: 0
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_applicable_amount: 100
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_weekly_liability: 100
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_non_dependant_deductions: 0
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_non_dependant_deduction_band: 0
     uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_assessed_capital: 6250
   output:
     uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#westmorland_and_furness_council_tax_reduction_tariff_income: 1
 - name: westmorland_and_furness_ctr_tariff_partial_step
   period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
   input:
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.local_authority_is_westmorland_and_furness: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_assessed_income: 0
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_applicable_amount: 100
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_weekly_liability: 100
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_non_dependant_deductions: 0
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_non_dependant_deduction_band: 0
     uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_assessed_capital: 6250.01
   output:
     uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#westmorland_and_furness_council_tax_reduction_tariff_income: 2
 - name: westmorland_and_furness_ctr_capital_limit
   period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
   input:
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.local_authority_is_westmorland_and_furness: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_assessed_income: 0
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_applicable_amount: 100
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_weekly_liability: 100
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_non_dependant_deductions: 0
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_non_dependant_deduction_band: 0
     uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_assessed_capital: 16000
   output:
     uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#westmorland_and_furness_council_tax_reduction_capital_eligible: holds
 - name: westmorland_and_furness_ctr_capital_cliff
   period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
   input:
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.local_authority_is_westmorland_and_furness: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_assessed_income: 0
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_applicable_amount: 100
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_weekly_liability: 100
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_non_dependant_deductions: 0
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_non_dependant_deduction_band: 0
     uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_assessed_capital: 16000.01
   output:
     uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#westmorland_and_furness_council_tax_reduction_capital_eligible: not_holds
 - name: westmorland_and_furness_ctr_class_d_award
   period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
   input:
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.local_authority_is_westmorland_and_furness: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_non_dependant_deduction_band: 0
     uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_assessed_capital: 0
     uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_assessed_income: 99
     uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_applicable_amount: 100
@@ -48,6 +100,11 @@
 - name: westmorland_and_furness_ctr_class_e_taper
   period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
   input:
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.local_authority_is_westmorland_and_furness: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_non_dependant_deduction_band: 0
     uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_assessed_capital: 0
     uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_assessed_income: 200
     uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_applicable_amount: 100
@@ -58,6 +115,11 @@
 - name: westmorland_and_furness_ctr_income_equality_gap_zero
   period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
   input:
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.local_authority_is_westmorland_and_furness: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_non_dependant_deduction_band: 0
     uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_assessed_capital: 0
     uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_assessed_income: 100
     uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_applicable_amount: 100
@@ -68,6 +130,11 @@
 - name: westmorland_and_furness_ctr_taper_exhaustion_zero
   period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
   input:
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.local_authority_is_westmorland_and_furness: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_non_dependant_deduction_band: 0
     uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_assessed_capital: 0
     uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_assessed_income: 3600
     uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_applicable_amount: 100
@@ -78,12 +145,29 @@
 - name: westmorland_and_furness_ctr_non_dependant_table
   period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
   input:
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.local_authority_is_westmorland_and_furness: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_assessed_capital: 0
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_assessed_income: 0
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_applicable_amount: 100
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_weekly_liability: 100
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_non_dependant_deductions: 0
     uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_non_dependant_deduction_band: 4
   output:
     uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#westmorland_and_furness_council_tax_reduction_non_dependant_weekly_deduction_by_band: 15.95
 - name: westmorland_and_furness_ctr_income_less_than_applicable_amount
   period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
   input:
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.local_authority_is_westmorland_and_furness: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_assessed_capital: 0
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_weekly_liability: 100
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_non_dependant_deductions: 0
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_non_dependant_deduction_band: 0
     uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_assessed_income: 99
     uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_applicable_amount: 100
   output:
@@ -91,6 +175,14 @@
 - name: westmorland_and_furness_ctr_income_greater_than_applicable_amount
   period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
   input:
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.local_authority_is_westmorland_and_furness: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_assessed_capital: 0
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_weekly_liability: 100
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_non_dependant_deductions: 0
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_non_dependant_deduction_band: 0
     uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_assessed_income: 101
     uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_applicable_amount: 100
   output:
@@ -98,7 +190,135 @@
 - name: westmorland_and_furness_ctr_excess_income
   period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
   input:
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.local_authority_is_westmorland_and_furness: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_assessed_capital: 0
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_weekly_liability: 100
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_non_dependant_deductions: 0
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_non_dependant_deduction_band: 0
     uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_assessed_income: 101
     uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_applicable_amount: 100
   output:
     uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#westmorland_and_furness_council_tax_reduction_excess_income: 1
+- name: westmorland_and_furness_ctr_class_d_zero_floor
+  period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
+  input:
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.local_authority_is_westmorland_and_furness: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_assessed_capital: 0
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_applicable_amount: 100
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_weekly_liability: 100
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_assessed_income: 99
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_non_dependant_deductions: 100.01
+  output:
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#westmorland_and_furness_council_tax_reduction_award: 0
+- name: westmorland_and_furness_ctr_working_age_scheme_applies
+  period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
+  input:
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.local_authority_is_westmorland_and_furness: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_assessed_capital: 0
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_assessed_income: 0
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_applicable_amount: 100
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_weekly_liability: 100
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_non_dependant_deductions: 0
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_non_dependant_deduction_band: 0
+  output:
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#westmorland_and_furness_council_tax_reduction_working_age_scheme_applies: holds
+- name: westmorland_and_furness_ctr_pensioner_zero_award
+  period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
+  input:
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.local_authority_is_westmorland_and_furness: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_assessed_capital: 0
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_assessed_income: 0
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_applicable_amount: 100
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_weekly_liability: 100
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_non_dependant_deductions: 0
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_applicant_is_not_pensioner: false
+  output:
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#westmorland_and_furness_council_tax_reduction_award: 0
+- name: westmorland_and_furness_ctr_no_application_zero_award
+  period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
+  input:
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.local_authority_is_westmorland_and_furness: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_assessed_capital: 0
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_assessed_income: 0
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_applicable_amount: 100
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_weekly_liability: 100
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_non_dependant_deductions: 0
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.would_claim_council_tax_reduction: false
+  output:
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#westmorland_and_furness_council_tax_reduction_award: 0
+- name: westmorland_and_furness_ctr_non_dependant_table_exemption
+  period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
+  input:
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.local_authority_is_westmorland_and_furness: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_assessed_capital: 0
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_assessed_income: 0
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_applicable_amount: 100
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_weekly_liability: 100
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_non_dependant_deductions: 0
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_non_dependant_deduction_band: 0
+  output:
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#westmorland_and_furness_council_tax_reduction_non_dependant_weekly_deduction_by_band: 0
+- name: westmorland_and_furness_ctr_non_dependant_table_band_1
+  period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
+  input:
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.local_authority_is_westmorland_and_furness: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_assessed_capital: 0
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_assessed_income: 0
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_applicable_amount: 100
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_weekly_liability: 100
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_non_dependant_deductions: 0
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_non_dependant_deduction_band: 1
+  output:
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#westmorland_and_furness_council_tax_reduction_non_dependant_weekly_deduction_by_band: 5.20
+- name: westmorland_and_furness_ctr_non_dependant_table_band_2
+  period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
+  input:
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.local_authority_is_westmorland_and_furness: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_assessed_capital: 0
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_assessed_income: 0
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_applicable_amount: 100
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_weekly_liability: 100
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_non_dependant_deductions: 0
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_non_dependant_deduction_band: 2
+  output:
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#westmorland_and_furness_council_tax_reduction_non_dependant_weekly_deduction_by_band: 10.60
+- name: westmorland_and_furness_ctr_non_dependant_table_band_3
+  period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
+  input:
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.local_authority_is_westmorland_and_furness: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_assessed_capital: 0
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_assessed_income: 0
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_applicable_amount: 100
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_weekly_liability: 100
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_non_dependant_deductions: 0
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#input.westmorland_and_furness_council_tax_reduction_non_dependant_deduction_band: 3
+  output:
+    uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction#westmorland_and_furness_council_tax_reduction_non_dependant_weekly_deduction_by_band: 13.30

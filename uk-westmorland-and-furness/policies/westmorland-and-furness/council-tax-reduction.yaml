@@ -8,7 +8,7 @@ module:
     #   status: delegated_scheme
     #   checked_paths: [uk/statutes/ukpga/1992/14/13A, uk/regulations/uksi/2012/2885, uk/regulations/uksi/2012/2886]
     #   rationale: LGFA 1992 section 13A delegates the working-age scheme to Westmorland and Furness Council, so its adopted scheme document is the operative legal source for locally set working-age values.
-  summary: Working-age Classes D and E receive the 100 per cent maximum less the statutory taper where income is greater than the applicable amount. Equality is not assigned to either printed class. Pension-age and applicable-amount schedules are outside this award surface.
+  summary: Working-age Classes D and E receive the 100 per cent maximum less the statutory taper where income is greater than the applicable amount. Awards require a Westmorland and Furness England household, a non-pensioner applicant, and an application for reduction. Equality is not assigned to either printed class. Pension-age and applicable-amount schedules are outside this award surface.
   deferred_outputs:
     - output: uk-westmorland-and-furness:policies/westmorland-and-furness/council-tax-reduction/paragraphs-25-to-28-and-schedule-3#applicable_amount
       reason: Applicable amounts, premiums and Universal Credit maximum amounts are inputs to this award surface.
@@ -121,6 +121,14 @@ rules:
     source: Westmorland and Furness Council CTR Scheme 2026/27 paragraph 23(1)
     metadata: {proof: {atoms: [{path: "versions[0].formula", kind: condition, source: {corpus_citation_path: uk-westmorland-and-furness/manual/council-tax-reduction-scheme-2026-2027/page-24, excerpt: "any person whose capital exceeds £16,000"}}]}}
     versions: [{effective_from: '2026-04-01', formula: westmorland_and_furness_council_tax_reduction_assessed_capital <= westmorland_and_furness_council_tax_reduction_capital_limit}]
+  - name: westmorland_and_furness_council_tax_reduction_working_age_scheme_applies
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Week
+    source: Westmorland and Furness Council CTR Scheme 2026/27 paragraphs 16 and 17
+    metadata: {proof: {atoms: [{path: "versions[0].formula", kind: condition, source: {corpus_citation_path: uk-westmorland-and-furness/manual/council-tax-reduction-scheme-2026-2027/page-16, excerpt: "Class D: persons who are not pensioners whose income is less than the applicable amount."}}]}}
+    versions: [{effective_from: '2026-04-01', formula: "local_authority_is_westmorland_and_furness and council_tax_reduction_household_in_england and westmorland_and_furness_council_tax_reduction_applicant_is_not_pensioner"}]
   - name: westmorland_and_furness_council_tax_reduction_tariff_income
     kind: derived
     entity: Person
@@ -171,8 +179,12 @@ rules:
           - path: "versions[0].formula"
             kind: formula
             source: {corpus_citation_path: uk-westmorland-and-furness/manual/council-tax-reduction-scheme-2026-2027/page-30, excerpt: "Where the person is within class B or E, that amount is the amount found by deducting amount B from amount A"}
-    versions: [{effective_from: '2026-04-01', formula: "if westmorland_and_furness_council_tax_reduction_capital_eligible and westmorland_and_furness_council_tax_reduction_income_is_less_than_applicable_amount: westmorland_and_furness_council_tax_reduction_weekly_liability * westmorland_and_furness_council_tax_reduction_maximum_support_rate - westmorland_and_furness_council_tax_reduction_non_dependant_deductions else: if westmorland_and_furness_council_tax_reduction_capital_eligible and westmorland_and_furness_council_tax_reduction_income_is_greater_than_applicable_amount and westmorland_and_furness_council_tax_reduction_weekly_liability * westmorland_and_furness_council_tax_reduction_maximum_support_rate - westmorland_and_furness_council_tax_reduction_non_dependant_deductions > westmorland_and_furness_council_tax_reduction_excess_income * westmorland_and_furness_council_tax_reduction_weekly_taper_rate: westmorland_and_furness_council_tax_reduction_weekly_liability * westmorland_and_furness_council_tax_reduction_maximum_support_rate - westmorland_and_furness_council_tax_reduction_non_dependant_deductions - westmorland_and_furness_council_tax_reduction_excess_income * westmorland_and_furness_council_tax_reduction_weekly_taper_rate else: westmorland_and_furness_council_tax_reduction_weekly_liability - westmorland_and_furness_council_tax_reduction_weekly_liability"}]
+    versions: [{effective_from: '2026-04-01', formula: "if westmorland_and_furness_council_tax_reduction_working_age_scheme_applies and would_claim_council_tax_reduction and westmorland_and_furness_council_tax_reduction_capital_eligible and westmorland_and_furness_council_tax_reduction_income_is_less_than_applicable_amount and westmorland_and_furness_council_tax_reduction_weekly_liability * westmorland_and_furness_council_tax_reduction_maximum_support_rate > westmorland_and_furness_council_tax_reduction_non_dependant_deductions: westmorland_and_furness_council_tax_reduction_weekly_liability * westmorland_and_furness_council_tax_reduction_maximum_support_rate - westmorland_and_furness_council_tax_reduction_non_dependant_deductions else: if westmorland_and_furness_council_tax_reduction_working_age_scheme_applies and would_claim_council_tax_reduction and westmorland_and_furness_council_tax_reduction_capital_eligible and westmorland_and_furness_council_tax_reduction_income_is_greater_than_applicable_amount and westmorland_and_furness_council_tax_reduction_weekly_liability * westmorland_and_furness_council_tax_reduction_maximum_support_rate - westmorland_and_furness_council_tax_reduction_non_dependant_deductions > westmorland_and_furness_council_tax_reduction_excess_income * westmorland_and_furness_council_tax_reduction_weekly_taper_rate: westmorland_and_furness_council_tax_reduction_weekly_liability * westmorland_and_furness_council_tax_reduction_maximum_support_rate - westmorland_and_furness_council_tax_reduction_non_dependant_deductions - westmorland_and_furness_council_tax_reduction_excess_income * westmorland_and_furness_council_tax_reduction_weekly_taper_rate else: westmorland_and_furness_council_tax_reduction_weekly_liability - westmorland_and_furness_council_tax_reduction_weekly_liability"}]
 inputs:
+  - {name: local_authority_is_westmorland_and_furness, entity: Person, dtype: Boolean, period: Week}
+  - {name: council_tax_reduction_household_in_england, entity: Person, dtype: Boolean, period: Week}
+  - {name: westmorland_and_furness_council_tax_reduction_applicant_is_not_pensioner, entity: Person, dtype: Boolean, period: Week}
+  - {name: would_claim_council_tax_reduction, entity: Person, dtype: Boolean, period: Week}
   - {name: westmorland_and_furness_council_tax_reduction_assessed_capital, entity: Person, dtype: Money, period: Week, unit: GBP}
   - {name: westmorland_and_furness_council_tax_reduction_assessed_income, entity: Person, dtype: Money, period: Week, unit: GBP}
   - {name: westmorland_and_furness_council_tax_reduction_applicable_amount, entity: Person, dtype: Money, period: Week, unit: GBP}
