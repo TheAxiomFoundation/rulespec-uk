@@ -9,7 +9,7 @@ module:
     #   checked_paths: [uk/statutes/ukpga/1992/14/13A, uk/regulations/uksi/2012/2885, uk/regulations/uksi/2012/2886]
     #   rationale: LGFA 1992 section 13A delegates the working-age scheme to Epsom & Ewell Borough Council, so the adopted scheme document is operative. The singular source-verification contract strips this attestation as a live field.
   summary: |-
-    Epsom & Ewell's 2026-27 working-age Council Tax Income Discount is a monthly-income banded scheme. The Schedule 1 percentage is applied to the section 36 defined maximum (80 percent of eligible liability); capital above £6,000 excludes entitlement, and the £38.00 monthly non-dependant contribution is deducted through the assessed annual contribution input. The scheme prints neither a taper nor a tariff-income rule.
+    Epsom & Ewell's 2026-27 working-age Council Tax Income Discount is a monthly-income banded scheme. The Schedule 1 percentage is applied to the section 36 defined maximum (80 percent of eligible liability); capital above £6,000 excludes entitlement, and the £38.00 monthly non-dependant contribution is deducted through the assessed annual contribution input. The scheme prints neither a taper nor a tariff-income rule. For the printed one-child C/D overlap (£1,360.01–£1,369.00), this module expressly preserves Band C through its printed £1,369.00 upper bound; Band D then applies from the first non-overlapping penny, rather than relying on descending selector precedence.
   deferred_outputs:
     - output: uk-epsom-and-ewell:policies/epsom-and-ewell/council-tax-reduction/sections-39-to-59#assessed_monthly_income
       reason: The detailed income calculation, including income attribution and disregards, is outside this award-surface module.
@@ -160,6 +160,54 @@ rules:
       - effective_from: '2026-04-01'
         values: {0: 751.01, 1: 1217.01, 2: 1360.01, 3: 1943.01}
 
+  - name: epsom_and_ewell_council_tax_reduction_band_a_upper_income_by_household
+    kind: parameter
+    dtype: Money
+    period: Month
+    unit: GBP
+    indexed_by: epsom_and_ewell_council_tax_reduction_household_type
+    source: Epsom & Ewell Council Tax Income Discount Scheme 2026 Schedule 1
+    metadata: {proof: {atoms: [{path: 'versions[0].values', kind: parameter_table, source: *grid_source}]}}
+    versions:
+      - effective_from: '2026-04-01'
+        values: {0: 426.00, 1: 795.00, 2: 1039.00, 3: 1348.00}
+
+  - name: epsom_and_ewell_council_tax_reduction_band_b_upper_income_by_household
+    kind: parameter
+    dtype: Money
+    period: Month
+    unit: GBP
+    indexed_by: epsom_and_ewell_council_tax_reduction_household_type
+    source: Epsom & Ewell Council Tax Income Discount Scheme 2026 Schedule 1
+    metadata: {proof: {atoms: [{path: 'versions[0].values', kind: parameter_table, source: *grid_source}]}}
+    versions:
+      - effective_from: '2026-04-01'
+        values: {0: 638.00, 1: 1022.00, 2: 1234.00, 3: 1583.00}
+
+  - name: epsom_and_ewell_council_tax_reduction_band_c_upper_income_by_household
+    kind: parameter
+    dtype: Money
+    period: Month
+    unit: GBP
+    indexed_by: epsom_and_ewell_council_tax_reduction_household_type
+    source: Epsom & Ewell Council Tax Income Discount Scheme 2026 Schedule 1
+    metadata: {proof: {atoms: [{path: 'versions[0].values', kind: parameter_table, source: *grid_source}]}}
+    versions:
+      - effective_from: '2026-04-01'
+        values: {0: 751.00, 1: 1217.00, 2: 1369.00, 3: 1943.00}
+
+  - name: epsom_and_ewell_council_tax_reduction_band_d_upper_income_by_household
+    kind: parameter
+    dtype: Money
+    period: Month
+    unit: GBP
+    indexed_by: epsom_and_ewell_council_tax_reduction_household_type
+    source: Epsom & Ewell Council Tax Income Discount Scheme 2026 Schedule 1
+    metadata: {proof: {atoms: [{path: 'versions[0].values', kind: parameter_table, source: *grid_source}]}}
+    versions:
+      - effective_from: '2026-04-01'
+        values: {0: 1525.00, 1: 1925.00, 2: 2337.00, 3: 3793.00}
+
   - name: epsom_and_ewell_council_tax_reduction_applicant_is_in_local_working_age_scheme_class
     kind: derived
     entity: Household
@@ -248,7 +296,29 @@ rules:
     versions:
       - effective_from: '2026-04-01'
         formula: |-
-          if epsom_and_ewell_council_tax_reduction_passported: epsom_and_ewell_council_tax_reduction_income_band_codes[0] else: if epsom_and_ewell_council_tax_reduction_assessed_monthly_income >= epsom_and_ewell_council_tax_reduction_band_d_lower_income_by_household[epsom_and_ewell_council_tax_reduction_household_type]: epsom_and_ewell_council_tax_reduction_income_band_codes[3] else: if epsom_and_ewell_council_tax_reduction_assessed_monthly_income >= epsom_and_ewell_council_tax_reduction_band_c_lower_income_by_household[epsom_and_ewell_council_tax_reduction_household_type]: epsom_and_ewell_council_tax_reduction_income_band_codes[2] else: if epsom_and_ewell_council_tax_reduction_assessed_monthly_income >= epsom_and_ewell_council_tax_reduction_band_b_lower_income_by_household[epsom_and_ewell_council_tax_reduction_household_type]: epsom_and_ewell_council_tax_reduction_income_band_codes[1] else: epsom_and_ewell_council_tax_reduction_income_band_codes[0]
+          if epsom_and_ewell_council_tax_reduction_passported: epsom_and_ewell_council_tax_reduction_income_band_codes[0] else: if epsom_and_ewell_council_tax_reduction_household_type == epsom_and_ewell_council_tax_reduction_income_band_codes[2] and epsom_and_ewell_council_tax_reduction_assessed_monthly_income >= epsom_and_ewell_council_tax_reduction_band_d_lower_income_by_household[epsom_and_ewell_council_tax_reduction_household_type] and epsom_and_ewell_council_tax_reduction_assessed_monthly_income <= epsom_and_ewell_council_tax_reduction_band_c_upper_income_by_household[epsom_and_ewell_council_tax_reduction_household_type]: epsom_and_ewell_council_tax_reduction_income_band_codes[2] else: if epsom_and_ewell_council_tax_reduction_assessed_monthly_income >= epsom_and_ewell_council_tax_reduction_band_d_lower_income_by_household[epsom_and_ewell_council_tax_reduction_household_type] and epsom_and_ewell_council_tax_reduction_assessed_monthly_income <= epsom_and_ewell_council_tax_reduction_band_d_upper_income_by_household[epsom_and_ewell_council_tax_reduction_household_type]: epsom_and_ewell_council_tax_reduction_income_band_codes[3] else: if epsom_and_ewell_council_tax_reduction_assessed_monthly_income >= epsom_and_ewell_council_tax_reduction_band_c_lower_income_by_household[epsom_and_ewell_council_tax_reduction_household_type] and epsom_and_ewell_council_tax_reduction_assessed_monthly_income <= epsom_and_ewell_council_tax_reduction_band_c_upper_income_by_household[epsom_and_ewell_council_tax_reduction_household_type]: epsom_and_ewell_council_tax_reduction_income_band_codes[2] else: if epsom_and_ewell_council_tax_reduction_assessed_monthly_income >= epsom_and_ewell_council_tax_reduction_band_b_lower_income_by_household[epsom_and_ewell_council_tax_reduction_household_type] and epsom_and_ewell_council_tax_reduction_assessed_monthly_income <= epsom_and_ewell_council_tax_reduction_band_b_upper_income_by_household[epsom_and_ewell_council_tax_reduction_household_type]: epsom_and_ewell_council_tax_reduction_income_band_codes[1] else: epsom_and_ewell_council_tax_reduction_income_band_codes[0]
+
+  - name: epsom_and_ewell_council_tax_reduction_income_is_within_schedule_1_limits
+    kind: derived
+    entity: Household
+    dtype: Judgment
+    period: Month
+    source: Epsom & Ewell Council Tax Income Discount Scheme 2026 paragraphs 32(g) and Schedule 1
+    metadata:
+      proof:
+        atoms:
+          - path: 'versions[0].formula'
+            kind: condition
+            source:
+              corpus_citation_path: uk-epsom-and-ewell/manual/council-tax-reduction-scheme-2026-2027/page-46
+              excerpt: "not have income above the levels specified in the scheme;"
+          - path: 'versions[0].formula'
+            kind: parameter_table
+            source: *grid_source
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          epsom_and_ewell_council_tax_reduction_passported or epsom_and_ewell_council_tax_reduction_assessed_monthly_income <= epsom_and_ewell_council_tax_reduction_band_d_upper_income_by_household[epsom_and_ewell_council_tax_reduction_household_type]
 
   - name: epsom_and_ewell_council_tax_reduction_selected_support_rate
     kind: derived
@@ -338,6 +408,7 @@ rules:
         formula: |-
           epsom_and_ewell_council_tax_reduction_working_age_scheme_applies
           and epsom_and_ewell_council_tax_reduction_capital_eligible
+          and epsom_and_ewell_council_tax_reduction_income_is_within_schedule_1_limits
 
   - name: epsom_and_ewell_council_tax_reduction_annual_amount
     kind: derived
