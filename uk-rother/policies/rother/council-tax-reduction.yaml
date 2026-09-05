@@ -1,79 +1,153 @@
 format: rulespec/v1
 module:
-  proof_validation:
-    required: true
-  source_verification:
-    corpus_citation_path: uk-rother/manual/council-tax-reduction-scheme-2026-2027/page-42
+  proof_validation: {required: true}
+  source_verification: {corpus_citation_path: uk-rother/manual/council-tax-reduction-scheme-2026-2027/page-58}
   summary: |-
-    Rother District Council's 2026-27 working-age discount scheme calculates the
-    maximum Council Tax Reduction at 100 per cent of eligible annual council-tax
-    liability. Detailed income, capital, household, daily-liability and pension-age
-    calculations remain outside this focused maximum-award surface.
+    Rother's 2026/27 award is Schedule 1's four-band weekly-income grid composed
+    onto the scheme-defined maximum Council Tax Reduction. The grid applies to
+    single, couple, one-child, and two-or-more-children households; the three
+    printed passporting benefits receive Band 1. Capital greater than £16,000
+    excludes the award. Detailed assessment and family definitions supply factual inputs.
   deferred_outputs:
     - output: uk-rother:policies/rother/council-tax-reduction/paragraphs-12-to-38#income_and_capital_assessment
-      reason: The scheme's detailed income and capital assessment is outside this maximum-award surface.
-    - output: uk-rother:policies/rother/council-tax-reduction/paragraph-39#daily_and_joint_liability_apportionment
-      reason: Daily calculation and joint-liability apportionment are outside this annual-liability input surface.
+      reason: Detailed income, capital valuation, disregards, and family definitions are supplied as assessed factual inputs to the complete Schedule 1 award surface.
 rules:
   - name: rother_council_tax_reduction_per_cent_unit
     kind: parameter
     dtype: Rate
     period: Year
-    source: Rother District Council Draft Council Tax Reduction Scheme 2026 paragraph 39.1
-    metadata:
-      proof:
-        atoms:
-          - path: versions[0].formula
-            kind: amount
-            source: &maximum_support_source
-              corpus_citation_path: uk-rother/manual/council-tax-reduction-scheme-2026-2027/page-42
-              excerpt: "shall be 100 per cent, of the amount A divided by B"
-    versions:
-      - effective_from: '2026-04-01'
-        formula: |-
-          0.01
-
-  - name: rother_council_tax_reduction_maximum_support_rate
+    source: Rother District Council Draft Council Tax Reduction Scheme 2026 Schedule 1
+    metadata: {proof: {atoms: [{path: "versions[0].formula", kind: amount, source: {corpus_citation_path: uk-rother/manual/council-tax-reduction-scheme-2026-2027/page-58, excerpt: "100%"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 0.01}]
+  - name: rother_council_tax_reduction_capital_limit
     kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Rother District Council Draft Council Tax Reduction Scheme 2026 Schedule 1 paragraph 5
+    metadata: {proof: {atoms: [{path: "versions[0].formula", kind: amount, source: {corpus_citation_path: uk-rother/manual/council-tax-reduction-scheme-2026-2027/page-58, excerpt: "greater than £16,000"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 16000}]
+  - name: rother_council_tax_reduction_family_category_codes
+    kind: parameter
+    dtype: Number
+    indexed_by: rother_council_tax_reduction_family_category
+    source: Rother District Council Draft Council Tax Reduction Scheme 2026 Schedule 1
+    metadata: {proof: {atoms: [{path: "versions[0].values", kind: parameter_table, source: &grid_source {corpus_citation_path: uk-rother/manual/council-tax-reduction-scheme-2026-2027/page-58, excerpt: &grid_excerpt "Band % Single Couple +1 Child 2 or more Discount (Income Level) (Income Level) ( Income Level) Children (Income Level) 1 100% £0 - £124.59 £0 - £177.06 £0 - £242.66 £0 - £308.24 2 60% £124.60 - £190.18 £177.07 -£242.66 £242.67 - £308.24 £308.25 - £373.82 3 40% £190.19 - £255.77 £242.67 - £308.24 £308.25- £373.82 £373.83 - £439.43 4 20% £255.78 - £321.38 £308.25 - £373.82 £373.83 - £439.43 £439.44 - £505.02", table: {header: "Schedule 1", row_key: "Band", column_key: "household income level"}}}]}}
+    versions: [{effective_from: '2026-04-01', values: {0: 0, 1: 1, 2: 2, 3: 3}}]
+  - name: rother_council_tax_reduction_income_band_codes
+    kind: parameter
+    dtype: Number
+    indexed_by: rother_council_tax_reduction_income_band
+    source: Rother District Council Draft Council Tax Reduction Scheme 2026 Schedule 1
+    metadata: {proof: {atoms: [{path: "versions[0].values", kind: parameter_table, source: *grid_source}]}}
+    versions: [{effective_from: '2026-04-01', values: {0: 0, 1: 1, 2: 2, 3: 3, 4: 4}}]
+  - name: rother_council_tax_reduction_support_rate_by_income_band
+    kind: parameter
+    dtype: Rate
+    indexed_by: rother_council_tax_reduction_income_band
+    source: Rother District Council Draft Council Tax Reduction Scheme 2026 Schedule 1
+    metadata: {proof: {atoms: [{path: "versions[0].values", kind: parameter_table, source: *grid_source}]}}
+    versions: [{effective_from: '2026-04-01', values: {0: 1, 1: 0.60, 2: 0.40, 3: 0.20, 4: 0}}]
+  - name: rother_council_tax_reduction_band_2_lower_income_by_family
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    indexed_by: rother_council_tax_reduction_family_category
+    source: Rother District Council Draft Council Tax Reduction Scheme 2026 Schedule 1
+    metadata: {proof: {atoms: [{path: "versions[0].values", kind: parameter_table, source: *grid_source}]}}
+    versions: [{effective_from: '2026-04-01', values: {0: 124.60, 1: 177.07, 2: 242.67, 3: 308.25}}]
+  - name: rother_council_tax_reduction_band_3_lower_income_by_family
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    indexed_by: rother_council_tax_reduction_family_category
+    source: Rother District Council Draft Council Tax Reduction Scheme 2026 Schedule 1
+    metadata: {proof: {atoms: [{path: "versions[0].values", kind: parameter_table, source: *grid_source}]}}
+    versions: [{effective_from: '2026-04-01', values: {0: 190.19, 1: 242.67, 2: 308.25, 3: 373.83}}]
+  - name: rother_council_tax_reduction_band_4_lower_income_by_family
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    indexed_by: rother_council_tax_reduction_family_category
+    source: Rother District Council Draft Council Tax Reduction Scheme 2026 Schedule 1
+    metadata: {proof: {atoms: [{path: "versions[0].values", kind: parameter_table, source: *grid_source}]}}
+    versions: [{effective_from: '2026-04-01', values: {0: 255.78, 1: 308.25, 2: 373.83, 3: 439.44}}]
+  - name: rother_council_tax_reduction_band_4_upper_income_by_family
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    indexed_by: rother_council_tax_reduction_family_category
+    source: Rother District Council Draft Council Tax Reduction Scheme 2026 Schedule 1
+    metadata: {proof: {atoms: [{path: "versions[0].values", kind: parameter_table, source: *grid_source}]}}
+    versions: [{effective_from: '2026-04-01', values: {0: 321.38, 1: 373.82, 2: 439.43, 3: 505.02}}]
+  - name: rother_council_tax_reduction_maximum_support_rate
+    kind: derived
+    entity: Person
     dtype: Rate
     period: Year
     source: Rother District Council Draft Council Tax Reduction Scheme 2026 paragraph 39.1
-    metadata:
-      proof:
-        atoms:
-          - path: versions[0].formula
-            kind: amount
-            source: *maximum_support_source
-    versions:
-      - effective_from: '2026-04-01'
-        formula: |-
-          1
-
+    metadata: {proof: {atoms: [{path: "versions[0].formula", kind: formula, source: {corpus_citation_path: uk-rother/manual/council-tax-reduction-scheme-2026-2027/page-42, excerpt: "shall be 100 per cent, of the amount A divided by B"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 1}]
+  - name: rother_council_tax_reduction_family_category
+    kind: derived
+    entity: Person
+    dtype: Number
+    period: Year
+    source: Rother District Council Draft Council Tax Reduction Scheme 2026 Schedule 1
+    metadata: {proof: {atoms: [{path: "versions[0].formula", kind: parameter_table, source: *grid_source}]}}
+    versions: [{effective_from: '2026-04-01', formula: "if rother_council_tax_reduction_has_two_or_more_dependant_children: rother_council_tax_reduction_family_category_codes[3] else: if rother_council_tax_reduction_has_one_dependant_child: rother_council_tax_reduction_family_category_codes[2] else: if rother_council_tax_reduction_has_partner: rother_council_tax_reduction_family_category_codes[1] else: rother_council_tax_reduction_family_category_codes[0]"}]
+  - name: rother_council_tax_reduction_passported_to_band_1
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Year
+    source: Rother District Council Draft Council Tax Reduction Scheme 2026 Schedule 1 paragraph 2(e)
+    metadata: {proof: {atoms: [{path: "versions[0].formula", kind: exception, source: {corpus_citation_path: uk-rother/manual/council-tax-reduction-scheme-2026-2027/page-58, excerpt: "Persons in receipt of Income Support, Job seeker’s Allowance Income Based, or Employment and Support Allowance (Income Related) will receive a discount in Band 1"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: "rother_council_tax_reduction_receives_income_support or rother_council_tax_reduction_receives_income_based_jsa or rother_council_tax_reduction_receives_income_related_esa"}]
+  - name: rother_council_tax_reduction_income_band
+    kind: derived
+    entity: Person
+    dtype: Number
+    period: Week
+    source: Rother District Council Draft Council Tax Reduction Scheme 2026 Schedule 1
+    metadata: {proof: {atoms: [{path: "versions[0].formula", kind: parameter_table, source: *grid_source}, {path: "versions[0].formula", kind: exception, source: {corpus_citation_path: uk-rother/manual/council-tax-reduction-scheme-2026-2027/page-58, excerpt: "will receive a discount in Band 1"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: "if rother_council_tax_reduction_passported_to_band_1: rother_council_tax_reduction_income_band_codes[0] else: if rother_council_tax_reduction_assessed_weekly_income > rother_council_tax_reduction_band_4_upper_income_by_family[rother_council_tax_reduction_family_category]: rother_council_tax_reduction_income_band_codes[4] else: if rother_council_tax_reduction_assessed_weekly_income >= rother_council_tax_reduction_band_4_lower_income_by_family[rother_council_tax_reduction_family_category]: rother_council_tax_reduction_income_band_codes[3] else: if rother_council_tax_reduction_assessed_weekly_income >= rother_council_tax_reduction_band_3_lower_income_by_family[rother_council_tax_reduction_family_category]: rother_council_tax_reduction_income_band_codes[2] else: if rother_council_tax_reduction_assessed_weekly_income >= rother_council_tax_reduction_band_2_lower_income_by_family[rother_council_tax_reduction_family_category]: rother_council_tax_reduction_income_band_codes[1] else: rother_council_tax_reduction_income_band_codes[0]"}]
+  - name: rother_council_tax_reduction_selected_support_rate
+    kind: derived
+    entity: Person
+    dtype: Rate
+    period: Year
+    source: Rother District Council Draft Council Tax Reduction Scheme 2026 Schedule 1
+    metadata: {proof: {atoms: [{path: "versions[0].formula", kind: parameter_table, source: *grid_source}]}}
+    versions: [{effective_from: '2026-04-01', formula: "rother_council_tax_reduction_support_rate_by_income_band[rother_council_tax_reduction_income_band] * rother_council_tax_reduction_per_cent_unit / rother_council_tax_reduction_per_cent_unit"}]
+  - name: rother_council_tax_reduction_capital_eligible
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Year
+    source: Rother District Council Draft Council Tax Reduction Scheme 2026 Schedule 1 paragraph 5
+    metadata: {proof: {atoms: [{path: "versions[0].formula", kind: condition, source: {corpus_citation_path: uk-rother/manual/council-tax-reduction-scheme-2026-2027/page-58, excerpt: "Any applicant who capital is greater than £16,000 shall not be entitled to any Council Tax Reductions whatsoever."}}]}}
+    versions: [{effective_from: '2026-04-01', formula: rother_council_tax_reduction_assessed_capital <= rother_council_tax_reduction_capital_limit}]
   - name: rother_council_tax_reduction_annual_amount
     kind: derived
-    entity: Household
+    entity: Person
     dtype: Money
     period: Year
     unit: GBP
-    source: Rother District Council Draft Council Tax Reduction Scheme 2026 paragraph 39.1
-    metadata:
-      proof:
-        atoms:
-          - path: versions[0].formula
-            kind: formula
-            source:
-              corpus_citation_path: uk-rother/manual/council-tax-reduction-scheme-2026-2027/page-42
-              excerpt: "A is the amount set by the appropriate authority as the council tax for the relevant financial year in respect of the dwelling in which he is a resident and for which he is liable, subject to any discount which may be appropriate to that dwelling under the 1992 Act"
-          - path: versions[0].formula
-            kind: formula
-            source: *maximum_support_source
-    versions:
-      - effective_from: '2026-04-01'
-        formula: |-
-          rother_council_tax_reduction_annual_eligible_liability * rother_council_tax_reduction_maximum_support_rate
+    source: Rother District Council Draft Council Tax Reduction Scheme 2026 Schedule 1 paragraph 2(a)
+    metadata: {proof: {atoms: [{path: "versions[0].formula", kind: formula, source: {corpus_citation_path: uk-rother/manual/council-tax-reduction-scheme-2026-2027/page-58, excerpt: "The amount of discount to be granted is to be based on the following factors: a. The maximum Council Tax Reduction as defined within this scheme"}}, {path: "versions[0].formula", kind: condition, source: {corpus_citation_path: uk-rother/manual/council-tax-reduction-scheme-2026-2027/page-58, excerpt: "Any applicant who capital is greater than £16,000 shall not be entitled to any Council Tax Reductions whatsoever."}}]}}
+    versions: [{effective_from: '2026-04-01', formula: "if rother_council_tax_reduction_capital_eligible: rother_council_tax_reduction_annual_eligible_liability * rother_council_tax_reduction_maximum_support_rate * rother_council_tax_reduction_selected_support_rate else: rother_council_tax_reduction_annual_eligible_liability - rother_council_tax_reduction_annual_eligible_liability"}]
 inputs:
-  - name: rother_council_tax_reduction_annual_eligible_liability
-    entity: Household
-    dtype: Money
-    period: Year
-    unit: GBP
+  - {name: rother_council_tax_reduction_annual_eligible_liability, entity: Person, dtype: Money, period: Year, unit: GBP}
+  - {name: rother_council_tax_reduction_assessed_weekly_income, entity: Person, dtype: Money, period: Week, unit: GBP}
+  - {name: rother_council_tax_reduction_assessed_capital, entity: Person, dtype: Money, period: Year, unit: GBP}
+  - {name: rother_council_tax_reduction_has_partner, entity: Person, dtype: Boolean, period: Year}
+  - {name: rother_council_tax_reduction_has_one_dependant_child, entity: Person, dtype: Boolean, period: Year}
+  - {name: rother_council_tax_reduction_has_two_or_more_dependant_children, entity: Person, dtype: Boolean, period: Year}
+  - {name: rother_council_tax_reduction_receives_income_support, entity: Person, dtype: Boolean, period: Year}
+  - {name: rother_council_tax_reduction_receives_income_based_jsa, entity: Person, dtype: Boolean, period: Year}
+  - {name: rother_council_tax_reduction_receives_income_related_esa, entity: Person, dtype: Boolean, period: Year}

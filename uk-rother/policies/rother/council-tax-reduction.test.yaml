@@ -1,9 +1,561 @@
-- name: rother_ctr_full_maximum_award
-  period:
-    period_kind: tax_year
-    start: '2026-04-01'
-    end: '2027-03-31'
+- name: rother_parameter_assertions
+  period: &parameters_period {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: &base_inputs
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_annual_eligible_liability: 1000
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_weekly_income: 0
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_capital: 0
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_partner: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_one_dependant_child: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_two_or_more_dependant_children: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_support: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_based_jsa: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_related_esa: false
+  output:
+    uk-rother:policies/rother/council-tax-reduction#rother_council_tax_reduction_per_cent_unit: 0.01
+    uk-rother:policies/rother/council-tax-reduction#rother_council_tax_reduction_capital_limit: 16000
+- name: rother_derived_maximum_rate
+  period: *parameters_period
   input:
     uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_annual_eligible_liability: 1000
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_weekly_income: 0
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_capital: 0
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_partner: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_one_dependant_child: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_two_or_more_dependant_children: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_support: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_based_jsa: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_related_esa: false
+  output:
+    uk-rother:policies/rother/council-tax-reduction#rother_council_tax_reduction_maximum_support_rate: 1
+- name: rother_derived_family_single
+  period: *parameters_period
+  input:
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_annual_eligible_liability: 1000
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_weekly_income: 0
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_capital: 0
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_partner: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_one_dependant_child: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_two_or_more_dependant_children: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_support: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_based_jsa: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_related_esa: false
+  output:
+    uk-rother:policies/rother/council-tax-reduction#rother_council_tax_reduction_family_category: 0
+- name: rother_derived_passport_false
+  period: *parameters_period
+  input:
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_annual_eligible_liability: 1000
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_weekly_income: 0
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_capital: 0
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_partner: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_one_dependant_child: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_two_or_more_dependant_children: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_support: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_based_jsa: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_related_esa: false
+  output:
+    uk-rother:policies/rother/council-tax-reduction#rother_council_tax_reduction_passported_to_band_1: not_holds
+- name: rother_derived_income_band_one
+  period: *parameters_period
+  input:
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_annual_eligible_liability: 1000
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_weekly_income: 0
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_capital: 0
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_partner: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_one_dependant_child: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_two_or_more_dependant_children: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_support: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_based_jsa: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_related_esa: false
+  output:
+    uk-rother:policies/rother/council-tax-reduction#rother_council_tax_reduction_income_band: 0
+- name: rother_derived_selected_rate_one
+  period: *parameters_period
+  input:
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_annual_eligible_liability: 1000
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_weekly_income: 0
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_capital: 0
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_partner: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_one_dependant_child: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_two_or_more_dependant_children: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_support: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_based_jsa: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_related_esa: false
+  output:
+    uk-rother:policies/rother/council-tax-reduction#rother_council_tax_reduction_selected_support_rate: 1
+- name: rother_derived_capital_eligible
+  period: *parameters_period
+  input:
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_annual_eligible_liability: 1000
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_weekly_income: 0
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_capital: 0
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_partner: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_one_dependant_child: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_two_or_more_dependant_children: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_support: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_based_jsa: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_related_esa: false
+  output:
+    uk-rother:policies/rother/council-tax-reduction#rother_council_tax_reduction_capital_eligible: holds
+- name: rother_single_band_1_upper
+  period: *parameters_period
+  input:
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_annual_eligible_liability: 1000
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_weekly_income: 124.59
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_capital: 0
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_partner: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_one_dependant_child: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_two_or_more_dependant_children: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_support: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_based_jsa: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_related_esa: false
+  output:
+    uk-rother:policies/rother/council-tax-reduction#rother_council_tax_reduction_annual_amount: 1000
+- name: rother_single_band_2_lower
+  period: *parameters_period
+  input:
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_annual_eligible_liability: 1000
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_weekly_income: 124.60
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_capital: 0
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_partner: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_one_dependant_child: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_two_or_more_dependant_children: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_support: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_based_jsa: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_related_esa: false
+  output:
+    uk-rother:policies/rother/council-tax-reduction#rother_council_tax_reduction_annual_amount: 600.0
+- name: rother_single_band_2_upper
+  period: *parameters_period
+  input:
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_annual_eligible_liability: 1000
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_weekly_income: 190.18
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_capital: 0
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_partner: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_one_dependant_child: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_two_or_more_dependant_children: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_support: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_based_jsa: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_related_esa: false
+  output:
+    uk-rother:policies/rother/council-tax-reduction#rother_council_tax_reduction_annual_amount: 600.0
+- name: rother_single_band_3_lower
+  period: *parameters_period
+  input:
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_annual_eligible_liability: 1000
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_weekly_income: 190.19
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_capital: 0
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_partner: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_one_dependant_child: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_two_or_more_dependant_children: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_support: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_based_jsa: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_related_esa: false
+  output:
+    uk-rother:policies/rother/council-tax-reduction#rother_council_tax_reduction_annual_amount: 400.0
+- name: rother_single_band_3_upper
+  period: *parameters_period
+  input:
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_annual_eligible_liability: 1000
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_weekly_income: 255.77
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_capital: 0
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_partner: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_one_dependant_child: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_two_or_more_dependant_children: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_support: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_based_jsa: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_related_esa: false
+  output:
+    uk-rother:policies/rother/council-tax-reduction#rother_council_tax_reduction_annual_amount: 400.0
+- name: rother_single_band_4_lower
+  period: *parameters_period
+  input:
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_annual_eligible_liability: 1000
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_weekly_income: 255.78
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_capital: 0
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_partner: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_one_dependant_child: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_two_or_more_dependant_children: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_support: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_based_jsa: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_related_esa: false
+  output:
+    uk-rother:policies/rother/council-tax-reduction#rother_council_tax_reduction_annual_amount: 200.0
+- name: rother_single_terminal_zero
+  period: *parameters_period
+  input:
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_annual_eligible_liability: 1000
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_weekly_income: 321.39
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_capital: 0
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_partner: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_one_dependant_child: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_two_or_more_dependant_children: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_support: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_based_jsa: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_related_esa: false
+  output:
+    uk-rother:policies/rother/council-tax-reduction#rother_council_tax_reduction_annual_amount: 0
+- name: rother_couple_band_1_upper
+  period: *parameters_period
+  input:
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_annual_eligible_liability: 1000
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_weekly_income: 177.06
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_capital: 0
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_partner: true
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_one_dependant_child: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_two_or_more_dependant_children: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_support: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_based_jsa: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_related_esa: false
+  output:
+    uk-rother:policies/rother/council-tax-reduction#rother_council_tax_reduction_annual_amount: 1000
+- name: rother_couple_band_2_lower
+  period: *parameters_period
+  input:
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_annual_eligible_liability: 1000
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_weekly_income: 177.07
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_capital: 0
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_partner: true
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_one_dependant_child: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_two_or_more_dependant_children: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_support: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_based_jsa: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_related_esa: false
+  output:
+    uk-rother:policies/rother/council-tax-reduction#rother_council_tax_reduction_annual_amount: 600.0
+- name: rother_couple_band_2_upper
+  period: *parameters_period
+  input:
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_annual_eligible_liability: 1000
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_weekly_income: 242.66
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_capital: 0
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_partner: true
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_one_dependant_child: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_two_or_more_dependant_children: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_support: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_based_jsa: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_related_esa: false
+  output:
+    uk-rother:policies/rother/council-tax-reduction#rother_council_tax_reduction_annual_amount: 600.0
+- name: rother_couple_band_3_lower
+  period: *parameters_period
+  input:
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_annual_eligible_liability: 1000
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_weekly_income: 242.67
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_capital: 0
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_partner: true
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_one_dependant_child: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_two_or_more_dependant_children: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_support: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_based_jsa: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_related_esa: false
+  output:
+    uk-rother:policies/rother/council-tax-reduction#rother_council_tax_reduction_annual_amount: 400.0
+- name: rother_couple_band_3_upper
+  period: *parameters_period
+  input:
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_annual_eligible_liability: 1000
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_weekly_income: 308.24
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_capital: 0
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_partner: true
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_one_dependant_child: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_two_or_more_dependant_children: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_support: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_based_jsa: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_related_esa: false
+  output:
+    uk-rother:policies/rother/council-tax-reduction#rother_council_tax_reduction_annual_amount: 400.0
+- name: rother_couple_band_4_lower
+  period: *parameters_period
+  input:
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_annual_eligible_liability: 1000
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_weekly_income: 308.25
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_capital: 0
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_partner: true
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_one_dependant_child: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_two_or_more_dependant_children: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_support: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_based_jsa: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_related_esa: false
+  output:
+    uk-rother:policies/rother/council-tax-reduction#rother_council_tax_reduction_annual_amount: 200.0
+- name: rother_couple_terminal_zero
+  period: *parameters_period
+  input:
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_annual_eligible_liability: 1000
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_weekly_income: 373.83
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_capital: 0
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_partner: true
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_one_dependant_child: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_two_or_more_dependant_children: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_support: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_based_jsa: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_related_esa: false
+  output:
+    uk-rother:policies/rother/council-tax-reduction#rother_council_tax_reduction_annual_amount: 0
+- name: rother_one_child_band_1_upper
+  period: *parameters_period
+  input:
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_annual_eligible_liability: 1000
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_weekly_income: 242.66
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_capital: 0
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_partner: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_one_dependant_child: true
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_two_or_more_dependant_children: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_support: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_based_jsa: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_related_esa: false
+  output:
+    uk-rother:policies/rother/council-tax-reduction#rother_council_tax_reduction_annual_amount: 1000
+- name: rother_one_child_band_2_lower
+  period: *parameters_period
+  input:
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_annual_eligible_liability: 1000
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_weekly_income: 242.67
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_capital: 0
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_partner: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_one_dependant_child: true
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_two_or_more_dependant_children: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_support: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_based_jsa: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_related_esa: false
+  output:
+    uk-rother:policies/rother/council-tax-reduction#rother_council_tax_reduction_annual_amount: 600.0
+- name: rother_one_child_band_2_upper
+  period: *parameters_period
+  input:
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_annual_eligible_liability: 1000
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_weekly_income: 308.24
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_capital: 0
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_partner: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_one_dependant_child: true
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_two_or_more_dependant_children: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_support: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_based_jsa: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_related_esa: false
+  output:
+    uk-rother:policies/rother/council-tax-reduction#rother_council_tax_reduction_annual_amount: 600.0
+- name: rother_one_child_band_3_lower
+  period: *parameters_period
+  input:
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_annual_eligible_liability: 1000
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_weekly_income: 308.25
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_capital: 0
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_partner: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_one_dependant_child: true
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_two_or_more_dependant_children: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_support: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_based_jsa: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_related_esa: false
+  output:
+    uk-rother:policies/rother/council-tax-reduction#rother_council_tax_reduction_annual_amount: 400.0
+- name: rother_one_child_band_3_upper
+  period: *parameters_period
+  input:
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_annual_eligible_liability: 1000
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_weekly_income: 373.82
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_capital: 0
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_partner: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_one_dependant_child: true
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_two_or_more_dependant_children: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_support: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_based_jsa: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_related_esa: false
+  output:
+    uk-rother:policies/rother/council-tax-reduction#rother_council_tax_reduction_annual_amount: 400.0
+- name: rother_one_child_band_4_lower
+  period: *parameters_period
+  input:
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_annual_eligible_liability: 1000
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_weekly_income: 373.83
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_capital: 0
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_partner: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_one_dependant_child: true
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_two_or_more_dependant_children: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_support: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_based_jsa: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_related_esa: false
+  output:
+    uk-rother:policies/rother/council-tax-reduction#rother_council_tax_reduction_annual_amount: 200.0
+- name: rother_one_child_terminal_zero
+  period: *parameters_period
+  input:
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_annual_eligible_liability: 1000
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_weekly_income: 439.44
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_capital: 0
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_partner: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_one_dependant_child: true
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_two_or_more_dependant_children: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_support: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_based_jsa: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_related_esa: false
+  output:
+    uk-rother:policies/rother/council-tax-reduction#rother_council_tax_reduction_annual_amount: 0
+- name: rother_two_children_band_1_upper
+  period: *parameters_period
+  input:
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_annual_eligible_liability: 1000
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_weekly_income: 308.24
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_capital: 0
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_partner: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_one_dependant_child: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_two_or_more_dependant_children: true
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_support: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_based_jsa: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_related_esa: false
+  output:
+    uk-rother:policies/rother/council-tax-reduction#rother_council_tax_reduction_annual_amount: 1000
+- name: rother_two_children_band_2_lower
+  period: *parameters_period
+  input:
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_annual_eligible_liability: 1000
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_weekly_income: 308.25
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_capital: 0
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_partner: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_one_dependant_child: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_two_or_more_dependant_children: true
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_support: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_based_jsa: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_related_esa: false
+  output:
+    uk-rother:policies/rother/council-tax-reduction#rother_council_tax_reduction_annual_amount: 600.0
+- name: rother_two_children_band_2_upper
+  period: *parameters_period
+  input:
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_annual_eligible_liability: 1000
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_weekly_income: 373.82
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_capital: 0
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_partner: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_one_dependant_child: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_two_or_more_dependant_children: true
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_support: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_based_jsa: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_related_esa: false
+  output:
+    uk-rother:policies/rother/council-tax-reduction#rother_council_tax_reduction_annual_amount: 600.0
+- name: rother_two_children_band_3_lower
+  period: *parameters_period
+  input:
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_annual_eligible_liability: 1000
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_weekly_income: 373.83
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_capital: 0
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_partner: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_one_dependant_child: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_two_or_more_dependant_children: true
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_support: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_based_jsa: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_related_esa: false
+  output:
+    uk-rother:policies/rother/council-tax-reduction#rother_council_tax_reduction_annual_amount: 400.0
+- name: rother_two_children_band_3_upper
+  period: *parameters_period
+  input:
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_annual_eligible_liability: 1000
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_weekly_income: 439.43
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_capital: 0
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_partner: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_one_dependant_child: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_two_or_more_dependant_children: true
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_support: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_based_jsa: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_related_esa: false
+  output:
+    uk-rother:policies/rother/council-tax-reduction#rother_council_tax_reduction_annual_amount: 400.0
+- name: rother_two_children_band_4_lower
+  period: *parameters_period
+  input:
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_annual_eligible_liability: 1000
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_weekly_income: 439.44
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_capital: 0
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_partner: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_one_dependant_child: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_two_or_more_dependant_children: true
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_support: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_based_jsa: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_related_esa: false
+  output:
+    uk-rother:policies/rother/council-tax-reduction#rother_council_tax_reduction_annual_amount: 200.0
+- name: rother_two_children_terminal_zero
+  period: *parameters_period
+  input:
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_annual_eligible_liability: 1000
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_weekly_income: 505.03
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_capital: 0
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_partner: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_one_dependant_child: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_two_or_more_dependant_children: true
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_support: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_based_jsa: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_related_esa: false
+  output:
+    uk-rother:policies/rother/council-tax-reduction#rother_council_tax_reduction_annual_amount: 0
+- name: rother_capital_at_limit
+  period: *parameters_period
+  input:
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_annual_eligible_liability: 1000
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_weekly_income: 0
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_capital: 16000
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_partner: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_one_dependant_child: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_two_or_more_dependant_children: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_support: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_based_jsa: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_related_esa: false
+  output:
+    uk-rother:policies/rother/council-tax-reduction#rother_council_tax_reduction_annual_amount: 1000
+- name: rother_capital_over_limit
+  period: *parameters_period
+  input:
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_annual_eligible_liability: 1000
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_weekly_income: 0
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_capital: 16000.01
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_partner: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_one_dependant_child: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_two_or_more_dependant_children: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_support: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_based_jsa: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_related_esa: false
+  output:
+    uk-rother:policies/rother/council-tax-reduction#rother_council_tax_reduction_annual_amount: 0
+- name: rother_passported_income_support
+  period: *parameters_period
+  input:
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_annual_eligible_liability: 1000
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_weekly_income: 1000
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_capital: 0
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_partner: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_one_dependant_child: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_two_or_more_dependant_children: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_support: true
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_based_jsa: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_related_esa: false
+  output:
+    uk-rother:policies/rother/council-tax-reduction#rother_council_tax_reduction_passported_to_band_1: holds
+- name: rother_passported_income_based_jsa
+  period: *parameters_period
+  input:
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_annual_eligible_liability: 1000
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_weekly_income: 1000
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_capital: 0
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_partner: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_one_dependant_child: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_two_or_more_dependant_children: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_support: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_based_jsa: true
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_related_esa: false
+  output:
+    uk-rother:policies/rother/council-tax-reduction#rother_council_tax_reduction_annual_amount: 1000
+- name: rother_passported_income_related_esa
+  period: *parameters_period
+  input:
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_annual_eligible_liability: 1000
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_weekly_income: 1000
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_assessed_capital: 0
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_partner: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_one_dependant_child: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_has_two_or_more_dependant_children: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_support: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_based_jsa: false
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_receives_income_related_esa: true
   output:
     uk-rother:policies/rother/council-tax-reduction#rother_council_tax_reduction_annual_amount: 1000
