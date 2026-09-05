@@ -11,6 +11,7 @@
     uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_assessed_capital_for_year: 0
     uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_maximum_eligible_liability_for_year: 1800
     uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_universal_credit_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_tariff_income_from_capital_under_housing_benefit_regulation_52_for_year: 0
     uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_uc_maximum_amount_for_year: 0
     uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_legacy_applicable_amount_for_year: 0
     uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_applicable_income_for_year: 0
@@ -20,8 +21,23 @@
     uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_exempt: false
     uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_weekly_hours: 0
     uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_normal_gross_weekly_income: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_reduction_period_days: 365
   output:
-    uk-crawley:policies/crawley/council-tax-reduction#crawley_council_tax_reduction_working_age_scheme_applies: holds
+    uk-crawley:policies/crawley/council-tax-reduction#crawley_council_tax_reduction_maximum_support_rate: 1
+    uk-crawley:policies/crawley/council-tax-reduction#crawley_council_tax_reduction_capital_limit: 9000
+    uk-crawley:policies/crawley/council-tax-reduction#crawley_council_tax_reduction_days_per_week: 7
+    uk-crawley:policies/crawley/council-tax-reduction#crawley_council_tax_reduction_taper_whole_percentage_points: 2
+    uk-crawley:policies/crawley/council-tax-reduction#crawley_council_tax_reduction_taper_fraction_numerator: 6
+    uk-crawley:policies/crawley/council-tax-reduction#crawley_council_tax_reduction_per_cent_unit: 0.01
+    uk-crawley:policies/crawley/council-tax-reduction#crawley_council_tax_reduction_withdrawal_rate: '0.0285714285714285714285714286'
+    uk-crawley:policies/crawley/council-tax-reduction#crawley_council_tax_reduction_remunerative_work_hours: 16
+    uk-crawley:policies/crawley/council-tax-reduction#crawley_council_tax_reduction_low_non_dependant_deduction_weekly: 5
+    uk-crawley:policies/crawley/council-tax-reduction#crawley_council_tax_reduction_mid_non_dependant_deduction_weekly: 10
+    uk-crawley:policies/crawley/council-tax-reduction#crawley_council_tax_reduction_high_non_dependant_deduction_weekly: 15
+    uk-crawley:policies/crawley/council-tax-reduction#crawley_council_tax_reduction_top_non_dependant_deduction_weekly: 20
+    uk-crawley:policies/crawley/council-tax-reduction#crawley_council_tax_reduction_non_dependant_mid_income_threshold_weekly: 100
+    uk-crawley:policies/crawley/council-tax-reduction#crawley_council_tax_reduction_non_dependant_high_income_threshold_weekly: 200
+    uk-crawley:policies/crawley/council-tax-reduction#crawley_council_tax_reduction_non_dependant_top_income_threshold_weekly: 300
 
 - name: crawley_ctr_capital_over_limit_is_nil
   period:
@@ -36,6 +52,7 @@
     uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_assessed_capital_for_year: 16001
     uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_maximum_eligible_liability_for_year: 1800
     uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_universal_credit_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_tariff_income_from_capital_under_housing_benefit_regulation_52_for_year: 0
     uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_uc_maximum_amount_for_year: 0
     uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_legacy_applicable_amount_for_year: 0
     uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_applicable_income_for_year: 0
@@ -45,6 +62,7 @@
     uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_exempt: false
     uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_weekly_hours: 0
     uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_normal_gross_weekly_income: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_reduction_period_days: 365
   output:
     uk-crawley:policies/crawley/council-tax-reduction#simulated_crawley_council_tax_reduction_annual_amount: 0
 
@@ -61,6 +79,7 @@
     uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_assessed_capital_for_year: 9000
     uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_maximum_eligible_liability_for_year: 1800
     uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_universal_credit_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_tariff_income_from_capital_under_housing_benefit_regulation_52_for_year: 0
     uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_uc_maximum_amount_for_year: 0
     uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_legacy_applicable_amount_for_year: 0
     uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_applicable_income_for_year: 0
@@ -70,8 +89,9 @@
     uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_exempt: false
     uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_weekly_hours: 0
     uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_normal_gross_weekly_income: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_reduction_period_days: 365
   output:
-    uk-crawley:policies/crawley/council-tax-reduction#crawley_council_tax_reduction_annual_amount: 1800
+    uk-crawley:policies/crawley/council-tax-reduction#crawley_council_tax_reduction_tariff_income_for_year: 0
 
 - name: crawley_ctr_universal_credit_uses_uc_maximum_amount
   period:
@@ -86,6 +106,7 @@
     uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_assessed_capital_for_year: 9000
     uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_maximum_eligible_liability_for_year: 1800
     uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_universal_credit_for_year: 12000
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_tariff_income_from_capital_under_housing_benefit_regulation_52_for_year: 0
     uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_uc_maximum_amount_for_year: 12000
     uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_legacy_applicable_amount_for_year: 0
     uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_applicable_income_for_year: 12000
@@ -95,6 +116,7 @@
     uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_exempt: false
     uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_weekly_hours: 0
     uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_normal_gross_weekly_income: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_reduction_period_days: 365
   output:
     uk-crawley:policies/crawley/council-tax-reduction#crawley_council_tax_reduction_has_universal_credit_award: holds
 
@@ -111,6 +133,7 @@
     uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_assessed_capital_for_year: 0
     uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_maximum_eligible_liability_for_year: 1800
     uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_universal_credit_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_tariff_income_from_capital_under_housing_benefit_regulation_52_for_year: 0
     uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_uc_maximum_amount_for_year: 0
     uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_legacy_applicable_amount_for_year: 0
     uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_applicable_income_for_year: 0
@@ -120,8 +143,9 @@
     uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_exempt: false
     uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_weekly_hours: 0
     uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_normal_gross_weekly_income: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_reduction_period_days: 365
   output:
-    uk-crawley:policies/crawley/council-tax-reduction#crawley_council_tax_reduction_annual_amount: 899.88
+    uk-crawley:policies/crawley/council-tax-reduction#crawley_council_tax_reduction_capital_eligible: holds
 
 - name: crawley_ctr_non_dependant_top_band_individual_deduction
   period:
@@ -133,6 +157,7 @@
     uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_exempt: false
     uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_weekly_hours: 16
     uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_normal_gross_weekly_income: 605
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_reduction_period_days: 365
     uk-crawley:policies/crawley/council-tax-reduction#input.local_authority_is_crawley: false
     uk-crawley:policies/crawley/council-tax-reduction#input.council_tax_reduction_household_in_england: false
     uk-crawley:policies/crawley/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: false
@@ -140,6 +165,7 @@
     uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_assessed_capital_for_year: 0
     uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_maximum_eligible_liability_for_year: 0
     uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_universal_credit_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_tariff_income_from_capital_under_housing_benefit_regulation_52_for_year: 0
     uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_uc_maximum_amount_for_year: 0
     uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_legacy_applicable_amount_for_year: 0
     uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_applicable_income_for_year: 0
@@ -158,6 +184,7 @@
     uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_exempt: true
     uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_weekly_hours: 16
     uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_normal_gross_weekly_income: 605
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_reduction_period_days: 365
     uk-crawley:policies/crawley/council-tax-reduction#input.local_authority_is_crawley: false
     uk-crawley:policies/crawley/council-tax-reduction#input.council_tax_reduction_household_in_england: false
     uk-crawley:policies/crawley/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: false
@@ -165,6 +192,7 @@
     uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_assessed_capital_for_year: 0
     uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_maximum_eligible_liability_for_year: 0
     uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_universal_credit_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_tariff_income_from_capital_under_housing_benefit_regulation_52_for_year: 0
     uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_uc_maximum_amount_for_year: 0
     uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_legacy_applicable_amount_for_year: 0
     uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_applicable_income_for_year: 0
@@ -173,62 +201,434 @@
   output:
     uk-crawley:policies/crawley/council-tax-reduction#crawley_council_tax_reduction_individual_non_dependant_deduction_for_year: 0
 
-- name: crawley_ctr_scheme_applies_coverage
+- name: crawley_ctr_capital_at_limit
   period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
-  input: *crawley_all_inputs
+  input:
+    uk-crawley:policies/crawley/council-tax-reduction#input.local_authority_is_crawley: true
+    uk-crawley:policies/crawley/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-crawley:policies/crawley/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: false
+    uk-crawley:policies/crawley/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_universal_credit_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_tariff_income_from_capital_under_housing_benefit_regulation_52_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_uc_maximum_amount_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_legacy_applicable_amount_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_applicable_income_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_relevant_income_based_benefit: false
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_deductions_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_is_non_dependant: false
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_exempt: false
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_weekly_hours: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_normal_gross_weekly_income: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_reduction_period_days: 365
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_assessed_capital_for_year: 9000
   output:
     uk-crawley:policies/crawley/council-tax-reduction#crawley_council_tax_reduction_working_age_scheme_applies: holds
 
-- name: crawley_ctr_uc_award_coverage
+- name: crawley_ctr_capital_penny_over_limit
   period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
-  input: *crawley_all_inputs
+  input:
+    uk-crawley:policies/crawley/council-tax-reduction#input.local_authority_is_crawley: true
+    uk-crawley:policies/crawley/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-crawley:policies/crawley/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: false
+    uk-crawley:policies/crawley/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_universal_credit_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_tariff_income_from_capital_under_housing_benefit_regulation_52_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_uc_maximum_amount_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_legacy_applicable_amount_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_applicable_income_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_relevant_income_based_benefit: false
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_deductions_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_is_non_dependant: false
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_exempt: false
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_weekly_hours: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_normal_gross_weekly_income: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_reduction_period_days: 365
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_assessed_capital_for_year: 9000.01
   output:
-    uk-crawley:policies/crawley/council-tax-reduction#crawley_council_tax_reduction_has_universal_credit_award: not_holds
+    uk-crawley:policies/crawley/council-tax-reduction#crawley_council_tax_reduction_capital_eligible: not_holds
 
-- name: crawley_ctr_applicable_amount_coverage
+- name: crawley_ctr_regulation_52_tariff_income_is_received_calculation
   period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
-  input: *crawley_all_inputs
+  input:
+    uk-crawley:policies/crawley/council-tax-reduction#input.local_authority_is_crawley: true
+    uk-crawley:policies/crawley/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-crawley:policies/crawley/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: false
+    uk-crawley:policies/crawley/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_assessed_capital_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_universal_credit_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_uc_maximum_amount_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_legacy_applicable_amount_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_applicable_income_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_relevant_income_based_benefit: false
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_deductions_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_is_non_dependant: false
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_exempt: false
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_weekly_hours: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_normal_gross_weekly_income: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_reduction_period_days: 365
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_tariff_income_from_capital_under_housing_benefit_regulation_52_for_year: 35
   output:
-    uk-crawley:policies/crawley/council-tax-reduction#crawley_council_tax_reduction_applicable_amount_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#crawley_council_tax_reduction_tariff_income_for_year: 35
 
-- name: crawley_ctr_capital_eligibility_coverage
+- name: crawley_ctr_income_equals_applicable_amount
   period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
-  input: *crawley_all_inputs
-  output:
-    uk-crawley:policies/crawley/council-tax-reduction#crawley_council_tax_reduction_capital_eligible: holds
-
-- name: crawley_ctr_tariff_income_coverage
-  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
-  input: *crawley_all_inputs
-  output:
-    uk-crawley:policies/crawley/council-tax-reduction#crawley_council_tax_reduction_tariff_income_for_year: 0
-
-- name: crawley_ctr_income_with_tariff_coverage
-  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
-  input: *crawley_all_inputs
-  output:
-    uk-crawley:policies/crawley/council-tax-reduction#crawley_council_tax_reduction_applicable_income_with_tariff_for_year: 0
-
-- name: crawley_ctr_excess_income_coverage
-  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
-  input: *crawley_all_inputs
+  input:
+    uk-crawley:policies/crawley/council-tax-reduction#input.local_authority_is_crawley: true
+    uk-crawley:policies/crawley/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-crawley:policies/crawley/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: false
+    uk-crawley:policies/crawley/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_assessed_capital_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_universal_credit_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_tariff_income_from_capital_under_housing_benefit_regulation_52_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_uc_maximum_amount_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_relevant_income_based_benefit: false
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_deductions_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_is_non_dependant: false
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_exempt: false
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_weekly_hours: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_normal_gross_weekly_income: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_reduction_period_days: 365
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_legacy_applicable_amount_for_year: 10000
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_applicable_income_for_year: 10000
   output:
     uk-crawley:policies/crawley/council-tax-reduction#crawley_council_tax_reduction_excess_income_for_year: 0
 
-- name: crawley_ctr_taper_coverage
+- name: crawley_ctr_taper_penny_below_exhaustion
   period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
-  input: *crawley_all_inputs
+  input:
+    uk-crawley:policies/crawley/council-tax-reduction#input.local_authority_is_crawley: true
+    uk-crawley:policies/crawley/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-crawley:policies/crawley/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: false
+    uk-crawley:policies/crawley/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_assessed_capital_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_universal_credit_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_tariff_income_from_capital_under_housing_benefit_regulation_52_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_uc_maximum_amount_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_legacy_applicable_amount_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_relevant_income_based_benefit: false
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_deductions_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_is_non_dependant: false
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_exempt: false
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_weekly_hours: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_normal_gross_weekly_income: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_reduction_period_days: 365
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_applicable_income_for_year: 62999.99
   output:
-    uk-crawley:policies/crawley/council-tax-reduction#crawley_council_tax_reduction_income_taper_deduction_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#crawley_council_tax_reduction_annual_amount: '0.0002857142857142857142839'
 
-- name: crawley_ctr_remunerative_work_coverage
+- name: crawley_ctr_taper_at_exhaustion
   period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
-  input: *crawley_all_inputs
+  input:
+    uk-crawley:policies/crawley/council-tax-reduction#input.local_authority_is_crawley: true
+    uk-crawley:policies/crawley/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-crawley:policies/crawley/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: false
+    uk-crawley:policies/crawley/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_assessed_capital_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_universal_credit_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_tariff_income_from_capital_under_housing_benefit_regulation_52_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_uc_maximum_amount_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_legacy_applicable_amount_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_relevant_income_based_benefit: false
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_deductions_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_is_non_dependant: false
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_exempt: false
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_weekly_hours: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_normal_gross_weekly_income: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_reduction_period_days: 365
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_applicable_income_for_year: 63000
   output:
-    uk-crawley:policies/crawley/council-tax-reduction#crawley_council_tax_reduction_non_dependant_in_remunerative_work: not_holds
+    uk-crawley:policies/crawley/council-tax-reduction#crawley_council_tax_reduction_annual_amount: 0
 
-- name: crawley_ctr_simulated_amount_coverage
+- name: crawley_ctr_relevant_income_based_benefit_passports_excess_income
   period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
-  input: *crawley_all_inputs
+  input:
+    uk-crawley:policies/crawley/council-tax-reduction#input.local_authority_is_crawley: true
+    uk-crawley:policies/crawley/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-crawley:policies/crawley/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: false
+    uk-crawley:policies/crawley/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_assessed_capital_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_universal_credit_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_tariff_income_from_capital_under_housing_benefit_regulation_52_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_uc_maximum_amount_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_legacy_applicable_amount_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_deductions_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_is_non_dependant: false
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_exempt: false
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_weekly_hours: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_normal_gross_weekly_income: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_reduction_period_days: 365
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_applicable_income_for_year: 100000
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_relevant_income_based_benefit: true
   output:
-    uk-crawley:policies/crawley/council-tax-reduction#simulated_crawley_council_tax_reduction_annual_amount: 1800
+    uk-crawley:policies/crawley/council-tax-reduction#crawley_council_tax_reduction_annual_amount: 1800
+
+- name: crawley_ctr_legacy_applicable_amount_branch
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-crawley:policies/crawley/council-tax-reduction#input.local_authority_is_crawley: true
+    uk-crawley:policies/crawley/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-crawley:policies/crawley/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: false
+    uk-crawley:policies/crawley/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_assessed_capital_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_universal_credit_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_tariff_income_from_capital_under_housing_benefit_regulation_52_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_uc_maximum_amount_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_applicable_income_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_relevant_income_based_benefit: false
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_deductions_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_is_non_dependant: false
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_exempt: false
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_weekly_hours: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_normal_gross_weekly_income: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_reduction_period_days: 365
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_legacy_applicable_amount_for_year: 9876
+  output:
+    uk-crawley:policies/crawley/council-tax-reduction#crawley_council_tax_reduction_applicable_amount_for_year: 9876
+
+- name: crawley_ctr_non_dependant_not_in_work
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-crawley:policies/crawley/council-tax-reduction#input.local_authority_is_crawley: true
+    uk-crawley:policies/crawley/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-crawley:policies/crawley/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: false
+    uk-crawley:policies/crawley/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_assessed_capital_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_universal_credit_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_tariff_income_from_capital_under_housing_benefit_regulation_52_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_uc_maximum_amount_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_legacy_applicable_amount_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_applicable_income_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_relevant_income_based_benefit: false
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_deductions_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_exempt: false
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_reduction_period_days: 365
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_is_non_dependant: true
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_weekly_hours: 15.99
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_normal_gross_weekly_income: 300
+  output:
+    uk-crawley:policies/crawley/council-tax-reduction#crawley_council_tax_reduction_individual_non_dependant_deduction_for_year: '260.71428571428571428571428571'
+
+- name: crawley_ctr_non_dependant_at_remunerative_work_threshold
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-crawley:policies/crawley/council-tax-reduction#input.local_authority_is_crawley: true
+    uk-crawley:policies/crawley/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-crawley:policies/crawley/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: false
+    uk-crawley:policies/crawley/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_assessed_capital_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_universal_credit_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_tariff_income_from_capital_under_housing_benefit_regulation_52_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_uc_maximum_amount_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_legacy_applicable_amount_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_applicable_income_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_relevant_income_based_benefit: false
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_deductions_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_exempt: false
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_reduction_period_days: 365
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_is_non_dependant: true
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_weekly_hours: 16
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_normal_gross_weekly_income: 100
+  output:
+    uk-crawley:policies/crawley/council-tax-reduction#crawley_council_tax_reduction_individual_non_dependant_deduction_for_year: '521.42857142857142857142857143'
+
+- name: crawley_ctr_non_dependant_just_below_100
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-crawley:policies/crawley/council-tax-reduction#input.local_authority_is_crawley: true
+    uk-crawley:policies/crawley/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-crawley:policies/crawley/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: false
+    uk-crawley:policies/crawley/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_assessed_capital_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_universal_credit_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_tariff_income_from_capital_under_housing_benefit_regulation_52_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_uc_maximum_amount_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_legacy_applicable_amount_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_applicable_income_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_relevant_income_based_benefit: false
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_deductions_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_exempt: false
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_reduction_period_days: 365
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_is_non_dependant: true
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_weekly_hours: 16
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_normal_gross_weekly_income: 99.99
+  output:
+    uk-crawley:policies/crawley/council-tax-reduction#crawley_council_tax_reduction_individual_non_dependant_deduction_for_year: '260.71428571428571428571428571'
+
+- name: crawley_ctr_non_dependant_just_below_200
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-crawley:policies/crawley/council-tax-reduction#input.local_authority_is_crawley: true
+    uk-crawley:policies/crawley/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-crawley:policies/crawley/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: false
+    uk-crawley:policies/crawley/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_assessed_capital_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_universal_credit_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_tariff_income_from_capital_under_housing_benefit_regulation_52_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_uc_maximum_amount_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_legacy_applicable_amount_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_applicable_income_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_relevant_income_based_benefit: false
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_deductions_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_exempt: false
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_reduction_period_days: 365
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_is_non_dependant: true
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_weekly_hours: 16
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_normal_gross_weekly_income: 199.99
+  output:
+    uk-crawley:policies/crawley/council-tax-reduction#crawley_council_tax_reduction_individual_non_dependant_deduction_for_year: '521.42857142857142857142857143'
+
+- name: crawley_ctr_non_dependant_at_200
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-crawley:policies/crawley/council-tax-reduction#input.local_authority_is_crawley: true
+    uk-crawley:policies/crawley/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-crawley:policies/crawley/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: false
+    uk-crawley:policies/crawley/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_assessed_capital_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_universal_credit_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_tariff_income_from_capital_under_housing_benefit_regulation_52_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_uc_maximum_amount_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_legacy_applicable_amount_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_applicable_income_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_relevant_income_based_benefit: false
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_deductions_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_exempt: false
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_reduction_period_days: 365
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_is_non_dependant: true
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_weekly_hours: 16
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_normal_gross_weekly_income: 200
+  output:
+    uk-crawley:policies/crawley/council-tax-reduction#crawley_council_tax_reduction_individual_non_dependant_deduction_for_year: '782.14285714285714285714285714'
+
+- name: crawley_ctr_non_dependant_just_below_300
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-crawley:policies/crawley/council-tax-reduction#input.local_authority_is_crawley: true
+    uk-crawley:policies/crawley/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-crawley:policies/crawley/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: false
+    uk-crawley:policies/crawley/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_assessed_capital_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_universal_credit_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_tariff_income_from_capital_under_housing_benefit_regulation_52_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_uc_maximum_amount_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_legacy_applicable_amount_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_applicable_income_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_relevant_income_based_benefit: false
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_deductions_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_exempt: false
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_reduction_period_days: 365
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_is_non_dependant: true
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_weekly_hours: 16
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_normal_gross_weekly_income: 299.99
+  output:
+    uk-crawley:policies/crawley/council-tax-reduction#crawley_council_tax_reduction_individual_non_dependant_deduction_for_year: '782.14285714285714285714285714'
+
+- name: crawley_ctr_non_dependant_at_300
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-crawley:policies/crawley/council-tax-reduction#input.local_authority_is_crawley: true
+    uk-crawley:policies/crawley/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-crawley:policies/crawley/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: false
+    uk-crawley:policies/crawley/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_assessed_capital_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_universal_credit_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_tariff_income_from_capital_under_housing_benefit_regulation_52_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_uc_maximum_amount_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_legacy_applicable_amount_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_applicable_income_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_relevant_income_based_benefit: false
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_deductions_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_exempt: false
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_reduction_period_days: 365
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_is_non_dependant: true
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_weekly_hours: 16
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_normal_gross_weekly_income: 300
+  output:
+    uk-crawley:policies/crawley/council-tax-reduction#crawley_council_tax_reduction_individual_non_dependant_deduction_for_year: '1042.8571428571428571428571429'
+
+- name: crawley_ctr_income_with_regulation_52_tariff
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-crawley:policies/crawley/council-tax-reduction#input.local_authority_is_crawley: true
+    uk-crawley:policies/crawley/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-crawley:policies/crawley/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: false
+    uk-crawley:policies/crawley/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_assessed_capital_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_universal_credit_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_tariff_income_from_capital_under_housing_benefit_regulation_52_for_year: 35
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_uc_maximum_amount_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_legacy_applicable_amount_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_applicable_income_for_year: 100
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_relevant_income_based_benefit: false
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_deductions_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_is_non_dependant: false
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_exempt: false
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_weekly_hours: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_normal_gross_weekly_income: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_reduction_period_days: 365
+  output:
+    uk-crawley:policies/crawley/council-tax-reduction#crawley_council_tax_reduction_applicable_income_with_tariff_for_year: 135
+
+- name: crawley_ctr_excess_income_after_applicable_amount
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-crawley:policies/crawley/council-tax-reduction#input.local_authority_is_crawley: true
+    uk-crawley:policies/crawley/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-crawley:policies/crawley/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: false
+    uk-crawley:policies/crawley/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_assessed_capital_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_universal_credit_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_tariff_income_from_capital_under_housing_benefit_regulation_52_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_uc_maximum_amount_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_legacy_applicable_amount_for_year: 100
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_applicable_income_for_year: 135
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_relevant_income_based_benefit: false
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_deductions_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_is_non_dependant: false
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_exempt: false
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_weekly_hours: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_normal_gross_weekly_income: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_reduction_period_days: 365
+  output:
+    uk-crawley:policies/crawley/council-tax-reduction#crawley_council_tax_reduction_excess_income_for_year: 35
+
+- name: crawley_ctr_taper_from_excess_income
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-crawley:policies/crawley/council-tax-reduction#input.local_authority_is_crawley: true
+    uk-crawley:policies/crawley/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-crawley:policies/crawley/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: false
+    uk-crawley:policies/crawley/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_assessed_capital_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_universal_credit_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_tariff_income_from_capital_under_housing_benefit_regulation_52_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_uc_maximum_amount_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_legacy_applicable_amount_for_year: 100
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_applicable_income_for_year: 135
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_relevant_income_based_benefit: false
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_deductions_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_is_non_dependant: false
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_exempt: false
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_weekly_hours: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_normal_gross_weekly_income: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_reduction_period_days: 365
+  output:
+    uk-crawley:policies/crawley/council-tax-reduction#crawley_council_tax_reduction_income_taper_deduction_for_year: 1

@@ -5,10 +5,12 @@ module:
   source_verification:
     corpus_citation_path: uk-crawley/manual/council-tax-reduction-scheme-2026-2027/page-51
   summary: |-
-    Crawley Council Tax Reduction working-age alignment surface for the 2026-2027 scheme: it applies the local maximum-liability award, working-age UC applicable-amount treatment, capital limit and tariff income, 20 percent excess-income taper, and working-age non-dependant deductions used by PolicyEngine UK's Kingston CTR implementation.
+    Crawley Council Tax Reduction working-age alignment surface for the 2026-2027 scheme: it applies the local maximum-liability award, working-age UC applicable-amount treatment, capital limit, Regulation 52 tariff-income boundary, 20 percent excess-income taper, and working-age non-dependant deductions.  The scheme does not print the Regulation 52 tariff thresholds or increments, so this module receives that controlling calculation rather than inventing local scalars.
   deferred_outputs:
-    - output: uk-crawley:policies/kingston-upon-thames/council-tax-reduction/e#applicable_premiums_amount
+    - output: uk-crawley:policies/crawley/council-tax-reduction/applicable-amount-schedule#applicable_premiums_amount
       reason: Page 38(e) adds premiums determined under Parts 3 and 4 of the applicable-amount Schedule. This module does not encode those category-specific premium eligibility and amount schedules, so the premium component is deferred rather than treated as zero or inferred from an unrelated amount.
+    - output: uk-crawley:policies/crawley/council-tax-reduction/housing-benefit-regulation-52#tariff_income_from_capital_for_reduction_period
+      reason: Page 34 expressly imports the weekly tariff-income calculation from Housing Benefit Regulations 2006 regulation 52. The Crawley scheme does not reproduce that calculation's thresholds or increments, so this module receives its calculated amount rather than inventing local tariff scalars.
 rules:
   - name: crawley_council_tax_reduction_maximum_support_rate
     kind: parameter
@@ -45,63 +47,6 @@ rules:
       - effective_from: '2026-04-01'
         formula: |-
           9000
-
-  - name: crawley_council_tax_reduction_tariff_income_threshold
-    kind: parameter
-    dtype: Money
-    period: Year
-    unit: GBP
-    source: Crawley Council Tax Reduction Scheme 2026-2027 paragraph 72
-    metadata:
-      proof:
-        atoms:
-          - path: versions[0].formula
-            kind: amount
-            source:
-              corpus_citation_path: uk-crawley/manual/council-tax-reduction-scheme-2026-2027/page-66
-              excerpt: "£5.00 x 1/7"
-    versions:
-      - effective_from: '2026-04-01'
-        formula: |-
-          9000
-
-  - name: crawley_council_tax_reduction_tariff_income_step
-    kind: parameter
-    dtype: Money
-    period: Year
-    unit: GBP
-    source: Crawley Council Tax Reduction Scheme 2026-2027 paragraph 72
-    metadata:
-      proof:
-        atoms:
-          - path: versions[0].formula
-            kind: amount
-            source:
-              corpus_citation_path: uk-crawley/manual/council-tax-reduction-scheme-2026-2027/page-66
-              excerpt: "£5.00 x 1/7"
-    versions:
-      - effective_from: '2026-04-01'
-        formula: |-
-          1
-
-  - name: crawley_council_tax_reduction_tariff_income_weekly_amount_per_step
-    kind: parameter
-    dtype: Money
-    period: Week
-    unit: GBP
-    source: Crawley Council Tax Reduction Scheme 2026-2027 paragraph 72
-    metadata:
-      proof:
-        atoms:
-          - path: versions[0].formula
-            kind: amount
-            source:
-              corpus_citation_path: uk-crawley/manual/council-tax-reduction-scheme-2026-2027/page-66
-              excerpt: "£5.00 x 1/7"
-    versions:
-      - effective_from: '2026-04-01'
-        formula: |-
-          1
 
   - name: crawley_council_tax_reduction_days_per_week
     kind: parameter
@@ -204,23 +149,6 @@ rules:
       - effective_from: '2026-04-01'
         formula: |-
           16
-
-  - name: crawley_council_tax_reduction_weeks_per_year
-    kind: parameter
-    dtype: Number
-    source: Crawley Council Tax Reduction Scheme 2026-2027 weekly-to-annual conversion denominator
-    metadata:
-      proof:
-        atoms:
-          - path: versions[0].formula
-            kind: amount
-            source:
-              corpus_citation_path: uk-crawley/manual/council-tax-reduction-scheme-2026-2027/page-61
-              excerpt: "52 or 53"
-    versions:
-      - effective_from: '2026-04-01'
-        formula: |-
-          52
 
   - name: crawley_council_tax_reduction_low_non_dependant_deduction_weekly
     kind: parameter
@@ -438,19 +366,19 @@ rules:
     dtype: Money
     period: Year
     unit: GBP
-    source: Crawley Council Tax Reduction Scheme 2026-2027 paragraph 72 working-age tariff income
+    source: Crawley Council Tax Reduction Scheme 2026-2027 Regulation 52 tariff-income import
     metadata:
       proof:
         atoms:
           - path: versions[0].formula
             kind: formula
             source:
-              corpus_citation_path: uk-crawley/manual/council-tax-reduction-scheme-2026-2027/page-66
-              excerpt: "£5.00 x 1/7"
+              corpus_citation_path: uk-crawley/manual/council-tax-reduction-scheme-2026-2027/page-34
+              excerpt: "by adding to that amount, the weekly income calculated in line with regulation 52 of the Housing Benefit Regulations 2006 (calculation to tariff income from capital)"
     versions:
       - effective_from: '2026-04-01'
         formula: |-
-          if crawley_council_tax_reduction_has_universal_credit_award: 0 else: crawley_council_tax_reduction_tariff_income_weekly_amount_per_step * ceil(max(0, crawley_council_tax_reduction_assessed_capital_for_year - crawley_council_tax_reduction_tariff_income_threshold) / crawley_council_tax_reduction_tariff_income_step) * crawley_council_tax_reduction_weeks_per_year
+          if crawley_council_tax_reduction_has_universal_credit_award: 0 else: crawley_council_tax_reduction_tariff_income_from_capital_under_housing_benefit_regulation_52_for_year
 
   - name: crawley_council_tax_reduction_applicable_income_with_tariff_for_year
     kind: derived
@@ -564,7 +492,7 @@ rules:
     versions:
       - effective_from: '2026-04-01'
         formula: |-
-          if not crawley_council_tax_reduction_is_non_dependant or crawley_council_tax_reduction_non_dependant_exempt: 0 else: (if crawley_council_tax_reduction_non_dependant_in_remunerative_work and crawley_council_tax_reduction_non_dependant_normal_gross_weekly_income >= crawley_council_tax_reduction_non_dependant_top_income_threshold_weekly: crawley_council_tax_reduction_top_non_dependant_deduction_weekly else: (if crawley_council_tax_reduction_non_dependant_in_remunerative_work and crawley_council_tax_reduction_non_dependant_normal_gross_weekly_income >= crawley_council_tax_reduction_non_dependant_high_income_threshold_weekly: crawley_council_tax_reduction_high_non_dependant_deduction_weekly else: (if crawley_council_tax_reduction_non_dependant_in_remunerative_work and crawley_council_tax_reduction_non_dependant_normal_gross_weekly_income >= crawley_council_tax_reduction_non_dependant_mid_income_threshold_weekly: crawley_council_tax_reduction_mid_non_dependant_deduction_weekly else: crawley_council_tax_reduction_low_non_dependant_deduction_weekly))) * crawley_council_tax_reduction_weeks_per_year
+          if not crawley_council_tax_reduction_is_non_dependant or crawley_council_tax_reduction_non_dependant_exempt: 0 else: (if crawley_council_tax_reduction_non_dependant_in_remunerative_work and crawley_council_tax_reduction_non_dependant_normal_gross_weekly_income >= crawley_council_tax_reduction_non_dependant_top_income_threshold_weekly: crawley_council_tax_reduction_top_non_dependant_deduction_weekly else: (if crawley_council_tax_reduction_non_dependant_in_remunerative_work and crawley_council_tax_reduction_non_dependant_normal_gross_weekly_income >= crawley_council_tax_reduction_non_dependant_high_income_threshold_weekly: crawley_council_tax_reduction_high_non_dependant_deduction_weekly else: (if crawley_council_tax_reduction_non_dependant_in_remunerative_work and crawley_council_tax_reduction_non_dependant_normal_gross_weekly_income >= crawley_council_tax_reduction_non_dependant_mid_income_threshold_weekly: crawley_council_tax_reduction_mid_non_dependant_deduction_weekly else: crawley_council_tax_reduction_low_non_dependant_deduction_weekly))) * crawley_council_tax_reduction_reduction_period_days / crawley_council_tax_reduction_days_per_week
 
   - name: simulated_crawley_council_tax_reduction_annual_amount
     kind: derived
