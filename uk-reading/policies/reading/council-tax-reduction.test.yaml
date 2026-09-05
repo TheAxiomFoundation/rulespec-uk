@@ -1,82 +1,78 @@
-- name: reading_ctr_income_below_applicable_amount
-  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
-  input:
-    uk-reading:policies/reading/council-tax-reduction#input.local_authority_is_reading: true
-    uk-reading:policies/reading/council-tax-reduction#input.council_tax_reduction_household_in_england: true
-    uk-reading:policies/reading/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: false
-    uk-reading:policies/reading/council-tax-reduction#input.would_claim_council_tax_reduction: true
-    uk-reading:policies/reading/council-tax-reduction#input.reading_council_tax_reduction_assessed_capital_for_year: 5999.99
-    uk-reading:policies/reading/council-tax-reduction#input.reading_council_tax_reduction_maximum_eligible_liability_for_year: 1800
-    uk-reading:policies/reading/council-tax-reduction#input.reading_council_tax_reduction_applicable_income_for_year: 9999
-    uk-reading:policies/reading/council-tax-reduction#input.reading_council_tax_reduction_applicable_amount_for_year: 10000
-    uk-reading:policies/reading/council-tax-reduction#input.reading_council_tax_reduction_non_dependant_deductions_for_year: 0
+- name: reading_ctr_printed_scalar_parameters
+  period: &tax_year {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {}
   output:
-    uk-reading:policies/reading/council-tax-reduction#reading_council_tax_reduction_working_age_scheme_applies: holds
-    uk-reading:policies/reading/council-tax-reduction#reading_council_tax_reduction_capital_eligible: holds
-    uk-reading:policies/reading/council-tax-reduction#reading_council_tax_reduction_tariff_income_for_year: 0
-    uk-reading:policies/reading/council-tax-reduction#reading_council_tax_reduction_excess_income_for_year: 0
-    uk-reading:policies/reading/council-tax-reduction#reading_council_tax_reduction_annual_amount: 1260
-
-- name: reading_ctr_income_equals_applicable_amount
-  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
-  input:
-    uk-reading:policies/reading/council-tax-reduction#input.local_authority_is_reading: true
-    uk-reading:policies/reading/council-tax-reduction#input.council_tax_reduction_household_in_england: true
-    uk-reading:policies/reading/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: false
-    uk-reading:policies/reading/council-tax-reduction#input.would_claim_council_tax_reduction: true
-    uk-reading:policies/reading/council-tax-reduction#input.reading_council_tax_reduction_assessed_capital_for_year: 6000
-    uk-reading:policies/reading/council-tax-reduction#input.reading_council_tax_reduction_maximum_eligible_liability_for_year: 1800
-    uk-reading:policies/reading/council-tax-reduction#input.reading_council_tax_reduction_applicable_income_for_year: 10000
-    uk-reading:policies/reading/council-tax-reduction#input.reading_council_tax_reduction_applicable_amount_for_year: 10000
-    uk-reading:policies/reading/council-tax-reduction#input.reading_council_tax_reduction_non_dependant_deductions_for_year: 520
-  output:
-    uk-reading:policies/reading/council-tax-reduction#reading_council_tax_reduction_capital_eligible: holds
-    uk-reading:policies/reading/council-tax-reduction#reading_council_tax_reduction_annual_amount: 740
-
-- name: reading_ctr_taper
-  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
-  input:
-    uk-reading:policies/reading/council-tax-reduction#input.local_authority_is_reading: true
-    uk-reading:policies/reading/council-tax-reduction#input.council_tax_reduction_household_in_england: true
-    uk-reading:policies/reading/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: false
-    uk-reading:policies/reading/council-tax-reduction#input.would_claim_council_tax_reduction: true
-    uk-reading:policies/reading/council-tax-reduction#input.reading_council_tax_reduction_assessed_capital_for_year: 0
-    uk-reading:policies/reading/council-tax-reduction#input.reading_council_tax_reduction_maximum_eligible_liability_for_year: 1800
-    uk-reading:policies/reading/council-tax-reduction#input.reading_council_tax_reduction_applicable_income_for_year: 11000
-    uk-reading:policies/reading/council-tax-reduction#input.reading_council_tax_reduction_applicable_amount_for_year: 10000
-    uk-reading:policies/reading/council-tax-reduction#input.reading_council_tax_reduction_non_dependant_deductions_for_year: 0
-  output:
-    uk-reading:policies/reading/council-tax-reduction#reading_council_tax_reduction_income_taper_deduction_for_year: 200
-    uk-reading:policies/reading/council-tax-reduction#reading_council_tax_reduction_annual_amount: 1060
-
-- name: reading_ctr_capital_cliff
-  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
-  input:
-    uk-reading:policies/reading/council-tax-reduction#input.local_authority_is_reading: true
-    uk-reading:policies/reading/council-tax-reduction#input.council_tax_reduction_household_in_england: true
-    uk-reading:policies/reading/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: false
-    uk-reading:policies/reading/council-tax-reduction#input.would_claim_council_tax_reduction: true
-    uk-reading:policies/reading/council-tax-reduction#input.reading_council_tax_reduction_assessed_capital_for_year: 6000.01
-    uk-reading:policies/reading/council-tax-reduction#input.reading_council_tax_reduction_maximum_eligible_liability_for_year: 1800
-    uk-reading:policies/reading/council-tax-reduction#input.reading_council_tax_reduction_applicable_income_for_year: 0
-    uk-reading:policies/reading/council-tax-reduction#input.reading_council_tax_reduction_applicable_amount_for_year: 10000
-    uk-reading:policies/reading/council-tax-reduction#input.reading_council_tax_reduction_non_dependant_deductions_for_year: 0
-  output:
-    uk-reading:policies/reading/council-tax-reduction#reading_council_tax_reduction_capital_eligible: not_holds
-    uk-reading:policies/reading/council-tax-reduction#reading_council_tax_reduction_annual_amount: 0
-
-- name: reading_ctr_zero_award_from_taper
-  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
-  input:
-    uk-reading:policies/reading/council-tax-reduction#input.local_authority_is_reading: true
-    uk-reading:policies/reading/council-tax-reduction#input.council_tax_reduction_household_in_england: true
-    uk-reading:policies/reading/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: false
-    uk-reading:policies/reading/council-tax-reduction#input.would_claim_council_tax_reduction: true
-    uk-reading:policies/reading/council-tax-reduction#input.reading_council_tax_reduction_assessed_capital_for_year: 0
-    uk-reading:policies/reading/council-tax-reduction#input.reading_council_tax_reduction_maximum_eligible_liability_for_year: 1800
-    uk-reading:policies/reading/council-tax-reduction#input.reading_council_tax_reduction_applicable_income_for_year: 16300
-    uk-reading:policies/reading/council-tax-reduction#input.reading_council_tax_reduction_applicable_amount_for_year: 10000
-    uk-reading:policies/reading/council-tax-reduction#input.reading_council_tax_reduction_non_dependant_deductions_for_year: 0
-  output:
-    uk-reading:policies/reading/council-tax-reduction#reading_council_tax_reduction_income_taper_deduction_for_year: 1260
-    uk-reading:policies/reading/council-tax-reduction#reading_council_tax_reduction_annual_amount: 0
+    uk-reading:policies/reading/council-tax-reduction#reading_council_tax_reduction_maximum_support_rate: 0.70
+    uk-reading:policies/reading/council-tax-reduction#reading_council_tax_reduction_capital_limit: 6000
+    uk-reading:policies/reading/council-tax-reduction#reading_council_tax_reduction_tariff_income_threshold: 6000
+    uk-reading:policies/reading/council-tax-reduction#reading_council_tax_reduction_per_cent_unit: 0.01
+    uk-reading:policies/reading/council-tax-reduction#reading_council_tax_reduction_taper_whole_per_cent: 2
+    uk-reading:policies/reading/council-tax-reduction#reading_council_tax_reduction_taper_numerator: 6
+    uk-reading:policies/reading/council-tax-reduction#reading_council_tax_reduction_taper_denominator: 7
+    uk-reading:policies/reading/council-tax-reduction#reading_council_tax_reduction_days_per_week: 7
+    uk-reading:policies/reading/council-tax-reduction#reading_council_tax_reduction_weeks_per_year: 52
+    uk-reading:policies/reading/council-tax-reduction#reading_council_tax_reduction_withdrawal_rate: 0.2
+- name: reading_ctr_non_dependant_table_zero_band
+  period: *tax_year
+  input: {uk-reading:policies/reading/council-tax-reduction#input.reading_council_tax_reduction_non_dependant_deduction_band: 0}
+  output: {uk-reading:policies/reading/council-tax-reduction#reading_council_tax_reduction_non_dependant_weekly_deduction_by_band: 0}
+- name: reading_ctr_non_dependant_table_positive_band
+  period: *tax_year
+  input: {uk-reading:policies/reading/council-tax-reduction#input.reading_council_tax_reduction_non_dependant_deduction_band: 1}
+  output: {uk-reading:policies/reading/council-tax-reduction#reading_council_tax_reduction_non_dependant_weekly_deduction_by_band: 10}
+- name: reading_ctr_class_d_judgment
+  period: *tax_year
+  input: &d {uk-reading:policies/reading/council-tax-reduction#input.local_authority_is_reading: true, uk-reading:policies/reading/council-tax-reduction#input.council_tax_reduction_household_in_england: true, uk-reading:policies/reading/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: false, uk-reading:policies/reading/council-tax-reduction#input.would_claim_council_tax_reduction: true, uk-reading:policies/reading/council-tax-reduction#input.reading_council_tax_reduction_assessed_capital_for_year: 0, uk-reading:policies/reading/council-tax-reduction#input.reading_council_tax_reduction_maximum_eligible_liability_for_year: 1800, uk-reading:policies/reading/council-tax-reduction#input.reading_council_tax_reduction_applicable_income_for_year: 9999, uk-reading:policies/reading/council-tax-reduction#input.reading_council_tax_reduction_applicable_amount_for_year: 10000, uk-reading:policies/reading/council-tax-reduction#input.reading_council_tax_reduction_non_dependant_deductions_for_year: 0}
+  output: {uk-reading:policies/reading/council-tax-reduction#reading_council_tax_reduction_class_d: holds}
+- name: reading_ctr_passported_class_d_award
+  period: *tax_year
+  input: *d
+  output: {uk-reading:policies/reading/council-tax-reduction#reading_council_tax_reduction_annual_amount: 1260}
+- name: reading_ctr_working_age_scheme_applies
+  period: *tax_year
+  input: *d
+  output: {uk-reading:policies/reading/council-tax-reduction#reading_council_tax_reduction_working_age_scheme_applies: holds}
+- name: reading_ctr_class_d_positive_non_dependant_deduction
+  period: *tax_year
+  input: {uk-reading:policies/reading/council-tax-reduction#input.local_authority_is_reading: true, uk-reading:policies/reading/council-tax-reduction#input.council_tax_reduction_household_in_england: true, uk-reading:policies/reading/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: false, uk-reading:policies/reading/council-tax-reduction#input.would_claim_council_tax_reduction: true, uk-reading:policies/reading/council-tax-reduction#input.reading_council_tax_reduction_assessed_capital_for_year: 0, uk-reading:policies/reading/council-tax-reduction#input.reading_council_tax_reduction_maximum_eligible_liability_for_year: 1800, uk-reading:policies/reading/council-tax-reduction#input.reading_council_tax_reduction_applicable_income_for_year: 9999, uk-reading:policies/reading/council-tax-reduction#input.reading_council_tax_reduction_applicable_amount_for_year: 10000, uk-reading:policies/reading/council-tax-reduction#input.reading_council_tax_reduction_non_dependant_deductions_for_year: 10}
+  output: {uk-reading:policies/reading/council-tax-reduction#reading_council_tax_reduction_annual_amount: 1250}
+- name: reading_ctr_income_equality_is_zero
+  period: *tax_year
+  input: &eq {uk-reading:policies/reading/council-tax-reduction#input.local_authority_is_reading: true, uk-reading:policies/reading/council-tax-reduction#input.council_tax_reduction_household_in_england: true, uk-reading:policies/reading/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: false, uk-reading:policies/reading/council-tax-reduction#input.would_claim_council_tax_reduction: true, uk-reading:policies/reading/council-tax-reduction#input.reading_council_tax_reduction_assessed_capital_for_year: 0, uk-reading:policies/reading/council-tax-reduction#input.reading_council_tax_reduction_maximum_eligible_liability_for_year: 1800, uk-reading:policies/reading/council-tax-reduction#input.reading_council_tax_reduction_applicable_income_for_year: 10000, uk-reading:policies/reading/council-tax-reduction#input.reading_council_tax_reduction_applicable_amount_for_year: 10000, uk-reading:policies/reading/council-tax-reduction#input.reading_council_tax_reduction_non_dependant_deductions_for_year: 0}
+  output: {uk-reading:policies/reading/council-tax-reduction#reading_council_tax_reduction_annual_amount: 0}
+- name: reading_ctr_class_e_judgment
+  period: *tax_year
+  input: &e {uk-reading:policies/reading/council-tax-reduction#input.local_authority_is_reading: true, uk-reading:policies/reading/council-tax-reduction#input.council_tax_reduction_household_in_england: true, uk-reading:policies/reading/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: false, uk-reading:policies/reading/council-tax-reduction#input.would_claim_council_tax_reduction: true, uk-reading:policies/reading/council-tax-reduction#input.reading_council_tax_reduction_assessed_capital_for_year: 0, uk-reading:policies/reading/council-tax-reduction#input.reading_council_tax_reduction_maximum_eligible_liability_for_year: 1800, uk-reading:policies/reading/council-tax-reduction#input.reading_council_tax_reduction_applicable_income_for_year: 11000, uk-reading:policies/reading/council-tax-reduction#input.reading_council_tax_reduction_applicable_amount_for_year: 10000, uk-reading:policies/reading/council-tax-reduction#input.reading_council_tax_reduction_non_dependant_deductions_for_year: 0}
+  output: {uk-reading:policies/reading/council-tax-reduction#reading_council_tax_reduction_class_e: holds}
+- name: reading_ctr_class_e_taper_deduction
+  period: *tax_year
+  input: *e
+  output: {uk-reading:policies/reading/council-tax-reduction#reading_council_tax_reduction_income_taper_deduction_for_year: 200}
+- name: reading_ctr_class_e_excess_income
+  period: *tax_year
+  input: *e
+  output: {uk-reading:policies/reading/council-tax-reduction#reading_council_tax_reduction_excess_income_for_year: 1000}
+- name: reading_ctr_class_e_positive_award
+  period: *tax_year
+  input: *e
+  output: {uk-reading:policies/reading/council-tax-reduction#reading_council_tax_reduction_annual_amount: 1060}
+- name: reading_ctr_just_below_taper_exhaustion
+  period: *tax_year
+  input: &near {uk-reading:policies/reading/council-tax-reduction#input.local_authority_is_reading: true, uk-reading:policies/reading/council-tax-reduction#input.council_tax_reduction_household_in_england: true, uk-reading:policies/reading/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: false, uk-reading:policies/reading/council-tax-reduction#input.would_claim_council_tax_reduction: true, uk-reading:policies/reading/council-tax-reduction#input.reading_council_tax_reduction_assessed_capital_for_year: 0, uk-reading:policies/reading/council-tax-reduction#input.reading_council_tax_reduction_maximum_eligible_liability_for_year: 1800, uk-reading:policies/reading/council-tax-reduction#input.reading_council_tax_reduction_applicable_income_for_year: 16299.995, uk-reading:policies/reading/council-tax-reduction#input.reading_council_tax_reduction_applicable_amount_for_year: 10000, uk-reading:policies/reading/council-tax-reduction#input.reading_council_tax_reduction_non_dependant_deductions_for_year: 0}
+  output: {uk-reading:policies/reading/council-tax-reduction#reading_council_tax_reduction_annual_amount: 0.001}
+- name: reading_ctr_taper_exhaustion_is_zero
+  period: *tax_year
+  input: &ex {uk-reading:policies/reading/council-tax-reduction#input.local_authority_is_reading: true, uk-reading:policies/reading/council-tax-reduction#input.council_tax_reduction_household_in_england: true, uk-reading:policies/reading/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: false, uk-reading:policies/reading/council-tax-reduction#input.would_claim_council_tax_reduction: true, uk-reading:policies/reading/council-tax-reduction#input.reading_council_tax_reduction_assessed_capital_for_year: 0, uk-reading:policies/reading/council-tax-reduction#input.reading_council_tax_reduction_maximum_eligible_liability_for_year: 1800, uk-reading:policies/reading/council-tax-reduction#input.reading_council_tax_reduction_applicable_income_for_year: 16300, uk-reading:policies/reading/council-tax-reduction#input.reading_council_tax_reduction_applicable_amount_for_year: 10000, uk-reading:policies/reading/council-tax-reduction#input.reading_council_tax_reduction_non_dependant_deductions_for_year: 0}
+  output: {uk-reading:policies/reading/council-tax-reduction#reading_council_tax_reduction_annual_amount: 0}
+- name: reading_ctr_capital_at_limit_eligible
+  period: *tax_year
+  input: &atlimit {uk-reading:policies/reading/council-tax-reduction#input.local_authority_is_reading: true, uk-reading:policies/reading/council-tax-reduction#input.council_tax_reduction_household_in_england: true, uk-reading:policies/reading/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: false, uk-reading:policies/reading/council-tax-reduction#input.would_claim_council_tax_reduction: true, uk-reading:policies/reading/council-tax-reduction#input.reading_council_tax_reduction_assessed_capital_for_year: 6000, uk-reading:policies/reading/council-tax-reduction#input.reading_council_tax_reduction_maximum_eligible_liability_for_year: 1800, uk-reading:policies/reading/council-tax-reduction#input.reading_council_tax_reduction_applicable_income_for_year: 9999, uk-reading:policies/reading/council-tax-reduction#input.reading_council_tax_reduction_applicable_amount_for_year: 10000, uk-reading:policies/reading/council-tax-reduction#input.reading_council_tax_reduction_non_dependant_deductions_for_year: 0}
+  output: {uk-reading:policies/reading/council-tax-reduction#reading_council_tax_reduction_capital_eligible: holds}
+- name: reading_ctr_capital_first_penny_over_ineligible
+  period: *tax_year
+  input: {uk-reading:policies/reading/council-tax-reduction#input.local_authority_is_reading: true, uk-reading:policies/reading/council-tax-reduction#input.council_tax_reduction_household_in_england: true, uk-reading:policies/reading/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: false, uk-reading:policies/reading/council-tax-reduction#input.would_claim_council_tax_reduction: true, uk-reading:policies/reading/council-tax-reduction#input.reading_council_tax_reduction_assessed_capital_for_year: 6000.01, uk-reading:policies/reading/council-tax-reduction#input.reading_council_tax_reduction_maximum_eligible_liability_for_year: 1800, uk-reading:policies/reading/council-tax-reduction#input.reading_council_tax_reduction_applicable_income_for_year: 9999, uk-reading:policies/reading/council-tax-reduction#input.reading_council_tax_reduction_applicable_amount_for_year: 10000, uk-reading:policies/reading/council-tax-reduction#input.reading_council_tax_reduction_non_dependant_deductions_for_year: 0}
+  output: {uk-reading:policies/reading/council-tax-reduction#reading_council_tax_reduction_capital_eligible: not_holds}
+- name: reading_ctr_tariff_at_capital_limit_is_zero
+  period: *tax_year
+  input: *atlimit
+  output: {uk-reading:policies/reading/council-tax-reduction#reading_council_tax_reduction_tariff_income_for_year: 0}

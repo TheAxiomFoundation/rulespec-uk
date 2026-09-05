@@ -12,6 +12,10 @@ module:
   deferred_outputs:
     - output: uk-reading:policies/reading/council-tax-reduction/applicable-amount#applicable_premiums_amount
       reason: Category-specific applicable-premium schedules are outside this award-surface module.
+    - output: uk-reading:policies/reading/council-tax-reduction#reading_council_tax_reduction_applicable_income_for_year
+      reason: The underlying income assessment is consumed as an assessed input; its component assessment rules are outside this award-surface module.
+    - output: uk-reading:policies/reading/council-tax-reduction#reading_council_tax_reduction_maximum_eligible_liability_for_year
+      reason: The underlying Council Tax liability assessment is consumed as an assessed input; its liability rules are outside this award-surface module.
 rules:
   - name: reading_council_tax_reduction_maximum_support_rate
     kind: parameter
@@ -218,6 +222,43 @@ rules:
               excerpt: "any person who is not a pensioner whose capital exceeds £6,000"
     versions: [{effective_from: '2026-04-01', formula: "reading_council_tax_reduction_assessed_capital_for_year <= reading_council_tax_reduction_capital_limit"}]
 
+  - name: reading_council_tax_reduction_class_d
+    kind: derived
+    entity: Household
+    dtype: Judgment
+    period: Year
+    source: Reading Borough Council Tax Reduction Scheme 2026/27 paragraph 16
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk-reading/manual/council-tax-reduction-scheme-2026-2027/page-18
+              excerpt: "persons who are not pensioners whose income is less than the applicable amount"
+    versions: [{effective_from: '2026-04-01', formula: "reading_council_tax_reduction_working_age_scheme_applies and reading_council_tax_reduction_applicable_income_for_year < reading_council_tax_reduction_applicable_amount_for_year"}]
+
+  - name: reading_council_tax_reduction_class_e
+    kind: derived
+    entity: Household
+    dtype: Judgment
+    period: Year
+    source: Reading Borough Council Tax Reduction Scheme 2026/27 paragraph 17
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk-reading/manual/council-tax-reduction-scheme-2026-2027/page-19
+              excerpt: "whose income for the relevant week is greater than their applicable amount"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk-reading/manual/council-tax-reduction-scheme-2026-2027/page-19
+              excerpt: "in respect of whom amount A exceeds amount B where"
+    versions: [{effective_from: '2026-04-01', formula: "reading_council_tax_reduction_working_age_scheme_applies and reading_council_tax_reduction_applicable_income_for_year > reading_council_tax_reduction_applicable_amount_for_year and reading_council_tax_reduction_maximum_eligible_liability_for_year * reading_council_tax_reduction_maximum_support_rate - reading_council_tax_reduction_non_dependant_deductions_for_year > reading_council_tax_reduction_income_taper_deduction_for_year"}]
+
   - name: reading_council_tax_reduction_tariff_income_for_year
     kind: derived
     entity: Household
@@ -291,4 +332,4 @@ rules:
               excerpt: "that amount is the amount found by deducting amount B from amount A"
     versions:
       - effective_from: '2026-04-01'
-        formula: "if reading_council_tax_reduction_working_age_scheme_applies and would_claim_council_tax_reduction and reading_council_tax_reduction_capital_eligible: max(0, reading_council_tax_reduction_maximum_eligible_liability_for_year * reading_council_tax_reduction_maximum_support_rate - reading_council_tax_reduction_income_taper_deduction_for_year - reading_council_tax_reduction_non_dependant_deductions_for_year) else: 0"
+        formula: "if would_claim_council_tax_reduction and reading_council_tax_reduction_capital_eligible and (reading_council_tax_reduction_class_d or reading_council_tax_reduction_class_e): max(0, reading_council_tax_reduction_maximum_eligible_liability_for_year * reading_council_tax_reduction_maximum_support_rate - reading_council_tax_reduction_income_taper_deduction_for_year - reading_council_tax_reduction_non_dependant_deductions_for_year) else: 0"
