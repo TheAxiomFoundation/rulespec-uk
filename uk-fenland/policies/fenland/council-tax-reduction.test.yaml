@@ -1,52 +1,144 @@
-- name: fenland_ctr_printed_parameters
-  period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
-  input: {}
-  output:
-    uk-fenland:policies/fenland/council-tax-reduction#fenland_council_tax_reduction_maximum_support_rate: 0.8
-    uk-fenland:policies/fenland/council-tax-reduction#fenland_council_tax_reduction_capital_limit: 10000
-    uk-fenland:policies/fenland/council-tax-reduction#fenland_council_tax_reduction_flat_non_dependant_deduction_weekly: 7.4
-    uk-fenland:policies/fenland/council-tax-reduction#fenland_council_tax_reduction_daily_taper_rate: "0.0285714285714285714285714286"
-    uk-fenland:policies/fenland/council-tax-reduction#fenland_council_tax_reduction_weekly_taper_rate: 0.2
-- name: fenland_ctr_taper_and_no_tariff
-  period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
-  input:
+- name: fenland_ctr_maximum_support_rate
+  period: &benefit_week {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
+  input: &facts
     uk-fenland:policies/fenland/council-tax-reduction#input.local_authority_is_fenland: true
     uk-fenland:policies/fenland/council-tax-reduction#input.would_claim_council_tax_reduction: true
     uk-fenland:policies/fenland/council-tax-reduction#input.fenland_council_tax_reduction_working_age_scheme_applies: true
-    uk-fenland:policies/fenland/council-tax-reduction#input.fenland_council_tax_reduction_assessed_capital_weekly: 10000
-    uk-fenland:policies/fenland/council-tax-reduction#input.fenland_council_tax_reduction_assessed_income_weekly: 110
+    uk-fenland:policies/fenland/council-tax-reduction#input.fenland_council_tax_reduction_class_f_applies: false
+    uk-fenland:policies/fenland/council-tax-reduction#input.fenland_council_tax_reduction_assessed_capital_weekly: 0
+    uk-fenland:policies/fenland/council-tax-reduction#input.fenland_council_tax_reduction_assessed_income_weekly: 0
     uk-fenland:policies/fenland/council-tax-reduction#input.fenland_council_tax_reduction_applicable_amount_weekly: 100
     uk-fenland:policies/fenland/council-tax-reduction#input.fenland_council_tax_reduction_eligible_liability_weekly: 100
-    uk-fenland:policies/fenland/council-tax-reduction#input.fenland_council_tax_reduction_non_dependant_deductions_weekly: 7.4
-  output:
-    uk-fenland:policies/fenland/council-tax-reduction#fenland_council_tax_reduction_capital_eligible: holds
-    uk-fenland:policies/fenland/council-tax-reduction#fenland_council_tax_reduction_tariff_income_weekly: 0
-    uk-fenland:policies/fenland/council-tax-reduction#fenland_council_tax_reduction_excess_income_weekly: 10
-    uk-fenland:policies/fenland/council-tax-reduction#fenland_council_tax_reduction_weekly_amount: 71
-- name: fenland_ctr_capital_cliff
-  period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
+    uk-fenland:policies/fenland/council-tax-reduction#input.fenland_council_tax_reduction_non_dependant_deductions_weekly: 0
+  output: {uk-fenland:policies/fenland/council-tax-reduction#fenland_council_tax_reduction_maximum_support_rate: 0.8}
+- name: fenland_ctr_capital_limit
+  period: *benefit_week
+  input: *facts
+  output: {uk-fenland:policies/fenland/council-tax-reduction#fenland_council_tax_reduction_capital_limit: 10000}
+- name: fenland_ctr_taper_whole_percentage_points
+  period: *benefit_week
+  input: *facts
+  output: {uk-fenland:policies/fenland/council-tax-reduction#fenland_council_tax_reduction_taper_whole_percentage_points: 2}
+- name: fenland_ctr_taper_fraction_numerator
+  period: *benefit_week
+  input: *facts
+  output: {uk-fenland:policies/fenland/council-tax-reduction#fenland_council_tax_reduction_taper_fraction_numerator: 6}
+- name: fenland_ctr_days_per_week
+  period: *benefit_week
+  input: *facts
+  output: {uk-fenland:policies/fenland/council-tax-reduction#fenland_council_tax_reduction_days_per_week: 7}
+- name: fenland_ctr_per_cent_unit
+  period: *benefit_week
+  input: *facts
+  output: {uk-fenland:policies/fenland/council-tax-reduction#fenland_council_tax_reduction_per_cent_unit: 0.01}
+- name: fenland_ctr_flat_non_dependant_deduction
+  period: *benefit_week
+  input: *facts
+  output: {uk-fenland:policies/fenland/council-tax-reduction#fenland_council_tax_reduction_flat_non_dependant_deduction_weekly: 7.4}
+- name: fenland_ctr_tariff_income_is_zero
+  period: *benefit_week
+  input: *facts
+  output: {uk-fenland:policies/fenland/council-tax-reduction#fenland_council_tax_reduction_tariff_income_weekly: 0}
+- name: fenland_ctr_daily_taper_rate
+  period: *benefit_week
+  input: *facts
+  output: {uk-fenland:policies/fenland/council-tax-reduction#fenland_council_tax_reduction_daily_taper_rate: '0.0285714285714285714285714286'}
+- name: fenland_ctr_weekly_taper_rate
+  period: *benefit_week
+  input: *facts
+  output: {uk-fenland:policies/fenland/council-tax-reduction#fenland_council_tax_reduction_weekly_taper_rate: 0.2}
+- name: fenland_ctr_capital_at_limit_eligible
+  period: *benefit_week
   input:
     uk-fenland:policies/fenland/council-tax-reduction#input.local_authority_is_fenland: true
     uk-fenland:policies/fenland/council-tax-reduction#input.would_claim_council_tax_reduction: true
     uk-fenland:policies/fenland/council-tax-reduction#input.fenland_council_tax_reduction_working_age_scheme_applies: true
+    uk-fenland:policies/fenland/council-tax-reduction#input.fenland_council_tax_reduction_class_f_applies: false
+    uk-fenland:policies/fenland/council-tax-reduction#input.fenland_council_tax_reduction_assessed_capital_weekly: 10000
+    uk-fenland:policies/fenland/council-tax-reduction#input.fenland_council_tax_reduction_assessed_income_weekly: 0
+    uk-fenland:policies/fenland/council-tax-reduction#input.fenland_council_tax_reduction_applicable_amount_weekly: 100
+    uk-fenland:policies/fenland/council-tax-reduction#input.fenland_council_tax_reduction_eligible_liability_weekly: 100
+    uk-fenland:policies/fenland/council-tax-reduction#input.fenland_council_tax_reduction_non_dependant_deductions_weekly: 0
+  output: {uk-fenland:policies/fenland/council-tax-reduction#fenland_council_tax_reduction_capital_eligible: holds}
+- name: fenland_ctr_capital_first_penny_over_ineligible
+  period: *benefit_week
+  input:
+    uk-fenland:policies/fenland/council-tax-reduction#input.local_authority_is_fenland: true
+    uk-fenland:policies/fenland/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-fenland:policies/fenland/council-tax-reduction#input.fenland_council_tax_reduction_working_age_scheme_applies: true
+    uk-fenland:policies/fenland/council-tax-reduction#input.fenland_council_tax_reduction_class_f_applies: false
     uk-fenland:policies/fenland/council-tax-reduction#input.fenland_council_tax_reduction_assessed_capital_weekly: 10000.01
     uk-fenland:policies/fenland/council-tax-reduction#input.fenland_council_tax_reduction_assessed_income_weekly: 0
     uk-fenland:policies/fenland/council-tax-reduction#input.fenland_council_tax_reduction_applicable_amount_weekly: 100
     uk-fenland:policies/fenland/council-tax-reduction#input.fenland_council_tax_reduction_eligible_liability_weekly: 100
     uk-fenland:policies/fenland/council-tax-reduction#input.fenland_council_tax_reduction_non_dependant_deductions_weekly: 0
-  output:
-    uk-fenland:policies/fenland/council-tax-reduction#fenland_council_tax_reduction_capital_eligible: not_holds
-    uk-fenland:policies/fenland/council-tax-reduction#fenland_council_tax_reduction_weekly_amount: 0
-- name: fenland_ctr_zero_award_from_excess_income
-  period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
+  output: {uk-fenland:policies/fenland/council-tax-reduction#fenland_council_tax_reduction_capital_eligible: not_holds}
+- name: fenland_ctr_excess_income
+  period: *benefit_week
   input:
     uk-fenland:policies/fenland/council-tax-reduction#input.local_authority_is_fenland: true
     uk-fenland:policies/fenland/council-tax-reduction#input.would_claim_council_tax_reduction: true
     uk-fenland:policies/fenland/council-tax-reduction#input.fenland_council_tax_reduction_working_age_scheme_applies: true
+    uk-fenland:policies/fenland/council-tax-reduction#input.fenland_council_tax_reduction_class_f_applies: false
+    uk-fenland:policies/fenland/council-tax-reduction#input.fenland_council_tax_reduction_assessed_capital_weekly: 0
+    uk-fenland:policies/fenland/council-tax-reduction#input.fenland_council_tax_reduction_assessed_income_weekly: 110
+    uk-fenland:policies/fenland/council-tax-reduction#input.fenland_council_tax_reduction_applicable_amount_weekly: 100
+    uk-fenland:policies/fenland/council-tax-reduction#input.fenland_council_tax_reduction_eligible_liability_weekly: 100
+    uk-fenland:policies/fenland/council-tax-reduction#input.fenland_council_tax_reduction_non_dependant_deductions_weekly: 0
+  output: {uk-fenland:policies/fenland/council-tax-reduction#fenland_council_tax_reduction_excess_income_weekly: 10}
+- name: fenland_ctr_class_d_award
+  period: *benefit_week
+  input: *facts
+  output: {uk-fenland:policies/fenland/council-tax-reduction#fenland_council_tax_reduction_weekly_amount: 80}
+- name: fenland_ctr_income_equal_to_applicable_amount_is_uncovered
+  period: *benefit_week
+  input:
+    uk-fenland:policies/fenland/council-tax-reduction#input.local_authority_is_fenland: true
+    uk-fenland:policies/fenland/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-fenland:policies/fenland/council-tax-reduction#input.fenland_council_tax_reduction_working_age_scheme_applies: true
+    uk-fenland:policies/fenland/council-tax-reduction#input.fenland_council_tax_reduction_class_f_applies: false
+    uk-fenland:policies/fenland/council-tax-reduction#input.fenland_council_tax_reduction_assessed_capital_weekly: 0
+    uk-fenland:policies/fenland/council-tax-reduction#input.fenland_council_tax_reduction_assessed_income_weekly: 100
+    uk-fenland:policies/fenland/council-tax-reduction#input.fenland_council_tax_reduction_applicable_amount_weekly: 100
+    uk-fenland:policies/fenland/council-tax-reduction#input.fenland_council_tax_reduction_eligible_liability_weekly: 100
+    uk-fenland:policies/fenland/council-tax-reduction#input.fenland_council_tax_reduction_non_dependant_deductions_weekly: 0
+  output: {uk-fenland:policies/fenland/council-tax-reduction#fenland_council_tax_reduction_weekly_amount: 0}
+- name: fenland_ctr_non_dependant_deduction_precedes_rate_and_taper
+  period: *benefit_week
+  input:
+    uk-fenland:policies/fenland/council-tax-reduction#input.local_authority_is_fenland: true
+    uk-fenland:policies/fenland/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-fenland:policies/fenland/council-tax-reduction#input.fenland_council_tax_reduction_working_age_scheme_applies: true
+    uk-fenland:policies/fenland/council-tax-reduction#input.fenland_council_tax_reduction_class_f_applies: false
+    uk-fenland:policies/fenland/council-tax-reduction#input.fenland_council_tax_reduction_assessed_capital_weekly: 0
+    uk-fenland:policies/fenland/council-tax-reduction#input.fenland_council_tax_reduction_assessed_income_weekly: 110
+    uk-fenland:policies/fenland/council-tax-reduction#input.fenland_council_tax_reduction_applicable_amount_weekly: 100
+    uk-fenland:policies/fenland/council-tax-reduction#input.fenland_council_tax_reduction_eligible_liability_weekly: 100
+    uk-fenland:policies/fenland/council-tax-reduction#input.fenland_council_tax_reduction_non_dependant_deductions_weekly: 7.4
+  output: {uk-fenland:policies/fenland/council-tax-reduction#fenland_council_tax_reduction_weekly_amount: 72.48}
+- name: fenland_ctr_taper_exhaustion
+  period: *benefit_week
+  input:
+    uk-fenland:policies/fenland/council-tax-reduction#input.local_authority_is_fenland: true
+    uk-fenland:policies/fenland/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-fenland:policies/fenland/council-tax-reduction#input.fenland_council_tax_reduction_working_age_scheme_applies: true
+    uk-fenland:policies/fenland/council-tax-reduction#input.fenland_council_tax_reduction_class_f_applies: false
     uk-fenland:policies/fenland/council-tax-reduction#input.fenland_council_tax_reduction_assessed_capital_weekly: 0
     uk-fenland:policies/fenland/council-tax-reduction#input.fenland_council_tax_reduction_assessed_income_weekly: 600
     uk-fenland:policies/fenland/council-tax-reduction#input.fenland_council_tax_reduction_applicable_amount_weekly: 100
     uk-fenland:policies/fenland/council-tax-reduction#input.fenland_council_tax_reduction_eligible_liability_weekly: 100
     uk-fenland:policies/fenland/council-tax-reduction#input.fenland_council_tax_reduction_non_dependant_deductions_weekly: 0
-  output:
-    uk-fenland:policies/fenland/council-tax-reduction#fenland_council_tax_reduction_weekly_amount: 0
+  output: {uk-fenland:policies/fenland/council-tax-reduction#fenland_council_tax_reduction_weekly_amount: 0}
+- name: fenland_ctr_class_f_explicitly_excluded_from_final_output
+  period: *benefit_week
+  input:
+    uk-fenland:policies/fenland/council-tax-reduction#input.local_authority_is_fenland: true
+    uk-fenland:policies/fenland/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-fenland:policies/fenland/council-tax-reduction#input.fenland_council_tax_reduction_working_age_scheme_applies: true
+    uk-fenland:policies/fenland/council-tax-reduction#input.fenland_council_tax_reduction_class_f_applies: true
+    uk-fenland:policies/fenland/council-tax-reduction#input.fenland_council_tax_reduction_assessed_capital_weekly: 0
+    uk-fenland:policies/fenland/council-tax-reduction#input.fenland_council_tax_reduction_assessed_income_weekly: 0
+    uk-fenland:policies/fenland/council-tax-reduction#input.fenland_council_tax_reduction_applicable_amount_weekly: 100
+    uk-fenland:policies/fenland/council-tax-reduction#input.fenland_council_tax_reduction_eligible_liability_weekly: 100
+    uk-fenland:policies/fenland/council-tax-reduction#input.fenland_council_tax_reduction_non_dependant_deductions_weekly: 0
+  output: {uk-fenland:policies/fenland/council-tax-reduction#fenland_council_tax_reduction_weekly_amount: 0}

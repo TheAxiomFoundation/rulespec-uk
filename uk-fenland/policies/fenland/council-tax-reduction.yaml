@@ -8,12 +8,12 @@ module:
     #   status: delegated_scheme
     #   checked_paths: [uk/statutes/ukpga/1992/14/13A, uk/regulations/uksi/2012/2885, uk/regulations/uksi/2012/2886]
     #   rationale: LGFA 1992 section 13A delegates the working-age scheme to this authority, so its adopted scheme is the operative source.
-  summary: Fenland's adopted 2026-27 working-age CTR surface is an 80 percent maximum-liability award reduced by the printed excess-income taper and non-dependant deductions. Pension-age provisions are outside scope.
+  summary: Fenland's adopted 2026-27 Class D/E working-age CTR surface is an 80 percent maximum-liability award after non-dependant deductions and the printed excess-income taper. Class D strictly requires income below the applicable amount and Class E strictly requires income above it; equality is not assigned to either printed class. The separate Class F alternative maximum is expressly excluded from this final output. Pension-age provisions are outside scope.
   deferred_outputs:
     - output: uk-fenland:policies/fenland/council-tax-reduction/schedule-3#applicable_amount
       reason: The working-age applicable-amount schedules determine this calculation input but are not encoded here.
     - output: uk-fenland:policies/fenland/council-tax-reduction/paragraph-18#alternative_maximum_reduction
-      reason: The separate alternative maximum reduction is outside this ordinary Class D/E award surface.
+      reason: The separate Class F alternative maximum calculation and its resident-income classifier are outside this expressly Class-F-excluded Class D/E award surface.
 rules:
   - name: fenland_council_tax_reduction_maximum_support_rate
     kind: parameter
@@ -117,11 +117,18 @@ rules:
           - path: "versions[0].formula"
             kind: formula
             source: {corpus_citation_path: uk-fenland/manual/council-tax-reduction-scheme-2026-2027/page-37, excerpt: "less any deductions in respect of non- dependants"}
-    versions: [{effective_from: '2026-04-01', formula: 'if local_authority_is_fenland and would_claim_council_tax_reduction and fenland_council_tax_reduction_working_age_scheme_applies and fenland_council_tax_reduction_capital_eligible: max(0, (fenland_council_tax_reduction_eligible_liability_weekly - fenland_council_tax_reduction_excess_income_weekly * fenland_council_tax_reduction_weekly_taper_rate) * fenland_council_tax_reduction_maximum_support_rate - fenland_council_tax_reduction_non_dependant_deductions_weekly) else: 0'}]
+          - path: "versions[0].formula"
+            kind: condition
+            source: {corpus_citation_path: uk-fenland/manual/council-tax-reduction-scheme-2026-2027/page-23, excerpt: "whose income (if any) for the relevant week is less than his applicable amount"}
+          - path: "versions[0].formula"
+            kind: condition
+            source: {corpus_citation_path: uk-fenland/manual/council-tax-reduction-scheme-2026-2027/page-24, excerpt: "whose income for the relevant week is greater than his applicable amount"}
+    versions: [{effective_from: '2026-04-01', formula: 'if local_authority_is_fenland and would_claim_council_tax_reduction and fenland_council_tax_reduction_working_age_scheme_applies and fenland_council_tax_reduction_capital_eligible and not fenland_council_tax_reduction_class_f_applies and (fenland_council_tax_reduction_assessed_income_weekly < fenland_council_tax_reduction_applicable_amount_weekly or (fenland_council_tax_reduction_assessed_income_weekly > fenland_council_tax_reduction_applicable_amount_weekly and fenland_council_tax_reduction_eligible_liability_weekly - fenland_council_tax_reduction_non_dependant_deductions_weekly > fenland_council_tax_reduction_excess_income_weekly * fenland_council_tax_reduction_weekly_taper_rate)): max(0, (fenland_council_tax_reduction_eligible_liability_weekly - fenland_council_tax_reduction_non_dependant_deductions_weekly - fenland_council_tax_reduction_excess_income_weekly * fenland_council_tax_reduction_weekly_taper_rate) * fenland_council_tax_reduction_maximum_support_rate) else: 0'}]
 inputs:
   - {name: local_authority_is_fenland, entity: Household, dtype: Boolean, period: Week}
   - {name: would_claim_council_tax_reduction, entity: Household, dtype: Boolean, period: Week}
   - {name: fenland_council_tax_reduction_working_age_scheme_applies, entity: Household, dtype: Boolean, period: Week}
+  - {name: fenland_council_tax_reduction_class_f_applies, entity: Household, dtype: Boolean, period: Week}
   - {name: fenland_council_tax_reduction_assessed_capital_weekly, entity: Household, dtype: Money, period: Week, unit: GBP}
   - {name: fenland_council_tax_reduction_assessed_income_weekly, entity: Household, dtype: Money, period: Week, unit: GBP}
   - {name: fenland_council_tax_reduction_applicable_amount_weekly, entity: Household, dtype: Money, period: Week, unit: GBP}
