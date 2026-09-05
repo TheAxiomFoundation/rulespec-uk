@@ -1,0 +1,202 @@
+- name: charnwood_ctr_printed_parameters
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  output:
+    uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_maximum_support_rate: 1
+    uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_taper_whole_percentage_points: 2
+    uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_taper_fraction_numerator: 6
+    uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_days_per_week: 7
+    uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_per_cent_unit: 0.01
+    uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_weekly_taper_rate: '0.0285714285714285714285714286'
+    uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_capital_limit: 16000
+    uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_tariff_income_threshold: 6000
+    uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_tariff_income_step: 250
+    uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_tariff_income_weekly_amount_per_step: 1
+    uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_weeks_per_year: 52
+
+- name: charnwood_ctr_class_d_full_award
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.local_authority_is_charnwood: true
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_actual_liability_for_year: 1000
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_assessed_income_for_year: 519
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_applicable_amount_for_year: 520
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_annual_amount: 1000
+
+- name: charnwood_ctr_working_age_scope
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.local_authority_is_charnwood: true
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_applicant_is_not_pensioner: true
+  output: {uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_working_age_scheme_applies: holds}
+
+- name: charnwood_ctr_maximum_amount
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_actual_liability_for_year: 1000
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output: {uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_maximum_council_tax_reduction_for_year: 1000}
+
+- name: charnwood_ctr_excess_income
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_assessed_income_for_year: 520
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_applicable_amount_for_year: 0
+  output: {uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_excess_income_for_year: 520}
+
+- name: charnwood_ctr_taper_deduction
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_assessed_income_for_year: 520
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_applicable_amount_for_year: 0
+  output: {uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_income_taper_deduction_for_year: '14.857142857142857142857142872'}
+
+- name: charnwood_ctr_class_d_condition
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.local_authority_is_charnwood: true
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_assessed_income_for_year: 0
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_applicable_amount_for_year: 1
+  output: {uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_class_d: holds}
+
+- name: charnwood_ctr_class_e_condition
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.local_authority_is_charnwood: true
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_actual_liability_for_year: 1000
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_assessed_income_for_year: 1
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_applicable_amount_for_year: 0
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output: {uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_class_e: holds}
+
+- name: charnwood_ctr_award_condition
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.local_authority_is_charnwood: true
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_actual_liability_for_year: 1000
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_assessed_income_for_year: 1
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_applicable_amount_for_year: 0
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output: {uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_award_conditions_met: holds}
+
+- name: charnwood_ctr_class_e_taper
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.local_authority_is_charnwood: true
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_actual_liability_for_year: 1000
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_assessed_income_for_year: 520
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_applicable_amount_for_year: 0
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_annual_amount: '985.1428571428571428571428571'
+
+- name: charnwood_ctr_tariff_threshold
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_assessed_capital_for_year: 6000}
+  output: {uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_tariff_income_for_year: 0}
+
+- name: charnwood_ctr_tariff_first_full_step
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_assessed_capital_for_year: 6250}
+  output: {uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_tariff_income_for_year: 52}
+
+- name: charnwood_ctr_tariff_first_step_and_penny
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_assessed_capital_for_year: 6250.01}
+  output: {uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_tariff_income_for_year: 104}
+
+- name: charnwood_ctr_capital_limit_eligible
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_assessed_capital_for_year: 16000}
+  output: {uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_capital_eligible: holds}
+
+- name: charnwood_ctr_capital_cliff
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_assessed_capital_for_year: 16000.01}
+  output: {uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_capital_eligible: not_holds}
+
+- name: charnwood_ctr_income_equality_gap_zero_award
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.local_authority_is_charnwood: true
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_actual_liability_for_year: 1000
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_assessed_income_for_year: 520
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_applicable_amount_for_year: 520
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output: {uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_annual_amount: 0}
+
+- name: charnwood_ctr_non_dependant_low_band
+  period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
+  input:
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_non_dependant_deduction_applies: true
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_non_dependant_in_remunerative_work: true
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_non_dependant_normal_gross_weekly_income: 278.98
+  output: {uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_individual_non_dependant_deduction_weekly: 5.20}
+
+- name: charnwood_ctr_non_dependant_band_selector
+  period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
+  input:
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_non_dependant_deduction_applies: true
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_non_dependant_in_remunerative_work: true
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_non_dependant_normal_gross_weekly_income: 485.00
+  output: {uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_non_dependant_deduction_band: 2}
+
+- name: charnwood_ctr_non_dependant_no_deduction_band
+  period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
+  input:
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_non_dependant_deduction_applies: false
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_non_dependant_in_remunerative_work: false
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_non_dependant_normal_gross_weekly_income: 0
+  output: {uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_non_dependant_deduction_band: 0}
+
+- name: charnwood_ctr_non_dependant_middle_band
+  period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
+  input:
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_non_dependant_deduction_applies: true
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_non_dependant_in_remunerative_work: true
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_non_dependant_normal_gross_weekly_income: 279.00
+  output: {uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_individual_non_dependant_deduction_weekly: 10.60}
+
+- name: charnwood_ctr_non_dependant_high_band
+  period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
+  input:
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_non_dependant_deduction_applies: true
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_non_dependant_in_remunerative_work: true
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_non_dependant_normal_gross_weekly_income: 485.00
+  output: {uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_individual_non_dependant_deduction_weekly: 13.30}
+
+- name: charnwood_ctr_non_dependant_top_band
+  period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
+  input:
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_non_dependant_deduction_applies: true
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_non_dependant_in_remunerative_work: true
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_non_dependant_normal_gross_weekly_income: 604.99
+  output: {uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_individual_non_dependant_deduction_weekly: 15.95}

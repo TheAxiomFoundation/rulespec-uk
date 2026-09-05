@@ -1,0 +1,255 @@
+format: rulespec/v1
+module:
+  proof_validation: {required: true}
+  source_verification:
+    corpus_citation_path: uk-charnwood/manual/council-tax-reduction-scheme-2026-2027/page-46
+    # upstream_source_check:
+    #   status: delegated_scheme
+    #   checked_paths: [uk/statutes/ukpga/1992/14/13A, uk/regulations/uksi/2012/2885, uk/regulations/uksi/2012/2886]
+    #   rationale: Section 13A of the Local Government Finance Act 1992 delegates the working-age scheme to Charnwood Borough Council, so its adopted scheme document is the operative legal source for the locally set working-age values.
+  summary: Working-age Classes D and E only. The adopted scheme gives full maximum support, then subtracts the printed excess-income taper and non-dependant deductions. Pension-age provisions, applicable-amount schedules, income assessment, capital valuation and non-dependant exemptions or household aggregation are outside this award-surface module.
+  deferred_outputs:
+    - output: uk-charnwood:policies/charnwood/council-tax-reduction/part-6-and-schedules-2-and-3#applicable_amount
+      reason: Category-specific personal allowances and premiums determine applicable amount and are outside this award-surface module.
+    - output: uk-charnwood:policies/charnwood/council-tax-reduction/part-10-and-schedule-10#assessed_income_and_capital
+      reason: Income assessment, capital valuation, attribution and disregards are outside this award-surface module.
+    - output: uk-charnwood:policies/charnwood/council-tax-reduction/paragraph-30-subparagraphs-3-to-7#non_dependant_exemption_and_household_aggregation
+      reason: This module provides every individual deduction band but defers exemption, couple, apportionment and household aggregation classifiers.
+rules:
+  - name: charnwood_council_tax_reduction_maximum_support_rate
+    kind: parameter
+    dtype: Rate
+    period: Year
+    source: Charnwood Local Council Tax Support Scheme 2026 paragraph 29(1A)
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-charnwood/manual/council-tax-reduction-scheme-2026-2027/page-40, excerpt: '"100 per cent"'}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '1'}]
+  - name: charnwood_council_tax_reduction_taper_whole_percentage_points
+    kind: parameter
+    dtype: Number
+    period: Year
+    source: Charnwood Local Council Tax Support Scheme 2026 paragraph 17(f)(ii)
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-charnwood/manual/council-tax-reduction-scheme-2026-2027/page-28, excerpt: 'amount B is 2 6/7 per cent'}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '2'}]
+  - name: charnwood_council_tax_reduction_taper_fraction_numerator
+    kind: parameter
+    dtype: Number
+    period: Year
+    source: Charnwood Local Council Tax Support Scheme 2026 paragraph 17(f)(ii)
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-charnwood/manual/council-tax-reduction-scheme-2026-2027/page-28, excerpt: 'amount B is 2 6/7 per cent'}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '6'}]
+  - name: charnwood_council_tax_reduction_days_per_week
+    kind: parameter
+    dtype: Number
+    period: Year
+    source: Charnwood Local Council Tax Support Scheme 2026 paragraph 30
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-charnwood/manual/council-tax-reduction-scheme-2026-2027/page-41, excerpt: '£15.95 x 1/7'}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '7'}]
+  - name: charnwood_council_tax_reduction_per_cent_unit
+    kind: parameter
+    dtype: Rate
+    period: Year
+    source: Charnwood Local Council Tax Support Scheme 2026 percentage notation
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-charnwood/manual/council-tax-reduction-scheme-2026-2027/page-40, excerpt: '100 per cent'}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '0.01'}]
+  - name: charnwood_council_tax_reduction_weekly_taper_rate
+    kind: parameter
+    dtype: Rate
+    period: Week
+    source: Charnwood Local Council Tax Support Scheme 2026 paragraph 17(f)(ii), derived from printed mixed-number percentage
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-charnwood/manual/council-tax-reduction-scheme-2026-2027/page-28, excerpt: 'amount B is 2 6/7 per cent of the difference between his income for the relevant week and his applicable amount'}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '(charnwood_council_tax_reduction_taper_whole_percentage_points + charnwood_council_tax_reduction_taper_fraction_numerator / charnwood_council_tax_reduction_days_per_week) * charnwood_council_tax_reduction_per_cent_unit'}]
+  - name: charnwood_council_tax_reduction_capital_limit
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Charnwood Local Council Tax Support Scheme 2026 paragraph 23
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-charnwood/manual/council-tax-reduction-scheme-2026-2027/page-37, excerpt: 'capital exceeds £16,000'}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '16000'}]
+  - name: charnwood_council_tax_reduction_tariff_income_threshold
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Charnwood Local Council Tax Support Scheme 2026 paragraph 72
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-charnwood/manual/council-tax-reduction-scheme-2026-2027/page-94, excerpt: '£1 for each £250 in excess of £6,000 but not exceeding £16,000'}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '6000'}]
+  - name: charnwood_council_tax_reduction_tariff_income_step
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Charnwood Local Council Tax Support Scheme 2026 paragraph 72
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-charnwood/manual/council-tax-reduction-scheme-2026-2027/page-94, excerpt: '£1 for each £250 in excess of £6,000 but not exceeding £16,000'}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '250'}]
+  - name: charnwood_council_tax_reduction_tariff_income_weekly_amount_per_step
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Charnwood Local Council Tax Support Scheme 2026 paragraph 72
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-charnwood/manual/council-tax-reduction-scheme-2026-2027/page-94, excerpt: '£1 for each £250 in excess of £6,000 but not exceeding £16,000'}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '1'}]
+  - name: charnwood_council_tax_reduction_weeks_per_year
+    kind: parameter
+    dtype: Number
+    period: Year
+    source: Charnwood Local Council Tax Support Scheme 2026 paragraph 28(3)
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-charnwood/manual/council-tax-reduction-scheme-2026-2027/page-40, excerpt: 'multiply the maximum amount by 12 and divide the product by 52'}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '52'}]
+  - name: charnwood_council_tax_reduction_non_dependant_deduction_weekly_by_band
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    indexed_by: charnwood_council_tax_reduction_non_dependant_deduction_band
+    source: Charnwood Local Council Tax Support Scheme 2026 paragraph 30(1)-(2)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].values
+            kind: parameter_table
+            source:
+              corpus_citation_path: uk-charnwood/manual/council-tax-reduction-scheme-2026-2027/page-41
+              excerpt: "in respect of a non-dependant aged 18 or over in remunerative work, £15.95 x 1/7. (b) in respect of a non-dependant aged 18 or over to whom paragraph (a) does not apply, £5.20 x 1/7.\n\n(2) In the case of a non-dependant aged 18 or over to whom sub-paragraph (1)(a) applies, where it is shown to the appropriate authority that his normal gross weekly income is— (a) less than £278.99, the deduction to be made under this paragraph is that specified in sub-paragraph (1)(b). (b) not less than £279.00 but less than £484.99, the deduction to be made under this paragraph is £10.60 x1/7. (c) not less than £485.00 but less than £604.99, the deduction to be made under this paragraph is £13.30 x1/7."
+              table: {header: Working-age non-dependant deductions, row_key: deduction band, column_key: weekly deduction before multiplication by 1/7}
+    versions: [{effective_from: '2026-04-01', values: {0: 5.20, 1: 10.60, 2: 13.30, 3: 15.95}}]
+  - name: charnwood_council_tax_reduction_working_age_scheme_applies
+    kind: derived
+    entity: Household
+    dtype: Judgment
+    period: Year
+    source: Charnwood Local Council Tax Support Scheme 2026 Classes D and E
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: condition, source: {corpus_citation_path: uk-charnwood/manual/council-tax-reduction-scheme-2026-2027/page-28, excerpt: 'persons who are not pensioners'}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 'local_authority_is_charnwood and council_tax_reduction_household_in_england and charnwood_council_tax_reduction_applicant_is_not_pensioner'}]
+  - name: charnwood_council_tax_reduction_capital_eligible
+    kind: derived
+    entity: Household
+    dtype: Judgment
+    period: Year
+    source: Charnwood Local Council Tax Support Scheme 2026 paragraph 23
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: condition, source: {corpus_citation_path: uk-charnwood/manual/council-tax-reduction-scheme-2026-2027/page-37, excerpt: 'capital exceeds £16,000'}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 'charnwood_council_tax_reduction_assessed_capital_for_year <= charnwood_council_tax_reduction_capital_limit'}]
+  - name: charnwood_council_tax_reduction_tariff_income_for_year
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Charnwood Local Council Tax Support Scheme 2026 paragraph 72
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-charnwood/manual/council-tax-reduction-scheme-2026-2027/page-94, excerpt: '£1 for any excess which is not a complete £250'}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 'if charnwood_council_tax_reduction_assessed_capital_for_year > charnwood_council_tax_reduction_tariff_income_threshold: ceil((charnwood_council_tax_reduction_assessed_capital_for_year - charnwood_council_tax_reduction_tariff_income_threshold) / charnwood_council_tax_reduction_tariff_income_step) * charnwood_council_tax_reduction_tariff_income_weekly_amount_per_step * charnwood_council_tax_reduction_weeks_per_year else: charnwood_council_tax_reduction_capital_limit - charnwood_council_tax_reduction_capital_limit'}]
+  - name: charnwood_council_tax_reduction_non_dependant_deduction_band
+    kind: derived
+    entity: Person
+    dtype: Number
+    period: Week
+    source: Charnwood Local Council Tax Support Scheme 2026 paragraph 30(1)-(2)
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: parameter_table, source: {corpus_citation_path: uk-charnwood/manual/council-tax-reduction-scheme-2026-2027/page-41, excerpt: 'not less than £279.00 but less than £484.99, the deduction to be made under this paragraph is £10.60 x1/7. (c) not less than £485.00 but less than £604.99, the deduction to be made under this paragraph is £13.30 x1/7.'}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 'if charnwood_council_tax_reduction_non_dependant_deduction_applies: if charnwood_council_tax_reduction_non_dependant_in_remunerative_work: if charnwood_council_tax_reduction_non_dependant_normal_gross_weekly_income < charnwood_council_tax_reduction_non_dependant_low_income_threshold: 0 else: if charnwood_council_tax_reduction_non_dependant_normal_gross_weekly_income < charnwood_council_tax_reduction_non_dependant_middle_income_threshold: 1 else: if charnwood_council_tax_reduction_non_dependant_normal_gross_weekly_income < charnwood_council_tax_reduction_non_dependant_top_income_threshold: 2 else: 3 else: 0 else: 0'}]
+  - name: charnwood_council_tax_reduction_non_dependant_low_income_threshold
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Charnwood Local Council Tax Support Scheme 2026 paragraph 30(2)(a)
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-charnwood/manual/council-tax-reduction-scheme-2026-2027/page-41, excerpt: 'less than £278.99'}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '278.99'}]
+  - name: charnwood_council_tax_reduction_non_dependant_middle_income_threshold
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Charnwood Local Council Tax Support Scheme 2026 paragraph 30(2)(b)
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-charnwood/manual/council-tax-reduction-scheme-2026-2027/page-41, excerpt: 'not less than £279.00 but less than £484.99'}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '484.99'}]
+  - name: charnwood_council_tax_reduction_non_dependant_top_income_threshold
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Charnwood Local Council Tax Support Scheme 2026 paragraph 30(2)(c)
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-charnwood/manual/council-tax-reduction-scheme-2026-2027/page-41, excerpt: 'not less than £485.00 but less than £604.99'}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '604.99'}]
+  - name: charnwood_council_tax_reduction_individual_non_dependant_deduction_weekly
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Charnwood Local Council Tax Support Scheme 2026 paragraph 30
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-charnwood/manual/council-tax-reduction-scheme-2026-2027/page-41, excerpt: 'the non-dependant deductions in respect of a day referred to in paragraph 29 are'}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 'charnwood_council_tax_reduction_non_dependant_deduction_weekly_by_band[charnwood_council_tax_reduction_non_dependant_deduction_band]'}]
+  - name: charnwood_council_tax_reduction_maximum_council_tax_reduction_for_year
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Charnwood Local Council Tax Support Scheme 2026 paragraph 29
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-charnwood/manual/council-tax-reduction-scheme-2026-2027/page-40, excerpt: 'a person''s maximum council tax support amount in respect of a day is 100 per cent of the amount A/B'}}, {path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-charnwood/manual/council-tax-reduction-scheme-2026-2027/page-40, excerpt: 'less any deductions in respect of non-dependants which fall to be made under paragraph 30'}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 'charnwood_council_tax_reduction_actual_liability_for_year * charnwood_council_tax_reduction_maximum_support_rate - charnwood_council_tax_reduction_non_dependant_deductions_for_year'}]
+  - name: charnwood_council_tax_reduction_excess_income_for_year
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Charnwood Local Council Tax Support Scheme 2026 Class E
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-charnwood/manual/council-tax-reduction-scheme-2026-2027/page-28, excerpt: 'difference between his income for the relevant week and his applicable amount'}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 'max(charnwood_council_tax_reduction_assessed_income_for_year + charnwood_council_tax_reduction_tariff_income_for_year - charnwood_council_tax_reduction_applicable_amount_for_year, charnwood_council_tax_reduction_capital_limit - charnwood_council_tax_reduction_capital_limit)'}]
+  - name: charnwood_council_tax_reduction_income_taper_deduction_for_year
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Charnwood Local Council Tax Support Scheme 2026 Class E
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-charnwood/manual/council-tax-reduction-scheme-2026-2027/page-28, excerpt: 'amount B is 2 6/7 per cent of the difference between his income for the relevant week and his applicable amount'}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 'charnwood_council_tax_reduction_excess_income_for_year * charnwood_council_tax_reduction_weekly_taper_rate'}]
+  - name: charnwood_council_tax_reduction_class_d
+    kind: derived
+    entity: Household
+    dtype: Judgment
+    period: Year
+    source: Charnwood Local Council Tax Support Scheme 2026 Class D
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: condition, source: {corpus_citation_path: uk-charnwood/manual/council-tax-reduction-scheme-2026-2027/page-28, excerpt: 'whose income (if any) for the relevant week is less than his applicable amount'}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 'charnwood_council_tax_reduction_working_age_scheme_applies and would_claim_council_tax_reduction and charnwood_council_tax_reduction_assessed_income_for_year + charnwood_council_tax_reduction_tariff_income_for_year < charnwood_council_tax_reduction_applicable_amount_for_year'}]
+  - name: charnwood_council_tax_reduction_class_e
+    kind: derived
+    entity: Household
+    dtype: Judgment
+    period: Year
+    source: Charnwood Local Council Tax Support Scheme 2026 Class E
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: condition, source: {corpus_citation_path: uk-charnwood/manual/council-tax-reduction-scheme-2026-2027/page-28, excerpt: 'whose income for the relevant week is greater than his applicable amount'}}, {path: 'versions[0].formula', kind: condition, source: {corpus_citation_path: uk-charnwood/manual/council-tax-reduction-scheme-2026-2027/page-28, excerpt: 'in respect of whom amount A exceeds amount B'}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 'charnwood_council_tax_reduction_working_age_scheme_applies and would_claim_council_tax_reduction and charnwood_council_tax_reduction_assessed_income_for_year + charnwood_council_tax_reduction_tariff_income_for_year > charnwood_council_tax_reduction_applicable_amount_for_year and charnwood_council_tax_reduction_maximum_council_tax_reduction_for_year > charnwood_council_tax_reduction_income_taper_deduction_for_year'}]
+  - name: charnwood_council_tax_reduction_award_conditions_met
+    kind: derived
+    entity: Household
+    dtype: Judgment
+    period: Year
+    source: Charnwood Local Council Tax Support Scheme 2026 Classes D and E
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: condition, source: {corpus_citation_path: uk-charnwood/manual/council-tax-reduction-scheme-2026-2027/page-28, excerpt: 'Class D: persons who are not pensioners whose income is less than the applicable amount'}}, {path: 'versions[0].formula', kind: condition, source: {corpus_citation_path: uk-charnwood/manual/council-tax-reduction-scheme-2026-2027/page-28, excerpt: 'Class E: persons who are not pensioners whose income is greater than the applicable amount'}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 'charnwood_council_tax_reduction_capital_eligible and (charnwood_council_tax_reduction_class_d or charnwood_council_tax_reduction_class_e)'}]
+  - name: charnwood_council_tax_reduction_annual_amount
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Charnwood Local Council Tax Support Scheme 2026 paragraph 32
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-charnwood/manual/council-tax-reduction-scheme-2026-2027/page-46, excerpt: 'Where the person is within class A or D97'}}, {path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-charnwood/manual/council-tax-reduction-scheme-2026-2027/page-46, excerpt: 'Where the person is within class B or E98, that amount is the amount found by deducting amount B from amount A'}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 'if charnwood_council_tax_reduction_award_conditions_met: if charnwood_council_tax_reduction_class_d: charnwood_council_tax_reduction_maximum_council_tax_reduction_for_year else: charnwood_council_tax_reduction_maximum_council_tax_reduction_for_year - charnwood_council_tax_reduction_income_taper_deduction_for_year else: charnwood_council_tax_reduction_capital_limit - charnwood_council_tax_reduction_capital_limit'}]
+inputs:
+  - {name: local_authority_is_charnwood, entity: Household, dtype: Boolean, period: Year}
+  - {name: council_tax_reduction_household_in_england, entity: Household, dtype: Boolean, period: Year}
+  - {name: charnwood_council_tax_reduction_applicant_is_not_pensioner, entity: Household, dtype: Boolean, period: Year}
+  - {name: would_claim_council_tax_reduction, entity: Household, dtype: Boolean, period: Year}
+  - {name: charnwood_council_tax_reduction_assessed_capital_for_year, entity: Household, dtype: Money, period: Year, unit: GBP}
+  - {name: charnwood_council_tax_reduction_actual_liability_for_year, entity: Household, dtype: Money, period: Year, unit: GBP}
+  - {name: charnwood_council_tax_reduction_assessed_income_for_year, entity: Household, dtype: Money, period: Year, unit: GBP}
+  - {name: charnwood_council_tax_reduction_applicable_amount_for_year, entity: Household, dtype: Money, period: Year, unit: GBP}
+  - {name: charnwood_council_tax_reduction_non_dependant_deductions_for_year, entity: Household, dtype: Money, period: Year, unit: GBP}
+  - {name: charnwood_council_tax_reduction_non_dependant_deduction_applies, entity: Person, dtype: Boolean, period: Week}
+  - {name: charnwood_council_tax_reduction_non_dependant_in_remunerative_work, entity: Person, dtype: Boolean, period: Week}
+  - {name: charnwood_council_tax_reduction_non_dependant_normal_gross_weekly_income, entity: Person, dtype: Money, period: Week, unit: GBP}
