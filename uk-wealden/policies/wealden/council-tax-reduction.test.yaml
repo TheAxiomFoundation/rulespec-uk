@@ -1,4 +1,4 @@
-- name: wealden_ctr_single_band_1_full_maximum
+- name: wealden_ctr_companion_scheme_applies
   period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
   input:
     uk-wealden:policies/wealden/council-tax-reduction#input.local_authority_is_wealden: true
@@ -13,15 +13,136 @@
     uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_maximum_eligible_liability_for_year: 1800
   output:
     uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_working_age_scheme_applies: holds
+
+- name: wealden_ctr_companion_family_category
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wealden:policies/wealden/council-tax-reduction#input.local_authority_is_wealden: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_applicant_is_working_age: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_partner: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_one_dependant: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_weekly_income: 110.03
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+  output:
     uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_family_category: 0
+
+- name: wealden_ctr_companion_capital_eligible
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wealden:policies/wealden/council-tax-reduction#input.local_authority_is_wealden: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_applicant_is_working_age: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_partner: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_one_dependant: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_weekly_income: 110.03
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+  output:
     uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_capital_eligible: holds
+
+- name: wealden_ctr_companion_income_band
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wealden:policies/wealden/council-tax-reduction#input.local_authority_is_wealden: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_applicant_is_working_age: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_partner: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_one_dependant: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_weekly_income: 110.03
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+  output:
     uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_income_band: 0
+
+- name: wealden_ctr_companion_selected_support_rate
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wealden:policies/wealden/council-tax-reduction#input.local_authority_is_wealden: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_applicant_is_working_age: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_partner: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_one_dependant: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_weekly_income: 110.03
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+  output:
     uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_selected_support_rate: 1
+
+- name: wealden_ctr_companion_maximum_amount
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wealden:policies/wealden/council-tax-reduction#input.local_authority_is_wealden: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_applicant_is_working_age: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_partner: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_one_dependant: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_weekly_income: 110.03
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+  output:
     uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_maximum_amount_for_year: 1800
+
+- name: wealden_ctr_companion_simulated_award_at_capital_limit
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wealden:policies/wealden/council-tax-reduction#input.local_authority_is_wealden: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_applicant_is_working_age: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_partner: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_one_dependant: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_weekly_income: 110.03
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+  output:
     uk-wealden:policies/wealden/council-tax-reduction#simulated_wealden_council_tax_reduction_annual_amount: 1800
+
+- name: wealden_ctr_companion_exact_capital_limit_operative_award
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wealden:policies/wealden/council-tax-reduction#input.local_authority_is_wealden: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_applicant_is_working_age: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_partner: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_one_dependant: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_weekly_income: 110.03
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+  output:
     uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_annual_amount: 1800
 
-- name: wealden_ctr_single_band_2_lower_edge
+- name: wealden_ctr_family_0_band_1_2_below_or_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wealden:policies/wealden/council-tax-reduction#input.local_authority_is_wealden: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_applicant_is_working_age: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_partner: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_one_dependant: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_weekly_income: 110.03
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+  output:
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_annual_amount: 1800
+
+- name: wealden_ctr_family_0_band_1_2_at_or_above
   period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
   input:
     uk-wealden:policies/wealden/council-tax-reduction#input.local_authority_is_wealden: true
@@ -37,7 +158,23 @@
   output:
     uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_annual_amount: 1440
 
-- name: wealden_ctr_single_band_3_lower_edge
+- name: wealden_ctr_family_0_band_2_3_below_or_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wealden:policies/wealden/council-tax-reduction#input.local_authority_is_wealden: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_applicant_is_working_age: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_partner: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_one_dependant: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_weekly_income: 175.27
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+  output:
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_annual_amount: 1440
+
+- name: wealden_ctr_family_0_band_2_3_at_or_above
   period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
   input:
     uk-wealden:policies/wealden/council-tax-reduction#input.local_authority_is_wealden: true
@@ -53,7 +190,23 @@
   output:
     uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_annual_amount: 1080
 
-- name: wealden_ctr_single_band_4_lower_edge
+- name: wealden_ctr_family_0_band_3_4_below_or_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wealden:policies/wealden/council-tax-reduction#input.local_authority_is_wealden: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_applicant_is_working_age: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_partner: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_one_dependant: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_weekly_income: 240.55
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+  output:
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_annual_amount: 1080
+
+- name: wealden_ctr_family_0_band_3_4_at_or_above
   period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
   input:
     uk-wealden:policies/wealden/council-tax-reduction#input.local_authority_is_wealden: true
@@ -69,7 +222,103 @@
   output:
     uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_annual_amount: 720
 
-- name: wealden_ctr_couple_no_children_edge
+- name: wealden_ctr_family_0_band_4_zero_below_or_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wealden:policies/wealden/council-tax-reduction#input.local_authority_is_wealden: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_applicant_is_working_age: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_partner: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_one_dependant: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_weekly_income: 307.07
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+  output:
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_annual_amount: 720
+
+- name: wealden_ctr_family_0_band_4_zero_at_or_above
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wealden:policies/wealden/council-tax-reduction#input.local_authority_is_wealden: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_applicant_is_working_age: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_partner: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_one_dependant: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_weekly_income: 307.08
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+  output:
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_annual_amount: 0
+
+- name: wealden_ctr_family_1_band_1_2_below_or_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wealden:policies/wealden/council-tax-reduction#input.local_authority_is_wealden: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_applicant_is_working_age: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_partner: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_one_dependant: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_weekly_income: 162.5
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+  output:
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_annual_amount: 1800
+
+- name: wealden_ctr_family_1_band_1_2_at_or_above
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wealden:policies/wealden/council-tax-reduction#input.local_authority_is_wealden: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_applicant_is_working_age: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_partner: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_one_dependant: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_weekly_income: 162.51
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+  output:
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_annual_amount: 1440
+
+- name: wealden_ctr_family_1_band_2_3_below_or_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wealden:policies/wealden/council-tax-reduction#input.local_authority_is_wealden: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_applicant_is_working_age: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_partner: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_one_dependant: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_weekly_income: 227.75
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+  output:
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_annual_amount: 1440
+
+- name: wealden_ctr_family_1_band_2_3_at_or_above
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wealden:policies/wealden/council-tax-reduction#input.local_authority_is_wealden: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_applicant_is_working_age: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_partner: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_one_dependant: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_weekly_income: 227.76
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+  output:
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_annual_amount: 1080
+
+- name: wealden_ctr_family_1_band_3_4_below_or_at
   period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
   input:
     uk-wealden:policies/wealden/council-tax-reduction#input.local_authority_is_wealden: true
@@ -85,7 +334,119 @@
   output:
     uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_annual_amount: 1080
 
-- name: wealden_ctr_lone_parent_one_child_edge
+- name: wealden_ctr_family_1_band_3_4_at_or_above
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wealden:policies/wealden/council-tax-reduction#input.local_authority_is_wealden: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_applicant_is_working_age: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_partner: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_one_dependant: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_weekly_income: 291.73
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+  output:
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_annual_amount: 720
+
+- name: wealden_ctr_family_1_band_4_zero_below_or_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wealden:policies/wealden/council-tax-reduction#input.local_authority_is_wealden: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_applicant_is_working_age: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_partner: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_one_dependant: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_weekly_income: 344.19
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+  output:
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_annual_amount: 720
+
+- name: wealden_ctr_family_1_band_4_zero_at_or_above
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wealden:policies/wealden/council-tax-reduction#input.local_authority_is_wealden: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_applicant_is_working_age: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_partner: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_one_dependant: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_weekly_income: 344.2
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+  output:
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_annual_amount: 0
+
+- name: wealden_ctr_family_2_band_1_2_below_or_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wealden:policies/wealden/council-tax-reduction#input.local_authority_is_wealden: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_applicant_is_working_age: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_partner: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_one_dependant: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_weekly_income: 227.75
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+  output:
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_annual_amount: 1800
+
+- name: wealden_ctr_family_2_band_1_2_at_or_above
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wealden:policies/wealden/council-tax-reduction#input.local_authority_is_wealden: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_applicant_is_working_age: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_partner: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_one_dependant: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_weekly_income: 227.76
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+  output:
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_annual_amount: 1440
+
+- name: wealden_ctr_family_2_band_2_3_below_or_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wealden:policies/wealden/council-tax-reduction#input.local_authority_is_wealden: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_applicant_is_working_age: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_partner: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_one_dependant: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_weekly_income: 291.72
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+  output:
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_annual_amount: 1440
+
+- name: wealden_ctr_family_2_band_2_3_at_or_above
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wealden:policies/wealden/council-tax-reduction#input.local_authority_is_wealden: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_applicant_is_working_age: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_partner: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_one_dependant: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_weekly_income: 291.73
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+  output:
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_annual_amount: 1080
+
+- name: wealden_ctr_family_2_band_3_4_below_or_at
   period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
   input:
     uk-wealden:policies/wealden/council-tax-reduction#input.local_authority_is_wealden: true
@@ -101,7 +462,119 @@
   output:
     uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_annual_amount: 1080
 
-- name: wealden_ctr_lone_parent_two_children_edge
+- name: wealden_ctr_family_2_band_3_4_at_or_above
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wealden:policies/wealden/council-tax-reduction#input.local_authority_is_wealden: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_applicant_is_working_age: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_partner: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_one_dependant: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_weekly_income: 356.98
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+  output:
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_annual_amount: 720
+
+- name: wealden_ctr_family_2_band_4_zero_below_or_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wealden:policies/wealden/council-tax-reduction#input.local_authority_is_wealden: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_applicant_is_working_age: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_partner: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_one_dependant: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_weekly_income: 422.24
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+  output:
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_annual_amount: 720
+
+- name: wealden_ctr_family_2_band_4_zero_at_or_above
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wealden:policies/wealden/council-tax-reduction#input.local_authority_is_wealden: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_applicant_is_working_age: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_partner: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_one_dependant: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_weekly_income: 422.25
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+  output:
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_annual_amount: 0
+
+- name: wealden_ctr_family_3_band_1_2_below_or_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wealden:policies/wealden/council-tax-reduction#input.local_authority_is_wealden: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_applicant_is_working_age: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_partner: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_one_dependant: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_two_or_more_dependants: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_weekly_income: 291.72
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+  output:
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_annual_amount: 1800
+
+- name: wealden_ctr_family_3_band_1_2_at_or_above
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wealden:policies/wealden/council-tax-reduction#input.local_authority_is_wealden: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_applicant_is_working_age: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_partner: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_one_dependant: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_two_or_more_dependants: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_weekly_income: 291.73
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+  output:
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_annual_amount: 1440
+
+- name: wealden_ctr_family_3_band_2_3_below_or_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wealden:policies/wealden/council-tax-reduction#input.local_authority_is_wealden: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_applicant_is_working_age: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_partner: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_one_dependant: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_two_or_more_dependants: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_weekly_income: 356.97
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+  output:
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_annual_amount: 1440
+
+- name: wealden_ctr_family_3_band_2_3_at_or_above
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wealden:policies/wealden/council-tax-reduction#input.local_authority_is_wealden: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_applicant_is_working_age: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_partner: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_one_dependant: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_two_or_more_dependants: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_weekly_income: 356.98
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+  output:
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_annual_amount: 1080
+
+- name: wealden_ctr_family_3_band_3_4_below_or_at
   period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
   input:
     uk-wealden:policies/wealden/council-tax-reduction#input.local_authority_is_wealden: true
@@ -117,7 +590,537 @@
   output:
     uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_annual_amount: 1080
 
-- name: wealden_ctr_capital_cliff_above_limit
+- name: wealden_ctr_family_3_band_3_4_at_or_above
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wealden:policies/wealden/council-tax-reduction#input.local_authority_is_wealden: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_applicant_is_working_age: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_partner: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_one_dependant: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_two_or_more_dependants: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_weekly_income: 422.25
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+  output:
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_annual_amount: 720
+
+- name: wealden_ctr_family_3_band_4_zero_below_or_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wealden:policies/wealden/council-tax-reduction#input.local_authority_is_wealden: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_applicant_is_working_age: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_partner: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_one_dependant: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_two_or_more_dependants: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_weekly_income: 487.50
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+  output:
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_annual_amount: 720
+
+- name: wealden_ctr_family_3_band_4_zero_at_or_above
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wealden:policies/wealden/council-tax-reduction#input.local_authority_is_wealden: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_applicant_is_working_age: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_partner: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_one_dependant: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_two_or_more_dependants: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_weekly_income: 487.51
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+  output:
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_annual_amount: 0
+
+- name: wealden_ctr_parameter_table_family_0_band_0
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wealden:policies/wealden/council-tax-reduction#input.local_authority_is_wealden: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_applicant_is_working_age: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_partner: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_one_dependant: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_weekly_income: 0
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_family_category: 0
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_income_band: 0
+  output:
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_maximum_support_rate: 1
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_capital_limit: 6000
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_family_category_codes: 0
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_income_band_codes: 0
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_support_rate_by_income_band: 1
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_2_lower_weekly_income_by_family: 110.04
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_3_lower_weekly_income_by_family: 175.28
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_4_lower_weekly_income_by_family: 240.56
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_4_upper_weekly_income_by_family: 307.07
+
+- name: wealden_ctr_parameter_table_family_0_band_1
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wealden:policies/wealden/council-tax-reduction#input.local_authority_is_wealden: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_applicant_is_working_age: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_partner: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_one_dependant: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_weekly_income: 110.04
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_family_category: 0
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_income_band: 1
+  output:
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_family_category_codes: 0
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_income_band_codes: 1
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_support_rate_by_income_band: 0.8
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_2_lower_weekly_income_by_family: 110.04
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_3_lower_weekly_income_by_family: 175.28
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_4_lower_weekly_income_by_family: 240.56
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_4_upper_weekly_income_by_family: 307.07
+
+- name: wealden_ctr_parameter_table_family_0_band_2
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wealden:policies/wealden/council-tax-reduction#input.local_authority_is_wealden: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_applicant_is_working_age: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_partner: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_one_dependant: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_weekly_income: 175.28
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_family_category: 0
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_income_band: 2
+  output:
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_family_category_codes: 0
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_income_band_codes: 2
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_support_rate_by_income_band: 0.6
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_2_lower_weekly_income_by_family: 110.04
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_3_lower_weekly_income_by_family: 175.28
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_4_lower_weekly_income_by_family: 240.56
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_4_upper_weekly_income_by_family: 307.07
+
+- name: wealden_ctr_parameter_table_family_0_band_3
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wealden:policies/wealden/council-tax-reduction#input.local_authority_is_wealden: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_applicant_is_working_age: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_partner: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_one_dependant: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_weekly_income: 240.56
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_family_category: 0
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_income_band: 3
+  output:
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_family_category_codes: 0
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_income_band_codes: 3
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_support_rate_by_income_band: 0.4
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_2_lower_weekly_income_by_family: 110.04
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_3_lower_weekly_income_by_family: 175.28
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_4_lower_weekly_income_by_family: 240.56
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_4_upper_weekly_income_by_family: 307.07
+
+- name: wealden_ctr_parameter_table_family_0_band_4
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wealden:policies/wealden/council-tax-reduction#input.local_authority_is_wealden: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_applicant_is_working_age: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_partner: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_one_dependant: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_weekly_income: 307.08
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_family_category: 0
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_income_band: 4
+  output:
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_family_category_codes: 0
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_income_band_codes: 4
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_support_rate_by_income_band: 0
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_2_lower_weekly_income_by_family: 110.04
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_3_lower_weekly_income_by_family: 175.28
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_4_lower_weekly_income_by_family: 240.56
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_4_upper_weekly_income_by_family: 307.07
+
+- name: wealden_ctr_parameter_table_family_1_band_0
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wealden:policies/wealden/council-tax-reduction#input.local_authority_is_wealden: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_applicant_is_working_age: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_partner: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_one_dependant: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_weekly_income: 0
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_family_category: 1
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_income_band: 0
+  output:
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_family_category_codes: 1
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_income_band_codes: 0
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_support_rate_by_income_band: 1
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_2_lower_weekly_income_by_family: 162.51
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_3_lower_weekly_income_by_family: 227.76
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_4_lower_weekly_income_by_family: 291.73
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_4_upper_weekly_income_by_family: 344.19
+
+- name: wealden_ctr_parameter_table_family_1_band_1
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wealden:policies/wealden/council-tax-reduction#input.local_authority_is_wealden: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_applicant_is_working_age: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_partner: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_one_dependant: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_weekly_income: 162.51
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_family_category: 1
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_income_band: 1
+  output:
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_family_category_codes: 1
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_income_band_codes: 1
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_support_rate_by_income_band: 0.8
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_2_lower_weekly_income_by_family: 162.51
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_3_lower_weekly_income_by_family: 227.76
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_4_lower_weekly_income_by_family: 291.73
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_4_upper_weekly_income_by_family: 344.19
+
+- name: wealden_ctr_parameter_table_family_1_band_2
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wealden:policies/wealden/council-tax-reduction#input.local_authority_is_wealden: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_applicant_is_working_age: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_partner: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_one_dependant: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_weekly_income: 227.76
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_family_category: 1
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_income_band: 2
+  output:
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_family_category_codes: 1
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_income_band_codes: 2
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_support_rate_by_income_band: 0.6
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_2_lower_weekly_income_by_family: 162.51
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_3_lower_weekly_income_by_family: 227.76
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_4_lower_weekly_income_by_family: 291.73
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_4_upper_weekly_income_by_family: 344.19
+
+- name: wealden_ctr_parameter_table_family_1_band_3
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wealden:policies/wealden/council-tax-reduction#input.local_authority_is_wealden: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_applicant_is_working_age: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_partner: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_one_dependant: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_weekly_income: 291.73
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_family_category: 1
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_income_band: 3
+  output:
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_family_category_codes: 1
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_income_band_codes: 3
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_support_rate_by_income_band: 0.4
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_2_lower_weekly_income_by_family: 162.51
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_3_lower_weekly_income_by_family: 227.76
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_4_lower_weekly_income_by_family: 291.73
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_4_upper_weekly_income_by_family: 344.19
+
+- name: wealden_ctr_parameter_table_family_1_band_4
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wealden:policies/wealden/council-tax-reduction#input.local_authority_is_wealden: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_applicant_is_working_age: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_partner: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_one_dependant: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_weekly_income: 344.20
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_family_category: 1
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_income_band: 4
+  output:
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_family_category_codes: 1
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_income_band_codes: 4
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_support_rate_by_income_band: 0
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_2_lower_weekly_income_by_family: 162.51
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_3_lower_weekly_income_by_family: 227.76
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_4_lower_weekly_income_by_family: 291.73
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_4_upper_weekly_income_by_family: 344.19
+
+- name: wealden_ctr_parameter_table_family_2_band_0
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wealden:policies/wealden/council-tax-reduction#input.local_authority_is_wealden: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_applicant_is_working_age: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_partner: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_one_dependant: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_weekly_income: 0
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_family_category: 2
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_income_band: 0
+  output:
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_family_category_codes: 2
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_income_band_codes: 0
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_support_rate_by_income_band: 1
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_2_lower_weekly_income_by_family: 227.76
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_3_lower_weekly_income_by_family: 291.73
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_4_lower_weekly_income_by_family: 356.98
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_4_upper_weekly_income_by_family: 422.24
+
+- name: wealden_ctr_parameter_table_family_2_band_1
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wealden:policies/wealden/council-tax-reduction#input.local_authority_is_wealden: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_applicant_is_working_age: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_partner: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_one_dependant: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_weekly_income: 227.76
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_family_category: 2
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_income_band: 1
+  output:
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_family_category_codes: 2
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_income_band_codes: 1
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_support_rate_by_income_band: 0.8
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_2_lower_weekly_income_by_family: 227.76
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_3_lower_weekly_income_by_family: 291.73
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_4_lower_weekly_income_by_family: 356.98
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_4_upper_weekly_income_by_family: 422.24
+
+- name: wealden_ctr_parameter_table_family_2_band_2
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wealden:policies/wealden/council-tax-reduction#input.local_authority_is_wealden: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_applicant_is_working_age: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_partner: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_one_dependant: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_weekly_income: 291.73
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_family_category: 2
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_income_band: 2
+  output:
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_family_category_codes: 2
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_income_band_codes: 2
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_support_rate_by_income_band: 0.6
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_2_lower_weekly_income_by_family: 227.76
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_3_lower_weekly_income_by_family: 291.73
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_4_lower_weekly_income_by_family: 356.98
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_4_upper_weekly_income_by_family: 422.24
+
+- name: wealden_ctr_parameter_table_family_2_band_3
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wealden:policies/wealden/council-tax-reduction#input.local_authority_is_wealden: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_applicant_is_working_age: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_partner: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_one_dependant: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_weekly_income: 356.98
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_family_category: 2
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_income_band: 3
+  output:
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_family_category_codes: 2
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_income_band_codes: 3
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_support_rate_by_income_band: 0.4
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_2_lower_weekly_income_by_family: 227.76
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_3_lower_weekly_income_by_family: 291.73
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_4_lower_weekly_income_by_family: 356.98
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_4_upper_weekly_income_by_family: 422.24
+
+- name: wealden_ctr_parameter_table_family_2_band_4
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wealden:policies/wealden/council-tax-reduction#input.local_authority_is_wealden: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_applicant_is_working_age: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_partner: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_one_dependant: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_two_or_more_dependants: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_weekly_income: 422.25
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_family_category: 2
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_income_band: 4
+  output:
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_family_category_codes: 2
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_income_band_codes: 4
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_support_rate_by_income_band: 0
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_2_lower_weekly_income_by_family: 227.76
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_3_lower_weekly_income_by_family: 291.73
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_4_lower_weekly_income_by_family: 356.98
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_4_upper_weekly_income_by_family: 422.24
+
+- name: wealden_ctr_parameter_table_family_3_band_0
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wealden:policies/wealden/council-tax-reduction#input.local_authority_is_wealden: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_applicant_is_working_age: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_partner: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_one_dependant: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_two_or_more_dependants: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_weekly_income: 0
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_family_category: 3
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_income_band: 0
+  output:
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_family_category_codes: 3
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_income_band_codes: 0
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_support_rate_by_income_band: 1
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_2_lower_weekly_income_by_family: 291.73
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_3_lower_weekly_income_by_family: 356.98
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_4_lower_weekly_income_by_family: 422.25
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_4_upper_weekly_income_by_family: 487.50
+
+- name: wealden_ctr_parameter_table_family_3_band_1
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wealden:policies/wealden/council-tax-reduction#input.local_authority_is_wealden: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_applicant_is_working_age: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_partner: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_one_dependant: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_two_or_more_dependants: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_weekly_income: 291.73
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_family_category: 3
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_income_band: 1
+  output:
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_family_category_codes: 3
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_income_band_codes: 1
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_support_rate_by_income_band: 0.8
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_2_lower_weekly_income_by_family: 291.73
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_3_lower_weekly_income_by_family: 356.98
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_4_lower_weekly_income_by_family: 422.25
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_4_upper_weekly_income_by_family: 487.50
+
+- name: wealden_ctr_parameter_table_family_3_band_2
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wealden:policies/wealden/council-tax-reduction#input.local_authority_is_wealden: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_applicant_is_working_age: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_partner: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_one_dependant: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_two_or_more_dependants: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_weekly_income: 356.98
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_family_category: 3
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_income_band: 2
+  output:
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_family_category_codes: 3
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_income_band_codes: 2
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_support_rate_by_income_band: 0.6
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_2_lower_weekly_income_by_family: 291.73
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_3_lower_weekly_income_by_family: 356.98
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_4_lower_weekly_income_by_family: 422.25
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_4_upper_weekly_income_by_family: 487.50
+
+- name: wealden_ctr_parameter_table_family_3_band_3
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wealden:policies/wealden/council-tax-reduction#input.local_authority_is_wealden: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_applicant_is_working_age: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_partner: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_one_dependant: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_two_or_more_dependants: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_weekly_income: 422.25
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_family_category: 3
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_income_band: 3
+  output:
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_family_category_codes: 3
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_income_band_codes: 3
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_support_rate_by_income_band: 0.4
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_2_lower_weekly_income_by_family: 291.73
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_3_lower_weekly_income_by_family: 356.98
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_4_lower_weekly_income_by_family: 422.25
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_4_upper_weekly_income_by_family: 487.50
+
+- name: wealden_ctr_parameter_table_family_3_band_4
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-wealden:policies/wealden/council-tax-reduction#input.local_authority_is_wealden: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_applicant_is_working_age: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_partner: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_one_dependant: false
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_two_or_more_dependants: true
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_capital_for_year: 0
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_weekly_income: 487.51
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_family_category: 3
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_income_band: 4
+  output:
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_family_category_codes: 3
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_income_band_codes: 4
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_support_rate_by_income_band: 0
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_2_lower_weekly_income_by_family: 291.73
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_3_lower_weekly_income_by_family: 356.98
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_4_lower_weekly_income_by_family: 422.25
+    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_band_4_upper_weekly_income_by_family: 487.50
+
+- name: wealden_ctr_capital_cliff_simulated_award
   period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
   input:
     uk-wealden:policies/wealden/council-tax-reduction#input.local_authority_is_wealden: true
@@ -132,9 +1135,8 @@
     uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_maximum_eligible_liability_for_year: 1800
   output:
     uk-wealden:policies/wealden/council-tax-reduction#simulated_wealden_council_tax_reduction_annual_amount: 0
-    uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_annual_amount: 0
 
-- name: wealden_ctr_income_above_grid_zero_award
+- name: wealden_ctr_capital_cliff_operative_award
   period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
   input:
     uk-wealden:policies/wealden/council-tax-reduction#input.local_authority_is_wealden: true
@@ -144,8 +1146,8 @@
     uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_partner: false
     uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_one_dependant: false
     uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_has_two_or_more_dependants: false
-    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_capital_for_year: 0
-    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_weekly_income: 307.08
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_capital_for_year: 6000.01
+    uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_assessed_weekly_income: 0
     uk-wealden:policies/wealden/council-tax-reduction#input.wealden_council_tax_reduction_maximum_eligible_liability_for_year: 1800
   output:
     uk-wealden:policies/wealden/council-tax-reduction#wealden_council_tax_reduction_annual_amount: 0
