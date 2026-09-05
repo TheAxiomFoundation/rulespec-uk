@@ -100,6 +100,22 @@ rules:
     source: Cumberland Council Tax Reduction Scheme 2026/27 section 33.1
     metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: condition, source: {corpus_citation_path: uk-cumberland/manual/council-tax-reduction-scheme-2026-2027/page-55, excerpt: "no support shall be granted when the applicant has an amount greater that this level"}}]}}
     versions: [{effective_from: '2026-04-01', formula: 'cumberland_council_tax_reduction_assessed_capital_for_year <= cumberland_council_tax_reduction_capital_limit'}]
+  - name: cumberland_council_tax_reduction_working_age_scheme_applies
+    kind: derived
+    entity: Household
+    dtype: Judgment
+    period: Year
+    source: Cumberland Council Tax Reduction Scheme 2026/27 sections 1.6-1.7
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: condition, source: {corpus_citation_path: uk-cumberland/manual/council-tax-reduction-scheme-2026-2027/page-8, excerpt: "this scheme only applies to a person who; (a) has not attained the qualifying age for state pension credit; or (b) has attained the qualifying age for state pension credit if he, and his partner, is a person on income support, on an income-based jobseeker’s allowance, on an income-related employment and support allowance or on universal credit."}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 'cumberland_council_tax_reduction_applicant_is_working_age or cumberland_council_tax_reduction_receives_income_support or cumberland_council_tax_reduction_receives_income_based_jobseekers_allowance or cumberland_council_tax_reduction_receives_income_related_employment_and_support_allowance or cumberland_council_tax_reduction_receives_universal_credit'}]
+  - name: cumberland_council_tax_reduction_receives_passported_income_related_benefit
+    kind: derived
+    entity: Household
+    dtype: Judgment
+    period: Year
+    source: Cumberland Council Tax Reduction Scheme 2026/27 section 1.7 Class D
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: condition, source: {corpus_citation_path: uk-cumberland/manual/council-tax-reduction-scheme-2026-2027/page-8, excerpt: "the applicant or partner is in receipt of income support, jobseekers’ allowance (income based) or employment and support allowance (income related)"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 'cumberland_council_tax_reduction_receives_income_support or cumberland_council_tax_reduction_receives_income_based_jobseekers_allowance or cumberland_council_tax_reduction_receives_income_related_employment_and_support_allowance'}]
   - name: cumberland_council_tax_reduction_tariff_income_weekly
     kind: derived
     entity: Household
@@ -127,6 +143,14 @@ rules:
     source: Cumberland Council Tax Reduction Scheme 2026/27 section 57.1
     metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-cumberland/manual/council-tax-reduction-scheme-2026-2027/page-73, excerpt: "shall be 100 per cent, of the amount A divided by B"}}]}}
     versions: [{effective_from: '2026-04-01', formula: 'cumberland_council_tax_reduction_liability_weekly * cumberland_council_tax_reduction_maximum_support_rate - cumberland_council_tax_reduction_non_dependant_deductions_weekly'}]
+  - name: cumberland_council_tax_reduction_award_conditions_met
+    kind: derived
+    entity: Household
+    dtype: Judgment
+    period: Week
+    source: Cumberland Council Tax Reduction Scheme 2026/27 section 1.7 Classes D-E
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: condition, source: {corpus_citation_path: uk-cumberland/manual/council-tax-reduction-scheme-2026-2027/page-8, excerpt: "be liable to pay council tax in respect of a dwelling in which he is solely or mainly resident; (d) is not deemed to be absent from the dwelling; (e) not fall within a class of person prescribed for the purposes of paragraph 2(9) of Schedule 1A to the Local Government Finance Act 1992 and excluded from the authority’s scheme; (f) be somebody in respect of whom a maximum Council Tax Reduction2 amount can be calculated; (g) not have capital savings above £16,0003; (h) be a person in respect of whom a day in which s/he is liable to pay council tax falls within a week in respect of which the person’s income4 is less than their applicable amount5 or the applicant or partner is in receipt of income support, jobseekers’ allowance (income based) or employment and support allowance (income related); and (i) has made a valid application for reduction6."}}, {path: 'versions[0].formula', kind: condition, source: {corpus_citation_path: uk-cumberland/manual/council-tax-reduction-scheme-2026-2027/page-9, excerpt: "be a person in respect of whom a day in which s/he is liable to pay council tax falls within a week in respect of which the person’s income10 is more than their applicable amount11; (i) have made a valid application for reduction12; (j) be a person in respect of whom amount A exceeds amount B where (i) amount A is the maximum Council Tax Reduction in respect of the day in the applicant’s case; and\n\n(ii) amount B is 2 6/7 per cent of the difference between his income for the relevant week and his applicable amount."}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 'cumberland_council_tax_reduction_working_age_scheme_applies and cumberland_council_tax_reduction_applicant_is_liable_for_council_tax and cumberland_council_tax_reduction_applicant_resides_in_dwelling and cumberland_council_tax_reduction_applicant_is_not_deemed_absent and cumberland_council_tax_reduction_applicant_is_not_excluded_from_scheme and cumberland_council_tax_reduction_maximum_amount_can_be_calculated and cumberland_council_tax_reduction_capital_eligible and cumberland_council_tax_reduction_has_valid_application and (cumberland_council_tax_reduction_receives_passported_income_related_benefit or cumberland_council_tax_reduction_assessed_income_weekly + cumberland_council_tax_reduction_tariff_income_weekly < cumberland_council_tax_reduction_applicable_amount_weekly or (cumberland_council_tax_reduction_assessed_income_weekly + cumberland_council_tax_reduction_tariff_income_weekly > cumberland_council_tax_reduction_applicable_amount_weekly and cumberland_council_tax_reduction_maximum_amount_weekly > cumberland_council_tax_reduction_excess_income_weekly * cumberland_council_tax_reduction_weekly_taper_rate))'}]
   - name: cumberland_council_tax_reduction_award_weekly
     kind: derived
     entity: Household
@@ -135,7 +159,7 @@ rules:
     unit: GBP
     source: Cumberland Council Tax Reduction Scheme 2026/27 section 59.1
     metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-cumberland/manual/council-tax-reduction-scheme-2026-2027/page-75, excerpt: "Where an applicant’s income exceeds their applicable amount, their council tax reduction shall be calculated by deducting their excess income multiplied by the taper from their maximum council tax reduction as defined within section 57 of this scheme"}}]}}
-    versions: [{effective_from: '2026-04-01', formula: 'if cumberland_council_tax_reduction_capital_eligible: max(0, cumberland_council_tax_reduction_maximum_amount_weekly - cumberland_council_tax_reduction_excess_income_weekly * cumberland_council_tax_reduction_weekly_taper_rate) else: 0'}]
+    versions: [{effective_from: '2026-04-01', formula: 'if cumberland_council_tax_reduction_award_conditions_met: if cumberland_council_tax_reduction_receives_passported_income_related_benefit: cumberland_council_tax_reduction_maximum_amount_weekly else: max(0, cumberland_council_tax_reduction_maximum_amount_weekly - cumberland_council_tax_reduction_excess_income_weekly * cumberland_council_tax_reduction_weekly_taper_rate) else: 0'}]
 inputs:
   - {name: cumberland_council_tax_reduction_non_dependant_band, entity: Household, dtype: Number, period: Week}
   - {name: cumberland_council_tax_reduction_assessed_capital_for_year, entity: Household, dtype: Money, period: Year, unit: GBP}
@@ -143,3 +167,14 @@ inputs:
   - {name: cumberland_council_tax_reduction_applicable_amount_weekly, entity: Household, dtype: Money, period: Week, unit: GBP}
   - {name: cumberland_council_tax_reduction_liability_weekly, entity: Household, dtype: Money, period: Week, unit: GBP}
   - {name: cumberland_council_tax_reduction_non_dependant_deductions_weekly, entity: Household, dtype: Money, period: Week, unit: GBP}
+  - {name: cumberland_council_tax_reduction_applicant_is_working_age, entity: Household, dtype: Boolean, period: Year}
+  - {name: cumberland_council_tax_reduction_receives_income_support, entity: Household, dtype: Boolean, period: Year}
+  - {name: cumberland_council_tax_reduction_receives_income_based_jobseekers_allowance, entity: Household, dtype: Boolean, period: Year}
+  - {name: cumberland_council_tax_reduction_receives_income_related_employment_and_support_allowance, entity: Household, dtype: Boolean, period: Year}
+  - {name: cumberland_council_tax_reduction_receives_universal_credit, entity: Household, dtype: Boolean, period: Year}
+  - {name: cumberland_council_tax_reduction_applicant_is_liable_for_council_tax, entity: Household, dtype: Boolean, period: Year}
+  - {name: cumberland_council_tax_reduction_applicant_resides_in_dwelling, entity: Household, dtype: Boolean, period: Year}
+  - {name: cumberland_council_tax_reduction_applicant_is_not_deemed_absent, entity: Household, dtype: Boolean, period: Year}
+  - {name: cumberland_council_tax_reduction_applicant_is_not_excluded_from_scheme, entity: Household, dtype: Boolean, period: Year}
+  - {name: cumberland_council_tax_reduction_maximum_amount_can_be_calculated, entity: Household, dtype: Boolean, period: Year}
+  - {name: cumberland_council_tax_reduction_has_valid_application, entity: Household, dtype: Boolean, period: Year}
