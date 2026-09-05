@@ -8,9 +8,31 @@
     uk-rushmoor:policies/rushmoor/council-tax-reduction#rushmoor_council_tax_reduction_days_per_week: 7
     uk-rushmoor:policies/rushmoor/council-tax-reduction#rushmoor_council_tax_reduction_per_cent_unit: 0.01
     uk-rushmoor:policies/rushmoor/council-tax-reduction#rushmoor_council_tax_reduction_daily_taper_rate: '0.0285714285714285714285714286'
-- name: rushmoor_ctr_positive_taper_band_d_binding
-  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
-  input:
+
+- name: rushmoor_ctr_non_dependant_parameter_band_0
+  period: &week {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
+  input: {uk-rushmoor:policies/rushmoor/council-tax-reduction#input.rushmoor_council_tax_reduction_non_dependant_band: 0}
+  output: {uk-rushmoor:policies/rushmoor/council-tax-reduction#rushmoor_council_tax_reduction_non_dependant_deduction_by_band: 0}
+- name: rushmoor_ctr_non_dependant_parameter_band_1
+  period: *week
+  input: {uk-rushmoor:policies/rushmoor/council-tax-reduction#input.rushmoor_council_tax_reduction_non_dependant_band: 1}
+  output: {uk-rushmoor:policies/rushmoor/council-tax-reduction#rushmoor_council_tax_reduction_non_dependant_deduction_by_band: 5.20}
+- name: rushmoor_ctr_non_dependant_parameter_band_2
+  period: *week
+  input: {uk-rushmoor:policies/rushmoor/council-tax-reduction#input.rushmoor_council_tax_reduction_non_dependant_band: 2}
+  output: {uk-rushmoor:policies/rushmoor/council-tax-reduction#rushmoor_council_tax_reduction_non_dependant_deduction_by_band: 10.60}
+- name: rushmoor_ctr_non_dependant_parameter_band_3
+  period: *week
+  input: {uk-rushmoor:policies/rushmoor/council-tax-reduction#input.rushmoor_council_tax_reduction_non_dependant_band: 3}
+  output: {uk-rushmoor:policies/rushmoor/council-tax-reduction#rushmoor_council_tax_reduction_non_dependant_deduction_by_band: 13.30}
+- name: rushmoor_ctr_non_dependant_parameter_band_4
+  period: *week
+  input: {uk-rushmoor:policies/rushmoor/council-tax-reduction#input.rushmoor_council_tax_reduction_non_dependant_band: 4}
+  output: {uk-rushmoor:policies/rushmoor/council-tax-reduction#rushmoor_council_tax_reduction_non_dependant_deduction_by_band: 15.95}
+
+- name: rushmoor_ctr_positive_taper_scheme_applies
+  period: &year {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: &binding
     uk-rushmoor:policies/rushmoor/council-tax-reduction#input.local_authority_is_rushmoor: true
     uk-rushmoor:policies/rushmoor/council-tax-reduction#input.council_tax_reduction_household_in_england: true
     uk-rushmoor:policies/rushmoor/council-tax-reduction#input.rushmoor_council_tax_reduction_applicant_is_working_age: true
@@ -21,19 +43,43 @@
     uk-rushmoor:policies/rushmoor/council-tax-reduction#input.rushmoor_council_tax_reduction_assessed_income_for_year: 520
     uk-rushmoor:policies/rushmoor/council-tax-reduction#input.rushmoor_council_tax_reduction_applicable_amount_for_year: 0
     uk-rushmoor:policies/rushmoor/council-tax-reduction#input.rushmoor_council_tax_reduction_non_dependant_deductions_for_year: 0
-  output:
-    uk-rushmoor:policies/rushmoor/council-tax-reduction#rushmoor_council_tax_reduction_working_age_scheme_applies: holds
-    uk-rushmoor:policies/rushmoor/council-tax-reduction#rushmoor_council_tax_reduction_capital_eligible: holds
-    uk-rushmoor:policies/rushmoor/council-tax-reduction#rushmoor_council_tax_reduction_class_e_income_condition: holds
-    uk-rushmoor:policies/rushmoor/council-tax-reduction#rushmoor_council_tax_reduction_band_d_capped_liability_for_year: 1000
-    uk-rushmoor:policies/rushmoor/council-tax-reduction#rushmoor_council_tax_reduction_maximum_council_tax_reduction_for_year: 1000
-    uk-rushmoor:policies/rushmoor/council-tax-reduction#rushmoor_council_tax_reduction_excess_income_for_year: 520
-    uk-rushmoor:policies/rushmoor/council-tax-reduction#rushmoor_council_tax_reduction_income_taper_deduction_for_year: '14.857142857142857142857142872'
-    uk-rushmoor:policies/rushmoor/council-tax-reduction#rushmoor_council_tax_reduction_award_conditions_met: holds
-    uk-rushmoor:policies/rushmoor/council-tax-reduction#rushmoor_council_tax_reduction_annual_amount: '985.1428571428571428571428571'
-- name: rushmoor_ctr_positive_taper_band_d_non_binding
-  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
-  input:
+  output: {uk-rushmoor:policies/rushmoor/council-tax-reduction#rushmoor_council_tax_reduction_working_age_scheme_applies: holds}
+- name: rushmoor_ctr_positive_taper_capital_eligible
+  period: *year
+  input: *binding
+  output: {uk-rushmoor:policies/rushmoor/council-tax-reduction#rushmoor_council_tax_reduction_capital_eligible: holds}
+- name: rushmoor_ctr_positive_taper_class_e
+  period: *year
+  input: *binding
+  output: {uk-rushmoor:policies/rushmoor/council-tax-reduction#rushmoor_council_tax_reduction_class_e_income_condition: holds}
+- name: rushmoor_ctr_positive_taper_band_d_cap
+  period: *year
+  input: *binding
+  output: {uk-rushmoor:policies/rushmoor/council-tax-reduction#rushmoor_council_tax_reduction_band_d_capped_liability_for_year: 1000}
+- name: rushmoor_ctr_positive_taper_maximum
+  period: *year
+  input: *binding
+  output: {uk-rushmoor:policies/rushmoor/council-tax-reduction#rushmoor_council_tax_reduction_maximum_council_tax_reduction_for_year: 1000}
+- name: rushmoor_ctr_positive_taper_excess_income
+  period: *year
+  input: *binding
+  output: {uk-rushmoor:policies/rushmoor/council-tax-reduction#rushmoor_council_tax_reduction_excess_income_for_year: 520}
+- name: rushmoor_ctr_positive_taper_deduction
+  period: *year
+  input: *binding
+  output: {uk-rushmoor:policies/rushmoor/council-tax-reduction#rushmoor_council_tax_reduction_income_taper_deduction_for_year: '14.857142857142857142857142872'}
+- name: rushmoor_ctr_positive_taper_award_conditions
+  period: *year
+  input: *binding
+  output: {uk-rushmoor:policies/rushmoor/council-tax-reduction#rushmoor_council_tax_reduction_award_conditions_met: holds}
+- name: rushmoor_ctr_positive_taper_annual_amount
+  period: *year
+  input: *binding
+  output: {uk-rushmoor:policies/rushmoor/council-tax-reduction#rushmoor_council_tax_reduction_annual_amount: '985.1428571428571428571428571'}
+
+- name: rushmoor_ctr_non_binding_band_d_cap
+  period: *year
+  input: &non_binding
     uk-rushmoor:policies/rushmoor/council-tax-reduction#input.local_authority_is_rushmoor: true
     uk-rushmoor:policies/rushmoor/council-tax-reduction#input.council_tax_reduction_household_in_england: true
     uk-rushmoor:policies/rushmoor/council-tax-reduction#input.rushmoor_council_tax_reduction_applicant_is_working_age: true
@@ -44,13 +90,19 @@
     uk-rushmoor:policies/rushmoor/council-tax-reduction#input.rushmoor_council_tax_reduction_assessed_income_for_year: 0
     uk-rushmoor:policies/rushmoor/council-tax-reduction#input.rushmoor_council_tax_reduction_applicable_amount_for_year: 1
     uk-rushmoor:policies/rushmoor/council-tax-reduction#input.rushmoor_council_tax_reduction_non_dependant_deductions_for_year: 0
-  output:
-    uk-rushmoor:policies/rushmoor/council-tax-reduction#rushmoor_council_tax_reduction_band_d_capped_liability_for_year: 800
-    uk-rushmoor:policies/rushmoor/council-tax-reduction#rushmoor_council_tax_reduction_class_d_income_condition: holds
-    uk-rushmoor:policies/rushmoor/council-tax-reduction#rushmoor_council_tax_reduction_annual_amount: 800
-- name: rushmoor_ctr_income_equality_source_gap
-  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
-  input:
+  output: {uk-rushmoor:policies/rushmoor/council-tax-reduction#rushmoor_council_tax_reduction_band_d_capped_liability_for_year: 800}
+- name: rushmoor_ctr_non_binding_class_d
+  period: *year
+  input: *non_binding
+  output: {uk-rushmoor:policies/rushmoor/council-tax-reduction#rushmoor_council_tax_reduction_class_d_income_condition: holds}
+- name: rushmoor_ctr_non_binding_annual_amount
+  period: *year
+  input: *non_binding
+  output: {uk-rushmoor:policies/rushmoor/council-tax-reduction#rushmoor_council_tax_reduction_annual_amount: 800}
+
+- name: rushmoor_ctr_income_equality_class_d
+  period: *year
+  input: &equality
     uk-rushmoor:policies/rushmoor/council-tax-reduction#input.local_authority_is_rushmoor: true
     uk-rushmoor:policies/rushmoor/council-tax-reduction#input.council_tax_reduction_household_in_england: true
     uk-rushmoor:policies/rushmoor/council-tax-reduction#input.rushmoor_council_tax_reduction_applicant_is_working_age: true
@@ -61,13 +113,19 @@
     uk-rushmoor:policies/rushmoor/council-tax-reduction#input.rushmoor_council_tax_reduction_assessed_income_for_year: 100
     uk-rushmoor:policies/rushmoor/council-tax-reduction#input.rushmoor_council_tax_reduction_applicable_amount_for_year: 100
     uk-rushmoor:policies/rushmoor/council-tax-reduction#input.rushmoor_council_tax_reduction_non_dependant_deductions_for_year: 0
-  output:
-    uk-rushmoor:policies/rushmoor/council-tax-reduction#rushmoor_council_tax_reduction_class_d_income_condition: not_holds
-    uk-rushmoor:policies/rushmoor/council-tax-reduction#rushmoor_council_tax_reduction_class_e_income_condition: not_holds
-    uk-rushmoor:policies/rushmoor/council-tax-reduction#rushmoor_council_tax_reduction_annual_amount: 0
-- name: rushmoor_ctr_capital_cliff_zero_award
-  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
-  input:
+  output: {uk-rushmoor:policies/rushmoor/council-tax-reduction#rushmoor_council_tax_reduction_class_d_income_condition: not_holds}
+- name: rushmoor_ctr_income_equality_class_e
+  period: *year
+  input: *equality
+  output: {uk-rushmoor:policies/rushmoor/council-tax-reduction#rushmoor_council_tax_reduction_class_e_income_condition: not_holds}
+- name: rushmoor_ctr_income_equality_annual_amount
+  period: *year
+  input: *equality
+  output: {uk-rushmoor:policies/rushmoor/council-tax-reduction#rushmoor_council_tax_reduction_annual_amount: 0}
+
+- name: rushmoor_ctr_capital_cliff_eligible
+  period: *year
+  input: &capital_cliff
     uk-rushmoor:policies/rushmoor/council-tax-reduction#input.local_authority_is_rushmoor: true
     uk-rushmoor:policies/rushmoor/council-tax-reduction#input.council_tax_reduction_household_in_england: true
     uk-rushmoor:policies/rushmoor/council-tax-reduction#input.rushmoor_council_tax_reduction_applicant_is_working_age: true
@@ -78,12 +136,15 @@
     uk-rushmoor:policies/rushmoor/council-tax-reduction#input.rushmoor_council_tax_reduction_assessed_income_for_year: 0
     uk-rushmoor:policies/rushmoor/council-tax-reduction#input.rushmoor_council_tax_reduction_applicable_amount_for_year: 0
     uk-rushmoor:policies/rushmoor/council-tax-reduction#input.rushmoor_council_tax_reduction_non_dependant_deductions_for_year: 0
-  output:
-    uk-rushmoor:policies/rushmoor/council-tax-reduction#rushmoor_council_tax_reduction_capital_eligible: not_holds
-    uk-rushmoor:policies/rushmoor/council-tax-reduction#rushmoor_council_tax_reduction_annual_amount: 0
-- name: rushmoor_ctr_taper_exhaustion_zero_award
-  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
-  input:
+  output: {uk-rushmoor:policies/rushmoor/council-tax-reduction#rushmoor_council_tax_reduction_capital_eligible: not_holds}
+- name: rushmoor_ctr_capital_cliff_annual_amount
+  period: *year
+  input: *capital_cliff
+  output: {uk-rushmoor:policies/rushmoor/council-tax-reduction#rushmoor_council_tax_reduction_annual_amount: 0}
+
+- name: rushmoor_ctr_taper_exhaustion_award_conditions
+  period: *year
+  input: &exhaustion
     uk-rushmoor:policies/rushmoor/council-tax-reduction#input.local_authority_is_rushmoor: true
     uk-rushmoor:policies/rushmoor/council-tax-reduction#input.council_tax_reduction_household_in_england: true
     uk-rushmoor:policies/rushmoor/council-tax-reduction#input.rushmoor_council_tax_reduction_applicant_is_working_age: true
@@ -94,13 +155,29 @@
     uk-rushmoor:policies/rushmoor/council-tax-reduction#input.rushmoor_council_tax_reduction_assessed_income_for_year: 35000
     uk-rushmoor:policies/rushmoor/council-tax-reduction#input.rushmoor_council_tax_reduction_applicable_amount_for_year: 0
     uk-rushmoor:policies/rushmoor/council-tax-reduction#input.rushmoor_council_tax_reduction_non_dependant_deductions_for_year: 0
-  output:
-    uk-rushmoor:policies/rushmoor/council-tax-reduction#rushmoor_council_tax_reduction_award_conditions_met: not_holds
-    uk-rushmoor:policies/rushmoor/council-tax-reduction#rushmoor_council_tax_reduction_annual_amount: 0
-- name: rushmoor_ctr_non_dependant_bands
-  period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
-  input:
-    uk-rushmoor:policies/rushmoor/council-tax-reduction#input.rushmoor_council_tax_reduction_non_dependant_deduction_applies: true
-    uk-rushmoor:policies/rushmoor/council-tax-reduction#input.rushmoor_council_tax_reduction_non_dependant_band: 2
-  output:
-    uk-rushmoor:policies/rushmoor/council-tax-reduction#rushmoor_council_tax_reduction_individual_non_dependant_deduction_weekly: 10.6
+  output: {uk-rushmoor:policies/rushmoor/council-tax-reduction#rushmoor_council_tax_reduction_award_conditions_met: not_holds}
+- name: rushmoor_ctr_taper_exhaustion_annual_amount
+  period: *year
+  input: *exhaustion
+  output: {uk-rushmoor:policies/rushmoor/council-tax-reduction#rushmoor_council_tax_reduction_annual_amount: 0}
+
+- name: rushmoor_ctr_non_dependant_deduction_not_applicable
+  period: *week
+  input: &no_deduction {uk-rushmoor:policies/rushmoor/council-tax-reduction#input.rushmoor_council_tax_reduction_non_dependant_deduction_applies: false, uk-rushmoor:policies/rushmoor/council-tax-reduction#input.rushmoor_council_tax_reduction_non_dependant_band: 4}
+  output: {uk-rushmoor:policies/rushmoor/council-tax-reduction#rushmoor_council_tax_reduction_individual_non_dependant_deduction_weekly: 0}
+- name: rushmoor_ctr_non_dependant_non_remunerative_boundary
+  period: *week
+  input: &band_1 {uk-rushmoor:policies/rushmoor/council-tax-reduction#input.rushmoor_council_tax_reduction_non_dependant_deduction_applies: true, uk-rushmoor:policies/rushmoor/council-tax-reduction#input.rushmoor_council_tax_reduction_non_dependant_band: 1}
+  output: {uk-rushmoor:policies/rushmoor/council-tax-reduction#rushmoor_council_tax_reduction_individual_non_dependant_deduction_weekly: 5.20}
+- name: rushmoor_ctr_non_dependant_279_boundary
+  period: *week
+  input: {uk-rushmoor:policies/rushmoor/council-tax-reduction#input.rushmoor_council_tax_reduction_non_dependant_deduction_applies: true, uk-rushmoor:policies/rushmoor/council-tax-reduction#input.rushmoor_council_tax_reduction_non_dependant_band: 2}
+  output: {uk-rushmoor:policies/rushmoor/council-tax-reduction#rushmoor_council_tax_reduction_individual_non_dependant_deduction_weekly: 10.60}
+- name: rushmoor_ctr_non_dependant_485_boundary
+  period: *week
+  input: {uk-rushmoor:policies/rushmoor/council-tax-reduction#input.rushmoor_council_tax_reduction_non_dependant_deduction_applies: true, uk-rushmoor:policies/rushmoor/council-tax-reduction#input.rushmoor_council_tax_reduction_non_dependant_band: 3}
+  output: {uk-rushmoor:policies/rushmoor/council-tax-reduction#rushmoor_council_tax_reduction_individual_non_dependant_deduction_weekly: 13.30}
+- name: rushmoor_ctr_non_dependant_605_boundary
+  period: *week
+  input: {uk-rushmoor:policies/rushmoor/council-tax-reduction#input.rushmoor_council_tax_reduction_non_dependant_deduction_applies: true, uk-rushmoor:policies/rushmoor/council-tax-reduction#input.rushmoor_council_tax_reduction_non_dependant_band: 4}
+  output: {uk-rushmoor:policies/rushmoor/council-tax-reduction#rushmoor_council_tax_reduction_individual_non_dependant_deduction_weekly: 15.95}
