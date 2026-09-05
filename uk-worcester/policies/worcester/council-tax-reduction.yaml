@@ -267,6 +267,57 @@ rules:
     source: Worcester Council Tax Reduction Scheme 2026/27 section 33.1
     metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: condition, source: {corpus_citation_path: uk-worcester/manual/council-tax-reduction-scheme-2026-2027/page-53, excerpt: "no support shall be granted when the applicant has an amount greater than this level."}}]}}
     versions: [{effective_from: '2026-04-01', formula: 'applicant_capital <= capital_limit'}]
+  - name: class_d_eligible
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Year
+    source: Worcester Council Tax Reduction Scheme 2026/27 section 1.7 Class D
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk-worcester/manual/council-tax-reduction-scheme-2026-2027/page-8
+              excerpt: "The adopted scheme for working age applicants is a means test, which compares income against an assessment of applicable amounts (unless otherwise stated)."
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk-worcester/manual/council-tax-reduction-scheme-2026-2027/page-8
+              excerpt: "be liable to pay council tax in respect of a dwelling in which he is solely or mainly resident; (d) is not deemed to be absent from the dwelling; (e) not fall within a class of person prescribed for the purposes of paragraph 2(9) of Schedule 1A to the Local Government Finance Act 1992 and excluded from the authority’s scheme; (f) be somebody in respect of whom a maximum Council Tax Reduction2 amount can be calculated; (g) not have capital savings above £6,0003; (h) be a person in respect of whom a day in which s/he is liable to pay council tax falls within a week in respect of which the person’s income4 is less than their applicable amount 5 or the applicant or partner is in receipt of income support, jobseekers’ allowance (income based) or employment and support allowance (income related);"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk-worcester/manual/council-tax-reduction-scheme-2026-2027/page-9
+              excerpt: "has made a valid application for reduction6."
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          applicant_is_in_local_working_age_class and applicant_is_liable_and_mainly_resident and applicant_is_not_deemed_absent and applicant_is_not_excluded_from_scheme and capital_eligible and applicant_has_valid_application and (applicant_weekly_income < applicant_weekly_applicable_amount or applicant_or_partner_receives_class_d_passported_benefit)
+  - name: class_e_eligible
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Year
+    source: Worcester Council Tax Reduction Scheme 2026/27 section 1.7 Class E
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk-worcester/manual/council-tax-reduction-scheme-2026-2027/page-9
+              excerpt: "be liable to pay council tax in respect of a dwelling in which they are solely or mainly resident; (e) is not deemed to be absent from the dwelling; (f) not fall within a class of person prescribed for the purposes of paragraph 2(9) of Schedule 1A to the Local Government Finance Act 1992 and excluded from the authority’s scheme; (g) be somebody in respect of whom a maximum Council Tax Reduction8 amount can be calculated; (h) not have capital savings above £6,0009; (i) be a person in respect of whom a day in which s/he is liable to pay council tax falls within a week in respect of which the person’s income10 is more than their applicable amount11; (j) have made a valid application for reduction12; (k) be a person in respect of whom amount A exceeds amount B where."
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk-worcester/manual/council-tax-reduction-scheme-2026-2027/page-9
+              excerpt: "amount B is 2 6/7 per cent of the difference between his income for the relevant week and his applicable amount."
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          applicant_is_in_local_working_age_class and applicant_is_liable_and_mainly_resident and applicant_is_not_deemed_absent and applicant_is_not_excluded_from_scheme and capital_eligible and applicant_has_valid_application and applicant_weekly_income > applicant_weekly_applicable_amount and maximum_council_tax_reduction > weekly_excess_income * weekly_taper_rate * weeks_per_year
   - name: non_dependant_deduction_weekly
     kind: derived
     entity: Person
@@ -320,4 +371,63 @@ rules:
     versions:
       - effective_from: '2026-04-01'
         formula: |-
-          if capital_eligible: if maximum_council_tax_reduction - weekly_excess_income * weekly_taper_rate * weeks_per_year < minimum_reduction_weekly * weeks_per_year: 0 else: maximum_council_tax_reduction - weekly_excess_income * weekly_taper_rate * weeks_per_year else: 0
+          if class_d_eligible: if maximum_council_tax_reduction < minimum_reduction_weekly * weeks_per_year: 0 else: maximum_council_tax_reduction else: if class_e_eligible: if maximum_council_tax_reduction - weekly_excess_income * weekly_taper_rate * weeks_per_year < minimum_reduction_weekly * weeks_per_year: 0 else: maximum_council_tax_reduction - weekly_excess_income * weekly_taper_rate * weeks_per_year else: 0
+inputs:
+  - name: applicant_capital
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+  - name: applicant_weekly_income
+    entity: Person
+    dtype: Money
+    period: Week
+    unit: GBP
+  - name: applicant_weekly_applicable_amount
+    entity: Person
+    dtype: Money
+    period: Week
+    unit: GBP
+  - name: annual_council_tax_liability_after_statutory_discounts
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+  - name: annual_non_dependant_deductions
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+  - name: non_dependant_is_exempt
+    entity: Person
+    dtype: Boolean
+    period: Week
+  - name: non_dependant_normal_gross_weekly_income
+    entity: Person
+    dtype: Money
+    period: Week
+    unit: GBP
+  - name: applicant_is_in_local_working_age_class
+    entity: Person
+    dtype: Boolean
+    period: Year
+  - name: applicant_is_liable_and_mainly_resident
+    entity: Person
+    dtype: Boolean
+    period: Year
+  - name: applicant_is_not_deemed_absent
+    entity: Person
+    dtype: Boolean
+    period: Year
+  - name: applicant_is_not_excluded_from_scheme
+    entity: Person
+    dtype: Boolean
+    period: Year
+  - name: applicant_has_valid_application
+    entity: Person
+    dtype: Boolean
+    period: Year
+  - name: applicant_or_partner_receives_class_d_passported_benefit
+    entity: Person
+    dtype: Boolean
+    period: Week
