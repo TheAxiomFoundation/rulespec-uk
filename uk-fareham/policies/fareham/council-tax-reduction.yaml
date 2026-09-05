@@ -15,8 +15,8 @@ module:
       reason: The detailed income, earnings, and disregard provisions determine the Schedule 1 weekly-income input and are outside this award-surface module.
     - output: uk-fareham:policies/fareham/council-tax-reduction/sections-27-to-34-and-schedule-3#assessed_capital_for_year
       reason: The detailed capital valuation and disregard provisions determine the capital input; this module applies the printed £16,000 exclusion.
-    - output: uk-fareham:policies/fareham/council-tax-reduction/paragraph-48#annual_maximum_council_tax_reduction_before_schedule_1_discount
-      reason: Liability discounts and joint-liability apportionment determine the section 48 maximum consumed by this Schedule 1 award surface.
+    - output: uk-fareham:policies/fareham/council-tax-reduction/paragraph-48#eligible_annual_council_tax_liability_after_discounts_and_apportionment
+      reason: The appropriate authority's liability calculation, statutory discounts, and joint-liability apportionment determine the eligible annual liability accepted by this award-surface module before paragraph 48's printed 100-percent maximum calculation.
 rules:
   - name: fareham_council_tax_reduction_maximum_support_rate
     kind: parameter
@@ -272,6 +272,30 @@ rules:
       - effective_from: '2026-04-01'
         formula: |-
           fareham_council_tax_reduction_assessed_capital_for_year < fareham_council_tax_reduction_capital_limit
+  - name: fareham_council_tax_reduction_maximum_amount_for_year
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Fareham Council Tax Support Scheme 2026/27 paragraph 48.1
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk-fareham/manual/council-tax-reduction-scheme-2026-2027/page-45
+              excerpt: "the amount of a person’s maximum Council Tax Reduction in respect of a day for which he is liable to pay council tax, shall be 100 per cent, of the amount A divided by B where;"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk-fareham/manual/council-tax-reduction-scheme-2026-2027/page-45
+              excerpt: "A is the amount set by the appropriate authority as the council tax for the relevant financial year in respect of the dwelling in which he is a resident and for which he is liable, subject to any discount which may be appropriate to that dwelling under the 1992 Act;"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          fareham_council_tax_reduction_eligible_annual_council_tax_liability_after_discounts_and_apportionment * fareham_council_tax_reduction_maximum_support_rate
   - name: fareham_council_tax_reduction_amount_before_award_conditions_for_year
     kind: derived
     entity: Household
@@ -359,7 +383,7 @@ inputs:
   - {name: fareham_council_tax_reduction_applicant_is_working_age, entity: Household, dtype: Boolean, period: Year}
   - {name: fareham_council_tax_reduction_assessed_capital_for_year, entity: Household, dtype: Money, period: Year, unit: GBP}
   - {name: fareham_council_tax_reduction_assessed_weekly_income, entity: Household, dtype: Money, period: Week, unit: GBP}
-  - {name: fareham_council_tax_reduction_maximum_amount_for_year, entity: Household, dtype: Money, period: Year, unit: GBP}
+  - {name: fareham_council_tax_reduction_eligible_annual_council_tax_liability_after_discounts_and_apportionment, entity: Household, dtype: Money, period: Year, unit: GBP}
   - {name: fareham_council_tax_reduction_has_partner, entity: Household, dtype: Boolean, period: Year}
   - {name: fareham_council_tax_reduction_has_one_dependant, entity: Household, dtype: Boolean, period: Year}
   - {name: fareham_council_tax_reduction_has_two_or_more_dependants, entity: Household, dtype: Boolean, period: Year}

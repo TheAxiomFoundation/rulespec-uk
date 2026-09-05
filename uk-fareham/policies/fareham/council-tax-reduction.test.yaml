@@ -1,13 +1,13 @@
-- name: fareham_ctr_band_1_full_award
+- name: fareham_ctr_parameter_assertions
   period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
   input:
     uk-fareham:policies/fareham/council-tax-reduction#input.local_authority_is_fareham: true
     uk-fareham:policies/fareham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
     uk-fareham:policies/fareham/council-tax-reduction#input.would_claim_council_tax_reduction: true
     uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_applicant_is_working_age: true
-    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_capital_for_year: 15999.99
-    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_weekly_income: 199.99
-    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_maximum_amount_for_year: 1800
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_capital_for_year: 0
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_weekly_income: 0
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_eligible_annual_council_tax_liability_after_discounts_and_apportionment: 1800
     uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_partner: false
     uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_one_dependant: false
     uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_two_or_more_dependants: false
@@ -15,16 +15,135 @@
     uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_related_esa: false
     uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_based_jsa: false
   output:
-    uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_working_age_scheme_applies: holds
+    uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_maximum_support_rate: 1
+    uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_capital_limit: 16000
+- name: fareham_ctr_family_single_classification_and_thresholds
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-fareham:policies/fareham/council-tax-reduction#input.local_authority_is_fareham: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_applicant_is_working_age: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_capital_for_year: 0
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_weekly_income: 0
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_eligible_annual_council_tax_liability_after_discounts_and_apportionment: 1800
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_partner: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_one_dependant: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_two_or_more_dependants: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_support: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_related_esa: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_based_jsa: false
+  output:
     uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_family_category: 0
-    uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_income_band: 0
+- name: fareham_ctr_family_couple_classification_and_thresholds
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-fareham:policies/fareham/council-tax-reduction#input.local_authority_is_fareham: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_applicant_is_working_age: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_capital_for_year: 0
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_weekly_income: 0
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_eligible_annual_council_tax_liability_after_discounts_and_apportionment: 1800
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_partner: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_one_dependant: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_two_or_more_dependants: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_support: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_related_esa: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_family_category: 1
+- name: fareham_ctr_family_lone_parent_one_dependant_classification_and_thresholds
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-fareham:policies/fareham/council-tax-reduction#input.local_authority_is_fareham: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_applicant_is_working_age: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_capital_for_year: 0
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_weekly_income: 0
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_eligible_annual_council_tax_liability_after_discounts_and_apportionment: 1800
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_partner: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_one_dependant: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_two_or_more_dependants: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_support: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_related_esa: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_family_category: 2
+- name: fareham_ctr_family_couple_one_dependant_classification_and_thresholds
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-fareham:policies/fareham/council-tax-reduction#input.local_authority_is_fareham: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_applicant_is_working_age: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_capital_for_year: 0
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_weekly_income: 0
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_eligible_annual_council_tax_liability_after_discounts_and_apportionment: 1800
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_partner: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_one_dependant: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_two_or_more_dependants: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_support: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_related_esa: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_family_category: 3
+- name: fareham_ctr_family_lone_parent_two_dependants_classification_and_thresholds
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-fareham:policies/fareham/council-tax-reduction#input.local_authority_is_fareham: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_applicant_is_working_age: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_capital_for_year: 0
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_weekly_income: 0
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_eligible_annual_council_tax_liability_after_discounts_and_apportionment: 1800
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_partner: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_one_dependant: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_two_or_more_dependants: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_support: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_related_esa: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_family_category: 4
+- name: fareham_ctr_family_couple_two_dependants_classification_and_thresholds
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-fareham:policies/fareham/council-tax-reduction#input.local_authority_is_fareham: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_applicant_is_working_age: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_capital_for_year: 0
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_weekly_income: 0
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_eligible_annual_council_tax_liability_after_discounts_and_apportionment: 1800
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_partner: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_one_dependant: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_two_or_more_dependants: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_support: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_related_esa: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_family_category: 5
+- name: fareham_ctr_band_1_rate_and_code
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-fareham:policies/fareham/council-tax-reduction#input.local_authority_is_fareham: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_applicant_is_working_age: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_capital_for_year: 0
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_weekly_income: 0
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_eligible_annual_council_tax_liability_after_discounts_and_apportionment: 1800
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_partner: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_one_dependant: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_two_or_more_dependants: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_support: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_related_esa: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_based_jsa: false
+  output:
     uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_selected_support_rate: 1
-    uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_capital_eligible: holds
-    uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_award_conditions_met: holds
-    uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_amount_before_award_conditions_for_year: 1800
-    uk-fareham:policies/fareham/council-tax-reduction#simulated_fareham_council_tax_reduction_annual_amount: 1800
-    uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_annual_amount: 1800
-- name: fareham_ctr_band_2_edge
+- name: fareham_ctr_band_2_rate_and_code
   period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
   input:
     uk-fareham:policies/fareham/council-tax-reduction#input.local_authority_is_fareham: true
@@ -33,7 +152,97 @@
     uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_applicant_is_working_age: true
     uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_capital_for_year: 0
     uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_weekly_income: 200
-    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_maximum_amount_for_year: 1800
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_eligible_annual_council_tax_liability_after_discounts_and_apportionment: 1800
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_partner: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_one_dependant: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_two_or_more_dependants: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_support: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_related_esa: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_selected_support_rate: 0.75
+- name: fareham_ctr_band_3_rate_and_code
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-fareham:policies/fareham/council-tax-reduction#input.local_authority_is_fareham: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_applicant_is_working_age: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_capital_for_year: 0
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_weekly_income: 250
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_eligible_annual_council_tax_liability_after_discounts_and_apportionment: 1800
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_partner: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_one_dependant: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_two_or_more_dependants: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_support: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_related_esa: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_selected_support_rate: 0.5
+- name: fareham_ctr_band_4_rate_and_code
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-fareham:policies/fareham/council-tax-reduction#input.local_authority_is_fareham: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_applicant_is_working_age: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_capital_for_year: 0
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_weekly_income: 300
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_eligible_annual_council_tax_liability_after_discounts_and_apportionment: 1800
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_partner: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_one_dependant: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_two_or_more_dependants: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_support: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_related_esa: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_selected_support_rate: 0.25
+- name: fareham_ctr_band_5_rate_and_code
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-fareham:policies/fareham/council-tax-reduction#input.local_authority_is_fareham: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_applicant_is_working_age: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_capital_for_year: 0
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_weekly_income: 350
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_eligible_annual_council_tax_liability_after_discounts_and_apportionment: 1800
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_partner: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_one_dependant: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_two_or_more_dependants: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_support: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_related_esa: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_selected_support_rate: 0
+- name: fareham_ctr_single_band_2_below
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-fareham:policies/fareham/council-tax-reduction#input.local_authority_is_fareham: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_applicant_is_working_age: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_capital_for_year: 0
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_weekly_income: 199.99
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_eligible_annual_council_tax_liability_after_discounts_and_apportionment: 1800
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_partner: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_one_dependant: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_two_or_more_dependants: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_support: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_related_esa: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_income_band: 0
+- name: fareham_ctr_single_band_2_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-fareham:policies/fareham/council-tax-reduction#input.local_authority_is_fareham: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_applicant_is_working_age: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_capital_for_year: 0
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_weekly_income: 200
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_eligible_annual_council_tax_liability_after_discounts_and_apportionment: 1800
     uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_partner: false
     uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_one_dependant: false
     uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_two_or_more_dependants: false
@@ -42,8 +251,834 @@
     uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_based_jsa: false
   output:
     uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_income_band: 1
-    uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_selected_support_rate: 0.75
-    uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_annual_amount: 1350
+- name: fareham_ctr_single_band_3_below
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-fareham:policies/fareham/council-tax-reduction#input.local_authority_is_fareham: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_applicant_is_working_age: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_capital_for_year: 0
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_weekly_income: 249.99
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_eligible_annual_council_tax_liability_after_discounts_and_apportionment: 1800
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_partner: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_one_dependant: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_two_or_more_dependants: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_support: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_related_esa: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_income_band: 1
+- name: fareham_ctr_single_band_3_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-fareham:policies/fareham/council-tax-reduction#input.local_authority_is_fareham: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_applicant_is_working_age: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_capital_for_year: 0
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_weekly_income: 250
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_eligible_annual_council_tax_liability_after_discounts_and_apportionment: 1800
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_partner: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_one_dependant: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_two_or_more_dependants: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_support: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_related_esa: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_income_band: 2
+- name: fareham_ctr_single_band_4_below
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-fareham:policies/fareham/council-tax-reduction#input.local_authority_is_fareham: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_applicant_is_working_age: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_capital_for_year: 0
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_weekly_income: 299.99
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_eligible_annual_council_tax_liability_after_discounts_and_apportionment: 1800
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_partner: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_one_dependant: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_two_or_more_dependants: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_support: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_related_esa: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_income_band: 2
+- name: fareham_ctr_single_band_4_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-fareham:policies/fareham/council-tax-reduction#input.local_authority_is_fareham: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_applicant_is_working_age: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_capital_for_year: 0
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_weekly_income: 300
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_eligible_annual_council_tax_liability_after_discounts_and_apportionment: 1800
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_partner: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_one_dependant: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_two_or_more_dependants: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_support: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_related_esa: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_income_band: 3
+- name: fareham_ctr_single_band_5_below
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-fareham:policies/fareham/council-tax-reduction#input.local_authority_is_fareham: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_applicant_is_working_age: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_capital_for_year: 0
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_weekly_income: 349.99
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_eligible_annual_council_tax_liability_after_discounts_and_apportionment: 1800
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_partner: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_one_dependant: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_two_or_more_dependants: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_support: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_related_esa: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_income_band: 3
+- name: fareham_ctr_single_band_5_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-fareham:policies/fareham/council-tax-reduction#input.local_authority_is_fareham: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_applicant_is_working_age: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_capital_for_year: 0
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_weekly_income: 350
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_eligible_annual_council_tax_liability_after_discounts_and_apportionment: 1800
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_partner: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_one_dependant: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_two_or_more_dependants: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_support: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_related_esa: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_income_band: 4
+- name: fareham_ctr_couple_band_2_below
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-fareham:policies/fareham/council-tax-reduction#input.local_authority_is_fareham: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_applicant_is_working_age: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_capital_for_year: 0
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_weekly_income: 299.99
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_eligible_annual_council_tax_liability_after_discounts_and_apportionment: 1800
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_partner: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_one_dependant: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_two_or_more_dependants: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_support: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_related_esa: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_income_band: 0
+- name: fareham_ctr_couple_band_2_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-fareham:policies/fareham/council-tax-reduction#input.local_authority_is_fareham: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_applicant_is_working_age: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_capital_for_year: 0
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_weekly_income: 300
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_eligible_annual_council_tax_liability_after_discounts_and_apportionment: 1800
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_partner: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_one_dependant: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_two_or_more_dependants: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_support: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_related_esa: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_income_band: 1
+- name: fareham_ctr_couple_band_3_below
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-fareham:policies/fareham/council-tax-reduction#input.local_authority_is_fareham: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_applicant_is_working_age: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_capital_for_year: 0
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_weekly_income: 349.99
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_eligible_annual_council_tax_liability_after_discounts_and_apportionment: 1800
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_partner: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_one_dependant: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_two_or_more_dependants: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_support: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_related_esa: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_income_band: 1
+- name: fareham_ctr_couple_band_3_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-fareham:policies/fareham/council-tax-reduction#input.local_authority_is_fareham: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_applicant_is_working_age: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_capital_for_year: 0
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_weekly_income: 350
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_eligible_annual_council_tax_liability_after_discounts_and_apportionment: 1800
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_partner: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_one_dependant: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_two_or_more_dependants: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_support: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_related_esa: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_income_band: 2
+- name: fareham_ctr_couple_band_4_below
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-fareham:policies/fareham/council-tax-reduction#input.local_authority_is_fareham: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_applicant_is_working_age: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_capital_for_year: 0
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_weekly_income: 399.99
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_eligible_annual_council_tax_liability_after_discounts_and_apportionment: 1800
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_partner: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_one_dependant: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_two_or_more_dependants: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_support: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_related_esa: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_income_band: 2
+- name: fareham_ctr_couple_band_4_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-fareham:policies/fareham/council-tax-reduction#input.local_authority_is_fareham: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_applicant_is_working_age: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_capital_for_year: 0
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_weekly_income: 400
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_eligible_annual_council_tax_liability_after_discounts_and_apportionment: 1800
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_partner: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_one_dependant: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_two_or_more_dependants: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_support: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_related_esa: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_income_band: 3
+- name: fareham_ctr_couple_band_5_below
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-fareham:policies/fareham/council-tax-reduction#input.local_authority_is_fareham: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_applicant_is_working_age: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_capital_for_year: 0
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_weekly_income: 449.99
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_eligible_annual_council_tax_liability_after_discounts_and_apportionment: 1800
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_partner: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_one_dependant: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_two_or_more_dependants: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_support: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_related_esa: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_income_band: 3
+- name: fareham_ctr_couple_band_5_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-fareham:policies/fareham/council-tax-reduction#input.local_authority_is_fareham: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_applicant_is_working_age: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_capital_for_year: 0
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_weekly_income: 450
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_eligible_annual_council_tax_liability_after_discounts_and_apportionment: 1800
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_partner: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_one_dependant: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_two_or_more_dependants: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_support: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_related_esa: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_income_band: 4
+- name: fareham_ctr_lone_parent_one_dependant_band_2_below
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-fareham:policies/fareham/council-tax-reduction#input.local_authority_is_fareham: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_applicant_is_working_age: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_capital_for_year: 0
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_weekly_income: 299.99
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_eligible_annual_council_tax_liability_after_discounts_and_apportionment: 1800
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_partner: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_one_dependant: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_two_or_more_dependants: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_support: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_related_esa: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_income_band: 0
+- name: fareham_ctr_lone_parent_one_dependant_band_2_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-fareham:policies/fareham/council-tax-reduction#input.local_authority_is_fareham: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_applicant_is_working_age: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_capital_for_year: 0
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_weekly_income: 300
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_eligible_annual_council_tax_liability_after_discounts_and_apportionment: 1800
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_partner: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_one_dependant: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_two_or_more_dependants: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_support: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_related_esa: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_income_band: 1
+- name: fareham_ctr_lone_parent_one_dependant_band_3_below
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-fareham:policies/fareham/council-tax-reduction#input.local_authority_is_fareham: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_applicant_is_working_age: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_capital_for_year: 0
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_weekly_income: 349.99
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_eligible_annual_council_tax_liability_after_discounts_and_apportionment: 1800
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_partner: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_one_dependant: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_two_or_more_dependants: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_support: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_related_esa: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_income_band: 1
+- name: fareham_ctr_lone_parent_one_dependant_band_3_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-fareham:policies/fareham/council-tax-reduction#input.local_authority_is_fareham: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_applicant_is_working_age: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_capital_for_year: 0
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_weekly_income: 350
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_eligible_annual_council_tax_liability_after_discounts_and_apportionment: 1800
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_partner: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_one_dependant: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_two_or_more_dependants: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_support: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_related_esa: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_income_band: 2
+- name: fareham_ctr_lone_parent_one_dependant_band_4_below
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-fareham:policies/fareham/council-tax-reduction#input.local_authority_is_fareham: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_applicant_is_working_age: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_capital_for_year: 0
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_weekly_income: 399.99
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_eligible_annual_council_tax_liability_after_discounts_and_apportionment: 1800
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_partner: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_one_dependant: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_two_or_more_dependants: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_support: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_related_esa: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_income_band: 2
+- name: fareham_ctr_lone_parent_one_dependant_band_4_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-fareham:policies/fareham/council-tax-reduction#input.local_authority_is_fareham: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_applicant_is_working_age: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_capital_for_year: 0
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_weekly_income: 400
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_eligible_annual_council_tax_liability_after_discounts_and_apportionment: 1800
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_partner: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_one_dependant: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_two_or_more_dependants: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_support: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_related_esa: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_income_band: 3
+- name: fareham_ctr_lone_parent_one_dependant_band_5_below
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-fareham:policies/fareham/council-tax-reduction#input.local_authority_is_fareham: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_applicant_is_working_age: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_capital_for_year: 0
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_weekly_income: 449.99
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_eligible_annual_council_tax_liability_after_discounts_and_apportionment: 1800
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_partner: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_one_dependant: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_two_or_more_dependants: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_support: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_related_esa: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_income_band: 3
+- name: fareham_ctr_lone_parent_one_dependant_band_5_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-fareham:policies/fareham/council-tax-reduction#input.local_authority_is_fareham: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_applicant_is_working_age: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_capital_for_year: 0
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_weekly_income: 450
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_eligible_annual_council_tax_liability_after_discounts_and_apportionment: 1800
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_partner: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_one_dependant: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_two_or_more_dependants: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_support: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_related_esa: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_income_band: 4
+- name: fareham_ctr_couple_one_dependant_band_2_below
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-fareham:policies/fareham/council-tax-reduction#input.local_authority_is_fareham: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_applicant_is_working_age: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_capital_for_year: 0
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_weekly_income: 349.99
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_eligible_annual_council_tax_liability_after_discounts_and_apportionment: 1800
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_partner: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_one_dependant: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_two_or_more_dependants: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_support: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_related_esa: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_income_band: 0
+- name: fareham_ctr_couple_one_dependant_band_2_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-fareham:policies/fareham/council-tax-reduction#input.local_authority_is_fareham: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_applicant_is_working_age: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_capital_for_year: 0
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_weekly_income: 350
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_eligible_annual_council_tax_liability_after_discounts_and_apportionment: 1800
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_partner: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_one_dependant: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_two_or_more_dependants: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_support: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_related_esa: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_income_band: 1
+- name: fareham_ctr_couple_one_dependant_band_3_below
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-fareham:policies/fareham/council-tax-reduction#input.local_authority_is_fareham: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_applicant_is_working_age: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_capital_for_year: 0
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_weekly_income: 399.99
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_eligible_annual_council_tax_liability_after_discounts_and_apportionment: 1800
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_partner: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_one_dependant: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_two_or_more_dependants: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_support: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_related_esa: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_income_band: 1
+- name: fareham_ctr_couple_one_dependant_band_3_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-fareham:policies/fareham/council-tax-reduction#input.local_authority_is_fareham: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_applicant_is_working_age: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_capital_for_year: 0
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_weekly_income: 400
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_eligible_annual_council_tax_liability_after_discounts_and_apportionment: 1800
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_partner: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_one_dependant: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_two_or_more_dependants: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_support: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_related_esa: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_income_band: 2
+- name: fareham_ctr_couple_one_dependant_band_4_below
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-fareham:policies/fareham/council-tax-reduction#input.local_authority_is_fareham: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_applicant_is_working_age: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_capital_for_year: 0
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_weekly_income: 449.99
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_eligible_annual_council_tax_liability_after_discounts_and_apportionment: 1800
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_partner: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_one_dependant: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_two_or_more_dependants: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_support: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_related_esa: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_income_band: 2
+- name: fareham_ctr_couple_one_dependant_band_4_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-fareham:policies/fareham/council-tax-reduction#input.local_authority_is_fareham: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_applicant_is_working_age: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_capital_for_year: 0
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_weekly_income: 450
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_eligible_annual_council_tax_liability_after_discounts_and_apportionment: 1800
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_partner: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_one_dependant: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_two_or_more_dependants: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_support: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_related_esa: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_income_band: 3
+- name: fareham_ctr_couple_one_dependant_band_5_below
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-fareham:policies/fareham/council-tax-reduction#input.local_authority_is_fareham: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_applicant_is_working_age: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_capital_for_year: 0
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_weekly_income: 499.99
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_eligible_annual_council_tax_liability_after_discounts_and_apportionment: 1800
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_partner: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_one_dependant: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_two_or_more_dependants: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_support: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_related_esa: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_income_band: 3
+- name: fareham_ctr_couple_one_dependant_band_5_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-fareham:policies/fareham/council-tax-reduction#input.local_authority_is_fareham: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_applicant_is_working_age: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_capital_for_year: 0
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_weekly_income: 500
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_eligible_annual_council_tax_liability_after_discounts_and_apportionment: 1800
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_partner: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_one_dependant: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_two_or_more_dependants: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_support: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_related_esa: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_income_band: 4
+- name: fareham_ctr_lone_parent_two_dependants_band_2_below
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-fareham:policies/fareham/council-tax-reduction#input.local_authority_is_fareham: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_applicant_is_working_age: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_capital_for_year: 0
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_weekly_income: 349.99
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_eligible_annual_council_tax_liability_after_discounts_and_apportionment: 1800
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_partner: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_one_dependant: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_two_or_more_dependants: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_support: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_related_esa: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_income_band: 0
+- name: fareham_ctr_lone_parent_two_dependants_band_2_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-fareham:policies/fareham/council-tax-reduction#input.local_authority_is_fareham: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_applicant_is_working_age: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_capital_for_year: 0
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_weekly_income: 350
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_eligible_annual_council_tax_liability_after_discounts_and_apportionment: 1800
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_partner: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_one_dependant: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_two_or_more_dependants: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_support: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_related_esa: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_income_band: 1
+- name: fareham_ctr_lone_parent_two_dependants_band_3_below
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-fareham:policies/fareham/council-tax-reduction#input.local_authority_is_fareham: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_applicant_is_working_age: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_capital_for_year: 0
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_weekly_income: 399.99
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_eligible_annual_council_tax_liability_after_discounts_and_apportionment: 1800
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_partner: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_one_dependant: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_two_or_more_dependants: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_support: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_related_esa: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_income_band: 1
+- name: fareham_ctr_lone_parent_two_dependants_band_3_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-fareham:policies/fareham/council-tax-reduction#input.local_authority_is_fareham: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_applicant_is_working_age: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_capital_for_year: 0
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_weekly_income: 400
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_eligible_annual_council_tax_liability_after_discounts_and_apportionment: 1800
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_partner: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_one_dependant: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_two_or_more_dependants: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_support: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_related_esa: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_income_band: 2
+- name: fareham_ctr_lone_parent_two_dependants_band_4_below
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-fareham:policies/fareham/council-tax-reduction#input.local_authority_is_fareham: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_applicant_is_working_age: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_capital_for_year: 0
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_weekly_income: 449.99
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_eligible_annual_council_tax_liability_after_discounts_and_apportionment: 1800
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_partner: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_one_dependant: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_two_or_more_dependants: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_support: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_related_esa: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_income_band: 2
+- name: fareham_ctr_lone_parent_two_dependants_band_4_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-fareham:policies/fareham/council-tax-reduction#input.local_authority_is_fareham: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_applicant_is_working_age: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_capital_for_year: 0
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_weekly_income: 450
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_eligible_annual_council_tax_liability_after_discounts_and_apportionment: 1800
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_partner: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_one_dependant: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_two_or_more_dependants: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_support: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_related_esa: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_income_band: 3
+- name: fareham_ctr_lone_parent_two_dependants_band_5_below
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-fareham:policies/fareham/council-tax-reduction#input.local_authority_is_fareham: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_applicant_is_working_age: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_capital_for_year: 0
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_weekly_income: 499.99
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_eligible_annual_council_tax_liability_after_discounts_and_apportionment: 1800
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_partner: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_one_dependant: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_two_or_more_dependants: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_support: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_related_esa: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_income_band: 3
+- name: fareham_ctr_lone_parent_two_dependants_band_5_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-fareham:policies/fareham/council-tax-reduction#input.local_authority_is_fareham: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_applicant_is_working_age: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_capital_for_year: 0
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_weekly_income: 500
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_eligible_annual_council_tax_liability_after_discounts_and_apportionment: 1800
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_partner: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_one_dependant: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_two_or_more_dependants: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_support: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_related_esa: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_income_band: 4
+- name: fareham_ctr_couple_two_dependants_band_2_below
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-fareham:policies/fareham/council-tax-reduction#input.local_authority_is_fareham: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_applicant_is_working_age: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_capital_for_year: 0
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_weekly_income: 399.99
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_eligible_annual_council_tax_liability_after_discounts_and_apportionment: 1800
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_partner: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_one_dependant: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_two_or_more_dependants: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_support: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_related_esa: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_income_band: 0
+- name: fareham_ctr_couple_two_dependants_band_2_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-fareham:policies/fareham/council-tax-reduction#input.local_authority_is_fareham: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_applicant_is_working_age: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_capital_for_year: 0
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_weekly_income: 400
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_eligible_annual_council_tax_liability_after_discounts_and_apportionment: 1800
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_partner: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_one_dependant: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_two_or_more_dependants: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_support: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_related_esa: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_income_band: 1
+- name: fareham_ctr_couple_two_dependants_band_3_below
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-fareham:policies/fareham/council-tax-reduction#input.local_authority_is_fareham: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_applicant_is_working_age: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_capital_for_year: 0
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_weekly_income: 449.99
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_eligible_annual_council_tax_liability_after_discounts_and_apportionment: 1800
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_partner: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_one_dependant: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_two_or_more_dependants: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_support: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_related_esa: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_income_band: 1
+- name: fareham_ctr_couple_two_dependants_band_3_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-fareham:policies/fareham/council-tax-reduction#input.local_authority_is_fareham: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_applicant_is_working_age: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_capital_for_year: 0
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_weekly_income: 450
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_eligible_annual_council_tax_liability_after_discounts_and_apportionment: 1800
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_partner: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_one_dependant: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_two_or_more_dependants: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_support: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_related_esa: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_income_band: 2
+- name: fareham_ctr_couple_two_dependants_band_4_below
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-fareham:policies/fareham/council-tax-reduction#input.local_authority_is_fareham: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_applicant_is_working_age: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_capital_for_year: 0
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_weekly_income: 499.99
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_eligible_annual_council_tax_liability_after_discounts_and_apportionment: 1800
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_partner: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_one_dependant: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_two_or_more_dependants: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_support: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_related_esa: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_income_band: 2
+- name: fareham_ctr_couple_two_dependants_band_4_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-fareham:policies/fareham/council-tax-reduction#input.local_authority_is_fareham: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_applicant_is_working_age: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_capital_for_year: 0
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_weekly_income: 500
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_eligible_annual_council_tax_liability_after_discounts_and_apportionment: 1800
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_partner: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_one_dependant: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_two_or_more_dependants: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_support: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_related_esa: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_income_band: 3
+- name: fareham_ctr_couple_two_dependants_band_5_below
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-fareham:policies/fareham/council-tax-reduction#input.local_authority_is_fareham: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_applicant_is_working_age: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_capital_for_year: 0
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_weekly_income: 549.99
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_eligible_annual_council_tax_liability_after_discounts_and_apportionment: 1800
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_partner: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_one_dependant: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_two_or_more_dependants: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_support: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_related_esa: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_income_band: 3
+- name: fareham_ctr_couple_two_dependants_band_5_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-fareham:policies/fareham/council-tax-reduction#input.local_authority_is_fareham: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_applicant_is_working_age: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_capital_for_year: 0
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_weekly_income: 550
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_eligible_annual_council_tax_liability_after_discounts_and_apportionment: 1800
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_partner: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_one_dependant: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_two_or_more_dependants: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_support: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_related_esa: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_income_band: 4
 - name: fareham_ctr_passported_band_1
   period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
   input:
@@ -53,7 +1088,7 @@
     uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_applicant_is_working_age: true
     uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_capital_for_year: 0
     uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_weekly_income: 1000
-    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_maximum_amount_for_year: 1800
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_eligible_annual_council_tax_liability_after_discounts_and_apportionment: 1800
     uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_partner: false
     uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_one_dependant: false
     uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_two_or_more_dependants: false
@@ -62,17 +1097,16 @@
     uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_based_jsa: false
   output:
     uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_passported_to_band_1: holds
-    uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_annual_amount: 1800
-- name: fareham_ctr_capital_cliff_and_zero_band
+- name: fareham_ctr_capital_just_below_limit
   period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
   input:
     uk-fareham:policies/fareham/council-tax-reduction#input.local_authority_is_fareham: true
     uk-fareham:policies/fareham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
     uk-fareham:policies/fareham/council-tax-reduction#input.would_claim_council_tax_reduction: true
     uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_applicant_is_working_age: true
-    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_capital_for_year: 16000
-    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_weekly_income: 350
-    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_maximum_amount_for_year: 1800
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_capital_for_year: 15999.99
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_weekly_income: 0
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_eligible_annual_council_tax_liability_after_discounts_and_apportionment: 1800
     uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_partner: false
     uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_one_dependant: false
     uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_two_or_more_dependants: false
@@ -80,6 +1114,130 @@
     uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_related_esa: false
     uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_based_jsa: false
   output:
-    uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_income_band: 4
+    uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_capital_eligible: holds
+- name: fareham_ctr_capital_at_limit
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-fareham:policies/fareham/council-tax-reduction#input.local_authority_is_fareham: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_applicant_is_working_age: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_capital_for_year: 16000
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_weekly_income: 0
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_eligible_annual_council_tax_liability_after_discounts_and_apportionment: 1800
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_partner: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_one_dependant: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_two_or_more_dependants: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_support: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_related_esa: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_based_jsa: false
+  output:
     uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_capital_eligible: not_holds
+- name: fareham_ctr_section_48_maximum_from_eligible_liability
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-fareham:policies/fareham/council-tax-reduction#input.local_authority_is_fareham: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_applicant_is_working_age: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_capital_for_year: 0
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_weekly_income: 0
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_eligible_annual_council_tax_liability_after_discounts_and_apportionment: 1800
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_partner: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_one_dependant: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_two_or_more_dependants: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_support: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_related_esa: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_maximum_amount_for_year: 1800
+- name: fareham_ctr_amount_before_award_conditions
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-fareham:policies/fareham/council-tax-reduction#input.local_authority_is_fareham: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_applicant_is_working_age: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_capital_for_year: 0
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_weekly_income: 200
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_eligible_annual_council_tax_liability_after_discounts_and_apportionment: 1800
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_partner: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_one_dependant: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_two_or_more_dependants: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_support: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_related_esa: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_amount_before_award_conditions_for_year: 1350
+- name: fareham_ctr_award_conditions_met
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-fareham:policies/fareham/council-tax-reduction#input.local_authority_is_fareham: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_applicant_is_working_age: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_capital_for_year: 0
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_weekly_income: 0
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_eligible_annual_council_tax_liability_after_discounts_and_apportionment: 1800
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_partner: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_one_dependant: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_two_or_more_dependants: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_support: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_related_esa: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_award_conditions_met: holds
+- name: fareham_ctr_simulated_annual_amount
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-fareham:policies/fareham/council-tax-reduction#input.local_authority_is_fareham: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_applicant_is_working_age: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_capital_for_year: 0
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_weekly_income: 250
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_eligible_annual_council_tax_liability_after_discounts_and_apportionment: 1800
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_partner: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_one_dependant: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_two_or_more_dependants: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_support: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_related_esa: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-fareham:policies/fareham/council-tax-reduction#simulated_fareham_council_tax_reduction_annual_amount: 900
+- name: fareham_ctr_zero_band_annual_amount
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-fareham:policies/fareham/council-tax-reduction#input.local_authority_is_fareham: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_applicant_is_working_age: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_capital_for_year: 0
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_weekly_income: 350
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_eligible_annual_council_tax_liability_after_discounts_and_apportionment: 1800
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_partner: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_one_dependant: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_two_or_more_dependants: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_support: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_related_esa: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_based_jsa: false
+  output:
     uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_annual_amount: 0
+- name: fareham_ctr_working_age_scheme_applies
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-fareham:policies/fareham/council-tax-reduction#input.local_authority_is_fareham: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_applicant_is_working_age: true
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_capital_for_year: 0
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_assessed_weekly_income: 0
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_eligible_annual_council_tax_liability_after_discounts_and_apportionment: 1800
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_partner: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_one_dependant: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_has_two_or_more_dependants: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_support: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_related_esa: false
+    uk-fareham:policies/fareham/council-tax-reduction#input.fareham_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-fareham:policies/fareham/council-tax-reduction#fareham_council_tax_reduction_working_age_scheme_applies: holds
