@@ -1,5 +1,24 @@
 - name: burnley_ctr_printed_parameters
-  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  period: &id001
+    period_kind: custom
+    name: calendar_year
+    start: '2026-04-06'
+    end: '2026-04-06'
+  input:
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-burnley:policies/burnley/council-tax-reduction#input.local_authority_is_burnley: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_actual_liability_for_day: 10
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_assessed_income_for_day: 0
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_applicable_amount_for_day: 100
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deductions_for_day: 0
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deduction_applies: false
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_in_remunerative_work: false
+    ? uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_normal_gross_weekly_income
+    : 0
   output:
     uk-burnley:policies/burnley/council-tax-reduction#burnley_council_tax_reduction_maximum_support_rate: 1
     uk-burnley:policies/burnley/council-tax-reduction#burnley_council_tax_reduction_per_cent_unit: 0.01
@@ -12,9 +31,88 @@
     uk-burnley:policies/burnley/council-tax-reduction#burnley_council_tax_reduction_tariff_income_threshold: 6000
     uk-burnley:policies/burnley/council-tax-reduction#burnley_council_tax_reduction_tariff_income_step: 250
     uk-burnley:policies/burnley/council-tax-reduction#burnley_council_tax_reduction_tariff_income_weekly_amount_per_step: 1
-
-- name: burnley_ctr_positive_taper_and_standard_deduction
-  period: {period_kind: custom, name: calendar_year, start: '2026-04-06', end: '2026-04-06'}
+    uk-burnley:policies/burnley/council-tax-reduction#burnley_council_tax_reduction_non_dependant_weekly_deduction_by_band: 0
+    uk-burnley:policies/burnley/council-tax-reduction#burnley_council_tax_reduction_non_dependant_low_income_threshold: 279
+    uk-burnley:policies/burnley/council-tax-reduction#burnley_council_tax_reduction_non_dependant_middle_income_threshold: 485
+    uk-burnley:policies/burnley/council-tax-reduction#burnley_council_tax_reduction_non_dependant_high_income_threshold: 605
+- name: burnley_ctr_table_one
+  period: *id001
+  input:
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deduction_band: 1
+    uk-burnley:policies/burnley/council-tax-reduction#input.local_authority_is_burnley: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_actual_liability_for_day: 10
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_assessed_income_for_day: 0
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_applicable_amount_for_day: 100
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deductions_for_day: 0
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deduction_applies: false
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_in_remunerative_work: false
+    ? uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_normal_gross_weekly_income
+    : 0
+  output:
+    uk-burnley:policies/burnley/council-tax-reduction#burnley_council_tax_reduction_non_dependant_weekly_deduction_by_band: 5.2
+- name: burnley_ctr_table_two
+  period: *id001
+  input:
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deduction_band: 2
+    uk-burnley:policies/burnley/council-tax-reduction#input.local_authority_is_burnley: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_actual_liability_for_day: 10
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_assessed_income_for_day: 0
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_applicable_amount_for_day: 100
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deductions_for_day: 0
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deduction_applies: false
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_in_remunerative_work: false
+    ? uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_normal_gross_weekly_income
+    : 0
+  output:
+    uk-burnley:policies/burnley/council-tax-reduction#burnley_council_tax_reduction_non_dependant_weekly_deduction_by_band: 10.6
+- name: burnley_ctr_table_three
+  period: *id001
+  input:
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deduction_band: 3
+    uk-burnley:policies/burnley/council-tax-reduction#input.local_authority_is_burnley: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_actual_liability_for_day: 10
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_assessed_income_for_day: 0
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_applicable_amount_for_day: 100
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deductions_for_day: 0
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deduction_applies: false
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_in_remunerative_work: false
+    ? uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_normal_gross_weekly_income
+    : 0
+  output:
+    uk-burnley:policies/burnley/council-tax-reduction#burnley_council_tax_reduction_non_dependant_weekly_deduction_by_band: 13.3
+- name: burnley_ctr_table_four
+  period: *id001
+  input:
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deduction_band: 4
+    uk-burnley:policies/burnley/council-tax-reduction#input.local_authority_is_burnley: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_actual_liability_for_day: 10
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_assessed_income_for_day: 0
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_applicable_amount_for_day: 100
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deductions_for_day: 0
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deduction_applies: false
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_in_remunerative_work: false
+    ? uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_normal_gross_weekly_income
+    : 0
+  output:
+    uk-burnley:policies/burnley/council-tax-reduction#burnley_council_tax_reduction_non_dependant_weekly_deduction_by_band: 15.95
+- name: burnley_ctr_tariff_6000
+  period: *id001
   input:
     uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deduction_band: 0
     uk-burnley:policies/burnley/council-tax-reduction#input.local_authority_is_burnley: true
@@ -23,30 +121,74 @@
     uk-burnley:policies/burnley/council-tax-reduction#input.would_claim_council_tax_reduction: true
     uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_assessed_capital_for_year: 6000
     uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_actual_liability_for_day: 10
-    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_assessed_income_for_day: 7
-    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_applicable_amount_for_day: 0
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_assessed_income_for_day: 0
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_applicable_amount_for_day: 100
     uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deductions_for_day: 0
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deduction_applies: false
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_in_remunerative_work: false
+    ? uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_normal_gross_weekly_income
+    : 0
   output:
-    uk-burnley:policies/burnley/council-tax-reduction#burnley_council_tax_reduction_working_age_scheme_applies: holds
-    uk-burnley:policies/burnley/council-tax-reduction#burnley_council_tax_reduction_capital_eligible: holds
     uk-burnley:policies/burnley/council-tax-reduction#burnley_council_tax_reduction_tariff_income_for_day: 0
-    uk-burnley:policies/burnley/council-tax-reduction#burnley_council_tax_reduction_maximum_council_tax_reduction_for_day: 10
-    uk-burnley:policies/burnley/council-tax-reduction#burnley_council_tax_reduction_excess_income_for_day: 7
-    uk-burnley:policies/burnley/council-tax-reduction#burnley_council_tax_reduction_income_taper_deduction_for_day: '0.2000000000000000000000000002'
-    uk-burnley:policies/burnley/council-tax-reduction#burnley_council_tax_reduction_pre_standard_deduction_amount_for_day: '9.8'
-    uk-burnley:policies/burnley/council-tax-reduction#burnley_council_tax_reduction_award_conditions_met: holds
-    uk-burnley:policies/burnley/council-tax-reduction#burnley_council_tax_reduction_daily_amount: '8.33'
-
-- name: burnley_ctr_tariff_first_step_and_partial_step
-  period: {period_kind: custom, name: calendar_year, start: '2026-04-06', end: '2026-04-06'}
+- name: burnley_ctr_tariff_6250
+  period: *id001
   input:
     uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-burnley:policies/burnley/council-tax-reduction#input.local_authority_is_burnley: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_assessed_capital_for_year: 6250
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_actual_liability_for_day: 10
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_assessed_income_for_day: 0
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_applicable_amount_for_day: 100
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deductions_for_day: 0
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deduction_applies: false
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_in_remunerative_work: false
+    ? uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_normal_gross_weekly_income
+    : 0
+  output:
+    uk-burnley:policies/burnley/council-tax-reduction#burnley_council_tax_reduction_tariff_income_for_day: '0.1428571428571428571428571429'
+- name: burnley_ctr_tariff_6250_01
+  period: *id001
+  input:
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-burnley:policies/burnley/council-tax-reduction#input.local_authority_is_burnley: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.would_claim_council_tax_reduction: true
     uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_assessed_capital_for_year: 6250.01
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_actual_liability_for_day: 10
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_assessed_income_for_day: 0
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_applicable_amount_for_day: 100
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deductions_for_day: 0
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deduction_applies: false
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_in_remunerative_work: false
+    ? uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_normal_gross_weekly_income
+    : 0
   output:
     uk-burnley:policies/burnley/council-tax-reduction#burnley_council_tax_reduction_tariff_income_for_day: '0.2857142857142857142857142857'
-
-- name: burnley_ctr_capital_limit_eligible
-  period: {period_kind: custom, name: calendar_year, start: '2026-04-06', end: '2026-04-06'}
+- name: burnley_ctr_scope
+  period: *id001
+  input:
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-burnley:policies/burnley/council-tax-reduction#input.local_authority_is_burnley: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_actual_liability_for_day: 10
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_assessed_income_for_day: 0
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_applicable_amount_for_day: 100
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deductions_for_day: 0
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deduction_applies: false
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_in_remunerative_work: false
+    ? uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_normal_gross_weekly_income
+    : 0
+  output:
+    uk-burnley:policies/burnley/council-tax-reduction#burnley_council_tax_reduction_working_age_scheme_applies: holds
+- name: burnley_ctr_capital_limit
+  period: *id001
   input:
     uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deduction_band: 0
     uk-burnley:policies/burnley/council-tax-reduction#input.local_authority_is_burnley: true
@@ -58,11 +200,166 @@
     uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_assessed_income_for_day: 0
     uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_applicable_amount_for_day: 100
     uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deductions_for_day: 0
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deduction_applies: false
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_in_remunerative_work: false
+    ? uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_normal_gross_weekly_income
+    : 0
   output:
     uk-burnley:policies/burnley/council-tax-reduction#burnley_council_tax_reduction_capital_eligible: holds
-
-- name: burnley_ctr_capital_cliff_zero_award
-  period: {period_kind: custom, name: calendar_year, start: '2026-04-06', end: '2026-04-06'}
+- name: burnley_ctr_maximum
+  period: *id001
+  input:
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-burnley:policies/burnley/council-tax-reduction#input.local_authority_is_burnley: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_actual_liability_for_day: 10
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_assessed_income_for_day: 0
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_applicable_amount_for_day: 100
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deductions_for_day: 0
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deduction_applies: false
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_in_remunerative_work: false
+    ? uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_normal_gross_weekly_income
+    : 0
+  output:
+    uk-burnley:policies/burnley/council-tax-reduction#burnley_council_tax_reduction_maximum_council_tax_reduction_for_day: 10
+- name: burnley_ctr_income_equals_applicable
+  period: *id001
+  input:
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-burnley:policies/burnley/council-tax-reduction#input.local_authority_is_burnley: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_actual_liability_for_day: 10
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_assessed_income_for_day: 100
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_applicable_amount_for_day: 100
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deductions_for_day: 0
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deduction_applies: false
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_in_remunerative_work: false
+    ? uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_normal_gross_weekly_income
+    : 0
+  output:
+    uk-burnley:policies/burnley/council-tax-reduction#burnley_council_tax_reduction_excess_income_for_day: 0
+- name: burnley_ctr_first_above_applicable
+  period: *id001
+  input:
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-burnley:policies/burnley/council-tax-reduction#input.local_authority_is_burnley: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_actual_liability_for_day: 10
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_assessed_income_for_day: 101
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_applicable_amount_for_day: 100
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deductions_for_day: 0
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deduction_applies: false
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_in_remunerative_work: false
+    ? uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_normal_gross_weekly_income
+    : 0
+  output:
+    uk-burnley:policies/burnley/council-tax-reduction#burnley_council_tax_reduction_income_taper_deduction_for_day: '0.0285714285714285714285714286'
+- name: burnley_ctr_pre_standard
+  period: *id001
+  input:
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-burnley:policies/burnley/council-tax-reduction#input.local_authority_is_burnley: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_actual_liability_for_day: 10
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_assessed_income_for_day: 7
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_applicable_amount_for_day: 0
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deductions_for_day: 0
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deduction_applies: false
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_in_remunerative_work: false
+    ? uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_normal_gross_weekly_income
+    : 0
+  output:
+    uk-burnley:policies/burnley/council-tax-reduction#burnley_council_tax_reduction_pre_standard_deduction_amount_for_day: '9.8'
+- name: burnley_ctr_positive_award
+  period: *id001
+  input:
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-burnley:policies/burnley/council-tax-reduction#input.local_authority_is_burnley: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_actual_liability_for_day: 10
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_assessed_income_for_day: 7
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_applicable_amount_for_day: 0
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deductions_for_day: 0
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deduction_applies: false
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_in_remunerative_work: false
+    ? uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_normal_gross_weekly_income
+    : 0
+  output:
+    uk-burnley:policies/burnley/council-tax-reduction#burnley_council_tax_reduction_daily_amount: '8.33'
+- name: burnley_ctr_award_conditions
+  period: *id001
+  input:
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-burnley:policies/burnley/council-tax-reduction#input.local_authority_is_burnley: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_actual_liability_for_day: 10
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_assessed_income_for_day: 7
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_applicable_amount_for_day: 0
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deductions_for_day: 0
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deduction_applies: false
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_in_remunerative_work: false
+    ? uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_normal_gross_weekly_income
+    : 0
+  output:
+    uk-burnley:policies/burnley/council-tax-reduction#burnley_council_tax_reduction_award_conditions_met: holds
+- name: burnley_ctr_taper_exhaustion
+  period: *id001
+  input:
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-burnley:policies/burnley/council-tax-reduction#input.local_authority_is_burnley: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_actual_liability_for_day: 10
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_assessed_income_for_day: 350
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_applicable_amount_for_day: 0
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deductions_for_day: 0
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deduction_applies: false
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_in_remunerative_work: false
+    ? uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_normal_gross_weekly_income
+    : 0
+  output:
+    uk-burnley:policies/burnley/council-tax-reduction#burnley_council_tax_reduction_daily_amount: 0
+- name: burnley_ctr_standalone_zero
+  period: *id001
+  input:
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-burnley:policies/burnley/council-tax-reduction#input.local_authority_is_burnley: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.would_claim_council_tax_reduction: false
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_actual_liability_for_day: 10
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_assessed_income_for_day: 0
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_applicable_amount_for_day: 100
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deductions_for_day: 0
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deduction_applies: false
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_in_remunerative_work: false
+    ? uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_normal_gross_weekly_income
+    : 0
+  output:
+    uk-burnley:policies/burnley/council-tax-reduction#burnley_council_tax_reduction_daily_amount: 0
+- name: burnley_ctr_capital_cliff_eligible
+  period: *id001
   input:
     uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deduction_band: 0
     uk-burnley:policies/burnley/council-tax-reduction#input.local_authority_is_burnley: true
@@ -74,16 +371,180 @@
     uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_assessed_income_for_day: 0
     uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_applicable_amount_for_day: 100
     uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deductions_for_day: 0
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deduction_applies: false
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_in_remunerative_work: false
+    ? uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_normal_gross_weekly_income
+    : 0
   output:
     uk-burnley:policies/burnley/council-tax-reduction#burnley_council_tax_reduction_capital_eligible: not_holds
-    uk-burnley:policies/burnley/council-tax-reduction#burnley_council_tax_reduction_daily_amount: 0
-
-- name: burnley_ctr_non_dependant_bands
-  period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
+- name: burnley_ctr_capital_cliff_zero
+  period: *id001
   input:
     uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-burnley:policies/burnley/council-tax-reduction#input.local_authority_is_burnley: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_assessed_capital_for_year: 16000.01
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_actual_liability_for_day: 10
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_assessed_income_for_day: 0
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_applicable_amount_for_day: 100
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deductions_for_day: 0
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deduction_applies: false
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_in_remunerative_work: false
+    ? uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_normal_gross_weekly_income
+    : 0
+  output:
+    uk-burnley:policies/burnley/council-tax-reduction#burnley_council_tax_reduction_daily_amount: 0
+- name: burnley_ctr_non_dependant_below_279
+  period: *id001
+  input:
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-burnley:policies/burnley/council-tax-reduction#input.local_authority_is_burnley: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_actual_liability_for_day: 10
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_assessed_income_for_day: 0
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_applicable_amount_for_day: 100
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deductions_for_day: 0
     uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deduction_applies: true
     uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_in_remunerative_work: true
-    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_normal_gross_weekly_income: 485
+    ? uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_normal_gross_weekly_income
+    : 278.99
+  output:
+    uk-burnley:policies/burnley/council-tax-reduction#burnley_council_tax_reduction_individual_non_dependant_deduction_weekly: 5.2
+- name: burnley_ctr_non_dependant_at_279
+  period: *id001
+  input:
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-burnley:policies/burnley/council-tax-reduction#input.local_authority_is_burnley: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_actual_liability_for_day: 10
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_assessed_income_for_day: 0
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_applicable_amount_for_day: 100
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deductions_for_day: 0
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deduction_applies: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_in_remunerative_work: true
+    ? uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_normal_gross_weekly_income
+    : 279
+  output:
+    uk-burnley:policies/burnley/council-tax-reduction#burnley_council_tax_reduction_individual_non_dependant_deduction_weekly: 10.6
+- name: burnley_ctr_non_dependant_below_485
+  period: *id001
+  input:
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-burnley:policies/burnley/council-tax-reduction#input.local_authority_is_burnley: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_actual_liability_for_day: 10
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_assessed_income_for_day: 0
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_applicable_amount_for_day: 100
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deductions_for_day: 0
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deduction_applies: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_in_remunerative_work: true
+    ? uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_normal_gross_weekly_income
+    : 484.99
+  output:
+    uk-burnley:policies/burnley/council-tax-reduction#burnley_council_tax_reduction_individual_non_dependant_deduction_weekly: 10.6
+- name: burnley_ctr_non_dependant_at_485
+  period: *id001
+  input:
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-burnley:policies/burnley/council-tax-reduction#input.local_authority_is_burnley: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_actual_liability_for_day: 10
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_assessed_income_for_day: 0
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_applicable_amount_for_day: 100
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deductions_for_day: 0
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deduction_applies: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_in_remunerative_work: true
+    ? uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_normal_gross_weekly_income
+    : 485
   output:
     uk-burnley:policies/burnley/council-tax-reduction#burnley_council_tax_reduction_individual_non_dependant_deduction_weekly: 13.3
+- name: burnley_ctr_non_dependant_below_605
+  period: *id001
+  input:
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-burnley:policies/burnley/council-tax-reduction#input.local_authority_is_burnley: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_actual_liability_for_day: 10
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_assessed_income_for_day: 0
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_applicable_amount_for_day: 100
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deductions_for_day: 0
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deduction_applies: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_in_remunerative_work: true
+    ? uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_normal_gross_weekly_income
+    : 604.99
+  output:
+    uk-burnley:policies/burnley/council-tax-reduction#burnley_council_tax_reduction_individual_non_dependant_deduction_weekly: 13.3
+- name: burnley_ctr_non_dependant_at_605
+  period: *id001
+  input:
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-burnley:policies/burnley/council-tax-reduction#input.local_authority_is_burnley: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_actual_liability_for_day: 10
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_assessed_income_for_day: 0
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_applicable_amount_for_day: 100
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deductions_for_day: 0
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deduction_applies: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_in_remunerative_work: true
+    ? uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_normal_gross_weekly_income
+    : 605
+  output:
+    uk-burnley:policies/burnley/council-tax-reduction#burnley_council_tax_reduction_individual_non_dependant_deduction_weekly: 15.95
+- name: burnley_ctr_non_dependant_non_remunerative
+  period: *id001
+  input:
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-burnley:policies/burnley/council-tax-reduction#input.local_authority_is_burnley: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_actual_liability_for_day: 10
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_assessed_income_for_day: 0
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_applicable_amount_for_day: 100
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deductions_for_day: 0
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deduction_applies: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_in_remunerative_work: false
+    ? uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_normal_gross_weekly_income
+    : 700
+  output:
+    uk-burnley:policies/burnley/council-tax-reduction#burnley_council_tax_reduction_individual_non_dependant_deduction_weekly: 5.2
+- name: burnley_ctr_non_dependant_exemption
+  period: *id001
+  input:
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-burnley:policies/burnley/council-tax-reduction#input.local_authority_is_burnley: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_actual_liability_for_day: 10
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_assessed_income_for_day: 0
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_applicable_amount_for_day: 100
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deductions_for_day: 0
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_deduction_applies: false
+    uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_in_remunerative_work: false
+    ? uk-burnley:policies/burnley/council-tax-reduction#input.burnley_council_tax_reduction_non_dependant_normal_gross_weekly_income
+    : 0
+  output:
+    uk-burnley:policies/burnley/council-tax-reduction#burnley_council_tax_reduction_individual_non_dependant_deduction_weekly: 0
