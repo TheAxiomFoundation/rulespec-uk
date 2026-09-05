@@ -18,8 +18,6 @@ module:
       reason: The category-specific living allowances and premiums used to determine the applicable amount are outside this award-surface module.
     - output: uk-eastleigh:policies/eastleigh/council-tax-reduction/sections-15-to-56#assessed_income_and_capital_for_year
       reason: Income and capital attribution, disregards, valuation, and notional-capital rules are outside this award-surface module.
-    - output: uk-eastleigh:policies/eastleigh/council-tax-reduction/section-57#maximum_eligible_liability_for_year
-      reason: The award surface consumes the lower of eligible liability and Band D liability after discounts and joint-liability apportionment.
     - output: uk-eastleigh:policies/eastleigh/council-tax-reduction/section-58.3-to-58.9#non_dependant_deductions_for_year
       reason: This module encodes the printed individual deduction bands; couple selection, apportionment, and protected-class classification are supplied as household inputs.
 rules:
@@ -367,7 +365,32 @@ rules:
     versions:
       - effective_from: '2026-04-01'
         formula: |-
-          max(0, eastleigh_council_tax_reduction_maximum_eligible_liability_for_year * eastleigh_council_tax_reduction_maximum_support_rate - eastleigh_council_tax_reduction_non_dependant_deductions_for_year)
+          max(0, eastleigh_council_tax_reduction_band_d_capped_liability_for_year * eastleigh_council_tax_reduction_maximum_support_rate - eastleigh_council_tax_reduction_non_dependant_deductions_for_year)
+
+  - name: eastleigh_council_tax_reduction_band_d_capped_liability_for_year
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Eastleigh Borough Council Council Tax Reduction Scheme 2026/27 section 57.1
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk-eastleigh/manual/council-tax-reduction-scheme-2026-2027/page-72
+              excerpt: "A is the lower of either; i. amount set by the appropriate authority as the council tax"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk-eastleigh/manual/council-tax-reduction-scheme-2026-2027/page-72
+              excerpt: "ii. the amount set by the appropriate authority as the council tax for the relevant financial year in respect of a dwelling within Band D"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          min(eastleigh_council_tax_reduction_actual_liability_for_year, eastleigh_council_tax_reduction_band_d_liability_for_year)
 
   - name: eastleigh_council_tax_reduction_annual_amount
     kind: derived
