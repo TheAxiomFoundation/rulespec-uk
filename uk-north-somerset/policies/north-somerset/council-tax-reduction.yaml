@@ -11,8 +11,6 @@ module:
       reason: Earnings assessment and conversion are consumed as an input to the award surface.
     - output: uk-north-somerset:policies/north-somerset/council-tax-reduction/paragraphs-26-to-33#assessed_capital
       reason: Capital valuation and disregards are consumed as an input to the award surface.
-    - output: uk-north-somerset:policies/north-somerset/council-tax-reduction/paragraphs-35-and-40#band_d_capped_annual_liability
-      reason: The Band D ceiling, discounts, and joint-liability share are consumed as an input.
     - output: uk-north-somerset:policies/north-somerset/council-tax-reduction/paragraphs-44-and-51#non_dependant_exemption
       reason: Detailed exemption classifiers are consumed as an input.
 rules:
@@ -104,6 +102,32 @@ rules:
     source: North Somerset Council Tax Reduction Scheme 2026/27 paragraph 10 Band 6
     metadata: *band_scalar_proof
     versions: [{effective_from: '2026-04-01', formula: 'north_somerset_council_tax_reduction_income_band_5 + north_somerset_council_tax_reduction_income_band_1'}]
+  - name: north_somerset_council_tax_reduction_non_dependant_band_none
+    kind: parameter
+    dtype: Number
+    source: North Somerset Council Tax Reduction Scheme 2026/27 paragraph 51
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-north-somerset/manual/council-tax-reduction-scheme-2026-2027/page-12, excerpt: "No non-dependant deduction is applied where the non-dependant:"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '0'}]
+  - name: north_somerset_council_tax_reduction_non_dependant_band_not_in_remunerative_work
+    kind: parameter
+    dtype: Number
+    source: North Somerset Council Tax Reduction Scheme 2026/27 paragraph 49
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: parameter_table, source: {corpus_citation_path: uk-north-somerset/manual/council-tax-reduction-scheme-2026-2027/page-12, excerpt: "a standard deduction is applied for non-dependants aged 18 or over. The deduction is £7.50 a week for those who are not in remunerative work, and £15.00 week for those who are in remunerative work.", table: {header: "Non-dependant deductions for working-age applicants", row_key: remunerative work, column_key: weekly deduction}}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '1'}]
+  - name: north_somerset_council_tax_reduction_non_dependant_band_in_remunerative_work
+    kind: parameter
+    dtype: Number
+    source: North Somerset Council Tax Reduction Scheme 2026/27 paragraph 49
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: parameter_table, source: {corpus_citation_path: uk-north-somerset/manual/council-tax-reduction-scheme-2026-2027/page-12, excerpt: "a standard deduction is applied for non-dependants aged 18 or over. The deduction is £7.50 a week for those who are not in remunerative work, and £15.00 week for those who are in remunerative work.", table: {header: "Non-dependant deductions for working-age applicants", row_key: remunerative work, column_key: weekly deduction}}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '2'}]
+  - name: north_somerset_council_tax_reduction_working_age_scheme_applies
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Year
+    source: North Somerset Council Tax Reduction Scheme 2026/27 paragraphs 5 and 10
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: condition, source: {corpus_citation_path: uk-north-somerset/manual/council-tax-reduction-scheme-2026-2027/page-4, excerpt: "The scheme is called a council tax reduction scheme because any support usually takes the form of a reduction in council tax liability, and therefore a reduction in the applicant’s council tax bill."}}, {path: 'versions[0].formula', kind: condition, source: {corpus_citation_path: uk-north-somerset/manual/council-tax-reduction-scheme-2026-2027/page-5, excerpt: "The Council has devised its own scheme for working-age applicants."}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 'north_somerset_council_tax_reduction_local_authority_is_north_somerset and north_somerset_council_tax_reduction_household_in_england and north_somerset_council_tax_reduction_applicant_is_working_age and north_somerset_council_tax_reduction_would_claim'}]
   - name: north_somerset_council_tax_reduction_capital_eligible
     kind: derived
     entity: Person
@@ -135,7 +159,7 @@ rules:
     period: Week
     source: North Somerset Council Tax Reduction Scheme 2026/27 paragraphs 49 and 51
     metadata: &nd_selection_proof {proof: {atoms: [{path: 'versions[0].formula', kind: condition, source: {corpus_citation_path: uk-north-somerset/manual/council-tax-reduction-scheme-2026-2027/page-12, excerpt: "No non-dependant deduction is applied where the non-dependant:"}}, {path: 'versions[0].formula', kind: parameter_table, source: {corpus_citation_path: uk-north-somerset/manual/council-tax-reduction-scheme-2026-2027/page-12, excerpt: "a standard deduction is applied for non-dependants aged 18 or over. The deduction is £7.50 a week for those who are not in remunerative work, and £15.00 week for those who are in remunerative work.", table: {header: "Non-dependant deductions for working-age applicants", row_key: remunerative work, column_key: weekly deduction}}}]}}
-    versions: [{effective_from: '2026-04-01', formula: 'if north_somerset_council_tax_reduction_has_chargeable_non_dependant and not north_somerset_council_tax_reduction_non_dependant_exempt: if north_somerset_council_tax_reduction_non_dependant_in_remunerative_work: 2 else: 1 else: 0'}]
+    versions: [{effective_from: '2026-04-01', formula: 'if north_somerset_council_tax_reduction_has_chargeable_non_dependant and not north_somerset_council_tax_reduction_non_dependant_exempt: if north_somerset_council_tax_reduction_non_dependant_in_remunerative_work: north_somerset_council_tax_reduction_non_dependant_band_in_remunerative_work else: north_somerset_council_tax_reduction_non_dependant_band_not_in_remunerative_work else: north_somerset_council_tax_reduction_non_dependant_band_none'}]
   - name: north_somerset_council_tax_reduction_annual_non_dependant_deduction
     kind: derived
     entity: Person
@@ -158,4 +182,20 @@ rules:
           - path: 'versions[0].formula'
             kind: ordering
             source: {corpus_citation_path: uk-north-somerset/manual/council-tax-reduction-scheme-2026-2027/page-9, excerpt: "For working-age applicants, the calculation of council tax reduction is made in the following order: a. the actual liability for council tax, capped at a band D property charge; b. apply the maximum council tax reduction in accordance with the table at paragraph 10; c. apply any non-dependant deductions set out in paragraph 49."}
-    versions: [{effective_from: '2026-04-01', formula: 'if north_somerset_council_tax_reduction_capital_eligible: max(0, north_somerset_council_tax_reduction_band_d_capped_annual_liability * north_somerset_council_tax_reduction_selected_support_rate - north_somerset_council_tax_reduction_annual_non_dependant_deduction) else: 0'}]
+    versions: [{effective_from: '2026-04-01', formula: 'if north_somerset_council_tax_reduction_working_age_scheme_applies and north_somerset_council_tax_reduction_capital_eligible: max(0, north_somerset_council_tax_reduction_band_d_capped_annual_liability * north_somerset_council_tax_reduction_selected_support_rate - north_somerset_council_tax_reduction_annual_non_dependant_deduction) else: 0'}]
+  - name: north_somerset_council_tax_reduction_band_d_capped_annual_liability
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: North Somerset Council Tax Reduction Scheme 2026/27 paragraphs 13 and 36
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: condition, source: {corpus_citation_path: uk-north-somerset/manual/council-tax-reduction-scheme-2026-2027/page-6, excerpt: "Households living in a property in a higher council tax band than band D are restricted to the amount of council tax liability for a band D property."}}, {path: 'versions[0].formula', kind: ordering, source: {corpus_citation_path: uk-north-somerset/manual/council-tax-reduction-scheme-2026-2027/page-9, excerpt: "For working-age applicants, the calculation of council tax reduction is made in the following order: a. the actual liability for council tax, capped at a band D property charge; b. apply the maximum council tax reduction in accordance with the table at paragraph 10; c. apply any non-dependant deductions set out in paragraph 49."}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 'min(north_somerset_council_tax_reduction_actual_annual_liability, north_somerset_council_tax_reduction_band_d_annual_liability)'}]
+inputs:
+  - {name: north_somerset_council_tax_reduction_local_authority_is_north_somerset, entity: Person, dtype: Boolean, period: Year}
+  - {name: north_somerset_council_tax_reduction_household_in_england, entity: Person, dtype: Boolean, period: Year}
+  - {name: north_somerset_council_tax_reduction_applicant_is_working_age, entity: Person, dtype: Boolean, period: Year}
+  - {name: north_somerset_council_tax_reduction_would_claim, entity: Person, dtype: Boolean, period: Year}
+  - {name: north_somerset_council_tax_reduction_actual_annual_liability, entity: Person, dtype: Money, period: Year, unit: GBP}
+  - {name: north_somerset_council_tax_reduction_band_d_annual_liability, entity: Person, dtype: Money, period: Year, unit: GBP}
