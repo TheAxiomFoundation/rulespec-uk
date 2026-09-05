@@ -143,16 +143,15 @@ rules:
           3: 13.30
           4: 15.95
 
-  - name: cherwell_council_tax_reduction_passported_award_rate_by_band
+  - name: cherwell_council_tax_reduction_passported_award_rate
     kind: parameter
     dtype: Rate
-    indexed_by: cherwell_council_tax_reduction_income_band
     source: Cherwell Council Tax Reduction Scheme 2026/27 paragraph 32(9)
     metadata:
       proof:
         atoms:
-          - path: versions[0].values
-            kind: parameter_table
+          - path: versions[0].formula
+            kind: amount
             source:
               corpus_citation_path: uk-cherwell/manual/council-tax-reduction-scheme-2026-2027/page-31
               excerpt: "Working age passported and/or War Pensioners Income Band Excess Income CTR Award based on Council Tax Liability 1 £0 and over 100%"
@@ -160,26 +159,10 @@ rules:
                 header: Working age passported and/or War Pensioners
                 row_key: income band
                 column_key: CTR Award
-          - path: versions[0].values
-            kind: parameter_table
-            source:
-              corpus_citation_path: uk-cherwell/manual/council-tax-reduction-scheme-2026-2027/page-32
-              excerpt: "1 £0.00 - £4.99 100% 2 £5.00 - £14.99 95% 3 £15.00 - £29.99 87% 4 £30.00 - £49.99 80% 5 £50.00 – 74.99 65% 6 £75.00 - £99.99 42% 7 £100.00 - £124.99 25% 8 £125.00 upwards 0% Working age non-passported with children Income Band Excess Income CTR Award based on Council Tax Liability 1 £0.00 - £4.99 100% 2 £5.00 - £14.99 93% 3 £15.00 – 29.99 83% 4 £30.00 - £49.99 78% 5 £50.00 - £74.99 59% 6 £75.00 - £99.99 32% 7 £100.00 - £124.99 25% 8 £125.00 upwards 0% Working age non-passported other Income Band Excess Income CTR Award based on Council Tax Liability 1 £0.00 - £4.99 96% 2 £5.00 - £14.99 85% 3 £15.00 – 29.99 73% 4 £30.00 - £49.99 66% 5 £50.00 - £74.99 42% 6 £75.00 - £99.99 28% 7 £100.00 - £124.99 18% 8 £125.00 upwards 0%"
-              table:
-                header: Working age non-passported grids
-                row_key: client group and income band
-                column_key: CTR Award
     versions:
       - effective_from: '2026-04-01'
-        values:
-          1: 1
-          2: 1
-          3: 1
-          4: 1
-          5: 1
-          6: 1
-          7: 1
-          8: 1
+        formula: |-
+          1
 
   - name: cherwell_council_tax_reduction_disabled_award_rate_by_band
     kind: parameter
@@ -304,6 +287,55 @@ rules:
           7: 7
           8: 8
 
+  - name: cherwell_council_tax_reduction_income_band_ordinal_one
+    kind: parameter
+    dtype: Number
+    source: Cherwell Council Tax Reduction Scheme 2026/27 paragraph 32(9)
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-cherwell/manual/council-tax-reduction-scheme-2026-2027/page-32, excerpt: "1 £0.00 - £4.99 100%"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '1'}]
+  - name: cherwell_council_tax_reduction_income_band_ordinal_two
+    kind: parameter
+    dtype: Number
+    source: Cherwell Council Tax Reduction Scheme 2026/27 paragraph 32(9)
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-cherwell/manual/council-tax-reduction-scheme-2026-2027/page-32, excerpt: "2 £5.00 - £14.99 95%"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '2'}]
+  - name: cherwell_council_tax_reduction_income_band_ordinal_three
+    kind: parameter
+    dtype: Number
+    source: Cherwell Council Tax Reduction Scheme 2026/27 paragraph 32(9)
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-cherwell/manual/council-tax-reduction-scheme-2026-2027/page-32, excerpt: "3 £15.00 - £29.99 87%"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '3'}]
+  - name: cherwell_council_tax_reduction_income_band_ordinal_four
+    kind: parameter
+    dtype: Number
+    source: Cherwell Council Tax Reduction Scheme 2026/27 paragraph 32(9)
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-cherwell/manual/council-tax-reduction-scheme-2026-2027/page-32, excerpt: "4 £30.00 - £49.99 80%"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '4'}]
+  - name: cherwell_council_tax_reduction_income_band_ordinal_five
+    kind: parameter
+    dtype: Number
+    source: Cherwell Council Tax Reduction Scheme 2026/27 paragraph 32(9)
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-cherwell/manual/council-tax-reduction-scheme-2026-2027/page-32, excerpt: "5 £50.00 – 74.99 65%"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '5'}]
+  - name: cherwell_council_tax_reduction_income_band_ordinal_six
+    kind: parameter
+    dtype: Number
+    source: Cherwell Council Tax Reduction Scheme 2026/27 paragraph 32(9)
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-cherwell/manual/council-tax-reduction-scheme-2026-2027/page-32, excerpt: "6 £75.00 - £99.99 42%"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '6'}]
+  - name: cherwell_council_tax_reduction_income_band_ordinal_seven
+    kind: parameter
+    dtype: Number
+    source: Cherwell Council Tax Reduction Scheme 2026/27 paragraph 32(9)
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-cherwell/manual/council-tax-reduction-scheme-2026-2027/page-32, excerpt: "7 £100.00 - £124.99 25%"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '7'}]
+  - name: cherwell_council_tax_reduction_income_band_ordinal_eight
+    kind: parameter
+    dtype: Number
+    source: Cherwell Council Tax Reduction Scheme 2026/27 paragraph 32(9)
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-cherwell/manual/council-tax-reduction-scheme-2026-2027/page-32, excerpt: "8 £125.00 upwards 0%"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '8'}]
+
   - name: cherwell_council_tax_reduction_weeks_per_year
     kind: parameter
     dtype: Number
@@ -381,7 +413,7 @@ rules:
     versions:
       - effective_from: '2026-04-01'
         formula: |-
-          if cherwell_council_tax_reduction_weekly_excess_income >= cherwell_council_tax_reduction_band_lower_excess_income[cherwell_council_tax_reduction_income_band_code[8]]: cherwell_council_tax_reduction_income_band_code[8] else: if cherwell_council_tax_reduction_weekly_excess_income >= cherwell_council_tax_reduction_band_lower_excess_income[cherwell_council_tax_reduction_income_band_code[7]]: cherwell_council_tax_reduction_income_band_code[7] else: if cherwell_council_tax_reduction_weekly_excess_income >= cherwell_council_tax_reduction_band_lower_excess_income[cherwell_council_tax_reduction_income_band_code[6]]: cherwell_council_tax_reduction_income_band_code[6] else: if cherwell_council_tax_reduction_weekly_excess_income >= cherwell_council_tax_reduction_band_lower_excess_income[cherwell_council_tax_reduction_income_band_code[5]]: cherwell_council_tax_reduction_income_band_code[5] else: if cherwell_council_tax_reduction_weekly_excess_income >= cherwell_council_tax_reduction_band_lower_excess_income[cherwell_council_tax_reduction_income_band_code[4]]: cherwell_council_tax_reduction_income_band_code[4] else: if cherwell_council_tax_reduction_weekly_excess_income >= cherwell_council_tax_reduction_band_lower_excess_income[cherwell_council_tax_reduction_income_band_code[3]]: cherwell_council_tax_reduction_income_band_code[3] else: if cherwell_council_tax_reduction_weekly_excess_income >= cherwell_council_tax_reduction_band_lower_excess_income[cherwell_council_tax_reduction_income_band_code[2]]: cherwell_council_tax_reduction_income_band_code[2] else: cherwell_council_tax_reduction_income_band_code[1]
+          if cherwell_council_tax_reduction_weekly_excess_income >= cherwell_council_tax_reduction_band_lower_excess_income[cherwell_council_tax_reduction_income_band_code[cherwell_council_tax_reduction_income_band_ordinal_eight]]: cherwell_council_tax_reduction_income_band_code[cherwell_council_tax_reduction_income_band_ordinal_eight] else: if cherwell_council_tax_reduction_weekly_excess_income >= cherwell_council_tax_reduction_band_lower_excess_income[cherwell_council_tax_reduction_income_band_code[cherwell_council_tax_reduction_income_band_ordinal_seven]]: cherwell_council_tax_reduction_income_band_code[cherwell_council_tax_reduction_income_band_ordinal_seven] else: if cherwell_council_tax_reduction_weekly_excess_income >= cherwell_council_tax_reduction_band_lower_excess_income[cherwell_council_tax_reduction_income_band_code[cherwell_council_tax_reduction_income_band_ordinal_six]]: cherwell_council_tax_reduction_income_band_code[cherwell_council_tax_reduction_income_band_ordinal_six] else: if cherwell_council_tax_reduction_weekly_excess_income >= cherwell_council_tax_reduction_band_lower_excess_income[cherwell_council_tax_reduction_income_band_code[cherwell_council_tax_reduction_income_band_ordinal_five]]: cherwell_council_tax_reduction_income_band_code[cherwell_council_tax_reduction_income_band_ordinal_five] else: if cherwell_council_tax_reduction_weekly_excess_income >= cherwell_council_tax_reduction_band_lower_excess_income[cherwell_council_tax_reduction_income_band_code[cherwell_council_tax_reduction_income_band_ordinal_four]]: cherwell_council_tax_reduction_income_band_code[cherwell_council_tax_reduction_income_band_ordinal_four] else: if cherwell_council_tax_reduction_weekly_excess_income >= cherwell_council_tax_reduction_band_lower_excess_income[cherwell_council_tax_reduction_income_band_code[cherwell_council_tax_reduction_income_band_ordinal_three]]: cherwell_council_tax_reduction_income_band_code[cherwell_council_tax_reduction_income_band_ordinal_three] else: if cherwell_council_tax_reduction_weekly_excess_income >= cherwell_council_tax_reduction_band_lower_excess_income[cherwell_council_tax_reduction_income_band_code[cherwell_council_tax_reduction_income_band_ordinal_two]]: cherwell_council_tax_reduction_income_band_code[cherwell_council_tax_reduction_income_band_ordinal_two] else: cherwell_council_tax_reduction_income_band_code[cherwell_council_tax_reduction_income_band_ordinal_one]
 
   - name: cherwell_council_tax_reduction_selected_award_rate
     kind: derived
@@ -404,7 +436,7 @@ rules:
     versions:
       - effective_from: '2026-04-01'
         formula: |-
-          if cherwell_council_tax_reduction_is_passported_or_war_pensioner: cherwell_council_tax_reduction_passported_award_rate_by_band[cherwell_council_tax_reduction_income_band] else: if cherwell_council_tax_reduction_is_non_passported_disabled: cherwell_council_tax_reduction_disabled_award_rate_by_band[cherwell_council_tax_reduction_income_band] else: if cherwell_council_tax_reduction_is_non_passported_with_children: cherwell_council_tax_reduction_children_award_rate_by_band[cherwell_council_tax_reduction_income_band] else: cherwell_council_tax_reduction_other_award_rate_by_band[cherwell_council_tax_reduction_income_band]
+          if cherwell_council_tax_reduction_is_passported_or_war_pensioner: cherwell_council_tax_reduction_passported_award_rate else: if cherwell_council_tax_reduction_is_non_passported_disabled: cherwell_council_tax_reduction_disabled_award_rate_by_band[cherwell_council_tax_reduction_income_band] else: if cherwell_council_tax_reduction_is_non_passported_with_children: cherwell_council_tax_reduction_children_award_rate_by_band[cherwell_council_tax_reduction_income_band] else: cherwell_council_tax_reduction_other_award_rate_by_band[cherwell_council_tax_reduction_income_band]
 
   - name: cherwell_council_tax_reduction_annual_non_dependant_deduction
     kind: derived
@@ -470,7 +502,12 @@ rules:
             source:
               corpus_citation_path: uk-cherwell/manual/council-tax-reduction-scheme-2026-2027/page-31
               excerpt: "Where the person is within class D the maximum reduction is equivalent to band 1 percentage in the Working age passported and/or War Pensions table below, applied against Council Tax liability."
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk-cherwell/manual/council-tax-reduction-scheme-2026-2027/page-31
+              excerpt: "the related CTR percentage for their respective client group is applied against their liability."
     versions:
       - effective_from: '2026-04-01'
         formula: |-
-          if cherwell_council_tax_reduction_working_age_scheme_applies and cherwell_council_tax_reduction_capital_eligible: max(0, cherwell_council_tax_reduction_maximum_eligible_liability_for_year * cherwell_council_tax_reduction_maximum_support_rate * cherwell_council_tax_reduction_selected_award_rate - cherwell_council_tax_reduction_annual_non_dependant_deduction) else: 0
+          if cherwell_council_tax_reduction_working_age_scheme_applies and cherwell_council_tax_reduction_capital_eligible: max(0, cherwell_council_tax_reduction_maximum_eligible_liability_for_year * cherwell_council_tax_reduction_selected_award_rate - cherwell_council_tax_reduction_annual_non_dependant_deduction) else: 0

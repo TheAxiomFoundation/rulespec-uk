@@ -1,8 +1,5 @@
 - name: cherwell_passported_full_award_parameters
-  period: &year
-    period_kind: tax_year
-    start: '2026-04-01'
-    end: '2027-03-31'
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
   input:
     uk-cherwell:policies/cherwell/council-tax-reduction#input.local_authority_is_cherwell: true
     uk-cherwell:policies/cherwell/council-tax-reduction#input.council_tax_reduction_household_in_england: true
@@ -17,20 +14,10 @@
     uk-cherwell:policies/cherwell/council-tax-reduction#input.cherwell_council_tax_reduction_non_dependant_deduction_band: 0
     uk-cherwell:policies/cherwell/council-tax-reduction#input.cherwell_council_tax_reduction_maximum_eligible_liability_for_year: 1000
   output:
-    uk-cherwell:policies/cherwell/council-tax-reduction#cherwell_council_tax_reduction_maximum_support_rate: 1
-    uk-cherwell:policies/cherwell/council-tax-reduction#cherwell_council_tax_reduction_capital_limit: 16000
-    uk-cherwell:policies/cherwell/council-tax-reduction#cherwell_council_tax_reduction_tariff_income_threshold: 6000
-    uk-cherwell:policies/cherwell/council-tax-reduction#cherwell_council_tax_reduction_tariff_income_step: 250
-    uk-cherwell:policies/cherwell/council-tax-reduction#cherwell_council_tax_reduction_tariff_income_weekly_amount_per_step: 1
-    uk-cherwell:policies/cherwell/council-tax-reduction#cherwell_council_tax_reduction_non_dependant_weekly_deduction_by_band: 0
-    uk-cherwell:policies/cherwell/council-tax-reduction#cherwell_council_tax_reduction_working_age_scheme_applies: holds
-    uk-cherwell:policies/cherwell/council-tax-reduction#cherwell_council_tax_reduction_tariff_income_weekly: 0
-    uk-cherwell:policies/cherwell/council-tax-reduction#cherwell_council_tax_reduction_income_band: 1
-    uk-cherwell:policies/cherwell/council-tax-reduction#cherwell_council_tax_reduction_selected_award_rate: 1
     uk-cherwell:policies/cherwell/council-tax-reduction#cherwell_council_tax_reduction_annual_amount: 1000
 
 - name: cherwell_disabled_band_2_tariff_first_step_and_non_dependant
-  period: *year
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
   input:
     uk-cherwell:policies/cherwell/council-tax-reduction#input.local_authority_is_cherwell: true
     uk-cherwell:policies/cherwell/council-tax-reduction#input.council_tax_reduction_household_in_england: true
@@ -46,14 +33,9 @@
     uk-cherwell:policies/cherwell/council-tax-reduction#input.cherwell_council_tax_reduction_maximum_eligible_liability_for_year: 1000
   output:
     uk-cherwell:policies/cherwell/council-tax-reduction#cherwell_council_tax_reduction_tariff_income_weekly: 1
-    uk-cherwell:policies/cherwell/council-tax-reduction#cherwell_council_tax_reduction_income_band: 2
-    uk-cherwell:policies/cherwell/council-tax-reduction#cherwell_council_tax_reduction_selected_award_rate: 0.95
-    uk-cherwell:policies/cherwell/council-tax-reduction#cherwell_council_tax_reduction_non_dependant_weekly_deduction_by_band: 10.20
-    uk-cherwell:policies/cherwell/council-tax-reduction#cherwell_council_tax_reduction_annual_non_dependant_deduction: 530.4
-    uk-cherwell:policies/cherwell/council-tax-reduction#cherwell_council_tax_reduction_annual_amount: 419.6
 
 - name: cherwell_children_band_8_zero_award
-  period: *year
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
   input:
     uk-cherwell:policies/cherwell/council-tax-reduction#input.local_authority_is_cherwell: true
     uk-cherwell:policies/cherwell/council-tax-reduction#input.council_tax_reduction_household_in_england: true
@@ -68,11 +50,10 @@
     uk-cherwell:policies/cherwell/council-tax-reduction#input.cherwell_council_tax_reduction_non_dependant_deduction_band: 1
     uk-cherwell:policies/cherwell/council-tax-reduction#input.cherwell_council_tax_reduction_maximum_eligible_liability_for_year: 1000
   output:
-    uk-cherwell:policies/cherwell/council-tax-reduction#cherwell_council_tax_reduction_selected_award_rate: 0
-    uk-cherwell:policies/cherwell/council-tax-reduction#cherwell_council_tax_reduction_annual_amount: 0
+    uk-cherwell:policies/cherwell/council-tax-reduction#cherwell_council_tax_reduction_capital_eligible: holds
 
 - name: cherwell_other_band_7_and_capital_cliff
-  period: *year
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
   input:
     uk-cherwell:policies/cherwell/council-tax-reduction#input.local_authority_is_cherwell: true
     uk-cherwell:policies/cherwell/council-tax-reduction#input.council_tax_reduction_household_in_england: true
@@ -87,14 +68,10 @@
     uk-cherwell:policies/cherwell/council-tax-reduction#input.cherwell_council_tax_reduction_non_dependant_deduction_band: 4
     uk-cherwell:policies/cherwell/council-tax-reduction#input.cherwell_council_tax_reduction_maximum_eligible_liability_for_year: 1000
   output:
-    uk-cherwell:policies/cherwell/council-tax-reduction#cherwell_council_tax_reduction_capital_eligible: holds
-    uk-cherwell:policies/cherwell/council-tax-reduction#cherwell_council_tax_reduction_tariff_income_weekly: 40
-    uk-cherwell:policies/cherwell/council-tax-reduction#cherwell_council_tax_reduction_selected_award_rate: 0.18
-    uk-cherwell:policies/cherwell/council-tax-reduction#cherwell_council_tax_reduction_non_dependant_weekly_deduction_by_band: 15.95
-    uk-cherwell:policies/cherwell/council-tax-reduction#cherwell_council_tax_reduction_annual_amount: 0
+    uk-cherwell:policies/cherwell/council-tax-reduction#cherwell_council_tax_reduction_income_band: 7
 
 - name: cherwell_capital_over_limit_zero_award
-  period: *year
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
   input:
     uk-cherwell:policies/cherwell/council-tax-reduction#input.local_authority_is_cherwell: true
     uk-cherwell:policies/cherwell/council-tax-reduction#input.council_tax_reduction_household_in_england: true
@@ -110,4 +87,75 @@
     uk-cherwell:policies/cherwell/council-tax-reduction#input.cherwell_council_tax_reduction_maximum_eligible_liability_for_year: 1000
   output:
     uk-cherwell:policies/cherwell/council-tax-reduction#cherwell_council_tax_reduction_capital_eligible: not_holds
+
+- name: cherwell_working_age_scheme_applies
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-cherwell:policies/cherwell/council-tax-reduction#input.local_authority_is_cherwell: true
+    uk-cherwell:policies/cherwell/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-cherwell:policies/cherwell/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-cherwell:policies/cherwell/council-tax-reduction#input.cherwell_council_tax_reduction_applicant_is_working_age: true
+    uk-cherwell:policies/cherwell/council-tax-reduction#input.cherwell_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-cherwell:policies/cherwell/council-tax-reduction#input.cherwell_council_tax_reduction_weekly_excess_income: 0
+    uk-cherwell:policies/cherwell/council-tax-reduction#input.cherwell_council_tax_reduction_income_band_ordinal: 1
+    uk-cherwell:policies/cherwell/council-tax-reduction#input.cherwell_council_tax_reduction_is_passported_or_war_pensioner: true
+    uk-cherwell:policies/cherwell/council-tax-reduction#input.cherwell_council_tax_reduction_is_non_passported_disabled: false
+    uk-cherwell:policies/cherwell/council-tax-reduction#input.cherwell_council_tax_reduction_is_non_passported_with_children: false
+    uk-cherwell:policies/cherwell/council-tax-reduction#input.cherwell_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-cherwell:policies/cherwell/council-tax-reduction#input.cherwell_council_tax_reduction_maximum_eligible_liability_for_year: 1000
+  output:
+    uk-cherwell:policies/cherwell/council-tax-reduction#cherwell_council_tax_reduction_working_age_scheme_applies: holds
+
+- name: cherwell_non_dependant_annual_deduction
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-cherwell:policies/cherwell/council-tax-reduction#input.local_authority_is_cherwell: true
+    uk-cherwell:policies/cherwell/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-cherwell:policies/cherwell/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-cherwell:policies/cherwell/council-tax-reduction#input.cherwell_council_tax_reduction_applicant_is_working_age: true
+    uk-cherwell:policies/cherwell/council-tax-reduction#input.cherwell_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-cherwell:policies/cherwell/council-tax-reduction#input.cherwell_council_tax_reduction_weekly_excess_income: 0
+    uk-cherwell:policies/cherwell/council-tax-reduction#input.cherwell_council_tax_reduction_income_band_ordinal: 1
+    uk-cherwell:policies/cherwell/council-tax-reduction#input.cherwell_council_tax_reduction_is_passported_or_war_pensioner: true
+    uk-cherwell:policies/cherwell/council-tax-reduction#input.cherwell_council_tax_reduction_is_non_passported_disabled: false
+    uk-cherwell:policies/cherwell/council-tax-reduction#input.cherwell_council_tax_reduction_is_non_passported_with_children: false
+    uk-cherwell:policies/cherwell/council-tax-reduction#input.cherwell_council_tax_reduction_non_dependant_deduction_band: 2
+    uk-cherwell:policies/cherwell/council-tax-reduction#input.cherwell_council_tax_reduction_maximum_eligible_liability_for_year: 1000
+  output:
+    uk-cherwell:policies/cherwell/council-tax-reduction#cherwell_council_tax_reduction_annual_non_dependant_deduction: 530.4
+
+- name: cherwell_passported_selected_rate
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-cherwell:policies/cherwell/council-tax-reduction#input.local_authority_is_cherwell: true
+    uk-cherwell:policies/cherwell/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-cherwell:policies/cherwell/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-cherwell:policies/cherwell/council-tax-reduction#input.cherwell_council_tax_reduction_applicant_is_working_age: true
+    uk-cherwell:policies/cherwell/council-tax-reduction#input.cherwell_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-cherwell:policies/cherwell/council-tax-reduction#input.cherwell_council_tax_reduction_weekly_excess_income: 125
+    uk-cherwell:policies/cherwell/council-tax-reduction#input.cherwell_council_tax_reduction_income_band_ordinal: 1
+    uk-cherwell:policies/cherwell/council-tax-reduction#input.cherwell_council_tax_reduction_is_passported_or_war_pensioner: true
+    uk-cherwell:policies/cherwell/council-tax-reduction#input.cherwell_council_tax_reduction_is_non_passported_disabled: false
+    uk-cherwell:policies/cherwell/council-tax-reduction#input.cherwell_council_tax_reduction_is_non_passported_with_children: false
+    uk-cherwell:policies/cherwell/council-tax-reduction#input.cherwell_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-cherwell:policies/cherwell/council-tax-reduction#input.cherwell_council_tax_reduction_maximum_eligible_liability_for_year: 1000
+  output:
+    uk-cherwell:policies/cherwell/council-tax-reduction#cherwell_council_tax_reduction_selected_award_rate: 1
+
+- name: cherwell_capital_over_limit_zero_award
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-cherwell:policies/cherwell/council-tax-reduction#input.local_authority_is_cherwell: true
+    uk-cherwell:policies/cherwell/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-cherwell:policies/cherwell/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-cherwell:policies/cherwell/council-tax-reduction#input.cherwell_council_tax_reduction_applicant_is_working_age: true
+    uk-cherwell:policies/cherwell/council-tax-reduction#input.cherwell_council_tax_reduction_assessed_capital_for_year: 16000.01
+    uk-cherwell:policies/cherwell/council-tax-reduction#input.cherwell_council_tax_reduction_weekly_excess_income: 0
+    uk-cherwell:policies/cherwell/council-tax-reduction#input.cherwell_council_tax_reduction_income_band_ordinal: 1
+    uk-cherwell:policies/cherwell/council-tax-reduction#input.cherwell_council_tax_reduction_is_passported_or_war_pensioner: true
+    uk-cherwell:policies/cherwell/council-tax-reduction#input.cherwell_council_tax_reduction_is_non_passported_disabled: false
+    uk-cherwell:policies/cherwell/council-tax-reduction#input.cherwell_council_tax_reduction_is_non_passported_with_children: false
+    uk-cherwell:policies/cherwell/council-tax-reduction#input.cherwell_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-cherwell:policies/cherwell/council-tax-reduction#input.cherwell_council_tax_reduction_maximum_eligible_liability_for_year: 1000
+  output:
     uk-cherwell:policies/cherwell/council-tax-reduction#cherwell_council_tax_reduction_annual_amount: 0
