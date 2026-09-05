@@ -12,7 +12,7 @@ module:
     #     - uk/regulations/uksi/2012/2886
     #   rationale: Section 13A of the Local Government Finance Act 1992 delegates the working-age scheme to Rossendale Borough Council, so the adopted scheme document is the operative legal source for its locally set working-age values.
   summary: |-
-    Rossendale's adopted 2026-27 working-age scheme calculates the section 57 maximum, deducts excess income at 2 6/7 per cent daily, then applies the 20% standard deduction, yielding 80% support before non-dependant deductions and taper. Capital above £16,000 is an eligibility cliff; capital above £6,000 and no more than £16,000 produces £1 weekly tariff income for each complete £250 or part thereof. No minimum-award floor or council-tax-band cap is printed. Pension-age and the separate second-adult rebate are out of scope.
+    Rossendale's adopted 2026-27 working-age scheme awards Class D where income is strictly below the applicable amount or the applicant or partner receives a qualifying income-related benefit, and Class E where income is strictly above it and the maximum exceeds the taper. It calculates the section 57 maximum less non-dependant deductions, deducts excess income at 2 6/7 per cent daily, then applies the 20% standard deduction. Capital above £16,000 is an eligibility cliff; capital above £6,000 and no more than £16,000 produces £1 weekly tariff income for each complete £250 or part thereof. No minimum-award floor or council-tax-band cap is printed. Pension-age and the separate second-adult rebate are out of scope.
   deferred_outputs:
     - output: uk-rossendale:policies/rossendale/council-tax-reduction/schedule-1#applicable_amount
       reason: The category-specific personal allowances, premiums, components, and transitional additions used to calculate the applicable amount are outside this award-surface module.
@@ -358,6 +358,27 @@ rules:
           2: 13.30
           3: 15.95
 
+  - name: rossendale_council_tax_reduction_non_dependant_band_codes
+    kind: parameter
+    dtype: Number
+    indexed_by: rossendale_council_tax_reduction_non_dependant_band
+    source: Rossendale Council Tax Reduction Scheme 2026/27 paragraph 58.2
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].values
+            kind: parameter_table
+            source:
+              corpus_citation_path: uk-rossendale/manual/council-tax-reduction-scheme-2026-2027/page-74
+              excerpt: "58.2 In the case of a non-dependant aged 18 or over, where it is shown to the appropriate authority that his normal gross weekly income is– (a) less than £279.00, the deduction to be made under this paragraph shall be that specified in paragraph 58.1(b); (b) not less than £279.00, but less than £485.00, the deduction to be made under this section shall be £10.60 x1/7; (c) not less than £485.00, but less than £605.00, the deduction to be made under this section shall be £13.30 x 1/7."
+              table:
+                header: "58.0 Non-dependant deductions"
+                row_key: "normal gross weekly income"
+                column_key: "deduction band"
+    versions:
+      - effective_from: '2026-04-01'
+        values: {0: 0, 1: 1, 2: 2, 3: 3}
+
   - name: rossendale_council_tax_reduction_capital_eligible
     kind: derived
     entity: Household
@@ -398,7 +419,69 @@ rules:
     versions:
       - effective_from: '2026-04-01'
         formula: |-
-          if rossendale_council_tax_reduction_non_dependant_normal_gross_weekly_income < rossendale_council_tax_reduction_non_dependant_middle_threshold: 0 else: if rossendale_council_tax_reduction_non_dependant_normal_gross_weekly_income < rossendale_council_tax_reduction_non_dependant_high_threshold: 1 else: if rossendale_council_tax_reduction_non_dependant_normal_gross_weekly_income < rossendale_council_tax_reduction_non_dependant_top_threshold: 2 else: 3
+          if rossendale_council_tax_reduction_non_dependant_normal_gross_weekly_income < rossendale_council_tax_reduction_non_dependant_middle_threshold: rossendale_council_tax_reduction_non_dependant_band_codes[0] else: if rossendale_council_tax_reduction_non_dependant_normal_gross_weekly_income < rossendale_council_tax_reduction_non_dependant_high_threshold: rossendale_council_tax_reduction_non_dependant_band_codes[1] else: if rossendale_council_tax_reduction_non_dependant_normal_gross_weekly_income < rossendale_council_tax_reduction_non_dependant_top_threshold: rossendale_council_tax_reduction_non_dependant_band_codes[2] else: rossendale_council_tax_reduction_non_dependant_band_codes[3]
+
+  - name: rossendale_council_tax_reduction_receives_qualifying_income_related_benefit
+    kind: derived
+    entity: Household
+    dtype: Judgment
+    period: Week
+    source: Rossendale Council Tax Reduction Scheme 2026/27 Class D
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk-rossendale/manual/council-tax-reduction-scheme-2026-2027/page-8
+              excerpt: "applicant or partner is in receipt of income support, jobseekers’ allowance (income based) or employment and support allowance (income related)"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          rossendale_council_tax_reduction_receives_income_support or rossendale_council_tax_reduction_receives_income_based_jobseekers_allowance or rossendale_council_tax_reduction_receives_income_related_employment_and_support_allowance
+
+  - name: rossendale_council_tax_reduction_class_d_conditions_met
+    kind: derived
+    entity: Household
+    dtype: Judgment
+    period: Week
+    source: Rossendale Council Tax Reduction Scheme 2026/27 Class D
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk-rossendale/manual/council-tax-reduction-scheme-2026-2027/page-8
+              excerpt: "person’s income4 is less than their applicable amount5 or the applicant or partner is in receipt of income support, jobseekers’ allowance (income based) or employment and support allowance (income related)"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          rossendale_council_tax_reduction_assessed_income_weekly < rossendale_council_tax_reduction_applicable_amount_weekly or rossendale_council_tax_reduction_receives_qualifying_income_related_benefit
+
+  - name: rossendale_council_tax_reduction_class_e_conditions_met
+    kind: derived
+    entity: Household
+    dtype: Judgment
+    period: Week
+    source: Rossendale Council Tax Reduction Scheme 2026/27 Class E
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk-rossendale/manual/council-tax-reduction-scheme-2026-2027/page-9
+              excerpt: "person’s income10 is more than their applicable amount11"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk-rossendale/manual/council-tax-reduction-scheme-2026-2027/page-9
+              excerpt: "amount A exceeds amount B"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          rossendale_council_tax_reduction_assessed_income_weekly > rossendale_council_tax_reduction_applicable_amount_weekly and rossendale_council_tax_reduction_maximum_weekly_amount > rossendale_council_tax_reduction_taper_deduction_weekly
 
   - name: rossendale_council_tax_reduction_individual_non_dependant_deduction_weekly
     kind: derived
@@ -557,7 +640,7 @@ rules:
     versions:
       - effective_from: '2026-04-01'
         formula: |-
-          local_authority_is_rossendale and rossendale_council_tax_reduction_applicant_is_in_working_age_class and would_claim_council_tax_reduction and rossendale_council_tax_reduction_capital_eligible
+          local_authority_is_rossendale and rossendale_council_tax_reduction_applicant_is_in_working_age_class and would_claim_council_tax_reduction and rossendale_council_tax_reduction_capital_eligible and (rossendale_council_tax_reduction_class_d_conditions_met or rossendale_council_tax_reduction_class_e_conditions_met)
 
   - name: rossendale_council_tax_reduction_weekly_amount
     kind: derived
@@ -636,3 +719,15 @@ inputs:
     dtype: Money
     period: Week
     unit: GBP
+  - name: rossendale_council_tax_reduction_receives_income_support
+    entity: Household
+    dtype: Boolean
+    period: Week
+  - name: rossendale_council_tax_reduction_receives_income_based_jobseekers_allowance
+    entity: Household
+    dtype: Boolean
+    period: Week
+  - name: rossendale_council_tax_reduction_receives_income_related_employment_and_support_allowance
+    entity: Household
+    dtype: Boolean
+    period: Week
