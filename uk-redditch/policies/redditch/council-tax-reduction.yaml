@@ -1,0 +1,598 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk-redditch/manual/council-tax-reduction-scheme-2026-2027/page-64
+    # upstream_source_check:
+    #   status: delegated_scheme
+    #   checked_paths: [uk/statutes/ukpga/1992/14/13A, uk/regulations/uksi/2012/2885, uk/regulations/uksi/2012/2886]
+    #   rationale: LGFA 1992 section 13A delegates the working-age scheme to Redditch District Council, so the adopted document is operative. The apply-stage encoder strips this attestation to the singular source-verification contract after local gates pass.
+  summary: |-
+    Redditch's adopted 2026-27 working-age scheme is a weekly-income banded discount applied to its defined maximum Council Tax Reduction, rather than an excess-income taper. The maximum is 100 percent of eligible liability; Schedule 1 applies 100.00, 80.00, 55.00, 30.00, or 0.00 percent by family and weekly income. Capital above £6,000 gives no reduction, and Income Support, income-related ESA, and income-based JSA are awarded Band 1. The working-age award provisions do not state a taper, tariff-income conversion, non-dependant deduction, or minimum-award floor, so none is invented here. Pension-age prescribed-scheme provisions are outside this module.
+  deferred_outputs:
+    - output: uk-redditch:policies/redditch/council-tax-reduction/sections-15-to-47-and-schedules-2-to-3#assessed_weekly_income
+      reason: The award surface consumes weekly income after the scheme's detailed income, disregard, and attribution rules, which are outside this module.
+    - output: uk-redditch:policies/redditch/council-tax-reduction/sections-15-to-47-and-schedules-2-to-3#assessed_capital
+      reason: The award surface consumes capital after the scheme's detailed capital valuation and attribution rules, which are outside this module.
+    - output: uk-redditch:policies/redditch/council-tax-reduction/section-48#eligible_annual_liability
+      reason: The award surface consumes annual liability after the section 48 daily-liability, discount, and joint-liability calculation, which is outside this module.
+rules:
+  - name: redditch_council_tax_reduction_family_category_codes
+    kind: parameter
+    dtype: Number
+    indexed_by: redditch_council_tax_reduction_family_category
+    source: Redditch District Council Council Tax Reduction Scheme 2026/27 Schedule 1 family columns
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].values
+            kind: parameter_table
+            source:
+              corpus_citation_path: uk-redditch/manual/council-tax-reduction-scheme-2026-2027/page-64
+              excerpt: "Single Person Single Person Single Person Couple Couple with one Couple with two with One with two child or more Child or more children"
+              table:
+                header: "Schedule 1 family columns"
+                row_key: "family category"
+                column_key: "implementation category code"
+    versions:
+      - effective_from: '2026-04-01'
+        values:
+          0: 0
+          1: 1
+          2: 2
+          3: 3
+          4: 4
+          5: 5
+
+  - name: redditch_council_tax_reduction_income_band_codes
+    kind: parameter
+    dtype: Number
+    indexed_by: redditch_council_tax_reduction_income_band
+    source: Redditch District Council Council Tax Reduction Scheme 2026/27 Schedule 1 award rows
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].values
+            kind: parameter_table
+            source:
+              corpus_citation_path: uk-redditch/manual/council-tax-reduction-scheme-2026-2027/page-64
+              excerpt: "Income 100.00% £0 to £0 to £0 to £0 to £0 to £0 to Band 1 £130 £203 £277 £186 £260 £333 Income 80.00% £130.01 £203.01 £277.01 £186.01 £260.01 £333.01 Band 2 to £159 to £243 to £316 to £214 to £299 to £372 Income 55.00% £159.01 £243.01 £316.01 £214.01 £299.01 £372.01 Band 3 to £186 to £283 to £355 to £243 to £338 to £413 Income 30.00% £186.01 £283.01 £355.01 £243.01 £338.01 £413.01 Band 4 to £214 to £321 to £395 to £270 to £378 to £451 Nil Award 0.00% Over Over Over Over Over Over £214 £321 £395 £270 £378 £451"
+              table:
+                header: "Schedule 1 award rows"
+                row_key: "discount band"
+                column_key: "implementation band code"
+    versions:
+      - effective_from: '2026-04-01'
+        values:
+          0: 0
+          1: 1
+          2: 2
+          3: 3
+          4: 4
+
+  - name: redditch_council_tax_reduction_maximum_support_rate
+    kind: parameter
+    dtype: Rate
+    period: Year
+    source: Redditch District Council Council Tax Reduction Scheme 2026/27 paragraph 48.1
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk-redditch/manual/council-tax-reduction-scheme-2026-2027/page-48
+              excerpt: "shall be 100 per cent, of the amount A divided by B where;"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          1.00
+
+  - name: redditch_council_tax_reduction_capital_limit
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Redditch District Council Council Tax Reduction Scheme 2026/27 Schedule 1 paragraph 6
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk-redditch/manual/council-tax-reduction-scheme-2026-2027/page-64
+              excerpt: "Any applicant who capital is greater than £6,000 shall not be entitled to any Council Tax Reductions whatsoever."
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          6000
+
+  - name: redditch_council_tax_reduction_one_dependant_child
+    kind: parameter
+    dtype: Number
+    source: Redditch District Council Council Tax Reduction Scheme 2026/27 Schedule 1 family columns
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk-redditch/manual/council-tax-reduction-scheme-2026-2027/page-64
+              excerpt: "Single Person Single Person Single Person Couple Couple with one Couple with two with One with two child or more Child or more children"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          1
+
+  - name: redditch_council_tax_reduction_maximum_dependant_children
+    kind: parameter
+    dtype: Number
+    source: Redditch District Council Council Tax Reduction Scheme 2026/27 Schedule 1 paragraph 5
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk-redditch/manual/council-tax-reduction-scheme-2026-2027/page-64
+              excerpt: "it should be noted that in any application for reduction is limited to a maximum of two dependent children or young persons."
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          2
+
+  - name: redditch_council_tax_reduction_band_2_lower_weekly_income_by_family
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    indexed_by: redditch_council_tax_reduction_family_category
+    source: Redditch District Council Council Tax Reduction Scheme 2026/27 Schedule 1 Income Band 2
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].values
+            kind: parameter_table
+            source:
+              corpus_citation_path: uk-redditch/manual/council-tax-reduction-scheme-2026-2027/page-64
+              excerpt: "Income 80.00% £130.01 £203.01 £277.01 £186.01 £260.01 £333.01 Band 2 to £159 to £243 to £316 to £214 to £299 to £372"
+              table:
+                header: "Income Band 2 lower weekly income by family"
+                row_key: "Income Band 2"
+                column_key: "family category"
+    versions:
+      - effective_from: '2026-04-01'
+        values:
+          0: 130.01
+          1: 203.01
+          2: 277.01
+          3: 186.01
+          4: 260.01
+          5: 333.01
+
+  - name: redditch_council_tax_reduction_band_3_lower_weekly_income_by_family
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    indexed_by: redditch_council_tax_reduction_family_category
+    source: Redditch District Council Council Tax Reduction Scheme 2026/27 Schedule 1 Income Band 3
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].values
+            kind: parameter_table
+            source:
+              corpus_citation_path: uk-redditch/manual/council-tax-reduction-scheme-2026-2027/page-64
+              excerpt: "Income 55.00% £159.01 £243.01 £316.01 £214.01 £299.01 £372.01 Band 3 to £186 to £283 to £355 to £243 to £338 to £413"
+              table:
+                header: "Income Band 3 lower weekly income by family"
+                row_key: "Income Band 3"
+                column_key: "family category"
+    versions:
+      - effective_from: '2026-04-01'
+        values:
+          0: 159.01
+          1: 243.01
+          2: 316.01
+          3: 214.01
+          4: 299.01
+          5: 372.01
+
+  - name: redditch_council_tax_reduction_band_4_lower_weekly_income_by_family
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    indexed_by: redditch_council_tax_reduction_family_category
+    source: Redditch District Council Council Tax Reduction Scheme 2026/27 Schedule 1 Income Band 4
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].values
+            kind: parameter_table
+            source:
+              corpus_citation_path: uk-redditch/manual/council-tax-reduction-scheme-2026-2027/page-64
+              excerpt: "Income 30.00% £186.01 £283.01 £355.01 £243.01 £338.01 £413.01 Band 4 to £214 to £321 to £395 to £270 to £378 to £451"
+              table:
+                header: "Income Band 4 lower weekly income by family"
+                row_key: "Income Band 4"
+                column_key: "family category"
+    versions:
+      - effective_from: '2026-04-01'
+        values:
+          0: 186.01
+          1: 283.01
+          2: 355.01
+          3: 243.01
+          4: 338.01
+          5: 413.01
+
+  - name: redditch_council_tax_reduction_last_discount_band_upper_weekly_income_by_family
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    indexed_by: redditch_council_tax_reduction_family_category
+    source: Redditch District Council Council Tax Reduction Scheme 2026/27 Schedule 1 Income Band 4 and Nil Award
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].values
+            kind: parameter_table
+            source:
+              corpus_citation_path: uk-redditch/manual/council-tax-reduction-scheme-2026-2027/page-64
+              excerpt: "Income 30.00% £186.01 £283.01 £355.01 £243.01 £338.01 £413.01 Band 4 to £214 to £321 to £395 to £270 to £378 to £451"
+              table:
+                header: "Last discount-band upper weekly income by family"
+                row_key: "Income Band 4"
+                column_key: "family category"
+    versions:
+      - effective_from: '2026-04-01'
+        values:
+          0: 214
+          1: 321
+          2: 395
+          3: 270
+          4: 378
+          5: 451
+
+  - name: redditch_council_tax_reduction_discount_rate_by_band
+    kind: parameter
+    dtype: Rate
+    period: Year
+    indexed_by: redditch_council_tax_reduction_income_band
+    source: Redditch District Council Council Tax Reduction Scheme 2026/27 Schedule 1 discount rows
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].values
+            kind: parameter_table
+            source:
+              corpus_citation_path: uk-redditch/manual/council-tax-reduction-scheme-2026-2027/page-64
+              excerpt: "Income 100.00% £0 to £0 to £0 to £0 to £0 to £0 to Band 1 £130 £203 £277 £186 £260 £333 Income 80.00% £130.01 £203.01 £277.01 £186.01 £260.01 £333.01 Band 2 to £159 to £243 to £316 to £214 to £299 to £372 Income 55.00% £159.01 £243.01 £316.01 £214.01 £299.01 £372.01 Band 3 to £186 to £283 to £355 to £243 to £338 to £413 Income 30.00% £186.01 £283.01 £355.01 £243.01 £338.01 £413.01 Band 4 to £214 to £321 to £395 to £270 to £378 to £451 Nil Award 0.00% Over Over Over Over Over Over £214 £321 £395 £270 £378 £451"
+              table:
+                header: "Schedule 1 discount rate by income band"
+                row_key: "discount band"
+                column_key: "discount rate"
+    versions:
+      - effective_from: '2026-04-01'
+        values:
+          0: 0.00
+          1: 1.00
+          2: 0.80
+          3: 0.55
+          4: 0.30
+
+  - name: redditch_council_tax_reduction_working_age_scheme_applies
+    kind: derived
+    entity: Household
+    dtype: Judgment
+    period: Year
+    source: Redditch District Council Council Tax Reduction Scheme 2026/27 sections 1.6-1.7
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk-redditch/manual/council-tax-reduction-scheme-2026-2027/page-7
+              excerpt: "The authority is required to specify a scheme for working age and therefore this scheme only applies to a person who;"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk-redditch/manual/council-tax-reduction-scheme-2026-2027/page-7
+              excerpt: "has made a valid application for reduction."
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          local_authority_is_redditch and council_tax_reduction_household_in_england and redditch_council_tax_reduction_applicant_is_in_working_age_class and would_claim_council_tax_reduction
+
+  - name: redditch_council_tax_reduction_family_category
+    kind: derived
+    entity: Household
+    dtype: Number
+    period: Year
+    source: Redditch District Council Council Tax Reduction Scheme 2026/27 Schedule 1 family columns and paragraph 5
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter_table
+            source:
+              corpus_citation_path: uk-redditch/manual/council-tax-reduction-scheme-2026-2027/page-64
+              excerpt: "Single Person Single Person Single Person Couple Couple with one Couple with two with One with two child or more Child or more children"
+              table:
+                header: "Schedule 1 family columns"
+                row_key: "family composition"
+                column_key: "family category"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk-redditch/manual/council-tax-reduction-scheme-2026-2027/page-64
+              excerpt: "it should be noted that in any application for reduction is limited to a maximum of two dependent children or young persons."
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          if redditch_council_tax_reduction_has_partner: if redditch_council_tax_reduction_dependant_children >= redditch_council_tax_reduction_maximum_dependant_children: redditch_council_tax_reduction_family_category_codes[5] else: if redditch_council_tax_reduction_dependant_children >= redditch_council_tax_reduction_one_dependant_child: redditch_council_tax_reduction_family_category_codes[4] else: redditch_council_tax_reduction_family_category_codes[3] else: if redditch_council_tax_reduction_dependant_children >= redditch_council_tax_reduction_maximum_dependant_children: redditch_council_tax_reduction_family_category_codes[2] else: if redditch_council_tax_reduction_dependant_children >= redditch_council_tax_reduction_one_dependant_child: redditch_council_tax_reduction_family_category_codes[1] else: redditch_council_tax_reduction_family_category_codes[0]
+
+  - name: redditch_council_tax_reduction_income_band
+    kind: derived
+    entity: Household
+    dtype: Number
+    period: Week
+    source: Redditch District Council Council Tax Reduction Scheme 2026/27 Schedule 1
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter_table
+            source:
+              corpus_citation_path: uk-redditch/manual/council-tax-reduction-scheme-2026-2027/page-64
+              excerpt: "Income 100.00% £0 to £0 to £0 to £0 to £0 to £0 to Band 1 £130 £203 £277 £186 £260 £333 Income 80.00% £130.01 £203.01 £277.01 £186.01 £260.01 £333.01 Band 2 to £159 to £243 to £316 to £214 to £299 to £372 Income 55.00% £159.01 £243.01 £316.01 £214.01 £299.01 £372.01 Band 3 to £186 to £283 to £355 to £243 to £338 to £413 Income 30.00% £186.01 £283.01 £355.01 £243.01 £338.01 £413.01 Band 4 to £214 to £321 to £395 to £270 to £378 to £451 Nil Award 0.00% Over Over Over Over Over Over £214 £321 £395 £270 £378 £451"
+              table:
+                header: "Schedule 1 weekly income bands"
+                row_key: "discount band"
+                column_key: "family category"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk-redditch/manual/council-tax-reduction-scheme-2026-2027/page-64
+              excerpt: "For the sake of clarity all incomes shown within the table above are weekly in accordance with the scheme requirements and definitions."
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          if redditch_council_tax_reduction_assessed_weekly_income < redditch_council_tax_reduction_band_2_lower_weekly_income_by_family[redditch_council_tax_reduction_family_category]: redditch_council_tax_reduction_income_band_codes[1] else: if redditch_council_tax_reduction_assessed_weekly_income < redditch_council_tax_reduction_band_3_lower_weekly_income_by_family[redditch_council_tax_reduction_family_category]: redditch_council_tax_reduction_income_band_codes[2] else: if redditch_council_tax_reduction_assessed_weekly_income < redditch_council_tax_reduction_band_4_lower_weekly_income_by_family[redditch_council_tax_reduction_family_category]: redditch_council_tax_reduction_income_band_codes[3] else: if redditch_council_tax_reduction_assessed_weekly_income <= redditch_council_tax_reduction_last_discount_band_upper_weekly_income_by_family[redditch_council_tax_reduction_family_category]: redditch_council_tax_reduction_income_band_codes[4] else: redditch_council_tax_reduction_income_band_codes[0]
+
+  - name: redditch_council_tax_reduction_relevant_benefit
+    kind: derived
+    entity: Household
+    dtype: Judgment
+    period: Year
+    source: Redditch District Council Council Tax Reduction Scheme 2026/27 Schedule 1 paragraph 8
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: exception
+            source:
+              corpus_citation_path: uk-redditch/manual/council-tax-reduction-scheme-2026-2027/page-64
+              excerpt: "Where an applicant or partner is in receipt of Income Support, Income Related Employment and Support Allowance or Income Based Jobseeker’s Allowance, discount will be awarded at Band 1 level."
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          redditch_council_tax_reduction_receives_income_support or redditch_council_tax_reduction_receives_income_related_esa or redditch_council_tax_reduction_receives_income_based_jsa
+
+  - name: redditch_council_tax_reduction_selected_discount_rate
+    kind: derived
+    entity: Household
+    dtype: Rate
+    period: Year
+    source: Redditch District Council Council Tax Reduction Scheme 2026/27 Schedule 1 paragraphs 1 and 8
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: parameter_table
+            source:
+              corpus_citation_path: uk-redditch/manual/council-tax-reduction-scheme-2026-2027/page-64
+              excerpt: "Income 100.00% £0 to £0 to £0 to £0 to £0 to £0 to Band 1 £130 £203 £277 £186 £260 £333 Income 80.00% £130.01 £203.01 £277.01 £186.01 £260.01 £333.01 Band 2 to £159 to £243 to £316 to £214 to £299 to £372 Income 55.00% £159.01 £243.01 £316.01 £214.01 £299.01 £372.01 Band 3 to £186 to £283 to £355 to £243 to £338 to £413 Income 30.00% £186.01 £283.01 £355.01 £243.01 £338.01 £413.01 Band 4 to £214 to £321 to £395 to £270 to £378 to £451 Nil Award 0.00% Over Over Over Over Over Over £214 £321 £395 £270 £378 £451"
+              table:
+                header: "Schedule 1 discount rate by income band"
+                row_key: "discount band"
+                column_key: "discount rate"
+          - path: versions[0].formula
+            kind: exception
+            source:
+              corpus_citation_path: uk-redditch/manual/council-tax-reduction-scheme-2026-2027/page-64
+              excerpt: "Where an applicant or partner is in receipt of Income Support, Income Related Employment and Support Allowance or Income Based Jobseeker’s Allowance, discount will be awarded at Band 1 level."
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          if redditch_council_tax_reduction_relevant_benefit: redditch_council_tax_reduction_discount_rate_by_band[redditch_council_tax_reduction_income_band_codes[1]] else: redditch_council_tax_reduction_discount_rate_by_band[redditch_council_tax_reduction_income_band]
+
+  - name: redditch_council_tax_reduction_capital_eligible
+    kind: derived
+    entity: Household
+    dtype: Judgment
+    period: Year
+    source: Redditch District Council Council Tax Reduction Scheme 2026/27 Schedule 1 paragraph 6
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk-redditch/manual/council-tax-reduction-scheme-2026-2027/page-64
+              excerpt: "Any applicant who capital is greater than £6,000 shall not be entitled to any Council Tax Reductions whatsoever."
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          redditch_council_tax_reduction_assessed_capital <= redditch_council_tax_reduction_capital_limit
+
+  - name: redditch_council_tax_reduction_maximum_amount_for_year
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Redditch District Council Council Tax Reduction Scheme 2026/27 paragraph 48.1
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk-redditch/manual/council-tax-reduction-scheme-2026-2027/page-48
+              excerpt: "shall be 100 per cent, of the amount A divided by B where;"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          redditch_council_tax_reduction_eligible_annual_liability * redditch_council_tax_reduction_maximum_support_rate
+
+  - name: redditch_council_tax_reduction_amount_before_eligibility
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Redditch District Council Council Tax Reduction Scheme 2026/27 Schedule 1 paragraph 2
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk-redditch/manual/council-tax-reduction-scheme-2026-2027/page-64
+              excerpt: "The amount of discount to be granted is to be based on the following factors: a. The maximum Council Tax Reduction as defined within this scheme;"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          redditch_council_tax_reduction_maximum_amount_for_year * redditch_council_tax_reduction_selected_discount_rate
+
+  - name: redditch_council_tax_reduction_award_conditions_met
+    kind: derived
+    entity: Household
+    dtype: Judgment
+    period: Year
+    source: Redditch District Council Council Tax Reduction Scheme 2026/27 Class D and Schedule 1 paragraph 6
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk-redditch/manual/council-tax-reduction-scheme-2026-2027/page-7
+              excerpt: "not have capital savings above £6,000;"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk-redditch/manual/council-tax-reduction-scheme-2026-2027/page-7
+              excerpt: "has made a valid application for reduction."
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          redditch_council_tax_reduction_working_age_scheme_applies and redditch_council_tax_reduction_capital_eligible
+
+  - name: simulated_redditch_council_tax_reduction_annual_amount
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Redditch District Council Council Tax Reduction Scheme 2026/27 operative working-age award
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk-redditch/manual/council-tax-reduction-scheme-2026-2027/page-64
+              excerpt: "The authority’s Council Tax Reduction scheme from 2026/27 shall be calculated on the basis of the following Banded Discount Scheme:"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk-redditch/manual/council-tax-reduction-scheme-2026-2027/page-64
+              excerpt: "Any applicant who capital is greater than £6,000 shall not be entitled to any Council Tax Reductions whatsoever."
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          if redditch_council_tax_reduction_award_conditions_met: redditch_council_tax_reduction_amount_before_eligibility else: redditch_council_tax_reduction_maximum_amount_for_year * redditch_council_tax_reduction_discount_rate_by_band[redditch_council_tax_reduction_income_band_codes[0]]
+
+  - name: redditch_council_tax_reduction_annual_amount
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Redditch District Council Council Tax Reduction Scheme 2026/27 operative working-age award
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: effective_period
+            source:
+              corpus_citation_path: uk-redditch/manual/council-tax-reduction-scheme-2026-2027/page-4
+              excerpt: "This document details how the scheme will operate for both pension credit age and working age applicants and in accordance with Section 13A of the Local Government Finance Act 1992 specifies the classes of person who are to be entitled to a reduction under the scheme and is effective from 1st April 2026 for a period of one financial year."
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk-redditch/manual/council-tax-reduction-scheme-2026-2027/page-64
+              excerpt: "The authority’s Council Tax Reduction scheme from 2026/27 shall be calculated on the basis of the following Banded Discount Scheme:"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          simulated_redditch_council_tax_reduction_annual_amount
+inputs:
+  - name: local_authority_is_redditch
+    entity: Household
+    dtype: Boolean
+    period: Year
+  - name: council_tax_reduction_household_in_england
+    entity: Household
+    dtype: Boolean
+    period: Year
+  - name: would_claim_council_tax_reduction
+    entity: Household
+    dtype: Boolean
+    period: Year
+  - name: redditch_council_tax_reduction_applicant_is_in_working_age_class
+    entity: Household
+    dtype: Boolean
+    period: Year
+  - name: redditch_council_tax_reduction_assessed_capital
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+  - name: redditch_council_tax_reduction_eligible_annual_liability
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+  - name: redditch_council_tax_reduction_assessed_weekly_income
+    entity: Household
+    dtype: Money
+    period: Week
+    unit: GBP
+  - name: redditch_council_tax_reduction_has_partner
+    entity: Household
+    dtype: Boolean
+    period: Year
+  - name: redditch_council_tax_reduction_dependant_children
+    entity: Household
+    dtype: Number
+    period: Year
+  - name: redditch_council_tax_reduction_receives_income_support
+    entity: Household
+    dtype: Boolean
+    period: Year
+  - name: redditch_council_tax_reduction_receives_income_related_esa
+    entity: Household
+    dtype: Boolean
+    period: Year
+  - name: redditch_council_tax_reduction_receives_income_based_jsa
+    entity: Household
+    dtype: Boolean
+    period: Year

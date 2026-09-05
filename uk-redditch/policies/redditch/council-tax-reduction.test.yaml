@@ -1,0 +1,1310 @@
+- name: redditch_ctr_single_no_children_band_1_at
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-redditch:policies/redditch/council-tax-reduction#input.local_authority_is_redditch: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_capital: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_eligible_annual_liability: 1000
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_weekly_income: 130
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_has_partner: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_dependant_children: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_support: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_related_esa: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_annual_amount: 1000
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_family_category: 0
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_income_band: 1
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_selected_discount_rate: 1
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_working_age_scheme_applies: holds
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_relevant_benefit: not_holds
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_capital_eligible: holds
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_maximum_amount_for_year: 1000
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_amount_before_eligibility: 1000
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_award_conditions_met: holds
+    uk-redditch:policies/redditch/council-tax-reduction#simulated_redditch_council_tax_reduction_annual_amount: 1000
+- name: redditch_ctr_single_no_children_band_1_over
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-redditch:policies/redditch/council-tax-reduction#input.local_authority_is_redditch: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_capital: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_eligible_annual_liability: 1000
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_weekly_income: 130.01
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_has_partner: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_dependant_children: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_support: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_related_esa: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_annual_amount: 800
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_income_band: 2
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_selected_discount_rate: 0.8
+- name: redditch_ctr_single_no_children_band_2_at
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-redditch:policies/redditch/council-tax-reduction#input.local_authority_is_redditch: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_capital: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_eligible_annual_liability: 1000
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_weekly_income: 159
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_has_partner: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_dependant_children: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_support: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_related_esa: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_annual_amount: 800
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_income_band: 2
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_selected_discount_rate: 0.8
+- name: redditch_ctr_single_no_children_band_2_over
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-redditch:policies/redditch/council-tax-reduction#input.local_authority_is_redditch: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_capital: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_eligible_annual_liability: 1000
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_weekly_income: 159.01
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_has_partner: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_dependant_children: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_support: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_related_esa: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_annual_amount: 550
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_income_band: 3
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_selected_discount_rate: 0.55
+- name: redditch_ctr_single_no_children_band_3_at
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-redditch:policies/redditch/council-tax-reduction#input.local_authority_is_redditch: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_capital: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_eligible_annual_liability: 1000
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_weekly_income: 186
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_has_partner: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_dependant_children: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_support: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_related_esa: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_annual_amount: 550
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_income_band: 3
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_selected_discount_rate: 0.55
+- name: redditch_ctr_single_no_children_band_3_over
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-redditch:policies/redditch/council-tax-reduction#input.local_authority_is_redditch: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_capital: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_eligible_annual_liability: 1000
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_weekly_income: 186.01
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_has_partner: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_dependant_children: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_support: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_related_esa: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_annual_amount: 300
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_income_band: 4
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_selected_discount_rate: 0.3
+- name: redditch_ctr_single_no_children_band_4_at
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-redditch:policies/redditch/council-tax-reduction#input.local_authority_is_redditch: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_capital: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_eligible_annual_liability: 1000
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_weekly_income: 214
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_has_partner: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_dependant_children: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_support: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_related_esa: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_annual_amount: 300
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_income_band: 4
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_selected_discount_rate: 0.3
+- name: redditch_ctr_single_no_children_band_4_over
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-redditch:policies/redditch/council-tax-reduction#input.local_authority_is_redditch: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_capital: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_eligible_annual_liability: 1000
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_weekly_income: 214.01
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_has_partner: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_dependant_children: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_support: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_related_esa: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_annual_amount: 0
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_income_band: 0
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_selected_discount_rate: 0
+- name: redditch_ctr_single_one_child_band_1_at
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-redditch:policies/redditch/council-tax-reduction#input.local_authority_is_redditch: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_capital: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_eligible_annual_liability: 1000
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_weekly_income: 203
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_has_partner: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_dependant_children: 1
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_support: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_related_esa: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_annual_amount: 1000
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_family_category: 1
+- name: redditch_ctr_single_one_child_band_1_over
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-redditch:policies/redditch/council-tax-reduction#input.local_authority_is_redditch: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_capital: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_eligible_annual_liability: 1000
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_weekly_income: 203.01
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_has_partner: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_dependant_children: 1
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_support: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_related_esa: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_annual_amount: 800
+- name: redditch_ctr_single_one_child_band_2_at
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-redditch:policies/redditch/council-tax-reduction#input.local_authority_is_redditch: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_capital: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_eligible_annual_liability: 1000
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_weekly_income: 243
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_has_partner: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_dependant_children: 1
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_support: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_related_esa: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_annual_amount: 800
+- name: redditch_ctr_single_one_child_band_2_over
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-redditch:policies/redditch/council-tax-reduction#input.local_authority_is_redditch: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_capital: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_eligible_annual_liability: 1000
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_weekly_income: 243.01
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_has_partner: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_dependant_children: 1
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_support: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_related_esa: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_annual_amount: 550
+- name: redditch_ctr_single_one_child_band_3_at
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-redditch:policies/redditch/council-tax-reduction#input.local_authority_is_redditch: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_capital: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_eligible_annual_liability: 1000
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_weekly_income: 283
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_has_partner: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_dependant_children: 1
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_support: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_related_esa: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_annual_amount: 550
+- name: redditch_ctr_single_one_child_band_3_over
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-redditch:policies/redditch/council-tax-reduction#input.local_authority_is_redditch: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_capital: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_eligible_annual_liability: 1000
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_weekly_income: 283.01
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_has_partner: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_dependant_children: 1
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_support: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_related_esa: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_annual_amount: 300
+- name: redditch_ctr_single_one_child_band_4_at
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-redditch:policies/redditch/council-tax-reduction#input.local_authority_is_redditch: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_capital: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_eligible_annual_liability: 1000
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_weekly_income: 321
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_has_partner: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_dependant_children: 1
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_support: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_related_esa: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_annual_amount: 300
+- name: redditch_ctr_single_one_child_band_4_over
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-redditch:policies/redditch/council-tax-reduction#input.local_authority_is_redditch: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_capital: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_eligible_annual_liability: 1000
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_weekly_income: 321.01
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_has_partner: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_dependant_children: 1
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_support: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_related_esa: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_annual_amount: 0
+- name: redditch_ctr_single_two_or_more_children_band_1_at
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-redditch:policies/redditch/council-tax-reduction#input.local_authority_is_redditch: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_capital: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_eligible_annual_liability: 1000
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_weekly_income: 277
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_has_partner: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_dependant_children: 2
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_support: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_related_esa: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_annual_amount: 1000
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_family_category: 2
+- name: redditch_ctr_single_two_or_more_children_band_1_over
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-redditch:policies/redditch/council-tax-reduction#input.local_authority_is_redditch: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_capital: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_eligible_annual_liability: 1000
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_weekly_income: 277.01
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_has_partner: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_dependant_children: 2
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_support: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_related_esa: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_annual_amount: 800
+- name: redditch_ctr_single_two_or_more_children_band_2_at
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-redditch:policies/redditch/council-tax-reduction#input.local_authority_is_redditch: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_capital: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_eligible_annual_liability: 1000
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_weekly_income: 316
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_has_partner: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_dependant_children: 2
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_support: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_related_esa: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_annual_amount: 800
+- name: redditch_ctr_single_two_or_more_children_band_2_over
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-redditch:policies/redditch/council-tax-reduction#input.local_authority_is_redditch: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_capital: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_eligible_annual_liability: 1000
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_weekly_income: 316.01
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_has_partner: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_dependant_children: 2
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_support: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_related_esa: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_annual_amount: 550
+- name: redditch_ctr_single_two_or_more_children_band_3_at
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-redditch:policies/redditch/council-tax-reduction#input.local_authority_is_redditch: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_capital: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_eligible_annual_liability: 1000
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_weekly_income: 355
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_has_partner: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_dependant_children: 2
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_support: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_related_esa: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_annual_amount: 550
+- name: redditch_ctr_single_two_or_more_children_band_3_over
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-redditch:policies/redditch/council-tax-reduction#input.local_authority_is_redditch: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_capital: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_eligible_annual_liability: 1000
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_weekly_income: 355.01
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_has_partner: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_dependant_children: 2
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_support: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_related_esa: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_annual_amount: 300
+- name: redditch_ctr_single_two_or_more_children_band_4_at
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-redditch:policies/redditch/council-tax-reduction#input.local_authority_is_redditch: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_capital: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_eligible_annual_liability: 1000
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_weekly_income: 395
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_has_partner: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_dependant_children: 2
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_support: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_related_esa: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_annual_amount: 300
+- name: redditch_ctr_single_two_or_more_children_band_4_over
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-redditch:policies/redditch/council-tax-reduction#input.local_authority_is_redditch: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_capital: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_eligible_annual_liability: 1000
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_weekly_income: 395.01
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_has_partner: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_dependant_children: 2
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_support: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_related_esa: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_annual_amount: 0
+- name: redditch_ctr_couple_no_children_band_1_at
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-redditch:policies/redditch/council-tax-reduction#input.local_authority_is_redditch: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_capital: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_eligible_annual_liability: 1000
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_weekly_income: 186
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_has_partner: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_dependant_children: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_support: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_related_esa: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_annual_amount: 1000
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_family_category: 3
+- name: redditch_ctr_couple_no_children_band_1_over
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-redditch:policies/redditch/council-tax-reduction#input.local_authority_is_redditch: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_capital: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_eligible_annual_liability: 1000
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_weekly_income: 186.01
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_has_partner: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_dependant_children: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_support: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_related_esa: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_annual_amount: 800
+- name: redditch_ctr_couple_no_children_band_2_at
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-redditch:policies/redditch/council-tax-reduction#input.local_authority_is_redditch: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_capital: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_eligible_annual_liability: 1000
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_weekly_income: 214
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_has_partner: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_dependant_children: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_support: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_related_esa: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_annual_amount: 800
+- name: redditch_ctr_couple_no_children_band_2_over
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-redditch:policies/redditch/council-tax-reduction#input.local_authority_is_redditch: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_capital: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_eligible_annual_liability: 1000
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_weekly_income: 214.01
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_has_partner: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_dependant_children: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_support: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_related_esa: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_annual_amount: 550
+- name: redditch_ctr_couple_no_children_band_3_at
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-redditch:policies/redditch/council-tax-reduction#input.local_authority_is_redditch: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_capital: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_eligible_annual_liability: 1000
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_weekly_income: 243
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_has_partner: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_dependant_children: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_support: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_related_esa: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_annual_amount: 550
+- name: redditch_ctr_couple_no_children_band_3_over
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-redditch:policies/redditch/council-tax-reduction#input.local_authority_is_redditch: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_capital: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_eligible_annual_liability: 1000
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_weekly_income: 243.01
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_has_partner: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_dependant_children: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_support: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_related_esa: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_annual_amount: 300
+- name: redditch_ctr_couple_no_children_band_4_at
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-redditch:policies/redditch/council-tax-reduction#input.local_authority_is_redditch: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_capital: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_eligible_annual_liability: 1000
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_weekly_income: 270
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_has_partner: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_dependant_children: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_support: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_related_esa: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_annual_amount: 300
+- name: redditch_ctr_couple_no_children_band_4_over
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-redditch:policies/redditch/council-tax-reduction#input.local_authority_is_redditch: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_capital: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_eligible_annual_liability: 1000
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_weekly_income: 270.01
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_has_partner: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_dependant_children: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_support: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_related_esa: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_annual_amount: 0
+- name: redditch_ctr_couple_one_child_band_1_at
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-redditch:policies/redditch/council-tax-reduction#input.local_authority_is_redditch: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_capital: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_eligible_annual_liability: 1000
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_weekly_income: 260
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_has_partner: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_dependant_children: 1
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_support: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_related_esa: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_annual_amount: 1000
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_family_category: 4
+- name: redditch_ctr_couple_one_child_band_1_over
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-redditch:policies/redditch/council-tax-reduction#input.local_authority_is_redditch: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_capital: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_eligible_annual_liability: 1000
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_weekly_income: 260.01
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_has_partner: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_dependant_children: 1
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_support: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_related_esa: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_annual_amount: 800
+- name: redditch_ctr_couple_one_child_band_2_at
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-redditch:policies/redditch/council-tax-reduction#input.local_authority_is_redditch: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_capital: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_eligible_annual_liability: 1000
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_weekly_income: 299
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_has_partner: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_dependant_children: 1
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_support: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_related_esa: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_annual_amount: 800
+- name: redditch_ctr_couple_one_child_band_2_over
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-redditch:policies/redditch/council-tax-reduction#input.local_authority_is_redditch: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_capital: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_eligible_annual_liability: 1000
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_weekly_income: 299.01
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_has_partner: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_dependant_children: 1
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_support: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_related_esa: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_annual_amount: 550
+- name: redditch_ctr_couple_one_child_band_3_at
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-redditch:policies/redditch/council-tax-reduction#input.local_authority_is_redditch: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_capital: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_eligible_annual_liability: 1000
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_weekly_income: 338
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_has_partner: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_dependant_children: 1
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_support: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_related_esa: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_annual_amount: 550
+- name: redditch_ctr_couple_one_child_band_3_over
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-redditch:policies/redditch/council-tax-reduction#input.local_authority_is_redditch: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_capital: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_eligible_annual_liability: 1000
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_weekly_income: 338.01
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_has_partner: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_dependant_children: 1
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_support: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_related_esa: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_annual_amount: 300
+- name: redditch_ctr_couple_one_child_band_4_at
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-redditch:policies/redditch/council-tax-reduction#input.local_authority_is_redditch: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_capital: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_eligible_annual_liability: 1000
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_weekly_income: 378
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_has_partner: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_dependant_children: 1
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_support: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_related_esa: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_annual_amount: 300
+- name: redditch_ctr_couple_one_child_band_4_over
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-redditch:policies/redditch/council-tax-reduction#input.local_authority_is_redditch: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_capital: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_eligible_annual_liability: 1000
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_weekly_income: 378.01
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_has_partner: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_dependant_children: 1
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_support: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_related_esa: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_annual_amount: 0
+- name: redditch_ctr_couple_two_or_more_children_band_1_at
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-redditch:policies/redditch/council-tax-reduction#input.local_authority_is_redditch: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_capital: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_eligible_annual_liability: 1000
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_weekly_income: 333
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_has_partner: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_dependant_children: 2
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_support: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_related_esa: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_annual_amount: 1000
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_family_category: 5
+- name: redditch_ctr_couple_two_or_more_children_band_1_over
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-redditch:policies/redditch/council-tax-reduction#input.local_authority_is_redditch: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_capital: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_eligible_annual_liability: 1000
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_weekly_income: 333.01
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_has_partner: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_dependant_children: 2
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_support: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_related_esa: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_annual_amount: 800
+- name: redditch_ctr_couple_two_or_more_children_band_2_at
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-redditch:policies/redditch/council-tax-reduction#input.local_authority_is_redditch: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_capital: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_eligible_annual_liability: 1000
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_weekly_income: 372
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_has_partner: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_dependant_children: 2
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_support: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_related_esa: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_annual_amount: 800
+- name: redditch_ctr_couple_two_or_more_children_band_2_over
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-redditch:policies/redditch/council-tax-reduction#input.local_authority_is_redditch: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_capital: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_eligible_annual_liability: 1000
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_weekly_income: 372.01
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_has_partner: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_dependant_children: 2
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_support: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_related_esa: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_annual_amount: 550
+- name: redditch_ctr_couple_two_or_more_children_band_3_at
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-redditch:policies/redditch/council-tax-reduction#input.local_authority_is_redditch: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_capital: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_eligible_annual_liability: 1000
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_weekly_income: 413
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_has_partner: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_dependant_children: 2
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_support: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_related_esa: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_annual_amount: 550
+- name: redditch_ctr_couple_two_or_more_children_band_3_over
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-redditch:policies/redditch/council-tax-reduction#input.local_authority_is_redditch: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_capital: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_eligible_annual_liability: 1000
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_weekly_income: 413.01
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_has_partner: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_dependant_children: 2
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_support: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_related_esa: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_annual_amount: 300
+- name: redditch_ctr_couple_two_or_more_children_band_4_at
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-redditch:policies/redditch/council-tax-reduction#input.local_authority_is_redditch: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_capital: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_eligible_annual_liability: 1000
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_weekly_income: 451
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_has_partner: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_dependant_children: 2
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_support: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_related_esa: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_annual_amount: 300
+- name: redditch_ctr_couple_two_or_more_children_band_4_over
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-redditch:policies/redditch/council-tax-reduction#input.local_authority_is_redditch: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_capital: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_eligible_annual_liability: 1000
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_weekly_income: 451.01
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_has_partner: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_dependant_children: 2
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_support: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_related_esa: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_annual_amount: 0
+- name: redditch_ctr_maximum_support_rate_is_100_percent
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-redditch:policies/redditch/council-tax-reduction#input.local_authority_is_redditch: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_capital: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_eligible_annual_liability: 987
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_weekly_income: 100
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_has_partner: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_dependant_children: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_support: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_related_esa: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_maximum_amount_for_year: 987
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_amount_before_eligibility: 987
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_annual_amount: 987
+- name: redditch_ctr_capital_at_limit
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-redditch:policies/redditch/council-tax-reduction#input.local_authority_is_redditch: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_capital: 6000
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_eligible_annual_liability: 1000
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_weekly_income: 100
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_has_partner: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_dependant_children: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_support: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_related_esa: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_capital_eligible: holds
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_award_conditions_met: holds
+    uk-redditch:policies/redditch/council-tax-reduction#simulated_redditch_council_tax_reduction_annual_amount: 1000
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_annual_amount: 1000
+- name: redditch_ctr_capital_over_limit
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-redditch:policies/redditch/council-tax-reduction#input.local_authority_is_redditch: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_capital: 6000.01
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_eligible_annual_liability: 1000
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_weekly_income: 100
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_has_partner: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_dependant_children: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_support: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_related_esa: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_capital_eligible: not_holds
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_award_conditions_met: not_holds
+    uk-redditch:policies/redditch/council-tax-reduction#simulated_redditch_council_tax_reduction_annual_amount: 0
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_annual_amount: 0
+- name: redditch_ctr_income_support_receives_band_1
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-redditch:policies/redditch/council-tax-reduction#input.local_authority_is_redditch: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_capital: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_eligible_annual_liability: 1000
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_weekly_income: 1000
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_has_partner: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_dependant_children: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_support: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_related_esa: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_selected_discount_rate: 1
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_amount_before_eligibility: 1000
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_annual_amount: 1000
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_relevant_benefit: holds
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_income_band: 0
+- name: redditch_ctr_income_related_esa_receives_band_1
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-redditch:policies/redditch/council-tax-reduction#input.local_authority_is_redditch: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_capital: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_eligible_annual_liability: 1000
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_weekly_income: 1000
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_has_partner: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_dependant_children: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_support: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_related_esa: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_selected_discount_rate: 1
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_amount_before_eligibility: 1000
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_annual_amount: 1000
+- name: redditch_ctr_income_based_jsa_receives_band_1
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-redditch:policies/redditch/council-tax-reduction#input.local_authority_is_redditch: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_capital: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_eligible_annual_liability: 1000
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_weekly_income: 1000
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_has_partner: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_dependant_children: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_support: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_related_esa: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_based_jsa: true
+  output:
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_selected_discount_rate: 1
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_amount_before_eligibility: 1000
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_annual_amount: 1000
+- name: redditch_ctr_high_income_without_passported_benefit_has_nil_award
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-redditch:policies/redditch/council-tax-reduction#input.local_authority_is_redditch: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_capital: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_eligible_annual_liability: 1000
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_weekly_income: 1000
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_has_partner: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_dependant_children: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_support: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_related_esa: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_relevant_benefit: not_holds
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_income_band: 0
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_selected_discount_rate: 0
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_annual_amount: 0
+- name: redditch_ctr_three_children_use_two_or_more_column
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-redditch:policies/redditch/council-tax-reduction#input.local_authority_is_redditch: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_capital: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_eligible_annual_liability: 1000
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_weekly_income: 277
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_has_partner: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_dependant_children: 3
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_support: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_related_esa: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_family_category: 2
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_income_band: 1
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_annual_amount: 1000
+- name: redditch_ctr_outside_redditch_has_no_award
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-redditch:policies/redditch/council-tax-reduction#input.local_authority_is_redditch: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_capital: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_eligible_annual_liability: 1000
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_weekly_income: 100
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_has_partner: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_dependant_children: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_support: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_related_esa: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_working_age_scheme_applies: not_holds
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_award_conditions_met: not_holds
+    uk-redditch:policies/redditch/council-tax-reduction#simulated_redditch_council_tax_reduction_annual_amount: 0
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_annual_amount: 0
+- name: redditch_ctr_outside_england_has_no_award
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-redditch:policies/redditch/council-tax-reduction#input.local_authority_is_redditch: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.council_tax_reduction_household_in_england: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_capital: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_eligible_annual_liability: 1000
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_weekly_income: 100
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_has_partner: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_dependant_children: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_support: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_related_esa: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_working_age_scheme_applies: not_holds
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_award_conditions_met: not_holds
+    uk-redditch:policies/redditch/council-tax-reduction#simulated_redditch_council_tax_reduction_annual_amount: 0
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_annual_amount: 0
+- name: redditch_ctr_not_in_working_age_class_has_no_award
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-redditch:policies/redditch/council-tax-reduction#input.local_authority_is_redditch: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_applicant_is_in_working_age_class: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_capital: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_eligible_annual_liability: 1000
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_weekly_income: 100
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_has_partner: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_dependant_children: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_support: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_related_esa: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_working_age_scheme_applies: not_holds
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_award_conditions_met: not_holds
+    uk-redditch:policies/redditch/council-tax-reduction#simulated_redditch_council_tax_reduction_annual_amount: 0
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_annual_amount: 0
+- name: redditch_ctr_does_not_claim_has_no_award
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-redditch:policies/redditch/council-tax-reduction#input.local_authority_is_redditch: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.would_claim_council_tax_reduction: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_capital: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_eligible_annual_liability: 1000
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_weekly_income: 100
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_has_partner: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_dependant_children: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_support: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_related_esa: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_working_age_scheme_applies: not_holds
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_award_conditions_met: not_holds
+    uk-redditch:policies/redditch/council-tax-reduction#simulated_redditch_council_tax_reduction_annual_amount: 0
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_annual_amount: 0
+- name: redditch_ctr_band_rate_multiplies_defined_maximum
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-redditch:policies/redditch/council-tax-reduction#input.local_authority_is_redditch: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_capital: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_eligible_annual_liability: 987
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_weekly_income: 130.01
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_has_partner: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_dependant_children: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_support: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_related_esa: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_maximum_amount_for_year: 987
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_selected_discount_rate: 0.80
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_amount_before_eligibility: 789.60
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_annual_amount: 789.60
+- name: redditch_ctr_capital_over_limit_blocks_passported_band_1
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-redditch:policies/redditch/council-tax-reduction#input.local_authority_is_redditch: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_capital: 6000.01
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_eligible_annual_liability: 1000
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_assessed_weekly_income: 1000
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_has_partner: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_dependant_children: 0
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_support: true
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_related_esa: false
+    uk-redditch:policies/redditch/council-tax-reduction#input.redditch_council_tax_reduction_receives_income_based_jsa: false
+  output:
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_relevant_benefit: holds
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_selected_discount_rate: 1.00
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_capital_eligible: not_holds
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_award_conditions_met: not_holds
+    uk-redditch:policies/redditch/council-tax-reduction#simulated_redditch_council_tax_reduction_annual_amount: 0
+    uk-redditch:policies/redditch/council-tax-reduction#redditch_council_tax_reduction_annual_amount: 0
