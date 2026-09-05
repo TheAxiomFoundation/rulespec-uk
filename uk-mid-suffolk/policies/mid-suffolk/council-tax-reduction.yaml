@@ -1,0 +1,185 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk-mid-suffolk/manual/council-tax-reduction-scheme-2026-2027/page-87
+    # upstream_source_check:
+      # status: delegated_scheme
+      # checked_paths:
+        # - uk/statutes/ukpga/1992/14/13A
+        # - uk/regulations/uksi/2012/2885
+        # - uk/regulations/uksi/2012/2886
+      # rationale: Section 13A delegates the working-age scheme to Mid Suffolk District Council, so its adopted scheme document is the operative legal source for the locally set working-age values.
+  summary: |-
+    Mid Suffolk's local working-age scheme has a 100 percent daily maximum, Class E's printed 20 percent taper, capital limit and tariff-income rule, and Class F Universal Credit contribution grid. The document incorporates non-dependant amounts by reference rather than printing a local table; this module consumes that assessed daily amount. Pension-age rules are outside scope.
+  deferred_outputs:
+    - output: uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction/paragraphs-12-to-33-and-schedules-1-to-3#applicable_amount_and_assessed_income
+      reason: The award surface consumes assessed income and applicable amount; detailed premiums, earnings and disregards are future outputs.
+    - output: uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction/paragraphs-35-to-41-and-schedule-4#assessed_capital
+      reason: Detailed capital valuation, attribution and disregards are future outputs.
+    - output: uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction/paragraph-58#non_dependant_deductions_for_day
+      reason: Paragraph 58 incorporates annually uprated prescribed-requirements amounts by reference and prints no deduction values; household aggregation and the incorporated schedule are future outputs.
+    - output: uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction/schedule-5#class_f_income_band
+      reason: The module encodes every printed contribution value and consumes the selected band; threshold classification is a future output.
+rules:
+  - name: mid_suffolk_council_tax_reduction_maximum_support_rate
+    kind: parameter
+    dtype: Rate
+    source: Mid Suffolk Council Tax Reduction Scheme 2026/27 paragraph 57.1
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-mid-suffolk/manual/council-tax-reduction-scheme-2026-2027/page-84, excerpt: "100 per cent of the amount A/B"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '1'}]
+  - name: mid_suffolk_council_tax_reduction_per_cent_unit
+    kind: parameter
+    dtype: Rate
+    source: Mid Suffolk Council Tax Reduction Scheme 2026/27 percentage notation
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-mid-suffolk/manual/council-tax-reduction-scheme-2026-2027/page-84, excerpt: "100 per cent of the amount A/B"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '0.01'}]
+  - name: mid_suffolk_council_tax_reduction_daily_taper_rate
+    kind: parameter
+    dtype: Rate
+    source: Mid Suffolk Council Tax Reduction Scheme 2026/27 paragraph 59.1
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-mid-suffolk/manual/council-tax-reduction-scheme-2026-2027/page-87, excerpt: "The prescribed daily percentage for the purposes of calculating support as a percentage of income over the applicable amount, which is deducted from maximum council tax reduction, shall be 20 per cent."}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '0.2'}]
+  - name: mid_suffolk_council_tax_reduction_days_per_week
+    kind: parameter
+    dtype: Number
+    source: Mid Suffolk Council Tax Reduction Scheme 2026/27 definition of week
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-mid-suffolk/manual/council-tax-reduction-scheme-2026-2027/page-21, excerpt: "“week” means a period of 7 consecutive days starting on a Monday and ending on a Sunday;"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '7'}]
+  - name: mid_suffolk_council_tax_reduction_weekly_taper_rate
+    kind: parameter
+    dtype: Rate
+    period: Week
+    source: Mid Suffolk Council Tax Reduction Scheme 2026/27 paragraph 59.1, aggregated over the defined week
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-mid-suffolk/manual/council-tax-reduction-scheme-2026-2027/page-87, excerpt: "shall be 20 per cent."}}, {path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-mid-suffolk/manual/council-tax-reduction-scheme-2026-2027/page-21, excerpt: "“week” means a period of 7 consecutive days starting on a Monday and ending on a Sunday;"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 'mid_suffolk_council_tax_reduction_daily_taper_rate * mid_suffolk_council_tax_reduction_days_per_week'}]
+  - name: mid_suffolk_council_tax_reduction_capital_limit
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Mid Suffolk Council Tax Reduction Scheme 2026/27 paragraph 34.1
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-mid-suffolk/manual/council-tax-reduction-scheme-2026-2027/page-65, excerpt: "the prescribed amount is £16,000"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '16000'}]
+  - name: mid_suffolk_council_tax_reduction_tariff_income_threshold
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Mid Suffolk Council Tax Reduction Scheme 2026/27 paragraph 42.1
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-mid-suffolk/manual/council-tax-reduction-scheme-2026-2027/page-71, excerpt: "exceeds £6,000"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '6000'}]
+  - name: mid_suffolk_council_tax_reduction_tariff_income_step
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Mid Suffolk Council Tax Reduction Scheme 2026/27 paragraph 42.1
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-mid-suffolk/manual/council-tax-reduction-scheme-2026-2027/page-71, excerpt: "each £250, or part thereof"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '250'}]
+  - name: mid_suffolk_council_tax_reduction_tariff_income_weekly_amount_per_step
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Mid Suffolk Council Tax Reduction Scheme 2026/27 paragraph 42.1
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-mid-suffolk/manual/council-tax-reduction-scheme-2026-2027/page-71, excerpt: "weekly income of £1 for each £250"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '1'}]
+  - name: mid_suffolk_council_tax_reduction_minimum_award_weekly
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Mid Suffolk Council Tax Reduction Scheme 2026/27 paragraph 57.7
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-mid-suffolk/manual/council-tax-reduction-scheme-2026-2027/page-84, excerpt: "less than one pound per benefit week"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '1'}]
+  - name: mid_suffolk_council_tax_reduction_class_f_weekly_contribution_by_band
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    indexed_by: mid_suffolk_council_tax_reduction_class_f_income_band
+    source: Mid Suffolk Council Tax Reduction Scheme 2026/27 Schedule 5
+    metadata: {proof: {atoms: [{path: 'versions[0].values', kind: parameter_table, source: {corpus_citation_path: uk-mid-suffolk/manual/council-tax-reduction-scheme-2026-2027/page-152, excerpt: "Not in work or less than £75.23 £0 £326 - £685.99 £52 £158.31 £12.00 £686 - £1305.99 £100 £301.38 £23.08 £1306 to £2076.99 £142 £479.31 £32.77 £2077 - £2668.99 £211 £615.92 £48.69 £2669 - £2999.99 £278 £692.31 £64.15 Over £3000 No entitlement to LCTR over £692.31 No entitlement to LCTR", table: {header: Class F income bands and weekly contributions, row_key: income band, column_key: weekly contribution}}}]}}
+    versions: [{effective_from: '2026-04-01', values: {0: 0, 1: 12.00, 2: 23.08, 3: 32.77, 4: 48.69, 5: 64.15, 6: 0}}]
+  - name: mid_suffolk_council_tax_reduction_capital_eligible
+    kind: derived
+    entity: Household
+    dtype: Judgment
+    period: Year
+    source: Mid Suffolk Council Tax Reduction Scheme 2026/27 paragraph 34.1
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: condition, source: {corpus_citation_path: uk-mid-suffolk/manual/council-tax-reduction-scheme-2026-2027/page-65, excerpt: "the prescribed amount is £16,000 and no support shall be granted where the applicant’s capital, exceeds this amount."}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 'mid_suffolk_council_tax_reduction_assessed_capital_for_year <= mid_suffolk_council_tax_reduction_capital_limit'}]
+  - name: mid_suffolk_council_tax_reduction_tariff_income_weekly
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Mid Suffolk Council Tax Reduction Scheme 2026/27 paragraph 42.1
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-mid-suffolk/manual/council-tax-reduction-scheme-2026-2027/page-71, excerpt: "£1 for each £250, or part thereof, in excess of £6,000 but not exceeding £16,000"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 'if mid_suffolk_council_tax_reduction_assessed_capital_for_year <= mid_suffolk_council_tax_reduction_tariff_income_threshold: 0 else: ceil((mid_suffolk_council_tax_reduction_assessed_capital_for_year - mid_suffolk_council_tax_reduction_tariff_income_threshold) / mid_suffolk_council_tax_reduction_tariff_income_step) * mid_suffolk_council_tax_reduction_tariff_income_weekly_amount_per_step'}]
+  - name: mid_suffolk_council_tax_reduction_maximum_amount_for_day
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Day
+    unit: GBP
+    source: Mid Suffolk Council Tax Reduction Scheme 2026/27 paragraph 57.1
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-mid-suffolk/manual/council-tax-reduction-scheme-2026-2027/page-84, excerpt: "a person's maximum council tax reduction amount in respect of a day is 100 per cent of the amount A/B"}}, {path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-mid-suffolk/manual/council-tax-reduction-scheme-2026-2027/page-84, excerpt: "B is the number of days in that financial year, less any deductions in respect of non- dependants"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 'max(0, mid_suffolk_council_tax_reduction_eligible_liability_for_year * mid_suffolk_council_tax_reduction_maximum_support_rate / mid_suffolk_council_tax_reduction_number_of_days_in_financial_year - mid_suffolk_council_tax_reduction_non_dependant_deductions_for_day)'}]
+  - name: mid_suffolk_council_tax_reduction_excess_income_weekly
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Mid Suffolk Council Tax Reduction Scheme 2026/27 paragraphs 1.10.10 and 18.1
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-mid-suffolk/manual/council-tax-reduction-scheme-2026-2027/page-9, excerpt: "the difference between his income for the relevant week and his applicable amount"}}, {path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-mid-suffolk/manual/council-tax-reduction-scheme-2026-2027/page-42, excerpt: "the income of an applicant is to be calculated on a weekly basis"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 'max(0, mid_suffolk_council_tax_reduction_assessed_income_weekly - mid_suffolk_council_tax_reduction_applicable_amount_weekly)'}]
+  - name: mid_suffolk_council_tax_reduction_class_e_taper_deduction_daily
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Day
+    unit: GBP
+    source: Mid Suffolk Council Tax Reduction Scheme 2026/27 paragraph 59.1
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-mid-suffolk/manual/council-tax-reduction-scheme-2026-2027/page-87, excerpt: "their council tax reduction shall be calculated by deducting their excess income multiplied by the taper from their maximum council tax reduction"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 'mid_suffolk_council_tax_reduction_excess_income_weekly * mid_suffolk_council_tax_reduction_daily_taper_rate'}]
+  - name: mid_suffolk_council_tax_reduction_class_e_amount_before_floor_for_day
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Day
+    unit: GBP
+    source: Mid Suffolk Council Tax Reduction Scheme 2026/27 paragraphs 1.10.10 and 59.1
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-mid-suffolk/manual/council-tax-reduction-scheme-2026-2027/page-9, excerpt: "Amount A is the maximum council tax reduction in respect of the day in the person’s case; and 1.10.10.2. Amount B is 20 percent of the difference between his income for the relevant week and his applicable amount."}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 'max(0, mid_suffolk_council_tax_reduction_maximum_amount_for_day - mid_suffolk_council_tax_reduction_class_e_taper_deduction_daily)'}]
+  - name: mid_suffolk_council_tax_reduction_class_f_contribution_daily
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Day
+    unit: GBP
+    source: Mid Suffolk Council Tax Reduction Scheme 2026/27 Schedule 5
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-mid-suffolk/manual/council-tax-reduction-scheme-2026-2027/page-152, excerpt: "Income Bands (Monthly) Monthly contribution Income Bands (Weekly up to) Weekly contribution"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 'mid_suffolk_council_tax_reduction_class_f_weekly_contribution_by_band[mid_suffolk_council_tax_reduction_class_f_income_band] / mid_suffolk_council_tax_reduction_days_per_week'}]
+  - name: mid_suffolk_council_tax_reduction_class_f_amount_before_floor_for_day
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Day
+    unit: GBP
+    source: Mid Suffolk Council Tax Reduction Scheme 2026/27 paragraphs 1.11.10 and Schedule 5
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-mid-suffolk/manual/council-tax-reduction-scheme-2026-2027/page-9, excerpt: "Amount A is the maximum council tax reduction in respect of the day in the person’s case; and 1.11.10.2. Amount B is the calculated contribution requirement based on the declared earnings."}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 'if mid_suffolk_council_tax_reduction_class_f_no_entitlement: 0 else: max(0, mid_suffolk_council_tax_reduction_maximum_amount_for_day - mid_suffolk_council_tax_reduction_class_f_contribution_daily)'}]
+  - name: mid_suffolk_council_tax_reduction_annual_amount
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Mid Suffolk Council Tax Reduction Scheme 2026/27 working-age classes D, E and F
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-mid-suffolk/manual/council-tax-reduction-scheme-2026-2027/page-84, excerpt: "it shall not be payable where the amount to which a person would otherwise be entitled is less than one pound per benefit week"}}, {path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-mid-suffolk/manual/council-tax-reduction-scheme-2026-2027/page-84, excerpt: "B is the number of days in that financial year"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 'if mid_suffolk_council_tax_reduction_working_age_scheme_applies and would_claim_council_tax_reduction and mid_suffolk_council_tax_reduction_capital_eligible: if (if mid_suffolk_council_tax_reduction_class_f_applies: mid_suffolk_council_tax_reduction_class_f_amount_before_floor_for_day else: mid_suffolk_council_tax_reduction_class_e_amount_before_floor_for_day) * mid_suffolk_council_tax_reduction_days_per_week < mid_suffolk_council_tax_reduction_minimum_award_weekly: 0 else: (if mid_suffolk_council_tax_reduction_class_f_applies: mid_suffolk_council_tax_reduction_class_f_amount_before_floor_for_day else: mid_suffolk_council_tax_reduction_class_e_amount_before_floor_for_day) * mid_suffolk_council_tax_reduction_number_of_days_in_financial_year else: 0'}]
