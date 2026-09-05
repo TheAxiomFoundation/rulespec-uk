@@ -1,0 +1,266 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk-burnley/manual/council-tax-reduction-scheme-2026-2027/page-74
+    # upstream_source_check:
+    #   status: delegated_scheme
+    #   checked_paths: [uk/statutes/ukpga/1992/14/13A, uk/regulations/uksi/2012/2885, uk/regulations/uksi/2012/2886]
+    #   rationale: LGFA 1992 section 13A delegates the working-age scheme to Burnley Borough Council, so the adopted scheme document is the operative legal source for locally set working-age values.
+  summary: |-
+    Burnley's working-age award is the daily maximum liability (100 percent), less non-dependant deductions and the prescribed excess-income taper, then subject to the universal 15 percent standard deduction. Pension-age provisions are outside this module.
+  deferred_outputs:
+    - output: uk-burnley:policies/burnley/council-tax-reduction/sections-12-to-14-and-schedule-1#applicable_amount
+      reason: This module consumes the applicable amount; its household-category and premium schedules are outside the working-age award surface.
+    - output: uk-burnley:policies/burnley/council-tax-reduction/sections-15-to-56-and-schedules-3-to-5#assessed_income_and_capital
+      reason: This module consumes assessed income and capital; valuation, attribution, disregards and income classifiers are outside this award surface.
+    - output: uk-burnley:policies/burnley/council-tax-reduction/section-58#non_dependant_exemptions_and_aggregation
+      reason: This module encodes the printed individual deduction bands and consumes the household deduction total; exemptions, couples and apportionment remain future outputs.
+rules:
+  - name: burnley_council_tax_reduction_maximum_support_rate
+    kind: parameter
+    dtype: Rate
+    period: Year
+    source: Burnley Council Tax Reduction Scheme 2026 section 57.1
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-burnley/manual/council-tax-reduction-scheme-2026-2027/page-74, excerpt: "shall be 100 per cent, of the amount A divided by B"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '1'}]
+
+  - name: burnley_council_tax_reduction_per_cent_unit
+    kind: parameter
+    dtype: Rate
+    period: Year
+    source: Burnley Council Tax Reduction Scheme 2026 percentage notation
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-burnley/manual/council-tax-reduction-scheme-2026-2027/page-74, excerpt: "shall be 100 per cent, of the amount A divided by B"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '0.01'}]
+
+  - name: burnley_council_tax_reduction_standard_deduction_rate
+    kind: parameter
+    dtype: Rate
+    period: Year
+    source: Burnley Council Tax Reduction Scheme 2026 section 59A.1
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-burnley/manual/council-tax-reduction-scheme-2026-2027/page-76, excerpt: "reduced by 15 per cent."}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '0.15'}]
+
+  - name: burnley_council_tax_reduction_taper_whole_percentage_points
+    kind: parameter
+    dtype: Number
+    period: Year
+    source: Burnley Council Tax Reduction Scheme 2026 section 59.1
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-burnley/manual/council-tax-reduction-scheme-2026-2027/page-76, excerpt: "shall be 2 6/7 per cent."}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '2'}]
+
+  - name: burnley_council_tax_reduction_taper_fraction_numerator
+    kind: parameter
+    dtype: Number
+    period: Year
+    source: Burnley Council Tax Reduction Scheme 2026 section 59.1
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-burnley/manual/council-tax-reduction-scheme-2026-2027/page-76, excerpt: "shall be 2 6/7 per cent."}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '6'}]
+
+  - name: burnley_council_tax_reduction_days_per_week
+    kind: parameter
+    dtype: Number
+    period: Year
+    source: Burnley Council Tax Reduction Scheme 2026 section 58.1
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-burnley/manual/council-tax-reduction-scheme-2026-2027/page-74, excerpt: "£15.95 x 1/7"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '7'}]
+
+  - name: burnley_council_tax_reduction_weekly_taper_rate
+    kind: parameter
+    dtype: Rate
+    period: Week
+    source: Burnley Council Tax Reduction Scheme 2026 section 59.1, derived from printed mixed-number percentage
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-burnley/manual/council-tax-reduction-scheme-2026-2027/page-76, excerpt: "shall be 2 6/7 per cent. Where an applicant’s income exceeds their applicable amount"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '(burnley_council_tax_reduction_taper_whole_percentage_points + burnley_council_tax_reduction_taper_fraction_numerator / burnley_council_tax_reduction_days_per_week) * burnley_council_tax_reduction_per_cent_unit'}]
+
+  - name: burnley_council_tax_reduction_capital_limit
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Burnley Council Tax Reduction Scheme 2026 section 33.1
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-burnley/manual/council-tax-reduction-scheme-2026-2027/page-56, excerpt: "the prescribed amount is £16,000 and no reduction shall be granted when the applicant has an amount greater than this level."}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '16000'}]
+
+  - name: burnley_council_tax_reduction_tariff_income_threshold
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Burnley Council Tax Reduction Scheme 2026 section 42.1
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-burnley/manual/council-tax-reduction-scheme-2026-2027/page-61, excerpt: "exceeds £6,000 it shall be treated as equivalent to a weekly income of £1 for each complete £250 of in excess of £6,000"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '6000'}]
+
+  - name: burnley_council_tax_reduction_tariff_income_step
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Burnley Council Tax Reduction Scheme 2026 section 42.1
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-burnley/manual/council-tax-reduction-scheme-2026-2027/page-61, excerpt: "£1 for each complete £250 of in excess of £6,000"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '250'}]
+
+  - name: burnley_council_tax_reduction_tariff_income_weekly_amount_per_step
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Burnley Council Tax Reduction Scheme 2026 section 42.1
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-burnley/manual/council-tax-reduction-scheme-2026-2027/page-61, excerpt: "weekly income of £1 for each complete £250"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '1'}]
+
+  - name: burnley_council_tax_reduction_non_dependant_weekly_deduction_by_band
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    indexed_by: burnley_council_tax_reduction_non_dependant_deduction_band
+    source: Burnley Council Tax Reduction Scheme 2026 sections 58.1-58.2
+    metadata:
+      proof:
+        atoms:
+          - path: 'versions[0].values'
+            kind: parameter_table
+            source:
+              corpus_citation_path: uk-burnley/manual/council-tax-reduction-scheme-2026-2027/page-74
+              excerpt: "(a) in respect of a non-dependant aged 18 or over in remunerative work, £15.95 x 1/7; (b) in respect of a non-dependant aged 18 or over to whom sub-paragraph (a) does not apply, £5.20 x 1/7.\n\n58.2 In the case of a non-dependant aged 18 or over, where it is shown to the appropriate authority that his normal gross weekly income is– (a) less than £279.00, the deduction to be made under this paragraph shall be that specified in paragraph 58.1(b); (b) not less than £279.00, but less than £485.00, the deduction to be made under this section shall be £10.60 x1/7; (c) not less than £485.00, but less than £605.00, the deduction to be made under this section shall be £13.30 x 1/7;"
+              table: {header: Non-dependant deductions, row_key: deduction band, column_key: weekly deduction}
+    versions: [{effective_from: '2026-04-01', values: {0: 0, 1: 5.20, 2: 10.60, 3: 13.30, 4: 15.95}}]
+
+  - name: burnley_council_tax_reduction_non_dependant_low_income_threshold
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Burnley Council Tax Reduction Scheme 2026 section 58.2
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-burnley/manual/council-tax-reduction-scheme-2026-2027/page-74, excerpt: "less than £279.00"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '279.00'}]
+
+  - name: burnley_council_tax_reduction_non_dependant_middle_income_threshold
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Burnley Council Tax Reduction Scheme 2026 section 58.2
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-burnley/manual/council-tax-reduction-scheme-2026-2027/page-74, excerpt: "not less than £279.00, but less than £485.00"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '485.00'}]
+
+  - name: burnley_council_tax_reduction_non_dependant_high_income_threshold
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Burnley Council Tax Reduction Scheme 2026 section 58.2
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-burnley/manual/council-tax-reduction-scheme-2026-2027/page-74, excerpt: "not less than £485.00, but less than £605.00"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '605.00'}]
+
+  - name: burnley_council_tax_reduction_working_age_scheme_applies
+    kind: derived
+    entity: Household
+    dtype: Judgment
+    period: Year
+    source: Burnley Council Tax Reduction Scheme 2026 section 1.6
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: condition, source: {corpus_citation_path: uk-burnley/manual/council-tax-reduction-scheme-2026-2027/page-9, excerpt: "THE SCHEME FOR WORKING AGE APPLICANTS – THE COUNCIL’S LOCAL SCHEME"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 'local_authority_is_burnley and council_tax_reduction_household_in_england and burnley_council_tax_reduction_applicant_is_not_pensioner'}]
+
+  - name: burnley_council_tax_reduction_capital_eligible
+    kind: derived
+    entity: Household
+    dtype: Judgment
+    period: Year
+    source: Burnley Council Tax Reduction Scheme 2026 section 33.1
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: condition, source: {corpus_citation_path: uk-burnley/manual/council-tax-reduction-scheme-2026-2027/page-56, excerpt: "no reduction shall be granted when the applicant has an amount greater than this level."}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 'burnley_council_tax_reduction_assessed_capital_for_year <= burnley_council_tax_reduction_capital_limit'}]
+
+  - name: burnley_council_tax_reduction_tariff_income_for_day
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Day
+    unit: GBP
+    source: Burnley Council Tax Reduction Scheme 2026 sections 42.1-42.2
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-burnley/manual/council-tax-reduction-scheme-2026-2027/page-61, excerpt: "Where the applicant’s capital calculated in accordance with this scheme exceeds £6,000 it shall be treated as equivalent to a weekly income of £1 for each complete £250 of in excess of £6,000 but not exceeding £16,000.\n\n42.2 Notwithstanding paragraph 42.1 where any part of the excess is not a complete £250 that part shall be treated as equivalent to a weekly tariff income of £1."}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 'if burnley_council_tax_reduction_assessed_capital_for_year > burnley_council_tax_reduction_tariff_income_threshold: ceil((burnley_council_tax_reduction_assessed_capital_for_year - burnley_council_tax_reduction_tariff_income_threshold) / burnley_council_tax_reduction_tariff_income_step) * burnley_council_tax_reduction_tariff_income_weekly_amount_per_step / burnley_council_tax_reduction_days_per_week else: burnley_council_tax_reduction_capital_limit - burnley_council_tax_reduction_capital_limit'}]
+
+  - name: burnley_council_tax_reduction_individual_non_dependant_deduction_weekly
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Burnley Council Tax Reduction Scheme 2026 sections 58.1-58.2
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-burnley/manual/council-tax-reduction-scheme-2026-2027/page-74, excerpt: "where it is shown to the appropriate authority that his normal gross weekly income is– (a) less than £279.00"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 'if burnley_council_tax_reduction_non_dependant_deduction_applies: if burnley_council_tax_reduction_non_dependant_in_remunerative_work: if burnley_council_tax_reduction_non_dependant_normal_gross_weekly_income < burnley_council_tax_reduction_non_dependant_low_income_threshold: burnley_council_tax_reduction_non_dependant_weekly_deduction_by_band[1] else: if burnley_council_tax_reduction_non_dependant_normal_gross_weekly_income < burnley_council_tax_reduction_non_dependant_middle_income_threshold: burnley_council_tax_reduction_non_dependant_weekly_deduction_by_band[2] else: if burnley_council_tax_reduction_non_dependant_normal_gross_weekly_income < burnley_council_tax_reduction_non_dependant_high_income_threshold: burnley_council_tax_reduction_non_dependant_weekly_deduction_by_band[3] else: burnley_council_tax_reduction_non_dependant_weekly_deduction_by_band[4] else: burnley_council_tax_reduction_non_dependant_weekly_deduction_by_band[1] else: burnley_council_tax_reduction_non_dependant_weekly_deduction_by_band[0]'}]
+
+  - name: burnley_council_tax_reduction_maximum_council_tax_reduction_for_day
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Day
+    unit: GBP
+    source: Burnley Council Tax Reduction Scheme 2026 section 57.1
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-burnley/manual/council-tax-reduction-scheme-2026-2027/page-74, excerpt: "shall be 100 per cent, of the amount A divided by B"}}, {path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-burnley/manual/council-tax-reduction-scheme-2026-2027/page-74, excerpt: "less any deductions in respect of non-dependants which fall to be made under section 58"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 'burnley_council_tax_reduction_actual_liability_for_day * burnley_council_tax_reduction_maximum_support_rate - burnley_council_tax_reduction_non_dependant_deductions_for_day'}]
+
+  - name: burnley_council_tax_reduction_excess_income_for_day
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Day
+    unit: GBP
+    source: Burnley Council Tax Reduction Scheme 2026 section 59.1
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-burnley/manual/council-tax-reduction-scheme-2026-2027/page-76, excerpt: "Where an applicant’s income exceeds their applicable amount"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 'max(burnley_council_tax_reduction_assessed_income_for_day + burnley_council_tax_reduction_tariff_income_for_day - burnley_council_tax_reduction_applicable_amount_for_day, burnley_council_tax_reduction_capital_limit - burnley_council_tax_reduction_capital_limit)'}]
+
+  - name: burnley_council_tax_reduction_income_taper_deduction_for_day
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Day
+    unit: GBP
+    source: Burnley Council Tax Reduction Scheme 2026 section 59.1
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-burnley/manual/council-tax-reduction-scheme-2026-2027/page-76, excerpt: "deducting their excess income multiplied by the taper from their maximum council tax reduction"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 'burnley_council_tax_reduction_excess_income_for_day * burnley_council_tax_reduction_weekly_taper_rate'}]
+
+  - name: burnley_council_tax_reduction_pre_standard_deduction_amount_for_day
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Day
+    unit: GBP
+    source: Burnley Council Tax Reduction Scheme 2026 sections 57 and 59
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-burnley/manual/council-tax-reduction-scheme-2026-2027/page-76, excerpt: "deducting their excess income multiplied by the taper from their maximum council tax reduction as defined within section 57 of this scheme."}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 'max(0, burnley_council_tax_reduction_maximum_council_tax_reduction_for_day - burnley_council_tax_reduction_income_taper_deduction_for_day)'}]
+
+  - name: burnley_council_tax_reduction_award_conditions_met
+    kind: derived
+    entity: Household
+    dtype: Judgment
+    period: Day
+    source: Burnley Council Tax Reduction Scheme 2026 sections 33 and 59
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: condition, source: {corpus_citation_path: uk-burnley/manual/council-tax-reduction-scheme-2026-2027/page-56, excerpt: "no reduction shall be granted when the applicant has an amount greater than this level."}}, {path: 'versions[0].formula', kind: condition, source: {corpus_citation_path: uk-burnley/manual/council-tax-reduction-scheme-2026-2027/page-76, excerpt: "Where an applicant’s income exceeds their applicable amount"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 'burnley_council_tax_reduction_working_age_scheme_applies and burnley_council_tax_reduction_capital_eligible and would_claim_council_tax_reduction and burnley_council_tax_reduction_pre_standard_deduction_amount_for_day > burnley_council_tax_reduction_capital_limit - burnley_council_tax_reduction_capital_limit'}]
+
+  - name: burnley_council_tax_reduction_daily_amount
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Day
+    unit: GBP
+    source: Burnley Council Tax Reduction Scheme 2026 section 59A.1
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-burnley/manual/council-tax-reduction-scheme-2026-2027/page-76, excerpt: "Any entitlement calculated in accordance with this scheme shall be reduced by 15 per cent."}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 'if burnley_council_tax_reduction_award_conditions_met: burnley_council_tax_reduction_pre_standard_deduction_amount_for_day * (burnley_council_tax_reduction_maximum_support_rate - burnley_council_tax_reduction_standard_deduction_rate) else: burnley_council_tax_reduction_capital_limit - burnley_council_tax_reduction_capital_limit'}]
+inputs:
+  - {name: local_authority_is_burnley, entity: Household, dtype: Boolean, period: Year}
+  - {name: council_tax_reduction_household_in_england, entity: Household, dtype: Boolean, period: Year}
+  - {name: burnley_council_tax_reduction_applicant_is_not_pensioner, entity: Household, dtype: Boolean, period: Year}
+  - {name: would_claim_council_tax_reduction, entity: Household, dtype: Boolean, period: Year}
+  - {name: burnley_council_tax_reduction_assessed_capital_for_year, entity: Household, dtype: Money, period: Year, unit: GBP}
+  - {name: burnley_council_tax_reduction_actual_liability_for_day, entity: Household, dtype: Money, period: Day, unit: GBP}
+  - {name: burnley_council_tax_reduction_assessed_income_for_day, entity: Household, dtype: Money, period: Day, unit: GBP}
+  - {name: burnley_council_tax_reduction_applicable_amount_for_day, entity: Household, dtype: Money, period: Day, unit: GBP}
+  - {name: burnley_council_tax_reduction_non_dependant_deductions_for_day, entity: Household, dtype: Money, period: Day, unit: GBP}
+  - {name: burnley_council_tax_reduction_non_dependant_deduction_applies, entity: Person, dtype: Boolean, period: Week}
+  - {name: burnley_council_tax_reduction_non_dependant_in_remunerative_work, entity: Person, dtype: Boolean, period: Week}
+  - {name: burnley_council_tax_reduction_non_dependant_normal_gross_weekly_income, entity: Person, dtype: Money, period: Week, unit: GBP}
