@@ -1,0 +1,158 @@
+# Expected values are hand-derived from the section 5 printed proportion
+# applied to a band D amount of £1,800, which is divisible by the band D term
+# 9 so that every band amount is exact: one ninth of £1,800 is £200, so band A
+# is 6 x £200 = £1,200, band B 7 x £200 = £1,400, and so on.
+- name: band_d_dwelling_pays_the_authority_band_d_amount
+  period:
+    period_kind: custom
+    name: financial_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk:statutes/ukpga/1992/14/10#input.council_tax_band_d_amount_set_by_billing_authority_for_year: 1800
+    uk:statutes/ukpga/1992/14/10#input.person_is_liable_to_pay_council_tax_for_chargeable_dwelling: true
+    uk:statutes/ukpga/1992/14/5#input.council_tax_valuation_band_index: 3
+    uk:statutes/ukpga/1992/14/5#input.dwelling_is_situated_in_wales: false
+  output:
+    uk:statutes/ukpga/1992/14/10#council_tax_amount_set_for_listed_band_for_year: 1800
+    uk:statutes/ukpga/1992/14/10#council_tax_liability_for_year: 1800
+
+- name: band_a_dwelling_pays_six_ninths_of_the_band_d_amount
+  period:
+    period_kind: custom
+    name: financial_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk:statutes/ukpga/1992/14/10#input.council_tax_band_d_amount_set_by_billing_authority_for_year: 1800
+    uk:statutes/ukpga/1992/14/10#input.person_is_liable_to_pay_council_tax_for_chargeable_dwelling: true
+    uk:statutes/ukpga/1992/14/5#input.council_tax_valuation_band_index: 0
+    uk:statutes/ukpga/1992/14/5#input.dwelling_is_situated_in_wales: false
+  output:
+    uk:statutes/ukpga/1992/14/10#council_tax_liability_for_year: 1200
+
+- name: band_b_dwelling_pays_seven_ninths_of_the_band_d_amount
+  period:
+    period_kind: custom
+    name: financial_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk:statutes/ukpga/1992/14/10#input.council_tax_band_d_amount_set_by_billing_authority_for_year: 1800
+    uk:statutes/ukpga/1992/14/10#input.person_is_liable_to_pay_council_tax_for_chargeable_dwelling: true
+    uk:statutes/ukpga/1992/14/5#input.council_tax_valuation_band_index: 1
+    uk:statutes/ukpga/1992/14/5#input.dwelling_is_situated_in_wales: false
+  output:
+    uk:statutes/ukpga/1992/14/10#council_tax_liability_for_year: 1400
+
+- name: band_c_dwelling_pays_eight_ninths_of_the_band_d_amount
+  period:
+    period_kind: custom
+    name: financial_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk:statutes/ukpga/1992/14/10#input.council_tax_band_d_amount_set_by_billing_authority_for_year: 1800
+    uk:statutes/ukpga/1992/14/10#input.person_is_liable_to_pay_council_tax_for_chargeable_dwelling: true
+    uk:statutes/ukpga/1992/14/5#input.council_tax_valuation_band_index: 2
+    uk:statutes/ukpga/1992/14/5#input.dwelling_is_situated_in_wales: false
+  output:
+    uk:statutes/ukpga/1992/14/10#council_tax_liability_for_year: 1600
+
+- name: band_e_dwelling_pays_eleven_ninths_of_the_band_d_amount
+  period:
+    period_kind: custom
+    name: financial_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk:statutes/ukpga/1992/14/10#input.council_tax_band_d_amount_set_by_billing_authority_for_year: 1800
+    uk:statutes/ukpga/1992/14/10#input.person_is_liable_to_pay_council_tax_for_chargeable_dwelling: true
+    uk:statutes/ukpga/1992/14/5#input.council_tax_valuation_band_index: 4
+    uk:statutes/ukpga/1992/14/5#input.dwelling_is_situated_in_wales: false
+  output:
+    uk:statutes/ukpga/1992/14/10#council_tax_liability_for_year: 2200
+
+- name: band_f_dwelling_pays_thirteen_ninths_of_the_band_d_amount
+  period:
+    period_kind: custom
+    name: financial_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk:statutes/ukpga/1992/14/10#input.council_tax_band_d_amount_set_by_billing_authority_for_year: 1800
+    uk:statutes/ukpga/1992/14/10#input.person_is_liable_to_pay_council_tax_for_chargeable_dwelling: true
+    uk:statutes/ukpga/1992/14/5#input.council_tax_valuation_band_index: 5
+    uk:statutes/ukpga/1992/14/5#input.dwelling_is_situated_in_wales: false
+  output:
+    uk:statutes/ukpga/1992/14/10#council_tax_liability_for_year: 2600
+
+- name: band_g_dwelling_pays_fifteen_ninths_of_the_band_d_amount
+  period:
+    period_kind: custom
+    name: financial_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk:statutes/ukpga/1992/14/10#input.council_tax_band_d_amount_set_by_billing_authority_for_year: 1800
+    uk:statutes/ukpga/1992/14/10#input.person_is_liable_to_pay_council_tax_for_chargeable_dwelling: true
+    uk:statutes/ukpga/1992/14/5#input.council_tax_valuation_band_index: 6
+    uk:statutes/ukpga/1992/14/5#input.dwelling_is_situated_in_wales: false
+  output:
+    uk:statutes/ukpga/1992/14/10#council_tax_liability_for_year: 3000
+
+- name: band_h_dwelling_pays_twice_the_band_d_amount
+  period:
+    period_kind: custom
+    name: financial_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk:statutes/ukpga/1992/14/10#input.council_tax_band_d_amount_set_by_billing_authority_for_year: 1800
+    uk:statutes/ukpga/1992/14/10#input.person_is_liable_to_pay_council_tax_for_chargeable_dwelling: true
+    uk:statutes/ukpga/1992/14/5#input.council_tax_valuation_band_index: 7
+    uk:statutes/ukpga/1992/14/5#input.dwelling_is_situated_in_wales: false
+  output:
+    uk:statutes/ukpga/1992/14/10#council_tax_liability_for_year: 3600
+
+- name: welsh_band_i_dwelling_pays_twenty_one_ninths_of_the_band_d_amount
+  period:
+    period_kind: custom
+    name: financial_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk:statutes/ukpga/1992/14/10#input.council_tax_band_d_amount_set_by_billing_authority_for_year: 1800
+    uk:statutes/ukpga/1992/14/10#input.person_is_liable_to_pay_council_tax_for_chargeable_dwelling: true
+    uk:statutes/ukpga/1992/14/5#input.council_tax_valuation_band_index: 8
+    uk:statutes/ukpga/1992/14/5#input.dwelling_is_situated_in_wales: true
+  output:
+    uk:statutes/ukpga/1992/14/10#council_tax_liability_for_year: 4200
+
+- name: no_basic_amount_is_payable_where_the_person_is_not_liable
+  period:
+    period_kind: custom
+    name: financial_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk:statutes/ukpga/1992/14/10#input.council_tax_band_d_amount_set_by_billing_authority_for_year: 1800
+    uk:statutes/ukpga/1992/14/10#input.person_is_liable_to_pay_council_tax_for_chargeable_dwelling: false
+    uk:statutes/ukpga/1992/14/5#input.council_tax_valuation_band_index: 3
+    uk:statutes/ukpga/1992/14/5#input.dwelling_is_situated_in_wales: false
+  output:
+    uk:statutes/ukpga/1992/14/10#council_tax_liability_for_year: 0
+
+- name: a_zero_band_d_amount_produces_a_zero_basic_amount_in_every_band
+  period:
+    period_kind: custom
+    name: financial_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk:statutes/ukpga/1992/14/10#input.council_tax_band_d_amount_set_by_billing_authority_for_year: 0
+    uk:statutes/ukpga/1992/14/10#input.person_is_liable_to_pay_council_tax_for_chargeable_dwelling: true
+    uk:statutes/ukpga/1992/14/5#input.council_tax_valuation_band_index: 7
+    uk:statutes/ukpga/1992/14/5#input.dwelling_is_situated_in_wales: false
+  output:
+    uk:statutes/ukpga/1992/14/10#council_tax_liability_for_year: 0

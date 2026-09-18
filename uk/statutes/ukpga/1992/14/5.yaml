@@ -1,0 +1,182 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/statute/ukpga/1992/14/5
+  summary: |-
+    Section 5 fixes the statutory proportion in which the amounts of council
+    tax payable for dwellings in the same billing authority's area (or the same
+    part of it) but listed in different valuation bands must stand to one
+    another. Subsection (1) prints that proportion as 6: 7: 8: 9: 11: 13: 15:
+    18, where 6 is for valuation band A, 7 for band B, and so on to 18 for band
+    H. Subsection (1A) substitutes, for dwellings situated in Wales and for
+    financial years beginning on or after 1st April 2005, the proportion 6: 7:
+    8: 9: 11: 13: 15: 18: 21, which adds a ninth term for Welsh band I.
+
+    The section prints ratios between bands, not a band-D-relative multiplier.
+    The band-D-relative figure this module derives is computed from the printed
+    terms by dividing the term for the listed band by the term for band D,
+    which subsection (1) identifies as the fourth term, 9. It is not typed as a
+    literal.
+
+    Scope. This module encodes section 5 only. It covers England and Wales;
+    Part I of the Act extends to England and Wales, and Scottish council tax
+    multipliers are set separately and are not encoded here. The valuation
+    bands themselves (the value ranges in subsections (2) and (3)) and the
+    listing of a dwelling in a band under Part I Chapter II are not encoded;
+    the listed band is consumed as a factual input.
+  deferred_outputs:
+    - output: uk:statutes/ukpga/1992/14/5#council_tax_valuation_band_index
+      reason: >-
+        The valuation band listed for a dwelling is the entry made in the
+        billing authority's valuation list under Part I Chapter II on the
+        listing officer's valuation. Sections 5(2) and 5(3) print the value
+        ranges for England and Wales, and neither the valuation nor the listing
+        process is encoded in this module, so the listed band is consumed as a
+        factual input.
+    - output: uk:statutes/ukpga/1992/14/5#dwelling_is_situated_in_wales
+      reason: >-
+        Subsection (1A) applies the substituted proportion by reference to
+        whether the dwelling is situated in Wales. Determining the part of a
+        billing authority's area in which a dwelling is situated is governed by
+        section 10(2) regulations and is not encoded here.
+rules:
+  - name: council_tax_band_proportion_england
+    kind: parameter
+    dtype: Number
+    indexed_by: council_tax_valuation_band_index
+    source: Local Government Finance Act 1992 s.5(1) (the printed proportion, band A to band H)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].values
+            kind: parameter_table
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/14/5
+              excerpt: "6: 7: 8: 9: 11: 13: 15: 18"
+              table:
+                header: Statutory proportion between valuation bands
+                row_key: valuation band
+                column_key: printed proportion term
+          - path: versions[0].values
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/14/5
+              excerpt: "where 6 is for dwellings listed in valuation band A, 7 is for dwellings listed in valuation band B, and so on."
+    versions:
+      - effective_from: '0001-01-01'
+        values:
+          0: 6
+          1: 7
+          2: 8
+          3: 9
+          4: 11
+          5: 13
+          6: 15
+          7: 18
+
+  - name: council_tax_band_proportion_wales
+    kind: parameter
+    dtype: Number
+    indexed_by: council_tax_valuation_band_index
+    source: Local Government Finance Act 1992 s.5(1A) (the proportion substituted for dwellings in Wales for financial years beginning on or after 1st April 2005, band A to band I)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].values
+            kind: parameter_table
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/14/5
+              excerpt: "6: 7: 8: 9: 11: 13: 15: 18: 21"
+              table:
+                header: Substituted statutory proportion for dwellings situated in Wales
+                row_key: valuation band
+                column_key: printed proportion term
+          - path: versions[0].effective_from
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/14/5
+              excerpt: "For the purposes of the application of subsection (1) to dwellings situated in Wales, for the purposes of financial years beginning on or after 1st April 2005, for the proportion specified in that subsection there is substituted the following proportion:"
+    versions:
+      - effective_from: '2005-04-01'
+        values:
+          0: 6
+          1: 7
+          2: 8
+          3: 9
+          4: 11
+          5: 13
+          6: 15
+          7: 18
+          8: 21
+
+  - name: council_tax_band_d_proportion_term
+    kind: parameter
+    dtype: Number
+    source: Local Government Finance Act 1992 s.5(1) (the fourth printed term, 9, being the term for valuation band D)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/14/5
+              excerpt: "6: 7: 8: 9: 11: 13: 15: 18"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/14/5
+              excerpt: "where 6 is for dwellings listed in valuation band A, 7 is for dwellings listed in valuation band B, and so on."
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          9
+
+  - name: council_tax_statutory_proportion_term_for_listed_band
+    kind: derived
+    entity: Household
+    dtype: Number
+    period: Year
+    source: Local Government Finance Act 1992 s.5(1) and s.5(1A)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/14/5
+              excerpt: "The amounts of council tax payable in respect of dwellings situated in the same billing authority’s area (or the same part of such an area) and listed in different valuation bands shall be in the proportion—"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/14/5
+              excerpt: "For the purposes of the application of subsection (1) to dwellings situated in Wales, for the purposes of financial years beginning on or after 1st April 2005, for the proportion specified in that subsection there is substituted the following proportion:"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if dwelling_is_situated_in_wales: council_tax_band_proportion_wales else: council_tax_band_proportion_england
+
+  - name: council_tax_band_proportion_relative_to_band_d
+    kind: derived
+    entity: Household
+    dtype: Number
+    period: Year
+    source: Local Government Finance Act 1992 s.5(1) and s.5(1A) (the printed proportion expressed relative to the band D term)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/14/5
+              excerpt: "The amounts of council tax payable in respect of dwellings situated in the same billing authority’s area (or the same part of such an area) and listed in different valuation bands shall be in the proportion—"
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/14/5
+              excerpt: "6: 7: 8: 9: 11: 13: 15: 18"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          council_tax_statutory_proportion_term_for_listed_band / council_tax_band_d_proportion_term

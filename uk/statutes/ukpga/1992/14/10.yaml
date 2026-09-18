@@ -1,0 +1,120 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk/statute/ukpga/1992/14/10
+  summary: |-
+    Section 10(1) states the basic amount of council tax payable. Subject to
+    sections 11 to 13A, a person liable to pay council tax in respect of a
+    chargeable dwelling and a day pays the billing authority an amount
+    calculated as A divided by D, where A is the amount which, for the
+    financial year in which the day falls and for dwellings in the valuation
+    band listed for the dwelling, has been set by the authority for its area or
+    the relevant part of it, and D is the number of days in the financial year.
+
+    A is the authority-set amount for the listed band. Under section 5 the
+    amounts set for the several bands must stand in the printed proportion, so
+    A for the listed band is the authority's band D amount multiplied by the
+    section 5 proportion for that band relative to band D. The band D amount
+    itself is set by the authority under the section 30 and section 33
+    calculation and is consumed here as a declared external input; this module
+    invents no value for it.
+
+    Annual figure. Because A is defined for the financial year and D is the
+    number of days in that year, the daily amounts A/D summed over every day of
+    a financial year for which the dwelling is chargeable to the same person
+    equal A. The annual output below is that whole-year figure. The daily form
+    and any apportionment over part of a year are not encoded.
+
+    Scope. This module encodes section 10 only, and only the whole-year basic
+    amount. Section 10(1) opens "Subject to sections 11 to 13A below"; none of
+    those adjusting provisions is encoded here. Specifically out of scope:
+    the section 11 discounts and the Schedule 1 disregards, sections 11A, 11B,
+    11C and 11D, sections 12, 12A and 12B, section 13 reduced amounts, the
+    section 13A reduction (encoded separately), joint and several liability and
+    its apportionment, calendar-day apportionment, and the section 10(2)
+    regulations on the part of an area in which a dwelling is situated. The
+    figure produced here is therefore the pre-adjustment basic amount, not a
+    final bill.
+
+    Part I of the Act extends to England and Wales. Scottish council tax is
+    charged under separate provisions with different band multipliers and is
+    not encoded here.
+  deferred_outputs:
+    - output: uk:statutes/ukpga/1992/14/10#council_tax_band_d_amount_set_by_billing_authority_for_year
+      reason: >-
+        A is the amount set by the billing authority for the financial year.
+        Authorities set it through the section 30 and section 33 calculation of
+        the basic amount of council tax, which is an authority budget decision
+        and is not encoded in this module, so the band D amount is consumed as
+        a declared external input.
+    - output: uk:statutes/ukpga/1992/14/10#person_is_liable_to_pay_council_tax_for_chargeable_dwelling
+      reason: >-
+        Liability to pay in respect of a chargeable dwelling is determined by
+        section 6, and whether a dwelling is chargeable by sections 4 and 8.
+        Neither is encoded here, so the liability status is consumed as a
+        factual input.
+    - output: uk:statutes/ukpga/1992/14/10#council_tax_basic_amount_after_sections_11_to_13a
+      reason: >-
+        Section 10(1) is expressed subject to sections 11 to 13A. The discounts,
+        premiums, disregards, reduced amounts and the section 13A reduction that
+        adjust the basic amount are separate provisions and are future outputs.
+    - output: uk:statutes/ukpga/1992/14/10#council_tax_daily_amount_payable
+      reason: >-
+        Section 10(1) states the amount for a day as A divided by D. The daily
+        form and the apportionment of a financial year between chargeable
+        periods and between jointly liable persons are future outputs; this
+        module encodes only the whole-year figure.
+imports:
+  - uk:statutes/ukpga/1992/14/5#council_tax_band_proportion_relative_to_band_d
+rules:
+  - name: council_tax_amount_set_for_listed_band_for_year
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Local Government Finance Act 1992 s.10(1) (amount A), read with s.5(1) and s.5(1A)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/14/10
+              excerpt: "A is the amount which, for the financial year in which the day falls and for dwellings in the valuation band listed for the dwelling, has been set by the authority for its area or (as the case may be) the part of its area in which the dwelling is situated;"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/14/5
+              excerpt: "The amounts of council tax payable in respect of dwellings situated in the same billing authority’s area (or the same part of such an area) and listed in different valuation bands shall be in the proportion—"
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          council_tax_band_d_amount_set_by_billing_authority_for_year * council_tax_band_proportion_relative_to_band_d
+
+  - name: council_tax_liability_for_year
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Local Government Finance Act 1992 s.10(1) (the basic amount payable, before the sections 11 to 13A adjustments)
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/14/10
+              excerpt: "a person who is liable to pay council tax in respect of any chargeable dwelling and any day shall, as respects the dwelling and the day, pay to the billing authority for the area in which the dwelling is situated an amount calculated in accordance with the formula—"
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk/statute/ukpga/1992/14/10
+              excerpt: "D is the number of days in the financial year."
+    versions:
+      - effective_from: '0001-01-01'
+        formula: |-
+          if person_is_liable_to_pay_council_tax_for_chargeable_dwelling: council_tax_amount_set_for_listed_band_for_year else: 0
