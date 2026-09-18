@@ -1054,3 +1054,61 @@ entries:
   class: mechanics
   note: 'England working-age default scheme; text legally frozen at 2013-01-10 amounts (S.I. 2012/3085)
     - encode from the corpus provision as-is, never reconcile to current uprated values. Vetting: ctr-end-2886-vetting.md.'
+- citation: uk/statute/ukpga/1992/14/5
+  repo: rulespec-uk
+  batch: CT-CHG
+  status: pending
+  heading: Different amounts for dwellings in different valuation bands (LGFA 1992 s5)
+  class: rate
+  note: 'Council tax charging. s.5(1) prints the proportion verbatim as ''6: 7: 8: 9: 11: 13: 15: 18''
+    for bands A-H and carries no England qualifier; s.5(1A) substitutes ''6: 7: 8: 9: 11: 13: 15: 18:
+    21'' for dwellings in Wales for financial years beginning on or after 1 April 2005, giving band I.
+    The band-D-relative ratios (A=6/9 ... H=18/9, I=21/9) are a derivation, not the Act''s printed form,
+    so proof atoms should quote the ratio string rather than the normalised fractions. Scotland is not
+    on these proportions: SSI 2016/123 raised E-H to 473/360, 585/360, 705/360 and 882/360 from April
+    2017, and is out of scope for this batch.'
+- citation: uk/statute/ukpga/1992/14/10
+  repo: rulespec-uk
+  batch: CT-CHG
+  status: pending
+  heading: Basic amounts payable (LGFA 1992 s10)
+  class: charge
+  note: 'Council tax charging. The liability formula itself, and the provision that
+    council_tax_liability_for_year in the CTR modules corresponds to. Opens ''Subject to sections 11 to
+    13A below''. A is the amount set by the billing authority for the financial year for dwellings in
+    the listed valuation band, and stays an external input - local rates are out of scope for this repo.
+    D is the number of days in the financial year. See #344.'
+- citation: uk/statute/ukpga/1992/14/11
+  repo: rulespec-uk
+  batch: CT-CHG
+  status: pending
+  heading: 'Discounts: England (LGFA 1992 s11)'
+  class: deduction
+  note: 'Council tax charging. Now England-scoped. s.11(1) gives a discount equal to ''the appropriate
+    percentage'' where there is one non-disregarded resident; s.11(2) gives ''twice the appropriate
+    percentage'' where there is no resident or all residents are disregarded, subject to ss.11A, 11B and
+    11C. s.11(3) defines the appropriate percentage as 25 per cent unless the Secretary of State orders
+    otherwise for the financial year. The familiar 50 per cent is therefore derived as twice the
+    default, not printed. Schedule 1 (disregarded persons) is a separate entry and is not included in
+    this batch.'
+- citation: uk/statute/ukpga/1992/14/11A
+  repo: rulespec-uk
+  batch: CT-CHG
+  status: pending
+  heading: 'Discounts: special provision for England (LGFA 1992 s11A)'
+  class: deduction
+  note: 'Council tax charging. Billing authorities may by determination reduce the s.11(2)(a) discount
+    to a lesser percentage ''of at least 10'', or under s.11A(4) disapply it or set a lesser percentage
+    for prescribed classes. Authority determinations are external inputs, not statute-derived values.'
+- citation: uk/statute/ukpga/1992/14/11B
+  repo: rulespec-uk
+  batch: CT-CHG
+  status: pending
+  heading: 'Higher amount for long-term empty dwellings: England (LGFA 1992 s11B)'
+  class: rate
+  note: 'Council tax charging. Disapplies the s.11(2)(a) discount and permits an increase of not more
+    than ''the relevant maximum'', which is defined by financial year and by length of the empty period
+    in ss.11B(1A)-(1C) - the maximum is not a single scalar. s.11C (second homes, up to 100 per cent)
+    and s.11D (excepted classes) are not in this batch. Wales premiums sit in ss.12A/12B at up to 300
+    per cent and are a separate lane; s.12 was omitted with effect 1 April 2026 by the Local Government
+    Finance (Wales) Act 2024 (asc 6), ss.18(6), 23(7).'
