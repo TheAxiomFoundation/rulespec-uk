@@ -1,0 +1,190 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk-gravesham/manual/council-tax-reduction-scheme-2026-2027/page-66
+    # upstream_source_check:
+    #   status: delegated_scheme
+    #   checked_paths: [uk/statutes/ukpga/1992/14/13A, uk/regulations/uksi/2012/2885, uk/regulations/uksi/2012/2886]
+    #   rationale: LGFA 1992 section 13A delegates the working-age scheme to Gravesham Borough Council, so the adopted scheme document is operative. The singular engine contract strips this attestation.
+  summary: Gravesham's 2026-27 local working-age award is a banded weekly-income discount applied to the scheme-defined maximum Council Tax Reduction. It is not an excess-income taper scheme. Pension-age provisions are outside this module.
+  deferred_outputs:
+    - output: uk-gravesham:policies/gravesham/council-tax-reduction/sections-11-to-25-and-schedule-2#assessed_weekly_income
+      reason: Income assessment, disregards, the minimum-income floor, and the tariff income calculated under paragraphs 34A.1-34A.2 determine the post-tariff assessed weekly-income input consumed by the band selector.
+    - output: uk-gravesham:policies/gravesham/council-tax-reduction/sections-26-to-34A-and-schedule-3#assessed_capital
+      reason: Capital valuation and disregard rules determine the capital input.
+    - output: uk-gravesham:policies/gravesham/council-tax-reduction/paragraphs-48.1-to-48.4#maximum_eligible_liability
+      reason: Liability after statutory discounts and joint-liability apportionment is consumed by this award surface.
+    - output: uk-gravesham:policies/gravesham/council-tax-reduction/paragraphs-48A.2-to-48A.6#non_dependant_deduction_units
+      reason: Resident exemptions and couple coordination determine deduction units.
+rules:
+  - name: gravesham_council_tax_reduction_maximum_support_rate
+    kind: parameter
+    dtype: Rate
+    source: Gravesham Council Tax Reduction Scheme 2026/27 paragraph 48.1
+    metadata: {proof: {atoms: [{path: "versions[0].formula", kind: amount, source: {corpus_citation_path: uk-gravesham/manual/council-tax-reduction-scheme-2026-2027/page-48, excerpt: "shall be 100 per cent, of the amount A divided by B"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '1'}]
+  - name: gravesham_council_tax_reduction_capital_limit
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Gravesham Council Tax Reduction Scheme 2026/27 Schedule 1 paragraph 5
+    metadata: {proof: {atoms: [{path: "versions[0].formula", kind: amount, source: {corpus_citation_path: uk-gravesham/manual/council-tax-reduction-scheme-2026-2027/page-66, excerpt: "Any applicant whose capital is greater than £16,000 shall not be entitled to any Council Tax Reduction whatsoever."}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '16000'}]
+  - name: gravesham_council_tax_reduction_tariff_income_threshold
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Gravesham Council Tax Reduction Scheme 2026/27 paragraph 34A.1
+    metadata: {proof: {atoms: [{path: "versions[0].formula", kind: amount, source: {corpus_citation_path: uk-gravesham/manual/council-tax-reduction-scheme-2026-2027/page-39, excerpt: "exceeds £6,000 it shall be treated as equivalent to a weekly income of £1 for each complete £250 of in excess of £6,000 but not exceeding £16,000"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '6000'}]
+  - name: gravesham_council_tax_reduction_tariff_income_step
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Gravesham Council Tax Reduction Scheme 2026/27 paragraph 34A.1
+    metadata: {proof: {atoms: [{path: "versions[0].formula", kind: amount, source: {corpus_citation_path: uk-gravesham/manual/council-tax-reduction-scheme-2026-2027/page-39, excerpt: "£1 for each complete £250"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '250'}]
+  - name: gravesham_council_tax_reduction_tariff_income_weekly_per_step
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Gravesham Council Tax Reduction Scheme 2026/27 paragraph 34A.1
+    metadata: {proof: {atoms: [{path: "versions[0].formula", kind: amount, source: {corpus_citation_path: uk-gravesham/manual/council-tax-reduction-scheme-2026-2027/page-39, excerpt: "weekly income of £1 for each complete £250"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '1'}]
+  - name: gravesham_council_tax_reduction_weeks_per_year
+    kind: parameter
+    dtype: Number
+    source: Gravesham Council Tax Reduction Scheme 2026/27 financial year
+    metadata: {proof: {atoms: [{path: "versions[0].formula", kind: amount, source: {corpus_citation_path: uk-gravesham/manual/council-tax-reduction-scheme-2026-2027/page-85, excerpt: "for a period of 52 weeks from the date of receipt"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '52'}]
+  - name: gravesham_council_tax_reduction_non_dependant_weekly_deduction
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Gravesham Council Tax Reduction Scheme 2026/27 paragraph 48A.1
+    metadata: {proof: {atoms: [{path: "versions[0].formula", kind: amount, source: {corpus_citation_path: uk-gravesham/manual/council-tax-reduction-scheme-2026-2027/page-48, excerpt: "£10 x 1/7"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '10'}]
+  - name: gravesham_council_tax_reduction_band_codes
+    kind: parameter
+    dtype: Number
+    indexed_by: gravesham_council_tax_reduction_income_band
+    source: Gravesham Council Tax Reduction Scheme 2026/27 Schedule 1
+    metadata: {proof: {atoms: [{path: "versions[0].values", kind: parameter_table, source: &grid {corpus_citation_path: uk-gravesham/manual/council-tax-reduction-scheme-2026-2027/page-66, excerpt: &grid_excerpt "Discount percent Single Person Couple Lone Parent with one child/young person Lone Parent with two or more children/young persons Couple with one child/young person Couple with two or more children/young persons\n\n100%\n\nPassported Benefit*\n\n100% £0 to £143 £0 to £198 £0 to £229 £0 to £316 £0 to £285 £0 to £372\n\n75% £143.01 to £198 £198.01 to £254 £229.01 to £285 £316.01 to £372 £285.01 to £341 £372.01 to £428\n\n50% £198.01 to £273 £254.01 to £329 £285.01 to £360 £372.01 to £446 £341.01 to £415 £428.01 to £502\n\n25% £273.01 to £347 £329.01 to £403 £360.01 to £434 £446.01 to £521 £415.01 to £490 £502.01 to £570\n\n0% £347+ £403+ £434+ £521+\n\n£490+\n\n£570+", table: {header: Discount percent, row_key: income band, column_key: weekly income by family category}}}]}}
+    versions: [{effective_from: '2026-04-01', values: {0: 0, 1: 1, 2: 2, 3: 3, 4: 4}}]
+  - name: gravesham_council_tax_reduction_support_rate_by_band
+    kind: parameter
+    dtype: Rate
+    indexed_by: gravesham_council_tax_reduction_income_band
+    source: Gravesham Council Tax Reduction Scheme 2026/27 Schedule 1
+    metadata: {proof: {atoms: [{path: "versions[0].values", kind: parameter_table, source: *grid}]}}
+    versions: [{effective_from: '2026-04-01', values: {0: 1, 1: 0.75, 2: 0.50, 3: 0.25, 4: 0}}]
+  - name: gravesham_council_tax_reduction_band_2_lower_income_by_family
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    indexed_by: gravesham_council_tax_reduction_family_category
+    source: Gravesham Council Tax Reduction Scheme 2026/27 Schedule 1
+    metadata: {proof: {atoms: [{path: "versions[0].values", kind: parameter_table, source: *grid}]}}
+    versions: [{effective_from: '2026-04-01', values: {0: 143.01, 1: 198.01, 2: 229.01, 3: 316.01, 4: 285.01, 5: 372.01}}]
+  - name: gravesham_council_tax_reduction_band_3_lower_income_by_family
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    indexed_by: gravesham_council_tax_reduction_family_category
+    source: Gravesham Council Tax Reduction Scheme 2026/27 Schedule 1
+    metadata: {proof: {atoms: [{path: "versions[0].values", kind: parameter_table, source: *grid}]}}
+    versions: [{effective_from: '2026-04-01', values: {0: 198.01, 1: 254.01, 2: 285.01, 3: 372.01, 4: 341.01, 5: 428.01}}]
+  - name: gravesham_council_tax_reduction_band_4_lower_income_by_family
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    indexed_by: gravesham_council_tax_reduction_family_category
+    source: Gravesham Council Tax Reduction Scheme 2026/27 Schedule 1
+    metadata: {proof: {atoms: [{path: "versions[0].values", kind: parameter_table, source: *grid}]}}
+    versions: [{effective_from: '2026-04-01', values: {0: 273.01, 1: 329.01, 2: 360.01, 3: 446.01, 4: 415.01, 5: 502.01}}]
+  - name: gravesham_council_tax_reduction_band_5_lower_income_by_family
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    indexed_by: gravesham_council_tax_reduction_family_category
+    source: Gravesham Council Tax Reduction Scheme 2026/27 Schedule 1
+    metadata: {proof: {atoms: [{path: "versions[0].values", kind: parameter_table, source: *grid}]}}
+    versions: [{effective_from: '2026-04-01', values: {0: 347, 1: 403, 2: 434, 3: 521, 4: 490, 5: 570}}]
+  - name: gravesham_council_tax_reduction_working_age_scheme_applies
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Year
+    source: Gravesham Council Tax Reduction Scheme 2026/27 section 1.6
+    metadata: {proof: {atoms: [{path: "versions[0].formula", kind: condition, source: {corpus_citation_path: uk-gravesham/manual/council-tax-reduction-scheme-2026-2027/page-6, excerpt: "The adopted scheme for working age applicants is an income band scheme means test"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: "local_authority_is_gravesham and council_tax_reduction_household_in_england and gravesham_council_tax_reduction_applicant_is_in_working_age_class"}]
+  - name: gravesham_council_tax_reduction_capital_eligible
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Year
+    source: Gravesham Council Tax Reduction Scheme 2026/27 Schedule 1 paragraph 5
+    metadata: {proof: {atoms: [{path: "versions[0].formula", kind: condition, source: {corpus_citation_path: uk-gravesham/manual/council-tax-reduction-scheme-2026-2027/page-66, excerpt: "capital is greater than £16,000 shall not be entitled to any Council Tax Reduction whatsoever"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: "gravesham_council_tax_reduction_assessed_capital_for_year <= gravesham_council_tax_reduction_capital_limit"}]
+  - name: gravesham_council_tax_reduction_passported_to_band_1
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Week
+    source: Gravesham Council Tax Reduction Scheme 2026/27 Schedule 1 paragraph 7
+    metadata: {proof: {atoms: [{path: "versions[0].formula", kind: condition, source: {corpus_citation_path: uk-gravesham/manual/council-tax-reduction-scheme-2026-2027/page-66, excerpt: "Where an applicant or partner is in receipt of Income Support, Income Related Employment and Support Allowance or Income Based Jobseeker’s Allowance, (passported benefits) discount will be awarded at 100%."}}]}}
+    versions: [{effective_from: '2026-04-01', formula: "gravesham_council_tax_reduction_receives_income_support or gravesham_council_tax_reduction_receives_income_related_esa or gravesham_council_tax_reduction_receives_income_based_jsa"}]
+  - name: gravesham_council_tax_reduction_income_band
+    kind: derived
+    entity: Person
+    dtype: Number
+    period: Week
+    source: Gravesham Council Tax Reduction Scheme 2026/27 Schedule 1
+    metadata: {proof: {atoms: [{path: "versions[0].formula", kind: parameter_table, source: *grid}]}}
+    versions: [{effective_from: '2026-04-01', formula: "if gravesham_council_tax_reduction_passported_to_band_1: gravesham_council_tax_reduction_band_codes[0] else: if gravesham_council_tax_reduction_weekly_income >= gravesham_council_tax_reduction_band_5_lower_income_by_family[gravesham_council_tax_reduction_family_category]: gravesham_council_tax_reduction_band_codes[4] else: if gravesham_council_tax_reduction_weekly_income >= gravesham_council_tax_reduction_band_4_lower_income_by_family[gravesham_council_tax_reduction_family_category]: gravesham_council_tax_reduction_band_codes[3] else: if gravesham_council_tax_reduction_weekly_income >= gravesham_council_tax_reduction_band_3_lower_income_by_family[gravesham_council_tax_reduction_family_category]: gravesham_council_tax_reduction_band_codes[2] else: if gravesham_council_tax_reduction_weekly_income >= gravesham_council_tax_reduction_band_2_lower_income_by_family[gravesham_council_tax_reduction_family_category]: gravesham_council_tax_reduction_band_codes[1] else: gravesham_council_tax_reduction_band_codes[0]"}]
+  - name: gravesham_council_tax_reduction_selected_support_rate
+    kind: derived
+    entity: Person
+    dtype: Rate
+    period: Year
+    source: Gravesham Council Tax Reduction Scheme 2026/27 Schedule 1
+    metadata: {proof: {atoms: [{path: "versions[0].formula", kind: parameter_table, source: *grid}]}}
+    versions: [{effective_from: '2026-04-01', formula: "gravesham_council_tax_reduction_support_rate_by_band[gravesham_council_tax_reduction_income_band]"}]
+  - name: gravesham_council_tax_reduction_tariff_income_for_year
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Gravesham Council Tax Reduction Scheme 2026/27 paragraphs 34A.1-34A.2
+    metadata: {proof: {atoms: [{path: "versions[0].formula", kind: formula, source: {corpus_citation_path: uk-gravesham/manual/council-tax-reduction-scheme-2026-2027/page-39, excerpt: "Where the claimant’s capital calculated in accordance with this scheme exceeds £6,000 it shall be treated as equivalent to a weekly income of £1 for each complete £250 of in excess of £6,000 but not exceeding £16,000\n\n34A.2 Notwithstanding paragraph 34A.1 where any part of the excess is not a complete £250 that part shall be treated as equivalent to a weekly tariff income of £1."}}]}}
+    versions: [{effective_from: '2026-04-01', formula: "if gravesham_council_tax_reduction_assessed_capital_for_year > gravesham_council_tax_reduction_tariff_income_threshold: ceil((gravesham_council_tax_reduction_assessed_capital_for_year - gravesham_council_tax_reduction_tariff_income_threshold) / gravesham_council_tax_reduction_tariff_income_step) * gravesham_council_tax_reduction_tariff_income_weekly_per_step * gravesham_council_tax_reduction_weeks_per_year else: 0"}]
+  - name: gravesham_council_tax_reduction_maximum_amount_for_year
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Gravesham Council Tax Reduction Scheme 2026/27 paragraph 48.1
+    metadata: {proof: {atoms: [{path: "versions[0].formula", kind: formula, source: {corpus_citation_path: uk-gravesham/manual/council-tax-reduction-scheme-2026-2027/page-48, excerpt: "shall be 100 per cent, of the amount A divided by B"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: "gravesham_council_tax_reduction_maximum_eligible_liability_for_year * gravesham_council_tax_reduction_maximum_support_rate"}]
+  - name: gravesham_council_tax_reduction_annual_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Gravesham Council Tax Reduction Scheme 2026/27 Schedule 1 paragraphs 1-2
+    metadata: {proof: {atoms: [{path: "versions[0].formula", kind: formula, source: {corpus_citation_path: uk-gravesham/manual/council-tax-reduction-scheme-2026-2027/page-66, excerpt: "The amount of discount to be granted is to be based on the following factors: a. The maximum Council Tax Reduction as defined within this scheme"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: "if gravesham_council_tax_reduction_working_age_scheme_applies and would_claim_council_tax_reduction and gravesham_council_tax_reduction_capital_eligible: max(0, gravesham_council_tax_reduction_maximum_amount_for_year * gravesham_council_tax_reduction_selected_support_rate - gravesham_council_tax_reduction_non_dependant_deductions_for_year) else: 0"}]

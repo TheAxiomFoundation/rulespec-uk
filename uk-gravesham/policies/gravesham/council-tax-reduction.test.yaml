@@ -1,0 +1,1158 @@
+# Each case assigns every factual input and asserts exactly one output.
+# weekly_income is the deferred post-tariff assessed income consumed by the grid.
+- name: gravesham_ctr_parameter_maximum_support_rate
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.local_authority_is_gravesham: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_maximum_eligible_liability_for_year: 1000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_weekly_income: 0
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_family_category: 0
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_support: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_related_esa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_based_jsa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-gravesham:policies/gravesham/council-tax-reduction#gravesham_council_tax_reduction_maximum_support_rate: 1
+- name: gravesham_ctr_parameter_capital_limit
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.local_authority_is_gravesham: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_maximum_eligible_liability_for_year: 1000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_weekly_income: 0
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_family_category: 0
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_support: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_related_esa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_based_jsa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-gravesham:policies/gravesham/council-tax-reduction#gravesham_council_tax_reduction_capital_limit: 16000
+- name: gravesham_ctr_parameter_tariff_income_threshold
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.local_authority_is_gravesham: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_maximum_eligible_liability_for_year: 1000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_weekly_income: 0
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_family_category: 0
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_support: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_related_esa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_based_jsa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-gravesham:policies/gravesham/council-tax-reduction#gravesham_council_tax_reduction_tariff_income_threshold: 6000
+- name: gravesham_ctr_parameter_tariff_income_step
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.local_authority_is_gravesham: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_maximum_eligible_liability_for_year: 1000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_weekly_income: 0
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_family_category: 0
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_support: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_related_esa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_based_jsa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-gravesham:policies/gravesham/council-tax-reduction#gravesham_council_tax_reduction_tariff_income_step: 250
+- name: gravesham_ctr_parameter_tariff_income_weekly_per_step
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.local_authority_is_gravesham: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_maximum_eligible_liability_for_year: 1000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_weekly_income: 0
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_family_category: 0
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_support: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_related_esa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_based_jsa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-gravesham:policies/gravesham/council-tax-reduction#gravesham_council_tax_reduction_tariff_income_weekly_per_step: 1
+- name: gravesham_ctr_parameter_weeks_per_year
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.local_authority_is_gravesham: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_maximum_eligible_liability_for_year: 1000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_weekly_income: 0
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_family_category: 0
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_support: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_related_esa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_based_jsa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-gravesham:policies/gravesham/council-tax-reduction#gravesham_council_tax_reduction_weeks_per_year: 52
+- name: gravesham_ctr_parameter_non_dependant_weekly_deduction
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.local_authority_is_gravesham: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_maximum_eligible_liability_for_year: 1000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_weekly_income: 0
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_family_category: 0
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_support: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_related_esa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_based_jsa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-gravesham:policies/gravesham/council-tax-reduction#gravesham_council_tax_reduction_non_dependant_weekly_deduction: 10
+- name: gravesham_ctr_working_age_scope
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.local_authority_is_gravesham: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_maximum_eligible_liability_for_year: 1000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_weekly_income: 0
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_family_category: 0
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_support: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_related_esa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_based_jsa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-gravesham:policies/gravesham/council-tax-reduction#gravesham_council_tax_reduction_working_age_scheme_applies: holds
+- name: gravesham_ctr_passported_status
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.local_authority_is_gravesham: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_maximum_eligible_liability_for_year: 1000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_weekly_income: 0
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_family_category: 0
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_support: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_related_esa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_based_jsa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-gravesham:policies/gravesham/council-tax-reduction#gravesham_council_tax_reduction_passported_to_band_1: holds
+- name: gravesham_ctr_passported_selection
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.local_authority_is_gravesham: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_maximum_eligible_liability_for_year: 1000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_weekly_income: 570
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_family_category: 5
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_support: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_related_esa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_based_jsa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-gravesham:policies/gravesham/council-tax-reduction#gravesham_council_tax_reduction_income_band: 0
+- name: gravesham_ctr_family_0_edge_1_below
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.local_authority_is_gravesham: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_maximum_eligible_liability_for_year: 1000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_weekly_income: 143.00
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_family_category: 0
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_support: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_related_esa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_based_jsa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-gravesham:policies/gravesham/council-tax-reduction#gravesham_council_tax_reduction_income_band: 0
+- name: gravesham_ctr_family_0_edge_1_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.local_authority_is_gravesham: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_maximum_eligible_liability_for_year: 1000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_weekly_income: 143.01
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_family_category: 0
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_support: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_related_esa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_based_jsa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-gravesham:policies/gravesham/council-tax-reduction#gravesham_council_tax_reduction_income_band: 1
+- name: gravesham_ctr_family_0_edge_2_below
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.local_authority_is_gravesham: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_maximum_eligible_liability_for_year: 1000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_weekly_income: 198.00
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_family_category: 0
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_support: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_related_esa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_based_jsa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-gravesham:policies/gravesham/council-tax-reduction#gravesham_council_tax_reduction_income_band: 1
+- name: gravesham_ctr_family_0_edge_2_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.local_authority_is_gravesham: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_maximum_eligible_liability_for_year: 1000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_weekly_income: 198.01
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_family_category: 0
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_support: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_related_esa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_based_jsa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-gravesham:policies/gravesham/council-tax-reduction#gravesham_council_tax_reduction_income_band: 2
+- name: gravesham_ctr_family_0_edge_3_below
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.local_authority_is_gravesham: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_maximum_eligible_liability_for_year: 1000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_weekly_income: 273.00
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_family_category: 0
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_support: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_related_esa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_based_jsa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-gravesham:policies/gravesham/council-tax-reduction#gravesham_council_tax_reduction_income_band: 2
+- name: gravesham_ctr_family_0_edge_3_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.local_authority_is_gravesham: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_maximum_eligible_liability_for_year: 1000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_weekly_income: 273.01
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_family_category: 0
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_support: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_related_esa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_based_jsa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-gravesham:policies/gravesham/council-tax-reduction#gravesham_council_tax_reduction_income_band: 3
+- name: gravesham_ctr_family_0_edge_4_below
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.local_authority_is_gravesham: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_maximum_eligible_liability_for_year: 1000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_weekly_income: 346.99
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_family_category: 0
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_support: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_related_esa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_based_jsa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-gravesham:policies/gravesham/council-tax-reduction#gravesham_council_tax_reduction_income_band: 3
+- name: gravesham_ctr_family_0_edge_4_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.local_authority_is_gravesham: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_maximum_eligible_liability_for_year: 1000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_weekly_income: 347
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_family_category: 0
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_support: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_related_esa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_based_jsa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-gravesham:policies/gravesham/council-tax-reduction#gravesham_council_tax_reduction_income_band: 4
+- name: gravesham_ctr_family_1_edge_1_below
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.local_authority_is_gravesham: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_maximum_eligible_liability_for_year: 1000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_weekly_income: 198.00
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_family_category: 1
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_support: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_related_esa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_based_jsa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-gravesham:policies/gravesham/council-tax-reduction#gravesham_council_tax_reduction_income_band: 0
+- name: gravesham_ctr_family_1_edge_1_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.local_authority_is_gravesham: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_maximum_eligible_liability_for_year: 1000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_weekly_income: 198.01
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_family_category: 1
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_support: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_related_esa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_based_jsa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-gravesham:policies/gravesham/council-tax-reduction#gravesham_council_tax_reduction_income_band: 1
+- name: gravesham_ctr_family_1_edge_2_below
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.local_authority_is_gravesham: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_maximum_eligible_liability_for_year: 1000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_weekly_income: 254.00
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_family_category: 1
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_support: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_related_esa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_based_jsa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-gravesham:policies/gravesham/council-tax-reduction#gravesham_council_tax_reduction_income_band: 1
+- name: gravesham_ctr_family_1_edge_2_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.local_authority_is_gravesham: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_maximum_eligible_liability_for_year: 1000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_weekly_income: 254.01
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_family_category: 1
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_support: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_related_esa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_based_jsa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-gravesham:policies/gravesham/council-tax-reduction#gravesham_council_tax_reduction_income_band: 2
+- name: gravesham_ctr_family_1_edge_3_below
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.local_authority_is_gravesham: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_maximum_eligible_liability_for_year: 1000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_weekly_income: 329.00
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_family_category: 1
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_support: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_related_esa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_based_jsa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-gravesham:policies/gravesham/council-tax-reduction#gravesham_council_tax_reduction_income_band: 2
+- name: gravesham_ctr_family_1_edge_3_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.local_authority_is_gravesham: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_maximum_eligible_liability_for_year: 1000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_weekly_income: 329.01
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_family_category: 1
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_support: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_related_esa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_based_jsa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-gravesham:policies/gravesham/council-tax-reduction#gravesham_council_tax_reduction_income_band: 3
+- name: gravesham_ctr_family_1_edge_4_below
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.local_authority_is_gravesham: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_maximum_eligible_liability_for_year: 1000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_weekly_income: 402.99
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_family_category: 1
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_support: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_related_esa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_based_jsa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-gravesham:policies/gravesham/council-tax-reduction#gravesham_council_tax_reduction_income_band: 3
+- name: gravesham_ctr_family_1_edge_4_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.local_authority_is_gravesham: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_maximum_eligible_liability_for_year: 1000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_weekly_income: 403
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_family_category: 1
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_support: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_related_esa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_based_jsa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-gravesham:policies/gravesham/council-tax-reduction#gravesham_council_tax_reduction_income_band: 4
+- name: gravesham_ctr_family_2_edge_1_below
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.local_authority_is_gravesham: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_maximum_eligible_liability_for_year: 1000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_weekly_income: 229.00
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_family_category: 2
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_support: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_related_esa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_based_jsa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-gravesham:policies/gravesham/council-tax-reduction#gravesham_council_tax_reduction_income_band: 0
+- name: gravesham_ctr_family_2_edge_1_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.local_authority_is_gravesham: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_maximum_eligible_liability_for_year: 1000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_weekly_income: 229.01
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_family_category: 2
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_support: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_related_esa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_based_jsa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-gravesham:policies/gravesham/council-tax-reduction#gravesham_council_tax_reduction_income_band: 1
+- name: gravesham_ctr_family_2_edge_2_below
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.local_authority_is_gravesham: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_maximum_eligible_liability_for_year: 1000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_weekly_income: 285.00
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_family_category: 2
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_support: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_related_esa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_based_jsa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-gravesham:policies/gravesham/council-tax-reduction#gravesham_council_tax_reduction_income_band: 1
+- name: gravesham_ctr_family_2_edge_2_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.local_authority_is_gravesham: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_maximum_eligible_liability_for_year: 1000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_weekly_income: 285.01
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_family_category: 2
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_support: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_related_esa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_based_jsa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-gravesham:policies/gravesham/council-tax-reduction#gravesham_council_tax_reduction_income_band: 2
+- name: gravesham_ctr_family_2_edge_3_below
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.local_authority_is_gravesham: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_maximum_eligible_liability_for_year: 1000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_weekly_income: 360.00
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_family_category: 2
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_support: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_related_esa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_based_jsa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-gravesham:policies/gravesham/council-tax-reduction#gravesham_council_tax_reduction_income_band: 2
+- name: gravesham_ctr_family_2_edge_3_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.local_authority_is_gravesham: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_maximum_eligible_liability_for_year: 1000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_weekly_income: 360.01
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_family_category: 2
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_support: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_related_esa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_based_jsa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-gravesham:policies/gravesham/council-tax-reduction#gravesham_council_tax_reduction_income_band: 3
+- name: gravesham_ctr_family_2_edge_4_below
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.local_authority_is_gravesham: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_maximum_eligible_liability_for_year: 1000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_weekly_income: 433.99
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_family_category: 2
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_support: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_related_esa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_based_jsa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-gravesham:policies/gravesham/council-tax-reduction#gravesham_council_tax_reduction_income_band: 3
+- name: gravesham_ctr_family_2_edge_4_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.local_authority_is_gravesham: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_maximum_eligible_liability_for_year: 1000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_weekly_income: 434
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_family_category: 2
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_support: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_related_esa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_based_jsa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-gravesham:policies/gravesham/council-tax-reduction#gravesham_council_tax_reduction_income_band: 4
+- name: gravesham_ctr_family_3_edge_1_below
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.local_authority_is_gravesham: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_maximum_eligible_liability_for_year: 1000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_weekly_income: 316.00
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_family_category: 3
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_support: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_related_esa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_based_jsa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-gravesham:policies/gravesham/council-tax-reduction#gravesham_council_tax_reduction_income_band: 0
+- name: gravesham_ctr_family_3_edge_1_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.local_authority_is_gravesham: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_maximum_eligible_liability_for_year: 1000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_weekly_income: 316.01
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_family_category: 3
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_support: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_related_esa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_based_jsa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-gravesham:policies/gravesham/council-tax-reduction#gravesham_council_tax_reduction_income_band: 1
+- name: gravesham_ctr_family_3_edge_2_below
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.local_authority_is_gravesham: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_maximum_eligible_liability_for_year: 1000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_weekly_income: 372.00
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_family_category: 3
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_support: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_related_esa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_based_jsa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-gravesham:policies/gravesham/council-tax-reduction#gravesham_council_tax_reduction_income_band: 1
+- name: gravesham_ctr_family_3_edge_2_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.local_authority_is_gravesham: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_maximum_eligible_liability_for_year: 1000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_weekly_income: 372.01
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_family_category: 3
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_support: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_related_esa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_based_jsa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-gravesham:policies/gravesham/council-tax-reduction#gravesham_council_tax_reduction_income_band: 2
+- name: gravesham_ctr_family_3_edge_3_below
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.local_authority_is_gravesham: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_maximum_eligible_liability_for_year: 1000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_weekly_income: 446.00
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_family_category: 3
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_support: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_related_esa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_based_jsa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-gravesham:policies/gravesham/council-tax-reduction#gravesham_council_tax_reduction_income_band: 2
+- name: gravesham_ctr_family_3_edge_3_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.local_authority_is_gravesham: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_maximum_eligible_liability_for_year: 1000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_weekly_income: 446.01
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_family_category: 3
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_support: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_related_esa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_based_jsa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-gravesham:policies/gravesham/council-tax-reduction#gravesham_council_tax_reduction_income_band: 3
+- name: gravesham_ctr_family_3_edge_4_below
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.local_authority_is_gravesham: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_maximum_eligible_liability_for_year: 1000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_weekly_income: 520.99
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_family_category: 3
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_support: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_related_esa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_based_jsa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-gravesham:policies/gravesham/council-tax-reduction#gravesham_council_tax_reduction_income_band: 3
+- name: gravesham_ctr_family_3_edge_4_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.local_authority_is_gravesham: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_maximum_eligible_liability_for_year: 1000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_weekly_income: 521
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_family_category: 3
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_support: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_related_esa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_based_jsa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-gravesham:policies/gravesham/council-tax-reduction#gravesham_council_tax_reduction_income_band: 4
+- name: gravesham_ctr_family_4_edge_1_below
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.local_authority_is_gravesham: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_maximum_eligible_liability_for_year: 1000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_weekly_income: 285.00
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_family_category: 4
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_support: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_related_esa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_based_jsa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-gravesham:policies/gravesham/council-tax-reduction#gravesham_council_tax_reduction_income_band: 0
+- name: gravesham_ctr_family_4_edge_1_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.local_authority_is_gravesham: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_maximum_eligible_liability_for_year: 1000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_weekly_income: 285.01
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_family_category: 4
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_support: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_related_esa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_based_jsa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-gravesham:policies/gravesham/council-tax-reduction#gravesham_council_tax_reduction_income_band: 1
+- name: gravesham_ctr_family_4_edge_2_below
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.local_authority_is_gravesham: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_maximum_eligible_liability_for_year: 1000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_weekly_income: 341.00
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_family_category: 4
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_support: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_related_esa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_based_jsa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-gravesham:policies/gravesham/council-tax-reduction#gravesham_council_tax_reduction_income_band: 1
+- name: gravesham_ctr_family_4_edge_2_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.local_authority_is_gravesham: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_maximum_eligible_liability_for_year: 1000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_weekly_income: 341.01
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_family_category: 4
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_support: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_related_esa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_based_jsa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-gravesham:policies/gravesham/council-tax-reduction#gravesham_council_tax_reduction_income_band: 2
+- name: gravesham_ctr_family_4_edge_3_below
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.local_authority_is_gravesham: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_maximum_eligible_liability_for_year: 1000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_weekly_income: 415.00
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_family_category: 4
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_support: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_related_esa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_based_jsa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-gravesham:policies/gravesham/council-tax-reduction#gravesham_council_tax_reduction_income_band: 2
+- name: gravesham_ctr_family_4_edge_3_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.local_authority_is_gravesham: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_maximum_eligible_liability_for_year: 1000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_weekly_income: 415.01
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_family_category: 4
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_support: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_related_esa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_based_jsa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-gravesham:policies/gravesham/council-tax-reduction#gravesham_council_tax_reduction_income_band: 3
+- name: gravesham_ctr_family_4_edge_4_below
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.local_authority_is_gravesham: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_maximum_eligible_liability_for_year: 1000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_weekly_income: 489.99
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_family_category: 4
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_support: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_related_esa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_based_jsa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-gravesham:policies/gravesham/council-tax-reduction#gravesham_council_tax_reduction_income_band: 3
+- name: gravesham_ctr_family_4_edge_4_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.local_authority_is_gravesham: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_maximum_eligible_liability_for_year: 1000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_weekly_income: 490
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_family_category: 4
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_support: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_related_esa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_based_jsa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-gravesham:policies/gravesham/council-tax-reduction#gravesham_council_tax_reduction_income_band: 4
+- name: gravesham_ctr_family_5_edge_1_below
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.local_authority_is_gravesham: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_maximum_eligible_liability_for_year: 1000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_weekly_income: 372.00
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_family_category: 5
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_support: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_related_esa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_based_jsa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-gravesham:policies/gravesham/council-tax-reduction#gravesham_council_tax_reduction_income_band: 0
+- name: gravesham_ctr_family_5_edge_1_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.local_authority_is_gravesham: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_maximum_eligible_liability_for_year: 1000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_weekly_income: 372.01
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_family_category: 5
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_support: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_related_esa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_based_jsa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-gravesham:policies/gravesham/council-tax-reduction#gravesham_council_tax_reduction_income_band: 1
+- name: gravesham_ctr_family_5_edge_2_below
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.local_authority_is_gravesham: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_maximum_eligible_liability_for_year: 1000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_weekly_income: 428.00
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_family_category: 5
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_support: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_related_esa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_based_jsa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-gravesham:policies/gravesham/council-tax-reduction#gravesham_council_tax_reduction_income_band: 1
+- name: gravesham_ctr_family_5_edge_2_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.local_authority_is_gravesham: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_maximum_eligible_liability_for_year: 1000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_weekly_income: 428.01
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_family_category: 5
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_support: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_related_esa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_based_jsa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-gravesham:policies/gravesham/council-tax-reduction#gravesham_council_tax_reduction_income_band: 2
+- name: gravesham_ctr_family_5_edge_3_below
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.local_authority_is_gravesham: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_maximum_eligible_liability_for_year: 1000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_weekly_income: 502.00
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_family_category: 5
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_support: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_related_esa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_based_jsa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-gravesham:policies/gravesham/council-tax-reduction#gravesham_council_tax_reduction_income_band: 2
+- name: gravesham_ctr_family_5_edge_3_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.local_authority_is_gravesham: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_maximum_eligible_liability_for_year: 1000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_weekly_income: 502.01
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_family_category: 5
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_support: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_related_esa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_based_jsa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-gravesham:policies/gravesham/council-tax-reduction#gravesham_council_tax_reduction_income_band: 3
+- name: gravesham_ctr_family_5_edge_4_below
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.local_authority_is_gravesham: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_maximum_eligible_liability_for_year: 1000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_weekly_income: 569.99
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_family_category: 5
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_support: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_related_esa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_based_jsa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-gravesham:policies/gravesham/council-tax-reduction#gravesham_council_tax_reduction_income_band: 3
+- name: gravesham_ctr_family_5_edge_4_at
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.local_authority_is_gravesham: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_maximum_eligible_liability_for_year: 1000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_weekly_income: 570
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_family_category: 5
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_support: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_related_esa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_based_jsa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-gravesham:policies/gravesham/council-tax-reduction#gravesham_council_tax_reduction_income_band: 4
+- name: gravesham_ctr_selected_rate
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.local_authority_is_gravesham: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_maximum_eligible_liability_for_year: 1000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_weekly_income: 143.01
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_family_category: 0
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_support: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_related_esa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_based_jsa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-gravesham:policies/gravesham/council-tax-reduction#gravesham_council_tax_reduction_selected_support_rate: 0.75
+- name: gravesham_ctr_tariff_at_threshold
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.local_authority_is_gravesham: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_maximum_eligible_liability_for_year: 1000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_weekly_income: 0
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_family_category: 0
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_support: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_related_esa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_based_jsa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-gravesham:policies/gravesham/council-tax-reduction#gravesham_council_tax_reduction_tariff_income_for_year: 0
+- name: gravesham_ctr_tariff_at_6250
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.local_authority_is_gravesham: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_assessed_capital_for_year: 6250
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_maximum_eligible_liability_for_year: 1000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_weekly_income: 0
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_family_category: 0
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_support: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_related_esa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_based_jsa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-gravesham:policies/gravesham/council-tax-reduction#gravesham_council_tax_reduction_tariff_income_for_year: 52
+- name: gravesham_ctr_tariff_first_penny_over_6250
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.local_authority_is_gravesham: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_assessed_capital_for_year: 6250.01
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_maximum_eligible_liability_for_year: 1000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_weekly_income: 0
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_family_category: 0
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_support: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_related_esa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_based_jsa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-gravesham:policies/gravesham/council-tax-reduction#gravesham_council_tax_reduction_tariff_income_for_year: 104
+- name: gravesham_ctr_capital_at_limit
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.local_authority_is_gravesham: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_assessed_capital_for_year: 16000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_maximum_eligible_liability_for_year: 1000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_weekly_income: 0
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_family_category: 0
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_support: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_related_esa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_based_jsa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-gravesham:policies/gravesham/council-tax-reduction#gravesham_council_tax_reduction_capital_eligible: holds
+- name: gravesham_ctr_capital_first_penny_over
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.local_authority_is_gravesham: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_assessed_capital_for_year: 16000.01
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_maximum_eligible_liability_for_year: 1000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_weekly_income: 0
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_family_category: 0
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_support: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_related_esa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_based_jsa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-gravesham:policies/gravesham/council-tax-reduction#gravesham_council_tax_reduction_capital_eligible: not_holds
+- name: gravesham_ctr_maximum_amount
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.local_authority_is_gravesham: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_maximum_eligible_liability_for_year: 1000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_weekly_income: 0
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_family_category: 0
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_support: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_related_esa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_based_jsa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-gravesham:policies/gravesham/council-tax-reduction#gravesham_council_tax_reduction_maximum_amount_for_year: 1000
+- name: gravesham_ctr_post_tariff_assessed_income_selects_band
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.local_authority_is_gravesham: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_assessed_capital_for_year: 6250
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_maximum_eligible_liability_for_year: 1000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_weekly_income: 144.01
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_family_category: 0
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_support: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_related_esa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_based_jsa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-gravesham:policies/gravesham/council-tax-reduction#gravesham_council_tax_reduction_income_band: 1
+- name: gravesham_ctr_non_dependant_deduction
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.local_authority_is_gravesham: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_maximum_eligible_liability_for_year: 1000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_weekly_income: 143.01
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_family_category: 0
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_support: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_related_esa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_based_jsa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_non_dependant_deductions_for_year: 20
+  output:
+    uk-gravesham:policies/gravesham/council-tax-reduction#gravesham_council_tax_reduction_annual_amount: 730
+- name: gravesham_ctr_non_dependant_zero_floor
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.local_authority_is_gravesham: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_applicant_is_in_working_age_class: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_maximum_eligible_liability_for_year: 1000
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_weekly_income: 143.01
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_family_category: 0
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_support: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_related_esa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_receives_income_based_jsa: false
+    uk-gravesham:policies/gravesham/council-tax-reduction#input.gravesham_council_tax_reduction_non_dependant_deductions_for_year: 800
+  output:
+    uk-gravesham:policies/gravesham/council-tax-reduction#gravesham_council_tax_reduction_annual_amount: 0
