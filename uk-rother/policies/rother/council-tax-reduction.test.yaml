@@ -1,0 +1,9 @@
+- name: rother_ctr_full_maximum_award
+  period:
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-rother:policies/rother/council-tax-reduction#input.rother_council_tax_reduction_annual_eligible_liability: 1000
+  output:
+    uk-rother:policies/rother/council-tax-reduction#rother_council_tax_reduction_annual_amount: 1000
