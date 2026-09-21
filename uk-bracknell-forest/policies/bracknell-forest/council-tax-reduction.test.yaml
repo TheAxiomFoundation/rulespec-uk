@@ -1,0 +1,528 @@
+- name: bracknell_ctr_printed_parameters
+  period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
+  input: {}
+  output:
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#bracknell_forest_council_tax_reduction_tariff_income_threshold: 6000
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#bracknell_forest_council_tax_reduction_tariff_income_step: 250
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#bracknell_forest_council_tax_reduction_tariff_income_weekly_amount_per_step: 1
+- name: bracknell_ctr_support_rate_index_0
+  period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
+  input:
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.local_authority_is_bracknell_forest: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.would_claim_council_tax_reduction: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_assessed_capital_weekly: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_eligible_liability_weekly: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_class_code: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_is_class_d: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_is_class_e: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_assessed_weekly_income: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_non_dependant_band: 0
+  output:
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#bracknell_forest_council_tax_reduction_support_rate_by_class: 0.80
+- name: bracknell_ctr_support_rate_index_1
+  period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
+  input:
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.local_authority_is_bracknell_forest: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.would_claim_council_tax_reduction: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_assessed_capital_weekly: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_eligible_liability_weekly: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_class_code: 1
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_is_class_d: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_is_class_e: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_assessed_weekly_income: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_non_dependant_band: 1
+  output:
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#bracknell_forest_council_tax_reduction_support_rate_by_class: 0.75
+- name: bracknell_ctr_support_rate_index_2
+  period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
+  input:
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.local_authority_is_bracknell_forest: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.would_claim_council_tax_reduction: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_assessed_capital_weekly: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_eligible_liability_weekly: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_class_code: 2
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_is_class_d: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_is_class_e: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_assessed_weekly_income: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_non_dependant_band: 2
+  output:
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#bracknell_forest_council_tax_reduction_support_rate_by_class: 0.75
+- name: bracknell_ctr_support_rate_index_3
+  period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
+  input:
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.local_authority_is_bracknell_forest: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.would_claim_council_tax_reduction: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_assessed_capital_weekly: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_eligible_liability_weekly: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_class_code: 3
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_is_class_d: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_is_class_e: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_assessed_weekly_income: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_non_dependant_band: 3
+  output:
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#bracknell_forest_council_tax_reduction_support_rate_by_class: 0.70
+- name: bracknell_ctr_support_rate_index_4
+  period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
+  input:
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.local_authority_is_bracknell_forest: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.would_claim_council_tax_reduction: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_assessed_capital_weekly: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_eligible_liability_weekly: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_class_code: 4
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_is_class_d: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_is_class_e: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_assessed_weekly_income: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_non_dependant_band: 4
+  output:
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#bracknell_forest_council_tax_reduction_support_rate_by_class: 0.60
+- name: bracknell_ctr_support_rate_index_5
+  period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
+  input:
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.local_authority_is_bracknell_forest: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.would_claim_council_tax_reduction: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_assessed_capital_weekly: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_eligible_liability_weekly: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_class_code: 5
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_is_class_d: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_is_class_e: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_assessed_weekly_income: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_non_dependant_band: 5
+  output:
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#bracknell_forest_council_tax_reduction_support_rate_by_class: 0.50
+- name: bracknell_ctr_support_rate_index_6
+  period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
+  input:
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.local_authority_is_bracknell_forest: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.would_claim_council_tax_reduction: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_assessed_capital_weekly: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_eligible_liability_weekly: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_class_code: 6
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_is_class_d: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_is_class_e: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_assessed_weekly_income: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_non_dependant_band: 6
+  output:
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#bracknell_forest_council_tax_reduction_support_rate_by_class: 0.40
+- name: bracknell_ctr_support_rate_index_7
+  period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
+  input:
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.local_authority_is_bracknell_forest: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.would_claim_council_tax_reduction: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_assessed_capital_weekly: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_eligible_liability_weekly: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_class_code: 7
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_is_class_d: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_is_class_e: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_assessed_weekly_income: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_non_dependant_band: 7
+  output:
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#bracknell_forest_council_tax_reduction_support_rate_by_class: 0.30
+- name: bracknell_ctr_support_rate_index_8
+  period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
+  input:
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.local_authority_is_bracknell_forest: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.would_claim_council_tax_reduction: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_assessed_capital_weekly: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_eligible_liability_weekly: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_class_code: 8
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_is_class_d: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_is_class_e: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_assessed_weekly_income: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_non_dependant_band: 8
+  output:
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#bracknell_forest_council_tax_reduction_support_rate_by_class: 0.20
+- name: bracknell_ctr_non_dependant_index_0
+  period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
+  input:
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.local_authority_is_bracknell_forest: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.would_claim_council_tax_reduction: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_assessed_capital_weekly: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_eligible_liability_weekly: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_class_code: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_is_class_d: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_is_class_e: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_assessed_weekly_income: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_non_dependant_band: 0
+  output:
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#bracknell_forest_council_tax_reduction_non_dependant_deduction_by_band: 0
+- name: bracknell_ctr_non_dependant_index_1
+  period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
+  input:
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.local_authority_is_bracknell_forest: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.would_claim_council_tax_reduction: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_assessed_capital_weekly: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_eligible_liability_weekly: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_class_code: 1
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_is_class_d: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_is_class_e: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_assessed_weekly_income: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_non_dependant_band: 1
+  output:
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#bracknell_forest_council_tax_reduction_non_dependant_deduction_by_band: 5.20
+- name: bracknell_ctr_non_dependant_index_2
+  period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
+  input:
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.local_authority_is_bracknell_forest: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.would_claim_council_tax_reduction: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_assessed_capital_weekly: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_eligible_liability_weekly: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_class_code: 2
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_is_class_d: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_is_class_e: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_assessed_weekly_income: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_non_dependant_band: 2
+  output:
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#bracknell_forest_council_tax_reduction_non_dependant_deduction_by_band: 10.60
+- name: bracknell_ctr_non_dependant_index_3
+  period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
+  input:
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.local_authority_is_bracknell_forest: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.would_claim_council_tax_reduction: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_assessed_capital_weekly: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_eligible_liability_weekly: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_class_code: 3
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_is_class_d: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_is_class_e: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_assessed_weekly_income: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_non_dependant_band: 3
+  output:
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#bracknell_forest_council_tax_reduction_non_dependant_deduction_by_band: 13.30
+- name: bracknell_ctr_non_dependant_index_4
+  period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
+  input:
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.local_authority_is_bracknell_forest: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.would_claim_council_tax_reduction: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_assessed_capital_weekly: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_eligible_liability_weekly: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_class_code: 4
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_is_class_d: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_is_class_e: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_assessed_weekly_income: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_non_dependant_band: 4
+  output:
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#bracknell_forest_council_tax_reduction_non_dependant_deduction_by_band: 15.95
+
+
+- name: bracknell_ctr_f_i_upper
+  period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
+  input:
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.local_authority_is_bracknell_forest: true
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_assessed_capital_weekly: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_eligible_liability_weekly: 100
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_class_code: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_is_class_d: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_is_class_e: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_assessed_weekly_income: 80
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_non_dependant_band: 0
+  output:
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#bracknell_forest_council_tax_reduction_selected_support_rate: 0.75
+- name: bracknell_ctr_f_ii_lower
+  period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
+  input:
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.local_authority_is_bracknell_forest: true
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_assessed_capital_weekly: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_eligible_liability_weekly: 100
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_class_code: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_is_class_d: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_is_class_e: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_assessed_weekly_income: 80.01
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_non_dependant_band: 0
+  output:
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#bracknell_forest_council_tax_reduction_selected_support_rate: 0.70
+- name: bracknell_ctr_f_ii_upper
+  period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
+  input:
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.local_authority_is_bracknell_forest: true
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_assessed_capital_weekly: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_eligible_liability_weekly: 100
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_class_code: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_is_class_d: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_is_class_e: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_assessed_weekly_income: 140
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_non_dependant_band: 0
+  output:
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#bracknell_forest_council_tax_reduction_selected_support_rate: 0.70
+- name: bracknell_ctr_f_iii_lower
+  period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
+  input:
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.local_authority_is_bracknell_forest: true
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_assessed_capital_weekly: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_eligible_liability_weekly: 100
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_class_code: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_is_class_d: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_is_class_e: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_assessed_weekly_income: 140.01
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_non_dependant_band: 0
+  output:
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#bracknell_forest_council_tax_reduction_selected_support_rate: 0.60
+- name: bracknell_ctr_f_iii_upper
+  period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
+  input:
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.local_authority_is_bracknell_forest: true
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_assessed_capital_weekly: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_eligible_liability_weekly: 100
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_class_code: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_is_class_d: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_is_class_e: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_assessed_weekly_income: 200
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_non_dependant_band: 0
+  output:
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#bracknell_forest_council_tax_reduction_selected_support_rate: 0.60
+- name: bracknell_ctr_f_iv_lower
+  period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
+  input:
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.local_authority_is_bracknell_forest: true
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_assessed_capital_weekly: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_eligible_liability_weekly: 100
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_class_code: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_is_class_d: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_is_class_e: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_assessed_weekly_income: 200.01
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_non_dependant_band: 0
+  output:
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#bracknell_forest_council_tax_reduction_selected_support_rate: 0.50
+- name: bracknell_ctr_f_iv_upper
+  period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
+  input:
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.local_authority_is_bracknell_forest: true
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_assessed_capital_weekly: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_eligible_liability_weekly: 100
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_class_code: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_is_class_d: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_is_class_e: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_assessed_weekly_income: 260
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_non_dependant_band: 0
+  output:
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#bracknell_forest_council_tax_reduction_selected_support_rate: 0.50
+- name: bracknell_ctr_f_v_lower
+  period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
+  input:
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.local_authority_is_bracknell_forest: true
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_assessed_capital_weekly: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_eligible_liability_weekly: 100
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_class_code: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_is_class_d: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_is_class_e: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_assessed_weekly_income: 260.01
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_non_dependant_band: 0
+  output:
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#bracknell_forest_council_tax_reduction_selected_support_rate: 0.40
+- name: bracknell_ctr_f_v_upper
+  period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
+  input:
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.local_authority_is_bracknell_forest: true
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_assessed_capital_weekly: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_eligible_liability_weekly: 100
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_class_code: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_is_class_d: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_is_class_e: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_assessed_weekly_income: 320
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_non_dependant_band: 0
+  output:
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#bracknell_forest_council_tax_reduction_selected_support_rate: 0.40
+- name: bracknell_ctr_f_vi_lower
+  period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
+  input:
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.local_authority_is_bracknell_forest: true
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_assessed_capital_weekly: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_eligible_liability_weekly: 100
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_class_code: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_is_class_d: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_is_class_e: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_assessed_weekly_income: 320.01
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_non_dependant_band: 0
+  output:
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#bracknell_forest_council_tax_reduction_selected_support_rate: 0.30
+- name: bracknell_ctr_f_vi_upper
+  period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
+  input:
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.local_authority_is_bracknell_forest: true
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_assessed_capital_weekly: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_eligible_liability_weekly: 100
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_class_code: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_is_class_d: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_is_class_e: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_assessed_weekly_income: 380
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_non_dependant_band: 0
+  output:
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#bracknell_forest_council_tax_reduction_selected_support_rate: 0.30
+- name: bracknell_ctr_f_vii_lower
+  period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
+  input:
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.local_authority_is_bracknell_forest: true
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_assessed_capital_weekly: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_eligible_liability_weekly: 100
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_class_code: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_is_class_d: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_is_class_e: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_assessed_weekly_income: 380.01
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_non_dependant_band: 0
+  output:
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#bracknell_forest_council_tax_reduction_selected_support_rate: 0.20
+- name: bracknell_ctr_f_vii_upper
+  period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
+  input:
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.local_authority_is_bracknell_forest: true
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_assessed_capital_weekly: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_eligible_liability_weekly: 100
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_class_code: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_is_class_d: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_is_class_e: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_assessed_weekly_income: 440
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_non_dependant_band: 0
+  output:
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#bracknell_forest_council_tax_reduction_selected_support_rate: 0.20
+- name: bracknell_ctr_f_viii_lower_zero_award
+  period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
+  input:
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.local_authority_is_bracknell_forest: true
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_assessed_capital_weekly: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_eligible_liability_weekly: 100
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_class_code: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_is_class_d: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_is_class_e: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_assessed_weekly_income: 440.01
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_non_dependant_band: 0
+  output:
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#bracknell_forest_council_tax_reduction_selected_support_rate: 0
+- name: bracknell_ctr_tariff_no_tariff
+  period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
+  input:
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.local_authority_is_bracknell_forest: true
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_assessed_capital_weekly: 6000
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_eligible_liability_weekly: 100
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_class_code: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_is_class_d: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_is_class_e: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_assessed_weekly_income: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_non_dependant_band: 0
+  output:
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#bracknell_forest_council_tax_reduction_tariff_income_weekly: 0
+- name: bracknell_ctr_tariff_first_partial_step
+  period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
+  input:
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.local_authority_is_bracknell_forest: true
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_assessed_capital_weekly: 6000.01
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_eligible_liability_weekly: 100
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_class_code: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_is_class_d: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_is_class_e: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_assessed_weekly_income: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_non_dependant_band: 0
+  output:
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#bracknell_forest_council_tax_reduction_tariff_income_weekly: 1
+- name: bracknell_ctr_tariff_complete_first_step
+  period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
+  input:
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.local_authority_is_bracknell_forest: true
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_assessed_capital_weekly: 6250
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_eligible_liability_weekly: 100
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_class_code: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_is_class_d: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_is_class_e: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_assessed_weekly_income: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_non_dependant_band: 0
+  output:
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#bracknell_forest_council_tax_reduction_tariff_income_weekly: 1
+- name: bracknell_ctr_tariff_second_step
+  period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
+  input:
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.local_authority_is_bracknell_forest: true
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_assessed_capital_weekly: 6250.01
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_eligible_liability_weekly: 100
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_class_code: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_is_class_d: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_is_class_e: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_assessed_weekly_income: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_non_dependant_band: 0
+  output:
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#bracknell_forest_council_tax_reduction_tariff_income_weekly: 2
+- name: bracknell_ctr_capital_limit
+  period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
+  input:
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.local_authority_is_bracknell_forest: true
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_assessed_capital_weekly: 16000
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_eligible_liability_weekly: 100
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_class_code: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_is_class_d: true
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_is_class_e: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_assessed_weekly_income: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_non_dependant_band: 0
+  output:
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#bracknell_forest_council_tax_reduction_capital_eligible: holds
+- name: bracknell_ctr_capital_cliff
+  period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
+  input:
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.local_authority_is_bracknell_forest: true
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_assessed_capital_weekly: 16000.01
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_eligible_liability_weekly: 100
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_class_code: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_is_class_d: true
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_is_class_e: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_assessed_weekly_income: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_non_dependant_band: 0
+  output:
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#bracknell_forest_council_tax_reduction_capital_eligible: not_holds
+- name: bracknell_ctr_minimum_floor_below
+  period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
+  input:
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.local_authority_is_bracknell_forest: true
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_assessed_capital_weekly: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_eligible_liability_weekly: 0.6125
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_class_code: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_is_class_d: true
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_is_class_e: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_assessed_weekly_income: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_non_dependant_band: 0
+  output:
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#bracknell_forest_council_tax_reduction_weekly_amount: 0
+- name: bracknell_ctr_minimum_floor_met
+  period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
+  input:
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.local_authority_is_bracknell_forest: true
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_assessed_capital_weekly: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_eligible_liability_weekly: 0.625
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_class_code: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_is_class_d: true
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_is_class_e: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_assessed_weekly_income: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_non_dependant_band: 0
+  output:
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#bracknell_forest_council_tax_reduction_weekly_amount: 0.5
+
+- name: bracknell_ctr_pre_floor_non_dependant_deduction
+  period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
+  input:
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.local_authority_is_bracknell_forest: true
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_assessed_capital_weekly: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_eligible_liability_weekly: 100
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_class_code: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_is_class_d: true
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_is_class_e: false
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_assessed_weekly_income: 0
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#input.bracknell_forest_council_tax_reduction_non_dependant_band: 4
+  output:
+    uk-bracknell-forest:policies/bracknell-forest/council-tax-reduction#bracknell_forest_council_tax_reduction_pre_floor_weekly_amount: 64.05
