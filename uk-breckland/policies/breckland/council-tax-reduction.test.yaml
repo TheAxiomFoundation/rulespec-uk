@@ -1,0 +1,168 @@
+- name: breckland_ctr_ordinary_maximum_rate
+  period: &period {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: &class_d
+    uk-breckland:policies/breckland/council-tax-reduction#input.breckland_council_tax_reduction_applicant_receives_war_pension: false
+    uk-breckland:policies/breckland/council-tax-reduction#input.breckland_council_tax_reduction_assessed_capital_for_year: 0
+    uk-breckland:policies/breckland/council-tax-reduction#input.breckland_council_tax_reduction_assessed_income_for_year: 9999
+    uk-breckland:policies/breckland/council-tax-reduction#input.breckland_council_tax_reduction_applicable_amount_for_year: 10000
+    uk-breckland:policies/breckland/council-tax-reduction#input.breckland_council_tax_reduction_eligible_liability_for_year: 1000
+    uk-breckland:policies/breckland/council-tax-reduction#input.breckland_council_tax_reduction_has_chargeable_non_dependant: false
+  output: {uk-breckland:policies/breckland/council-tax-reduction#breckland_council_tax_reduction_ordinary_maximum_support_rate: 0.915}
+- name: breckland_ctr_war_pension_maximum_rate
+  period: *period
+  input: *class_d
+  output: {uk-breckland:policies/breckland/council-tax-reduction#breckland_council_tax_reduction_war_pension_maximum_support_rate: 1}
+- name: breckland_ctr_taper_whole_percentage_points
+  period: *period
+  input: *class_d
+  output: {uk-breckland:policies/breckland/council-tax-reduction#breckland_council_tax_reduction_taper_whole_percentage_points: 2}
+- name: breckland_ctr_taper_fraction_numerator
+  period: *period
+  input: *class_d
+  output: {uk-breckland:policies/breckland/council-tax-reduction#breckland_council_tax_reduction_taper_fraction_numerator: 6}
+- name: breckland_ctr_taper_fraction_denominator
+  period: *period
+  input: *class_d
+  output: {uk-breckland:policies/breckland/council-tax-reduction#breckland_council_tax_reduction_taper_fraction_denominator: 7}
+- name: breckland_ctr_per_cent_unit
+  period: *period
+  input: *class_d
+  output: {uk-breckland:policies/breckland/council-tax-reduction#breckland_council_tax_reduction_per_cent_unit: 0.01}
+- name: breckland_ctr_weekly_taper_rate
+  period: *period
+  input: *class_d
+  output: {uk-breckland:policies/breckland/council-tax-reduction#breckland_council_tax_reduction_weekly_taper_rate: 0.2}
+- name: breckland_ctr_capital_limit
+  period: *period
+  input: *class_d
+  output: {uk-breckland:policies/breckland/council-tax-reduction#breckland_council_tax_reduction_capital_limit: 10000}
+- name: breckland_ctr_weeks_per_year
+  period: *period
+  input: *class_d
+  output: {uk-breckland:policies/breckland/council-tax-reduction#breckland_council_tax_reduction_weeks_per_year: 52}
+- name: breckland_ctr_non_dependant_index_zero
+  period: *period
+  input:
+    <<: *class_d
+    uk-breckland:policies/breckland/council-tax-reduction#input.breckland_council_tax_reduction_non_dependant_band: 0
+  output: {uk-breckland:policies/breckland/council-tax-reduction#breckland_council_tax_reduction_non_dependant_weekly_deduction_by_band: 0}
+- name: breckland_ctr_non_dependant_index_chargeable
+  period: *period
+  input:
+    <<: *class_d
+    uk-breckland:policies/breckland/council-tax-reduction#input.breckland_council_tax_reduction_non_dependant_band: 1
+  output: {uk-breckland:policies/breckland/council-tax-reduction#breckland_council_tax_reduction_non_dependant_weekly_deduction_by_band: 7.40}
+- name: breckland_ctr_chargeable_inputs
+  period: *period
+  input: &chargeable_e
+    uk-breckland:policies/breckland/council-tax-reduction#input.breckland_council_tax_reduction_applicant_receives_war_pension: false
+    uk-breckland:policies/breckland/council-tax-reduction#input.breckland_council_tax_reduction_assessed_capital_for_year: 0
+    uk-breckland:policies/breckland/council-tax-reduction#input.breckland_council_tax_reduction_assessed_income_for_year: 11000
+    uk-breckland:policies/breckland/council-tax-reduction#input.breckland_council_tax_reduction_applicable_amount_for_year: 10000
+    uk-breckland:policies/breckland/council-tax-reduction#input.breckland_council_tax_reduction_eligible_liability_for_year: 1000
+    uk-breckland:policies/breckland/council-tax-reduction#input.breckland_council_tax_reduction_has_chargeable_non_dependant: true
+  output: {uk-breckland:policies/breckland/council-tax-reduction#breckland_council_tax_reduction_income_greater_than_applicable_amount: holds}
+- name: breckland_ctr_war_pension_selected_rate
+  period: *period
+  input: &war
+    uk-breckland:policies/breckland/council-tax-reduction#input.breckland_council_tax_reduction_applicant_receives_war_pension: true
+    uk-breckland:policies/breckland/council-tax-reduction#input.breckland_council_tax_reduction_assessed_capital_for_year: 0
+    uk-breckland:policies/breckland/council-tax-reduction#input.breckland_council_tax_reduction_assessed_income_for_year: 9999
+    uk-breckland:policies/breckland/council-tax-reduction#input.breckland_council_tax_reduction_applicable_amount_for_year: 10000
+    uk-breckland:policies/breckland/council-tax-reduction#input.breckland_council_tax_reduction_eligible_liability_for_year: 1000
+    uk-breckland:policies/breckland/council-tax-reduction#input.breckland_council_tax_reduction_has_chargeable_non_dependant: false
+  output: {uk-breckland:policies/breckland/council-tax-reduction#breckland_council_tax_reduction_selected_maximum_support_rate: 1}
+- name: breckland_ctr_war_pension_award
+  period: *period
+  input: *war
+  output: {uk-breckland:policies/breckland/council-tax-reduction#breckland_council_tax_reduction_working_age_annual_amount: 1000}
+- name: breckland_ctr_capital_at_limit_eligible
+  period: *period
+  input: &capital_limit
+    uk-breckland:policies/breckland/council-tax-reduction#input.breckland_council_tax_reduction_applicant_receives_war_pension: false
+    uk-breckland:policies/breckland/council-tax-reduction#input.breckland_council_tax_reduction_assessed_capital_for_year: 10000
+    uk-breckland:policies/breckland/council-tax-reduction#input.breckland_council_tax_reduction_assessed_income_for_year: 9999
+    uk-breckland:policies/breckland/council-tax-reduction#input.breckland_council_tax_reduction_applicable_amount_for_year: 10000
+    uk-breckland:policies/breckland/council-tax-reduction#input.breckland_council_tax_reduction_eligible_liability_for_year: 1000
+    uk-breckland:policies/breckland/council-tax-reduction#input.breckland_council_tax_reduction_has_chargeable_non_dependant: false
+  output: {uk-breckland:policies/breckland/council-tax-reduction#breckland_council_tax_reduction_capital_eligible: holds}
+- name: breckland_ctr_capital_first_penny_over_limit_ineligible
+  period: *period
+  input: &capital_over
+    uk-breckland:policies/breckland/council-tax-reduction#input.breckland_council_tax_reduction_applicant_receives_war_pension: false
+    uk-breckland:policies/breckland/council-tax-reduction#input.breckland_council_tax_reduction_assessed_capital_for_year: 10000.01
+    uk-breckland:policies/breckland/council-tax-reduction#input.breckland_council_tax_reduction_assessed_income_for_year: 9999
+    uk-breckland:policies/breckland/council-tax-reduction#input.breckland_council_tax_reduction_applicable_amount_for_year: 10000
+    uk-breckland:policies/breckland/council-tax-reduction#input.breckland_council_tax_reduction_eligible_liability_for_year: 1000
+    uk-breckland:policies/breckland/council-tax-reduction#input.breckland_council_tax_reduction_has_chargeable_non_dependant: false
+  output: {uk-breckland:policies/breckland/council-tax-reduction#breckland_council_tax_reduction_capital_eligible: not_holds}
+- name: breckland_ctr_capital_first_penny_over_limit_award_zero
+  period: *period
+  input: *capital_over
+  output: {uk-breckland:policies/breckland/council-tax-reduction#breckland_council_tax_reduction_working_age_annual_amount: 0}
+- name: breckland_ctr_no_chargeable_non_dependant_band
+  period: *period
+  input: *class_d
+  output: {uk-breckland:policies/breckland/council-tax-reduction#breckland_council_tax_reduction_non_dependant_band: 0}
+- name: breckland_ctr_chargeable_non_dependant_band
+  period: *period
+  input: *chargeable_e
+  output: {uk-breckland:policies/breckland/council-tax-reduction#breckland_council_tax_reduction_non_dependant_band: 1}
+- name: breckland_ctr_no_chargeable_non_dependant_deduction
+  period: *period
+  input: *class_d
+  output: {uk-breckland:policies/breckland/council-tax-reduction#breckland_council_tax_reduction_annual_non_dependant_deduction: 0}
+- name: breckland_ctr_chargeable_non_dependant_deduction
+  period: *period
+  input: *chargeable_e
+  output: {uk-breckland:policies/breckland/council-tax-reduction#breckland_council_tax_reduction_annual_non_dependant_deduction: 384.8}
+- name: breckland_ctr_class_d_immediately_below_equality
+  period: *period
+  input: *class_d
+  output: {uk-breckland:policies/breckland/council-tax-reduction#breckland_council_tax_reduction_income_less_than_applicable_amount: holds}
+- name: breckland_ctr_class_d_award
+  period: *period
+  input: *class_d
+  output: {uk-breckland:policies/breckland/council-tax-reduction#breckland_council_tax_reduction_working_age_annual_amount: 915}
+- name: breckland_ctr_equality_drafting_gap_award_zero
+  period: *period
+  input: &equality
+    uk-breckland:policies/breckland/council-tax-reduction#input.breckland_council_tax_reduction_applicant_receives_war_pension: false
+    uk-breckland:policies/breckland/council-tax-reduction#input.breckland_council_tax_reduction_assessed_capital_for_year: 0
+    uk-breckland:policies/breckland/council-tax-reduction#input.breckland_council_tax_reduction_assessed_income_for_year: 10000
+    uk-breckland:policies/breckland/council-tax-reduction#input.breckland_council_tax_reduction_applicable_amount_for_year: 10000
+    uk-breckland:policies/breckland/council-tax-reduction#input.breckland_council_tax_reduction_eligible_liability_for_year: 1000
+    uk-breckland:policies/breckland/council-tax-reduction#input.breckland_council_tax_reduction_has_chargeable_non_dependant: false
+  output: {uk-breckland:policies/breckland/council-tax-reduction#breckland_council_tax_reduction_working_age_annual_amount: 0}
+- name: breckland_ctr_class_e_immediately_above_equality
+  period: *period
+  input: &class_e
+    uk-breckland:policies/breckland/council-tax-reduction#input.breckland_council_tax_reduction_applicant_receives_war_pension: false
+    uk-breckland:policies/breckland/council-tax-reduction#input.breckland_council_tax_reduction_assessed_capital_for_year: 0
+    uk-breckland:policies/breckland/council-tax-reduction#input.breckland_council_tax_reduction_assessed_income_for_year: 10001
+    uk-breckland:policies/breckland/council-tax-reduction#input.breckland_council_tax_reduction_applicable_amount_for_year: 10000
+    uk-breckland:policies/breckland/council-tax-reduction#input.breckland_council_tax_reduction_eligible_liability_for_year: 1000
+    uk-breckland:policies/breckland/council-tax-reduction#input.breckland_council_tax_reduction_has_chargeable_non_dependant: false
+  output: {uk-breckland:policies/breckland/council-tax-reduction#breckland_council_tax_reduction_income_greater_than_applicable_amount: holds}
+- name: breckland_ctr_class_e_excess_income
+  period: *period
+  input: *chargeable_e
+  output: {uk-breckland:policies/breckland/council-tax-reduction#breckland_council_tax_reduction_excess_income_for_year: 1000}
+- name: breckland_ctr_class_e_taper_deduction
+  period: *period
+  input: *chargeable_e
+  output: {uk-breckland:policies/breckland/council-tax-reduction#breckland_council_tax_reduction_income_taper_deduction_for_year: 200}
+- name: breckland_ctr_class_e_award_after_taper_and_non_dependant_deduction
+  period: *period
+  input: *chargeable_e
+  output: {uk-breckland:policies/breckland/council-tax-reduction#breckland_council_tax_reduction_working_age_annual_amount: 330.2}
+- name: breckland_ctr_class_e_taper_exhausts_award
+  period: *period
+  input:
+    uk-breckland:policies/breckland/council-tax-reduction#input.breckland_council_tax_reduction_applicant_receives_war_pension: false
+    uk-breckland:policies/breckland/council-tax-reduction#input.breckland_council_tax_reduction_assessed_capital_for_year: 0
+    uk-breckland:policies/breckland/council-tax-reduction#input.breckland_council_tax_reduction_assessed_income_for_year: 14575
+    uk-breckland:policies/breckland/council-tax-reduction#input.breckland_council_tax_reduction_applicable_amount_for_year: 10000
+    uk-breckland:policies/breckland/council-tax-reduction#input.breckland_council_tax_reduction_eligible_liability_for_year: 1000
+    uk-breckland:policies/breckland/council-tax-reduction#input.breckland_council_tax_reduction_has_chargeable_non_dependant: false
+  output: {uk-breckland:policies/breckland/council-tax-reduction#breckland_council_tax_reduction_working_age_annual_amount: 0}

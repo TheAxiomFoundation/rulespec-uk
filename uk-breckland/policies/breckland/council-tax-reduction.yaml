@@ -1,0 +1,191 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk-breckland/manual/council-tax-reduction-scheme-2026-2027/page-49
+    # upstream_source_check:
+    #   status: delegated_scheme
+    #   checked_paths: [uk/statutes/ukpga/1992/14/13A, uk/regulations/uksi/2012/2885, uk/regulations/uksi/2012/2886]
+    #   rationale: Section 13A delegates the working-age scheme to Breckland Council, so the adopted scheme document is the operative legal source for its locally set working-age values.
+  summary: |-
+    Breckland's 2026-27 working-age scheme gives non-pensioners a daily maximum of 91.5 percent of eligible liability, or 100 percent for a war-pension recipient. Class D is strictly below the applicable amount and Class E strictly above it; the drafting therefore leaves equality outside those classes. Class E deducts the printed 2 6/7 percent weekly excess-income amount. Capital above £10,000 excludes the claimant. Paragraph 73 says the non-pensioner tariff-income rule is no longer used, so no tariff threshold or step is invented. The flat £7.40 weekly non-dependant deduction is included. Pension-age and alternative/second-adult calculations are out of scope.
+  deferred_outputs:
+    - output: uk-breckland:policies/breckland/council-tax-reduction/paragraphs-25-to-28-and-schedules-2-to-3#applicable_amount_for_week
+      reason: Household allowances, premiums, children, and Universal Credit applicable-amount schedules are outside this working-age award surface.
+    - output: uk-breckland:policies/breckland/council-tax-reduction/part-10-and-schedules-5-to-10#assessed_income_and_capital
+      reason: Detailed income assessment, disregards, attribution, and capital valuation are outside this award surface.
+    - output: uk-breckland:policies/breckland/council-tax-reduction/paragraph-31#non_dependant_exemption_and_apportionment
+      reason: This module consumes the household's chargeable non-dependant count; exemption and joint-liability apportionment classification remain future outputs.
+    - output: uk-breckland:policies/breckland/council-tax-reduction/paragraph-32-and-schedule-4#alternative_maximum_council_tax_reduction
+      reason: The pension-age alternative/second-adult calculation is outside the working-age main award surface.
+rules:
+  - name: breckland_council_tax_reduction_ordinary_maximum_support_rate
+    kind: parameter
+    dtype: Rate
+    period: Year
+    source: Breckland Council Tax Reduction Scheme 2026/27 paragraph 30(1)
+    metadata: {proof: {atoms: [{path: "versions[0].formula", kind: amount, source: {corpus_citation_path: uk-breckland/manual/council-tax-reduction-scheme-2026-2027/page-43, excerpt: "a person's maximum council tax reduction amount in respect of a day is 91.5 per cent"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '0.915'}]
+
+  - name: breckland_council_tax_reduction_war_pension_maximum_support_rate
+    kind: parameter
+    dtype: Rate
+    period: Year
+    source: Breckland Council Tax Reduction Scheme 2026/27 paragraph 29(1)
+    metadata: {proof: {atoms: [{path: "versions[0].formula", kind: amount, source: {corpus_citation_path: uk-breckland/manual/council-tax-reduction-scheme-2026-2027/page-43, excerpt: "a person's maximum council tax reduction amount in respect of a day is 100 per cent"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '1'}]
+
+  - name: breckland_council_tax_reduction_taper_whole_percentage_points
+    kind: parameter
+    dtype: Number
+    period: Year
+    source: Breckland Council Tax Reduction Scheme 2026/27 paragraph 17(f)(ii)
+    metadata: {proof: {atoms: [{path: "versions[0].formula", kind: amount, source: {corpus_citation_path: uk-breckland/manual/council-tax-reduction-scheme-2026-2027/page-29, excerpt: "amount B is 2 6/7 per cent of the difference between his income for the relevant week and his applicable amount"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '2'}]
+
+  - name: breckland_council_tax_reduction_taper_fraction_numerator
+    kind: parameter
+    dtype: Number
+    period: Year
+    source: Breckland Council Tax Reduction Scheme 2026/27 paragraph 17(f)(ii)
+    metadata: {proof: {atoms: [{path: "versions[0].formula", kind: amount, source: {corpus_citation_path: uk-breckland/manual/council-tax-reduction-scheme-2026-2027/page-29, excerpt: "amount B is 2 6/7 per cent of the difference between his income for the relevant week and his applicable amount"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '6'}]
+
+  - name: breckland_council_tax_reduction_taper_fraction_denominator
+    kind: parameter
+    dtype: Number
+    period: Year
+    source: Breckland Council Tax Reduction Scheme 2026/27 paragraph 17(f)(ii)
+    metadata: {proof: {atoms: [{path: "versions[0].formula", kind: amount, source: {corpus_citation_path: uk-breckland/manual/council-tax-reduction-scheme-2026-2027/page-29, excerpt: "amount B is 2 6/7 per cent of the difference between his income for the relevant week and his applicable amount"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '7'}]
+
+  - name: breckland_council_tax_reduction_per_cent_unit
+    kind: parameter
+    dtype: Rate
+    period: Year
+    source: Breckland Council Tax Reduction Scheme 2026/27 percentage notation
+    metadata: {proof: {atoms: [{path: "versions[0].formula", kind: amount, source: {corpus_citation_path: uk-breckland/manual/council-tax-reduction-scheme-2026-2027/page-43, excerpt: "a person's maximum council tax reduction amount in respect of a day is 100 per cent"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '0.01'}]
+
+  - name: breckland_council_tax_reduction_weekly_taper_rate
+    kind: parameter
+    dtype: Rate
+    period: Week
+    source: Breckland Council Tax Reduction Scheme 2026/27 paragraph 17(f)(ii), derived from the printed mixed percentage
+    metadata: {proof: {atoms: [{path: "versions[0].formula", kind: formula, source: {corpus_citation_path: uk-breckland/manual/council-tax-reduction-scheme-2026-2027/page-29, excerpt: "amount B is 2 6/7 per cent of the difference between his income for the relevant week and his applicable amount"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '(breckland_council_tax_reduction_taper_whole_percentage_points + breckland_council_tax_reduction_taper_fraction_numerator / breckland_council_tax_reduction_taper_fraction_denominator) * breckland_council_tax_reduction_per_cent_unit * breckland_council_tax_reduction_taper_fraction_denominator'}]
+
+  - name: breckland_council_tax_reduction_capital_limit
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Breckland Council Tax Reduction Scheme 2026/27 paragraph 23A(1)
+    metadata: {proof: {atoms: [{path: "versions[0].formula", kind: amount, source: {corpus_citation_path: uk-breckland/manual/council-tax-reduction-scheme-2026-2027/page-38, excerpt: "any person whose capital exceeds £10,000"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '10000'}]
+
+  - name: breckland_council_tax_reduction_non_dependant_weekly_deduction_by_band
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    indexed_by: breckland_council_tax_reduction_non_dependant_band
+    source: Breckland Council Tax Reduction Scheme 2026/27 paragraph 31(2)
+    metadata: {proof: {atoms: [{path: "versions[0].values", kind: parameter_table, source: {corpus_citation_path: uk-breckland/manual/council-tax-reduction-scheme-2026-2027/page-44, excerpt: "the non-dependant deductions in respect of a day referred to in paragraph 30 will be £7.40 per week from 01/04/22.", table: {header: working-age non-dependant deduction, row_key: chargeable non-dependant, column_key: weekly deduction}}}]}}
+    versions:
+      - effective_from: '2026-04-01'
+        values: {0: 0, 1: 7.40}
+
+  - name: breckland_council_tax_reduction_weeks_per_year
+    kind: parameter
+    dtype: Number
+    period: Year
+    source: Breckland Council Tax Reduction Scheme 2026/27 paragraph 19(2)(a)
+    metadata: {proof: {atoms: [{path: "versions[0].formula", kind: amount, source: {corpus_citation_path: uk-breckland/manual/council-tax-reduction-scheme-2026-2027/page-29, excerpt: "a longer period of absence from the dwelling of more than 52 weeks"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '52'}]
+
+  - name: breckland_council_tax_reduction_selected_maximum_support_rate
+    kind: derived
+    entity: Household
+    dtype: Rate
+    period: Year
+    source: Breckland Council Tax Reduction Scheme 2026/27 paragraphs 29-30
+    metadata: {proof: {atoms: [{path: "versions[0].formula", kind: condition, source: {corpus_citation_path: uk-breckland/manual/council-tax-reduction-scheme-2026-2027/page-43, excerpt: "Maximum council tax reduction amount under this scheme: pensioners and those in receipt of a war pension"}}, {path: "versions[0].formula", kind: condition, source: {corpus_citation_path: uk-breckland/manual/council-tax-reduction-scheme-2026-2027/page-43, excerpt: "Maximum council tax reduction amount under this scheme: persons who are not pensioners and not in receipt of a war pension"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 'if breckland_council_tax_reduction_applicant_receives_war_pension: breckland_council_tax_reduction_war_pension_maximum_support_rate else: breckland_council_tax_reduction_ordinary_maximum_support_rate'}]
+
+  - name: breckland_council_tax_reduction_capital_eligible
+    kind: derived
+    entity: Household
+    dtype: Judgment
+    period: Year
+    source: Breckland Council Tax Reduction Scheme 2026/27 paragraph 23A(1)
+    metadata: {proof: {atoms: [{path: "versions[0].formula", kind: condition, source: {corpus_citation_path: uk-breckland/manual/council-tax-reduction-scheme-2026-2027/page-38, excerpt: "any person whose capital exceeds £10,000"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 'breckland_council_tax_reduction_assessed_capital_for_year <= breckland_council_tax_reduction_capital_limit'}]
+
+  - name: breckland_council_tax_reduction_non_dependant_band
+    kind: derived
+    entity: Household
+    dtype: Number
+    period: Year
+    source: Breckland Council Tax Reduction Scheme 2026/27 paragraph 31(2)
+    metadata: {proof: {atoms: [{path: "versions[0].formula", kind: condition, source: {corpus_citation_path: uk-breckland/manual/council-tax-reduction-scheme-2026-2027/page-44, excerpt: "the non-dependant deductions in respect of a day referred to in paragraph 30 will be £7.40 per week from 01/04/22."}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 'if breckland_council_tax_reduction_has_chargeable_non_dependant: 1 else: 0'}]
+
+  - name: breckland_council_tax_reduction_annual_non_dependant_deduction
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Breckland Council Tax Reduction Scheme 2026/27 paragraph 31(2)
+    metadata: {proof: {atoms: [{path: "versions[0].formula", kind: formula, source: {corpus_citation_path: uk-breckland/manual/council-tax-reduction-scheme-2026-2027/page-44, excerpt: "the non-dependant deductions in respect of a day referred to in paragraph 30 will be £7.40 per week from 01/04/22."}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 'breckland_council_tax_reduction_non_dependant_weekly_deduction_by_band[breckland_council_tax_reduction_non_dependant_band] * breckland_council_tax_reduction_weeks_per_year'}]
+
+  - name: breckland_council_tax_reduction_income_less_than_applicable_amount
+    kind: derived
+    entity: Household
+    dtype: Judgment
+    period: Year
+    source: Breckland Council Tax Reduction Scheme 2026/27 paragraph 16
+    metadata: {proof: {atoms: [{path: "versions[0].formula", kind: condition, source: {corpus_citation_path: uk-breckland/manual/council-tax-reduction-scheme-2026-2027/page-28, excerpt: "whose income (if any) for the relevant week is less than his applicable amount"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 'breckland_council_tax_reduction_assessed_income_for_year < breckland_council_tax_reduction_applicable_amount_for_year'}]
+
+  - name: breckland_council_tax_reduction_income_greater_than_applicable_amount
+    kind: derived
+    entity: Household
+    dtype: Judgment
+    period: Year
+    source: Breckland Council Tax Reduction Scheme 2026/27 paragraph 17
+    metadata: {proof: {atoms: [{path: "versions[0].formula", kind: condition, source: {corpus_citation_path: uk-breckland/manual/council-tax-reduction-scheme-2026-2027/page-29, excerpt: "whose income for the relevant week is greater than his applicable amount"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 'breckland_council_tax_reduction_assessed_income_for_year > breckland_council_tax_reduction_applicable_amount_for_year'}]
+
+  - name: breckland_council_tax_reduction_excess_income_for_year
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Breckland Council Tax Reduction Scheme 2026/27 paragraph 17(f)(ii)
+    metadata: {proof: {atoms: [{path: "versions[0].formula", kind: formula, source: {corpus_citation_path: uk-breckland/manual/council-tax-reduction-scheme-2026-2027/page-29, excerpt: "the difference between his income for the relevant week and his applicable amount"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 'max(0, breckland_council_tax_reduction_assessed_income_for_year - breckland_council_tax_reduction_applicable_amount_for_year)'}]
+
+  - name: breckland_council_tax_reduction_income_taper_deduction_for_year
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Breckland Council Tax Reduction Scheme 2026/27 paragraph 17(f)(ii)
+    metadata: {proof: {atoms: [{path: "versions[0].formula", kind: formula, source: {corpus_citation_path: uk-breckland/manual/council-tax-reduction-scheme-2026-2027/page-29, excerpt: "amount B is 2 6/7 per cent of the difference between his income for the relevant week and his applicable amount"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 'breckland_council_tax_reduction_excess_income_for_year * breckland_council_tax_reduction_weekly_taper_rate'}]
+
+  - name: breckland_council_tax_reduction_working_age_annual_amount
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Breckland Council Tax Reduction Scheme 2026/27 paragraphs 30 and 33
+    metadata: {proof: {atoms: [{path: "versions[0].formula", kind: formula, source: {corpus_citation_path: uk-breckland/manual/council-tax-reduction-scheme-2026-2027/page-49, excerpt: "that amount is the amount found by deducting amount B from amount A"}}, {path: "versions[0].formula", kind: formula, source: {corpus_citation_path: uk-breckland/manual/council-tax-reduction-scheme-2026-2027/page-49, excerpt: "the amount which is the maximum council tax reduction in respect of the day in the applicant's case as prescribed in paragraph 29 and 30 of this scheme"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 'if breckland_council_tax_reduction_capital_eligible and (breckland_council_tax_reduction_income_less_than_applicable_amount or breckland_council_tax_reduction_income_greater_than_applicable_amount): max(0, breckland_council_tax_reduction_eligible_liability_for_year * breckland_council_tax_reduction_selected_maximum_support_rate - breckland_council_tax_reduction_annual_non_dependant_deduction - breckland_council_tax_reduction_income_taper_deduction_for_year) else: 0'}]
