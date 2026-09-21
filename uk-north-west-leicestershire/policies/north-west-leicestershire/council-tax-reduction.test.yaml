@@ -1,0 +1,157 @@
+---
+- name: north_west_leicestershire_ctr_parameters_and_taper
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.local_authority_is_north_west_leicestershire: true
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.north_west_leicestershire_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.north_west_leicestershire_council_tax_reduction_other_class_conditions_met: true
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.north_west_leicestershire_council_tax_reduction_assessed_capital_for_year: 0
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.north_west_leicestershire_council_tax_reduction_eligible_liability_for_year: 1000
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.north_west_leicestershire_council_tax_reduction_assessed_income_for_year: 1250
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.north_west_leicestershire_council_tax_reduction_applicable_amount_for_year: 1000
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.north_west_leicestershire_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#north_west_leicestershire_council_tax_reduction_annual_amount: '992.8571428571428571428571428'
+- name: north_west_leicestershire_ctr_capital_limit
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.local_authority_is_north_west_leicestershire: true
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.north_west_leicestershire_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.north_west_leicestershire_council_tax_reduction_other_class_conditions_met: true
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.north_west_leicestershire_council_tax_reduction_assessed_capital_for_year: 16000
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.north_west_leicestershire_council_tax_reduction_eligible_liability_for_year: 1000
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.north_west_leicestershire_council_tax_reduction_assessed_income_for_year: 0
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.north_west_leicestershire_council_tax_reduction_applicable_amount_for_year: 1000
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.north_west_leicestershire_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#north_west_leicestershire_council_tax_reduction_capital_limit: 16000
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#north_west_leicestershire_council_tax_reduction_capital_eligible: holds
+- name: north_west_leicestershire_ctr_capital_cliff_zero_award
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.local_authority_is_north_west_leicestershire: true
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.north_west_leicestershire_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.north_west_leicestershire_council_tax_reduction_other_class_conditions_met: true
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.north_west_leicestershire_council_tax_reduction_assessed_capital_for_year: 16000.01
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.north_west_leicestershire_council_tax_reduction_eligible_liability_for_year: 1000
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.north_west_leicestershire_council_tax_reduction_assessed_income_for_year: 0
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.north_west_leicestershire_council_tax_reduction_applicable_amount_for_year: 1000
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.north_west_leicestershire_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#north_west_leicestershire_council_tax_reduction_annual_amount: 0
+- name: north_west_leicestershire_ctr_tariff_first_step
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.local_authority_is_north_west_leicestershire: true
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.north_west_leicestershire_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.north_west_leicestershire_council_tax_reduction_other_class_conditions_met: true
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.north_west_leicestershire_council_tax_reduction_assessed_capital_for_year: 6250.01
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.north_west_leicestershire_council_tax_reduction_eligible_liability_for_year: 1000
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.north_west_leicestershire_council_tax_reduction_assessed_income_for_year: 0
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.north_west_leicestershire_council_tax_reduction_applicable_amount_for_year: 1000
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.north_west_leicestershire_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#north_west_leicestershire_council_tax_reduction_tariff_income_for_year: 104
+- name: north_west_leicestershire_ctr_non_dependant_bands
+  period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
+  input:
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.local_authority_is_north_west_leicestershire: true
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.north_west_leicestershire_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.north_west_leicestershire_council_tax_reduction_other_class_conditions_met: true
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.north_west_leicestershire_council_tax_reduction_assessed_capital_for_year: 0
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.north_west_leicestershire_council_tax_reduction_eligible_liability_for_year: 1000
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.north_west_leicestershire_council_tax_reduction_assessed_income_for_year: 0
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.north_west_leicestershire_council_tax_reduction_applicable_amount_for_year: 1000
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.north_west_leicestershire_council_tax_reduction_non_dependant_deductions_for_year: 0
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.north_west_leicestershire_council_tax_reduction_non_dependant_deduction_band: 4
+  output:
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#north_west_leicestershire_council_tax_reduction_non_dependant_weekly_deduction_by_band: 15.95
+- name: north_west_leicestershire_ctr_class_d_income_condition
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.local_authority_is_north_west_leicestershire: true
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.north_west_leicestershire_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.north_west_leicestershire_council_tax_reduction_other_class_conditions_met: true
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.north_west_leicestershire_council_tax_reduction_assessed_capital_for_year: 0
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.north_west_leicestershire_council_tax_reduction_eligible_liability_for_year: 1000
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.north_west_leicestershire_council_tax_reduction_assessed_income_for_year: 0
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.north_west_leicestershire_council_tax_reduction_applicable_amount_for_year: 1000
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.north_west_leicestershire_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#north_west_leicestershire_council_tax_reduction_class_d_income_condition: holds
+- name: north_west_leicestershire_ctr_class_e_income_condition
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.local_authority_is_north_west_leicestershire: true
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.north_west_leicestershire_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.north_west_leicestershire_council_tax_reduction_other_class_conditions_met: true
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.north_west_leicestershire_council_tax_reduction_assessed_capital_for_year: 0
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.north_west_leicestershire_council_tax_reduction_eligible_liability_for_year: 1000
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.north_west_leicestershire_council_tax_reduction_assessed_income_for_year: 1250
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.north_west_leicestershire_council_tax_reduction_applicable_amount_for_year: 1000
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.north_west_leicestershire_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#north_west_leicestershire_council_tax_reduction_class_e_income_condition: holds
+- name: north_west_leicestershire_ctr_excess_income
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.local_authority_is_north_west_leicestershire: true
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.north_west_leicestershire_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.north_west_leicestershire_council_tax_reduction_other_class_conditions_met: true
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.north_west_leicestershire_council_tax_reduction_assessed_capital_for_year: 0
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.north_west_leicestershire_council_tax_reduction_eligible_liability_for_year: 1000
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.north_west_leicestershire_council_tax_reduction_assessed_income_for_year: 1250
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.north_west_leicestershire_council_tax_reduction_applicable_amount_for_year: 1000
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.north_west_leicestershire_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#north_west_leicestershire_council_tax_reduction_excess_income_for_year: 250
+- name: north_west_leicestershire_ctr_taper_deduction
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.local_authority_is_north_west_leicestershire: true
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.north_west_leicestershire_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.north_west_leicestershire_council_tax_reduction_other_class_conditions_met: true
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.north_west_leicestershire_council_tax_reduction_assessed_capital_for_year: 0
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.north_west_leicestershire_council_tax_reduction_eligible_liability_for_year: 1000
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.north_west_leicestershire_council_tax_reduction_assessed_income_for_year: 1250
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.north_west_leicestershire_council_tax_reduction_applicable_amount_for_year: 1000
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.north_west_leicestershire_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#north_west_leicestershire_council_tax_reduction_income_taper_deduction_for_year: '7.14285714285714285714285715'
+- name: north_west_leicestershire_ctr_maximum_amount
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.local_authority_is_north_west_leicestershire: true
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.north_west_leicestershire_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.north_west_leicestershire_council_tax_reduction_other_class_conditions_met: true
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.north_west_leicestershire_council_tax_reduction_assessed_capital_for_year: 0
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.north_west_leicestershire_council_tax_reduction_eligible_liability_for_year: 1000
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.north_west_leicestershire_council_tax_reduction_assessed_income_for_year: 0
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.north_west_leicestershire_council_tax_reduction_applicable_amount_for_year: 1000
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.north_west_leicestershire_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#north_west_leicestershire_council_tax_reduction_maximum_amount_for_year: 1000
+- name: north_west_leicestershire_ctr_award_conditions
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.local_authority_is_north_west_leicestershire: true
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.north_west_leicestershire_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.north_west_leicestershire_council_tax_reduction_other_class_conditions_met: true
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.north_west_leicestershire_council_tax_reduction_assessed_capital_for_year: 0
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.north_west_leicestershire_council_tax_reduction_eligible_liability_for_year: 1000
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.north_west_leicestershire_council_tax_reduction_assessed_income_for_year: 0
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.north_west_leicestershire_council_tax_reduction_applicable_amount_for_year: 1000
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#input.north_west_leicestershire_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-north-west-leicestershire:policies/north-west-leicestershire/council-tax-reduction#north_west_leicestershire_council_tax_reduction_award_conditions_met: holds
