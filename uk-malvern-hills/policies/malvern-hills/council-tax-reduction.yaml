@@ -1,0 +1,162 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk-malvern-hills/manual/council-tax-reduction-scheme-2026-2027/page-73
+    # upstream_source_check:
+      # status: delegated_scheme
+      # checked_paths: [uk/statutes/ukpga/1992/14/13A, uk/regulations/uksi/2012/2885, uk/regulations/uksi/2012/2886]
+      # rationale: Section 13A delegates the working-age scheme to this authority so the adopted document is operative.
+  summary: Malvern Hills' 2026-27 working-age means-tested scheme provides 80 percent maximum support, a 2 6/7 percent excess-income taper, a £6,000 capital cliff, £10 weekly minimum reduction, and the printed non-dependant deductions. Pension-age provisions are outside scope.
+  deferred_outputs:
+    - output: uk-malvern-hills:policies/malvern-hills/council-tax-reduction/sections-12-to-14-and-schedule-1#applicable_amount
+      reason: Category-specific applicable amounts and premiums are outside this award-surface module.
+    - output: uk-malvern-hills:policies/malvern-hills/council-tax-reduction/sections-15-to-42-and-schedules-3-to-5#assessed_income_and_capital
+      reason: Income calculation, capital valuation, attribution and disregards are outside this award-surface module.
+    - output: uk-malvern-hills:policies/malvern-hills/council-tax-reduction/section-58#non_dependant_exemption_and_household_aggregation
+      reason: This module encodes the individual deduction bands and consumes the household total; exemption, couple and apportionment classifiers remain future outputs.
+rules:
+  - name: malvern_hills_council_tax_reduction_maximum_support_rate
+    kind: parameter
+    dtype: Rate
+    period: Year
+    source: Malvern Hills Council Tax Reduction Scheme 2026-27 paragraph 57.1
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-malvern-hills/manual/council-tax-reduction-scheme-2026-2027/page-71, excerpt: "shall be 80 per cent, of the amount A/B"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '0.80'}]
+  - name: malvern_hills_council_tax_reduction_per_cent_unit
+    kind: parameter
+    dtype: Rate
+    period: Year
+    source: Malvern Hills Council Tax Reduction Scheme 2026-27 percentage notation
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-malvern-hills/manual/council-tax-reduction-scheme-2026-2027/page-118, excerpt: "100 per cent. of such payments"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '0.01'}]
+  - name: malvern_hills_council_tax_reduction_taper_whole_percentage_points
+    kind: parameter
+    dtype: Number
+    period: Week
+    source: Malvern Hills Council Tax Reduction Scheme 2026-27 paragraph 59.1
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-malvern-hills/manual/council-tax-reduction-scheme-2026-2027/page-73, excerpt: "shall be 2 6/7 per cent"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '2'}]
+  - name: malvern_hills_council_tax_reduction_taper_fraction_numerator
+    kind: parameter
+    dtype: Number
+    period: Week
+    source: Malvern Hills Council Tax Reduction Scheme 2026-27 paragraph 59.1
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-malvern-hills/manual/council-tax-reduction-scheme-2026-2027/page-73, excerpt: "shall be 2 6/7 per cent"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '6'}]
+  - name: malvern_hills_council_tax_reduction_days_per_week
+    kind: parameter
+    dtype: Number
+    period: Week
+    source: Malvern Hills Council Tax Reduction Scheme 2026-27 daily conversion
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-malvern-hills/manual/council-tax-reduction-scheme-2026-2027/page-71, excerpt: "£10.00 x 1/7"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '7'}]
+  - name: malvern_hills_council_tax_reduction_weekly_taper_rate
+    kind: parameter
+    dtype: Rate
+    period: Week
+    source: Malvern Hills Council Tax Reduction Scheme 2026-27 paragraph 59.1
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-malvern-hills/manual/council-tax-reduction-scheme-2026-2027/page-73, excerpt: "shall be 2 6/7 per cent"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '(malvern_hills_council_tax_reduction_taper_whole_percentage_points + malvern_hills_council_tax_reduction_taper_fraction_numerator / malvern_hills_council_tax_reduction_days_per_week) * malvern_hills_council_tax_reduction_per_cent_unit'}]
+  - name: malvern_hills_council_tax_reduction_capital_limit
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Malvern Hills Council Tax Reduction Scheme 2026-27 paragraph 33.1
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-malvern-hills/manual/council-tax-reduction-scheme-2026-2027/page-53, excerpt: "prescribed amount is £6,000"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '6000'}]
+  - name: malvern_hills_council_tax_reduction_minimum_award_weekly
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Malvern Hills Council Tax Reduction Scheme 2026-27 paragraph 57A.1
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-malvern-hills/manual/council-tax-reduction-scheme-2026-2027/page-71, excerpt: "shall be £10.00 x 1/7"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '10.00'}]
+  - name: malvern_hills_council_tax_reduction_weeks_per_year
+    kind: parameter
+    dtype: Number
+    period: Year
+    source: Malvern Hills Council Tax Reduction Scheme 2026-27 weekly minimum conversion
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-malvern-hills/manual/council-tax-reduction-scheme-2026-2027/page-72, excerpt: "period of excess of 52 weeks"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '52'}]
+  - name: malvern_hills_council_tax_reduction_non_dependant_weekly_deduction_by_band
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    indexed_by: malvern_hills_council_tax_reduction_non_dependant_deduction_band
+    source: Malvern Hills Council Tax Reduction Scheme 2026-27 paragraph 58
+    metadata: {proof: {atoms: [{path: 'versions[0].values', kind: parameter_table, source: {corpus_citation_path: uk-malvern-hills/manual/council-tax-reduction-scheme-2026-2027/page-71, table: {header: "58.0 Non-dependant deductions", row_key: "adult non-dependant status and normal gross weekly income", column_key: "weekly deduction"}, excerpt: "58.1 Subject to the following provisions of this paragraph, the non-dependant deductions in respect of a day referred to in section 29 (maximum council tax reduction) shall be; (a) in respect of a non-dependant aged 18 or over in remunerative work, £15.95 x 1/7; (b) in respect of a non-dependant aged 18 or over to whom sub-paragraph (a) does not apply, £5.20 x 1/7. 58.2 In the case of a non-dependant aged 18 or over, where it is shown to the appropriate authority that his normal gross weekly income is– (a) less than £279.00, the deduction to be made under this paragraph shall be that specified in paragraph 58.1(b); (b) not less than £279.00, but less than £485.00, the deduction to be made under this section shall be £10.60 x1/7; (c) not less than £485.00, but less than £605.00, the deduction to be made under this section shall be £13.30 x 1/7"}}]}}
+    versions: [{effective_from: '2026-04-01', values: {0: 0, 1: 5.20, 2: 10.60, 3: 13.30, 4: 15.95}}]
+  - name: malvern_hills_council_tax_reduction_capital_eligible
+    kind: derived
+    entity: Household
+    dtype: Judgment
+    period: Year
+    source: Malvern Hills Council Tax Reduction Scheme 2026-27 paragraph 33.1
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: condition, source: {corpus_citation_path: uk-malvern-hills/manual/council-tax-reduction-scheme-2026-2027/page-53, excerpt: "no support shall be granted when the applicant has an amount greater than this level"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 'malvern_hills_council_tax_reduction_assessed_capital_for_year <= malvern_hills_council_tax_reduction_capital_limit'}]
+  - name: malvern_hills_council_tax_reduction_income_class
+    kind: derived
+    entity: Household
+    dtype: Judgment
+    period: Year
+    source: Malvern Hills Council Tax Reduction Scheme 2026-27 classes D and E
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: condition, source: {corpus_citation_path: uk-malvern-hills/manual/council-tax-reduction-scheme-2026-2027/page-8, excerpt: "person’s income4 is less than their applicable"}}, {path: 'versions[0].formula', kind: condition, source: {corpus_citation_path: uk-malvern-hills/manual/council-tax-reduction-scheme-2026-2027/page-9, excerpt: "person’s income10 is more than their applicable amount11"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 'malvern_hills_council_tax_reduction_assessed_income_for_year < malvern_hills_council_tax_reduction_applicable_amount_for_year or malvern_hills_council_tax_reduction_assessed_income_for_year > malvern_hills_council_tax_reduction_applicable_amount_for_year'}]
+  - name: malvern_hills_council_tax_reduction_maximum_for_year
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Malvern Hills Council Tax Reduction Scheme 2026-27 paragraph 57.1
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-malvern-hills/manual/council-tax-reduction-scheme-2026-2027/page-71, excerpt: "shall be 80 per cent, of the amount A/B"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 'malvern_hills_council_tax_reduction_eligible_liability_for_year * malvern_hills_council_tax_reduction_maximum_support_rate - malvern_hills_council_tax_reduction_non_dependant_weekly_deduction_by_band[malvern_hills_council_tax_reduction_non_dependant_deduction_band] * malvern_hills_council_tax_reduction_weeks_per_year'}]
+  - name: malvern_hills_council_tax_reduction_excess_income_for_year
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Malvern Hills Council Tax Reduction Scheme 2026-27 paragraph 59.1
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-malvern-hills/manual/council-tax-reduction-scheme-2026-2027/page-73, excerpt: "income exceeds their applicable amount"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 'if malvern_hills_council_tax_reduction_assessed_income_for_year > malvern_hills_council_tax_reduction_applicable_amount_for_year: malvern_hills_council_tax_reduction_assessed_income_for_year - malvern_hills_council_tax_reduction_applicable_amount_for_year else: malvern_hills_council_tax_reduction_capital_limit - malvern_hills_council_tax_reduction_capital_limit'}]
+  - name: malvern_hills_council_tax_reduction_taper_deduction_for_year
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Malvern Hills Council Tax Reduction Scheme 2026-27 paragraph 59.1
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-malvern-hills/manual/council-tax-reduction-scheme-2026-2027/page-73, excerpt: "deducting their excess income multiplied by the taper from their maximum council tax reduction"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 'malvern_hills_council_tax_reduction_excess_income_for_year * malvern_hills_council_tax_reduction_weekly_taper_rate'}]
+  - name: malvern_hills_council_tax_reduction_award_conditions_met
+    kind: derived
+    entity: Household
+    dtype: Judgment
+    period: Year
+    source: Malvern Hills Council Tax Reduction Scheme 2026-27 classes D and E
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: condition, source: {corpus_citation_path: uk-malvern-hills/manual/council-tax-reduction-scheme-2026-2027/page-9, excerpt: "amount A exceeds amount B"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 'local_authority_is_malvern_hills and malvern_hills_council_tax_reduction_applicant_is_not_pensioner and would_claim_council_tax_reduction and malvern_hills_council_tax_reduction_capital_eligible and malvern_hills_council_tax_reduction_income_class and malvern_hills_council_tax_reduction_maximum_for_year > malvern_hills_council_tax_reduction_taper_deduction_for_year'}]
+  - name: malvern_hills_council_tax_reduction_annual_amount
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Malvern Hills Council Tax Reduction Scheme 2026-27 paragraphs 57A.1 and 59.1
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-malvern-hills/manual/council-tax-reduction-scheme-2026-2027/page-71, excerpt: "shall be £10.00 x 1/7"}}, {path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-malvern-hills/manual/council-tax-reduction-scheme-2026-2027/page-73, excerpt: "deducting their excess income multiplied by the taper from their maximum council tax reduction"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 'if malvern_hills_council_tax_reduction_award_conditions_met and malvern_hills_council_tax_reduction_maximum_for_year - malvern_hills_council_tax_reduction_taper_deduction_for_year >= malvern_hills_council_tax_reduction_minimum_award_weekly * malvern_hills_council_tax_reduction_weeks_per_year: malvern_hills_council_tax_reduction_maximum_for_year - malvern_hills_council_tax_reduction_taper_deduction_for_year else: malvern_hills_council_tax_reduction_capital_limit - malvern_hills_council_tax_reduction_capital_limit'}]
+inputs:
+  - {name: local_authority_is_malvern_hills, entity: Household, dtype: Boolean, period: Year}
+  - {name: malvern_hills_council_tax_reduction_applicant_is_not_pensioner, entity: Household, dtype: Boolean, period: Year}
+  - {name: would_claim_council_tax_reduction, entity: Household, dtype: Boolean, period: Year}
+  - {name: malvern_hills_council_tax_reduction_assessed_capital_for_year, entity: Household, dtype: Money, period: Year, unit: GBP}
+  - {name: malvern_hills_council_tax_reduction_eligible_liability_for_year, entity: Household, dtype: Money, period: Year, unit: GBP}
+  - {name: malvern_hills_council_tax_reduction_assessed_income_for_year, entity: Household, dtype: Money, period: Year, unit: GBP}
+  - {name: malvern_hills_council_tax_reduction_applicable_amount_for_year, entity: Household, dtype: Money, period: Year, unit: GBP}
+  - {name: malvern_hills_council_tax_reduction_non_dependant_deduction_band, entity: Household, dtype: Number, period: Year}

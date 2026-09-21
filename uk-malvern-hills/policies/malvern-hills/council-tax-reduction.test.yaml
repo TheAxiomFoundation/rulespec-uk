@@ -1,0 +1,247 @@
+- name: malvern_hills_ctr_below_ten_weekly_minimum_is_not_payable
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.local_authority_is_malvern_hills: true
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_assessed_capital_for_year: 0
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_eligible_liability_for_year: 649.9875
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_assessed_income_for_year: 0
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_applicable_amount_for_year: 100
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_non_dependant_deduction_band: 0
+  output:
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#malvern_hills_council_tax_reduction_annual_amount: 0
+- name: malvern_hills_ctr_exactly_ten_weekly_minimum_is_payable
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.local_authority_is_malvern_hills: true
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_assessed_capital_for_year: 0
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_eligible_liability_for_year: 650
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_assessed_income_for_year: 0
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_applicable_amount_for_year: 100
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_non_dependant_deduction_band: 0
+  output:
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#malvern_hills_council_tax_reduction_annual_amount: 520
+- name: malvern_hills_ctr_above_ten_weekly_minimum_is_not_increased
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.local_authority_is_malvern_hills: true
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_assessed_capital_for_year: 0
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_eligible_liability_for_year: 650.0125
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_assessed_income_for_year: 0
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_applicable_amount_for_year: 100
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_non_dependant_deduction_band: 0
+  output:
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#malvern_hills_council_tax_reduction_annual_amount: 520.01
+- name: malvern_hills_ctr_positive_taper_award
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.local_authority_is_malvern_hills: true
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_assessed_capital_for_year: 0
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_eligible_liability_for_year: 2000
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_assessed_income_for_year: 520
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_applicable_amount_for_year: 0
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_non_dependant_deduction_band: 0
+  output:
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#malvern_hills_council_tax_reduction_annual_amount: '1585.1428571428571428571428571'
+- name: malvern_hills_ctr_taper_exhaustion_zero_award
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.local_authority_is_malvern_hills: true
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_assessed_capital_for_year: 0
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_eligible_liability_for_year: 2000
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_assessed_income_for_year: 56000
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_applicable_amount_for_year: 0
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_non_dependant_deduction_band: 0
+  output:
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#malvern_hills_council_tax_reduction_annual_amount: 0
+- name: malvern_hills_ctr_income_equality_is_outside_strict_classes
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.local_authority_is_malvern_hills: true
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_assessed_capital_for_year: 0
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_eligible_liability_for_year: 2000
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_assessed_income_for_year: 100
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_applicable_amount_for_year: 100
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_non_dependant_deduction_band: 0
+  output:
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#malvern_hills_council_tax_reduction_income_class: not_holds
+- name: malvern_hills_ctr_capital_limit_is_inclusive
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.local_authority_is_malvern_hills: true
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_eligible_liability_for_year: 2000
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_assessed_income_for_year: 520
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_applicable_amount_for_year: 0
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_non_dependant_deduction_band: 0
+  output:
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#malvern_hills_council_tax_reduction_capital_eligible: holds
+- name: malvern_hills_ctr_capital_above_limit_is_ineligible
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.local_authority_is_malvern_hills: true
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_assessed_capital_for_year: 6000.01
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_eligible_liability_for_year: 2000
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_assessed_income_for_year: 520
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_applicable_amount_for_year: 0
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_non_dependant_deduction_band: 0
+  output:
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#malvern_hills_council_tax_reduction_capital_eligible: not_holds
+- name: malvern_hills_ctr_scope_false_zero_award
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.local_authority_is_malvern_hills: false
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_assessed_capital_for_year: 0
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_eligible_liability_for_year: 2000
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_assessed_income_for_year: 520
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_applicable_amount_for_year: 0
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_non_dependant_deduction_band: 0
+  output:
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#malvern_hills_council_tax_reduction_annual_amount: 0
+- name: malvern_hills_ctr_claim_false_zero_award
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.local_authority_is_malvern_hills: true
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.would_claim_council_tax_reduction: false
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_assessed_capital_for_year: 0
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_eligible_liability_for_year: 2000
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_assessed_income_for_year: 520
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_applicable_amount_for_year: 0
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_non_dependant_deduction_band: 0
+  output:
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#malvern_hills_council_tax_reduction_annual_amount: 0
+- name: malvern_hills_ctr_non_dependant_no_deduction
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.local_authority_is_malvern_hills: true
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_assessed_capital_for_year: 0
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_eligible_liability_for_year: 2000
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_assessed_income_for_year: 0
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_applicable_amount_for_year: 100
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_non_dependant_deduction_band: 0
+  output:
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#malvern_hills_council_tax_reduction_maximum_for_year: 1600
+- name: malvern_hills_ctr_non_dependant_5_20_row_and_below_279_boundary
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.local_authority_is_malvern_hills: true
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_assessed_capital_for_year: 0
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_eligible_liability_for_year: 2000
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_assessed_income_for_year: 0
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_applicable_amount_for_year: 100
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_non_dependant_deduction_band: 1
+  output:
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#malvern_hills_council_tax_reduction_maximum_for_year: 1329.6
+- name: malvern_hills_ctr_non_dependant_10_60_row_at_279_boundary
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.local_authority_is_malvern_hills: true
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_assessed_capital_for_year: 0
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_eligible_liability_for_year: 2000
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_assessed_income_for_year: 0
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_applicable_amount_for_year: 100
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_non_dependant_deduction_band: 2
+  output:
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#malvern_hills_council_tax_reduction_maximum_for_year: 1048.8
+- name: malvern_hills_ctr_non_dependant_13_30_row_at_485_boundary
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.local_authority_is_malvern_hills: true
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_assessed_capital_for_year: 0
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_eligible_liability_for_year: 2000
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_assessed_income_for_year: 0
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_applicable_amount_for_year: 100
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_non_dependant_deduction_band: 3
+  output:
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#malvern_hills_council_tax_reduction_maximum_for_year: 908.4
+- name: malvern_hills_ctr_non_dependant_15_95_row_at_605_boundary
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.local_authority_is_malvern_hills: true
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_assessed_capital_for_year: 0
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_eligible_liability_for_year: 2000
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_assessed_income_for_year: 0
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_applicable_amount_for_year: 100
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_non_dependant_deduction_band: 4
+  output:
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#malvern_hills_council_tax_reduction_maximum_for_year: 770.6
+- name: malvern_hills_ctr_excess_income
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.local_authority_is_malvern_hills: true
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_assessed_capital_for_year: 0
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_eligible_liability_for_year: 2000
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_assessed_income_for_year: 520
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_applicable_amount_for_year: 0
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_non_dependant_deduction_band: 0
+  output:
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#malvern_hills_council_tax_reduction_excess_income_for_year: 520
+- name: malvern_hills_ctr_taper_deduction
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.local_authority_is_malvern_hills: true
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_assessed_capital_for_year: 0
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_eligible_liability_for_year: 2000
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_assessed_income_for_year: 520
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_applicable_amount_for_year: 0
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_non_dependant_deduction_band: 0
+  output:
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#malvern_hills_council_tax_reduction_taper_deduction_for_year: '14.857142857142857142857142872'
+- name: malvern_hills_ctr_award_conditions
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.local_authority_is_malvern_hills: true
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_assessed_capital_for_year: 0
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_eligible_liability_for_year: 2000
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_assessed_income_for_year: 520
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_applicable_amount_for_year: 0
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_non_dependant_deduction_band: 0
+  output:
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#malvern_hills_council_tax_reduction_award_conditions_met: holds
+- name: malvern_hills_ctr_income_strictly_below_class_holds
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.local_authority_is_malvern_hills: true
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_assessed_capital_for_year: 0
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_eligible_liability_for_year: 2000
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_assessed_income_for_year: 99
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_applicable_amount_for_year: 100
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#input.malvern_hills_council_tax_reduction_non_dependant_deduction_band: 0
+  output:
+    uk-malvern-hills:policies/malvern-hills/council-tax-reduction#malvern_hills_council_tax_reduction_income_class: holds
