@@ -1,0 +1,227 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk-isles-of-scilly/manual/council-tax-reduction-scheme-2026-2027/page-74
+    # upstream_source_check:
+    #   status: delegated_scheme
+    #   checked_paths: [uk/statutes/ukpga/1992/14/13A, uk/regulations/uksi/2012/2885, uk/regulations/uksi/2012/2886]
+    #   rationale: LGFA 1992 section 13A delegates the working-age scheme to the Council of the Isles of Scilly, so the adopted scheme document is the operative legal source for the locally set working-age values.
+  summary: Isles of Scilly's operative 2026-27 local working-age scheme provides the defined maximum liability amount less non-dependant deductions, then deducts excess income at the printed taper. Pension-age provisions are outside scope.
+  deferred_outputs:
+    - output: uk-isles-of-scilly:policies/isles-of-scilly/council-tax-reduction/sections-12-to-42-and-schedules-1-to-5#assessed_income_capital_and_applicable_amount
+      reason: Detailed applicable-amount, income and capital assessment schedules feed this award surface.
+    - output: uk-isles-of-scilly:policies/isles-of-scilly/council-tax-reduction/section-58#non_dependant_exemption_and_household_aggregation
+      reason: Resident exemptions, couple coordination and aggregation determine the household deduction input.
+    - output: uk-isles-of-scilly:policies/isles-of-scilly/council-tax-reduction/class-f#second_adult_rebate
+      reason: Class F second-adult reduction is a separate calculation.
+rules:
+  - name: isles_of_scilly_council_tax_reduction_maximum_support_rate
+    kind: parameter
+    dtype: Rate
+    source: Isles of Scilly Council Tax Reduction Scheme 2026/27 paragraph 57.1
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-isles-of-scilly/manual/council-tax-reduction-scheme-2026-2027/page-72, excerpt: "shall be 100 per cent, of the amount A divided by B where;"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '1'}]
+  - name: isles_of_scilly_council_tax_reduction_per_cent_unit
+    kind: parameter
+    dtype: Rate
+    source: Isles of Scilly Council Tax Reduction Scheme 2026/27 percentage notation
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-isles-of-scilly/manual/council-tax-reduction-scheme-2026-2027/page-72, excerpt: "100 per cent"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '0.01'}]
+  - name: isles_of_scilly_council_tax_reduction_taper_whole_percentage_points
+    kind: parameter
+    dtype: Number
+    source: Isles of Scilly Council Tax Reduction Scheme 2026/27 paragraph 59.1
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-isles-of-scilly/manual/council-tax-reduction-scheme-2026-2027/page-74, excerpt: "shall be 2 6/7 per cent."}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '2'}]
+  - name: isles_of_scilly_council_tax_reduction_taper_fraction_numerator
+    kind: parameter
+    dtype: Number
+    source: Isles of Scilly Council Tax Reduction Scheme 2026/27 paragraph 59.1
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-isles-of-scilly/manual/council-tax-reduction-scheme-2026-2027/page-74, excerpt: "shall be 2 6/7 per cent."}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '6'}]
+  - name: isles_of_scilly_council_tax_reduction_days_per_week
+    kind: parameter
+    dtype: Number
+    source: Isles of Scilly Council Tax Reduction Scheme 2026/27 paragraph 58.1
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-isles-of-scilly/manual/council-tax-reduction-scheme-2026-2027/page-72, excerpt: "£15.95 x 1/7"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '7'}]
+  - name: isles_of_scilly_council_tax_reduction_weekly_taper_rate
+    kind: parameter
+    dtype: Rate
+    period: Week
+    source: Isles of Scilly Council Tax Reduction Scheme 2026/27 paragraph 59.1
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-isles-of-scilly/manual/council-tax-reduction-scheme-2026-2027/page-74, excerpt: "shall be 2 6/7 per cent."}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '(isles_of_scilly_council_tax_reduction_taper_whole_percentage_points + isles_of_scilly_council_tax_reduction_taper_fraction_numerator / isles_of_scilly_council_tax_reduction_days_per_week) * isles_of_scilly_council_tax_reduction_per_cent_unit'}]
+  - name: isles_of_scilly_council_tax_reduction_capital_limit
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Isles of Scilly Council Tax Reduction Scheme 2026/27 paragraph 33.1
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-isles-of-scilly/manual/council-tax-reduction-scheme-2026-2027/page-54, excerpt: "the prescribed amount is £16,000 and no support shall be granted when the applicant has an amount greater that this level."}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '16000'}]
+  - name: isles_of_scilly_council_tax_reduction_tariff_income_threshold
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Isles of Scilly Council Tax Reduction Scheme 2026/27 paragraph 42.1
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-isles-of-scilly/manual/council-tax-reduction-scheme-2026-2027/page-59, excerpt: "exceeds £6,000"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '6000'}]
+  - name: isles_of_scilly_council_tax_reduction_tariff_income_step
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Isles of Scilly Council Tax Reduction Scheme 2026/27 paragraph 42.1
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-isles-of-scilly/manual/council-tax-reduction-scheme-2026-2027/page-59, excerpt: "each complete £250"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '250'}]
+  - name: isles_of_scilly_council_tax_reduction_tariff_income_weekly_amount_per_step
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Isles of Scilly Council Tax Reduction Scheme 2026/27 paragraph 42.1
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-isles-of-scilly/manual/council-tax-reduction-scheme-2026-2027/page-59, excerpt: "weekly income of £1 for each complete £250"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '1'}]
+  - name: isles_of_scilly_council_tax_reduction_weeks_per_year
+    kind: parameter
+    dtype: Number
+    source: Isles of Scilly Council Tax Reduction Scheme 2026/27 annual conversion
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-isles-of-scilly/manual/council-tax-reduction-scheme-2026-2027/page-73, excerpt: "period of excess of 52 weeks"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '52'}]
+  - name: isles_of_scilly_council_tax_reduction_non_dependant_deduction_weekly_by_band
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    indexed_by: isles_of_scilly_council_tax_reduction_non_dependant_band
+    source: Isles of Scilly Council Tax Reduction Scheme 2026/27 paragraph 58
+    metadata:
+      proof:
+        atoms:
+          - path: 'versions[0].values'
+            kind: parameter_table
+            source:
+              corpus_citation_path: uk-isles-of-scilly/manual/council-tax-reduction-scheme-2026-2027/page-72
+              excerpt: "58.1 Subject to the following provisions of this paragraph, the non-dependant deductions in respect of a day referred to in section 29 (maximum council tax reduction) shall be; (a) in respect of a non-dependant aged 18 or over in remunerative work, £15.95 x 1/7; (b) in respect of a non-dependant aged 18 or over to whom sub-paragraph (a) does not apply, £5.20 x 1/7. 58.2 In the case of a non-dependant aged 18 or over, where it is shown to the appropriate authority that his normal gross weekly income is– (a) less than £279.00, the deduction to be made under this paragraph shall be that specified in paragraph 58.1(b); (b) not less than £279.00, but less than £485.00, the deduction to be made under this section shall be £10.60 x1/7; (c) not less than £485.00, but less than £605.00, the deduction to be made under this section shall be £13.30 x 1/7;"
+              table: {header: "58.1–58.2", row_key: income band, column_key: weekly deduction}
+    versions: [{effective_from: '2026-04-01', values: {0: 0, 1: 5.20, 2: 10.60, 3: 13.30, 4: 15.95}}]
+  - name: isles_of_scilly_council_tax_reduction_non_dependant_income_threshold_low
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Isles of Scilly Council Tax Reduction Scheme 2026/27 paragraph 58.2
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-isles-of-scilly/manual/council-tax-reduction-scheme-2026-2027/page-72, excerpt: "not less than £279.00, but less than £485.00"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '279'}]
+  - name: isles_of_scilly_council_tax_reduction_non_dependant_income_threshold_middle
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Isles of Scilly Council Tax Reduction Scheme 2026/27 paragraph 58.2
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-isles-of-scilly/manual/council-tax-reduction-scheme-2026-2027/page-72, excerpt: "not less than £485.00, but less than £605.00"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '485'}]
+  - name: isles_of_scilly_council_tax_reduction_non_dependant_income_threshold_top
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Isles of Scilly Council Tax Reduction Scheme 2026/27 paragraph 58.2
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-isles-of-scilly/manual/council-tax-reduction-scheme-2026-2027/page-72, excerpt: "not less than £485.00, but less than £605.00"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '605'}]
+  - name: isles_of_scilly_council_tax_reduction_working_age_scheme_applies
+    kind: derived
+    entity: Household
+    dtype: Judgment
+    period: Year
+    source: Isles of Scilly Council Tax Reduction Scheme 2026/27 section 1.6
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: condition, source: {corpus_citation_path: uk-isles-of-scilly/manual/council-tax-reduction-scheme-2026-2027/page-8, excerpt: "The adopted scheme for working age applicants is a means test"}}, {path: 'versions[0].formula', kind: condition, source: {corpus_citation_path: uk-isles-of-scilly/manual/council-tax-reduction-scheme-2026-2027/page-8, excerpt: "the person’s income4 is less than their applicable amount5"}}, {path: 'versions[0].formula', kind: condition, source: {corpus_citation_path: uk-isles-of-scilly/manual/council-tax-reduction-scheme-2026-2027/page-9, excerpt: "the person’s income10 is more than their applicable amount11"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 'local_authority_is_isles_of_scilly and council_tax_reduction_household_in_england and isles_of_scilly_council_tax_reduction_applicant_is_not_pensioner and (isles_of_scilly_council_tax_reduction_assessed_income_for_year + isles_of_scilly_council_tax_reduction_tariff_income_for_year < isles_of_scilly_council_tax_reduction_applicable_amount_for_year or isles_of_scilly_council_tax_reduction_assessed_income_for_year + isles_of_scilly_council_tax_reduction_tariff_income_for_year > isles_of_scilly_council_tax_reduction_applicable_amount_for_year)'}]
+  - name: isles_of_scilly_council_tax_reduction_capital_eligible
+    kind: derived
+    entity: Household
+    dtype: Judgment
+    period: Year
+    source: Isles of Scilly Council Tax Reduction Scheme 2026/27 paragraph 33.1
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: condition, source: {corpus_citation_path: uk-isles-of-scilly/manual/council-tax-reduction-scheme-2026-2027/page-54, excerpt: "no support shall be granted when the applicant has an amount greater that this level."}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 'isles_of_scilly_council_tax_reduction_assessed_capital_for_year <= isles_of_scilly_council_tax_reduction_capital_limit'}]
+  - name: isles_of_scilly_council_tax_reduction_tariff_income_for_year
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Isles of Scilly Council Tax Reduction Scheme 2026/27 paragraph 42
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-isles-of-scilly/manual/council-tax-reduction-scheme-2026-2027/page-59, excerpt: "Where the applicant’s capital calculated in accordance with this scheme exceeds £6,000 it shall be treated as equivalent to a weekly income of £1 for each complete £250 of in excess of £6,000 but not exceeding £16,000."}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 'if isles_of_scilly_council_tax_reduction_assessed_capital_for_year > isles_of_scilly_council_tax_reduction_tariff_income_threshold: ceil((isles_of_scilly_council_tax_reduction_assessed_capital_for_year - isles_of_scilly_council_tax_reduction_tariff_income_threshold) / isles_of_scilly_council_tax_reduction_tariff_income_step) * isles_of_scilly_council_tax_reduction_tariff_income_weekly_amount_per_step * isles_of_scilly_council_tax_reduction_weeks_per_year else: isles_of_scilly_council_tax_reduction_capital_limit - isles_of_scilly_council_tax_reduction_capital_limit'}]
+  - name: isles_of_scilly_council_tax_reduction_individual_non_dependant_deduction_weekly
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Isles of Scilly Council Tax Reduction Scheme 2026/27 paragraph 58
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-isles-of-scilly/manual/council-tax-reduction-scheme-2026-2027/page-72, excerpt: "the non-dependant deductions in respect of a day referred to in section 29"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 'if isles_of_scilly_council_tax_reduction_non_dependant_deduction_applies: if isles_of_scilly_council_tax_reduction_non_dependant_in_remunerative_work: if isles_of_scilly_council_tax_reduction_non_dependant_normal_gross_weekly_income < isles_of_scilly_council_tax_reduction_non_dependant_income_threshold_low: isles_of_scilly_council_tax_reduction_non_dependant_deduction_weekly_by_band[1] else: if isles_of_scilly_council_tax_reduction_non_dependant_normal_gross_weekly_income < isles_of_scilly_council_tax_reduction_non_dependant_income_threshold_middle: isles_of_scilly_council_tax_reduction_non_dependant_deduction_weekly_by_band[2] else: if isles_of_scilly_council_tax_reduction_non_dependant_normal_gross_weekly_income < isles_of_scilly_council_tax_reduction_non_dependant_income_threshold_top: isles_of_scilly_council_tax_reduction_non_dependant_deduction_weekly_by_band[3] else: isles_of_scilly_council_tax_reduction_non_dependant_deduction_weekly_by_band[4] else: isles_of_scilly_council_tax_reduction_non_dependant_deduction_weekly_by_band[1] else: isles_of_scilly_council_tax_reduction_non_dependant_deduction_weekly_by_band[0]'}]
+  - name: isles_of_scilly_council_tax_reduction_maximum_for_year
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Isles of Scilly Council Tax Reduction Scheme 2026/27 paragraph 57.1
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-isles-of-scilly/manual/council-tax-reduction-scheme-2026-2027/page-72, excerpt: "shall be 100 per cent, of the amount A divided by B where;"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 'isles_of_scilly_council_tax_reduction_actual_liability_for_year * isles_of_scilly_council_tax_reduction_maximum_support_rate - isles_of_scilly_council_tax_reduction_non_dependant_deductions_for_year'}]
+  - name: isles_of_scilly_council_tax_reduction_excess_income_for_year
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Isles of Scilly Council Tax Reduction Scheme 2026/27 paragraph 59.1
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-isles-of-scilly/manual/council-tax-reduction-scheme-2026-2027/page-74, excerpt: "deducting their excess income multiplied by the taper"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 'max(isles_of_scilly_council_tax_reduction_assessed_income_for_year + isles_of_scilly_council_tax_reduction_tariff_income_for_year - isles_of_scilly_council_tax_reduction_applicable_amount_for_year, isles_of_scilly_council_tax_reduction_capital_limit - isles_of_scilly_council_tax_reduction_capital_limit)'}]
+  - name: isles_of_scilly_council_tax_reduction_income_taper_deduction_for_year
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Isles of Scilly Council Tax Reduction Scheme 2026/27 paragraph 59.1
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-isles-of-scilly/manual/council-tax-reduction-scheme-2026-2027/page-74, excerpt: "deducting their excess income multiplied by the taper"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 'isles_of_scilly_council_tax_reduction_excess_income_for_year * isles_of_scilly_council_tax_reduction_weekly_taper_rate'}]
+  - name: isles_of_scilly_council_tax_reduction_award_conditions_met
+    kind: derived
+    entity: Household
+    dtype: Judgment
+    period: Year
+    source: Isles of Scilly Council Tax Reduction Scheme 2026/27 Class E
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: condition, source: {corpus_citation_path: uk-isles-of-scilly/manual/council-tax-reduction-scheme-2026-2027/page-9, excerpt: "amount A exceeds amount B"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 'isles_of_scilly_council_tax_reduction_working_age_scheme_applies and isles_of_scilly_council_tax_reduction_capital_eligible and would_claim_council_tax_reduction and isles_of_scilly_council_tax_reduction_maximum_for_year > isles_of_scilly_council_tax_reduction_income_taper_deduction_for_year'}]
+  - name: isles_of_scilly_council_tax_reduction_annual_amount
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Isles of Scilly Council Tax Reduction Scheme 2026/27 paragraph 59.1
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-isles-of-scilly/manual/council-tax-reduction-scheme-2026-2027/page-74, excerpt: "their Council Tax Reduction shall be calculated by deducting their excess income multiplied by the taper from their maximum Council Tax Reduction"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 'if isles_of_scilly_council_tax_reduction_award_conditions_met: isles_of_scilly_council_tax_reduction_maximum_for_year - isles_of_scilly_council_tax_reduction_income_taper_deduction_for_year else: isles_of_scilly_council_tax_reduction_capital_limit - isles_of_scilly_council_tax_reduction_capital_limit'}]
+inputs:
+  - {name: local_authority_is_isles_of_scilly, entity: Household, dtype: Boolean, period: Year}
+  - {name: council_tax_reduction_household_in_england, entity: Household, dtype: Boolean, period: Year}
+  - {name: isles_of_scilly_council_tax_reduction_applicant_is_not_pensioner, entity: Household, dtype: Boolean, period: Year}
+  - {name: would_claim_council_tax_reduction, entity: Household, dtype: Boolean, period: Year}
+  - {name: isles_of_scilly_council_tax_reduction_assessed_capital_for_year, entity: Household, dtype: Money, period: Year, unit: GBP}
+  - {name: isles_of_scilly_council_tax_reduction_actual_liability_for_year, entity: Household, dtype: Money, period: Year, unit: GBP}
+  - {name: isles_of_scilly_council_tax_reduction_assessed_income_for_year, entity: Household, dtype: Money, period: Year, unit: GBP}
+  - {name: isles_of_scilly_council_tax_reduction_applicable_amount_for_year, entity: Household, dtype: Money, period: Year, unit: GBP}
+  - {name: isles_of_scilly_council_tax_reduction_non_dependant_deductions_for_year, entity: Household, dtype: Money, period: Year, unit: GBP}
+  - {name: isles_of_scilly_council_tax_reduction_non_dependant_deduction_applies, entity: Person, dtype: Boolean, period: Week}
+  - {name: isles_of_scilly_council_tax_reduction_non_dependant_in_remunerative_work, entity: Person, dtype: Boolean, period: Week}
+  - {name: isles_of_scilly_council_tax_reduction_non_dependant_normal_gross_weekly_income, entity: Person, dtype: Money, period: Week, unit: GBP}
+  - {name: isles_of_scilly_council_tax_reduction_non_dependant_band, entity: Person, dtype: Number, period: Week}
