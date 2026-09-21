@@ -1,0 +1,383 @@
+- name: hart_ctr_parameter_maximum_support_rate
+  period: &year
+    period_kind: tax_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-hart:policies/hart/council-tax-reduction#input.local_authority_is_hart: true
+    uk-hart:policies/hart/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_applicant_is_not_a_pensioner: true
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_assessed_capital_for_year: 0
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_actual_liability_for_year: 1000
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_assessed_income_for_year: 0
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_applicable_amount_for_year: 100
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-hart:policies/hart/council-tax-reduction#hart_council_tax_reduction_maximum_support_rate: 1
+- name: hart_ctr_parameter_taper_whole_percentage_points
+  period: *year
+  input:
+    uk-hart:policies/hart/council-tax-reduction#input.local_authority_is_hart: true
+    uk-hart:policies/hart/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_applicant_is_not_a_pensioner: true
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_assessed_capital_for_year: 0
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_actual_liability_for_year: 1000
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_assessed_income_for_year: 0
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_applicable_amount_for_year: 100
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-hart:policies/hart/council-tax-reduction#hart_council_tax_reduction_taper_whole_percentage_points: 2
+- name: hart_ctr_parameter_taper_fraction_numerator
+  period: *year
+  input:
+    uk-hart:policies/hart/council-tax-reduction#input.local_authority_is_hart: true
+    uk-hart:policies/hart/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_applicant_is_not_a_pensioner: true
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_assessed_capital_for_year: 0
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_actual_liability_for_year: 1000
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_assessed_income_for_year: 0
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_applicable_amount_for_year: 100
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-hart:policies/hart/council-tax-reduction#hart_council_tax_reduction_taper_fraction_numerator: 6
+- name: hart_ctr_parameter_days_per_week
+  period: *year
+  input:
+    uk-hart:policies/hart/council-tax-reduction#input.local_authority_is_hart: true
+    uk-hart:policies/hart/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_applicant_is_not_a_pensioner: true
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_assessed_capital_for_year: 0
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_actual_liability_for_year: 1000
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_assessed_income_for_year: 0
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_applicable_amount_for_year: 100
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-hart:policies/hart/council-tax-reduction#hart_council_tax_reduction_days_per_week: 7
+- name: hart_ctr_parameter_per_cent_unit
+  period: *year
+  input:
+    uk-hart:policies/hart/council-tax-reduction#input.local_authority_is_hart: true
+    uk-hart:policies/hart/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_applicant_is_not_a_pensioner: true
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_assessed_capital_for_year: 0
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_actual_liability_for_year: 1000
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_assessed_income_for_year: 0
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_applicable_amount_for_year: 100
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-hart:policies/hart/council-tax-reduction#hart_council_tax_reduction_per_cent_unit: 0.01
+- name: hart_ctr_parameter_weekly_taper_rate
+  period: *year
+  input:
+    uk-hart:policies/hart/council-tax-reduction#input.local_authority_is_hart: true
+    uk-hart:policies/hart/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_applicant_is_not_a_pensioner: true
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_assessed_capital_for_year: 0
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_actual_liability_for_year: 1000
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_assessed_income_for_year: 0
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_applicable_amount_for_year: 100
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-hart:policies/hart/council-tax-reduction#hart_council_tax_reduction_weekly_taper_rate: '0.0285714285714285714285714286'
+- name: hart_ctr_parameter_capital_limit
+  period: *year
+  input:
+    uk-hart:policies/hart/council-tax-reduction#input.local_authority_is_hart: true
+    uk-hart:policies/hart/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_applicant_is_not_a_pensioner: true
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_assessed_capital_for_year: 0
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_actual_liability_for_year: 1000
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_assessed_income_for_year: 0
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_applicable_amount_for_year: 100
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-hart:policies/hart/council-tax-reduction#hart_council_tax_reduction_capital_limit: 16000
+- name: hart_ctr_parameter_tariff_income_threshold
+  period: *year
+  input:
+    uk-hart:policies/hart/council-tax-reduction#input.local_authority_is_hart: true
+    uk-hart:policies/hart/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_applicant_is_not_a_pensioner: true
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_assessed_capital_for_year: 0
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_actual_liability_for_year: 1000
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_assessed_income_for_year: 0
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_applicable_amount_for_year: 100
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-hart:policies/hart/council-tax-reduction#hart_council_tax_reduction_tariff_income_threshold: 6000
+- name: hart_ctr_parameter_tariff_income_step
+  period: *year
+  input:
+    uk-hart:policies/hart/council-tax-reduction#input.local_authority_is_hart: true
+    uk-hart:policies/hart/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_applicant_is_not_a_pensioner: true
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_assessed_capital_for_year: 0
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_actual_liability_for_year: 1000
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_assessed_income_for_year: 0
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_applicable_amount_for_year: 100
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-hart:policies/hart/council-tax-reduction#hart_council_tax_reduction_tariff_income_step: 250
+- name: hart_ctr_parameter_tariff_income_weekly_amount_per_step
+  period: *year
+  input:
+    uk-hart:policies/hart/council-tax-reduction#input.local_authority_is_hart: true
+    uk-hart:policies/hart/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_applicant_is_not_a_pensioner: true
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_assessed_capital_for_year: 0
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_actual_liability_for_year: 1000
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_assessed_income_for_year: 0
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_applicable_amount_for_year: 100
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-hart:policies/hart/council-tax-reduction#hart_council_tax_reduction_tariff_income_weekly_amount_per_step: 1
+- name: hart_ctr_parameter_weeks_per_year
+  period: *year
+  input:
+    uk-hart:policies/hart/council-tax-reduction#input.local_authority_is_hart: true
+    uk-hart:policies/hart/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_applicant_is_not_a_pensioner: true
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_assessed_capital_for_year: 0
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_actual_liability_for_year: 1000
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_assessed_income_for_year: 0
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_applicable_amount_for_year: 100
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-hart:policies/hart/council-tax-reduction#hart_council_tax_reduction_weeks_per_year: 52
+- name: hart_ctr_non_dependant_under_279_table_cell
+  period: *year
+  input:
+    uk-hart:policies/hart/council-tax-reduction#input.local_authority_is_hart: true
+    uk-hart:policies/hart/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_applicant_is_not_a_pensioner: true
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_assessed_capital_for_year: 0
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_actual_liability_for_year: 1000
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_assessed_income_for_year: 0
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_applicable_amount_for_year: 100
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-hart:policies/hart/council-tax-reduction#hart_council_tax_reduction_non_dependant_deduction_table: 5.20
+- name: hart_ctr_non_dependant_279_to_484_99_table_cell
+  period: *year
+  input:
+    uk-hart:policies/hart/council-tax-reduction#input.local_authority_is_hart: true
+    uk-hart:policies/hart/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_applicant_is_not_a_pensioner: true
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_assessed_capital_for_year: 0
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_actual_liability_for_year: 1000
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_assessed_income_for_year: 0
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_applicable_amount_for_year: 100
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-hart:policies/hart/council-tax-reduction#hart_council_tax_reduction_non_dependant_deduction_table: 5.20
+- name: hart_ctr_non_dependant_485_to_604_99_table_cell
+  period: *year
+  input:
+    uk-hart:policies/hart/council-tax-reduction#input.local_authority_is_hart: true
+    uk-hart:policies/hart/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_applicant_is_not_a_pensioner: true
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_assessed_capital_for_year: 0
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_actual_liability_for_year: 1000
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_assessed_income_for_year: 0
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_applicable_amount_for_year: 100
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-hart:policies/hart/council-tax-reduction#hart_council_tax_reduction_non_dependant_deduction_table: 5.20
+- name: hart_ctr_non_dependant_605_or_more_table_cell
+  period: *year
+  input:
+    uk-hart:policies/hart/council-tax-reduction#input.local_authority_is_hart: true
+    uk-hart:policies/hart/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_applicant_is_not_a_pensioner: true
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_assessed_capital_for_year: 0
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_actual_liability_for_year: 1000
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_assessed_income_for_year: 0
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_applicable_amount_for_year: 100
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-hart:policies/hart/council-tax-reduction#hart_council_tax_reduction_non_dependant_deduction_table: 5.20
+- name: hart_ctr_tariff_at_6250
+  period: *year
+  input:
+    uk-hart:policies/hart/council-tax-reduction#input.local_authority_is_hart: true
+    uk-hart:policies/hart/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_applicant_is_not_a_pensioner: true
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_assessed_capital_for_year: 6250
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_actual_liability_for_year: 1000
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_assessed_income_for_year: 0
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_applicable_amount_for_year: 100
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-hart:policies/hart/council-tax-reduction#hart_council_tax_reduction_tariff_income_for_year: 52
+- name: hart_ctr_tariff_first_penny_over_6250
+  period: *year
+  input:
+    uk-hart:policies/hart/council-tax-reduction#input.local_authority_is_hart: true
+    uk-hart:policies/hart/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_applicant_is_not_a_pensioner: true
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_assessed_capital_for_year: 6250.01
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_actual_liability_for_year: 1000
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_assessed_income_for_year: 0
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_applicable_amount_for_year: 100
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-hart:policies/hart/council-tax-reduction#hart_council_tax_reduction_tariff_income_for_year: 104
+- name: hart_ctr_capital_at_16000_eligible
+  period: *year
+  input:
+    uk-hart:policies/hart/council-tax-reduction#input.local_authority_is_hart: true
+    uk-hart:policies/hart/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_applicant_is_not_a_pensioner: true
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_assessed_capital_for_year: 16000
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_actual_liability_for_year: 1000
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_assessed_income_for_year: 0
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_applicable_amount_for_year: 100
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-hart:policies/hart/council-tax-reduction#hart_council_tax_reduction_capital_eligible: holds
+- name: hart_ctr_income_equal_applicable_is_uncovered
+  period: *year
+  input:
+    uk-hart:policies/hart/council-tax-reduction#input.local_authority_is_hart: true
+    uk-hart:policies/hart/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_applicant_is_not_a_pensioner: true
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_assessed_capital_for_year: 0
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_actual_liability_for_year: 1000
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_assessed_income_for_year: 100
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_applicable_amount_for_year: 100
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-hart:policies/hart/council-tax-reduction#hart_council_tax_reduction_annual_amount: 0
+
+
+- name: hart_ctr_class_d_below_applicable_award
+  period: *year
+  input:
+    uk-hart:policies/hart/council-tax-reduction#input.local_authority_is_hart: true
+    uk-hart:policies/hart/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_applicant_is_not_a_pensioner: true
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_assessed_capital_for_year: 0
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_actual_liability_for_year: 1000
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_assessed_income_for_year: 99
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_applicable_amount_for_year: 100
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-hart:policies/hart/council-tax-reduction#hart_council_tax_reduction_annual_amount: 1000
+- name: hart_ctr_class_e_taper_award
+  period: *year
+  input:
+    uk-hart:policies/hart/council-tax-reduction#input.local_authority_is_hart: true
+    uk-hart:policies/hart/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_applicant_is_not_a_pensioner: true
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_assessed_capital_for_year: 0
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_actual_liability_for_year: 1000
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_assessed_income_for_year: 620
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_applicable_amount_for_year: 100
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-hart:policies/hart/council-tax-reduction#hart_council_tax_reduction_annual_amount: '985.1428571428571428571428571'
+- name: hart_ctr_taper_exhaustion_boundary
+  period: *year
+  input:
+    uk-hart:policies/hart/council-tax-reduction#input.local_authority_is_hart: true
+    uk-hart:policies/hart/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_applicant_is_not_a_pensioner: true
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_assessed_capital_for_year: 0
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_actual_liability_for_year: 1000
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_assessed_income_for_year: 35100
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_applicable_amount_for_year: 100
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-hart:policies/hart/council-tax-reduction#hart_council_tax_reduction_annual_amount: 0
+- name: hart_ctr_capital_first_penny_over_zero
+  period: *year
+  input:
+    uk-hart:policies/hart/council-tax-reduction#input.local_authority_is_hart: true
+    uk-hart:policies/hart/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_applicant_is_not_a_pensioner: true
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_assessed_capital_for_year: 16000.01
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_actual_liability_for_year: 1000
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_assessed_income_for_year: 0
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_applicable_amount_for_year: 100
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-hart:policies/hart/council-tax-reduction#hart_council_tax_reduction_annual_amount: 0
+- name: hart_ctr_authority_false_zero
+  period: *year
+  input:
+    uk-hart:policies/hart/council-tax-reduction#input.local_authority_is_hart: false
+    uk-hart:policies/hart/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_applicant_is_not_a_pensioner: true
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_assessed_capital_for_year: 0
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_actual_liability_for_year: 1000
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_assessed_income_for_year: 0
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_applicable_amount_for_year: 100
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-hart:policies/hart/council-tax-reduction#hart_council_tax_reduction_annual_amount: 0
+- name: hart_ctr_claim_false_zero
+  period: *year
+  input:
+    uk-hart:policies/hart/council-tax-reduction#input.local_authority_is_hart: true
+    uk-hart:policies/hart/council-tax-reduction#input.would_claim_council_tax_reduction: false
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_applicant_is_not_a_pensioner: true
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_assessed_capital_for_year: 0
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_actual_liability_for_year: 1000
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_assessed_income_for_year: 0
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_applicable_amount_for_year: 100
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-hart:policies/hart/council-tax-reduction#hart_council_tax_reduction_annual_amount: 0
+- name: hart_ctr_pensioner_false_scope_zero
+  period: *year
+  input:
+    uk-hart:policies/hart/council-tax-reduction#input.local_authority_is_hart: true
+    uk-hart:policies/hart/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_applicant_is_not_a_pensioner: false
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_assessed_capital_for_year: 0
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_actual_liability_for_year: 1000
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_assessed_income_for_year: 0
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_applicable_amount_for_year: 100
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-hart:policies/hart/council-tax-reduction#hart_council_tax_reduction_annual_amount: 0
+- name: hart_ctr_zero_non_dependant_exceeds_liability
+  period: *year
+  input:
+    uk-hart:policies/hart/council-tax-reduction#input.local_authority_is_hart: true
+    uk-hart:policies/hart/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_applicant_is_not_a_pensioner: true
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_assessed_capital_for_year: 0
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_actual_liability_for_year: 10
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_assessed_income_for_year: 0
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_applicable_amount_for_year: 100
+    uk-hart:policies/hart/council-tax-reduction#input.hart_council_tax_reduction_non_dependant_deductions_for_year: 10
+  output:
+    uk-hart:policies/hart/council-tax-reduction#hart_council_tax_reduction_annual_amount: 0

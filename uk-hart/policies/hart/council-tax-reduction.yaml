@@ -1,0 +1,162 @@
+format: rulespec/v1
+module:
+  proof_validation: {required: true}
+  source_verification:
+    corpus_citation_path: uk-hart/manual/council-tax-reduction-scheme-2026-2027/page-32
+    # upstream_source_check: {status: delegated_scheme, checked_paths: [uk/statutes/ukpga/1992/14/13A, uk/regulations/uksi/2012/2885, uk/regulations/uksi/2012/2886], rationale: Section 13A delegates the working-age scheme to Hart District Council, so the adopted document is the operative legal source for its locally set working-age values.}
+  summary: Hart's local working-age Class D/E award surface is a full-liability maximum less printed non-dependant deductions and, for Class E, the 2 6/7 per cent excess-income amount. The national pension-age provisions are outside scope.
+  deferred_outputs:
+    - output: uk-hart:policies/hart/council-tax-reduction/paragraph-26-and-schedule-3#applicable_amount
+      reason: Applicable amounts and premiums are inputs to this award-surface module.
+    - output: uk-hart:policies/hart/council-tax-reduction/part-10#assessed_income_and_capital
+      reason: Detailed income and capital assessment is outside this award-surface module.
+    - output: uk-hart:policies/hart/council-tax-reduction/paragraph-30#non_dependant_exemptions
+      reason: Exemption and household aggregation classifications are outside this module.
+rules:
+  - name: hart_council_tax_reduction_maximum_support_rate
+    kind: parameter
+    dtype: Rate
+    period: Year
+    source: Hart Council Tax Support Scheme 2026-2027 paragraph 29(1)
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-hart/manual/council-tax-reduction-scheme-2026-2027/page-28, excerpt: "a person’s maximum counciltax reduction amount in respect of a day is 100 per cent of the amount A/B where—"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '1'}]
+  - name: hart_council_tax_reduction_taper_whole_percentage_points
+    kind: parameter
+    dtype: Number
+    period: Year
+    source: Hart Council Tax Support Scheme 2026-2027 paragraph 17(f)(ii)
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-hart/manual/council-tax-reduction-scheme-2026-2027/page-19, excerpt: "amount B is 2 6/7 per cent of the difference between his income for the relevant week and his applicable amount"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '2'}]
+  - name: hart_council_tax_reduction_taper_fraction_numerator
+    kind: parameter
+    dtype: Number
+    period: Year
+    source: Hart Council Tax Support Scheme 2026-2027 paragraph 17(f)(ii)
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-hart/manual/council-tax-reduction-scheme-2026-2027/page-19, excerpt: "amount B is 2 6/7 per cent of the difference between his income for the relevant week and his applicable amount"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '6'}]
+  - name: hart_council_tax_reduction_days_per_week
+    kind: parameter
+    dtype: Number
+    period: Year
+    source: Hart Council Tax Support Scheme 2026-2027 paragraph 30
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-hart/manual/council-tax-reduction-scheme-2026-2027/page-29, excerpt: "£15.95 x 1/7"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '7'}]
+  - name: hart_council_tax_reduction_per_cent_unit
+    kind: parameter
+    dtype: Rate
+    period: Year
+    source: Hart Council Tax Support Scheme 2026-2027 percentage notation
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-hart/manual/council-tax-reduction-scheme-2026-2027/page-28, excerpt: "100 per cent of the amount A/B where—"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '0.01'}]
+  - name: hart_council_tax_reduction_weekly_taper_rate
+    kind: parameter
+    dtype: Rate
+    period: Week
+    source: Hart Council Tax Support Scheme 2026-2027 paragraph 17(f)(ii), derived from printed mixed percentage
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-hart/manual/council-tax-reduction-scheme-2026-2027/page-19, excerpt: "amount B is 2 6/7 per cent of the difference between his income for the relevant week and his applicable amount"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '(hart_council_tax_reduction_taper_whole_percentage_points + hart_council_tax_reduction_taper_fraction_numerator / hart_council_tax_reduction_days_per_week) * hart_council_tax_reduction_per_cent_unit'}]
+  - name: hart_council_tax_reduction_capital_limit
+    kind: parameter
+    dtype: Money
+    period: Year
+
+    unit: GBP
+    indexed_by: hart_council_tax_reduction_non_dependant_deduction_band
+    source: Hart Council Tax Support Scheme 2026-2027 paragraph 22
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-hart/manual/council-tax-reduction-scheme-2026-2027/page-25, excerpt: "whose capital exceeds £16,000"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '16000'}]
+  - name: hart_council_tax_reduction_tariff_income_threshold
+    kind: parameter
+    dtype: Money
+    period: Year
+
+    unit: GBP
+    indexed_by: hart_council_tax_reduction_non_dependant_deduction_band
+    source: Hart Council Tax Support Scheme 2026-2027 paragraph 72
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-hart/manual/council-tax-reduction-scheme-2026-2027/page-65, excerpt: "£1 for each £250 in excess of £6,000 but not exceeding £16,000"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '6000'}]
+  - name: hart_council_tax_reduction_tariff_income_step
+    kind: parameter
+    dtype: Money
+    period: Year
+
+    unit: GBP
+    indexed_by: hart_council_tax_reduction_non_dependant_deduction_band
+    source: Hart Council Tax Support Scheme 2026-2027 paragraph 72
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-hart/manual/council-tax-reduction-scheme-2026-2027/page-65, excerpt: "£1 for each £250 in excess of £6,000 but not exceeding £16,000"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '250'}]
+  - name: hart_council_tax_reduction_tariff_income_weekly_amount_per_step
+    kind: parameter
+    dtype: Money
+    period: Week
+
+    unit: GBP
+    indexed_by: hart_council_tax_reduction_non_dependant_deduction_band
+    source: Hart Council Tax Support Scheme 2026-2027 paragraph 72
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-hart/manual/council-tax-reduction-scheme-2026-2027/page-65, excerpt: "£1 for each £250 in excess of £6,000 but not exceeding £16,000"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '1'}]
+  - name: hart_council_tax_reduction_non_dependant_deduction_table
+    kind: parameter
+    dtype: Money
+    period: Week
+
+    unit: GBP
+    indexed_by: hart_council_tax_reduction_non_dependant_deduction_band
+    source: Hart Council Tax Support Scheme 2026-2027 paragraph 30
+    metadata: {proof: {atoms: [{path: 'versions[0].values', kind: parameter_table, source: {corpus_citation_path: uk-hart/manual/council-tax-reduction-scheme-2026-2027/page-29, excerpt: "(a) in respect of a non-dependant aged 18 or over in remunerative work, £15.95 x 1/7; (b) in respect of a non-dependant aged 18 or over to whom sub-paragraph (a) does not apply, £5.20 x 1/7. In the case of a non-dependant aged 18 or over to whom paragraph 30.1(a) applies, where it is shown to the appropriate authority that his normal gross weekly income is– (a) less than £279.00, the deduction to be made under this paragraph shall be that specified in paragraph 30.1(b); (b) not less than £279.00, but less than £485.00, the deduction to be made under this section shall be £10.60 x1/7; (c) not less than £485.00, but less than £605.00, the deduction to be made under this section shall be £13.30 x 1/7.", table: {header: Working-age non-dependant deductions, row_key: deduction band, column_key: weekly deduction}}}]}}
+    versions: [{effective_from: '2026-04-01', values: {0: 5.20, 1: 10.60, 2: 13.30, 3: 15.95}}]
+  - name: hart_council_tax_reduction_weeks_per_year
+    kind: parameter
+    dtype: Number
+    period: Year
+    source: Hart Council Tax Support Scheme 2026-2027 paragraph 28(3)
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-hart/manual/council-tax-reduction-scheme-2026-2027/page-28, excerpt: "multiply the maximum amount by 12 and divide the product by 52"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '52'}]
+  - name: hart_council_tax_reduction_capital_eligible
+    kind: derived
+    entity: Household
+    dtype: Judgment
+    period: Year
+    source: Hart Council Tax Support Scheme 2026-2027 capital limit
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: condition, source: {corpus_citation_path: uk-hart/manual/council-tax-reduction-scheme-2026-2027/page-25, excerpt: "whose capital exceeds £16,000"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 'hart_council_tax_reduction_assessed_capital_for_year <= hart_council_tax_reduction_capital_limit'}]
+  - name: hart_council_tax_reduction_tariff_income_for_year
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+
+    unit: GBP
+    indexed_by: hart_council_tax_reduction_non_dependant_deduction_band
+    source: Hart Council Tax Support Scheme 2026-2027 paragraph 72
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-hart/manual/council-tax-reduction-scheme-2026-2027/page-65, excerpt: "£1 for any excess which is not a complete £250."}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 'if hart_council_tax_reduction_assessed_capital_for_year > hart_council_tax_reduction_tariff_income_threshold: ceil((hart_council_tax_reduction_assessed_capital_for_year - hart_council_tax_reduction_tariff_income_threshold) / hart_council_tax_reduction_tariff_income_step) * hart_council_tax_reduction_tariff_income_weekly_amount_per_step * hart_council_tax_reduction_weeks_per_year else: hart_council_tax_reduction_capital_limit - hart_council_tax_reduction_capital_limit'}]
+  - name: hart_council_tax_reduction_annual_amount
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+
+    unit: GBP
+    indexed_by: hart_council_tax_reduction_non_dependant_deduction_band
+    source: Hart Council Tax Support Scheme 2026-2027 paragraphs 17 and 31
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-hart/manual/council-tax-reduction-scheme-2026-2027/page-32, excerpt: "Where the person is within class B or E, that amount is the amount found by deducting amount B from amount A"}}, {path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-hart/manual/council-tax-reduction-scheme-2026-2027/page-28, excerpt: "a person’s maximum counciltax reduction amount in respect of a day is 100 per cent of the amount A/B where—"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 'if local_authority_is_hart and would_claim_council_tax_reduction and hart_council_tax_reduction_applicant_is_not_a_pensioner and hart_council_tax_reduction_capital_eligible and hart_council_tax_reduction_assessed_income_for_year < hart_council_tax_reduction_applicable_amount_for_year: max(hart_council_tax_reduction_actual_liability_for_year / ((hart_council_tax_reduction_per_cent_unit / hart_council_tax_reduction_per_cent_unit) / hart_council_tax_reduction_maximum_support_rate) - hart_council_tax_reduction_non_dependant_deductions_for_year, hart_council_tax_reduction_capital_limit - hart_council_tax_reduction_capital_limit) else: if local_authority_is_hart and would_claim_council_tax_reduction and hart_council_tax_reduction_applicant_is_not_a_pensioner and hart_council_tax_reduction_capital_eligible and hart_council_tax_reduction_assessed_income_for_year > hart_council_tax_reduction_applicable_amount_for_year and max(hart_council_tax_reduction_actual_liability_for_year / ((hart_council_tax_reduction_per_cent_unit / hart_council_tax_reduction_per_cent_unit) / hart_council_tax_reduction_maximum_support_rate) - hart_council_tax_reduction_non_dependant_deductions_for_year, hart_council_tax_reduction_capital_limit - hart_council_tax_reduction_capital_limit) > (hart_council_tax_reduction_assessed_income_for_year + hart_council_tax_reduction_tariff_income_for_year - hart_council_tax_reduction_applicable_amount_for_year) / ((hart_council_tax_reduction_per_cent_unit / hart_council_tax_reduction_per_cent_unit) / hart_council_tax_reduction_weekly_taper_rate): max(max(hart_council_tax_reduction_actual_liability_for_year / ((hart_council_tax_reduction_per_cent_unit / hart_council_tax_reduction_per_cent_unit) / hart_council_tax_reduction_maximum_support_rate) - hart_council_tax_reduction_non_dependant_deductions_for_year, hart_council_tax_reduction_capital_limit - hart_council_tax_reduction_capital_limit) - (hart_council_tax_reduction_assessed_income_for_year + hart_council_tax_reduction_tariff_income_for_year - hart_council_tax_reduction_applicable_amount_for_year) / ((hart_council_tax_reduction_per_cent_unit / hart_council_tax_reduction_per_cent_unit) / hart_council_tax_reduction_weekly_taper_rate), hart_council_tax_reduction_capital_limit - hart_council_tax_reduction_capital_limit) else: hart_council_tax_reduction_capital_limit - hart_council_tax_reduction_capital_limit'}]
+inputs:
+  - {name: local_authority_is_hart, entity: Household, dtype: Boolean, period: Year}
+
+  - {name: would_claim_council_tax_reduction, entity: Household, dtype: Boolean, period: Year}
+
+  - {name: hart_council_tax_reduction_applicant_is_not_a_pensioner, entity: Household, dtype: Boolean, period: Year}
+
+  - {name: hart_council_tax_reduction_non_dependant_deduction_band, entity: Household, dtype: Integer, period: Week}
+
+  - {name: hart_council_tax_reduction_assessed_capital_for_year, entity: Household, dtype: Money, period: Year, unit: GBP}
+
+  - {name: hart_council_tax_reduction_actual_liability_for_year, entity: Household, dtype: Money, period: Year, unit: GBP}
+
+  - {name: hart_council_tax_reduction_assessed_income_for_year, entity: Household, dtype: Money, period: Year, unit: GBP}
+
+  - {name: hart_council_tax_reduction_applicable_amount_for_year, entity: Household, dtype: Money, period: Year, unit: GBP}
+
+  - {name: hart_council_tax_reduction_non_dependant_deductions_for_year, entity: Household, dtype: Money, period: Year, unit: GBP}
