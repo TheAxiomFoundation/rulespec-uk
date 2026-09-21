@@ -1,0 +1,161 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk-north-somerset/manual/council-tax-reduction-scheme-2026-2027/page-9
+    # upstream_source_check: {status: delegated_scheme, checked_paths: [uk/statutes/ukpga/1992/14/13A, uk/regulations/uksi/2012/2885, uk/regulations/uksi/2012/2886], rationale: Section 13A delegates the working-age scheme to North Somerset Council, so the adopted document is operative.}
+  summary: North Somerset's 2026-27 working-age award is a monthly-earned-income banded discount, applied after the Band D liability ceiling and before a weekly non-dependant deduction. Capital above £6,000 precludes an award. The scheme states no tariff-income rule, taper, or minimum-award floor. Pension-age provisions are outside this module.
+  deferred_outputs:
+    - output: uk-north-somerset:policies/north-somerset/council-tax-reduction/paragraphs-14-to-24#assessed_monthly_earned_income
+      reason: Earnings assessment and conversion are consumed as an input to the award surface.
+    - output: uk-north-somerset:policies/north-somerset/council-tax-reduction/paragraphs-26-to-33#assessed_capital
+      reason: Capital valuation and disregards are consumed as an input to the award surface.
+    - output: uk-north-somerset:policies/north-somerset/council-tax-reduction/paragraphs-35-and-40#band_d_capped_annual_liability
+      reason: The Band D ceiling, discounts, and joint-liability share are consumed as an input.
+    - output: uk-north-somerset:policies/north-somerset/council-tax-reduction/paragraphs-44-and-51#non_dependant_exemption
+      reason: Detailed exemption classifiers are consumed as an input.
+rules:
+  - name: north_somerset_council_tax_reduction_capital_limit
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: North Somerset Council Tax Reduction Scheme 2026/27 paragraph 27
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-north-somerset/manual/council-tax-reduction-scheme-2026-2027/page-8, excerpt: "more than £16,000 (£6,000 for working-age applicants)"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '6000'}]
+  - name: north_somerset_council_tax_reduction_band_1_rate
+    kind: parameter
+    dtype: Rate
+    source: North Somerset Council Tax Reduction Scheme 2026/27 paragraph 10
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: parameter_table, source: {corpus_citation_path: uk-north-somerset/manual/council-tax-reduction-scheme-2026-2027/page-6, excerpt: "Band Monthly earned income\n\nDiscount percentage Protected group 1 £0 67.5% 67.5% 2 £0.01-£500.00 47% 57% 3 £500.01 - £800 34% 57% 4 £800.01 - £1,100 22% 57% 5 £1,100.01 - £1,400 10% 57% 6 £1,400.01 and above 0% 0%", table: {header: "Band Monthly earned income", row_key: band, column_key: discount percentage}}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '0.675'}]
+  - name: north_somerset_council_tax_reduction_regular_rate_by_band
+    kind: parameter
+    dtype: Rate
+    indexed_by: north_somerset_council_tax_reduction_income_band
+    source: North Somerset Council Tax Reduction Scheme 2026/27 paragraph 10 regular discount grid
+    metadata: &grid_proof {proof: {atoms: [{path: 'versions[0].values', kind: parameter_table, source: {corpus_citation_path: uk-north-somerset/manual/council-tax-reduction-scheme-2026-2027/page-6, excerpt: "Band Monthly earned income\n\nDiscount percentage Protected group 1 £0 67.5% 67.5% 2 £0.01-£500.00 47% 57% 3 £500.01 - £800 34% 57% 4 £800.01 - £1,100 22% 57% 5 £1,100.01 - £1,400 10% 57% 6 £1,400.01 and above 0% 0%", table: {header: "Band Monthly earned income", row_key: band, column_key: discount percentage}}}]}}
+    versions: [{effective_from: '2026-04-01', values: {0: 0, 1: 0.675, 2: 0.47, 3: 0.34, 4: 0.22, 5: 0.10, 6: 0}}]
+  - name: north_somerset_council_tax_reduction_protected_rate_by_band
+    kind: parameter
+    dtype: Rate
+    indexed_by: north_somerset_council_tax_reduction_income_band
+    source: North Somerset Council Tax Reduction Scheme 2026/27 paragraph 10 protected-group discount grid
+    metadata: *grid_proof
+    versions: [{effective_from: '2026-04-01', values: {0: 0, 1: 0.675, 2: 0.57, 3: 0.57, 4: 0.57, 5: 0.57, 6: 0}}]
+  - name: north_somerset_council_tax_reduction_non_dependant_weekly_deduction_by_band
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    indexed_by: north_somerset_council_tax_reduction_non_dependant_band
+    source: North Somerset Council Tax Reduction Scheme 2026/27 paragraph 49
+    metadata: &nd_proof {proof: {atoms: [{path: 'versions[0].values', kind: parameter_table, source: {corpus_citation_path: uk-north-somerset/manual/council-tax-reduction-scheme-2026-2027/page-12, excerpt: "a standard deduction is applied for non-dependants aged 18 or over. The deduction is £7.50 a week for those who are not in remunerative work, and £15.00 week for those who are in remunerative work.", table: {header: "Non-dependant deductions for working-age applicants", row_key: remunerative work, column_key: weekly deduction}}}]}}
+    versions: [{effective_from: '2026-04-01', values: {0: 0, 1: 7.50, 2: 15.00}}]
+  - name: north_somerset_council_tax_reduction_weeks_per_year
+    kind: parameter
+    dtype: Number
+    source: North Somerset Council Tax Reduction Scheme 2026/27 earnings period
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-north-somerset/manual/council-tax-reduction-scheme-2026-2027/page-7, excerpt: "multiplying by 12 and dividing by 52"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '52'}]
+  - name: north_somerset_council_tax_reduction_monthly_income_upper_by_band
+    kind: parameter
+    dtype: Money
+    period: Month
+    unit: GBP
+    indexed_by: north_somerset_council_tax_reduction_income_band
+    source: North Somerset Council Tax Reduction Scheme 2026/27 paragraph 10 income grid
+    metadata: *grid_proof
+    versions: [{effective_from: '2026-04-01', values: {1: 0, 2: 500, 3: 800, 4: 1100, 5: 1400}}]
+  - name: north_somerset_council_tax_reduction_income_band_1
+    kind: parameter
+    dtype: Number
+    source: North Somerset Council Tax Reduction Scheme 2026/27 paragraph 10 Band 1
+    metadata: &band_scalar_proof {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-north-somerset/manual/council-tax-reduction-scheme-2026-2027/page-6, excerpt: "1 £0 67.5% 67.5%"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '1'}]
+  - name: north_somerset_council_tax_reduction_income_band_2
+    kind: parameter
+    dtype: Number
+    source: North Somerset Council Tax Reduction Scheme 2026/27 paragraph 10 Band 2
+    metadata: *band_scalar_proof
+    versions: [{effective_from: '2026-04-01', formula: '2'}]
+  - name: north_somerset_council_tax_reduction_income_band_3
+    kind: parameter
+    dtype: Number
+    source: North Somerset Council Tax Reduction Scheme 2026/27 paragraph 10 Band 3
+    metadata: *band_scalar_proof
+    versions: [{effective_from: '2026-04-01', formula: '3'}]
+  - name: north_somerset_council_tax_reduction_income_band_4
+    kind: parameter
+    dtype: Number
+    source: North Somerset Council Tax Reduction Scheme 2026/27 paragraph 10 Band 4
+    metadata: *band_scalar_proof
+    versions: [{effective_from: '2026-04-01', formula: 'north_somerset_council_tax_reduction_income_band_3 + north_somerset_council_tax_reduction_income_band_1'}]
+  - name: north_somerset_council_tax_reduction_income_band_5
+    kind: parameter
+    dtype: Number
+    source: North Somerset Council Tax Reduction Scheme 2026/27 paragraph 10 Band 5
+    metadata: *band_scalar_proof
+    versions: [{effective_from: '2026-04-01', formula: 'north_somerset_council_tax_reduction_income_band_4 + north_somerset_council_tax_reduction_income_band_1'}]
+  - name: north_somerset_council_tax_reduction_income_band_6
+    kind: parameter
+    dtype: Number
+    source: North Somerset Council Tax Reduction Scheme 2026/27 paragraph 10 Band 6
+    metadata: *band_scalar_proof
+    versions: [{effective_from: '2026-04-01', formula: 'north_somerset_council_tax_reduction_income_band_5 + north_somerset_council_tax_reduction_income_band_1'}]
+  - name: north_somerset_council_tax_reduction_capital_eligible
+    kind: derived
+    entity: Person
+    dtype: Judgment
+    period: Year
+    source: North Somerset Council Tax Reduction Scheme 2026/27 paragraph 27
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: condition, source: {corpus_citation_path: uk-north-somerset/manual/council-tax-reduction-scheme-2026-2027/page-8, excerpt: "If an applicant has more than £16,000 (£6,000 for working-age applicants) in capital, no council tax reduction is payable under this scheme."}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 'north_somerset_council_tax_reduction_assessed_capital_for_year <= north_somerset_council_tax_reduction_capital_limit'}]
+  - name: north_somerset_council_tax_reduction_income_band
+    kind: derived
+    entity: Person
+    dtype: Number
+    period: Month
+    source: North Somerset Council Tax Reduction Scheme 2026/27 paragraph 10 grid
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: parameter_table, source: {corpus_citation_path: uk-north-somerset/manual/council-tax-reduction-scheme-2026-2027/page-6, excerpt: "Band Monthly earned income\n\nDiscount percentage Protected group 1 £0 67.5% 67.5% 2 £0.01-£500.00 47% 57% 3 £500.01 - £800 34% 57% 4 £800.01 - £1,100 22% 57% 5 £1,100.01 - £1,400 10% 57% 6 £1,400.01 and above 0% 0%", table: {header: "Band Monthly earned income", row_key: band, column_key: discount percentage}}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 'if north_somerset_council_tax_reduction_assessed_monthly_earned_income <= north_somerset_council_tax_reduction_monthly_income_upper_by_band[north_somerset_council_tax_reduction_income_band_1]: north_somerset_council_tax_reduction_income_band_1 else: if north_somerset_council_tax_reduction_assessed_monthly_earned_income <= north_somerset_council_tax_reduction_monthly_income_upper_by_band[north_somerset_council_tax_reduction_income_band_2]: north_somerset_council_tax_reduction_income_band_2 else: if north_somerset_council_tax_reduction_assessed_monthly_earned_income <= north_somerset_council_tax_reduction_monthly_income_upper_by_band[north_somerset_council_tax_reduction_income_band_3]: north_somerset_council_tax_reduction_income_band_3 else: if north_somerset_council_tax_reduction_assessed_monthly_earned_income <= north_somerset_council_tax_reduction_monthly_income_upper_by_band[north_somerset_council_tax_reduction_income_band_4]: north_somerset_council_tax_reduction_income_band_4 else: if north_somerset_council_tax_reduction_assessed_monthly_earned_income <= north_somerset_council_tax_reduction_monthly_income_upper_by_band[north_somerset_council_tax_reduction_income_band_5]: north_somerset_council_tax_reduction_income_band_5 else: north_somerset_council_tax_reduction_income_band_6'}]
+  - name: north_somerset_council_tax_reduction_selected_support_rate
+    kind: derived
+    entity: Person
+    dtype: Rate
+    period: Year
+    source: North Somerset Council Tax Reduction Scheme 2026/27 paragraph 10
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: parameter_table, source: {corpus_citation_path: uk-north-somerset/manual/council-tax-reduction-scheme-2026-2027/page-6, excerpt: "Band Monthly earned income\n\nDiscount percentage Protected group 1 £0 67.5% 67.5% 2 £0.01-£500.00 47% 57% 3 £500.01 - £800 34% 57% 4 £800.01 - £1,100 22% 57% 5 £1,100.01 - £1,400 10% 57% 6 £1,400.01 and above 0% 0%", table: {header: "Band Monthly earned income", row_key: band, column_key: discount percentage}}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 'if north_somerset_council_tax_reduction_has_disabled_child: north_somerset_council_tax_reduction_protected_rate_by_band[north_somerset_council_tax_reduction_income_band] else: north_somerset_council_tax_reduction_regular_rate_by_band[north_somerset_council_tax_reduction_income_band]'}]
+  - name: north_somerset_council_tax_reduction_non_dependant_band
+    kind: derived
+    entity: Person
+    dtype: Number
+    period: Week
+    source: North Somerset Council Tax Reduction Scheme 2026/27 paragraphs 49 and 51
+    metadata: &nd_selection_proof {proof: {atoms: [{path: 'versions[0].formula', kind: condition, source: {corpus_citation_path: uk-north-somerset/manual/council-tax-reduction-scheme-2026-2027/page-12, excerpt: "No non-dependant deduction is applied where the non-dependant:"}}, {path: 'versions[0].formula', kind: parameter_table, source: {corpus_citation_path: uk-north-somerset/manual/council-tax-reduction-scheme-2026-2027/page-12, excerpt: "a standard deduction is applied for non-dependants aged 18 or over. The deduction is £7.50 a week for those who are not in remunerative work, and £15.00 week for those who are in remunerative work.", table: {header: "Non-dependant deductions for working-age applicants", row_key: remunerative work, column_key: weekly deduction}}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 'if north_somerset_council_tax_reduction_has_chargeable_non_dependant and not north_somerset_council_tax_reduction_non_dependant_exempt: if north_somerset_council_tax_reduction_non_dependant_in_remunerative_work: 2 else: 1 else: 0'}]
+  - name: north_somerset_council_tax_reduction_annual_non_dependant_deduction
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: North Somerset Council Tax Reduction Scheme 2026/27 paragraph 49
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: parameter_table, source: {corpus_citation_path: uk-north-somerset/manual/council-tax-reduction-scheme-2026-2027/page-12, excerpt: "a standard deduction is applied for non-dependants aged 18 or over. The deduction is £7.50 a week for those who are not in remunerative work, and £15.00 week for those who are in remunerative work.", table: {header: "Non-dependant deductions for working-age applicants", row_key: remunerative work, column_key: weekly deduction}}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 'north_somerset_council_tax_reduction_non_dependant_weekly_deduction_by_band[north_somerset_council_tax_reduction_non_dependant_band] * north_somerset_council_tax_reduction_weeks_per_year'}]
+  - name: north_somerset_council_tax_reduction_annual_amount
+    kind: derived
+    entity: Person
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: North Somerset Council Tax Reduction Scheme 2026/27 paragraph 36
+    metadata:
+      proof:
+        atoms:
+          - path: 'versions[0].formula'
+            kind: ordering
+            source: {corpus_citation_path: uk-north-somerset/manual/council-tax-reduction-scheme-2026-2027/page-9, excerpt: "For working-age applicants, the calculation of council tax reduction is made in the following order: a. the actual liability for council tax, capped at a band D property charge; b. apply the maximum council tax reduction in accordance with the table at paragraph 10; c. apply any non-dependant deductions set out in paragraph 49."}
+    versions: [{effective_from: '2026-04-01', formula: 'if north_somerset_council_tax_reduction_capital_eligible: max(0, north_somerset_council_tax_reduction_band_d_capped_annual_liability * north_somerset_council_tax_reduction_selected_support_rate - north_somerset_council_tax_reduction_annual_non_dependant_deduction) else: 0'}]
