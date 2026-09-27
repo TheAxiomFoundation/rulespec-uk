@@ -61,3 +61,35 @@
     uk:statutes/social_security/workers/pilot_worker_self_employed_nic_pipeline#uk_nic_pilot_se_voluntary_class_2_weekly_rate: 3.5
     uk:statutes/social_security/workers/pilot_worker_self_employed_nic_pipeline#uk_nic_pilot_se_class_2_amount_payable: 0
     uk:statutes/social_security/workers/pilot_worker_self_employed_nic_pipeline#uk_nic_pilot_se_self_employed_contribution: 0
+- name: profits_limits_unaltered_in_2027_28
+  period:
+    period_kind: tax_year
+    start: '2027-04-06'
+    end: '2028-04-05'
+  input:
+    uk:statutes/social_security/workers/pilot_worker_self_employed_nic_pipeline#input.uk_nic_pilot_se_annual_profits: 65432
+  output:
+    uk:statutes/social_security/workers/pilot_worker_self_employed_nic_pipeline#uk_nic_pilot_se_lower_profits_limit: 12570
+    uk:statutes/social_security/workers/pilot_worker_self_employed_nic_pipeline#uk_nic_pilot_se_upper_profits_limit: 50270
+    uk:statutes/social_security/workers/pilot_worker_self_employed_nic_pipeline#uk_nic_pilot_se_profits: 65432
+    uk:statutes/social_security/workers/pilot_worker_self_employed_nic_pipeline#uk_nic_pilot_se_main_class_4_contribution: 2262
+    uk:statutes/social_security/workers/pilot_worker_self_employed_nic_pipeline#uk_nic_pilot_se_additional_class_4_contribution: 303.24
+    uk:statutes/social_security/workers/pilot_worker_self_employed_nic_pipeline#uk_nic_pilot_se_class_4_contribution: 2565.24
+    uk:statutes/social_security/workers/pilot_worker_self_employed_nic_pipeline#uk_nic_pilot_se_class_2_amount_payable: 0
+    uk:statutes/social_security/workers/pilot_worker_self_employed_nic_pipeline#uk_nic_pilot_se_self_employed_contribution: 2565.24
+- name: profits_limits_unaltered_in_2030_31
+  period:
+    period_kind: tax_year
+    start: '2030-04-06'
+    end: '2031-04-05'
+  input:
+    uk:statutes/social_security/workers/pilot_worker_self_employed_nic_pipeline#input.uk_nic_pilot_se_annual_profits: 52301
+  output:
+    uk:statutes/social_security/workers/pilot_worker_self_employed_nic_pipeline#uk_nic_pilot_se_lower_profits_limit: 12570
+    uk:statutes/social_security/workers/pilot_worker_self_employed_nic_pipeline#uk_nic_pilot_se_upper_profits_limit: 50270
+    uk:statutes/social_security/workers/pilot_worker_self_employed_nic_pipeline#uk_nic_pilot_se_profits: 52301
+    uk:statutes/social_security/workers/pilot_worker_self_employed_nic_pipeline#uk_nic_pilot_se_main_class_4_contribution: 2262
+    uk:statutes/social_security/workers/pilot_worker_self_employed_nic_pipeline#uk_nic_pilot_se_additional_class_4_contribution: 40.62
+    uk:statutes/social_security/workers/pilot_worker_self_employed_nic_pipeline#uk_nic_pilot_se_class_4_contribution: 2302.62
+    uk:statutes/social_security/workers/pilot_worker_self_employed_nic_pipeline#uk_nic_pilot_se_class_2_amount_payable: 0
+    uk:statutes/social_security/workers/pilot_worker_self_employed_nic_pipeline#uk_nic_pilot_se_self_employed_contribution: 2302.62

@@ -47,3 +47,31 @@
     uk:statutes/social_security/workers/pilot_worker_class_1_nic_pipeline#uk_nic_pilot_main_primary_contribution: 0
     uk:statutes/social_security/workers/pilot_worker_class_1_nic_pipeline#uk_nic_pilot_additional_primary_contribution: 0
     uk:statutes/social_security/workers/pilot_worker_class_1_nic_pipeline#uk_nic_pilot_primary_class_1_contribution: 0
+- name: frozen_personal_allowance_and_basic_rate_limit_give_same_thresholds_in_2027_28
+  period:
+    period_kind: tax_year
+    start: '2027-04-06'
+    end: '2028-04-05'
+  input:
+    uk:statutes/social_security/workers/pilot_worker_class_1_nic_pipeline#input.uk_nic_pilot_annual_employment_income: 52301
+  output:
+    uk:statutes/social_security/workers/pilot_worker_class_1_nic_pipeline#uk_nic_pilot_primary_threshold_annual: 12570
+    uk:statutes/social_security/workers/pilot_worker_class_1_nic_pipeline#uk_nic_pilot_upper_earnings_limit_annual: 50270
+    uk:statutes/social_security/workers/pilot_worker_class_1_nic_pipeline#uk_nic_pilot_annual_earnings: 52301
+    uk:statutes/social_security/workers/pilot_worker_class_1_nic_pipeline#uk_nic_pilot_main_primary_contribution: 3016
+    uk:statutes/social_security/workers/pilot_worker_class_1_nic_pipeline#uk_nic_pilot_additional_primary_contribution: 40.62
+    uk:statutes/social_security/workers/pilot_worker_class_1_nic_pipeline#uk_nic_pilot_primary_class_1_contribution: 3056.62
+- name: frozen_personal_allowance_and_basic_rate_limit_give_same_thresholds_in_2030_31
+  period:
+    period_kind: tax_year
+    start: '2030-04-06'
+    end: '2031-04-05'
+  input:
+    uk:statutes/social_security/workers/pilot_worker_class_1_nic_pipeline#input.uk_nic_pilot_annual_employment_income: 30000
+  output:
+    uk:statutes/social_security/workers/pilot_worker_class_1_nic_pipeline#uk_nic_pilot_primary_threshold_annual: 12570
+    uk:statutes/social_security/workers/pilot_worker_class_1_nic_pipeline#uk_nic_pilot_upper_earnings_limit_annual: 50270
+    uk:statutes/social_security/workers/pilot_worker_class_1_nic_pipeline#uk_nic_pilot_annual_earnings: 30000
+    uk:statutes/social_security/workers/pilot_worker_class_1_nic_pipeline#uk_nic_pilot_main_primary_contribution: 1394.4
+    uk:statutes/social_security/workers/pilot_worker_class_1_nic_pipeline#uk_nic_pilot_additional_primary_contribution: 0
+    uk:statutes/social_security/workers/pilot_worker_class_1_nic_pipeline#uk_nic_pilot_primary_class_1_contribution: 1394.4
