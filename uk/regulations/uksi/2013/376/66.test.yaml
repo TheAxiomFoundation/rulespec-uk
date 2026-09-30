@@ -653,7 +653,8 @@
     uk:regulations/uksi/2013/376/66#unearned_income_amount_from_payment:
     - 374.62
 # From 15.3.2026 reg 2 'carer support payment' means 'the carer support payment component of carer support' (SI 2026/246 art 25);
-# SSI 2023/302 reg 16(1A) SCS 11.70 a week x 52 / 12 = 50.70. ASSUMPTION: SCS is not ITTOIA Part 5 miscellaneous income (UNVERIFIED).
+# SSI 2023/302 reg 16(1A) SCS 11.70 a week x 52 / 12 = 50.70. SCS is taxed under ITEPA 2003 s.660 Table A (SI 2026/93 reg 2(3)),
+# not ITTOIA Part 5, so reg 66(1)(m) does not reach it either.
 - name: scottish_carer_supplement_is_not_carer_support_payment
   period: 2026-05
   input: {}
