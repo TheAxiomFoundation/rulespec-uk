@@ -70,7 +70,8 @@
     uk:regulations/uksi/2013/376/72#actual_income_from_tariffed_capital_treated_as_capital: 0
 # ADM H5094 Example 2: for a let second property, "the actual income derived from
 # that capital (the rental income) is treated as part of Scoot’s capital from the
-# date it is due to be paid" (reg 72(3)). Property worth 10,000; rent of 400 due.
+# date it is due to be paid" (reg 72(3)). Capital of 10,000 (after reg 49
+# valuation) in the let property; rent of 400 due.
 - name: rent from a tariffed let property is treated as capital on due day
   period:
     period_kind: custom
@@ -85,3 +86,21 @@
     uk:regulations/uksi/2013/376/72#input.actual_income_derived_from_that_capital_due_to_be_paid_to_person_on_day_amount: 400
   output:
     uk:regulations/uksi/2013/376/72#actual_income_from_tariffed_capital_treated_as_capital: 400
+# Reg 72(2): paragraph (1) "does not apply where the capital is disregarded", so
+# the capital is not treated as yielding income and reg 72(3) does not reach the
+# rent from it. Same property and rent, but the capital is disregarded under
+# Schedule 10.
+- name: rent from disregarded capital is not treated as capital by 72(3)
+  period:
+    period_kind: custom
+    name: day
+    start: '2024-01-15'
+    end: '2024-01-15'
+  input:
+    uk:regulations/uksi/2013/376/72#input.person_capital: 10000
+    uk:regulations/uksi/2013/376/72#input.capital_is_disregarded: true
+    uk:regulations/uksi/2013/376/72#input.actual_income_from_capital_taken_into_account_under_regulation_66_1_i_annuity: false
+    uk:regulations/uksi/2013/376/72#input.actual_income_from_capital_taken_into_account_under_regulation_66_1_j_trust: false
+    uk:regulations/uksi/2013/376/72#input.actual_income_derived_from_that_capital_due_to_be_paid_to_person_on_day_amount: 400
+  output:
+    uk:regulations/uksi/2013/376/72#actual_income_from_tariffed_capital_treated_as_capital: 0

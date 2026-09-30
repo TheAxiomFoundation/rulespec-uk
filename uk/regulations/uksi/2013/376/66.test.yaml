@@ -315,9 +315,10 @@
     - 0
 # Bank interest is charged under ITTOIA 2005 Part 4 Chapter 2 (s.369), not Part 5,
 # so no reg 66(1) description covers it (reg 66(1)(m) reaches only Part 5 income).
-# Reg 72(3) treats actual income derived from capital, "for example rental,
-# interest or dividends", as capital; ADM H5002: an unlisted type of income
-# "does not affect the claimant's award".
+# ADM H5002: an unlisted type of income "does not affect the claimant's award".
+# Separately, where capital is treated as yielding income, reg 72(3) makes the
+# actual income derived from it, "for example rental, interest or dividends",
+# part of the person's capital.
 - name: bank_interest_is_not_unearned_income
   period: 2026-04
   input: {}
@@ -363,8 +364,9 @@
     - not_holds
     uk:regulations/uksi/2013/376/66#unearned_income_amount_from_payment:
     - 0
-# Dividends from a UK company are charged under ITTOIA 2005 Part 4 Chapter 3
-# (s.383), not Part 5, and are named in reg 72(3) as income derived from capital.
+# Dividends are charged under ITTOIA 2005 Part 4, not Part 5: Chapter 3 (s.383)
+# for UK-resident companies and Chapter 4 (s.402) for non-UK-resident ones. Reg
+# 72(3) names them as income derived from capital.
 - name: dividends_are_not_unearned_income
   period: 2026-04
   input: {}
@@ -504,8 +506,9 @@
     - not_holds
     uk:regulations/uksi/2013/376/66#unearned_income_amount_from_payment:
     - 0
-# Reg 66(1)(k) counts the reg 72(1) assumed yield instead. A let property
-# worth £10,000 yields (10,000 - 6,000) / 250 = 16 x £4.35 = £69.60 a month.
+# Reg 66(1)(k) counts the reg 72(1) assumed yield instead. £10,000 of capital
+# (after reg 49 valuation) in a let property yields (10,000 - 6,000) / 250 =
+# 16 x £4.35 = £69.60 a month.
 - name: assumed_yield_on_let_property_counts_as_unearned_income
   period: 2026-04
   input: {}
