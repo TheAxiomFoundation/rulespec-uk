@@ -1,0 +1,83 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-36
+    source_sha256: a73776635f36d9210aac7dabbebab4865ce3f8f9083a63b26fb3199da7783307
+  summary: Capital possessed outside the United Kingdom is calculated at current market
+    or surrender value where transfer is not prohibited, otherwise at its United Kingdom
+    willing-buyer sale price, less 10 per cent where sale expenses would arise and
+    less secured encumbrances.
+inputs:
+- name: transfer_to_united_kingdom_is_prohibited
+  entity: Asset
+  dtype: Boolean
+  period: Month
+- name: current_market_or_surrender_value_in_country
+  entity: Asset
+  dtype: Money
+  period: Month
+- name: willing_buyer_sale_price_in_united_kingdom
+  entity: Asset
+  dtype: Money
+  period: Month
+- name: sale_expenses_are_attributable_to_sale
+  entity: Asset
+  dtype: Boolean
+  period: Month
+- name: encumbrances_secured_on_capital
+  entity: Asset
+  dtype: Money
+  period: Month
+rules:
+- name: sale_expense_deduction_rate
+  kind: parameter
+  dtype: Rate
+  source: uk-wakefield/manual/council-tax-support-scheme-working-age/block-36
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: amount
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-36
+          excerpt: less, where there would be expenses attributable to sale, 10 per
+            cent
+  versions:
+  - effective_from: '0001-01-01'
+    formula: '0.10'
+- name: capital_value_outside_united_kingdom
+  kind: derived
+  entity: Asset
+  dtype: Money
+  period: Month
+  source: uk-wakefield/manual/council-tax-support-scheme-working-age/block-36
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-36
+          excerpt: in a case where there is no prohibition in that country against
+            the transfer to the United Kingdom
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-36
+          excerpt: in a case where there is such a prohibition, at the price which
+            it would realise if sold in the United Kingdom to a willing buyer
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-36
+          excerpt: less, where there would be expenses attributable to sale, 10 per
+            cent and the amount of any encumbrances secured on it.
+  versions:
+  - effective_from: '0001-01-01'
+    formula: "(if transfer_to_united_kingdom_is_prohibited:\n  willing_buyer_sale_price_in_united_kingdom\n\
+      else:\n  current_market_or_surrender_value_in_country)\n- (if sale_expenses_are_attributable_to_sale:\n\
+      \  (if transfer_to_united_kingdom_is_prohibited:\n    willing_buyer_sale_price_in_united_kingdom\n\
+      \  else:\n    current_market_or_surrender_value_in_country) * sale_expense_deduction_rate\n\
+      else:\n  0)\n- encumbrances_secured_on_capital"
