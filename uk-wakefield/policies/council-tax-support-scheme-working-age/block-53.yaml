@@ -1,0 +1,128 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-53
+    source_sha256: f6f734f462d71e44a53971a6f2e00c8a7bf9308c4ebbe98213bb0412accc5187
+  summary: A change of circumstances takes effect from the earliest day of a Council
+    Tax liability change, the change of circumstances (subject to c)), or the Universal
+    Credit assessment-period start date in which a current claimant's award is amended.
+inputs:
+- name: council_tax_liability_changes_on_day
+  entity: Person
+  dtype: Boolean
+  period: Day
+- name: council_tax_liability_change_day_is_earliest
+  entity: Person
+  dtype: Boolean
+  period: Day
+- name: change_of_circumstances_occurs_on_day
+  entity: Person
+  dtype: Boolean
+  period: Day
+- name: change_of_circumstances_day_is_earliest
+  entity: Person
+  dtype: Boolean
+  period: Day
+- name: applicant_has_current_universal_credit_claim
+  entity: Person
+  dtype: Boolean
+  period: Day
+- name: day_is_start_of_universal_credit_assessment_period_with_amended_award
+  entity: Person
+  dtype: Boolean
+  period: Day
+- name: universal_credit_assessment_period_start_day_is_earliest
+  entity: Person
+  dtype: Boolean
+  period: Day
+rules:
+- name: council_tax_liability_change_effective_day
+  kind: derived
+  entity: Person
+  dtype: Judgment
+  period: Day
+  source: Wakefield Council Tax Support Scheme (Working Age) 2026/27, block 53, Council
+    Tax liability branch
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-53
+          excerpt: where the change results in a change to Council Tax liability,
+            the day that Council Tax liability changes.
+  versions:
+  - effective_from: '0001-01-01'
+    formula: 'council_tax_liability_changes_on_day
+
+      and council_tax_liability_change_day_is_earliest'
+- name: change_of_circumstances_effective_day_subject_to_c
+  kind: derived
+  entity: Person
+  dtype: Judgment
+  period: Day
+  source: Wakefield Council Tax Support Scheme (Working Age) 2026/27, block 53, change-of-circumstances
+    branch
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-53
+          excerpt: Subject to c), the day the change of circumstances occurs.
+  versions:
+  - effective_from: '0001-01-01'
+    formula: 'change_of_circumstances_occurs_on_day
+
+      and change_of_circumstances_day_is_earliest
+
+      and not applicant_has_current_universal_credit_claim'
+- name: universal_credit_assessment_period_effective_day_c
+  kind: derived
+  entity: Person
+  dtype: Judgment
+  period: Day
+  source: Wakefield Council Tax Support Scheme (Working Age) 2026/27, block 53(c)
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-53
+          excerpt: where an applicant has a current claim to Universal Credit, the
+            start date of the assessment period in which the Universal Credit award
+            is amended to reflect the change.
+  versions:
+  - effective_from: '0001-01-01'
+    formula: 'applicant_has_current_universal_credit_claim
+
+      and day_is_start_of_universal_credit_assessment_period_with_amended_award
+
+      and universal_credit_assessment_period_start_day_is_earliest'
+- name: change_of_circumstances_takes_effect_on_day
+  kind: derived
+  entity: Person
+  dtype: Judgment
+  period: Day
+  source: Wakefield Council Tax Support Scheme (Working Age) 2026/27, block 53
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: ordering
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-53
+          excerpt: 'A change of circumstances will take effect from the earliest of
+            the following:'
+  versions:
+  - effective_from: '0001-01-01'
+    formula: 'council_tax_liability_change_effective_day
+
+      or change_of_circumstances_effective_day_subject_to_c
+
+      or universal_credit_assessment_period_effective_day_c'

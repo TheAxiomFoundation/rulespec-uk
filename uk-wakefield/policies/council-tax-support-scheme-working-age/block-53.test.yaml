@@ -1,0 +1,231 @@
+- name: council_tax_liability_day_is_effective
+  period:
+    period_kind: custom
+    name: day
+    start: '2026-04-01'
+    end: '2026-04-01'
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#input.council_tax_liability_changes_on_day: true
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#input.council_tax_liability_change_day_is_earliest: true
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#input.change_of_circumstances_occurs_on_day: false
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#input.change_of_circumstances_day_is_earliest: false
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#input.applicant_has_current_universal_credit_claim: false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#input.day_is_start_of_universal_credit_assessment_period_with_amended_award
+    : false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#input.universal_credit_assessment_period_start_day_is_earliest
+    : false
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#council_tax_liability_change_effective_day: holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#change_of_circumstances_effective_day_subject_to_c: not_holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#universal_credit_assessment_period_effective_day_c: not_holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#change_of_circumstances_takes_effect_on_day: holds
+- name: council_tax_liability_day_requires_liability_change
+  period:
+    period_kind: custom
+    name: day
+    start: '2026-04-01'
+    end: '2026-04-01'
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#input.council_tax_liability_changes_on_day: false
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#input.council_tax_liability_change_day_is_earliest: true
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#input.change_of_circumstances_occurs_on_day: false
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#input.change_of_circumstances_day_is_earliest: false
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#input.applicant_has_current_universal_credit_claim: false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#input.day_is_start_of_universal_credit_assessment_period_with_amended_award
+    : false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#input.universal_credit_assessment_period_start_day_is_earliest
+    : false
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#council_tax_liability_change_effective_day: not_holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#change_of_circumstances_effective_day_subject_to_c: not_holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#universal_credit_assessment_period_effective_day_c: not_holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#change_of_circumstances_takes_effect_on_day: not_holds
+- name: council_tax_liability_day_requires_earliest_day
+  period:
+    period_kind: custom
+    name: day
+    start: '2026-04-01'
+    end: '2026-04-01'
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#input.council_tax_liability_changes_on_day: true
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#input.council_tax_liability_change_day_is_earliest: false
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#input.change_of_circumstances_occurs_on_day: false
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#input.change_of_circumstances_day_is_earliest: false
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#input.applicant_has_current_universal_credit_claim: false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#input.day_is_start_of_universal_credit_assessment_period_with_amended_award
+    : false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#input.universal_credit_assessment_period_start_day_is_earliest
+    : false
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#council_tax_liability_change_effective_day: not_holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#change_of_circumstances_effective_day_subject_to_c: not_holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#universal_credit_assessment_period_effective_day_c: not_holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#change_of_circumstances_takes_effect_on_day: not_holds
+- name: change_of_circumstances_day_is_effective_without_current_universal_credit_claim
+  period:
+    period_kind: custom
+    name: day
+    start: '2026-04-01'
+    end: '2026-04-01'
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#input.council_tax_liability_changes_on_day: false
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#input.council_tax_liability_change_day_is_earliest: false
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#input.change_of_circumstances_occurs_on_day: true
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#input.change_of_circumstances_day_is_earliest: true
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#input.applicant_has_current_universal_credit_claim: false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#input.day_is_start_of_universal_credit_assessment_period_with_amended_award
+    : false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#input.universal_credit_assessment_period_start_day_is_earliest
+    : false
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#council_tax_liability_change_effective_day: not_holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#change_of_circumstances_effective_day_subject_to_c: holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#universal_credit_assessment_period_effective_day_c: not_holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#change_of_circumstances_takes_effect_on_day: holds
+- name: change_of_circumstances_day_requires_change
+  period:
+    period_kind: custom
+    name: day
+    start: '2026-04-01'
+    end: '2026-04-01'
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#input.council_tax_liability_changes_on_day: false
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#input.council_tax_liability_change_day_is_earliest: false
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#input.change_of_circumstances_occurs_on_day: false
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#input.change_of_circumstances_day_is_earliest: true
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#input.applicant_has_current_universal_credit_claim: false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#input.day_is_start_of_universal_credit_assessment_period_with_amended_award
+    : false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#input.universal_credit_assessment_period_start_day_is_earliest
+    : false
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#council_tax_liability_change_effective_day: not_holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#change_of_circumstances_effective_day_subject_to_c: not_holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#universal_credit_assessment_period_effective_day_c: not_holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#change_of_circumstances_takes_effect_on_day: not_holds
+- name: change_of_circumstances_day_requires_earliest_day
+  period:
+    period_kind: custom
+    name: day
+    start: '2026-04-01'
+    end: '2026-04-01'
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#input.council_tax_liability_changes_on_day: false
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#input.council_tax_liability_change_day_is_earliest: false
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#input.change_of_circumstances_occurs_on_day: true
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#input.change_of_circumstances_day_is_earliest: false
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#input.applicant_has_current_universal_credit_claim: false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#input.day_is_start_of_universal_credit_assessment_period_with_amended_award
+    : false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#input.universal_credit_assessment_period_start_day_is_earliest
+    : false
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#council_tax_liability_change_effective_day: not_holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#change_of_circumstances_effective_day_subject_to_c: not_holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#universal_credit_assessment_period_effective_day_c: not_holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#change_of_circumstances_takes_effect_on_day: not_holds
+- name: change_of_circumstances_day_is_subject_to_universal_credit_branch
+  period:
+    period_kind: custom
+    name: day
+    start: '2026-04-01'
+    end: '2026-04-01'
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#input.council_tax_liability_changes_on_day: false
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#input.council_tax_liability_change_day_is_earliest: false
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#input.change_of_circumstances_occurs_on_day: true
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#input.change_of_circumstances_day_is_earliest: true
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#input.applicant_has_current_universal_credit_claim: true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#input.day_is_start_of_universal_credit_assessment_period_with_amended_award
+    : false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#input.universal_credit_assessment_period_start_day_is_earliest
+    : false
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#council_tax_liability_change_effective_day: not_holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#change_of_circumstances_effective_day_subject_to_c: not_holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#universal_credit_assessment_period_effective_day_c: not_holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#change_of_circumstances_takes_effect_on_day: not_holds
+- name: universal_credit_assessment_period_start_day_is_effective
+  period:
+    period_kind: custom
+    name: day
+    start: '2026-04-01'
+    end: '2026-04-01'
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#input.council_tax_liability_changes_on_day: false
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#input.council_tax_liability_change_day_is_earliest: false
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#input.change_of_circumstances_occurs_on_day: false
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#input.change_of_circumstances_day_is_earliest: false
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#input.applicant_has_current_universal_credit_claim: true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#input.day_is_start_of_universal_credit_assessment_period_with_amended_award
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#input.universal_credit_assessment_period_start_day_is_earliest
+    : true
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#council_tax_liability_change_effective_day: not_holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#change_of_circumstances_effective_day_subject_to_c: not_holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#universal_credit_assessment_period_effective_day_c: holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#change_of_circumstances_takes_effect_on_day: holds
+- name: universal_credit_assessment_period_start_day_requires_current_claim
+  period:
+    period_kind: custom
+    name: day
+    start: '2026-04-01'
+    end: '2026-04-01'
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#input.council_tax_liability_changes_on_day: false
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#input.council_tax_liability_change_day_is_earliest: false
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#input.change_of_circumstances_occurs_on_day: false
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#input.change_of_circumstances_day_is_earliest: false
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#input.applicant_has_current_universal_credit_claim: false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#input.day_is_start_of_universal_credit_assessment_period_with_amended_award
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#input.universal_credit_assessment_period_start_day_is_earliest
+    : true
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#council_tax_liability_change_effective_day: not_holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#change_of_circumstances_effective_day_subject_to_c: not_holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#universal_credit_assessment_period_effective_day_c: not_holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#change_of_circumstances_takes_effect_on_day: not_holds
+- name: universal_credit_assessment_period_start_day_requires_amended_award_period_start
+  period:
+    period_kind: custom
+    name: day
+    start: '2026-04-01'
+    end: '2026-04-01'
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#input.council_tax_liability_changes_on_day: false
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#input.council_tax_liability_change_day_is_earliest: false
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#input.change_of_circumstances_occurs_on_day: false
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#input.change_of_circumstances_day_is_earliest: false
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#input.applicant_has_current_universal_credit_claim: true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#input.day_is_start_of_universal_credit_assessment_period_with_amended_award
+    : false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#input.universal_credit_assessment_period_start_day_is_earliest
+    : true
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#council_tax_liability_change_effective_day: not_holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#change_of_circumstances_effective_day_subject_to_c: not_holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#universal_credit_assessment_period_effective_day_c: not_holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#change_of_circumstances_takes_effect_on_day: not_holds
+- name: universal_credit_assessment_period_start_day_requires_earliest_day
+  period:
+    period_kind: custom
+    name: day
+    start: '2026-04-01'
+    end: '2026-04-01'
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#input.council_tax_liability_changes_on_day: false
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#input.council_tax_liability_change_day_is_earliest: false
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#input.change_of_circumstances_occurs_on_day: false
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#input.change_of_circumstances_day_is_earliest: false
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#input.applicant_has_current_universal_credit_claim: true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#input.day_is_start_of_universal_credit_assessment_period_with_amended_award
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#input.universal_credit_assessment_period_start_day_is_earliest
+    : false
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#council_tax_liability_change_effective_day: not_holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#change_of_circumstances_effective_day_subject_to_c: not_holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#universal_credit_assessment_period_effective_day_c: not_holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-53#change_of_circumstances_takes_effect_on_day: not_holds
