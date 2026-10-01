@@ -1,0 +1,158 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-61
+    source_sha256: 4962e7b81689d8dfce2f5c92e5c743bd0f8a391ccb29f7dd40a84465853b9b1b
+  summary: “An application to an authority for a reduction under section 13A(1)(c)(a)
+    of the 1992 Act may be made” in writing, electronically in accordance with Part
+    9, or by telephone where a number is published; qualifying scheme applications
+    may be treated as section 13A(1)(c) applications.
+rules:
+- name: cited_section_subsection_number
+  kind: parameter
+  dtype: Integer
+  source: Wakefield Council Tax Support Scheme (Working Age), block 61, opening application
+    clause
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: parameter
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-61
+          excerpt: section 13A(1)(c)(a)
+  versions:
+  - effective_from: '0001-01-01'
+    formula: '1'
+- name: cited_act_year
+  kind: parameter
+  dtype: Integer
+  source: Wakefield Council Tax Support Scheme (Working Age), block 61, opening application
+    clause
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: parameter
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-61
+          excerpt: the 1992 Act
+  versions:
+  - effective_from: '0001-01-01'
+    formula: '1992'
+- name: reduction_application_may_be_made_in_writing
+  kind: derived
+  entity: Person
+  dtype: Judgment
+  period: Month
+  source: Wakefield Council Tax Support Scheme (Working Age), block 61, application
+    methods
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: condition
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-61
+          excerpt: 'An application to an authority for a reduction under section 13A(1)(c)(a)
+            of the 1992 Act may be made:'
+  versions:
+  - effective_from: '0001-01-01'
+    formula: 'true'
+- name: reduction_application_may_be_made_by_electronic_communication
+  kind: derived
+  entity: Person
+  dtype: Judgment
+  period: Month
+  source: Wakefield Council Tax Support Scheme (Working Age), block 61, application
+    methods
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: condition
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-61
+          excerpt: by means of an electronic communication in accordance with Part
+            9
+  versions:
+  - effective_from: '0001-01-01'
+    formula: electronic_communication_is_in_accordance_with_part_9
+- name: reduction_application_may_be_made_by_telephone
+  kind: derived
+  entity: Person
+  dtype: Judgment
+  period: Month
+  source: Wakefield Council Tax Support Scheme (Working Age), block 61, application
+    methods
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: condition
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-61
+          excerpt: where the authority has published a telephone number for the purpose
+            of receiving such applications, by telephone.
+  versions:
+  - effective_from: '0001-01-01'
+    formula: authority_has_published_telephone_number_for_receiving_applications
+- name: scheme_reduction_application_may_be_treated_as_section_13a_1_c_application
+  kind: derived
+  entity: Person
+  dtype: Judgment
+  period: Month
+  source: Wakefield Council Tax Support Scheme (Working Age), block 61, treatment
+    of application
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: condition
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-61
+          excerpt: the authority has made a determination under section 13A(1)(c)
+            in relation to a class
+      - path: versions[0].formula
+        kind: condition
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-61
+          excerpt: a person in that class would otherwise be entitled to a reduction
+            under this scheme
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-61
+          excerpt: that person’s application for a reduction under the authority’s
+            scheme may also be treated as an application for a reduction under section
+            13A(1)(c).
+  versions:
+  - effective_from: '0001-01-01'
+    formula: 'authority_has_made_section_13a_1_c_determination_for_class
+
+      and person_is_in_class_of_section_13a_1_c_determination
+
+      and person_would_otherwise_be_entitled_to_scheme_reduction'
+inputs:
+- name: electronic_communication_is_in_accordance_with_part_9
+  entity: Person
+  dtype: Boolean
+  period: Month
+- name: authority_has_published_telephone_number_for_receiving_applications
+  entity: Person
+  dtype: Boolean
+  period: Month
+- name: authority_has_made_section_13a_1_c_determination_for_class
+  entity: Person
+  dtype: Boolean
+  period: Month
+- name: person_is_in_class_of_section_13a_1_c_determination
+  entity: Person
+  dtype: Boolean
+  period: Month
+- name: person_would_otherwise_be_entitled_to_scheme_reduction
+  entity: Person
+  dtype: Boolean
+  period: Month
