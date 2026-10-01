@@ -1,0 +1,64 @@
+- name: termination_required_when_council_tax_liability_ends
+  period:
+    period_kind: custom
+    name: day
+    start: '2026-04-01'
+    end: '2026-04-01'
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-54#input.day_council_tax_liability_ends: true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-54#input.applicant_requests_claim_cancellation_from_this_day
+    : false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-54#input.applicant_fails_to_provide_information_necessary_to_confirm_ongoing_entitlement
+    : false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-54#input.this_day_is_date_authority_determines_entitlement_can_no_longer_reasonably_be_confirmed
+    : false
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-54#council_tax_support_claim_termination_required: holds
+- name: termination_required_from_requested_cancellation_day
+  period:
+    period_kind: custom
+    name: day
+    start: '2026-04-01'
+    end: '2026-04-01'
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-54#input.day_council_tax_liability_ends: false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-54#input.applicant_requests_claim_cancellation_from_this_day
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-54#input.applicant_fails_to_provide_information_necessary_to_confirm_ongoing_entitlement
+    : false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-54#input.this_day_is_date_authority_determines_entitlement_can_no_longer_reasonably_be_confirmed
+    : false
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-54#council_tax_support_claim_termination_required: holds
+- name: termination_required_when_entitlement_can_no_longer_be_confirmed
+  period:
+    period_kind: custom
+    name: day
+    start: '2026-04-01'
+    end: '2026-04-01'
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-54#input.day_council_tax_liability_ends: false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-54#input.applicant_requests_claim_cancellation_from_this_day
+    : false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-54#input.applicant_fails_to_provide_information_necessary_to_confirm_ongoing_entitlement
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-54#input.this_day_is_date_authority_determines_entitlement_can_no_longer_reasonably_be_confirmed
+    : true
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-54#council_tax_support_claim_termination_required: holds
+- name: termination_not_required_without_a_termination_trigger
+  period:
+    period_kind: custom
+    name: day
+    start: '2026-04-01'
+    end: '2026-04-01'
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-54#input.day_council_tax_liability_ends: false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-54#input.applicant_requests_claim_cancellation_from_this_day
+    : false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-54#input.applicant_fails_to_provide_information_necessary_to_confirm_ongoing_entitlement
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-54#input.this_day_is_date_authority_determines_entitlement_can_no_longer_reasonably_be_confirmed
+    : false
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-54#council_tax_support_claim_termination_required: not_holds
