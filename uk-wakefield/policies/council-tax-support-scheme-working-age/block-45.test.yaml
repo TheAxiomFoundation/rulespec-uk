@@ -1,0 +1,132 @@
+- name: telephone_application_with_requested_information_is_not_defective
+  period: 2026-04
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-45#input.application_made_under_scheme: true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-45#input.authority_has_published_telephone_application_number
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-45#input.telephone_application_provides_all_information_requested_during_call
+    : true
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-45#application_procedures_apply: holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-45#telephone_application_method_available: holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-45#telephone_application_defective: not_holds
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-45#authority_must_provide_telephone_defect_correction_opportunity
+    : not_holds
+- name: written_supplied_form_defect_allows_completion_request
+  period: 2026-04
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-45#input.application_made_under_scheme: true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-45#input.written_application_uses_form_provided_by_authority
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-45#input.authority_accepts_written_application_form_as_properly_completed
+    : false
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-45#application_procedures_apply: holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-45#written_application_method_available: holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-45#written_application_defective_on_supplied_form: holds
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-45#authority_may_request_completion_of_supplied_form_defect
+    : holds
+- name: written_nonapproved_form_defect_allows_both_information_routes
+  period: 2026-04
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-45#input.application_made_under_scheme: true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-45#input.written_application_uses_form_approved_for_purpose
+    : false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-45#input.authority_accepts_nonapproved_written_application_as_sufficient
+    : false
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-45#application_procedures_apply: holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-45#written_application_method_available: holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-45#written_application_defective_on_nonapproved_form: holds
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-45#authority_may_supply_approved_form_for_nonapproved_form_defect
+    : holds
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-45#authority_may_request_information_for_nonapproved_form_defect
+    : holds
+- name: properly_completed_written_application_is_valid
+  period: 2026-04
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-45#input.application_made_under_scheme: true
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-45#input.written_application_made_to_designated_office: true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-45#input.written_application_uses_form_provided_by_authority
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-45#input.written_application_form_completed_in_accordance_with_instructions
+    : true
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-45#application_procedures_apply: holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-45#written_application_method_available: holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-45#written_application_form_properly_completed: holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-45#written_application_valid: holds
+- name: electronic_application_defect_requires_correction_opportunity
+  period: 2026-04
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-45#input.application_made_under_scheme: true
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-45#input.electronic_communication_complies_with_part_9: true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-45#input.electronic_application_provides_all_information_authority_requires
+    : false
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-45#application_procedures_apply: holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-45#electronic_application_method_available: holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-45#electronic_application_defective: holds
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-45#authority_must_provide_electronic_defect_correction_opportunity
+    : holds
+- name: electronic_application_with_required_information_is_not_defective
+  period: 2026-04
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-45#input.application_made_under_scheme: true
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-45#input.electronic_communication_complies_with_part_9: true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-45#input.electronic_application_provides_all_information_authority_requires
+    : true
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-45#application_procedures_apply: holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-45#electronic_application_method_available: holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-45#electronic_application_defective: not_holds
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-45#authority_must_provide_electronic_defect_correction_opportunity
+    : not_holds
+- name: telephone_approval_required_and_given_makes_application_valid
+  period: 2026-04
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-45#input.application_made_under_scheme: true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-45#input.authority_has_published_telephone_application_number
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-45#input.authority_requires_telephone_written_statement_approval
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-45#input.telephone_applicant_approves_authority_written_statement_of_circumstances
+    : true
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-45#application_procedures_apply: holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-45#telephone_application_method_available: holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-45#telephone_application_valid: holds
+- name: telephone_approval_required_but_not_given_makes_application_invalid
+  period: 2026-04
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-45#input.application_made_under_scheme: true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-45#input.authority_has_published_telephone_application_number
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-45#input.authority_requires_telephone_written_statement_approval
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-45#input.telephone_applicant_approves_authority_written_statement_of_circumstances
+    : false
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-45#application_procedures_apply: holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-45#telephone_application_method_available: holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-45#telephone_application_valid: not_holds
+- name: telephone_defect_requires_correction_opportunity
+  period: 2026-04
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-45#input.application_made_under_scheme: true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-45#input.authority_has_published_telephone_application_number
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-45#input.telephone_application_provides_all_information_requested_during_call
+    : false
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-45#application_procedures_apply: holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-45#telephone_application_method_available: holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-45#telephone_application_defective: holds
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-45#authority_must_provide_telephone_defect_correction_opportunity
+    : holds
+- name: authority_must_provide_written_form_without_charge
+  period: 2026-04
+  input: {}
+  output:
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-45#authority_must_provide_written_application_form_free_of_charge
+    : holds
