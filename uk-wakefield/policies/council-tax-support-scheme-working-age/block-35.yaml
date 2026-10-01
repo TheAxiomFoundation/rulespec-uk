@@ -1,0 +1,70 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-35
+    source_sha256: 4dc4292d95b094f37ec29f8dc921d8929a25f51b16459864aa969dca326ef6bd
+  summary: Capital which an applicant possesses in the United Kingdom is to be calculated
+    at its current market or surrender value less 10 per cent where there would be
+    expenses attributable to the sale, and less the amount of any encumbrance secured
+    on it.
+inputs:
+- name: capital_current_market_or_surrender_value
+  entity: Person
+  dtype: Money
+  period: Month
+  unit: GBP
+- name: expenses_attributable_to_capital_sale
+  entity: Person
+  dtype: Boolean
+  period: Month
+- name: encumbrance_secured_on_capital
+  entity: Person
+  dtype: Money
+  period: Month
+  unit: GBP
+rules:
+- name: capital_sale_expense_deduction_rate
+  kind: parameter
+  dtype: Rate
+  source: Wakefield Council Tax Support Scheme (Working Age) 2026/27, block 35
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: amount
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-35
+          excerpt: where there would be expenses attributable to the sale, 10 per
+            cent
+  versions:
+  - effective_from: '0001-01-01'
+    formula: '0.10'
+- name: capital_value_after_sale_expenses_and_encumbrance
+  kind: derived
+  entity: Person
+  dtype: Money
+  period: Month
+  unit: GBP
+  source: Wakefield Council Tax Support Scheme (Working Age) 2026/27, block 35
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-35
+          excerpt: 'Capital which an applicant possesses in the United Kingdom is
+            to be calculated at its current market or surrender value less:
+
+
+            where there would be expenses attributable to the sale, 10 per cent; and
+
+
+            the amount of any encumbrance secured on it.'
+  versions:
+  - effective_from: '0001-01-01'
+    formula: "capital_current_market_or_surrender_value\n- (if expenses_attributable_to_capital_sale:\n\
+      \    capital_current_market_or_surrender_value * capital_sale_expense_deduction_rate\n\
+      \  else: 0)\n- encumbrance_secured_on_capital"
