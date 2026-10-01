@@ -1,0 +1,105 @@
+- name: applicant_extended_reduction_from_english_billing_authority
+  period:
+    period_kind: custom
+    name: calendar_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-60#input.application_made_to_current_authority: true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-60#input.applicant_receives_extended_reduction_from_another_english_billing_authority
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-60#input.partner_receives_extended_reduction_from_another_english_billing_authority
+    : false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-60#input.applicant_receives_extended_reduction_from_welsh_billing_authority
+    : false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-60#input.partner_receives_extended_reduction_from_welsh_billing_authority
+    : false
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-60#input.reduction_to_which_applicant_is_entitled: 100
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-60#input.extended_reduction_amount: 30
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-60#extended_reduction_coordination_applies: holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-60#reduction_after_extended_reduction: 70
+- name: partner_extended_reduction_from_english_billing_authority
+  period:
+    period_kind: custom
+    name: calendar_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-60#input.application_made_to_current_authority: true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-60#input.applicant_receives_extended_reduction_from_another_english_billing_authority
+    : false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-60#input.partner_receives_extended_reduction_from_another_english_billing_authority
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-60#input.applicant_receives_extended_reduction_from_welsh_billing_authority
+    : false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-60#input.partner_receives_extended_reduction_from_welsh_billing_authority
+    : false
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-60#input.reduction_to_which_applicant_is_entitled: 100
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-60#input.extended_reduction_amount: 30
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-60#extended_reduction_coordination_applies: holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-60#reduction_after_extended_reduction: 70
+- name: applicant_extended_reduction_from_welsh_billing_authority
+  period:
+    period_kind: custom
+    name: calendar_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-60#input.application_made_to_current_authority: true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-60#input.applicant_receives_extended_reduction_from_another_english_billing_authority
+    : false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-60#input.partner_receives_extended_reduction_from_another_english_billing_authority
+    : false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-60#input.applicant_receives_extended_reduction_from_welsh_billing_authority
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-60#input.partner_receives_extended_reduction_from_welsh_billing_authority
+    : false
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-60#input.reduction_to_which_applicant_is_entitled: 100
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-60#input.extended_reduction_amount: 30
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-60#extended_reduction_coordination_applies: holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-60#reduction_after_extended_reduction: 70
+- name: partner_extended_reduction_from_welsh_billing_authority
+  period:
+    period_kind: custom
+    name: calendar_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-60#input.application_made_to_current_authority: true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-60#input.applicant_receives_extended_reduction_from_another_english_billing_authority
+    : false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-60#input.partner_receives_extended_reduction_from_another_english_billing_authority
+    : false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-60#input.applicant_receives_extended_reduction_from_welsh_billing_authority
+    : false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-60#input.partner_receives_extended_reduction_from_welsh_billing_authority
+    : true
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-60#input.reduction_to_which_applicant_is_entitled: 100
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-60#input.extended_reduction_amount: 30
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-60#extended_reduction_coordination_applies: holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-60#reduction_after_extended_reduction: 70
+- name: no_current_authority_application
+  period:
+    period_kind: custom
+    name: calendar_year
+    start: '2026-04-01'
+    end: '2027-03-31'
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-60#input.application_made_to_current_authority: false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-60#input.applicant_receives_extended_reduction_from_another_english_billing_authority
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-60#input.partner_receives_extended_reduction_from_another_english_billing_authority
+    : false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-60#input.applicant_receives_extended_reduction_from_welsh_billing_authority
+    : false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-60#input.partner_receives_extended_reduction_from_welsh_billing_authority
+    : false
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-60#input.reduction_to_which_applicant_is_entitled: 100
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-60#input.extended_reduction_amount: 30
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-60#extended_reduction_coordination_applies: not_holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-60#reduction_after_extended_reduction: 100
