@@ -313,3 +313,245 @@
     - not_holds
     uk:regulations/uksi/2013/376/66#unearned_income_amount_from_payment:
     - 0
+# Bank interest is charged under ITTOIA 2005 Part 4 Chapter 2 (s.369), not Part 5,
+# so no reg 66(1) description covers it (reg 66(1)(m) reaches only Part 5 income).
+# ADM H5002: an unlisted type of income "does not affect the claimant's award".
+# Separately, where capital is treated as yielding income, reg 72(3) makes the
+# actual income derived from it, "for example rental, interest or dividends",
+# part of the person's capital.
+- name: bank_interest_is_not_unearned_income
+  period: 2026-04
+  input: {}
+  tables:
+    Payment:
+    - uk:regulations/uksi/2013/376/66#input.payment_income_amount: 40
+      uk:regulations/uksi/2013/376/66#input.payment_amount_payable_after_overlapping_benefits_adjustment: 0
+      uk:regulations/uksi/2013/376/66#input.carers_allowance_amount_if_claimant_had_entitlement: 0
+      uk:regulations/uksi/2013/376/66#input.payment_is_retirement_pension_income_to_which_person_is_entitled: false
+      uk:regulations/uksi/2013/376/66#input.payment_is_jobseekers_allowance_to_which_person_is_entitled: false
+      uk:regulations/uksi/2013/376/66#input.payment_is_employment_and_support_allowance_to_which_person_is_entitled: false
+      uk:regulations/uksi/2013/376/66#input.payment_is_carers_allowance_to_which_person_is_entitled: false
+      uk:regulations/uksi/2013/376/66#input.payment_is_carer_support_payment_to_which_person_is_entitled: false
+      uk:regulations/uksi/2013/376/66#input.payment_is_widowed_mothers_allowance_to_which_person_is_entitled: false
+      uk:regulations/uksi/2013/376/66#input.payment_is_widowed_parents_allowance_to_which_person_is_entitled: false
+      uk:regulations/uksi/2013/376/66#input.payment_is_widows_pension_to_which_person_is_entitled: false
+      uk:regulations/uksi/2013/376/66#input.payment_is_maternity_allowance_to_which_person_is_entitled: false
+      ? uk:regulations/uksi/2013/376/66#input.payment_is_industrial_injuries_benefit_excluding_constant_attendance_or_exceptionally_severe_disablement_increases
+      : false
+      uk:regulations/uksi/2013/376/66#input.payment_is_analogous_foreign_benefit_allowance_or_other_payment: false
+      ? uk:regulations/uksi/2013/376/66#input.payment_is_maintenance_from_spouse_civil_partner_former_spouse_or_former_civil_partner_under_order_or_agreement
+      : false
+      uk:regulations/uksi/2013/376/66#input.payment_is_foreign_state_retirement_pension: false
+      uk:regulations/uksi/2013/376/66#input.payment_is_student_income: false
+      ? uk:regulations/uksi/2013/376/66#input.payment_under_employment_training_or_enterprise_new_towns_for_universal_credit_substitute_or_living_expenses
+      : false
+      uk:regulations/uksi/2013/376/66#input.payment_by_sports_council_from_national_lottery_distribution_for_living_expenses: false
+      ? uk:regulations/uksi/2013/376/66#input.payment_under_insurance_policy_for_loss_of_income_due_to_illness_accident_or_redundancy
+      : false
+      uk:regulations/uksi/2013/376/66#input.payment_is_annuity_income_other_than_retirement_pension_income: false
+      uk:regulations/uksi/2013/376/66#input.annuity_income_disregarded_under_regulation_75: false
+      uk:regulations/uksi/2013/376/66#input.payment_is_trust_income: false
+      uk:regulations/uksi/2013/376/66#input.trust_income_disregarded_under_regulation_75: false
+      uk:regulations/uksi/2013/376/66#input.trust_income_disregarded_under_regulation_76: false
+      uk:regulations/uksi/2013/376/66#input.payment_is_income_treated_as_yield_from_capital_by_regulation_72: false
+      uk:regulations/uksi/2013/376/66#input.payment_is_capital_treated_as_income_by_regulation_46_3_or_4: false
+      uk:regulations/uksi/2013/376/66#input.payment_is_ppf_periodic_payment: false
+      uk:regulations/uksi/2013/376/66#input.payment_is_taxable_miscellaneous_income_under_part_5_ittoia_not_otherwise_listed: false
+  output:
+    uk:regulations/uksi/2013/376/66#overlapping_benefits_adjusted_amount_required_for_unearned_income:
+    - not_holds
+    uk:regulations/uksi/2013/376/66#payment_falls_within_unearned_income_description:
+    - not_holds
+    uk:regulations/uksi/2013/376/66#unearned_income_amount_from_payment:
+    - 0
+# Dividends are charged under ITTOIA 2005 Part 4, not Part 5: Chapter 3 (s.383)
+# for UK-resident companies and Chapter 4 (s.402) for non-UK-resident ones. Reg
+# 72(3) names them as income derived from capital.
+- name: dividends_are_not_unearned_income
+  period: 2026-04
+  input: {}
+  tables:
+    Payment:
+    - uk:regulations/uksi/2013/376/66#input.payment_income_amount: 150
+      uk:regulations/uksi/2013/376/66#input.payment_amount_payable_after_overlapping_benefits_adjustment: 0
+      uk:regulations/uksi/2013/376/66#input.carers_allowance_amount_if_claimant_had_entitlement: 0
+      uk:regulations/uksi/2013/376/66#input.payment_is_retirement_pension_income_to_which_person_is_entitled: false
+      uk:regulations/uksi/2013/376/66#input.payment_is_jobseekers_allowance_to_which_person_is_entitled: false
+      uk:regulations/uksi/2013/376/66#input.payment_is_employment_and_support_allowance_to_which_person_is_entitled: false
+      uk:regulations/uksi/2013/376/66#input.payment_is_carers_allowance_to_which_person_is_entitled: false
+      uk:regulations/uksi/2013/376/66#input.payment_is_carer_support_payment_to_which_person_is_entitled: false
+      uk:regulations/uksi/2013/376/66#input.payment_is_widowed_mothers_allowance_to_which_person_is_entitled: false
+      uk:regulations/uksi/2013/376/66#input.payment_is_widowed_parents_allowance_to_which_person_is_entitled: false
+      uk:regulations/uksi/2013/376/66#input.payment_is_widows_pension_to_which_person_is_entitled: false
+      uk:regulations/uksi/2013/376/66#input.payment_is_maternity_allowance_to_which_person_is_entitled: false
+      ? uk:regulations/uksi/2013/376/66#input.payment_is_industrial_injuries_benefit_excluding_constant_attendance_or_exceptionally_severe_disablement_increases
+      : false
+      uk:regulations/uksi/2013/376/66#input.payment_is_analogous_foreign_benefit_allowance_or_other_payment: false
+      ? uk:regulations/uksi/2013/376/66#input.payment_is_maintenance_from_spouse_civil_partner_former_spouse_or_former_civil_partner_under_order_or_agreement
+      : false
+      uk:regulations/uksi/2013/376/66#input.payment_is_foreign_state_retirement_pension: false
+      uk:regulations/uksi/2013/376/66#input.payment_is_student_income: false
+      ? uk:regulations/uksi/2013/376/66#input.payment_under_employment_training_or_enterprise_new_towns_for_universal_credit_substitute_or_living_expenses
+      : false
+      uk:regulations/uksi/2013/376/66#input.payment_by_sports_council_from_national_lottery_distribution_for_living_expenses: false
+      ? uk:regulations/uksi/2013/376/66#input.payment_under_insurance_policy_for_loss_of_income_due_to_illness_accident_or_redundancy
+      : false
+      uk:regulations/uksi/2013/376/66#input.payment_is_annuity_income_other_than_retirement_pension_income: false
+      uk:regulations/uksi/2013/376/66#input.annuity_income_disregarded_under_regulation_75: false
+      uk:regulations/uksi/2013/376/66#input.payment_is_trust_income: false
+      uk:regulations/uksi/2013/376/66#input.trust_income_disregarded_under_regulation_75: false
+      uk:regulations/uksi/2013/376/66#input.trust_income_disregarded_under_regulation_76: false
+      uk:regulations/uksi/2013/376/66#input.payment_is_income_treated_as_yield_from_capital_by_regulation_72: false
+      uk:regulations/uksi/2013/376/66#input.payment_is_capital_treated_as_income_by_regulation_46_3_or_4: false
+      uk:regulations/uksi/2013/376/66#input.payment_is_ppf_periodic_payment: false
+      uk:regulations/uksi/2013/376/66#input.payment_is_taxable_miscellaneous_income_under_part_5_ittoia_not_otherwise_listed: false
+  output:
+    uk:regulations/uksi/2013/376/66#overlapping_benefits_adjusted_amount_required_for_unearned_income:
+    - not_holds
+    uk:regulations/uksi/2013/376/66#payment_falls_within_unearned_income_description:
+    - not_holds
+    uk:regulations/uksi/2013/376/66#unearned_income_amount_from_payment:
+    - 0
+# Rent is property income under ITTOIA 2005 Part 3, not Part 5. ADM H5094
+# Example 2: where the let second property is treated as yielding income, its
+# rent is treated as part of capital.
+- name: rent_from_let_property_is_not_unearned_income
+  period: 2026-04
+  input: {}
+  tables:
+    Payment:
+    - uk:regulations/uksi/2013/376/66#input.payment_income_amount: 400
+      uk:regulations/uksi/2013/376/66#input.payment_amount_payable_after_overlapping_benefits_adjustment: 0
+      uk:regulations/uksi/2013/376/66#input.carers_allowance_amount_if_claimant_had_entitlement: 0
+      uk:regulations/uksi/2013/376/66#input.payment_is_retirement_pension_income_to_which_person_is_entitled: false
+      uk:regulations/uksi/2013/376/66#input.payment_is_jobseekers_allowance_to_which_person_is_entitled: false
+      uk:regulations/uksi/2013/376/66#input.payment_is_employment_and_support_allowance_to_which_person_is_entitled: false
+      uk:regulations/uksi/2013/376/66#input.payment_is_carers_allowance_to_which_person_is_entitled: false
+      uk:regulations/uksi/2013/376/66#input.payment_is_carer_support_payment_to_which_person_is_entitled: false
+      uk:regulations/uksi/2013/376/66#input.payment_is_widowed_mothers_allowance_to_which_person_is_entitled: false
+      uk:regulations/uksi/2013/376/66#input.payment_is_widowed_parents_allowance_to_which_person_is_entitled: false
+      uk:regulations/uksi/2013/376/66#input.payment_is_widows_pension_to_which_person_is_entitled: false
+      uk:regulations/uksi/2013/376/66#input.payment_is_maternity_allowance_to_which_person_is_entitled: false
+      ? uk:regulations/uksi/2013/376/66#input.payment_is_industrial_injuries_benefit_excluding_constant_attendance_or_exceptionally_severe_disablement_increases
+      : false
+      uk:regulations/uksi/2013/376/66#input.payment_is_analogous_foreign_benefit_allowance_or_other_payment: false
+      ? uk:regulations/uksi/2013/376/66#input.payment_is_maintenance_from_spouse_civil_partner_former_spouse_or_former_civil_partner_under_order_or_agreement
+      : false
+      uk:regulations/uksi/2013/376/66#input.payment_is_foreign_state_retirement_pension: false
+      uk:regulations/uksi/2013/376/66#input.payment_is_student_income: false
+      ? uk:regulations/uksi/2013/376/66#input.payment_under_employment_training_or_enterprise_new_towns_for_universal_credit_substitute_or_living_expenses
+      : false
+      uk:regulations/uksi/2013/376/66#input.payment_by_sports_council_from_national_lottery_distribution_for_living_expenses: false
+      ? uk:regulations/uksi/2013/376/66#input.payment_under_insurance_policy_for_loss_of_income_due_to_illness_accident_or_redundancy
+      : false
+      uk:regulations/uksi/2013/376/66#input.payment_is_annuity_income_other_than_retirement_pension_income: false
+      uk:regulations/uksi/2013/376/66#input.annuity_income_disregarded_under_regulation_75: false
+      uk:regulations/uksi/2013/376/66#input.payment_is_trust_income: false
+      uk:regulations/uksi/2013/376/66#input.trust_income_disregarded_under_regulation_75: false
+      uk:regulations/uksi/2013/376/66#input.trust_income_disregarded_under_regulation_76: false
+      uk:regulations/uksi/2013/376/66#input.payment_is_income_treated_as_yield_from_capital_by_regulation_72: false
+      uk:regulations/uksi/2013/376/66#input.payment_is_capital_treated_as_income_by_regulation_46_3_or_4: false
+      uk:regulations/uksi/2013/376/66#input.payment_is_ppf_periodic_payment: false
+      uk:regulations/uksi/2013/376/66#input.payment_is_taxable_miscellaneous_income_under_part_5_ittoia_not_otherwise_listed: false
+  output:
+    uk:regulations/uksi/2013/376/66#overlapping_benefits_adjusted_amount_required_for_unearned_income:
+    - not_holds
+    uk:regulations/uksi/2013/376/66#payment_falls_within_unearned_income_description:
+    - not_holds
+    uk:regulations/uksi/2013/376/66#unearned_income_amount_from_payment:
+    - 0
+# ADM H5112 example: a room let at £60 a week is "not defined as income for
+# the purposes of UC". 60 x 52 / 12 = 260 a month.
+- name: rent_from_a_lodger_in_the_home_is_not_unearned_income
+  period: 2026-04
+  input: {}
+  tables:
+    Payment:
+    - uk:regulations/uksi/2013/376/66#input.payment_income_amount: 260
+      uk:regulations/uksi/2013/376/66#input.payment_amount_payable_after_overlapping_benefits_adjustment: 0
+      uk:regulations/uksi/2013/376/66#input.carers_allowance_amount_if_claimant_had_entitlement: 0
+      uk:regulations/uksi/2013/376/66#input.payment_is_retirement_pension_income_to_which_person_is_entitled: false
+      uk:regulations/uksi/2013/376/66#input.payment_is_jobseekers_allowance_to_which_person_is_entitled: false
+      uk:regulations/uksi/2013/376/66#input.payment_is_employment_and_support_allowance_to_which_person_is_entitled: false
+      uk:regulations/uksi/2013/376/66#input.payment_is_carers_allowance_to_which_person_is_entitled: false
+      uk:regulations/uksi/2013/376/66#input.payment_is_carer_support_payment_to_which_person_is_entitled: false
+      uk:regulations/uksi/2013/376/66#input.payment_is_widowed_mothers_allowance_to_which_person_is_entitled: false
+      uk:regulations/uksi/2013/376/66#input.payment_is_widowed_parents_allowance_to_which_person_is_entitled: false
+      uk:regulations/uksi/2013/376/66#input.payment_is_widows_pension_to_which_person_is_entitled: false
+      uk:regulations/uksi/2013/376/66#input.payment_is_maternity_allowance_to_which_person_is_entitled: false
+      ? uk:regulations/uksi/2013/376/66#input.payment_is_industrial_injuries_benefit_excluding_constant_attendance_or_exceptionally_severe_disablement_increases
+      : false
+      uk:regulations/uksi/2013/376/66#input.payment_is_analogous_foreign_benefit_allowance_or_other_payment: false
+      ? uk:regulations/uksi/2013/376/66#input.payment_is_maintenance_from_spouse_civil_partner_former_spouse_or_former_civil_partner_under_order_or_agreement
+      : false
+      uk:regulations/uksi/2013/376/66#input.payment_is_foreign_state_retirement_pension: false
+      uk:regulations/uksi/2013/376/66#input.payment_is_student_income: false
+      ? uk:regulations/uksi/2013/376/66#input.payment_under_employment_training_or_enterprise_new_towns_for_universal_credit_substitute_or_living_expenses
+      : false
+      uk:regulations/uksi/2013/376/66#input.payment_by_sports_council_from_national_lottery_distribution_for_living_expenses: false
+      ? uk:regulations/uksi/2013/376/66#input.payment_under_insurance_policy_for_loss_of_income_due_to_illness_accident_or_redundancy
+      : false
+      uk:regulations/uksi/2013/376/66#input.payment_is_annuity_income_other_than_retirement_pension_income: false
+      uk:regulations/uksi/2013/376/66#input.annuity_income_disregarded_under_regulation_75: false
+      uk:regulations/uksi/2013/376/66#input.payment_is_trust_income: false
+      uk:regulations/uksi/2013/376/66#input.trust_income_disregarded_under_regulation_75: false
+      uk:regulations/uksi/2013/376/66#input.trust_income_disregarded_under_regulation_76: false
+      uk:regulations/uksi/2013/376/66#input.payment_is_income_treated_as_yield_from_capital_by_regulation_72: false
+      uk:regulations/uksi/2013/376/66#input.payment_is_capital_treated_as_income_by_regulation_46_3_or_4: false
+      uk:regulations/uksi/2013/376/66#input.payment_is_ppf_periodic_payment: false
+      uk:regulations/uksi/2013/376/66#input.payment_is_taxable_miscellaneous_income_under_part_5_ittoia_not_otherwise_listed: false
+  output:
+    uk:regulations/uksi/2013/376/66#overlapping_benefits_adjusted_amount_required_for_unearned_income:
+    - not_holds
+    uk:regulations/uksi/2013/376/66#payment_falls_within_unearned_income_description:
+    - not_holds
+    uk:regulations/uksi/2013/376/66#unearned_income_amount_from_payment:
+    - 0
+# Reg 66(1)(k) counts the reg 72(1) assumed yield instead. £10,000 of capital
+# (after reg 49 valuation) in a let property yields (10,000 - 6,000) / 250 =
+# 16 x £4.35 = £69.60 a month.
+- name: assumed_yield_on_let_property_counts_as_unearned_income
+  period: 2026-04
+  input: {}
+  tables:
+    Payment:
+    - uk:regulations/uksi/2013/376/66#input.payment_income_amount: 69.6
+      uk:regulations/uksi/2013/376/66#input.payment_amount_payable_after_overlapping_benefits_adjustment: 0
+      uk:regulations/uksi/2013/376/66#input.carers_allowance_amount_if_claimant_had_entitlement: 0
+      uk:regulations/uksi/2013/376/66#input.payment_is_retirement_pension_income_to_which_person_is_entitled: false
+      uk:regulations/uksi/2013/376/66#input.payment_is_jobseekers_allowance_to_which_person_is_entitled: false
+      uk:regulations/uksi/2013/376/66#input.payment_is_employment_and_support_allowance_to_which_person_is_entitled: false
+      uk:regulations/uksi/2013/376/66#input.payment_is_carers_allowance_to_which_person_is_entitled: false
+      uk:regulations/uksi/2013/376/66#input.payment_is_carer_support_payment_to_which_person_is_entitled: false
+      uk:regulations/uksi/2013/376/66#input.payment_is_widowed_mothers_allowance_to_which_person_is_entitled: false
+      uk:regulations/uksi/2013/376/66#input.payment_is_widowed_parents_allowance_to_which_person_is_entitled: false
+      uk:regulations/uksi/2013/376/66#input.payment_is_widows_pension_to_which_person_is_entitled: false
+      uk:regulations/uksi/2013/376/66#input.payment_is_maternity_allowance_to_which_person_is_entitled: false
+      ? uk:regulations/uksi/2013/376/66#input.payment_is_industrial_injuries_benefit_excluding_constant_attendance_or_exceptionally_severe_disablement_increases
+      : false
+      uk:regulations/uksi/2013/376/66#input.payment_is_analogous_foreign_benefit_allowance_or_other_payment: false
+      ? uk:regulations/uksi/2013/376/66#input.payment_is_maintenance_from_spouse_civil_partner_former_spouse_or_former_civil_partner_under_order_or_agreement
+      : false
+      uk:regulations/uksi/2013/376/66#input.payment_is_foreign_state_retirement_pension: false
+      uk:regulations/uksi/2013/376/66#input.payment_is_student_income: false
+      ? uk:regulations/uksi/2013/376/66#input.payment_under_employment_training_or_enterprise_new_towns_for_universal_credit_substitute_or_living_expenses
+      : false
+      uk:regulations/uksi/2013/376/66#input.payment_by_sports_council_from_national_lottery_distribution_for_living_expenses: false
+      ? uk:regulations/uksi/2013/376/66#input.payment_under_insurance_policy_for_loss_of_income_due_to_illness_accident_or_redundancy
+      : false
+      uk:regulations/uksi/2013/376/66#input.payment_is_annuity_income_other_than_retirement_pension_income: false
+      uk:regulations/uksi/2013/376/66#input.annuity_income_disregarded_under_regulation_75: false
+      uk:regulations/uksi/2013/376/66#input.payment_is_trust_income: false
+      uk:regulations/uksi/2013/376/66#input.trust_income_disregarded_under_regulation_75: false
+      uk:regulations/uksi/2013/376/66#input.trust_income_disregarded_under_regulation_76: false
+      uk:regulations/uksi/2013/376/66#input.payment_is_income_treated_as_yield_from_capital_by_regulation_72: true
+      uk:regulations/uksi/2013/376/66#input.payment_is_capital_treated_as_income_by_regulation_46_3_or_4: false
+      uk:regulations/uksi/2013/376/66#input.payment_is_ppf_periodic_payment: false
+      uk:regulations/uksi/2013/376/66#input.payment_is_taxable_miscellaneous_income_under_part_5_ittoia_not_otherwise_listed: false
+  output:
+    uk:regulations/uksi/2013/376/66#overlapping_benefits_adjusted_amount_required_for_unearned_income:
+    - not_holds
+    uk:regulations/uksi/2013/376/66#payment_falls_within_unearned_income_description:
+    - holds
+    uk:regulations/uksi/2013/376/66#unearned_income_amount_from_payment:
+    - 69.6
