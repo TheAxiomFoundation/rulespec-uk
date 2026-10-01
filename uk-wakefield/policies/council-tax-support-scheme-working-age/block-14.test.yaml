@@ -1,0 +1,22 @@
+- name: entitlement_holds_without_local_foster_carers_discount
+  period:
+    period_kind: custom
+    name: day
+    start: '2026-04-01'
+    end: '2026-04-01'
+  input:
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-14#input.council_tax_liability_reduced_by_local_foster_carers_discount
+    : false
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-14#council_tax_support_entitlement: holds
+- name: entitlement_does_not_hold_with_local_foster_carers_discount
+  period:
+    period_kind: custom
+    name: day
+    start: '2026-04-01'
+    end: '2026-04-01'
+  input:
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-14#input.council_tax_liability_reduced_by_local_foster_carers_discount
+    : true
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-14#council_tax_support_entitlement: not_holds
