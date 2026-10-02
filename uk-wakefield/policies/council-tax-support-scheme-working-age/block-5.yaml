@@ -1,0 +1,57 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-5
+    source_sha256: 6a6582d19e7a72dec6ae84d465e2adcebf834e49aa31f64922771f29e8f6275b
+  summary: In this scheme, “couple” means two people who are married to, or civil
+    partners of, each other and are members of the same household; or two people who
+    are not married to, or civil partners of, each other but are living together as
+    if they were a married couple or civil partners.
+inputs:
+- name: members_are_married_or_civil_partners
+  entity: Couple
+  dtype: Boolean
+  period: Month
+- name: members_are_in_same_household
+  entity: Couple
+  dtype: Boolean
+  period: Month
+- name: members_are_not_married_or_civil_partners
+  entity: Couple
+  dtype: Boolean
+  period: Month
+- name: members_are_living_together_as_if_married_or_civil_partners
+  entity: Couple
+  dtype: Boolean
+  period: Month
+rules:
+- name: couple
+  kind: derived
+  entity: Couple
+  dtype: Judgment
+  period: Month
+  source: uk-wakefield/manual/council-tax-support-scheme-working-age/block-5
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: definition
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-5
+          excerpt: '“couple” means: two people who are married to, or civil partners
+            of, each other and are members of the same household; or two people who
+            are not married to, or civil partners of, each other but are living together
+            as if they were a married couple or civil partners.'
+  versions:
+  - effective_from: '0001-01-01'
+    formula: '(members_are_married_or_civil_partners
+
+      and members_are_in_same_household)
+
+      or
+
+      (members_are_not_married_or_civil_partners
+
+      and members_are_living_together_as_if_married_or_civil_partners)'
