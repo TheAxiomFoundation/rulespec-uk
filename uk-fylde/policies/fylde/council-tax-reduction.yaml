@@ -11,7 +11,7 @@ module:
         # - uk/regulations/uksi/2012/2885
         # - uk/regulations/uksi/2012/2886
       # rationale: Section 13A of the Local Government Finance Act 1992 delegates the working-age scheme to Fylde Council, so its adopted scheme document is the operative legal source for the locally set working-age values.
-  summary: Fylde's 2026-27 working-age local scheme is a means test. The award is the 100 percent maximum liability less non-dependant deductions and the excess-income taper, then reduced by the printed 22.7 percent standard deduction. Pension-age provisions are outside this module.
+  summary: Fylde's 2026-27 working-age local scheme is a means test. The award is the 100 percent maximum liability less non-dependant deductions and the weekly equivalent of the printed daily excess-income taper, then reduced by the printed 22.7 percent standard deduction. The working-age class includes a pension-credit-age applicant or partner receiving a specified qualifying benefit; other pension-age provisions are outside this module.
   deferred_outputs:
     - output: uk-fylde:policies/fylde/council-tax-reduction/schedule-1#applicable_amount
       reason: Schedule 1's category-specific applicable amounts and premiums supply the means-test comparator but are outside this award-surface module.
@@ -62,13 +62,20 @@ rules:
     source: Fylde Council Tax Reduction Scheme 2026-27 section 58.1 daily conversion
     metadata: {proof: {atoms: [{path: "versions[0].formula", kind: amount, source: {corpus_citation_path: uk-fylde/manual/council-tax-reduction-scheme-2026-2027/page-71, excerpt: "£15.35 x 1/7"}}]}}
     versions: [{effective_from: '2026-04-01', formula: '7'}]
+  - name: fylde_council_tax_reduction_daily_taper_rate
+    kind: parameter
+    dtype: Rate
+    period: Week
+    source: Fylde Council Tax Reduction Scheme 2026-27 section 59.1 daily mixed-number percentage
+    metadata: {proof: {atoms: [{path: "versions[0].formula", kind: formula, source: {corpus_citation_path: uk-fylde/manual/council-tax-reduction-scheme-2026-2027/page-73, excerpt: "2 6/7 per cent"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: '(fylde_council_tax_reduction_taper_whole_percentage_points + fylde_council_tax_reduction_taper_fraction_numerator / fylde_council_tax_reduction_days_per_week) * fylde_council_tax_reduction_per_cent_unit'}]
   - name: fylde_council_tax_reduction_weekly_taper_rate
     kind: parameter
     dtype: Rate
     period: Week
-    source: Fylde Council Tax Reduction Scheme 2026-27 section 59.1 derived mixed-number percentage
-    metadata: {proof: {atoms: [{path: "versions[0].formula", kind: formula, source: {corpus_citation_path: uk-fylde/manual/council-tax-reduction-scheme-2026-2027/page-73, excerpt: "2 6/7 per cent"}}]}}
-    versions: [{effective_from: '2026-04-01', formula: '(fylde_council_tax_reduction_taper_whole_percentage_points + fylde_council_tax_reduction_taper_fraction_numerator / fylde_council_tax_reduction_days_per_week) * fylde_council_tax_reduction_per_cent_unit'}]
+    source: Fylde Council Tax Reduction Scheme 2026-27 section 59.1 weekly equivalent of daily rate
+    metadata: {proof: {atoms: [{path: "versions[0].formula", kind: formula, source: {corpus_citation_path: uk-fylde/manual/council-tax-reduction-scheme-2026-2027/page-73, excerpt: "The prescribed daily percentage for the purpose of calculating support as a percentage of excess of income over the applicable amount which is deducted from maximum council tax support, shall be 2 6/7 per cent."}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 'fylde_council_tax_reduction_daily_taper_rate * fylde_council_tax_reduction_days_per_week'}]
   - name: fylde_council_tax_reduction_capital_limit
     kind: parameter
     dtype: Money
@@ -148,7 +155,7 @@ rules:
     period: Year
     source: Fylde Council Tax Reduction Scheme 2026-27 section 1.6
     metadata: {proof: {atoms: [{path: "versions[0].formula", kind: condition, source: {corpus_citation_path: uk-fylde/manual/council-tax-reduction-scheme-2026-2027/page-8, excerpt: "this scheme only applies to a person who; a. has not attained the qualifying age for state pension credit; or b. has attained the qualifying age for state pension credit if he, and his partner, is a person on income support, on an income-based jobseeker’s allowance, on an income-related employment and support allowance or on universal credit."}}]}}
-    versions: [{effective_from: '2026-04-01', formula: 'local_authority_is_fylde and council_tax_reduction_household_in_england and fylde_council_tax_reduction_applicant_is_not_pensioner'}]
+    versions: [{effective_from: '2026-04-01', formula: 'local_authority_is_fylde and council_tax_reduction_household_in_england and (fylde_council_tax_reduction_applicant_is_not_pensioner or fylde_council_tax_reduction_applicant_or_partner_receives_income_support or fylde_council_tax_reduction_applicant_or_partner_receives_income_based_jobseekers_allowance or fylde_council_tax_reduction_applicant_or_partner_receives_income_related_employment_and_support_allowance or fylde_council_tax_reduction_applicant_or_partner_receives_universal_credit)'}]
   - name: fylde_council_tax_reduction_capital_eligible
     kind: derived
     entity: Household
@@ -240,6 +247,10 @@ inputs:
   - {name: local_authority_is_fylde, entity: Household, dtype: Boolean, period: Year}
   - {name: council_tax_reduction_household_in_england, entity: Household, dtype: Boolean, period: Year}
   - {name: fylde_council_tax_reduction_applicant_is_not_pensioner, entity: Household, dtype: Boolean, period: Year}
+  - {name: fylde_council_tax_reduction_applicant_or_partner_receives_income_support, entity: Household, dtype: Boolean, period: Year}
+  - {name: fylde_council_tax_reduction_applicant_or_partner_receives_income_based_jobseekers_allowance, entity: Household, dtype: Boolean, period: Year}
+  - {name: fylde_council_tax_reduction_applicant_or_partner_receives_income_related_employment_and_support_allowance, entity: Household, dtype: Boolean, period: Year}
+  - {name: fylde_council_tax_reduction_applicant_or_partner_receives_universal_credit, entity: Household, dtype: Boolean, period: Year}
   - {name: would_claim_council_tax_reduction, entity: Household, dtype: Boolean, period: Year}
   - {name: fylde_council_tax_reduction_assessed_capital_for_year, entity: Household, dtype: Money, period: Year, unit: GBP}
   - {name: fylde_council_tax_reduction_actual_liability_for_year, entity: Household, dtype: Money, period: Year, unit: GBP}
