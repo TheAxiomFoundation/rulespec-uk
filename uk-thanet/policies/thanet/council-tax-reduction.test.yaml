@@ -1,37 +1,11 @@
 - name: thanet_ctr_band_1_nonbinding_ceiling
   period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
-  input:
+  input: &facts
     uk-thanet:policies/thanet/council-tax-reduction#input.local_authority_is_thanet: true
     uk-thanet:policies/thanet/council-tax-reduction#input.council_tax_reduction_household_in_england: true
     uk-thanet:policies/thanet/council-tax-reduction#input.would_claim_council_tax_reduction: true
     uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_applicant_is_working_age: true
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_assessed_capital_for_year: 10000
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_assessed_weekly_income: 0
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_actual_liability_for_year: 1000
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_band_d_liability_for_year: 1200
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_financial_year_days: 365
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_partner: false
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_one_dependant: false
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_two_or_more_dependants: false
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_receives_income_support: false
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_receives_income_related_esa: false
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_receives_income_based_jsa: false
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_receives_universal_credit: false
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_uc_has_no_earnings: false
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_is_qualifying_kent_care_leaver: false
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_non_dependant_deduction_band: 0
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_chargeable_non_dependant_units: 0
-  output:
-    uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_working_age_scheme_applies: holds
-    uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_family_category: 0
-    uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_passported_to_band_1: not_holds
-    uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_income_band: 0
-    uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_selected_support_rate: 1
-    uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_capital_eligible: holds
-    uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_band_d_capped_eligible_liability_for_year: 1000
-    uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_annual_non_dependant_deduction: 0
-    uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_amount_before_award_conditions_for_year: 1000
-    uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_annual_amount: 1000
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_annual_amount: 1000}
 - name: thanet_ctr_band_2_with_band_d_ceiling
   period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
   input:
@@ -39,22 +13,6 @@
     uk-thanet:policies/thanet/council-tax-reduction#input.council_tax_reduction_household_in_england: true
     uk-thanet:policies/thanet/council-tax-reduction#input.would_claim_council_tax_reduction: true
     uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_applicant_is_working_age: true
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_assessed_capital_for_year: 0
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_assessed_weekly_income: 109.01
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_actual_liability_for_year: 1400
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_band_d_liability_for_year: 1200
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_financial_year_days: 365
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_partner: false
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_one_dependant: false
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_two_or_more_dependants: false
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_receives_income_support: false
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_receives_income_related_esa: false
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_receives_income_based_jsa: false
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_receives_universal_credit: false
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_uc_has_no_earnings: false
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_is_qualifying_kent_care_leaver: false
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_non_dependant_deduction_band: 0
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_chargeable_non_dependant_units: 0
   output:
     uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_annual_amount: 900
 - name: thanet_ctr_band_3_non_dependant_deduction
@@ -64,22 +22,6 @@
     uk-thanet:policies/thanet/council-tax-reduction#input.council_tax_reduction_household_in_england: true
     uk-thanet:policies/thanet/council-tax-reduction#input.would_claim_council_tax_reduction: true
     uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_applicant_is_working_age: true
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_assessed_capital_for_year: 0
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_assessed_weekly_income: 184.01
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_actual_liability_for_year: 1200
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_band_d_liability_for_year: 1200
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_financial_year_days: 364
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_partner: false
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_one_dependant: false
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_two_or_more_dependants: false
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_receives_income_support: false
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_receives_income_related_esa: false
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_receives_income_based_jsa: false
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_receives_universal_credit: false
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_uc_has_no_earnings: false
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_is_qualifying_kent_care_leaver: false
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_non_dependant_deduction_band: 1
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_chargeable_non_dependant_units: 1
   output:
     uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_annual_amount: 80
 - name: thanet_ctr_band_4
@@ -89,22 +31,6 @@
     uk-thanet:policies/thanet/council-tax-reduction#input.council_tax_reduction_household_in_england: true
     uk-thanet:policies/thanet/council-tax-reduction#input.would_claim_council_tax_reduction: true
     uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_applicant_is_working_age: true
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_assessed_capital_for_year: 0
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_assessed_weekly_income: 259.01
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_actual_liability_for_year: 1200
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_band_d_liability_for_year: 1200
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_financial_year_days: 365
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_partner: false
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_one_dependant: false
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_two_or_more_dependants: false
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_receives_income_support: false
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_receives_income_related_esa: false
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_receives_income_based_jsa: false
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_receives_universal_credit: false
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_uc_has_no_earnings: false
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_is_qualifying_kent_care_leaver: false
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_non_dependant_deduction_band: 0
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_chargeable_non_dependant_units: 0
   output:
     uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_annual_amount: 300
 - name: thanet_ctr_capital_cliff_and_zero_band
@@ -114,22 +40,342 @@
     uk-thanet:policies/thanet/council-tax-reduction#input.council_tax_reduction_household_in_england: true
     uk-thanet:policies/thanet/council-tax-reduction#input.would_claim_council_tax_reduction: true
     uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_applicant_is_working_age: true
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_assessed_capital_for_year: 10000.01
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_assessed_weekly_income: 334.01
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_actual_liability_for_year: 1200
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_band_d_liability_for_year: 1200
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_financial_year_days: 365
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_partner: false
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_one_dependant: false
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_two_or_more_dependants: false
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_receives_income_support: true
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_receives_income_related_esa: false
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_receives_income_based_jsa: false
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_receives_universal_credit: false
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_uc_has_no_earnings: false
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_is_qualifying_kent_care_leaver: false
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_non_dependant_deduction_band: 0
-    uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_chargeable_non_dependant_units: 0
-  output:
-    uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_annual_amount: 0
-    uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_passported_to_band_1: holds
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_annual_amount: 0}
+
+# Round-1 exhaustive grid and parameter companions: every case inherits all factual inputs.
+- name: thanet_ctr_scheme_applies
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: *facts
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_working_age_scheme_applies: holds}
+- name: thanet_ctr_family_category
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: *facts
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_family_category: 0}
+- name: thanet_ctr_selected_rate
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: *facts
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_selected_support_rate: 1}
+- name: thanet_ctr_amount_before_conditions
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: *facts
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_amount_before_award_conditions_for_year: 1000}
+- name: thanet_ctr_single_edge_1
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {<<: [*facts, {uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_assessed_weekly_income: 109, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_partner: false, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_one_dependant: false, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_two_or_more_dependants: false}]}
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_income_band: 0}
+- name: thanet_ctr_single_edge_2
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {<<: [*facts, {uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_assessed_weekly_income: 109.01, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_partner: false, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_one_dependant: false, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_two_or_more_dependants: false}]}
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_income_band: 1}
+- name: thanet_ctr_single_edge_3
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {<<: [*facts, {uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_assessed_weekly_income: 184, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_partner: false, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_one_dependant: false, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_two_or_more_dependants: false}]}
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_income_band: 1}
+- name: thanet_ctr_single_edge_4
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {<<: [*facts, {uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_assessed_weekly_income: 184.01, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_partner: false, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_one_dependant: false, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_two_or_more_dependants: false}]}
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_income_band: 2}
+- name: thanet_ctr_single_edge_5
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {<<: [*facts, {uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_assessed_weekly_income: 259, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_partner: false, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_one_dependant: false, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_two_or_more_dependants: false}]}
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_income_band: 2}
+- name: thanet_ctr_single_edge_6
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {<<: [*facts, {uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_assessed_weekly_income: 259.01, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_partner: false, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_one_dependant: false, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_two_or_more_dependants: false}]}
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_income_band: 3}
+- name: thanet_ctr_single_edge_7
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {<<: [*facts, {uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_assessed_weekly_income: 334, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_partner: false, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_one_dependant: false, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_two_or_more_dependants: false}]}
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_income_band: 3}
+- name: thanet_ctr_single_edge_8
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {<<: [*facts, {uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_assessed_weekly_income: 334.01, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_partner: false, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_one_dependant: false, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_two_or_more_dependants: false}]}
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_income_band: 4}
+- name: thanet_ctr_couple_edge_1
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {<<: [*facts, {uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_assessed_weekly_income: 164, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_partner: true, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_one_dependant: false, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_two_or_more_dependants: false}]}
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_income_band: 0}
+- name: thanet_ctr_couple_edge_2
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {<<: [*facts, {uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_assessed_weekly_income: 164.01, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_partner: true, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_one_dependant: false, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_two_or_more_dependants: false}]}
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_income_band: 1}
+- name: thanet_ctr_couple_edge_3
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {<<: [*facts, {uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_assessed_weekly_income: 239, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_partner: true, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_one_dependant: false, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_two_or_more_dependants: false}]}
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_income_band: 1}
+- name: thanet_ctr_couple_edge_4
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {<<: [*facts, {uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_assessed_weekly_income: 239.01, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_partner: true, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_one_dependant: false, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_two_or_more_dependants: false}]}
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_income_band: 2}
+- name: thanet_ctr_couple_edge_5
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {<<: [*facts, {uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_assessed_weekly_income: 314, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_partner: true, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_one_dependant: false, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_two_or_more_dependants: false}]}
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_income_band: 2}
+- name: thanet_ctr_couple_edge_6
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {<<: [*facts, {uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_assessed_weekly_income: 314.01, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_partner: true, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_one_dependant: false, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_two_or_more_dependants: false}]}
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_income_band: 3}
+- name: thanet_ctr_couple_edge_7
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {<<: [*facts, {uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_assessed_weekly_income: 389, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_partner: true, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_one_dependant: false, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_two_or_more_dependants: false}]}
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_income_band: 3}
+- name: thanet_ctr_couple_edge_8
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {<<: [*facts, {uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_assessed_weekly_income: 389.01, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_partner: true, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_one_dependant: false, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_two_or_more_dependants: false}]}
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_income_band: 4}
+- name: thanet_ctr_one_dependant_edge_1
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {<<: [*facts, {uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_assessed_weekly_income: 246, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_partner: false, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_one_dependant: true, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_two_or_more_dependants: false}]}
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_income_band: 0}
+- name: thanet_ctr_one_dependant_edge_2
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {<<: [*facts, {uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_assessed_weekly_income: 246.01, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_partner: false, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_one_dependant: true, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_two_or_more_dependants: false}]}
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_income_band: 1}
+- name: thanet_ctr_one_dependant_edge_3
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {<<: [*facts, {uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_assessed_weekly_income: 321, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_partner: false, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_one_dependant: true, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_two_or_more_dependants: false}]}
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_income_band: 1}
+- name: thanet_ctr_one_dependant_edge_4
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {<<: [*facts, {uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_assessed_weekly_income: 321.01, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_partner: false, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_one_dependant: true, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_two_or_more_dependants: false}]}
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_income_band: 2}
+- name: thanet_ctr_one_dependant_edge_5
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {<<: [*facts, {uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_assessed_weekly_income: 396, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_partner: false, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_one_dependant: true, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_two_or_more_dependants: false}]}
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_income_band: 2}
+- name: thanet_ctr_one_dependant_edge_6
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {<<: [*facts, {uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_assessed_weekly_income: 396.01, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_partner: false, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_one_dependant: true, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_two_or_more_dependants: false}]}
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_income_band: 3}
+- name: thanet_ctr_one_dependant_edge_7
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {<<: [*facts, {uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_assessed_weekly_income: 471, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_partner: false, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_one_dependant: true, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_two_or_more_dependants: false}]}
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_income_band: 3}
+- name: thanet_ctr_one_dependant_edge_8
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {<<: [*facts, {uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_assessed_weekly_income: 471.01, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_partner: false, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_one_dependant: true, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_two_or_more_dependants: false}]}
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_income_band: 4}
+- name: thanet_ctr_two_or_more_dependants_edge_1
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {<<: [*facts, {uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_assessed_weekly_income: 327, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_partner: false, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_one_dependant: false, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_two_or_more_dependants: true}]}
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_income_band: 0}
+- name: thanet_ctr_two_or_more_dependants_edge_2
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {<<: [*facts, {uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_assessed_weekly_income: 327.01, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_partner: false, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_one_dependant: false, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_two_or_more_dependants: true}]}
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_income_band: 1}
+- name: thanet_ctr_two_or_more_dependants_edge_3
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {<<: [*facts, {uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_assessed_weekly_income: 402, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_partner: false, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_one_dependant: false, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_two_or_more_dependants: true}]}
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_income_band: 1}
+- name: thanet_ctr_two_or_more_dependants_edge_4
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {<<: [*facts, {uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_assessed_weekly_income: 402.01, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_partner: false, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_one_dependant: false, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_two_or_more_dependants: true}]}
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_income_band: 2}
+- name: thanet_ctr_two_or_more_dependants_edge_5
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {<<: [*facts, {uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_assessed_weekly_income: 477, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_partner: false, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_one_dependant: false, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_two_or_more_dependants: true}]}
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_income_band: 2}
+- name: thanet_ctr_two_or_more_dependants_edge_6
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {<<: [*facts, {uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_assessed_weekly_income: 477.01, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_partner: false, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_one_dependant: false, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_two_or_more_dependants: true}]}
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_income_band: 3}
+- name: thanet_ctr_two_or_more_dependants_edge_7
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {<<: [*facts, {uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_assessed_weekly_income: 552, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_partner: false, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_one_dependant: false, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_two_or_more_dependants: true}]}
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_income_band: 3}
+- name: thanet_ctr_two_or_more_dependants_edge_8
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {<<: [*facts, {uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_assessed_weekly_income: 552.01, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_partner: false, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_one_dependant: false, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_has_two_or_more_dependants: true}]}
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_income_band: 4}
+- name: thanet_ctr_family_category_codes_0
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {<<: [*facts, {uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_family_category: 0}]}
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_family_category_codes: 0}
+- name: thanet_ctr_family_category_codes_1
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {<<: [*facts, {uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_family_category: 1}]}
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_family_category_codes: 1}
+- name: thanet_ctr_family_category_codes_2
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {<<: [*facts, {uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_family_category: 2}]}
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_family_category_codes: 2}
+- name: thanet_ctr_family_category_codes_3
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {<<: [*facts, {uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_family_category: 3}]}
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_family_category_codes: 3}
+- name: thanet_ctr_income_band_codes_0
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {<<: [*facts, {uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_income_band: 0}]}
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_income_band_codes: 0}
+- name: thanet_ctr_income_band_codes_1
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {<<: [*facts, {uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_income_band: 1}]}
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_income_band_codes: 1}
+- name: thanet_ctr_income_band_codes_2
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {<<: [*facts, {uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_income_band: 2}]}
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_income_band_codes: 2}
+- name: thanet_ctr_income_band_codes_3
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {<<: [*facts, {uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_income_band: 3}]}
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_income_band_codes: 3}
+- name: thanet_ctr_income_band_codes_4
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {<<: [*facts, {uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_income_band: 4}]}
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_income_band_codes: 4}
+- name: thanet_ctr_support_rate_by_income_band_0
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {<<: [*facts, {uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_income_band: 0}]}
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_support_rate_by_income_band: 1}
+- name: thanet_ctr_support_rate_by_income_band_1
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {<<: [*facts, {uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_income_band: 1}]}
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_support_rate_by_income_band: 0.75}
+- name: thanet_ctr_support_rate_by_income_band_2
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {<<: [*facts, {uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_income_band: 2}]}
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_support_rate_by_income_band: 0.5}
+- name: thanet_ctr_support_rate_by_income_band_3
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {<<: [*facts, {uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_income_band: 3}]}
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_support_rate_by_income_band: 0.25}
+- name: thanet_ctr_support_rate_by_income_band_4
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {<<: [*facts, {uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_income_band: 4}]}
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_support_rate_by_income_band: 0}
+- name: thanet_ctr_band_2_lower_income_by_family_0
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {<<: [*facts, {uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_family_category: 0}]}
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_band_2_lower_income_by_family: 109.01}
+- name: thanet_ctr_band_2_lower_income_by_family_1
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {<<: [*facts, {uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_family_category: 1}]}
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_band_2_lower_income_by_family: 164.01}
+- name: thanet_ctr_band_2_lower_income_by_family_2
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {<<: [*facts, {uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_family_category: 2}]}
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_band_2_lower_income_by_family: 246.01}
+- name: thanet_ctr_band_2_lower_income_by_family_3
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {<<: [*facts, {uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_family_category: 3}]}
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_band_2_lower_income_by_family: 327.01}
+- name: thanet_ctr_band_3_lower_income_by_family_0
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {<<: [*facts, {uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_family_category: 0}]}
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_band_3_lower_income_by_family: 184.01}
+- name: thanet_ctr_band_3_lower_income_by_family_1
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {<<: [*facts, {uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_family_category: 1}]}
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_band_3_lower_income_by_family: 239.01}
+- name: thanet_ctr_band_3_lower_income_by_family_2
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {<<: [*facts, {uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_family_category: 2}]}
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_band_3_lower_income_by_family: 321.01}
+- name: thanet_ctr_band_3_lower_income_by_family_3
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {<<: [*facts, {uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_family_category: 3}]}
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_band_3_lower_income_by_family: 402.01}
+- name: thanet_ctr_band_4_lower_income_by_family_0
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {<<: [*facts, {uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_family_category: 0}]}
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_band_4_lower_income_by_family: 259.01}
+- name: thanet_ctr_band_4_lower_income_by_family_1
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {<<: [*facts, {uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_family_category: 1}]}
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_band_4_lower_income_by_family: 314.01}
+- name: thanet_ctr_band_4_lower_income_by_family_2
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {<<: [*facts, {uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_family_category: 2}]}
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_band_4_lower_income_by_family: 396.01}
+- name: thanet_ctr_band_4_lower_income_by_family_3
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {<<: [*facts, {uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_family_category: 3}]}
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_band_4_lower_income_by_family: 477.01}
+- name: thanet_ctr_band_4_upper_income_by_family_0
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {<<: [*facts, {uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_family_category: 0}]}
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_band_4_upper_income_by_family: 334}
+- name: thanet_ctr_band_4_upper_income_by_family_1
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {<<: [*facts, {uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_family_category: 1}]}
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_band_4_upper_income_by_family: 389}
+- name: thanet_ctr_band_4_upper_income_by_family_2
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {<<: [*facts, {uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_family_category: 2}]}
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_band_4_upper_income_by_family: 471}
+- name: thanet_ctr_band_4_upper_income_by_family_3
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {<<: [*facts, {uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_family_category: 3}]}
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_band_4_upper_income_by_family: 552}
+- name: thanet_ctr_non_dependant_weekly_deduction_by_band_0
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {<<: [*facts, {uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_non_dependant_deduction_band: 0}]}
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_non_dependant_weekly_deduction_by_band: 0}
+- name: thanet_ctr_non_dependant_weekly_deduction_by_band_1
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {<<: [*facts, {uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_non_dependant_deduction_band: 1}]}
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_non_dependant_weekly_deduction_by_band: 10}
+- name: thanet_ctr_maximum_support_rate
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: *facts
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_maximum_support_rate: 1}
+- name: thanet_ctr_capital_limit
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: *facts
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_capital_limit: 10000}
+- name: thanet_ctr_days_per_week
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: *facts
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_days_per_week: 7}
+- name: thanet_ctr_zero_award
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: *facts
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_zero_award: 0}
+- name: thanet_ctr_ceiling_nonbinding
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {<<: *facts}
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_band_d_capped_eligible_liability_for_year: 1000}
+- name: thanet_ctr_ceiling_binding
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {<<: [*facts, {uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_actual_liability_for_year: 1400}]}
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_band_d_capped_eligible_liability_for_year: 1200}
+- name: thanet_ctr_capital_limit_eligible
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {<<: [*facts, {uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_assessed_capital_for_year: 10000}]}
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_capital_eligible: holds}
+- name: thanet_ctr_capital_cliff
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {<<: [*facts, {uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_assessed_capital_for_year: 10000.01}]}
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_capital_eligible: not_holds}
+- name: thanet_ctr_income_above_grid
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {<<: [*facts, {uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_assessed_weekly_income: 334.01}]}
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_annual_amount: 0}
+- name: thanet_ctr_income_support
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {<<: [*facts, {uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_assessed_weekly_income: 500, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_receives_income_support: true}]}
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_passported_to_band_1: holds}
+- name: thanet_ctr_income_related_esa
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {<<: [*facts, {uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_assessed_weekly_income: 500, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_receives_income_related_esa: true}]}
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_passported_to_band_1: holds}
+- name: thanet_ctr_income_based_jsa
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {<<: [*facts, {uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_assessed_weekly_income: 500, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_receives_income_based_jsa: true}]}
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_passported_to_band_1: holds}
+- name: thanet_ctr_uc_no_earnings
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {<<: [*facts, {uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_assessed_weekly_income: 500, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_receives_universal_credit: true, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_uc_has_no_earnings: true}]}
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_passported_to_band_1: holds}
+- name: thanet_ctr_uc_with_earnings
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {<<: [*facts, {uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_assessed_weekly_income: 500, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_receives_universal_credit: true}]}
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_passported_to_band_1: not_holds}
+- name: thanet_ctr_kent_care_leaver
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {<<: [*facts, {uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_assessed_weekly_income: 500, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_is_qualifying_kent_care_leaver: true}]}
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_passported_to_band_1: holds}
+- name: thanet_ctr_non_dependant_annual
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input: {<<: [*facts, {uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_financial_year_days: 364, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_non_dependant_deduction_band: 1, uk-thanet:policies/thanet/council-tax-reduction#input.thanet_council_tax_reduction_chargeable_non_dependant_units: 1}]}
+  output: {uk-thanet:policies/thanet/council-tax-reduction#thanet_council_tax_reduction_annual_non_dependant_deduction: 520}
