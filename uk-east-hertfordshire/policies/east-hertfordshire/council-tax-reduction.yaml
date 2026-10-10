@@ -53,9 +53,10 @@ rules:
     kind: parameter
     dtype: Rate
     period: Week
-    source: East Hertfordshire Council Tax Reduction Scheme 2026/27 paragraph 59.1
-    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-east-hertfordshire/manual/council-tax-reduction-scheme-2026-2027/page-73, excerpt: "shall be 2 6/7 per cent."}}]}}
-    versions: [{effective_from: '2026-04-01', formula: "(east_hertfordshire_council_tax_reduction_taper_whole_percentage_points + east_hertfordshire_council_tax_reduction_taper_fraction_numerator / east_hertfordshire_council_tax_reduction_days_per_week) * east_hertfordshire_council_tax_reduction_per_cent_unit"}]
+    source: East Hertfordshire Council Tax Reduction Scheme 2026/27 paragraphs 59.1 and 58.1, weekly rate derived from the printed daily mixed-number percentage
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-east-hertfordshire/manual/council-tax-reduction-scheme-2026-2027/page-73, excerpt: "The prescribed daily percentage for the purpose of calculating support as a percentage of excess of income over the applicable amount, which is deducted from maximum council tax reduction, shall be 2 6/7 per cent."}}]}}
+    # (2 + 6/7) percent per day times seven days; cancel before division for an exact weekly rate.
+    versions: [{effective_from: '2026-04-01', formula: "(east_hertfordshire_council_tax_reduction_taper_whole_percentage_points * east_hertfordshire_council_tax_reduction_days_per_week + east_hertfordshire_council_tax_reduction_taper_fraction_numerator) * east_hertfordshire_council_tax_reduction_per_cent_unit"}]
   - name: east_hertfordshire_council_tax_reduction_capital_limit
     kind: parameter
     dtype: Money
