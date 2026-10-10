@@ -1,0 +1,40 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-62
+    source_sha256: ea32acc2eda2a57fe1d70da74c29921c5faf5d8b540255d75692fea4a1013a10
+  summary: Excess support means an amount of Council Tax Support to which there was
+    no entitlement under these rules.
+inputs:
+- name: council_tax_support_awarded
+  entity: Household
+  dtype: Money
+  unit: GBP
+  period: Month
+- name: council_tax_support_entitlement
+  entity: Household
+  dtype: Money
+  unit: GBP
+  period: Month
+rules:
+- name: excess_support
+  kind: derived
+  entity: Household
+  dtype: Money
+  unit: GBP
+  period: Month
+  source: uk-wakefield/manual/council-tax-support-scheme-working-age/block-62
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: definition
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-62
+          excerpt: Excess support means an amount of Council Tax Support to which
+            there was no entitlement under these rules.
+  versions:
+  - effective_from: '0001-01-01'
+    formula: max(0, council_tax_support_awarded - council_tax_support_entitlement)
