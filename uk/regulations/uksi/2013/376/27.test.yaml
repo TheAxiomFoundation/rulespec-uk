@@ -46,3 +46,75 @@
     uk:regulations/uksi/2013/376/27#input.lcwra_element_amount_given_in_regulation_36_for_second_joint_claimant: 495.0
   output:
     uk:regulations/uksi/2013/376/27#universal_credit_award_lcwra_element_included_amount: 495.0
+- name: joint_claimants_both_lcwra_at_same_amount_include_one_element
+  period: 2026-04
+  input:
+    uk:regulations/uksi/2013/376/27#input.claim_is_for_joint_claimants: true
+    uk:regulations/uksi/2013/376/27#input.single_claimant_has_limited_capability_for_work_and_work_related_activity: false
+    uk:regulations/uksi/2013/376/27#input.first_joint_claimant_has_limited_capability_for_work_and_work_related_activity: true
+    uk:regulations/uksi/2013/376/27#input.second_joint_claimant_has_limited_capability_for_work_and_work_related_activity: true
+    uk:regulations/uksi/2013/376/27#input.lcwra_element_amount_given_in_regulation_36_for_single_claimant: 0
+    uk:regulations/uksi/2013/376/27#input.lcwra_element_amount_given_in_regulation_36_for_first_joint_claimant: 217.26
+    uk:regulations/uksi/2013/376/27#input.lcwra_element_amount_given_in_regulation_36_for_second_joint_claimant: 217.26
+  output:
+    uk:regulations/uksi/2013/376/27#universal_credit_award_lcwra_element_included_amount: 217.26
+- name: joint_claimants_both_lcwra_include_one_higher_amount_when_first_is_higher
+  period: 2026-04
+  input:
+    uk:regulations/uksi/2013/376/27#input.claim_is_for_joint_claimants: true
+    uk:regulations/uksi/2013/376/27#input.single_claimant_has_limited_capability_for_work_and_work_related_activity: false
+    uk:regulations/uksi/2013/376/27#input.first_joint_claimant_has_limited_capability_for_work_and_work_related_activity: true
+    uk:regulations/uksi/2013/376/27#input.second_joint_claimant_has_limited_capability_for_work_and_work_related_activity: true
+    uk:regulations/uksi/2013/376/27#input.lcwra_element_amount_given_in_regulation_36_for_single_claimant: 0
+    uk:regulations/uksi/2013/376/27#input.lcwra_element_amount_given_in_regulation_36_for_first_joint_claimant: 429.80
+    uk:regulations/uksi/2013/376/27#input.lcwra_element_amount_given_in_regulation_36_for_second_joint_claimant: 217.26
+  output:
+    uk:regulations/uksi/2013/376/27#universal_credit_award_lcwra_element_included_amount: 429.80
+- name: joint_claimants_only_first_has_lcwra_include_first_amount
+  period: 2026-04
+  input:
+    uk:regulations/uksi/2013/376/27#input.claim_is_for_joint_claimants: true
+    uk:regulations/uksi/2013/376/27#input.single_claimant_has_limited_capability_for_work_and_work_related_activity: false
+    uk:regulations/uksi/2013/376/27#input.first_joint_claimant_has_limited_capability_for_work_and_work_related_activity: true
+    uk:regulations/uksi/2013/376/27#input.second_joint_claimant_has_limited_capability_for_work_and_work_related_activity: false
+    uk:regulations/uksi/2013/376/27#input.lcwra_element_amount_given_in_regulation_36_for_single_claimant: 0
+    uk:regulations/uksi/2013/376/27#input.lcwra_element_amount_given_in_regulation_36_for_first_joint_claimant: 217.26
+    uk:regulations/uksi/2013/376/27#input.lcwra_element_amount_given_in_regulation_36_for_second_joint_claimant: 429.80
+  output:
+    uk:regulations/uksi/2013/376/27#universal_credit_award_lcwra_element_included_amount: 217.26
+- name: joint_claim_with_neither_lcwra_ignores_single_claimant_slot
+  period: 2026-04
+  input:
+    uk:regulations/uksi/2013/376/27#input.claim_is_for_joint_claimants: true
+    uk:regulations/uksi/2013/376/27#input.single_claimant_has_limited_capability_for_work_and_work_related_activity: true
+    uk:regulations/uksi/2013/376/27#input.first_joint_claimant_has_limited_capability_for_work_and_work_related_activity: false
+    uk:regulations/uksi/2013/376/27#input.second_joint_claimant_has_limited_capability_for_work_and_work_related_activity: false
+    uk:regulations/uksi/2013/376/27#input.lcwra_element_amount_given_in_regulation_36_for_single_claimant: 217.26
+    uk:regulations/uksi/2013/376/27#input.lcwra_element_amount_given_in_regulation_36_for_first_joint_claimant: 217.26
+    uk:regulations/uksi/2013/376/27#input.lcwra_element_amount_given_in_regulation_36_for_second_joint_claimant: 217.26
+  output:
+    uk:regulations/uksi/2013/376/27#universal_credit_award_lcwra_element_included_amount: 0
+- name: single_claimant_pre_2026_lcwra_includes_higher_regulation_36_amount
+  period: 2026-04
+  input:
+    uk:regulations/uksi/2013/376/27#input.claim_is_for_joint_claimants: false
+    uk:regulations/uksi/2013/376/27#input.single_claimant_has_limited_capability_for_work_and_work_related_activity: true
+    uk:regulations/uksi/2013/376/27#input.first_joint_claimant_has_limited_capability_for_work_and_work_related_activity: false
+    uk:regulations/uksi/2013/376/27#input.second_joint_claimant_has_limited_capability_for_work_and_work_related_activity: false
+    uk:regulations/uksi/2013/376/27#input.lcwra_element_amount_given_in_regulation_36_for_single_claimant: 429.80
+    uk:regulations/uksi/2013/376/27#input.lcwra_element_amount_given_in_regulation_36_for_first_joint_claimant: 0
+    uk:regulations/uksi/2013/376/27#input.lcwra_element_amount_given_in_regulation_36_for_second_joint_claimant: 0
+  output:
+    uk:regulations/uksi/2013/376/27#universal_credit_award_lcwra_element_included_amount: 429.80
+- name: single_claim_ignores_joint_claimant_lcwra_slots
+  period: 2026-04
+  input:
+    uk:regulations/uksi/2013/376/27#input.claim_is_for_joint_claimants: false
+    uk:regulations/uksi/2013/376/27#input.single_claimant_has_limited_capability_for_work_and_work_related_activity: false
+    uk:regulations/uksi/2013/376/27#input.first_joint_claimant_has_limited_capability_for_work_and_work_related_activity: true
+    uk:regulations/uksi/2013/376/27#input.second_joint_claimant_has_limited_capability_for_work_and_work_related_activity: true
+    uk:regulations/uksi/2013/376/27#input.lcwra_element_amount_given_in_regulation_36_for_single_claimant: 217.26
+    uk:regulations/uksi/2013/376/27#input.lcwra_element_amount_given_in_regulation_36_for_first_joint_claimant: 217.26
+    uk:regulations/uksi/2013/376/27#input.lcwra_element_amount_given_in_regulation_36_for_second_joint_claimant: 429.80
+  output:
+    uk:regulations/uksi/2013/376/27#universal_credit_award_lcwra_element_included_amount: 0

@@ -99,3 +99,195 @@
     uk:regulations/uksi/2013/376/22#earned_income_amount_subject_to_taper: 1290
     uk:regulations/uksi/2013/376/22#earned_income_deduction_from_maximum_amount: 709.5
     uk:regulations/uksi/2013/376/22#universal_credit_award_deduction_from_maximum_amount: 1009.5
+- name: joint_claimants_without_child_one_with_lcw_higher_work_allowance_without_housing_costs
+  period: 2026-04
+  input:
+    uk:regulations/uksi/2013/376/22#input.claim_is_for_joint_claimants: true
+    uk:regulations/uksi/2013/376/22#input.claimant_is_member_of_couple: false
+    uk:regulations/uksi/2013/376/22#input.claimant_makes_claim_as_single_person: false
+    uk:regulations/uksi/2013/376/22#input.award_contains_housing_costs_element: false
+    uk:regulations/uksi/2013/376/22#input.single_claimant_responsible_for_child_or_qualifying_young_person: false
+    uk:regulations/uksi/2013/376/22#input.single_claimant_has_limited_capability_for_work: false
+    uk:regulations/uksi/2013/376/22#input.joint_claimants_responsible_for_child_or_qualifying_young_person: false
+    uk:regulations/uksi/2013/376/22#input.one_or_both_joint_claimants_have_limited_capability_for_work: true
+    uk:regulations/uksi/2013/376/22#input.claimant_unearned_income_in_assessment_period: 40
+    uk:regulations/uksi/2013/376/22#input.joint_claimants_combined_unearned_income_in_assessment_period: 120
+    uk:regulations/uksi/2013/376/22#input.claimant_earned_income_in_assessment_period: 300
+    uk:regulations/uksi/2013/376/22#input.joint_claimants_combined_earned_income_in_assessment_period: 1500
+  output:
+    uk:regulations/uksi/2013/376/22#effective_joint_claimants_for_deduction: holds
+    uk:regulations/uksi/2013/376/22#work_allowance_specified_for_deduction: holds
+    uk:regulations/uksi/2013/376/22#earned_income_for_deduction: 1500
+    uk:regulations/uksi/2013/376/22#unearned_income_for_deduction: 120
+    uk:regulations/uksi/2013/376/22#applicable_work_allowance_amount: 710
+    uk:regulations/uksi/2013/376/22#earned_income_amount_subject_to_taper: 790
+    uk:regulations/uksi/2013/376/22#earned_income_deduction_from_maximum_amount: 434.5
+    uk:regulations/uksi/2013/376/22#universal_credit_award_deduction_from_maximum_amount: 554.5
+- name: joint_claimants_without_child_one_with_lcw_lower_work_allowance_with_housing_costs
+  period: 2026-04
+  input:
+    uk:regulations/uksi/2013/376/22#input.claim_is_for_joint_claimants: true
+    uk:regulations/uksi/2013/376/22#input.claimant_is_member_of_couple: false
+    uk:regulations/uksi/2013/376/22#input.claimant_makes_claim_as_single_person: false
+    uk:regulations/uksi/2013/376/22#input.award_contains_housing_costs_element: true
+    uk:regulations/uksi/2013/376/22#input.single_claimant_responsible_for_child_or_qualifying_young_person: false
+    uk:regulations/uksi/2013/376/22#input.single_claimant_has_limited_capability_for_work: false
+    uk:regulations/uksi/2013/376/22#input.joint_claimants_responsible_for_child_or_qualifying_young_person: false
+    uk:regulations/uksi/2013/376/22#input.one_or_both_joint_claimants_have_limited_capability_for_work: true
+    uk:regulations/uksi/2013/376/22#input.claimant_unearned_income_in_assessment_period: 40
+    uk:regulations/uksi/2013/376/22#input.joint_claimants_combined_unearned_income_in_assessment_period: 120
+    uk:regulations/uksi/2013/376/22#input.claimant_earned_income_in_assessment_period: 300
+    uk:regulations/uksi/2013/376/22#input.joint_claimants_combined_earned_income_in_assessment_period: 1500
+  output:
+    uk:regulations/uksi/2013/376/22#effective_joint_claimants_for_deduction: holds
+    uk:regulations/uksi/2013/376/22#work_allowance_specified_for_deduction: holds
+    uk:regulations/uksi/2013/376/22#earned_income_for_deduction: 1500
+    uk:regulations/uksi/2013/376/22#unearned_income_for_deduction: 120
+    uk:regulations/uksi/2013/376/22#applicable_work_allowance_amount: 427
+    uk:regulations/uksi/2013/376/22#earned_income_amount_subject_to_taper: 1073
+    uk:regulations/uksi/2013/376/22#earned_income_deduction_from_maximum_amount: 590.15
+    uk:regulations/uksi/2013/376/22#universal_credit_award_deduction_from_maximum_amount: 710.15
+- name: single_claimant_with_lcw_and_no_child_higher_work_allowance_without_housing_costs
+  period: 2026-04
+  input:
+    uk:regulations/uksi/2013/376/22#input.claim_is_for_joint_claimants: false
+    uk:regulations/uksi/2013/376/22#input.claimant_is_member_of_couple: false
+    uk:regulations/uksi/2013/376/22#input.claimant_makes_claim_as_single_person: false
+    uk:regulations/uksi/2013/376/22#input.award_contains_housing_costs_element: false
+    uk:regulations/uksi/2013/376/22#input.single_claimant_responsible_for_child_or_qualifying_young_person: false
+    uk:regulations/uksi/2013/376/22#input.single_claimant_has_limited_capability_for_work: true
+    uk:regulations/uksi/2013/376/22#input.joint_claimants_responsible_for_child_or_qualifying_young_person: false
+    uk:regulations/uksi/2013/376/22#input.one_or_both_joint_claimants_have_limited_capability_for_work: false
+    uk:regulations/uksi/2013/376/22#input.claimant_unearned_income_in_assessment_period: 0
+    uk:regulations/uksi/2013/376/22#input.joint_claimants_combined_unearned_income_in_assessment_period: 900
+    uk:regulations/uksi/2013/376/22#input.claimant_earned_income_in_assessment_period: 2000
+    uk:regulations/uksi/2013/376/22#input.joint_claimants_combined_earned_income_in_assessment_period: 3000
+  output:
+    uk:regulations/uksi/2013/376/22#effective_joint_claimants_for_deduction: not_holds
+    uk:regulations/uksi/2013/376/22#work_allowance_specified_for_deduction: holds
+    uk:regulations/uksi/2013/376/22#earned_income_for_deduction: 2000
+    uk:regulations/uksi/2013/376/22#unearned_income_for_deduction: 0
+    uk:regulations/uksi/2013/376/22#applicable_work_allowance_amount: 710
+    uk:regulations/uksi/2013/376/22#earned_income_amount_subject_to_taper: 1290
+    uk:regulations/uksi/2013/376/22#earned_income_deduction_from_maximum_amount: 709.5
+    uk:regulations/uksi/2013/376/22#universal_credit_award_deduction_from_maximum_amount: 709.5
+- name: single_claimant_with_lcw_and_no_child_lower_work_allowance_with_housing_costs
+  period: 2026-04
+  input:
+    uk:regulations/uksi/2013/376/22#input.claim_is_for_joint_claimants: false
+    uk:regulations/uksi/2013/376/22#input.claimant_is_member_of_couple: false
+    uk:regulations/uksi/2013/376/22#input.claimant_makes_claim_as_single_person: false
+    uk:regulations/uksi/2013/376/22#input.award_contains_housing_costs_element: true
+    uk:regulations/uksi/2013/376/22#input.single_claimant_responsible_for_child_or_qualifying_young_person: false
+    uk:regulations/uksi/2013/376/22#input.single_claimant_has_limited_capability_for_work: true
+    uk:regulations/uksi/2013/376/22#input.joint_claimants_responsible_for_child_or_qualifying_young_person: false
+    uk:regulations/uksi/2013/376/22#input.one_or_both_joint_claimants_have_limited_capability_for_work: false
+    uk:regulations/uksi/2013/376/22#input.claimant_unearned_income_in_assessment_period: 0
+    uk:regulations/uksi/2013/376/22#input.joint_claimants_combined_unearned_income_in_assessment_period: 900
+    uk:regulations/uksi/2013/376/22#input.claimant_earned_income_in_assessment_period: 900
+    uk:regulations/uksi/2013/376/22#input.joint_claimants_combined_earned_income_in_assessment_period: 3000
+  output:
+    uk:regulations/uksi/2013/376/22#effective_joint_claimants_for_deduction: not_holds
+    uk:regulations/uksi/2013/376/22#work_allowance_specified_for_deduction: holds
+    uk:regulations/uksi/2013/376/22#earned_income_for_deduction: 900
+    uk:regulations/uksi/2013/376/22#unearned_income_for_deduction: 0
+    uk:regulations/uksi/2013/376/22#applicable_work_allowance_amount: 427
+    uk:regulations/uksi/2013/376/22#earned_income_amount_subject_to_taper: 473
+    uk:regulations/uksi/2013/376/22#earned_income_deduction_from_maximum_amount: 260.15
+    uk:regulations/uksi/2013/376/22#universal_credit_award_deduction_from_maximum_amount: 260.15
+- name: single_claimant_without_child_or_lcw_has_no_work_allowance_with_housing_costs
+  period: 2026-04
+  input:
+    uk:regulations/uksi/2013/376/22#input.claim_is_for_joint_claimants: false
+    uk:regulations/uksi/2013/376/22#input.claimant_is_member_of_couple: false
+    uk:regulations/uksi/2013/376/22#input.claimant_makes_claim_as_single_person: false
+    uk:regulations/uksi/2013/376/22#input.award_contains_housing_costs_element: true
+    uk:regulations/uksi/2013/376/22#input.single_claimant_responsible_for_child_or_qualifying_young_person: false
+    uk:regulations/uksi/2013/376/22#input.single_claimant_has_limited_capability_for_work: false
+    uk:regulations/uksi/2013/376/22#input.joint_claimants_responsible_for_child_or_qualifying_young_person: false
+    uk:regulations/uksi/2013/376/22#input.one_or_both_joint_claimants_have_limited_capability_for_work: false
+    uk:regulations/uksi/2013/376/22#input.claimant_unearned_income_in_assessment_period: 50
+    uk:regulations/uksi/2013/376/22#input.joint_claimants_combined_unearned_income_in_assessment_period: 900
+    uk:regulations/uksi/2013/376/22#input.claimant_earned_income_in_assessment_period: 800
+    uk:regulations/uksi/2013/376/22#input.joint_claimants_combined_earned_income_in_assessment_period: 3000
+  output:
+    uk:regulations/uksi/2013/376/22#effective_joint_claimants_for_deduction: not_holds
+    uk:regulations/uksi/2013/376/22#work_allowance_specified_for_deduction: not_holds
+    uk:regulations/uksi/2013/376/22#earned_income_for_deduction: 800
+    uk:regulations/uksi/2013/376/22#unearned_income_for_deduction: 50
+    uk:regulations/uksi/2013/376/22#applicable_work_allowance_amount: 0
+    uk:regulations/uksi/2013/376/22#earned_income_amount_subject_to_taper: 800
+    uk:regulations/uksi/2013/376/22#earned_income_deduction_from_maximum_amount: 440
+    uk:regulations/uksi/2013/376/22#universal_credit_award_deduction_from_maximum_amount: 490
+- name: joint_claimants_without_child_or_lcw_have_no_work_allowance
+  period: 2026-04
+  input:
+    uk:regulations/uksi/2013/376/22#input.claim_is_for_joint_claimants: true
+    uk:regulations/uksi/2013/376/22#input.claimant_is_member_of_couple: false
+    uk:regulations/uksi/2013/376/22#input.claimant_makes_claim_as_single_person: false
+    uk:regulations/uksi/2013/376/22#input.award_contains_housing_costs_element: false
+    uk:regulations/uksi/2013/376/22#input.single_claimant_responsible_for_child_or_qualifying_young_person: false
+    uk:regulations/uksi/2013/376/22#input.single_claimant_has_limited_capability_for_work: false
+    uk:regulations/uksi/2013/376/22#input.joint_claimants_responsible_for_child_or_qualifying_young_person: false
+    uk:regulations/uksi/2013/376/22#input.one_or_both_joint_claimants_have_limited_capability_for_work: false
+    uk:regulations/uksi/2013/376/22#input.claimant_unearned_income_in_assessment_period: 40
+    uk:regulations/uksi/2013/376/22#input.joint_claimants_combined_unearned_income_in_assessment_period: 0
+    uk:regulations/uksi/2013/376/22#input.claimant_earned_income_in_assessment_period: 300
+    uk:regulations/uksi/2013/376/22#input.joint_claimants_combined_earned_income_in_assessment_period: 1200
+  output:
+    uk:regulations/uksi/2013/376/22#effective_joint_claimants_for_deduction: holds
+    uk:regulations/uksi/2013/376/22#work_allowance_specified_for_deduction: not_holds
+    uk:regulations/uksi/2013/376/22#earned_income_for_deduction: 1200
+    uk:regulations/uksi/2013/376/22#unearned_income_for_deduction: 0
+    uk:regulations/uksi/2013/376/22#applicable_work_allowance_amount: 0
+    uk:regulations/uksi/2013/376/22#earned_income_amount_subject_to_taper: 1200
+    uk:regulations/uksi/2013/376/22#earned_income_deduction_from_maximum_amount: 660
+    uk:regulations/uksi/2013/376/22#universal_credit_award_deduction_from_maximum_amount: 660
+- name: single_claim_ignores_joint_claimant_child_and_lcw_slots
+  period: 2026-04
+  input:
+    uk:regulations/uksi/2013/376/22#input.claim_is_for_joint_claimants: false
+    uk:regulations/uksi/2013/376/22#input.claimant_is_member_of_couple: false
+    uk:regulations/uksi/2013/376/22#input.claimant_makes_claim_as_single_person: false
+    uk:regulations/uksi/2013/376/22#input.award_contains_housing_costs_element: false
+    uk:regulations/uksi/2013/376/22#input.single_claimant_responsible_for_child_or_qualifying_young_person: false
+    uk:regulations/uksi/2013/376/22#input.single_claimant_has_limited_capability_for_work: false
+    uk:regulations/uksi/2013/376/22#input.joint_claimants_responsible_for_child_or_qualifying_young_person: true
+    uk:regulations/uksi/2013/376/22#input.one_or_both_joint_claimants_have_limited_capability_for_work: true
+    uk:regulations/uksi/2013/376/22#input.claimant_unearned_income_in_assessment_period: 0
+    uk:regulations/uksi/2013/376/22#input.joint_claimants_combined_unearned_income_in_assessment_period: 900
+    uk:regulations/uksi/2013/376/22#input.claimant_earned_income_in_assessment_period: 1000
+    uk:regulations/uksi/2013/376/22#input.joint_claimants_combined_earned_income_in_assessment_period: 3000
+  output:
+    uk:regulations/uksi/2013/376/22#effective_joint_claimants_for_deduction: not_holds
+    uk:regulations/uksi/2013/376/22#work_allowance_specified_for_deduction: not_holds
+    uk:regulations/uksi/2013/376/22#earned_income_for_deduction: 1000
+    uk:regulations/uksi/2013/376/22#unearned_income_for_deduction: 0
+    uk:regulations/uksi/2013/376/22#applicable_work_allowance_amount: 0
+    uk:regulations/uksi/2013/376/22#earned_income_amount_subject_to_taper: 1000
+    uk:regulations/uksi/2013/376/22#earned_income_deduction_from_maximum_amount: 550
+    uk:regulations/uksi/2013/376/22#universal_credit_award_deduction_from_maximum_amount: 550
+- name: member_of_couple_claiming_as_single_with_partner_lcw_uses_joint_work_allowance
+  period: 2026-04
+  input:
+    uk:regulations/uksi/2013/376/22#input.claim_is_for_joint_claimants: false
+    uk:regulations/uksi/2013/376/22#input.claimant_is_member_of_couple: true
+    uk:regulations/uksi/2013/376/22#input.claimant_makes_claim_as_single_person: true
+    uk:regulations/uksi/2013/376/22#input.award_contains_housing_costs_element: false
+    uk:regulations/uksi/2013/376/22#input.single_claimant_responsible_for_child_or_qualifying_young_person: false
+    uk:regulations/uksi/2013/376/22#input.single_claimant_has_limited_capability_for_work: false
+    uk:regulations/uksi/2013/376/22#input.joint_claimants_responsible_for_child_or_qualifying_young_person: false
+    uk:regulations/uksi/2013/376/22#input.one_or_both_joint_claimants_have_limited_capability_for_work: true
+    uk:regulations/uksi/2013/376/22#input.claimant_unearned_income_in_assessment_period: 0
+    uk:regulations/uksi/2013/376/22#input.joint_claimants_combined_unearned_income_in_assessment_period: 0
+    uk:regulations/uksi/2013/376/22#input.claimant_earned_income_in_assessment_period: 600
+    uk:regulations/uksi/2013/376/22#input.joint_claimants_combined_earned_income_in_assessment_period: 1000
+  output:
+    uk:regulations/uksi/2013/376/22#effective_joint_claimants_for_deduction: holds
+    uk:regulations/uksi/2013/376/22#work_allowance_specified_for_deduction: holds
+    uk:regulations/uksi/2013/376/22#earned_income_for_deduction: 1000
+    uk:regulations/uksi/2013/376/22#unearned_income_for_deduction: 0
+    uk:regulations/uksi/2013/376/22#applicable_work_allowance_amount: 710
+    uk:regulations/uksi/2013/376/22#earned_income_amount_subject_to_taper: 290
+    uk:regulations/uksi/2013/376/22#earned_income_deduction_from_maximum_amount: 159.5
+    uk:regulations/uksi/2013/376/22#universal_credit_award_deduction_from_maximum_amount: 159.5
