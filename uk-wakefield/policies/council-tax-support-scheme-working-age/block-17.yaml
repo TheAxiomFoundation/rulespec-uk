@@ -1,0 +1,33 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-17
+    source_sha256: 6846171041d1fcf5453181d80efa5509f0f1a307549cbd557f1c82a38a209ed9
+  summary: '"The amount of gross earned income used in the calculation of Universal
+    Credit shall be used as gross earnings."'
+inputs:
+- name: universal_credit_gross_earned_income
+  entity: Person
+  dtype: Money
+  period: Month
+rules:
+- name: gross_earnings
+  kind: derived
+  entity: Person
+  dtype: Money
+  period: Month
+  source: uk-wakefield/manual/council-tax-support-scheme-working-age/block-17
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-17
+          excerpt: gross earned income used in the calculation of Universal Credit
+            shall be used as gross earnings
+  versions:
+  - effective_from: '0001-01-01'
+    formula: universal_credit_gross_earned_income
