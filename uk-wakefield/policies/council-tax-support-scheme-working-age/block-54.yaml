@@ -1,0 +1,65 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-54
+    source_sha256: 747b3b3e06ea4e575e5d57c5121f4fd1e1093bcab75eb942a7a5cd7e68fadbc5
+  summary: The authority shall terminate the Council Tax Support claim on the day
+    Council Tax liability ends, from a day the applicant requests cancellation, or
+    where information necessary to confirm ongoing entitlement is not provided from
+    the date entitlement can no longer reasonably be confirmed.
+inputs:
+- name: day_council_tax_liability_ends
+  entity: Person
+  dtype: Boolean
+  period: Day
+- name: applicant_requests_claim_cancellation_from_this_day
+  entity: Person
+  dtype: Boolean
+  period: Day
+- name: applicant_fails_to_provide_information_necessary_to_confirm_ongoing_entitlement
+  entity: Person
+  dtype: Boolean
+  period: Day
+- name: this_day_is_date_authority_determines_entitlement_can_no_longer_reasonably_be_confirmed
+  entity: Person
+  dtype: Boolean
+  period: Day
+rules:
+- name: council_tax_support_claim_termination_required
+  kind: derived
+  entity: Person
+  dtype: Judgment
+  period: Day
+  source: uk-wakefield/manual/council-tax-support-scheme-working-age/block-54
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: condition
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-54
+          excerpt: on the day Council Tax liability ends
+      - path: versions[0].formula
+        kind: condition
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-54
+          excerpt: from a day the applicant requests the claim to be cancelled
+      - path: versions[0].formula
+        kind: condition
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-54
+          excerpt: fails to provide information necessary to confirm ongoing entitlement
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-54
+          excerpt: terminated from a date the authority determines that entitlement
+            can no longer reasonably be confirmed
+  versions:
+  - effective_from: '0001-01-01'
+    formula: "day_council_tax_liability_ends\nor applicant_requests_claim_cancellation_from_this_day\n\
+      or (\n  applicant_fails_to_provide_information_necessary_to_confirm_ongoing_entitlement\n\
+      \  and this_day_is_date_authority_determines_entitlement_can_no_longer_reasonably_be_confirmed\n\
+      )"
