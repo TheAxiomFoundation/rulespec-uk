@@ -40,7 +40,7 @@ correction. Scottish composition belongs to #442, outside this council registry.
 
 ## Status measured on 2026-10-09
 
-The local `HEAD`, `origin/main` and GitHub's `main` all resolve to `1c1101c`.
+Measurements used `main` at `1c1101c` (before this change).
 Tracked module paths were counted with `git ls-files`; open council PRs were
 queried read-only with:
 
@@ -105,8 +105,10 @@ about the existing unreceipted content.
 The 2026-09-13 Arun pilot explains the granularity problem. A page citation
 omitted award components on other pages; adding repository context did not
 supply those provisions. A whole-document citation reached more components
-but failed the encoder's coverage gates. These are retained pilot findings,
-not a fresh encoder run. The retained pilot recorded:
+but failed the encoder's coverage gates. These are archival pilot records from
+the campaign's working notes, not a fresh encoder run; their run artifacts are
+not published, so treat the counts as reported rather than reproducible. The
+retained pilot recorded:
 
 | Input and context | Rules emitted | Recorded result |
 |---|---:|---|
@@ -182,7 +184,8 @@ Full Council adoption record or council clarification, and record the ruling
 with the encoding. Neither the pilot's 90% result nor the PR's 100% result
 settles the conflict.
 
-The historical duplicate-grid sweep covered 138 manuals, before the next
+The historical duplicate-grid sweep (an archival record; its run artifacts are
+not published) covered 138 manuals, before the next
 21 scopes were added. Its Arun-only result excluded some grid layouts and
 DOCX blocks. Repeat the check over the full bound inventory before encoding.
 

@@ -200,6 +200,8 @@ narrower heading pattern; that is untested.
 ## Heading-family survey
 
 This preserves the **2026-09-13 heading survey**, not today's ingest inventory.
+The survey's classification run is an archival record whose artifacts are not
+published; the council lists and totals below were rechecked, the classifier was not.
 Counts were rechecked on 2026-10-09 by counting the PDF entries in the council
 lists below: 169 PDFs across 155 unique PDF-sourced council scopes, plus the
 4 DOCX/HTML scopes listed separately. A scope can include a scheme and adoption
