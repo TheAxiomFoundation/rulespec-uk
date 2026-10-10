@@ -44,6 +44,8 @@
     uk-eastleigh:policies/eastleigh/council-tax-reduction#eastleigh_council_tax_reduction_income_taper_deduction_for_year: 0
     uk-eastleigh:policies/eastleigh/council-tax-reduction#eastleigh_council_tax_reduction_annual_amount: 1800
 
+# Section 58.1(a) deducts £12.00 x 1/7 for each day; over the 365 days of 2026-27
+# that is 12 x 365 / 7 = 625.714285..., not 52 weekly deductions of £12.
 - name: eastleigh_ctr_taper_and_high_non_dependant_deduction
   period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
   input:
@@ -53,14 +55,14 @@
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.would_claim_council_tax_reduction: true
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_assessed_capital_for_year: 0
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_maximum_eligible_liability_for_year: 1800
-    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_non_dependant_deductions_for_year: 624
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_non_dependant_deductions_for_year: "625.7142857142857142857142857"
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_assessed_income_for_year: 11000
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_applicable_amount_for_year: 10000
   output:
     uk-eastleigh:policies/eastleigh/council-tax-reduction#eastleigh_council_tax_reduction_excess_income_for_year: 1000
     uk-eastleigh:policies/eastleigh/council-tax-reduction#eastleigh_council_tax_reduction_income_taper_deduction_for_year: 200
-    uk-eastleigh:policies/eastleigh/council-tax-reduction#eastleigh_council_tax_reduction_maximum_after_non_dependant_deductions_for_year: 1176
-    uk-eastleigh:policies/eastleigh/council-tax-reduction#eastleigh_council_tax_reduction_annual_amount: 976
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#eastleigh_council_tax_reduction_maximum_after_non_dependant_deductions_for_year: "1174.2857142857142857142857143"
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#eastleigh_council_tax_reduction_annual_amount: "974.2857142857142857142857143"
 
 - name: eastleigh_ctr_non_dependant_no_deduction
   period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
@@ -94,6 +96,28 @@
   output:
     uk-eastleigh:policies/eastleigh/council-tax-reduction#eastleigh_council_tax_reduction_non_dependant_deduction_band: 2
     uk-eastleigh:policies/eastleigh/council-tax-reduction#eastleigh_council_tax_reduction_individual_non_dependant_weekly_deduction: 12
+
+- name: eastleigh_ctr_non_dependant_just_below_189
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_non_dependant_deduction_applies: true
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_applicant_or_partner_is_protected_from_non_dependant_deductions: false
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_non_dependant_in_remunerative_work: true
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_non_dependant_normal_gross_weekly_income: 188.99
+  output:
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#eastleigh_council_tax_reduction_non_dependant_deduction_band: 1
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#eastleigh_council_tax_reduction_individual_non_dependant_weekly_deduction: 4
+
+- name: eastleigh_ctr_non_dependant_at_189_not_in_remunerative_work
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_non_dependant_deduction_applies: true
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_applicant_or_partner_is_protected_from_non_dependant_deductions: false
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_non_dependant_in_remunerative_work: false
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_non_dependant_normal_gross_weekly_income: 189
+  output:
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#eastleigh_council_tax_reduction_non_dependant_deduction_band: 1
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#eastleigh_council_tax_reduction_individual_non_dependant_weekly_deduction: 4
 
 - name: eastleigh_ctr_protected_non_dependant_no_deduction
   period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
@@ -136,4 +160,145 @@
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_applicable_amount_for_year: 10000
   output:
     uk-eastleigh:policies/eastleigh/council-tax-reduction#eastleigh_council_tax_reduction_income_taper_deduction_for_year: 1800
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#eastleigh_council_tax_reduction_annual_amount: 0
+
+- name: eastleigh_ctr_full_award_income_below_applicable_amount
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.local_authority_is_eastleigh: true
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: false
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_assessed_capital_for_year: 0
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_non_dependant_deductions_for_year: 0
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_assessed_income_for_year: 9000
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_applicable_amount_for_year: 10000
+  output:
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#eastleigh_council_tax_reduction_working_age_scheme_applies: holds
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#eastleigh_council_tax_reduction_capital_eligible: holds
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#eastleigh_council_tax_reduction_excess_income_for_year: 0
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#eastleigh_council_tax_reduction_income_taper_deduction_for_year: 0
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#eastleigh_council_tax_reduction_maximum_after_non_dependant_deductions_for_year: 1800
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#eastleigh_council_tax_reduction_annual_amount: 1800
+
+# Taper-delta pair, clear of the capital limit, deduction bands, the zero floor and income
+# equal to the applicable amount (the scheme prints no minimum award). Weekly applicable
+# amount £140 and weekly income £147, then £154, annualised over 365 days: 7300, 7665, 8030.
+# Daily deduction 2 6/7% x £7 = £0.20, so 0.20 x 365 = 73 a year; doubling weekly excess to
+# £14 adds another 73. The change in support, 1727 - 1654 = 73, is 20% of the 365 increase
+# in annual excess, and £1.40 a week is 20% of the £7 increase in weekly excess.
+- name: eastleigh_ctr_taper_delta_weekly_excess_7
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.local_authority_is_eastleigh: true
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: false
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_assessed_capital_for_year: 0
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_non_dependant_deductions_for_year: 0
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_assessed_income_for_year: 7665
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_applicable_amount_for_year: 7300
+  output:
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#eastleigh_council_tax_reduction_excess_income_for_year: 365
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#eastleigh_council_tax_reduction_income_taper_deduction_for_year: 73
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#eastleigh_council_tax_reduction_annual_amount: 1727
+
+- name: eastleigh_ctr_taper_delta_weekly_excess_14
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.local_authority_is_eastleigh: true
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: false
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_assessed_capital_for_year: 0
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_non_dependant_deductions_for_year: 0
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_assessed_income_for_year: 8030
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_applicable_amount_for_year: 7300
+  output:
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#eastleigh_council_tax_reduction_excess_income_for_year: 730
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#eastleigh_council_tax_reduction_income_taper_deduction_for_year: 146
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#eastleigh_council_tax_reduction_annual_amount: 1654
+
+- name: eastleigh_ctr_taper_exceeds_maximum_floors_at_zero
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.local_authority_is_eastleigh: true
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: false
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_assessed_capital_for_year: 0
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_non_dependant_deductions_for_year: 0
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_assessed_income_for_year: 20000
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_applicable_amount_for_year: 10000
+  output:
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#eastleigh_council_tax_reduction_excess_income_for_year: 10000
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#eastleigh_council_tax_reduction_income_taper_deduction_for_year: 2000
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#eastleigh_council_tax_reduction_annual_amount: 0
+
+- name: eastleigh_ctr_non_dependant_deductions_exceed_maximum
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.local_authority_is_eastleigh: true
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: false
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_assessed_capital_for_year: 0
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_maximum_eligible_liability_for_year: 600
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_non_dependant_deductions_for_year: "625.7142857142857142857142857"
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_assessed_income_for_year: 0
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_applicable_amount_for_year: 0
+  output:
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#eastleigh_council_tax_reduction_maximum_after_non_dependant_deductions_for_year: 0
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#eastleigh_council_tax_reduction_annual_amount: 0
+
+- name: eastleigh_ctr_pensioner_household_outside_working_age_scheme
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.local_authority_is_eastleigh: true
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: true
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_assessed_capital_for_year: 0
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_non_dependant_deductions_for_year: 0
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_assessed_income_for_year: 0
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_applicable_amount_for_year: 0
+  output:
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#eastleigh_council_tax_reduction_working_age_scheme_applies: not_holds
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#eastleigh_council_tax_reduction_annual_amount: 0
+
+- name: eastleigh_ctr_other_authority_outside_scheme
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.local_authority_is_eastleigh: false
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: false
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_assessed_capital_for_year: 0
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_non_dependant_deductions_for_year: 0
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_assessed_income_for_year: 0
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_applicable_amount_for_year: 0
+  output:
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#eastleigh_council_tax_reduction_working_age_scheme_applies: not_holds
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#eastleigh_council_tax_reduction_annual_amount: 0
+
+- name: eastleigh_ctr_not_claiming_zero
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.local_authority_is_eastleigh: true
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: false
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.would_claim_council_tax_reduction: false
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_assessed_capital_for_year: 0
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_non_dependant_deductions_for_year: 0
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_assessed_income_for_year: 0
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_applicable_amount_for_year: 0
+  output:
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#eastleigh_council_tax_reduction_working_age_scheme_applies: holds
     uk-eastleigh:policies/eastleigh/council-tax-reduction#eastleigh_council_tax_reduction_annual_amount: 0

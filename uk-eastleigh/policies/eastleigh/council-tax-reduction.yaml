@@ -12,16 +12,20 @@ module:
     #     - uk/regulations/uksi/2012/2886
     #   rationale: Section 13A delegates the working-age scheme to Eastleigh Borough Council, so the adopted document is the operative legal source for the locally set working-age values.
   summary: |-
-    Eastleigh's 2026-27 working-age award is 100 percent of eligible liability, capped at Band D and reduced by the published non-dependant daily deductions and a 20 percent weekly excess-income taper. Capital greater than £6,000 ends support; the adopted text prints no tariff-income rule. Applicable amounts, income/capital assessment, liability apportionment and the detailed protected-class classifiers are consumed as inputs. Pension-age provisions are outside this module.
+    Eastleigh's 2026-27 working-age award is 100 percent of eligible liability, capped at Band D and reduced by the published non-dependant daily deductions and by a daily taper of 2 6/7 percent of weekly excess income, which equals 20 percent of excess income measured over the same period as the award. Annual amounts are the sums of the scheme's daily amounts over the financial year. Capital greater than £6,000 ends support. Section 17.1(b) adds tariff income from capital under regulation 52 of the Housing Benefit Regulations 2006, which arises only above £6,000 and so cannot affect an eligible award. The scheme prints no minimum award. Applicable amounts, income/capital assessment, liability apportionment and the detailed protected-class classifiers are consumed as inputs. Pension-age provisions are outside this module.
   deferred_outputs:
     - output: uk-eastleigh:policies/eastleigh/council-tax-reduction/section-12#applicable_amount_for_year
       reason: The category-specific living allowances and premiums used to determine the applicable amount are outside this award-surface module.
     - output: uk-eastleigh:policies/eastleigh/council-tax-reduction/sections-15-to-56#assessed_income_and_capital_for_year
-      reason: Income and capital attribution, disregards, valuation, and notional-capital rules are outside this award-surface module.
+      reason: Income and capital attribution, disregards, valuation, notional-capital rules, and the section 17.1(b) tariff income from capital are outside this award-surface module.
     - output: uk-eastleigh:policies/eastleigh/council-tax-reduction/section-57#maximum_eligible_liability_for_year
       reason: The award surface consumes the lower of eligible liability and Band D liability after discounts and joint-liability apportionment.
     - output: uk-eastleigh:policies/eastleigh/council-tax-reduction/section-58.3-to-58.9#non_dependant_deductions_for_year
       reason: This module encodes the printed individual deduction bands; couple selection, apportionment, and protected-class classification are supplied as household inputs.
+    - output: uk-eastleigh:policies/eastleigh/council-tax-reduction/section-56A#students_with_second_adults_reduction
+      reason: The 100 percent reduction for a dwelling that would be wholly occupied by students but for second adults on a qualifying benefit is a separate route outside this Classes D and E award surface.
+    - output: uk-eastleigh:policies/eastleigh/council-tax-reduction/sections-60-to-61E#extended_reduction
+      reason: Extended-reduction eligibility, duration, amount and the offsets for movers are a separate post-employment-change route outside this Classes D and E award surface.
 rules:
   - name: eastleigh_council_tax_reduction_maximum_support_rate
     kind: parameter
@@ -168,6 +172,11 @@ rules:
             source:
               corpus_citation_path: uk-eastleigh/manual/council-tax-reduction-scheme-2026-2027/page-72
               excerpt: "£12.00 x 1/7"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk-eastleigh/manual/council-tax-reduction-scheme-2026-2027/page-9
+              excerpt: "amount B is 2 6/7 per cent of the difference between his income for the relevant week and his applicable amount"
     versions:
       - effective_from: '2026-04-01'
         formula: |-
@@ -232,6 +241,11 @@ rules:
             source:
               corpus_citation_path: uk-eastleigh/manual/council-tax-reduction-scheme-2026-2027/page-8
               excerpt: "The adopted scheme for working age applicants is a means test"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk-eastleigh/manual/council-tax-reduction-scheme-2026-2027/page-8
+              excerpt: "this scheme only applies to a person who; a. has not attained the qualifying age for state pension credit; or b. has attained the qualifying age for state pension credit if he, and his partner, is a person on income support, on an income-based jobseeker’s allowance, on an income-related employment and support allowance or on universal credit."
     versions:
       - effective_from: '2026-04-01'
         formula: |-
@@ -339,6 +353,11 @@ rules:
             source:
               corpus_citation_path: uk-eastleigh/manual/council-tax-reduction-scheme-2026-2027/page-74
               excerpt: "deducting their excess income multiplied by the taper from their maximum council tax support as defined within section 57 of this scheme"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk-eastleigh/manual/council-tax-reduction-scheme-2026-2027/page-9
+              excerpt: "amount B is 2 6/7 per cent of the difference between his income for the relevant week and his applicable amount"
     versions:
       - effective_from: '2026-04-01'
         formula: |-
