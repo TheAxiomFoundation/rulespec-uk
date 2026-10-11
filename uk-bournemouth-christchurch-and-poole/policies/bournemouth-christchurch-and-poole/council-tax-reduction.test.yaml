@@ -1,4 +1,5 @@
 - name: bcp_ctr_ordinary_80_percent_rate
+  # Paragraph 57.1 (p98): "shall be 80 per cent"; no protected receipt, so the rate is 0.80.
   period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
   input:
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.local_authority_is_bournemouth_christchurch_and_poole: true
@@ -16,6 +17,8 @@
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_support_rate: 0.8
 
 - name: bcp_ctr_protected_100_percent_rate
+  # Paragraph 57.1 (p98): "will be 100% where the claimant or partner is in receipt of any of
+  # the following"; protected input true, so the rate is 1.
   period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
   input:
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.local_authority_is_bournemouth_christchurch_and_poole: true
@@ -33,6 +36,10 @@
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_support_rate: 1
 
 - name: bcp_ctr_printed_parameters
+  # Printed values: 80% and 100% (p98); 2 6/7 per cent, so whole 2, numerator 6, denominator 7
+  # (p101); 7 days from "x 1/7" (p99); 1% unit; £16,000 (p75); £6,000, £250, £1 (p82);
+  # 52 weeks; 50p = 1/2 = £0.50 (p99); £279, £485, £605 (p99).
+  # Same-period taper: (2 x 7 + 6) = 20; 20 x 7 = 140; 140 / 7 = 20; 20 x 0.01 = 0.20.
   period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
   input: {}
   output:
@@ -40,9 +47,10 @@
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_protected_support_rate: 1
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_taper_whole_percentage_points: 2
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_taper_fraction_numerator: 6
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_taper_fraction_denominator: 7
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_days_per_week: 7
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_per_cent_unit: 0.01
-    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_weekly_taper_rate: '0.0285714285714285714285714286'
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_weekly_taper_rate: 0.2
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_capital_limit: 16000
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_tariff_income_threshold: 6000
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_tariff_income_step: 250
@@ -54,6 +62,8 @@
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_non_dependant_top_income_threshold: 605
 
 - name: bcp_ctr_band_c_ceiling_binds
+  # Paragraph 57.1 (p98) amount A is the lower of the dwelling's tax and the Band C tax.
+  # min(1200, 1000) = 1000; maximum = 1000 x 0.80 = 800; no excess income, so award = 800.
   period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
   input:
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.local_authority_is_bournemouth_christchurch_and_poole: true
@@ -69,8 +79,11 @@
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_non_dependant_deductions_for_year: 0
   output:
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_eligible_liability_for_year: 1000
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_maximum_council_tax_reduction_for_year: 800
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_annual_amount: 800
 
 - name: bcp_ctr_band_c_ceiling_strictly_non_binding
+  # min(800, 1000) = 800; maximum = 800 x 0.80 = 640.
   period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
   input:
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.local_authority_is_bournemouth_christchurch_and_poole: true
@@ -86,8 +99,13 @@
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_non_dependant_deductions_for_year: 0
   output:
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_eligible_liability_for_year: 800
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_maximum_council_tax_reduction_for_year: 640
 
 - name: bcp_ctr_capital_at_16000_is_eligible
+  # Paragraph 33.1 (p75): no support "when the applicant has an amount greater than" £16,000,
+  # so exactly £16,000 is eligible. Tariff (42.1, p82): (16000 - 6000) / 250 = 40 complete
+  # steps, £40 a week, 40 x 52 = 2080 a year. Excess = 0 + 2080 - 0 = 2080; taper
+  # 2080 x 0.20 = 416; award 800 - 416 = 384 >= 26, so 384 is granted.
   period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
   input:
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.local_authority_is_bournemouth_christchurch_and_poole: true
@@ -102,9 +120,12 @@
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_applicable_amount_for_year: 0
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_non_dependant_deductions_for_year: 0
   output:
-    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_capital_eligible: 'holds'
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_capital_eligible: holds
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_tariff_income_for_year: 2080
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_annual_amount: 384
 
 - name: bcp_ctr_capital_first_penny_over_is_ineligible
+  # £16,000.01 is greater than £16,000 (33.1, p75), so no support: award 0.
   period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
   input:
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.local_authority_is_bournemouth_christchurch_and_poole: true
@@ -119,9 +140,47 @@
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_applicable_amount_for_year: 0
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_non_dependant_deductions_for_year: 0
   output:
-    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_capital_eligible: 'not_holds'
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_capital_eligible: not_holds
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_annual_amount: 0
+
+- name: bcp_ctr_tariff_at_6000_none
+  # 42.1 (p82) applies only where capital "exceeds £6,000"; at exactly £6,000 tariff is 0.
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.local_authority_is_bournemouth_christchurch_and_poole: true
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_protected_claimant_or_partner: false
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_actual_liability_for_year: 1000
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_band_c_liability_for_year: 1000
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_assessed_income_for_year: 0
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_applicable_amount_for_year: 0
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_tariff_income_for_year: 0
+
+- name: bcp_ctr_tariff_at_6000_01_partial_first_step
+  # Excess £0.01 is not a complete £250; 42.2 (p82) treats that part as £1 a week: 1 x 52 = 52.
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.local_authority_is_bournemouth_christchurch_and_poole: true
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_protected_claimant_or_partner: false
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_assessed_capital_for_year: 6000.01
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_actual_liability_for_year: 1000
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_band_c_liability_for_year: 1000
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_assessed_income_for_year: 0
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_applicable_amount_for_year: 0
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_tariff_income_for_year: 52
 
 - name: bcp_ctr_tariff_at_6250_first_full_step
+  # (6250 - 6000) / 250 = 1 complete step, no remainder: £1 a week, 1 x 52 = 52.
   period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
   input:
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.local_authority_is_bournemouth_christchurch_and_poole: true
@@ -139,6 +198,7 @@
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_tariff_income_for_year: 52
 
 - name: bcp_ctr_tariff_at_6250_01_first_partial_second_step
+  # Excess £250.01 = 1 complete £250 plus a £0.01 part treated as £1 (42.2): £2 a week, 104.
   period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
   input:
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.local_authority_is_bournemouth_christchurch_and_poole: true
@@ -155,7 +215,31 @@
   output:
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_tariff_income_for_year: 104
 
+- name: bcp_ctr_tariff_income_tapered
+  # Capital £7,000: (7000 - 6000) / 250 = 4 steps, £4 a week, 4 x 52 = 208 a year. With no
+  # other income, excess = 208; taper 208 x 0.20 = 41.6; award 800 - 41.6 = 758.4.
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.local_authority_is_bournemouth_christchurch_and_poole: true
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_protected_claimant_or_partner: false
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_assessed_capital_for_year: 7000
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_actual_liability_for_year: 1000
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_band_c_liability_for_year: 1000
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_assessed_income_for_year: 0
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_applicable_amount_for_year: 0
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_tariff_income_for_year: 208
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_excess_income_for_year: 208
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_income_taper_deduction_for_year: 41.6
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_annual_amount: 758.4
+
 - name: bcp_ctr_income_equals_applicable_amount
+  # 59.1 (p101) tapers only "Where an applicant's income exceeds their applicable amount";
+  # 100 - 100 = 0 excess, so no taper and the award is the 800 maximum.
   period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
   input:
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.local_authority_is_bournemouth_christchurch_and_poole: true
@@ -171,8 +255,10 @@
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_non_dependant_deductions_for_year: 0
   output:
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_excess_income_for_year: 0
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_annual_amount: 800
 
 - name: bcp_ctr_income_first_penny_above_applicable_amount
+  # Excess 100.01 - 100 = 0.01; taper 0.01 x 0.20 = 0.002; award 800 - 0.002 = 799.998.
   period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
   input:
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.local_authority_is_bournemouth_christchurch_and_poole: true
@@ -188,8 +274,13 @@
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_non_dependant_deductions_for_year: 0
   output:
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_excess_income_for_year: 0.01
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_income_taper_deduction_for_year: 0.002
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_annual_amount: 799.998
 
 - name: bcp_ctr_taper_exhausts_award_to_zero
+  # Excess 4000 (about £76.92 a week); taper 4000 x 0.20 = 800 = the 800 maximum, so the
+  # calculated reduction is 0, which is less than 50p a week (57A.1): nothing is granted.
+  # The pre-repair 2 6/7% annual taper would have deducted only 114.29 here.
   period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
   input:
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.local_authority_is_bournemouth_christchurch_and_poole: true
@@ -200,13 +291,38 @@
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_assessed_capital_for_year: 0
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_actual_liability_for_year: 1000
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_band_c_liability_for_year: 1000
-    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_assessed_income_for_year: 28000
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_assessed_income_for_year: 4000
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_applicable_amount_for_year: 0
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_non_dependant_deductions_for_year: 0
   output:
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_income_taper_deduction_for_year: 800
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_award_conditions_met: not_holds
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_annual_amount: 0
+
+- name: bcp_ctr_minimum_award_at_exactly_50p_weekly
+  # 57A.1 (p99) withholds only amounts "less than 50p per week". Income 3870: taper
+  # 3870 x 0.20 = 774; award 800 - 774 = 26.00 = 0.50 x 52, which is not less than 50p a week,
+  # so 26 is granted. This also requires the taper to be exactly 0.20: a rounded 6/7 would
+  # leave 25.99...9 and withhold the award.
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.local_authority_is_bournemouth_christchurch_and_poole: true
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_protected_claimant_or_partner: false
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_assessed_capital_for_year: 0
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_actual_liability_for_year: 1000
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_band_c_liability_for_year: 1000
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_assessed_income_for_year: 3870
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_applicable_amount_for_year: 0
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_award_conditions_met: holds
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_annual_amount: 26
 
 - name: bcp_ctr_minimum_award_just_above_printed_threshold
+  # Income 3869.99: taper 3869.99 x 0.20 = 773.998; award 800 - 773.998 = 26.002 >= 26.
   period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
   input:
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.local_authority_is_bournemouth_christchurch_and_poole: true
@@ -217,13 +333,16 @@
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_assessed_capital_for_year: 0
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_actual_liability_for_year: 1000
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_band_c_liability_for_year: 1000
-    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_assessed_income_for_year: 27089.99
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_assessed_income_for_year: 3869.99
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_applicable_amount_for_year: 0
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_non_dependant_deductions_for_year: 0
   output:
-    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_annual_amount: '26.00028571428571428571428494'
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_award_conditions_met: holds
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_annual_amount: 26.002
 
 - name: bcp_ctr_minimum_award_first_penny_below_threshold
+  # Income 3870.01: taper 3870.01 x 0.20 = 774.002; award 800 - 774.002 = 25.998 < 26
+  # (under 50p a week), so nothing is granted (57A.1).
   period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
   input:
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.local_authority_is_bournemouth_christchurch_and_poole: true
@@ -234,13 +353,64 @@
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_assessed_capital_for_year: 0
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_actual_liability_for_year: 1000
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_band_c_liability_for_year: 1000
-    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_assessed_income_for_year: 27090.01
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_assessed_income_for_year: 3870.01
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_applicable_amount_for_year: 0
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_non_dependant_deductions_for_year: 0
   output:
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_award_conditions_met: not_holds
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_annual_amount: 0
 
+- name: bcp_ctr_taper_marginal_base_weekly_excess_20
+  # Marginal-taper pair, clear of the capital cliff and tariff (capital 0), the Band C
+  # ceiling (900 < 1000), the zero excess edge, the 50p minimum and the zero floor.
+  # Applicable amount £100 a week (5200 a year); income £120 a week (6240 a year).
+  # Weekly excess £20. Daily deduction 2 6/7% x 20 = 0.5714...; x 7 days = £4.00 a week = 20%
+  # of £20. Annual: excess 1040; taper 1040 x 0.20 = 208 (= 4.00 x 52).
+  # Maximum 900 x 0.80 = 720; award 720 - 208 = 512.
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.local_authority_is_bournemouth_christchurch_and_poole: true
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_protected_claimant_or_partner: false
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_assessed_capital_for_year: 0
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_actual_liability_for_year: 900
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_band_c_liability_for_year: 1000
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_assessed_income_for_year: 6240
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_applicable_amount_for_year: 5200
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_excess_income_for_year: 1040
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_income_taper_deduction_for_year: 208
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_annual_amount: 512
+
+- name: bcp_ctr_taper_marginal_plus_10_weekly_excess
+  # Same household with income £130 a week (6760 a year): weekly excess rises by £10, to £30.
+  # Weekly deduction 20% x 30 = £6.00; annual excess 1560; taper 1560 x 0.20 = 312.
+  # Award 720 - 312 = 408. Change in support: 408 - 512 = -104 a year = -2.00 a week
+  # = -0.20 x the £10 weekly increase (and -0.20 x 520 a year). The pre-repair taper gave
+  # a change of only -14.86 a year.
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.local_authority_is_bournemouth_christchurch_and_poole: true
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_protected_claimant_or_partner: false
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_assessed_capital_for_year: 0
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_actual_liability_for_year: 900
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_band_c_liability_for_year: 1000
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_assessed_income_for_year: 6760
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_applicable_amount_for_year: 5200
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_excess_income_for_year: 1560
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_income_taper_deduction_for_year: 312
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_annual_amount: 408
+
 - name: bcp_ctr_non_dependant_exempt_branch
+  # No deduction applies (58.6-58.8 exemptions are an input): band 0, deduction 0.
   period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
   input:
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_non_dependant_deduction_applies: false
@@ -248,8 +418,10 @@
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_non_dependant_normal_gross_weekly_income: 605
   output:
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_non_dependant_band: 0
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_individual_non_dependant_deduction_weekly: 0
 
 - name: bcp_ctr_non_dependant_non_working_branch
+  # Not in remunerative work: 58.1(b) (p99), £5.20 a week (the £5.20 x 1/7 daily figure x 7).
   period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
   input:
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_non_dependant_deduction_applies: true
@@ -257,8 +429,10 @@
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_non_dependant_normal_gross_weekly_income: 605
   output:
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_non_dependant_band: 1
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_individual_non_dependant_deduction_weekly: 5.2
 
 - name: bcp_ctr_non_dependant_below_279
+  # In work, £278.99 is "less than £279.00": 58.2(a) gives the 58.1(b) £5.20.
   period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
   input:
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_non_dependant_deduction_applies: true
@@ -266,8 +440,10 @@
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_non_dependant_normal_gross_weekly_income: 278.99
   output:
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_non_dependant_band: 1
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_individual_non_dependant_deduction_weekly: 5.2
 
 - name: bcp_ctr_non_dependant_at_279
+  # £279 is "not less than £279.00, but less than £485.00": 58.2(b) £10.60.
   period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
   input:
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_non_dependant_deduction_applies: true
@@ -275,8 +451,10 @@
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_non_dependant_normal_gross_weekly_income: 279
   output:
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_non_dependant_band: 2
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_individual_non_dependant_deduction_weekly: 10.6
 
 - name: bcp_ctr_non_dependant_below_485
+  # £484.99 is still below £485.00: 58.2(b) £10.60.
   period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
   input:
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_non_dependant_deduction_applies: true
@@ -284,8 +462,10 @@
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_non_dependant_normal_gross_weekly_income: 484.99
   output:
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_non_dependant_band: 2
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_individual_non_dependant_deduction_weekly: 10.6
 
 - name: bcp_ctr_non_dependant_at_485
+  # £485 is "not less than £485.00, but less than £605.00": 58.2(c) £13.30.
   period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
   input:
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_non_dependant_deduction_applies: true
@@ -293,8 +473,10 @@
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_non_dependant_normal_gross_weekly_income: 485
   output:
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_non_dependant_band: 3
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_individual_non_dependant_deduction_weekly: 13.3
 
 - name: bcp_ctr_non_dependant_below_605
+  # £604.99 is still below £605.00: 58.2(c) £13.30.
   period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
   input:
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_non_dependant_deduction_applies: true
@@ -302,17 +484,21 @@
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_non_dependant_normal_gross_weekly_income: 604.99
   output:
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_non_dependant_band: 3
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_individual_non_dependant_deduction_weekly: 13.3
 
 - name: bcp_ctr_non_dependant_at_605
+  # £605 falls in no 58.2 band, so 58.1(a) applies to the earner: £15.95.
   period: {period_kind: benefit_week, start: '2026-04-06', end: '2026-04-12'}
   input:
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_non_dependant_deduction_applies: true
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_non_dependant_in_remunerative_work: true
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_non_dependant_normal_gross_weekly_income: 605
   output:
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_non_dependant_band: 4
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_individual_non_dependant_deduction_weekly: 15.95
 
 - name: bcp_ctr_working_age_scheme_applies
+  # BCP household in England, applicant not a pensioner (1.6, p11): the working-age scheme applies.
   period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
   input:
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.local_authority_is_bournemouth_christchurch_and_poole: true
@@ -327,9 +513,68 @@
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_applicable_amount_for_year: 0
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_non_dependant_deductions_for_year: 0
   output:
-    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_working_age_scheme_applies: 'holds'
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_working_age_scheme_applies: holds
+
+- name: bcp_ctr_pensioner_outside_working_age_scheme
+  # 1.7 (p11): the working-age scheme "shall not apply" where the applicant or partner has
+  # attained the qualifying age for state pension credit; award 0 under this module.
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.local_authority_is_bournemouth_christchurch_and_poole: true
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_applicant_is_not_pensioner: false
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_protected_claimant_or_partner: false
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_assessed_capital_for_year: 0
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_actual_liability_for_year: 1000
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_band_c_liability_for_year: 1000
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_assessed_income_for_year: 0
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_applicable_amount_for_year: 0
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_working_age_scheme_applies: not_holds
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_annual_amount: 0
+
+- name: bcp_ctr_other_authority_outside_scheme
+  # A household outside Bournemouth, Christchurch and Poole is not in this scheme: award 0.
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.local_authority_is_bournemouth_christchurch_and_poole: false
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_protected_claimant_or_partner: false
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_assessed_capital_for_year: 0
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_actual_liability_for_year: 1000
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_band_c_liability_for_year: 1000
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_assessed_income_for_year: 0
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_applicable_amount_for_year: 0
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_working_age_scheme_applies: not_holds
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_annual_amount: 0
+
+- name: bcp_ctr_no_claim_no_award
+  # Class D/E condition: the person "has made a valid application" (p12-13); no claim, award 0.
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.local_authority_is_bournemouth_christchurch_and_poole: true
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.would_claim_council_tax_reduction: false
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_protected_claimant_or_partner: false
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_assessed_capital_for_year: 0
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_actual_liability_for_year: 1000
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_band_c_liability_for_year: 1000
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_assessed_income_for_year: 0
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_applicable_amount_for_year: 0
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_award_conditions_met: not_holds
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_annual_amount: 0
 
 - name: bcp_ctr_maximum_amount_uses_ordinary_rate
+  # 1000 x 0.80 - 0 non-dependant deductions = 800.
   period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
   input:
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.local_authority_is_bournemouth_christchurch_and_poole: true
@@ -346,7 +591,50 @@
   output:
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_maximum_council_tax_reduction_for_year: 800
 
+- name: bcp_ctr_maximum_amount_uses_protected_rate
+  # Protected receipt: 1000 x 1 - 0 = 1000.
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.local_authority_is_bournemouth_christchurch_and_poole: true
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_protected_claimant_or_partner: true
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_assessed_capital_for_year: 0
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_actual_liability_for_year: 1000
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_band_c_liability_for_year: 1000
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_assessed_income_for_year: 0
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_applicable_amount_for_year: 0
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_maximum_council_tax_reduction_for_year: 1000
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_annual_amount: 1000
+
+- name: bcp_ctr_maximum_amount_less_non_dependant_deduction
+  # 57.1 (p98) takes away the section 58 deductions. One non-working non-dependant:
+  # £5.20 a week x 52 = 270.40 a year. Maximum 1000 x 0.80 - 270.40 = 529.60; no excess
+  # income, so the award is 529.60.
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.local_authority_is_bournemouth_christchurch_and_poole: true
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_protected_claimant_or_partner: false
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_assessed_capital_for_year: 0
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_actual_liability_for_year: 1000
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_band_c_liability_for_year: 1000
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_assessed_income_for_year: 0
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_applicable_amount_for_year: 0
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_non_dependant_deductions_for_year: 270.40
+  output:
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_maximum_council_tax_reduction_for_year: 529.6
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_annual_amount: 529.6
+
 - name: bcp_ctr_taper_deduction_from_excess_income
+  # Excess 520 a year (£10 a week). Daily 2 6/7% x £10 = 0.2857...; x 7 = £2.00 a week = 20%.
+  # Annual taper 520 x 0.20 = 104 (= 2.00 x 52); award 800 - 104 = 696. The pre-repair
+  # module deducted 520 x 0.0285714... = 14.86, a seventh of the printed taper.
   period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
   input:
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.local_authority_is_bournemouth_christchurch_and_poole: true
@@ -361,9 +649,30 @@
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_applicable_amount_for_year: 0
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_non_dependant_deductions_for_year: 0
   output:
-    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_income_taper_deduction_for_year: '14.857142857142857142857142872'
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_income_taper_deduction_for_year: 104
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_annual_amount: 696
+
+- name: bcp_ctr_protected_rate_with_taper
+  # Protected maximum 1000 x 1 = 1000; excess 520; taper 104; award 1000 - 104 = 896.
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.local_authority_is_bournemouth_christchurch_and_poole: true
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_protected_claimant_or_partner: true
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_assessed_capital_for_year: 0
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_actual_liability_for_year: 1000
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_band_c_liability_for_year: 1000
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_assessed_income_for_year: 520
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_applicable_amount_for_year: 0
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_income_taper_deduction_for_year: 104
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_annual_amount: 896
 
 - name: bcp_ctr_award_conditions_above_minimum
+  # Award 800 >= 26 (50p x 52), capital 0, working age, claim made: conditions hold.
   period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
   input:
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.local_authority_is_bournemouth_christchurch_and_poole: true
@@ -378,4 +687,4 @@
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_applicable_amount_for_year: 0
     uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#input.bournemouth_christchurch_and_poole_council_tax_reduction_non_dependant_deductions_for_year: 0
   output:
-    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_award_conditions_met: 'holds'
+    uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction#bournemouth_christchurch_and_poole_council_tax_reduction_award_conditions_met: holds

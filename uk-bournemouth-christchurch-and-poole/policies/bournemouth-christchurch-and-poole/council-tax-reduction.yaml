@@ -12,7 +12,7 @@ module:
         # - uk/regulations/uksi/2012/2886
       # rationale: Section 13A delegates the working-age scheme to Bournemouth, Christchurch and Poole Council, so its adopted scheme document is the operative legal source for the locally set working-age values.
   summary: |-
-    Bournemouth, Christchurch and Poole's 2026-27 working-age award surface: an 80 percent maximum (100 percent for the specified protected claimant or partner cases), Band C liability ceiling, capital cliff and tariff income, non-dependant deductions, 20 percent excess-income taper, and 50p weekly minimum award.
+    Bournemouth, Christchurch and Poole's 2026-27 working-age award surface: an 80 percent maximum (100 percent for the specified protected claimant or partner cases), Band C liability ceiling, capital cliff and tariff income, non-dependant deductions, an excess-income taper of 2 6/7 percent a day of the weekly excess (20 percent of the excess over the same period), and 50p weekly minimum award.
   deferred_outputs:
     - output: uk-bournemouth-christchurch-and-poole:policies/bournemouth-christchurch-and-poole/council-tax-reduction/section-12#applicable_amount
       reason: Category-specific applicable amounts and premium schedules are not part of this award-surface module.
@@ -49,12 +49,19 @@ rules:
     source: Bournemouth, Christchurch and Poole Council Tax Reduction Scheme 2026/27 paragraph 59.1
     metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-bournemouth-christchurch-and-poole/manual/council-tax-reduction-scheme-2026-2027/page-101, excerpt: "2 6/7 per cent (a 20% taper)"}}]}}
     versions: [{effective_from: '2026-04-01', formula: "6"}]
+  - name: bournemouth_christchurch_and_poole_council_tax_reduction_taper_fraction_denominator
+    kind: parameter
+    dtype: Number
+    period: Year
+    source: Bournemouth, Christchurch and Poole Council Tax Reduction Scheme 2026/27 paragraph 59.1
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-bournemouth-christchurch-and-poole/manual/council-tax-reduction-scheme-2026-2027/page-101, excerpt: "2 6/7 per cent (a 20% taper)"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: "7"}]
   - name: bournemouth_christchurch_and_poole_council_tax_reduction_days_per_week
     kind: parameter
     dtype: Number
     period: Year
     source: Bournemouth, Christchurch and Poole Council Tax Reduction Scheme 2026/27 paragraph 58.1
-    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-bournemouth-christchurch-and-poole/manual/council-tax-reduction-scheme-2026-2027/page-99, excerpt: "£15.95 x 1/7"}}]}}
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-bournemouth-christchurch-and-poole/manual/council-tax-reduction-scheme-2026-2027/page-99, excerpt: "the non-dependant deductions in respect of a day referred to in section 29 (maximum council tax reduction) shall be; (a) in respect of a non-dependant aged 18 or over in remunerative work, £15.95 x 1/7"}}]}}
     versions: [{effective_from: '2026-04-01', formula: "7"}]
   - name: bournemouth_christchurch_and_poole_council_tax_reduction_per_cent_unit
     kind: parameter
@@ -63,13 +70,33 @@ rules:
     source: Bournemouth, Christchurch and Poole Council Tax Reduction Scheme 2026/27 percentage notation
     metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-bournemouth-christchurch-and-poole/manual/council-tax-reduction-scheme-2026-2027/page-98, excerpt: "will be 100% where the claimant"}}]}}
     versions: [{effective_from: '2026-04-01', formula: "0.01"}]
+  # Paragraph 59.1 and Class E condition (j) deduct the prescribed daily percentage,
+  # 2 6/7 per cent, of the weekly excess of income from the maximum reduction for a day.
+  # Over the seven days of a week that is (2 6/7 per cent) x 7 = 20 per cent of the same
+  # week's excess, the "20% taper" the scheme prints, so this is the same-period rate
+  # applied to a same-period excess. The formula keeps the printed mixed number visible:
+  # (2 x 7 + 6) / 7 = 2 6/7, multiplied by 7 days, in per-cent units. It multiplies by the
+  # days before dividing by the fraction's denominator so that the engine's decimal
+  # arithmetic lands on 0.20 exactly rather than on a rounded 6/7.
   - name: bournemouth_christchurch_and_poole_council_tax_reduction_weekly_taper_rate
     kind: parameter
     dtype: Rate
     period: Week
-    source: Bournemouth, Christchurch and Poole Council Tax Reduction Scheme 2026/27 paragraph 59.1, derived from printed mixed-number percentage
-    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-bournemouth-christchurch-and-poole/manual/council-tax-reduction-scheme-2026-2027/page-101, excerpt: "2 6/7 per cent (a 20% taper)"}}]}}
-    versions: [{effective_from: '2026-04-01', formula: "(bournemouth_christchurch_and_poole_council_tax_reduction_taper_whole_percentage_points + bournemouth_christchurch_and_poole_council_tax_reduction_taper_fraction_numerator / bournemouth_christchurch_and_poole_council_tax_reduction_days_per_week) * bournemouth_christchurch_and_poole_council_tax_reduction_per_cent_unit"}]
+    source: Bournemouth, Christchurch and Poole Council Tax Reduction Scheme 2026/27 paragraph 59.1 and Class E condition (j), the prescribed daily percentage of the weekly excess over seven days
+    metadata:
+      proof:
+        atoms:
+          - path: 'versions[0].formula'
+            kind: formula
+            source:
+              corpus_citation_path: uk-bournemouth-christchurch-and-poole/manual/council-tax-reduction-scheme-2026-2027/page-101
+              excerpt: "59.1 The prescribed daily percentage for the purpose of calculating support as a percentage of excess of income over the applicable amount, which is deducted from maximum council tax reduction, shall be 2 6/7 per cent (a 20% taper)."
+          - path: 'versions[0].formula'
+            kind: formula
+            source:
+              corpus_citation_path: uk-bournemouth-christchurch-and-poole/manual/council-tax-reduction-scheme-2026-2027/page-13
+              excerpt: "amount A is the maximum council tax reduction in respect of the day in the applicant’s case; and\n\n(ii) amount B is 2 6/7 per cent of the difference between his income for the relevant week and his applicable amount (a 20% taper)."
+    versions: [{effective_from: '2026-04-01', formula: "(bournemouth_christchurch_and_poole_council_tax_reduction_taper_whole_percentage_points * bournemouth_christchurch_and_poole_council_tax_reduction_taper_fraction_denominator + bournemouth_christchurch_and_poole_council_tax_reduction_taper_fraction_numerator) * bournemouth_christchurch_and_poole_council_tax_reduction_days_per_week / bournemouth_christchurch_and_poole_council_tax_reduction_taper_fraction_denominator * bournemouth_christchurch_and_poole_council_tax_reduction_per_cent_unit"}]
   - name: bournemouth_christchurch_and_poole_council_tax_reduction_capital_limit
     kind: parameter
     dtype: Money
@@ -109,14 +136,18 @@ rules:
     source: Bournemouth, Christchurch and Poole Council Tax Reduction Scheme 2026/27 paragraph 14.2
     metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-bournemouth-christchurch-and-poole/manual/council-tax-reduction-scheme-2026-2027/page-48, excerpt: "multiply the maximum amount by 12 and divide the product by 52"}}]}}
     versions: [{effective_from: '2026-04-01', formula: "52"}]
+  # Paragraph 57A.1 prints the minimum as 50p, which is half of one pound. The value is
+  # written as that half (1 / 2 = 0.50 GBP) and depends on no other parameter. A bare
+  # 0.50 literal cannot be grounded against this excerpt, because the pinned grounding
+  # extractor reads no number from "50p" (it parses "50 pence", not "50p").
   - name: bournemouth_christchurch_and_poole_council_tax_reduction_minimum_award_weekly
     kind: parameter
     dtype: Money
     period: Week
     unit: GBP
     source: Bournemouth, Christchurch and Poole Council Tax Reduction Scheme 2026/27 paragraph 57A.1
-    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-bournemouth-christchurch-and-poole/manual/council-tax-reduction-scheme-2026-2027/page-99, excerpt: "less than 50p per week, no amount whatsoever will be granted"}}]}}
-    versions: [{effective_from: '2026-04-01', formula: "bournemouth_christchurch_and_poole_council_tax_reduction_taper_whole_percentage_points * bournemouth_christchurch_and_poole_council_tax_reduction_protected_support_rate / (bournemouth_christchurch_and_poole_council_tax_reduction_taper_whole_percentage_points + bournemouth_christchurch_and_poole_council_tax_reduction_taper_whole_percentage_points)"}]
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-bournemouth-christchurch-and-poole/manual/council-tax-reduction-scheme-2026-2027/page-99, excerpt: "57A.1 Where an amount of Council Tax Reduction is calculated and it is less than 50p per week, no amount whatsoever will be granted by the authority."}}]}}
+    versions: [{effective_from: '2026-04-01', formula: "1 / 2"}]
   - name: bournemouth_christchurch_and_poole_council_tax_reduction_non_dependant_weekly_deduction_by_band
     kind: parameter
     dtype: Money
@@ -182,7 +213,14 @@ rules:
     unit: GBP
     source: Bournemouth, Christchurch and Poole Council Tax Reduction Scheme 2026/27 paragraph 42
     metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-bournemouth-christchurch-and-poole/manual/council-tax-reduction-scheme-2026-2027/page-82, excerpt: "Where the applicant’s capital calculated in accordance with this scheme exceeds £6,000 it shall be treated as equivalent to a weekly income of £1 for each complete £250 of in excess of £6,000 but not exceeding £16,000. 42.2 Notwithstanding paragraph 42.1 where any part of the excess is not a complete £250 that part shall be treated as equivalent to a weekly tariff income of £1."}}]}}
-    versions: [{effective_from: '2026-04-01', formula: "if bournemouth_christchurch_and_poole_council_tax_reduction_assessed_capital_for_year > bournemouth_christchurch_and_poole_council_tax_reduction_tariff_income_threshold: ceil((bournemouth_christchurch_and_poole_council_tax_reduction_assessed_capital_for_year - bournemouth_christchurch_and_poole_council_tax_reduction_tariff_income_threshold) / bournemouth_christchurch_and_poole_council_tax_reduction_tariff_income_step) * bournemouth_christchurch_and_poole_council_tax_reduction_tariff_income_weekly_amount_per_step * bournemouth_christchurch_and_poole_council_tax_reduction_weeks_per_year else: bournemouth_christchurch_and_poole_council_tax_reduction_capital_limit - bournemouth_christchurch_and_poole_council_tax_reduction_capital_limit"}]
+    versions: [{effective_from: '2026-04-01', formula: "if bournemouth_christchurch_and_poole_council_tax_reduction_assessed_capital_for_year > bournemouth_christchurch_and_poole_council_tax_reduction_tariff_income_threshold: ceil((bournemouth_christchurch_and_poole_council_tax_reduction_assessed_capital_for_year - bournemouth_christchurch_and_poole_council_tax_reduction_tariff_income_threshold) / bournemouth_christchurch_and_poole_council_tax_reduction_tariff_income_step) * bournemouth_christchurch_and_poole_council_tax_reduction_tariff_income_weekly_amount_per_step * bournemouth_christchurch_and_poole_council_tax_reduction_weeks_per_year else: 0"}]
+  # Paragraph 58.2 as printed opens "In the case of a non-dependant aged 18 or over",
+  # with no words limiting it to the remunerative-work case in 58.1(a). Read literally,
+  # a non-dependant not in remunerative work would pay £10.60 or £13.30 on £279 to
+  # £604.99 of weekly income but £5.20 at £605 or more. This rule applies the 58.2
+  # income bands only in the remunerative-work branch, where they step down from
+  # 58.1(a)'s £15.95, and gives everyone else 58.1(b)'s £5.20. That reading is an
+  # open interpretation, not a printed qualifier.
   - name: bournemouth_christchurch_and_poole_council_tax_reduction_non_dependant_band
     kind: derived
     entity: Person
@@ -234,14 +272,14 @@ rules:
     unit: GBP
     source: Bournemouth, Christchurch and Poole Council Tax Reduction Scheme 2026/27 paragraph 59.1
     metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-bournemouth-christchurch-and-poole/manual/council-tax-reduction-scheme-2026-2027/page-101, excerpt: "Where an applicant’s income exceeds their applicable amount"}}]}}
-    versions: [{effective_from: '2026-04-01', formula: "max(bournemouth_christchurch_and_poole_council_tax_reduction_assessed_income_for_year + bournemouth_christchurch_and_poole_council_tax_reduction_tariff_income_for_year - bournemouth_christchurch_and_poole_council_tax_reduction_applicable_amount_for_year, bournemouth_christchurch_and_poole_council_tax_reduction_capital_limit - bournemouth_christchurch_and_poole_council_tax_reduction_capital_limit)"}]
+    versions: [{effective_from: '2026-04-01', formula: "max(bournemouth_christchurch_and_poole_council_tax_reduction_assessed_income_for_year + bournemouth_christchurch_and_poole_council_tax_reduction_tariff_income_for_year - bournemouth_christchurch_and_poole_council_tax_reduction_applicable_amount_for_year, 0)"}]
   - name: bournemouth_christchurch_and_poole_council_tax_reduction_income_taper_deduction_for_year
     kind: derived
     entity: Household
     dtype: Money
     period: Year
     unit: GBP
-    source: Bournemouth, Christchurch and Poole Council Tax Reduction Scheme 2026/27 paragraph 59.1
+    source: Bournemouth, Christchurch and Poole Council Tax Reduction Scheme 2026/27 paragraph 59.1, the same-period 20 percent rate applied to the excess for the same year as the annual maximum
     metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-bournemouth-christchurch-and-poole/manual/council-tax-reduction-scheme-2026-2027/page-101, excerpt: "deducting their excess income multiplied by the taper from their maximum council tax reduction as defined within section 57 of this scheme"}}]}}
     versions: [{effective_from: '2026-04-01', formula: "bournemouth_christchurch_and_poole_council_tax_reduction_excess_income_for_year * bournemouth_christchurch_and_poole_council_tax_reduction_weekly_taper_rate"}]
   - name: bournemouth_christchurch_and_poole_council_tax_reduction_award_conditions_met
@@ -260,7 +298,7 @@ rules:
     unit: GBP
     source: Bournemouth, Christchurch and Poole Council Tax Reduction Scheme 2026/27 paragraphs 57A and 59.1
     metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-bournemouth-christchurch-and-poole/manual/council-tax-reduction-scheme-2026-2027/page-101, excerpt: "their council tax reduction shall be calculated by deducting their excess income multiplied by the taper from their maximum council tax reduction"}}]}}
-    versions: [{effective_from: '2026-04-01', formula: "if bournemouth_christchurch_and_poole_council_tax_reduction_award_conditions_met: bournemouth_christchurch_and_poole_council_tax_reduction_maximum_council_tax_reduction_for_year - bournemouth_christchurch_and_poole_council_tax_reduction_income_taper_deduction_for_year else: bournemouth_christchurch_and_poole_council_tax_reduction_capital_limit - bournemouth_christchurch_and_poole_council_tax_reduction_capital_limit"}]
+    versions: [{effective_from: '2026-04-01', formula: "if bournemouth_christchurch_and_poole_council_tax_reduction_award_conditions_met: bournemouth_christchurch_and_poole_council_tax_reduction_maximum_council_tax_reduction_for_year - bournemouth_christchurch_and_poole_council_tax_reduction_income_taper_deduction_for_year else: 0"}]
 inputs:
   - {name: local_authority_is_bournemouth_christchurch_and_poole, entity: Household, dtype: Boolean, period: Year}
   - {name: council_tax_reduction_household_in_england, entity: Household, dtype: Boolean, period: Year}
