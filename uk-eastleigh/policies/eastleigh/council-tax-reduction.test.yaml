@@ -133,9 +133,10 @@
     uk-eastleigh:policies/eastleigh/council-tax-reduction#eastleigh_council_tax_reduction_annual_amount: 1799.998
 
 # Section 58.1(a) deducts £12.00 x 1/7 for each day; over the 365 days of 2026-27
-# that is 12 x 365 / 7 = 625.714285..., not 52 weekly deductions of £12.
-# Maximum 1800 - 625.714285... = 1174.285714...; excess 11000 - 10000 = 1000,
-# taper 20% x 1000 = 200; award 1174.285714... - 200 = 974.285714....
+# that is 12 x 365 / 7 = 625.714285..., not 52 weekly deductions of £12 (624). The
+# input is that annual total to the penny, 625.71, because companion inputs are
+# decimals, not fractions. Maximum 1800 - 625.71 = 1174.29; excess 11000 - 10000 =
+# 1000, taper 20% x 1000 = 200; award 1174.29 - 200 = 974.29.
 - name: eastleigh_ctr_taper_and_high_non_dependant_deduction
   period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
   input:
@@ -147,7 +148,7 @@
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_class_d_or_e_non_income_conditions_hold: true
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_assessed_capital_for_year: 0
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_maximum_eligible_liability_for_year: 1800
-    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_non_dependant_deductions_for_year: "625.7142857142857142857142857"
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_non_dependant_deductions_for_year: 625.71
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_assessed_income_for_year: 11000
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_applicable_amount_for_year: 10000
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_applicant_or_partner_on_legacy_income_based_benefit: false
@@ -156,8 +157,8 @@
     uk-eastleigh:policies/eastleigh/council-tax-reduction#eastleigh_council_tax_reduction_class_e_income_condition_met: holds
     uk-eastleigh:policies/eastleigh/council-tax-reduction#eastleigh_council_tax_reduction_excess_income_for_year: 1000
     uk-eastleigh:policies/eastleigh/council-tax-reduction#eastleigh_council_tax_reduction_income_taper_deduction_for_year: 200
-    uk-eastleigh:policies/eastleigh/council-tax-reduction#eastleigh_council_tax_reduction_maximum_after_non_dependant_deductions_for_year: "1174.2857142857142857142857143"
-    uk-eastleigh:policies/eastleigh/council-tax-reduction#eastleigh_council_tax_reduction_annual_amount: "974.2857142857142857142857143"
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#eastleigh_council_tax_reduction_maximum_after_non_dependant_deductions_for_year: 1174.29
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#eastleigh_council_tax_reduction_annual_amount: 974.29
 
 - name: eastleigh_ctr_non_dependant_no_deduction
   period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
@@ -388,8 +389,9 @@
     uk-eastleigh:policies/eastleigh/council-tax-reduction#eastleigh_council_tax_reduction_class_e_income_condition_met: not_holds
     uk-eastleigh:policies/eastleigh/council-tax-reduction#eastleigh_council_tax_reduction_annual_amount: 0
 
-# Class D applies (income 0 < 7300), but 600 - 625.714285... is negative, so the
-# maximum after non-dependant deductions floors at 0 and so does the award.
+# Class D applies (income 0 < 7300), but 600 - 625.71 (the 365-day total of £12.00 x 1/7
+# a day, to the penny) is negative, so the maximum after non-dependant deductions
+# floors at 0 and so does the award.
 - name: eastleigh_ctr_non_dependant_deductions_exceed_maximum
   period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
   input:
@@ -401,7 +403,7 @@
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_class_d_or_e_non_income_conditions_hold: true
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_assessed_capital_for_year: 0
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_maximum_eligible_liability_for_year: 600
-    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_non_dependant_deductions_for_year: "625.7142857142857142857142857"
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_non_dependant_deductions_for_year: 625.71
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_assessed_income_for_year: 0
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_applicable_amount_for_year: 7300
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_applicant_or_partner_on_legacy_income_based_benefit: false
