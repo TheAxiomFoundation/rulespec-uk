@@ -199,12 +199,15 @@ Both withdraw support at one-seventh of the intended same-period 20% rate.
 Their companion expectations reproduce the error. Repair with independently
 derived period invariants and differential checks against the national rules.
 
-`uk-babergh` scales a daily 20% coefficient into an effective 140% weekly
-taper; `uk-ipswich` uses 20% on same-period excess despite the same quoted
-scheme wording. Establish the operative period interpretation before changing
-either, and apply the ruling consistently to `uk-guildford`. The
-[playbook](../uk-council-encoding-playbook.md) describes the review checks.
-These findings were rechecked in the tracked formulas on 2026-10-09.
+`uk-babergh` and `uk-ipswich` quote the same scheme sentence, a "prescribed
+daily percentage" of 20 per cent. The maintainer ruled on 10 October 2026 that
+it means 20% of weekly excess per week. `uk-babergh` had scaled it into an
+effective 140% weekly taper and left tariff income out of the excess; it now
+applies the ruling and counts tariff income. `uk-ipswich` and `uk-guildford`
+already use 20% on same-period excess. The
+[playbook](../uk-council-encoding-playbook.md) records the ruling and the
+review checks. The Oldham and East Hertfordshire findings above were rechecked
+in the tracked formulas on 2026-10-09.
 
 Other retained discovery blockers require renewed source verification:
 
