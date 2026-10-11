@@ -92,14 +92,15 @@ the equivalent weekly deduction is 20 percent of that excess: multiply the
 daily deduction by seven, or use the derived same-period rate after converting
 the calculation consistently.
 
-The campaign provides current examples of this failure. Rechecked on
-2026-10-09 at `1c1101c`,
-[Oldham](../uk-oldham/policies/oldham/council-tax-reduction.yaml) applies
+The campaign provides examples of this failure. Until #447,
+[Oldham](../uk-oldham/policies/oldham/council-tax-reduction.yaml) applied
 `(2 + 6/7) × 0.01` directly to an annual excess, and
 [East Hertfordshire](../uk-east-hertfordshire/policies/east-hertfordshire/council-tax-reduction.yaml)
-applies the same rate to a weekly excess. Both call the parameter a weekly
-rate. Their companion expectations reproduce that calculation, so a passing
-companion suite cannot establish period consistency. The public review on
+applied the same rate to a weekly excess, while both called the parameter a
+weekly rate. Their companion expectations reproduced that calculation, so a
+passing companion suite could not establish period consistency. #447 repaired
+both and added the period-consistency tests in
+`tests/test_ctr_taper_periodisation.py`. The public review on
 [#140](https://github.com/TheAxiomFoundation/rulespec-uk/issues/140#issuecomment-5845299202)
 records the source context and the broader failure class.
 
@@ -118,18 +119,30 @@ A verbatim excerpt can still omit the sentence that changes its meaning. When
 source provisions disagree, record both provisions and the unresolved decision
 instead of silently selecting a value or copying a neighbouring council.
 
-Rechecked at `1c1101c` on 2026-10-09,
-[Babergh](../uk-babergh/policies/babergh/council-tax-reduction.yaml) subtracts
-20 percent of a weekly excess from a daily maximum, giving an effective
-same-period taper of 140 percent.
-[Ipswich](../uk-ipswich/policies/ipswich/council-tax-reduction.yaml) applies
-20 percent to annual excess against an annual maximum. The
+[Babergh](../uk-babergh/policies/babergh/council-tax-reduction.yaml) and
+[Ipswich](../uk-ipswich/policies/ipswich/council-tax-reduction.yaml) print the
+same sentence: a "prescribed daily percentage" of 20 per cent, deducted from a
+maximum that the scheme states per day. Read literally, that withdraws 140
+percent of a week's excess income per week. Until October 2026 the two modules
+disagreed: Babergh subtracted 20 percent of a weekly excess from a daily
+maximum, and Ipswich applied 20 percent to annual excess against an annual
+maximum. The
 [maintainer's issue reply](https://github.com/TheAxiomFoundation/rulespec-uk/issues/140#issuecomment-5872231649)
-identifies the identical scheme wording as an unresolved interpretation;
+identified the wording as an unresolved interpretation.
+
+The maintainer ruled on 10 October 2026 that the sentence means 20 percent of
+weekly excess per week, for every scheme with this wording. The prescribed and
+default schemes deduct 2 6/7 percent a day from a daily maximum, which is 20
+percent a week, and these schemes printed "20 per cent" without dividing by
+seven. Babergh now applies that reading and quotes the literal sentence and the
+ruling in its module summary. Ipswich and
 [Guildford](../uk-guildford/policies/guildford/council-tax-reduction.yaml)
-also applies a 20 percent rate to annual excess and needs to be considered in
-that adjudication. Formula agreement or familiar rates cannot settle the legal
-reading. These observations document an open correction, not a module repair.
+already apply 20 percent to same-period excess. The ruling also names Mid
+Suffolk, which is not in this repository yet.
+
+The ruling settles this wording only. Formula agreement and familiar rates did
+not settle it, and will not settle the next conflict: record both provisions
+and ask.
 
 Arun illustrates a different conflict: s.23(3) prints band A at 100 percent,
 while Schedule 3 paragraph 1 prints 90 percent for the same scheme year. Keep

@@ -191,20 +191,22 @@ DOCX blocks. Repeat the check over the full bound inventory before encoding.
 
 ### 3. Known correctness and source blockers
 
-The tracked modules at `1c1101c` still contain the periodisation errors reported
+`uk-oldham` and `uk-east-hertfordshire` had the periodisation errors reported
 on [#140](https://github.com/TheAxiomFoundation/rulespec-uk/issues/140#issuecomment-5845299202):
-`uk-oldham` applies the daily 2 6/7% coefficient to annual excess, and
-`uk-east-hertfordshire` applies it to weekly excess before scaling the award.
-Both withdraw support at one-seventh of the intended same-period 20% rate.
-Their companion expectations reproduce the error. Repair with independently
-derived period invariants and differential checks against the national rules.
+Oldham applied the daily 2 6/7% coefficient to annual excess, and East
+Hertfordshire applied it to weekly excess before scaling the award, so both
+withdrew support at one-seventh of the intended same-period 20% rate. #447
+repaired both, with period invariants and differential checks against the
+national rules (`tests/test_ctr_taper_periodisation.py`).
 
-`uk-babergh` scales a daily 20% coefficient into an effective 140% weekly
-taper; `uk-ipswich` uses 20% on same-period excess despite the same quoted
-scheme wording. Establish the operative period interpretation before changing
-either, and apply the ruling consistently to `uk-guildford`. The
-[playbook](../uk-council-encoding-playbook.md) describes the review checks.
-These findings were rechecked in the tracked formulas on 2026-10-09.
+`uk-babergh` and `uk-ipswich` quote the same scheme sentence, a "prescribed
+daily percentage" of 20 per cent. The maintainer ruled on 10 October 2026 that
+it means 20% of weekly excess per week. `uk-babergh` had scaled it into an
+effective 140% weekly taper and left tariff income out of the excess; it now
+applies the ruling and counts tariff income. `uk-ipswich` and `uk-guildford`
+already use 20% on same-period excess. The
+[playbook](../uk-council-encoding-playbook.md) records the ruling and the
+review checks.
 
 Other retained discovery blockers require renewed source verification:
 
