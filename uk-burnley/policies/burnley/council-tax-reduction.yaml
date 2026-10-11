@@ -9,14 +9,14 @@ module:
     #   checked_paths: [uk/statutes/ukpga/1992/14/13A, uk/regulations/uksi/2012/2885, uk/regulations/uksi/2012/2886]
     #   rationale: LGFA 1992 section 13A delegates the working-age scheme to Burnley Borough Council, so the adopted scheme document is the operative legal source for locally set working-age values.
   summary: |-
-    Burnley's 2026/27 working-age award (Classes D and E) is the daily maximum council tax reduction of section 57.1 (100 percent of the daily liability, less non-dependant deductions), less the section 59.1 excess-income taper for Class E, then reduced by the section 59A.1 15 percent standard deduction. Class E's amount B is "2 6/7 per cent of the difference between his income for the relevant week and his applicable amount", set against amount A, "the maximum Council Tax Reduction in respect of the day". Because the weekly excess is seven times the daily excess, this module multiplies the printed daily percentage by the seven-day conversion and applies the resulting 20 percent same-period rate to the daily excess. Class D requires income less than the applicable amount and Class E requires income more than it; the scheme assigns neither class at equality, so this module preserves that drafting gap. Capital over £16,000 is an exclusion, and £1 weekly tariff income applies for each complete or part £250 above £6,000. The scheme prints no minimum award and no council-tax-band cap. Paragraph 58.2 as printed applies its income bands to "a non-dependant aged 18 or over" and omits the qualifier "to whom sub-paragraph (1)(a) applies" that Schedule 1 paragraph 8(2) of the Prescribed Requirements Regulations 2012 attaches to the same printed bands and amounts, the regulations footnote 25 says this section's amounts are uprated in line with. This module applies the 58.2 bands only to non-dependants in remunerative work, as the prescribed paragraph does; the literal reading, under which the bands also reach non-dependants not in remunerative work, remains an open interpretation. Class F (second adult reduction), the greater-of selection between Classes D/E and F, Classes G and H, and pension-age provisions are outside this module.
+    Burnley's 2026/27 working-age award (Classes D and E) is the daily maximum council tax reduction of section 57.1 (100 percent of the daily liability, less non-dependant deductions), less the section 59.1 excess-income taper for Class E, then reduced by the section 59A.1 15 percent standard deduction. Class E's amount B is "2 6/7 per cent of the difference between his income for the relevant week and his applicable amount", set against amount A, "the maximum Council Tax Reduction in respect of the day". Because the weekly excess is seven times the daily excess, this module multiplies the printed daily percentage by the seven-day conversion and applies the resulting 20 percent same-period rate to the daily excess. Class D requires income less than the applicable amount, or that the applicant or partner is on income support, income-based jobseeker's allowance or income-related employment and support allowance; Class E requires income more than the applicable amount and amount A exceeding amount B, and the section 59 taper applies to Class E only. For an applicant without one of those benefits, the scheme assigns neither class when income equals the applicable amount, so this module preserves that drafting gap. Capital over £16,000 is an exclusion, and £1 weekly tariff income applies for each complete or part £250 above £6,000. The scheme prints no minimum award and no council-tax-band cap. Paragraph 58.2 as printed applies its income bands to "a non-dependant aged 18 or over" and omits the qualifier "to whom sub-paragraph (1)(a) applies" that Schedule 1 paragraph 8(2) of the Prescribed Requirements Regulations 2012 attaches to the same printed bands and amounts, the regulations footnote 25 says this section's amounts are uprated in line with. This module applies the 58.2 bands only to non-dependants in remunerative work, as the prescribed paragraph does; the literal reading, under which the bands also reach non-dependants not in remunerative work, remains an open interpretation. Class F (second adult reduction), the greater-of selection between Classes D/E and F, Classes G and H, and pension-age provisions are outside this module.
   deferred_outputs:
     - output: uk-burnley:policies/burnley/council-tax-reduction/sections-12-to-14-and-schedule-1#applicable_amount
       reason: This module consumes the applicable amount; its household-category and premium schedules are outside the working-age award surface.
     - output: uk-burnley:policies/burnley/council-tax-reduction/sections-15-to-56-and-schedules-3-to-5#assessed_income_and_capital
       reason: This module consumes assessed income and capital; valuation, attribution, disregards and income classifiers are outside this award surface.
     - output: uk-burnley:policies/burnley/council-tax-reduction/section-58#non_dependant_exemptions_and_aggregation
-      reason: This module encodes the printed individual deduction bands and consumes the household deduction total; exemptions, couples and apportionment remain future outputs.
+      reason: This module encodes the printed individual weekly deduction bands and consumes the household daily deduction total; the 58.1 "x 1/7" daily conversion of the weekly amounts, exemptions, couples and apportionment remain future outputs.
     - output: uk-burnley:policies/burnley/council-tax-reduction/sections-62-63-and-schedule-2#class_f_second_adult_reduction
       reason: Class F's alternative maximum council tax reduction and the greater-of selection between the Class D or E amount and the Class F amount are outside this Class D and E award surface.
     - output: uk-burnley:policies/burnley/council-tax-reduction/schedules-6-and-7#class_g_and_h_reduction
@@ -74,8 +74,8 @@ rules:
     kind: parameter
     dtype: Number
     period: Year
-    source: Burnley Council Tax Reduction Scheme 2026 section 58.1
-    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-burnley/manual/council-tax-reduction-scheme-2026-2027/page-74, excerpt: "£15.95 x 1/7"}}]}}
+    source: Burnley Council Tax Reduction Scheme 2026 section 2 definition of week and section 58.1
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-burnley/manual/council-tax-reduction-scheme-2026-2027/page-74, excerpt: "£15.95 x 1/7"}}, {path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-burnley/manual/council-tax-reduction-scheme-2026-2027/page-22, excerpt: "‘week’ means a period of seven days beginning with a Monday;"}}]}}
     versions: [{effective_from: '2026-04-01', formula: '7'}]
 
   - name: burnley_council_tax_reduction_prescribed_daily_percentage
@@ -181,7 +181,7 @@ rules:
     dtype: Judgment
     period: Year
     source: Burnley Council Tax Reduction Scheme 2026 section 1.6
-    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: condition, source: {corpus_citation_path: uk-burnley/manual/council-tax-reduction-scheme-2026-2027/page-9, excerpt: "THE SCHEME FOR WORKING AGE APPLICANTS – THE COUNCIL’S LOCAL SCHEME"}}]}}
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: condition, source: {corpus_citation_path: uk-burnley/manual/council-tax-reduction-scheme-2026-2027/page-9, excerpt: "THE SCHEME FOR WORKING AGE APPLICANTS – THE COUNCIL’S LOCAL SCHEME"}}, {path: 'versions[0].formula', kind: condition, source: {corpus_citation_path: uk-burnley/manual/council-tax-reduction-scheme-2026-2027/page-9, excerpt: "this scheme only applies to a person who; a. has not attained the qualifying age for state pension credit"}}]}}
     versions: [{effective_from: '2026-04-01', formula: 'local_authority_is_burnley and council_tax_reduction_household_in_england and burnley_council_tax_reduction_applicant_is_not_pensioner'}]
 
   - name: burnley_council_tax_reduction_capital_eligible
@@ -253,6 +253,24 @@ rules:
     metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-burnley/manual/council-tax-reduction-scheme-2026-2027/page-76, excerpt: "deducting their excess income multiplied by the taper from their maximum council tax reduction"}}, {path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-burnley/manual/council-tax-reduction-scheme-2026-2027/page-10, excerpt: "(ii) amount B is 2 6/7 per cent of the difference between his income for the relevant week and his applicable amount."}}]}}
     versions: [{effective_from: '2026-04-01', formula: 'burnley_council_tax_reduction_excess_income_for_day * burnley_council_tax_reduction_same_period_taper_rate'}]
 
+  - name: burnley_council_tax_reduction_class_d_income_condition
+    kind: derived
+    entity: Household
+    dtype: Judgment
+    period: Day
+    source: Burnley Council Tax Reduction Scheme 2026 Class D
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: condition, source: {corpus_citation_path: uk-burnley/manual/council-tax-reduction-scheme-2026-2027/page-9, excerpt: "is less than their applicable amount"}}, {path: 'versions[0].formula', kind: condition, source: {corpus_citation_path: uk-burnley/manual/council-tax-reduction-scheme-2026-2027/page-9, excerpt: "or the applicant or partner is in receipt of income support, jobseekers’ allowance (income based) or employment and support allowance (income related)"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 'burnley_council_tax_reduction_income_including_tariff_for_day < burnley_council_tax_reduction_applicable_amount_for_day or burnley_council_tax_reduction_applicant_or_partner_on_income_support_jsa_ib_or_esa_ir'}]
+
+  - name: burnley_council_tax_reduction_class_e_income_condition
+    kind: derived
+    entity: Household
+    dtype: Judgment
+    period: Day
+    source: Burnley Council Tax Reduction Scheme 2026 Class E
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: condition, source: {corpus_citation_path: uk-burnley/manual/council-tax-reduction-scheme-2026-2027/page-10, excerpt: "is more than their applicable amount"}}, {path: 'versions[0].formula', kind: condition, source: {corpus_citation_path: uk-burnley/manual/council-tax-reduction-scheme-2026-2027/page-10, excerpt: "be a person in respect of whom amount A exceeds amount B where;"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 'burnley_council_tax_reduction_income_including_tariff_for_day > burnley_council_tax_reduction_applicable_amount_for_day and burnley_council_tax_reduction_maximum_council_tax_reduction_for_day > burnley_council_tax_reduction_income_taper_deduction_for_day'}]
+
   - name: burnley_council_tax_reduction_pre_standard_deduction_amount_for_day
     kind: derived
     entity: Household
@@ -260,8 +278,8 @@ rules:
     period: Day
     unit: GBP
     source: Burnley Council Tax Reduction Scheme 2026 sections 57 and 59
-    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-burnley/manual/council-tax-reduction-scheme-2026-2027/page-76, excerpt: "deducting their excess income multiplied by the taper from their maximum council tax reduction as defined within section 57 of this scheme."}}]}}
-    versions: [{effective_from: '2026-04-01', formula: 'max(0, burnley_council_tax_reduction_maximum_council_tax_reduction_for_day - burnley_council_tax_reduction_income_taper_deduction_for_day)'}]
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-burnley/manual/council-tax-reduction-scheme-2026-2027/page-76, excerpt: "deducting their excess income multiplied by the taper from their maximum council tax reduction as defined within section 57 of this scheme."}}, {path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-burnley/manual/council-tax-reduction-scheme-2026-2027/page-76, excerpt: "59.0 Council tax reduction taper (applies to persons defined within Class E)"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 'if burnley_council_tax_reduction_class_d_income_condition: max(0, burnley_council_tax_reduction_maximum_council_tax_reduction_for_day) else: max(0, burnley_council_tax_reduction_maximum_council_tax_reduction_for_day - burnley_council_tax_reduction_income_taper_deduction_for_day)'}]
 
   - name: burnley_council_tax_reduction_award_conditions_met
     kind: derived
@@ -269,8 +287,8 @@ rules:
     dtype: Judgment
     period: Day
     source: Burnley Council Tax Reduction Scheme 2026 Classes D and E and section 33
-    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: condition, source: {corpus_citation_path: uk-burnley/manual/council-tax-reduction-scheme-2026-2027/page-56, excerpt: "no reduction shall be granted when the applicant has an amount greater than this level."}}, {path: 'versions[0].formula', kind: condition, source: {corpus_citation_path: uk-burnley/manual/council-tax-reduction-scheme-2026-2027/page-9, excerpt: "is less than their applicable amount"}}, {path: 'versions[0].formula', kind: condition, source: {corpus_citation_path: uk-burnley/manual/council-tax-reduction-scheme-2026-2027/page-10, excerpt: "is more than their applicable amount"}}, {path: 'versions[0].formula', kind: condition, source: {corpus_citation_path: uk-burnley/manual/council-tax-reduction-scheme-2026-2027/page-10, excerpt: "be a person in respect of whom amount A exceeds amount B where;"}}]}}
-    versions: [{effective_from: '2026-04-01', formula: 'burnley_council_tax_reduction_working_age_scheme_applies and burnley_council_tax_reduction_capital_eligible and would_claim_council_tax_reduction and (burnley_council_tax_reduction_income_including_tariff_for_day < burnley_council_tax_reduction_applicable_amount_for_day or (burnley_council_tax_reduction_income_including_tariff_for_day > burnley_council_tax_reduction_applicable_amount_for_day and burnley_council_tax_reduction_maximum_council_tax_reduction_for_day > burnley_council_tax_reduction_income_taper_deduction_for_day))'}]
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: condition, source: {corpus_citation_path: uk-burnley/manual/council-tax-reduction-scheme-2026-2027/page-56, excerpt: "no reduction shall be granted when the applicant has an amount greater than this level."}}, {path: 'versions[0].formula', kind: condition, source: {corpus_citation_path: uk-burnley/manual/council-tax-reduction-scheme-2026-2027/page-11, excerpt: "the amount of the reduction given by Class D or Class E as the case may be;"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 'burnley_council_tax_reduction_working_age_scheme_applies and burnley_council_tax_reduction_capital_eligible and would_claim_council_tax_reduction and (burnley_council_tax_reduction_class_d_income_condition or burnley_council_tax_reduction_class_e_income_condition)'}]
 
   - name: burnley_council_tax_reduction_daily_amount
     kind: derived
@@ -286,6 +304,7 @@ inputs:
   - {name: council_tax_reduction_household_in_england, entity: Household, dtype: Boolean, period: Year}
   - {name: burnley_council_tax_reduction_applicant_is_not_pensioner, entity: Household, dtype: Boolean, period: Year}
   - {name: would_claim_council_tax_reduction, entity: Household, dtype: Boolean, period: Year}
+  - {name: burnley_council_tax_reduction_applicant_or_partner_on_income_support_jsa_ib_or_esa_ir, entity: Household, dtype: Boolean, period: Year}
   - {name: burnley_council_tax_reduction_assessed_capital_for_year, entity: Household, dtype: Money, period: Year, unit: GBP}
   - {name: burnley_council_tax_reduction_actual_liability_for_day, entity: Household, dtype: Money, period: Day, unit: GBP}
   - {name: burnley_council_tax_reduction_assessed_income_for_day, entity: Household, dtype: Money, period: Day, unit: GBP}
