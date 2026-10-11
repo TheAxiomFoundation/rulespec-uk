@@ -99,8 +99,8 @@
     uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_chargeable_non_dependant_count: 0
   output:
     # Literal reading: band A starts at £0, so -£0.01 is in no printed band and
-    # outside Class D (s.13(f)). Assessed income cannot be negative under the scheme
-    # (s.41(10) bars offsetting a loss), so this pins the selector's lower edge only.
+    # outside Class D (s.13(f)). The scheme prints no rule for a negative assessed
+    # income; this case pins the selector's lower edge.
     uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_income_band: 0
     uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_annual_amount: 0
 

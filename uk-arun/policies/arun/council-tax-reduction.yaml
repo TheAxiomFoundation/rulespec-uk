@@ -74,7 +74,9 @@ rules:
               corpus_citation_path: uk-arun/manual/council-tax-reduction-scheme-2026-2027/page-28
               excerpt: "the non-dependant deduction in respect of every non-dependant ages 18 or over is £5.00 x 1/7 where any of the following apply: (a) Where any non-dependant is in remunerative work; or (b) Where any non-dependant receives no income whatsoever."
               table: {header: Non-dependant deductions, row_key: deduction band, column_key: weekly deduction}
-          # Row 0: no deduction for a non-dependant exempted by section 22(2).
+          # Row 0: no deduction for a non-dependant exempted by section 22(2), or one
+          # outside section 22(1)'s conditions (under 18, or neither in remunerative
+          # work nor without any income), as the row-1 excerpt states them.
           - path: 'versions[0].values'
             kind: parameter_table
             source:
