@@ -31,9 +31,21 @@ except ImportError:
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SNAPSHOT = json.loads(
-    (ROOT / "tests/fixtures/babergh_ctr_original_cases.json").read_text()
-)
+
+
+def _load_fixture_data():
+    import importlib.util
+
+    spec = importlib.util.spec_from_file_location(
+        "babergh_ctr_original_cases_fixture",
+        ROOT / "tests/babergh_ctr_original_cases_fixture.py",
+    )
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module.DATA
+
+
+SNAPSHOT = _load_fixture_data()
 # JSON object keys are strings; RuleSpec indexed-table keys are integers.
 for original_rule in SNAPSHOT["original_rules"].values():
     for version in original_rule["versions"]:
