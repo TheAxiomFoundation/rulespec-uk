@@ -19,6 +19,7 @@
     uk-eastleigh:policies/eastleigh/council-tax-reduction#eastleigh_council_tax_reduction_capital_limit: 6000
     uk-eastleigh:policies/eastleigh/council-tax-reduction#eastleigh_council_tax_reduction_taper_whole_percentage_points: 2
     uk-eastleigh:policies/eastleigh/council-tax-reduction#eastleigh_council_tax_reduction_taper_fraction_numerator: 6
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#eastleigh_council_tax_reduction_taper_fraction_denominator: 7
     uk-eastleigh:policies/eastleigh/council-tax-reduction#eastleigh_council_tax_reduction_days_per_week: 7
     uk-eastleigh:policies/eastleigh/council-tax-reduction#eastleigh_council_tax_reduction_per_cent_unit: 0.01
     uk-eastleigh:policies/eastleigh/council-tax-reduction#eastleigh_council_tax_reduction_daily_taper_rate: "0.0285714285714285714285714286"
@@ -28,14 +29,17 @@
 # Section 1.7 Class D needs income "less than" the applicable amount (or one of the
 # listed income-based benefits) and Class E needs income "more than" it. Income equal
 # to the applicable amount (£140 a week, 140 x 365 / 7 = 7300 a year) without one of
-# those benefits falls in neither class, so no reduction is granted.
+# those benefits falls in neither class, so no reduction is granted. This is also the
+# position of a universal credit claimant with no other income (sections 14 and 15A).
 - name: eastleigh_ctr_income_equal_to_applicable_amount_has_no_class
   period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
   input:
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.local_authority_is_eastleigh: true
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.council_tax_reduction_household_in_england: true
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: false
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_pension_age_applicant_and_partner_on_working_age_benefit: false
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_class_d_or_e_non_income_conditions_hold: true
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_assessed_capital_for_year: 0
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_maximum_eligible_liability_for_year: 1800
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_non_dependant_deductions_for_year: 0
@@ -57,13 +61,17 @@
 # The Class D benefit limb alone: income equals the applicable amount, but the applicant
 # receives income support, income-based JSA or income-related ESA, so Class D applies and
 # the award is the maximum, 1800 x 100% - 0 non-dependant deductions - 0 taper = 1800.
+# The fixture isolates the limb; in practice Schedule 4 paragraph 4 disregards the whole
+# income of such an applicant, so assessed income would be nil.
 - name: eastleigh_ctr_income_based_benefit_at_applicable_amount_is_class_d
   period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
   input:
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.local_authority_is_eastleigh: true
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.council_tax_reduction_household_in_england: true
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: false
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_pension_age_applicant_and_partner_on_working_age_benefit: false
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_class_d_or_e_non_income_conditions_hold: true
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_assessed_capital_for_year: 0
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_maximum_eligible_liability_for_year: 1800
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_non_dependant_deductions_for_year: 0
@@ -83,7 +91,9 @@
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.local_authority_is_eastleigh: true
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.council_tax_reduction_household_in_england: true
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: false
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_pension_age_applicant_and_partner_on_working_age_benefit: false
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_class_d_or_e_non_income_conditions_hold: true
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_assessed_capital_for_year: 0
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_maximum_eligible_liability_for_year: 1800
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_non_dependant_deductions_for_year: 0
@@ -104,7 +114,9 @@
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.local_authority_is_eastleigh: true
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.council_tax_reduction_household_in_england: true
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: false
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_pension_age_applicant_and_partner_on_working_age_benefit: false
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_class_d_or_e_non_income_conditions_hold: true
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_assessed_capital_for_year: 0
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_maximum_eligible_liability_for_year: 1800
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_non_dependant_deductions_for_year: 0
@@ -130,7 +142,9 @@
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.local_authority_is_eastleigh: true
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.council_tax_reduction_household_in_england: true
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: false
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_pension_age_applicant_and_partner_on_working_age_benefit: false
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_class_d_or_e_non_income_conditions_hold: true
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_assessed_capital_for_year: 0
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_maximum_eligible_liability_for_year: 1800
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_non_dependant_deductions_for_year: "625.7142857142857142857142857"
@@ -217,7 +231,9 @@
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.local_authority_is_eastleigh: true
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.council_tax_reduction_household_in_england: true
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: false
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_pension_age_applicant_and_partner_on_working_age_benefit: false
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_class_d_or_e_non_income_conditions_hold: true
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_assessed_capital_for_year: 6000.01
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_maximum_eligible_liability_for_year: 1800
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_non_dependant_deductions_for_year: 0
@@ -238,7 +254,9 @@
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.local_authority_is_eastleigh: true
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.council_tax_reduction_household_in_england: true
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: false
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_pension_age_applicant_and_partner_on_working_age_benefit: false
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_class_d_or_e_non_income_conditions_hold: true
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_assessed_capital_for_year: 6000
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_maximum_eligible_liability_for_year: 1800
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_non_dependant_deductions_for_year: 0
@@ -267,7 +285,9 @@
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.local_authority_is_eastleigh: true
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.council_tax_reduction_household_in_england: true
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: false
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_pension_age_applicant_and_partner_on_working_age_benefit: false
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_class_d_or_e_non_income_conditions_hold: true
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_assessed_capital_for_year: 0
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_maximum_eligible_liability_for_year: 1800
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_non_dependant_deductions_for_year: 0
@@ -286,7 +306,9 @@
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.local_authority_is_eastleigh: true
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.council_tax_reduction_household_in_england: true
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: false
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_pension_age_applicant_and_partner_on_working_age_benefit: false
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_class_d_or_e_non_income_conditions_hold: true
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_assessed_capital_for_year: 0
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_maximum_eligible_liability_for_year: 1800
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_non_dependant_deductions_for_year: 0
@@ -307,7 +329,9 @@
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.local_authority_is_eastleigh: true
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.council_tax_reduction_household_in_england: true
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: false
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_pension_age_applicant_and_partner_on_working_age_benefit: false
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_class_d_or_e_non_income_conditions_hold: true
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_assessed_capital_for_year: 0
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_maximum_eligible_liability_for_year: 1800
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_non_dependant_deductions_for_year: 0
@@ -328,7 +352,9 @@
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.local_authority_is_eastleigh: true
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.council_tax_reduction_household_in_england: true
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: false
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_pension_age_applicant_and_partner_on_working_age_benefit: false
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_class_d_or_e_non_income_conditions_hold: true
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_assessed_capital_for_year: 0
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_maximum_eligible_liability_for_year: 1800
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_non_dependant_deductions_for_year: 0
@@ -347,7 +373,9 @@
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.local_authority_is_eastleigh: true
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.council_tax_reduction_household_in_england: true
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: false
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_pension_age_applicant_and_partner_on_working_age_benefit: false
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_class_d_or_e_non_income_conditions_hold: true
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_assessed_capital_for_year: 0
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_maximum_eligible_liability_for_year: 1800
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_non_dependant_deductions_for_year: 0
@@ -368,7 +396,9 @@
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.local_authority_is_eastleigh: true
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.council_tax_reduction_household_in_england: true
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: false
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_pension_age_applicant_and_partner_on_working_age_benefit: false
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_class_d_or_e_non_income_conditions_hold: true
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_assessed_capital_for_year: 0
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_maximum_eligible_liability_for_year: 600
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_non_dependant_deductions_for_year: "625.7142857142857142857142857"
@@ -386,7 +416,9 @@
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.local_authority_is_eastleigh: true
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.council_tax_reduction_household_in_england: true
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: true
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_pension_age_applicant_and_partner_on_working_age_benefit: false
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_class_d_or_e_non_income_conditions_hold: true
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_assessed_capital_for_year: 0
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_maximum_eligible_liability_for_year: 1800
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_non_dependant_deductions_for_year: 0
@@ -398,13 +430,61 @@
     uk-eastleigh:policies/eastleigh/council-tax-reduction#eastleigh_council_tax_reduction_class_d_income_condition_met: holds
     uk-eastleigh:policies/eastleigh/council-tax-reduction#eastleigh_council_tax_reduction_annual_amount: 0
 
+# Section 1.6(b): an applicant over the qualifying age for state pension credit who, with
+# their partner, receives income support, income-based JSA, income-related ESA or universal
+# credit stays in the working-age scheme. Income 0 < 7300 (Class D), so the award is 1800.
+- name: eastleigh_ctr_pension_age_applicant_on_working_age_benefit_in_scheme
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.local_authority_is_eastleigh: true
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: true
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_pension_age_applicant_and_partner_on_working_age_benefit: true
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_class_d_or_e_non_income_conditions_hold: true
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_assessed_capital_for_year: 0
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_non_dependant_deductions_for_year: 0
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_assessed_income_for_year: 0
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_applicable_amount_for_year: 7300
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_applicant_or_partner_on_legacy_income_based_benefit: false
+  output:
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#eastleigh_council_tax_reduction_working_age_scheme_applies: holds
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#eastleigh_council_tax_reduction_class_d_income_condition_met: holds
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#eastleigh_council_tax_reduction_annual_amount: 1800
+
+# Class D's income condition holds, but a shared Class D and E condition fails (for example
+# a student excluded by section 45.1, or an applicant absent from the dwelling), so no
+# reduction is granted.
+- name: eastleigh_ctr_class_d_or_e_non_income_conditions_fail_is_zero
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.local_authority_is_eastleigh: true
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: false
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_pension_age_applicant_and_partner_on_working_age_benefit: false
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_class_d_or_e_non_income_conditions_hold: false
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_assessed_capital_for_year: 0
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_non_dependant_deductions_for_year: 0
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_assessed_income_for_year: 0
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_applicable_amount_for_year: 7300
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_applicant_or_partner_on_legacy_income_based_benefit: false
+  output:
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#eastleigh_council_tax_reduction_working_age_scheme_applies: holds
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#eastleigh_council_tax_reduction_class_d_income_condition_met: holds
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#eastleigh_council_tax_reduction_annual_amount: 0
+
 - name: eastleigh_ctr_other_authority_outside_scheme
   period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
   input:
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.local_authority_is_eastleigh: false
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.council_tax_reduction_household_in_england: true
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: false
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_pension_age_applicant_and_partner_on_working_age_benefit: false
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_class_d_or_e_non_income_conditions_hold: true
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_assessed_capital_for_year: 0
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_maximum_eligible_liability_for_year: 1800
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_non_dependant_deductions_for_year: 0
@@ -422,7 +502,9 @@
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.local_authority_is_eastleigh: true
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.council_tax_reduction_household_in_england: true
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: false
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_pension_age_applicant_and_partner_on_working_age_benefit: false
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.would_claim_council_tax_reduction: false
+    uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_class_d_or_e_non_income_conditions_hold: true
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_assessed_capital_for_year: 0
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_maximum_eligible_liability_for_year: 1800
     uk-eastleigh:policies/eastleigh/council-tax-reduction#input.eastleigh_council_tax_reduction_non_dependant_deductions_for_year: 0

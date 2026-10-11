@@ -12,18 +12,20 @@ module:
     #     - uk/regulations/uksi/2012/2886
     #   rationale: Section 13A delegates the working-age scheme to Eastleigh Borough Council, so the adopted document is the operative legal source for the locally set working-age values.
   summary: |-
-    Eastleigh's 2026-27 working-age award is 100 percent of eligible liability, capped at Band D and reduced by the published non-dependant daily deductions and by a daily taper of 2 6/7 percent of weekly excess income, which equals 20 percent of excess income measured over the same period as the award. Annual amounts are the sums of the scheme's daily amounts over the financial year. Section 1.7 limits reductions to Class D, where income is less than the applicable amount or the applicant or partner receives income support, income-based jobseeker's allowance or income-related employment and support allowance, and Class E, where income is more than the applicable amount and the maximum exceeds the taper deduction. Income equal to the applicable amount without one of those benefits falls in neither class and receives no reduction. Capital greater than £6,000 ends support. Section 17.1(b) adds tariff income from capital under regulation 52 of the Housing Benefit Regulations 2006, which arises only above £6,000 and so cannot affect an eligible award. The scheme prints no minimum award. Applicable amounts, income/capital assessment, liability apportionment and the detailed protected-class classifiers are consumed as inputs. Pension-age provisions are outside this module.
+    Eastleigh's 2026-27 working-age award is 100 percent of eligible liability, capped at Band D and reduced by the published non-dependant daily deductions and by a daily taper of 2 6/7 percent of weekly excess income, which equals 20 percent of excess income measured over the same period as the award. Annual amounts are the sums of the scheme's daily amounts over the financial year, with circumstances held constant across the year. Section 1.6 applies the scheme to applicants below the qualifying age for state pension credit and to those above it who, with their partner, receive income support, income-based jobseeker's allowance, income-related employment and support allowance or universal credit; the pension-age Classes A to C are outside this module. Section 1.7 limits reductions to Class D, where income is less than the applicable amount or the applicant or partner receives income support, income-based jobseeker's allowance or income-related employment and support allowance, and Class E, where income is more than the applicable amount and the maximum exceeds the taper deduction. Income equal to the applicable amount without one of those benefits falls in neither class and receives no reduction. Under sections 14 and 15A a universal credit claimant's applicable amount is the universal credit maximum amount and their income includes the universal credit award, each multiplied by 12 and divided by 52. Section 8 of the Welfare Reform Act 2012 makes the award the maximum amount less deductions for earned and unearned income, so a claimant with no other income has income equal to the applicable amount and, on this literal reading, no reduction. Capital greater than £6,000 ends support. Section 17.1(b) adds tariff income under regulation 52 of the Housing Benefit Regulations 2006, whose paragraph (1) starts tariff income only where capital exceeds £6,000, so it cannot affect an eligible award. The scheme prints no minimum award. Applicable amounts, income and capital assessment, eligible liability after apportionment, the aggregate non-dependant deduction, and the shared Class D and E residence, absence, excluded-person and student conditions are consumed as inputs.
   deferred_outputs:
-    - output: uk-eastleigh:policies/eastleigh/council-tax-reduction/section-12#applicable_amount_for_year
-      reason: The category-specific living allowances and premiums used to determine the applicable amount are outside this award-surface module.
+    - output: uk-eastleigh:policies/eastleigh/council-tax-reduction/sections-12-to-14#applicable_amount_for_year
+      reason: The category-specific living allowances and premiums used to determine the applicable amount, and the section 14 universal credit maximum-amount applicable amount, are outside this award-surface module.
     - output: uk-eastleigh:policies/eastleigh/council-tax-reduction/sections-15-to-56#assessed_income_and_capital_for_year
-      reason: Income and capital attribution, disregards, valuation, notional-capital rules, and the section 17.1(b) tariff income from capital are outside this award-surface module.
+      reason: Income and capital attribution, the section 15A universal credit income and capital, disregards, valuation, notional-capital rules, and the section 17.1(b) tariff income from capital are outside this award-surface module.
     - output: uk-eastleigh:policies/eastleigh/council-tax-reduction/section-57#maximum_eligible_liability_for_year
       reason: The award surface consumes the lower of eligible liability and Band D liability after discounts and joint-liability apportionment.
     - output: uk-eastleigh:policies/eastleigh/council-tax-reduction/section-58.3-to-58.9#non_dependant_deductions_for_year
-      reason: This module encodes the printed individual deduction bands; couple selection, apportionment, and protected-class classification are supplied as household inputs.
+      reason: This module encodes the printed individual deduction bands. Whether a deduction applies to a non-dependant (aged 18 or over and not excluded by sections 58.7 and 58.8), the section 58.6 protection, the section 58.9 income disregards, couple selection, apportionment and the aggregate deduction for the year are supplied as inputs.
     - output: uk-eastleigh:policies/eastleigh/council-tax-reduction/section-56A#students_with_second_adults_reduction
-      reason: The 100 percent reduction for a dwelling that would be wholly occupied by students but for second adults on a qualifying benefit is a separate route outside this Classes D and E award surface.
+      reason: The 100 percent reduction for a dwelling that would be wholly occupied by students but for second adults in receipt of income support, state pension credit, income-related employment and support allowance or income-based jobseeker's allowance is a separate route outside this Classes D and E award surface.
+    - output: uk-eastleigh:policies/eastleigh/council-tax-reduction/sections-7-8-and-45#class_d_and_e_non_income_conditions
+      reason: This module consumes whether the shared Class D and E conditions hold (liability for a dwelling in which the applicant is solely or mainly resident, not absent, not an excluded person from abroad, and not a student excluded by section 45); the detailed residence, absence, immigration and student classifiers are outside this award surface.
     - output: uk-eastleigh:policies/eastleigh/council-tax-reduction/sections-60-to-61E#extended_reduction
       reason: Extended-reduction eligibility, duration, amount and the offsets for movers are a separate post-employment-change route outside this Classes D and E award surface.
 rules:
@@ -100,6 +102,24 @@ rules:
         formula: |-
           6
 
+  - name: eastleigh_council_tax_reduction_taper_fraction_denominator
+    kind: parameter
+    dtype: Number
+    period: Year
+    source: Eastleigh Borough Council Council Tax Reduction Scheme 2026/27 section 59.1
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk-eastleigh/manual/council-tax-reduction-scheme-2026-2027/page-74
+              excerpt: "shall be 2 6/7 per cent"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          7
+
   - name: eastleigh_council_tax_reduction_days_per_week
     kind: parameter
     dtype: Number
@@ -152,7 +172,7 @@ rules:
     versions:
       - effective_from: '2026-04-01'
         formula: |-
-          (eastleigh_council_tax_reduction_taper_whole_percentage_points + eastleigh_council_tax_reduction_taper_fraction_numerator / eastleigh_council_tax_reduction_days_per_week) * eastleigh_council_tax_reduction_per_cent_unit
+          (eastleigh_council_tax_reduction_taper_whole_percentage_points + eastleigh_council_tax_reduction_taper_fraction_numerator / eastleigh_council_tax_reduction_taper_fraction_denominator) * eastleigh_council_tax_reduction_per_cent_unit
 
   - name: eastleigh_council_tax_reduction_weekly_taper_rate
     kind: parameter
@@ -246,10 +266,15 @@ rules:
             source:
               corpus_citation_path: uk-eastleigh/manual/council-tax-reduction-scheme-2026-2027/page-8
               excerpt: "this scheme only applies to a person who; a. has not attained the qualifying age for state pension credit; or b. has attained the qualifying age for state pension credit if he, and his partner, is a person on income support, on an income-based jobseeker’s allowance, on an income-related employment and support allowance or on universal credit."
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk-eastleigh/manual/council-tax-reduction-scheme-2026-2027/page-16
+              excerpt: "‘pensioner’ a person who has attained the age at which pension credit can be claimed"
     versions:
       - effective_from: '2026-04-01'
         formula: |-
-          local_authority_is_eastleigh and council_tax_reduction_household_in_england and not council_tax_reduction_household_has_pensioner
+          local_authority_is_eastleigh and council_tax_reduction_household_in_england and (not council_tax_reduction_household_has_pensioner or eastleigh_council_tax_reduction_pension_age_applicant_and_partner_on_working_age_benefit)
 
   - name: eastleigh_council_tax_reduction_capital_eligible
     kind: derived
@@ -333,6 +358,11 @@ rules:
             source:
               corpus_citation_path: uk-eastleigh/manual/council-tax-reduction-scheme-2026-2027/page-74
               excerpt: "Where an applicant’s income exceeds their applicable amount"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk-eastleigh/manual/council-tax-reduction-scheme-2026-2027/page-9
+              excerpt: "the difference between his income for the relevant week and his applicable amount"
     versions:
       - effective_from: '2026-04-01'
         formula: |-
@@ -489,7 +519,17 @@ rules:
             source:
               corpus_citation_path: uk-eastleigh/manual/council-tax-reduction-scheme-2026-2027/page-8
               excerpt: "The Council has resolved that there will be two classes of persons who will receive a reduction in line with adopted scheme."
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk-eastleigh/manual/council-tax-reduction-scheme-2026-2027/page-8
+              excerpt: "be liable to pay council tax in respect of a dwelling in which he is solely or mainly resident; • is not deemed to be absent from the dwelling; • not fall within a class of person prescribed for the purposes of paragraph 2(9) of Schedule 1A to the Local Government Finance Act 1992 and excluded from the authority’s scheme;"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk-eastleigh/manual/council-tax-reduction-scheme-2026-2027/page-64
+              excerpt: "Students (except those specified in paragraph 45.3) are not able to claim Council Tax Support under Classes D and E of the Council’s reduction scheme."
     versions:
       - effective_from: '2026-04-01'
         formula: |-
-          if eastleigh_council_tax_reduction_working_age_scheme_applies and would_claim_council_tax_reduction and eastleigh_council_tax_reduction_capital_eligible and (eastleigh_council_tax_reduction_class_d_income_condition_met or eastleigh_council_tax_reduction_class_e_income_condition_met): max(0, eastleigh_council_tax_reduction_maximum_after_non_dependant_deductions_for_year - eastleigh_council_tax_reduction_income_taper_deduction_for_year) else: 0
+          if eastleigh_council_tax_reduction_working_age_scheme_applies and would_claim_council_tax_reduction and eastleigh_council_tax_reduction_class_d_or_e_non_income_conditions_hold and eastleigh_council_tax_reduction_capital_eligible and (eastleigh_council_tax_reduction_class_d_income_condition_met or eastleigh_council_tax_reduction_class_e_income_condition_met): max(0, eastleigh_council_tax_reduction_maximum_after_non_dependant_deductions_for_year - eastleigh_council_tax_reduction_income_taper_deduction_for_year) else: 0
