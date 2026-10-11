@@ -5,7 +5,8 @@
     uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_maximum_support_rate: 1
     uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_per_cent_unit: 0.01
     uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_daily_taper_rate: 0.2
-    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_weekly_taper_rate: 1.4
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_days_per_week: 7
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_weekly_taper_rate: 0.2
     uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_capital_limit: 16000
     uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_tariff_income_threshold: 6000
     uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_tariff_income_step: 250
@@ -30,12 +31,12 @@
     uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_capital_eligible: holds
     uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_tariff_income_weekly: 1
     uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_maximum_amount_for_day: 9
-    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_excess_income_weekly: 10
-    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_class_e_taper_deduction_daily: 2
-    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_class_e_amount_before_floor_for_day: 7
-    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_annual_amount: 2555
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_excess_income_weekly: 11
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_class_e_taper_deduction_daily: '0.3142857142857142857142857143'
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_class_e_amount_before_floor_for_day: '8.685714285714285714285714286'
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_annual_amount: '3170.2857142857142857142857144'
 
-- name: mid_suffolk_ctr_class_f_band_three
+- name: mid_suffolk_ctr_class_e_taper_weekly_excess_35
   period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
   input:
     uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_working_age_scheme_applies: true
@@ -43,17 +44,145 @@
     uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_assessed_capital_for_year: 0
     uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_eligible_liability_for_year: 3650
     uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_non_dependant_deductions_for_day: 0
-    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_assessed_income_weekly: 0
-    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_applicable_amount_weekly: 0
-    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_class_f_applies: true
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_assessed_income_weekly: 135
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_applicable_amount_weekly: 100
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_class_f_applies: false
     uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_class_f_no_entitlement: false
-    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_class_f_income_band: 3
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_class_f_income_band: 0
     uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_number_of_days_in_financial_year: 365
   output:
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_capital_eligible: holds
     uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_tariff_income_weekly: 0
-    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_class_f_contribution_daily: '4.6814285714285714285714285714'
-    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_class_f_amount_before_floor_for_day: '5.3185714285714285714285714286'
-    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_annual_amount: '1941.2785714285714285714285714'
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_maximum_amount_for_day: 10
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_excess_income_weekly: 35
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_class_e_taper_deduction_daily: 1
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_class_e_amount_before_floor_for_day: 9
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_annual_amount: 3285
+
+- name: mid_suffolk_ctr_class_e_taper_weekly_excess_70
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_working_age_scheme_applies: true
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_assessed_capital_for_year: 0
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_eligible_liability_for_year: 3650
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_non_dependant_deductions_for_day: 0
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_assessed_income_weekly: 170
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_applicable_amount_weekly: 100
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_class_f_applies: false
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_class_f_no_entitlement: false
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_class_f_income_band: 0
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_number_of_days_in_financial_year: 365
+  output:
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_capital_eligible: holds
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_tariff_income_weekly: 0
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_maximum_amount_for_day: 10
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_excess_income_weekly: 70
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_class_e_taper_deduction_daily: 2
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_class_e_amount_before_floor_for_day: 8
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_annual_amount: 2920
+
+- name: mid_suffolk_ctr_class_d_income_below_applicable_amount
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_working_age_scheme_applies: true
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_assessed_capital_for_year: 0
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_eligible_liability_for_year: 3650
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_non_dependant_deductions_for_day: 0
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_assessed_income_weekly: 90
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_applicable_amount_weekly: 100
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_class_f_applies: false
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_class_f_no_entitlement: false
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_class_f_income_band: 0
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_number_of_days_in_financial_year: 365
+  output:
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_excess_income_weekly: 0
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_class_e_taper_deduction_daily: 0
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_class_e_amount_before_floor_for_day: 10
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_annual_amount: 3650
+
+- name: mid_suffolk_ctr_class_e_taper_zero_floor
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_working_age_scheme_applies: true
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_assessed_capital_for_year: 0
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_eligible_liability_for_year: 3650
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_non_dependant_deductions_for_day: 0
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_assessed_income_weekly: 485
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_applicable_amount_weekly: 100
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_class_f_applies: false
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_class_f_no_entitlement: false
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_class_f_income_band: 0
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_number_of_days_in_financial_year: 365
+  output:
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_excess_income_weekly: 385
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_class_e_taper_deduction_daily: 11
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_class_e_amount_before_floor_for_day: 0
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_annual_amount: 0
+
+- name: mid_suffolk_ctr_minimum_award_just_below_one_pound
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_working_age_scheme_applies: true
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_assessed_capital_for_year: 0
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_eligible_liability_for_year: 3650
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_non_dependant_deductions_for_day: 0
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_assessed_income_weekly: 445.05
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_applicable_amount_weekly: 100
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_class_f_applies: false
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_class_f_no_entitlement: false
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_class_f_income_band: 0
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_number_of_days_in_financial_year: 365
+  output:
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_excess_income_weekly: 345.05
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_class_e_taper_deduction_daily: '9.858571428571428571428571429'
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_class_e_amount_before_floor_for_day: '0.141428571428571428571428571'
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_annual_amount: 0
+
+- name: mid_suffolk_ctr_minimum_award_at_one_pound
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_working_age_scheme_applies: true
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_assessed_capital_for_year: 0
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_eligible_liability_for_year: 3650
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_non_dependant_deductions_for_day: 0
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_assessed_income_weekly: 445
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_applicable_amount_weekly: 100
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_class_f_applies: false
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_class_f_no_entitlement: false
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_class_f_income_band: 0
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_number_of_days_in_financial_year: 365
+  output:
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_excess_income_weekly: 345
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_class_e_taper_deduction_daily: '9.857142857142857142857142857'
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_class_e_amount_before_floor_for_day: '0.142857142857142857142857143'
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_annual_amount: '52.142857142857142857142857195'
+
+- name: mid_suffolk_ctr_capital_at_limit
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_working_age_scheme_applies: true
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_assessed_capital_for_year: 16000
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_eligible_liability_for_year: 3650
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_non_dependant_deductions_for_day: 0
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_assessed_income_weekly: 95
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_applicable_amount_weekly: 100
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_class_f_applies: false
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_class_f_no_entitlement: false
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_class_f_income_band: 0
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_number_of_days_in_financial_year: 365
+  output:
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_capital_eligible: holds
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_tariff_income_weekly: 40
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_excess_income_weekly: 35
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_class_e_taper_deduction_daily: 1
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_class_e_amount_before_floor_for_day: 9
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_annual_amount: 3285
 
 - name: mid_suffolk_ctr_capital_cliff
   period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
@@ -73,6 +202,192 @@
     uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_capital_eligible: not_holds
     uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_annual_amount: 0
 
+- name: mid_suffolk_ctr_tariff_at_threshold
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_working_age_scheme_applies: true
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_eligible_liability_for_year: 3650
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_non_dependant_deductions_for_day: 0
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_assessed_income_weekly: 135
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_applicable_amount_weekly: 100
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_class_f_applies: false
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_class_f_no_entitlement: false
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_class_f_income_band: 0
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_number_of_days_in_financial_year: 365
+  output:
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_tariff_income_weekly: 0
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_excess_income_weekly: 35
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_class_e_amount_before_floor_for_day: 9
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_annual_amount: 3285
+
+- name: mid_suffolk_ctr_tariff_one_full_step
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_working_age_scheme_applies: true
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_assessed_capital_for_year: 6250
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_eligible_liability_for_year: 3650
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_non_dependant_deductions_for_day: 0
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_assessed_income_weekly: 134
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_applicable_amount_weekly: 100
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_class_f_applies: false
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_class_f_no_entitlement: false
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_class_f_income_band: 0
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_number_of_days_in_financial_year: 365
+  output:
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_tariff_income_weekly: 1
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_excess_income_weekly: 35
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_class_e_amount_before_floor_for_day: 9
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_annual_amount: 3285
+
+- name: mid_suffolk_ctr_tariff_part_of_second_step
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_working_age_scheme_applies: true
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_assessed_capital_for_year: 6250.01
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_eligible_liability_for_year: 3650
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_non_dependant_deductions_for_day: 0
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_assessed_income_weekly: 133
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_applicable_amount_weekly: 100
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_class_f_applies: false
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_class_f_no_entitlement: false
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_class_f_income_band: 0
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_number_of_days_in_financial_year: 365
+  output:
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_tariff_income_weekly: 2
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_excess_income_weekly: 35
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_class_e_amount_before_floor_for_day: 9
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_annual_amount: 3285
+
+- name: mid_suffolk_ctr_class_f_band_zero
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_working_age_scheme_applies: true
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_assessed_capital_for_year: 0
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_eligible_liability_for_year: 3650
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_non_dependant_deductions_for_day: 0
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_assessed_income_weekly: 0
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_applicable_amount_weekly: 0
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_class_f_applies: true
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_class_f_no_entitlement: false
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_class_f_income_band: 0
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_number_of_days_in_financial_year: 365
+  output:
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_class_f_weekly_contribution_by_band: 0
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_tariff_income_weekly: 0
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_class_f_contribution_daily: 0
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_class_f_amount_before_floor_for_day: 10
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_annual_amount: 3650
+
+- name: mid_suffolk_ctr_class_f_band_one
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_working_age_scheme_applies: true
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_assessed_capital_for_year: 0
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_eligible_liability_for_year: 3650
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_non_dependant_deductions_for_day: 0
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_assessed_income_weekly: 0
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_applicable_amount_weekly: 0
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_class_f_applies: true
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_class_f_no_entitlement: false
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_class_f_income_band: 1
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_number_of_days_in_financial_year: 365
+  output:
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_class_f_weekly_contribution_by_band: 12
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_tariff_income_weekly: 0
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_class_f_contribution_daily: '1.7142857142857142857142857143'
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_class_f_amount_before_floor_for_day: '8.285714285714285714285714286'
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_annual_amount: '3024.2857142857142857142857144'
+
+- name: mid_suffolk_ctr_class_f_band_two
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_working_age_scheme_applies: true
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_assessed_capital_for_year: 0
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_eligible_liability_for_year: 3650
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_non_dependant_deductions_for_day: 0
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_assessed_income_weekly: 0
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_applicable_amount_weekly: 0
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_class_f_applies: true
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_class_f_no_entitlement: false
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_class_f_income_band: 2
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_number_of_days_in_financial_year: 365
+  output:
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_class_f_weekly_contribution_by_band: 23.08
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_tariff_income_weekly: 0
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_class_f_contribution_daily: '3.2971428571428571428571428571'
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_class_f_amount_before_floor_for_day: '6.7028571428571428571428571429'
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_annual_amount: '2446.5428571428571428571428572'
+
+- name: mid_suffolk_ctr_class_f_band_three
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_working_age_scheme_applies: true
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_assessed_capital_for_year: 0
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_eligible_liability_for_year: 3650
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_non_dependant_deductions_for_day: 0
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_assessed_income_weekly: 0
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_applicable_amount_weekly: 0
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_class_f_applies: true
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_class_f_no_entitlement: false
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_class_f_income_band: 3
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_number_of_days_in_financial_year: 365
+  output:
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_class_f_weekly_contribution_by_band: 32.77
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_tariff_income_weekly: 0
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_class_f_contribution_daily: '4.6814285714285714285714285714'
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_class_f_amount_before_floor_for_day: '5.3185714285714285714285714286'
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_annual_amount: '1941.2785714285714285714285714'
+
+- name: mid_suffolk_ctr_class_f_band_four
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_working_age_scheme_applies: true
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_assessed_capital_for_year: 0
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_eligible_liability_for_year: 3650
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_non_dependant_deductions_for_day: 0
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_assessed_income_weekly: 0
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_applicable_amount_weekly: 0
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_class_f_applies: true
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_class_f_no_entitlement: false
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_class_f_income_band: 4
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_number_of_days_in_financial_year: 365
+  output:
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_class_f_weekly_contribution_by_band: 48.69
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_tariff_income_weekly: 0
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_class_f_contribution_daily: '6.9557142857142857142857142857'
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_class_f_amount_before_floor_for_day: '3.0442857142857142857142857143'
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_annual_amount: '1111.1642857142857142857142857'
+
+- name: mid_suffolk_ctr_class_f_band_five
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_working_age_scheme_applies: true
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_assessed_capital_for_year: 0
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_eligible_liability_for_year: 3650
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_non_dependant_deductions_for_day: 0
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_assessed_income_weekly: 0
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_applicable_amount_weekly: 0
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_class_f_applies: true
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_class_f_no_entitlement: false
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_class_f_income_band: 5
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_number_of_days_in_financial_year: 365
+  output:
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_class_f_weekly_contribution_by_band: 64.15
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_tariff_income_weekly: 0
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_class_f_contribution_daily: '9.164285714285714285714285714'
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_class_f_amount_before_floor_for_day: '0.835714285714285714285714286'
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_annual_amount: '305.03571428571428571428571439'
+
 - name: mid_suffolk_ctr_class_f_no_entitlement
   period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
   input:
@@ -88,5 +403,61 @@
     uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_class_f_income_band: 6
     uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_number_of_days_in_financial_year: 365
   output:
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_class_f_weekly_contribution_by_band: 0
     uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_class_f_amount_before_floor_for_day: 0
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_annual_amount: 0
+
+- name: mid_suffolk_ctr_outside_working_age_scheme
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_working_age_scheme_applies: false
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_assessed_capital_for_year: 0
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_eligible_liability_for_year: 3650
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_non_dependant_deductions_for_day: 0
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_assessed_income_weekly: 135
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_applicable_amount_weekly: 100
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_class_f_applies: false
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_class_f_no_entitlement: false
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_class_f_income_band: 0
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_number_of_days_in_financial_year: 365
+  output:
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_class_e_amount_before_floor_for_day: 9
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_annual_amount: 0
+
+- name: mid_suffolk_ctr_no_claim
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_working_age_scheme_applies: true
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.would_claim_council_tax_reduction: false
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_assessed_capital_for_year: 0
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_eligible_liability_for_year: 3650
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_non_dependant_deductions_for_day: 0
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_assessed_income_weekly: 135
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_applicable_amount_weekly: 100
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_class_f_applies: false
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_class_f_no_entitlement: false
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_class_f_income_band: 0
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_number_of_days_in_financial_year: 365
+  output:
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_class_e_amount_before_floor_for_day: 9
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_annual_amount: 0
+
+- name: mid_suffolk_ctr_non_dependant_deduction_exceeds_daily_liability
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_working_age_scheme_applies: true
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_assessed_capital_for_year: 0
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_eligible_liability_for_year: 3650
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_non_dependant_deductions_for_day: 12
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_assessed_income_weekly: 100
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_applicable_amount_weekly: 100
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_class_f_applies: false
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_class_f_no_entitlement: false
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_class_f_income_band: 0
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#input.mid_suffolk_council_tax_reduction_number_of_days_in_financial_year: 365
+  output:
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_maximum_amount_for_day: 0
+    uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_class_e_amount_before_floor_for_day: 0
     uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction#mid_suffolk_council_tax_reduction_annual_amount: 0

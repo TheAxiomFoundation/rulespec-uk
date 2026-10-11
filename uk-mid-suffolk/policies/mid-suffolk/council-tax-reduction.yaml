@@ -12,7 +12,7 @@ module:
         # - uk/regulations/uksi/2012/2886
       # rationale: Section 13A delegates the working-age scheme to Mid Suffolk District Council, so its adopted scheme document is the operative legal source for the locally set working-age values.
   summary: |-
-    Mid Suffolk's local working-age scheme has a 100 percent daily maximum, Class E's printed 20 percent taper, capital limit and tariff-income rule, and Class F Universal Credit contribution grid. The document incorporates non-dependant amounts by reference rather than printing a local table; this module consumes that assessed daily amount. Pension-age rules are outside scope.
+    Mid Suffolk's 2026-27 working-age scheme (Classes D, E and F) provides a 100 percent daily maximum of eligible liability, reduced by daily non-dependant deductions. Paragraph 59.1 says: "The prescribed daily percentage for the purposes of calculating support as a percentage of income over the applicable amount, which is deducted from maximum council tax reduction, shall be 20 per cent." This module applies the maintainer's 2026-10-10 ruling, which covers Babergh, Ipswich, Mid Suffolk and Guildford: the sentence means a taper of 20 percent of weekly excess income per week, so Class E deducts 20 percent of the weekly excess divided by the seven days of the defined week from each day's maximum. It is not 140 percent a week. The prescribed and default schemes deduct 2 6/7 percent a day, which is 20 percent a week; this scheme printed 20 per cent without dividing by seven. A literal reading would withdraw £1.40 of weekly support for each £1 of weekly excess income. Babergh and Ipswich print the identical sentence and apply the same weekly reading. The daily_taper_rate identifier keeps the printed 20 percent figure, weekly_taper_rate is that figure read as the same-period weekly rate, and the daily deduction divides the weekly deduction by seven. Paragraph 18.1.2 adds the paragraph 42 tariff income to assessed weekly income before the applicable amount is subtracted; the assessed-income input excludes that separately calculated tariff. Capital above £16,000 excludes entitlement, and capital over £6,000 creates £1 of weekly tariff income for each £250 or part. Class F (Universal Credit) receives the daily maximum less one seventh of its Schedule 5 weekly contribution, and nothing in the no-entitlement band. Awards below £1 a benefit week are not payable. The annual output multiplies the daily award by the number of days in the financial year. The document incorporates non-dependant amounts by reference rather than printing a local table; this module consumes that assessed daily amount. Pension-age rules are outside scope.
   deferred_outputs:
     - output: uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction/paragraphs-12-to-33-and-schedules-1-to-3#applicable_amount_and_assessed_income
       reason: The award surface consumes assessed income and applicable amount; detailed premiums, earnings and disregards are future outputs.
@@ -21,7 +21,7 @@ module:
     - output: uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction/paragraph-58#non_dependant_deductions_for_day
       reason: Paragraph 58 incorporates annually uprated prescribed-requirements amounts by reference and prints no deduction values; household aggregation and the incorporated schedule are future outputs.
     - output: uk-mid-suffolk:policies/mid-suffolk/council-tax-reduction/schedule-5#class_f_income_band
-      reason: The module encodes every printed contribution value and consumes the selected band; threshold classification is a future output.
+      reason: The module encodes every printed contribution value and consumes the selected band and the no-entitlement result; classification from DWP-notified earnings against the monthly or weekly thresholds is a future output.
 rules:
   - name: mid_suffolk_council_tax_reduction_maximum_support_rate
     kind: parameter
@@ -35,11 +35,15 @@ rules:
     source: Mid Suffolk Council Tax Reduction Scheme 2026/27 percentage notation
     metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-mid-suffolk/manual/council-tax-reduction-scheme-2026-2027/page-84, excerpt: "100 per cent of the amount A/B"}}]}}
     versions: [{effective_from: '2026-04-01', formula: '0.01'}]
+  # The printed "prescribed daily percentage" of 20 per cent. Under the 2026-10-10
+  # maintainer ruling it is a weekly taper (20 percent of weekly excess per week),
+  # not a daily rate against weekly excess; see weekly_taper_rate and
+  # class_e_taper_deduction_daily.
   - name: mid_suffolk_council_tax_reduction_daily_taper_rate
     kind: parameter
     dtype: Rate
     source: Mid Suffolk Council Tax Reduction Scheme 2026/27 paragraph 59.1
-    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-mid-suffolk/manual/council-tax-reduction-scheme-2026-2027/page-87, excerpt: "The prescribed daily percentage for the purposes of calculating support as a percentage of income over the applicable amount, which is deducted from maximum council tax reduction, shall be 20 per cent."}}]}}
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-mid-suffolk/manual/council-tax-reduction-scheme-2026-2027/page-87, excerpt: "The prescribed daily percentage for the purposes of calculating support as a percentage of income over the applicable amount, which is deducted from maximum council tax reduction, shall be 20 per cent."}}]}}
     versions: [{effective_from: '2026-04-01', formula: '0.2'}]
   - name: mid_suffolk_council_tax_reduction_days_per_week
     kind: parameter
@@ -47,13 +51,17 @@ rules:
     source: Mid Suffolk Council Tax Reduction Scheme 2026/27 definition of week
     metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-mid-suffolk/manual/council-tax-reduction-scheme-2026-2027/page-21, excerpt: "“week” means a period of 7 consecutive days starting on a Monday and ending on a Sunday;"}}]}}
     versions: [{effective_from: '2026-04-01', formula: '7'}]
+  # Maintainer ruling 2026-10-10: "the prescribed daily percentage ... shall be
+  # 20 per cent" is a taper of 20 percent of weekly excess income per week, so the
+  # weekly rate is the printed 20 percent itself. Multiplying it by seven (the
+  # earlier encoding) gave 140 percent a week.
   - name: mid_suffolk_council_tax_reduction_weekly_taper_rate
     kind: parameter
     dtype: Rate
     period: Week
-    source: Mid Suffolk Council Tax Reduction Scheme 2026/27 paragraph 59.1, aggregated over the defined week
-    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-mid-suffolk/manual/council-tax-reduction-scheme-2026-2027/page-87, excerpt: "shall be 20 per cent."}}, {path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-mid-suffolk/manual/council-tax-reduction-scheme-2026-2027/page-21, excerpt: "“week” means a period of 7 consecutive days starting on a Monday and ending on a Sunday;"}}]}}
-    versions: [{effective_from: '2026-04-01', formula: 'mid_suffolk_council_tax_reduction_daily_taper_rate * mid_suffolk_council_tax_reduction_days_per_week'}]
+    source: Mid Suffolk Council Tax Reduction Scheme 2026/27 paragraph 59.1, printed percentage read as the same-period weekly rate under the 2026-10-10 ruling
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-mid-suffolk/manual/council-tax-reduction-scheme-2026-2027/page-87, excerpt: "The prescribed daily percentage for the purposes of calculating support as a percentage of income over the applicable amount, which is deducted from maximum council tax reduction, shall be 20 per cent."}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 'mid_suffolk_council_tax_reduction_daily_taper_rate'}]
   - name: mid_suffolk_council_tax_reduction_capital_limit
     kind: parameter
     dtype: Money
@@ -135,18 +143,22 @@ rules:
     dtype: Money
     period: Week
     unit: GBP
-    source: Mid Suffolk Council Tax Reduction Scheme 2026/27 paragraphs 1.10.10 and 18.1
-    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-mid-suffolk/manual/council-tax-reduction-scheme-2026-2027/page-9, excerpt: "the difference between his income for the relevant week and his applicable amount"}}, {path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-mid-suffolk/manual/council-tax-reduction-scheme-2026-2027/page-42, excerpt: "the income of an applicant is to be calculated on a weekly basis"}}]}}
-    versions: [{effective_from: '2026-04-01', formula: 'max(0, mid_suffolk_council_tax_reduction_assessed_income_weekly - mid_suffolk_council_tax_reduction_applicable_amount_weekly)'}]
+    source: Mid Suffolk Council Tax Reduction Scheme 2026/27 paragraphs 1.10.10, 18.1.1 and 18.1.2
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-mid-suffolk/manual/council-tax-reduction-scheme-2026-2027/page-9, excerpt: "the difference between his income for the relevant week and his applicable amount"}}, {path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-mid-suffolk/manual/council-tax-reduction-scheme-2026-2027/page-42, excerpt: "the income of an applicant is to be calculated on a weekly basis"}}, {path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-mid-suffolk/manual/council-tax-reduction-scheme-2026-2027/page-42, excerpt: "by adding to that amount, the weekly income calculated under paragraph 42 (tariff income); and"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 'max(0, mid_suffolk_council_tax_reduction_assessed_income_weekly + mid_suffolk_council_tax_reduction_tariff_income_weekly - mid_suffolk_council_tax_reduction_applicable_amount_weekly)'}]
+  # Maintainer ruling 2026-10-10: the printed 20 per cent is a weekly taper on
+  # weekly excess income. The daily maximum is reduced by one seventh of that
+  # weekly deduction, i.e. 20%/7 (2 6/7 percent) of the weekly excess per day,
+  # which withdraws 20 pence of weekly support per £1 of weekly excess, not £1.40.
   - name: mid_suffolk_council_tax_reduction_class_e_taper_deduction_daily
     kind: derived
     entity: Household
     dtype: Money
     period: Day
     unit: GBP
-    source: Mid Suffolk Council Tax Reduction Scheme 2026/27 paragraph 59.1
-    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-mid-suffolk/manual/council-tax-reduction-scheme-2026-2027/page-87, excerpt: "their council tax reduction shall be calculated by deducting their excess income multiplied by the taper from their maximum council tax reduction"}}]}}
-    versions: [{effective_from: '2026-04-01', formula: 'mid_suffolk_council_tax_reduction_excess_income_weekly * mid_suffolk_council_tax_reduction_daily_taper_rate'}]
+    source: Mid Suffolk Council Tax Reduction Scheme 2026/27 paragraph 59.1 under the 2026-10-10 weekly reading, converted to a daily deduction using the paragraph 2 definition of week
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-mid-suffolk/manual/council-tax-reduction-scheme-2026-2027/page-87, excerpt: "their council tax reduction shall be calculated by deducting their excess income multiplied by the taper from their maximum council tax reduction"}}, {path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-mid-suffolk/manual/council-tax-reduction-scheme-2026-2027/page-87, excerpt: "The prescribed daily percentage for the purposes of calculating support as a percentage of income over the applicable amount, which is deducted from maximum council tax reduction, shall be 20 per cent."}}, {path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-mid-suffolk/manual/council-tax-reduction-scheme-2026-2027/page-21, excerpt: "“week” means a period of 7 consecutive days starting on a Monday and ending on a Sunday;"}}]}}
+    versions: [{effective_from: '2026-04-01', formula: 'mid_suffolk_council_tax_reduction_excess_income_weekly * mid_suffolk_council_tax_reduction_weekly_taper_rate / mid_suffolk_council_tax_reduction_days_per_week'}]
   - name: mid_suffolk_council_tax_reduction_class_e_amount_before_floor_for_day
     kind: derived
     entity: Household
@@ -162,8 +174,8 @@ rules:
     dtype: Money
     period: Day
     unit: GBP
-    source: Mid Suffolk Council Tax Reduction Scheme 2026/27 Schedule 5
-    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-mid-suffolk/manual/council-tax-reduction-scheme-2026-2027/page-152, excerpt: "Income Bands (Monthly) Monthly contribution Income Bands (Weekly up to) Weekly contribution"}}]}}
+    source: Mid Suffolk Council Tax Reduction Scheme 2026/27 paragraph 2 and Schedule 5
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-mid-suffolk/manual/council-tax-reduction-scheme-2026-2027/page-152, excerpt: "Income Bands (Monthly) Monthly contribution Income Bands (Weekly up to) Weekly contribution"}}, {path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-mid-suffolk/manual/council-tax-reduction-scheme-2026-2027/page-21, excerpt: "“week” means a period of 7 consecutive days starting on a Monday and ending on a Sunday;"}}]}}
     versions: [{effective_from: '2026-04-01', formula: 'mid_suffolk_council_tax_reduction_class_f_weekly_contribution_by_band[mid_suffolk_council_tax_reduction_class_f_income_band] / mid_suffolk_council_tax_reduction_days_per_week'}]
   - name: mid_suffolk_council_tax_reduction_class_f_amount_before_floor_for_day
     kind: derived
