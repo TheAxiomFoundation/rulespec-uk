@@ -5,12 +5,25 @@ module:
   source_verification:
     corpus_citation_path: uk-arun/manual/council-tax-reduction-scheme-2026-2027/page-28
     # upstream_source_check: {status: delegated_scheme, checked_paths: [uk/statutes/ukpga/1992/14/13A, uk/regulations/uksi/2012/2885, uk/regulations/uksi/2012/2886], rationale: Section 13A delegates the working-age scheme to Arun District Council, so the adopted document is operative.}
-  summary: Arun's 2026-27 working-age award is a five-band percentage of the section 21 maximum. Capital exceeding £6,000 excludes entitlement; the scheme prints no tariff-income rule. Pension-age provisions are outside this module.
+  summary: |-
+    Arun's adopted 2026/27 working-age scheme (Class D) is an income-banded discount, not an excess-income taper. Section 3 and paragraph 1.6 limit it to persons who are not pensioners: under the qualifying age for state pension credit, or over it with the applicant or partner on Income Support, income-based JSA, income-related ESA or Universal Credit. The applicant_is_working_age input carries that test. The 2 6/7 per cent taper on page 5 belongs to the prescribed pension-age Class B and is outside this module.
+
+    Section 23(2) applies the band percentage to the section 21 maximum. That maximum is 100 per cent of the daily liability A/B, less a non-dependant deduction of £5.00 x 1/7 a day for each chargeable non-dependant (section 22). Weekly income (Schedule 3 paragraph 4) selects band A (£0 to £219.99, 100 per cent), B (£220.00 to £279.99, 70), C (£280.00 to £345.99, 50), D (£346.00 to £405.99, 30) or E (£406.00 to £470.99, 10). Income above £470.99 falls in no band and gets no reduction. Schedule 3 paragraph 8 awards band A to an applicant or partner receiving Income Support, income-related ESA or income-based JSA, whatever their assessed income. Schedule 7 paragraph 8 disregards the whole of their capital. Otherwise capital above £6,000 excludes entitlement (section 19), and the scheme prints no tariff-income rule. No reduction is payable where entitlement is less than £1 a week (section 21(7)).
+
+    Band A conflict and ruling. Section 23(3) on page 28 prints band A at 100 per cent. Schedule 3 paragraph 1 on page 80 prints 90 per cent for the same band "from 2026/27". Bands B to E agree. On 10 October 2026 the maintainer ruled that section 23(3) governs, because section 23(4) says "A summary of the entitlement is shown within Schedule 3". This module therefore encodes 100 per cent.
+
+    Income grid uprating (open). Schedule 3 paragraph 7 uprates the grid each year by CPI at 1 October before the financial year. This module encodes the figures that section 23(2) and (3) print "for 2026/27". Arun's council tax reduction web page, retrieved on 11 October 2026 and not part of the bound corpus, prints a higher grid: upper limits of £223.99, £290.99, £359.99, £421.99 and £489.99, with band A at 100 per cent. The printed thresholds may therefore predate the 2026/27 uprating. They stand until a bound source confirms the operative grid.
   deferred_outputs:
     - output: uk-arun:policies/arun/council-tax-reduction/sections-24-to-62-and-schedules#assessed_weekly_income_and_capital
-      reason: Income, capital valuation, attribution, and disregard calculations are outside this award-surface module.
+      reason: Income, capital valuation, attribution and disregard calculations (sections 24 to 62 and Schedules 5 to 7) are consumed as assessed weekly income and capital. This module applies only the Schedule 3 paragraph 8 band A route and the Schedule 7 paragraph 8 whole-capital disregard for the relevant benefits.
     - output: uk-arun:policies/arun/council-tax-reduction/paragraph-22#non_dependant_exemption_and_count
       reason: The detailed benefit, student, couple, and apportionment classifier is consumed as inputs to the printed flat deduction.
+    - output: uk-arun:policies/arun/council-tax-reduction/paragraph-21#eligible_liability_for_year
+      reason: Amount A, the council tax for the dwelling after any discount and any other reduction under the 1992 Act (section 21(1)(a) and (2)), divided among jointly and severally liable persons under section 21(3) to (5), is consumed as an input.
+    - output: uk-arun:policies/arun/council-tax-reduction/paragraphs-15-to-18-20-and-51#excluded_classes_and_absence
+      reason: Temporary absence (section 15) and the excluded classes of persons treated as not being in Great Britain (section 17), persons subject to immigration control (section 18) and students (sections 20 and 51) are not classified here. The module assumes the applicant is in none of them.
+    - output: uk-arun:policies/arun/council-tax-reduction/paragraphs-63-to-75#continuing_and_extended_reductions
+      reason: Continuing reductions where state pension credit is claimed (section 64) and extended reductions (sections 65 to 75) depend on benefit-history facts outside this award-surface module.
 rules:
   - name: arun_council_tax_reduction_maximum_support_rate
     kind: parameter
@@ -25,7 +38,7 @@ rules:
     period: Year
     unit: GBP
     source: Arun Council Tax Reduction Scheme 2026/27 paragraph 19.1
-    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-arun/manual/council-tax-reduction-scheme-2026-2027/page-27, excerpt: "capital exceeds £6,000"}}]}}
+    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-arun/manual/council-tax-reduction-scheme-2026-2027/page-27, excerpt: "capital exceeds £6,000"}}, {path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-arun/manual/council-tax-reduction-scheme-2026-2027/page-80, excerpt: "6 Any applicant who capital is greater than £6,000 shall not be entitled to any Council Tax Reductions whatsoever."}}]}}
     versions: [{effective_from: '2026-04-01', formula: "6000"}]
 
   - name: arun_council_tax_reduction_days_per_week
@@ -54,20 +67,27 @@ rules:
     metadata:
       proof:
         atoms:
-          - path: 'versions[0].values'
-            kind: parameter_table
-            source:
-              corpus_citation_path: uk-arun/manual/council-tax-reduction-scheme-2026-2027/page-28
-              excerpt: "Income (net) LCTRS Income Banding Percentage award of net liability £0 - £219.99 A 100%"
-              table: {header: Income banding, row_key: income band, column_key: percentage award}
+          # Row 1: the flat £5.00 a week (£5.00 x 1/7 a day) under section 22(1).
           - path: 'versions[0].values'
             kind: parameter_table
             source:
               corpus_citation_path: uk-arun/manual/council-tax-reduction-scheme-2026-2027/page-28
               excerpt: "the non-dependant deduction in respect of every non-dependant ages 18 or over is £5.00 x 1/7 where any of the following apply: (a) Where any non-dependant is in remunerative work; or (b) Where any non-dependant receives no income whatsoever."
               table: {header: Non-dependant deductions, row_key: deduction band, column_key: weekly deduction}
+          # Row 0: no deduction for a non-dependant exempted by section 22(2).
+          - path: 'versions[0].values'
+            kind: parameter_table
+            source:
+              corpus_citation_path: uk-arun/manual/council-tax-reduction-scheme-2026-2027/page-28
+              excerpt: "Irrespective of subsection (1) above, no non-dependant deduction shall be made where the non-de- pendant is in receipt of any of the following:"
+              table: {header: Non-dependant deductions, row_key: deduction band, column_key: weekly deduction}
     versions: [{effective_from: '2026-04-01', values: {0: 0, 1: 5}}]
 
+  # Band A (index 1) is 100 per cent, as section 23(3) prints on page 28. Schedule 3
+  # paragraph 1 on page 80 prints 90 per cent for band A "from 2026/27"; bands B to E
+  # agree in both places. The maintainer ruled on 10 October 2026 that section 23(3)
+  # governs, because section 23(4) calls Schedule 3 "A summary of the entitlement".
+  # Index 0 is no band (income above £470.99), which carries no award.
   - name: arun_council_tax_reduction_support_rate_by_income_band
     kind: parameter
     dtype: Rate
@@ -76,6 +96,12 @@ rules:
     metadata:
       proof:
         atoms:
+          - path: 'versions[0].values'
+            kind: parameter_table
+            source:
+              corpus_citation_path: uk-arun/manual/council-tax-reduction-scheme-2026-2027/page-28
+              excerpt: "(3) Income (net) LCTRS Income Banding Percentage award of net liability £0 - £219.99 A 100%"
+              table: {header: Income banding, row_key: income band, column_key: percentage award}
           - path: 'versions[0].values'
             kind: parameter_table
             source:
@@ -155,31 +181,94 @@ rules:
     metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: amount, source: {corpus_citation_path: uk-arun/manual/council-tax-reduction-scheme-2026-2027/page-29, excerpt: "£406.00 - £470.99 E 10% (4) A summary of the entitlement is shown within Schedule 3 of this scheme."}}]}}
     versions: [{effective_from: '2026-04-01', formula: "470.99"}]
 
+  # Schedule 3 paragraph 8 names the relevant benefits. Section 24(2) applies every
+  # reference to the applicant equally to the partner, so the test covers either.
+  - name: arun_council_tax_reduction_receives_relevant_benefit
+    kind: derived
+    entity: Household
+    dtype: Judgment
+    period: Year
+    source: Arun Council Tax Reduction Scheme 2026/27 Schedule 3 paragraph 8
+    metadata:
+      proof:
+        atoms:
+          - path: 'versions[0].formula'
+            kind: condition
+            source:
+              corpus_citation_path: uk-arun/manual/council-tax-reduction-scheme-2026-2027/page-80
+              excerpt: "8. Where an applicant or partner is in receipt of a relevant benefit namely Income Support, Income Re­ lated Employment and Support Allowance or Income Based Jobseeker’s Allowance"
+          - path: 'versions[0].formula'
+            kind: definition
+            source:
+              corpus_citation_path: uk-arun/manual/council-tax-reduction-scheme-2026-2027/page-29
+              excerpt: "(2) The income and capital of any partner of the applicant is to be treated as income and capital of the applicant, and in this scheme any reference to the applicant applies equally to any partner of that applicant."
+    versions: [{effective_from: '2026-04-01', formula: "arun_council_tax_reduction_applicant_or_partner_receives_income_support or arun_council_tax_reduction_applicant_or_partner_receives_income_related_esa or arun_council_tax_reduction_applicant_or_partner_receives_income_based_jsa"}]
+
+  # Section 19(2) calculates capital "in accordance with this scheme", and Schedule 7
+  # paragraph 8 disregards the whole capital of an applicant on Income Support,
+  # income-based JSA or income-related ESA, so the £6,000 limit cannot exclude them.
   - name: arun_council_tax_reduction_capital_eligible
     kind: derived
     entity: Household
     dtype: Judgment
     period: Year
-    source: Arun Council Tax Reduction Scheme 2026/27 paragraph 19.1
-    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: condition, source: {corpus_citation_path: uk-arun/manual/council-tax-reduction-scheme-2026-2027/page-27, excerpt: "any person whose capital exceeds £6,000"}}]}}
-    versions: [{effective_from: '2026-04-01', formula: "arun_council_tax_reduction_assessed_capital_for_year <= arun_council_tax_reduction_capital_limit"}]
+    source: Arun Council Tax Reduction Scheme 2026/27 paragraph 19 and Schedule 7 paragraph 8
+    metadata:
+      proof:
+        atoms:
+          - path: 'versions[0].formula'
+            kind: condition
+            source:
+              corpus_citation_path: uk-arun/manual/council-tax-reduction-scheme-2026-2027/page-27
+              excerpt: "any person whose capital exceeds £6,000"
+          - path: 'versions[0].formula'
+            kind: definition
+            source:
+              corpus_citation_path: uk-arun/manual/council-tax-reduction-scheme-2026-2027/page-27
+              excerpt: "Capital for the purposes of sub-paragraph (1) is to be calculated in accordance with this scheme."
+          - path: 'versions[0].formula'
+            kind: exception
+            source:
+              corpus_citation_path: uk-arun/manual/council-tax-reduction-scheme-2026-2027/page-101
+              excerpt: "8. Where an applicant is on income support, an income-based jobseeker's allowance or an income-related employment and support allowance, the whole of his capital."
+    versions: [{effective_from: '2026-04-01', formula: "arun_council_tax_reduction_receives_relevant_benefit or arun_council_tax_reduction_assessed_capital_for_year <= arun_council_tax_reduction_capital_limit"}]
 
   - name: arun_council_tax_reduction_income_band
     kind: derived
     entity: Household
     dtype: Number
     period: Week
-    source: Arun Council Tax Reduction Scheme 2026/27 paragraph 23.3
+    source: Arun Council Tax Reduction Scheme 2026/27 paragraph 23.3 and Schedule 3 paragraphs 4 and 8
     metadata:
       proof:
         atoms:
           - path: 'versions[0].formula'
             kind: parameter_table
             source:
+              corpus_citation_path: uk-arun/manual/council-tax-reduction-scheme-2026-2027/page-28
+              excerpt: "(3) Income (net) LCTRS Income Banding Percentage award of net liability £0 - £219.99 A 100%"
+              table: {header: Income banding, row_key: net income, column_key: income band}
+          - path: 'versions[0].formula'
+            kind: parameter_table
+            source:
               corpus_citation_path: uk-arun/manual/council-tax-reduction-scheme-2026-2027/page-29
               excerpt: "Income (net) LCTRS Income Banding Percentage award of net liability £220.00- £279.99 B 70% £280.00 - £345.99 C 50% £346.00 - £405.99 D 30% £406.00 - £470.99 E 10% (4) A summary of the entitlement is shown within Schedule 3 of this scheme."
               table: {header: Income banding, row_key: net income, column_key: income band}
-    versions: [{effective_from: '2026-04-01', formula: "if arun_council_tax_reduction_assessed_weekly_income < 0: 0 else: if arun_council_tax_reduction_assessed_weekly_income <= arun_council_tax_reduction_band_1_upper_income: arun_council_tax_reduction_band_1 else: if arun_council_tax_reduction_assessed_weekly_income <= arun_council_tax_reduction_band_2_upper_income: arun_council_tax_reduction_band_2 else: if arun_council_tax_reduction_assessed_weekly_income <= arun_council_tax_reduction_band_3_upper_income: arun_council_tax_reduction_band_3 else: if arun_council_tax_reduction_assessed_weekly_income <= arun_council_tax_reduction_band_4_upper_income: arun_council_tax_reduction_band_4 else: if arun_council_tax_reduction_assessed_weekly_income <= arun_council_tax_reduction_band_5_upper_income: arun_council_tax_reduction_band_5 else: 0"}]
+          - path: 'versions[0].formula'
+            kind: unit
+            source:
+              corpus_citation_path: uk-arun/manual/council-tax-reduction-scheme-2026-2027/page-80
+              excerpt: "4 For the sake of clarity all incomes shown within the table above are weekly in accordance with the scheme requirements and definitions."
+          - path: 'versions[0].formula'
+            kind: exception
+            source:
+              corpus_citation_path: uk-arun/manual/council-tax-reduction-scheme-2026-2027/page-80
+              excerpt: "discount will be awarded in accordance with discount Band A."
+    # A relevant-benefit household takes band A whatever its assessed income
+    # (Schedule 3 paragraph 8). Otherwise each upper limit selects its own band at the
+    # limit and the next band from £0.01 above it; income above £470.99, or below the
+    # £0 floor of band A, is in no printed band (index 0).
+    versions: [{effective_from: '2026-04-01', formula: "if arun_council_tax_reduction_receives_relevant_benefit: arun_council_tax_reduction_band_1 else: if arun_council_tax_reduction_assessed_weekly_income < 0: 0 else: if arun_council_tax_reduction_assessed_weekly_income <= arun_council_tax_reduction_band_1_upper_income: arun_council_tax_reduction_band_1 else: if arun_council_tax_reduction_assessed_weekly_income <= arun_council_tax_reduction_band_2_upper_income: arun_council_tax_reduction_band_2 else: if arun_council_tax_reduction_assessed_weekly_income <= arun_council_tax_reduction_band_3_upper_income: arun_council_tax_reduction_band_3 else: if arun_council_tax_reduction_assessed_weekly_income <= arun_council_tax_reduction_band_4_upper_income: arun_council_tax_reduction_band_4 else: if arun_council_tax_reduction_assessed_weekly_income <= arun_council_tax_reduction_band_5_upper_income: arun_council_tax_reduction_band_5 else: 0"}]
 
   - name: arun_council_tax_reduction_non_dependant_deduction_for_day
     kind: derived
@@ -217,4 +306,13 @@ rules:
           - path: 'versions[0].formula'
             kind: amount
             source: {corpus_citation_path: uk-arun/manual/council-tax-reduction-scheme-2026-2027/page-28, excerpt: "No council tax reduction shall be payable where any entitlement is less than £1 per week."}
+          - path: 'versions[0].formula'
+            kind: formula
+            source: {corpus_citation_path: uk-arun/manual/council-tax-reduction-scheme-2026-2027/page-80, excerpt: "2 The amount of discount to be granted is to be based on the following factors: a. The maximum Council Tax Reduction as defined within this scheme;"}
+          - path: 'versions[0].formula'
+            kind: condition
+            source: {corpus_citation_path: uk-arun/manual/council-tax-reduction-scheme-2026-2027/page-16, excerpt: "(1) This scheme applies to persons who are not pensioners who fall within Class D."}
+    # Every term is a daily amount: the section 21 daily maximum (after non-dependant
+    # deductions) times the band rate. Seven days of it is the weekly entitlement tested
+    # against the £1 minimum; the days in the financial year give the annual amount.
     versions: [{effective_from: '2026-04-01', formula: "if local_authority_is_arun and council_tax_reduction_household_in_england and arun_council_tax_reduction_applicant_is_working_age and would_claim_council_tax_reduction and arun_council_tax_reduction_capital_eligible: if arun_council_tax_reduction_maximum_for_day * arun_council_tax_reduction_support_rate_by_income_band[arun_council_tax_reduction_income_band] * arun_council_tax_reduction_days_per_week < arun_council_tax_reduction_minimum_award_weekly: 0 else: arun_council_tax_reduction_maximum_for_day * arun_council_tax_reduction_support_rate_by_income_band[arun_council_tax_reduction_income_band] * arun_council_tax_reduction_number_of_days_in_financial_year else: 0"}]

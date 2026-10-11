@@ -1,74 +1,793 @@
-- name: arun_ctr_all_parameters
-  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
-  input: {uk-arun:policies/arun/council-tax-reduction#input.local_authority_is_arun: true, uk-arun:policies/arun/council-tax-reduction#input.council_tax_reduction_household_in_england: true, uk-arun:policies/arun/council-tax-reduction#input.would_claim_council_tax_reduction: true, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_is_working_age: true, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_capital_for_year: 0, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_weekly_income: 0, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_eligible_liability_for_year: 3650, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_number_of_days_in_financial_year: 365, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_non_dependant_deduction_band: 0, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_chargeable_non_dependant_count: 0}
-  output: {uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_maximum_support_rate: 1, uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_capital_limit: 6000, uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_days_per_week: 7, uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_minimum_award_weekly: 1, uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_band_1: 1, uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_band_2: 2, uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_band_3: 3, uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_band_4: 4, uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_band_5: 5, uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_band_1_upper_income: 219.99, uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_band_2_upper_income: 279.99, uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_band_3_upper_income: 345.99, uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_band_4_upper_income: 405.99, uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_band_5_upper_income: 470.99}
+# Companions for Arun's 2026/27 working-age (Class D) scheme. Every expected value is
+# derived by hand from the scheme text before it was run:
+#   section 21(1): daily maximum = 100% x A/B, less non-dependant deductions;
+#   section 22(1): £5.00 x 1/7 a day for each chargeable non-dependant;
+#   section 23(2)-(3): band A 100%, B 70%, C 50%, D 30%, E 10% of that maximum,
+#     selected by weekly income (Schedule 3 paragraph 4); above £470.99 no band;
+#   section 21(7): nothing payable where entitlement is less than £1 a week;
+#   section 19: capital above £6,000 excludes; Schedule 3 paragraph 8: relevant
+#     benefits take band A; Schedule 7 paragraph 8: their whole capital is disregarded.
+# Unless a case says otherwise: A = £3,650 and B = 365 days, so A/B = £10.00 a day
+# (£70.00 a week), with no non-dependants, no capital and no relevant benefit.
+# The scheme is banded, so it has no excess-income taper to step-test; the
+# within-band cases show that more income inside a band leaves the award unchanged.
 
-- name: arun_ctr_income_219_99
+- name: arun_ctr_parameters
   period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
-  input: {uk-arun:policies/arun/council-tax-reduction#input.local_authority_is_arun: true, uk-arun:policies/arun/council-tax-reduction#input.council_tax_reduction_household_in_england: true, uk-arun:policies/arun/council-tax-reduction#input.would_claim_council_tax_reduction: true, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_is_working_age: true, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_capital_for_year: 0, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_weekly_income: 219.99, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_eligible_liability_for_year: 3650, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_number_of_days_in_financial_year: 365, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_non_dependant_deduction_band: 0, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_chargeable_non_dependant_count: 0}
-  output: {uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_income_band: 1}
-- name: arun_ctr_income_220_00
-  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
-  input: {uk-arun:policies/arun/council-tax-reduction#input.local_authority_is_arun: true, uk-arun:policies/arun/council-tax-reduction#input.council_tax_reduction_household_in_england: true, uk-arun:policies/arun/council-tax-reduction#input.would_claim_council_tax_reduction: true, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_is_working_age: true, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_capital_for_year: 0, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_weekly_income: 220.00, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_eligible_liability_for_year: 3650, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_number_of_days_in_financial_year: 365, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_non_dependant_deduction_band: 0, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_chargeable_non_dependant_count: 0}
-  output: {uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_income_band: 2}
-- name: arun_ctr_income_279_99
-  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
-  input: {uk-arun:policies/arun/council-tax-reduction#input.local_authority_is_arun: true, uk-arun:policies/arun/council-tax-reduction#input.council_tax_reduction_household_in_england: true, uk-arun:policies/arun/council-tax-reduction#input.would_claim_council_tax_reduction: true, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_is_working_age: true, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_capital_for_year: 0, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_weekly_income: 279.99, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_eligible_liability_for_year: 3650, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_number_of_days_in_financial_year: 365, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_non_dependant_deduction_band: 0, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_chargeable_non_dependant_count: 0}
-  output: {uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_income_band: 2}
-- name: arun_ctr_income_280_00
-  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
-  input: {uk-arun:policies/arun/council-tax-reduction#input.local_authority_is_arun: true, uk-arun:policies/arun/council-tax-reduction#input.council_tax_reduction_household_in_england: true, uk-arun:policies/arun/council-tax-reduction#input.would_claim_council_tax_reduction: true, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_is_working_age: true, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_capital_for_year: 0, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_weekly_income: 280.00, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_eligible_liability_for_year: 3650, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_number_of_days_in_financial_year: 365, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_non_dependant_deduction_band: 0, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_chargeable_non_dependant_count: 0}
-  output: {uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_income_band: 3}
-- name: arun_ctr_income_345_99
-  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
-  input: {uk-arun:policies/arun/council-tax-reduction#input.local_authority_is_arun: true, uk-arun:policies/arun/council-tax-reduction#input.council_tax_reduction_household_in_england: true, uk-arun:policies/arun/council-tax-reduction#input.would_claim_council_tax_reduction: true, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_is_working_age: true, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_capital_for_year: 0, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_weekly_income: 345.99, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_eligible_liability_for_year: 3650, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_number_of_days_in_financial_year: 365, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_non_dependant_deduction_band: 0, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_chargeable_non_dependant_count: 0}
-  output: {uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_income_band: 3}
-- name: arun_ctr_income_346_00
-  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
-  input: {uk-arun:policies/arun/council-tax-reduction#input.local_authority_is_arun: true, uk-arun:policies/arun/council-tax-reduction#input.council_tax_reduction_household_in_england: true, uk-arun:policies/arun/council-tax-reduction#input.would_claim_council_tax_reduction: true, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_is_working_age: true, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_capital_for_year: 0, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_weekly_income: 346.00, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_eligible_liability_for_year: 3650, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_number_of_days_in_financial_year: 365, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_non_dependant_deduction_band: 0, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_chargeable_non_dependant_count: 0}
-  output: {uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_income_band: 4}
-- name: arun_ctr_income_405_99
-  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
-  input: {uk-arun:policies/arun/council-tax-reduction#input.local_authority_is_arun: true, uk-arun:policies/arun/council-tax-reduction#input.council_tax_reduction_household_in_england: true, uk-arun:policies/arun/council-tax-reduction#input.would_claim_council_tax_reduction: true, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_is_working_age: true, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_capital_for_year: 0, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_weekly_income: 405.99, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_eligible_liability_for_year: 3650, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_number_of_days_in_financial_year: 365, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_non_dependant_deduction_band: 0, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_chargeable_non_dependant_count: 0}
-  output: {uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_income_band: 4}
-- name: arun_ctr_income_406_00
-  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
-  input: {uk-arun:policies/arun/council-tax-reduction#input.local_authority_is_arun: true, uk-arun:policies/arun/council-tax-reduction#input.council_tax_reduction_household_in_england: true, uk-arun:policies/arun/council-tax-reduction#input.would_claim_council_tax_reduction: true, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_is_working_age: true, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_capital_for_year: 0, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_weekly_income: 406.00, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_eligible_liability_for_year: 3650, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_number_of_days_in_financial_year: 365, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_non_dependant_deduction_band: 0, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_chargeable_non_dependant_count: 0}
-  output: {uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_income_band: 5}
-- name: arun_ctr_income_470_99
-  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
-  input: {uk-arun:policies/arun/council-tax-reduction#input.local_authority_is_arun: true, uk-arun:policies/arun/council-tax-reduction#input.council_tax_reduction_household_in_england: true, uk-arun:policies/arun/council-tax-reduction#input.would_claim_council_tax_reduction: true, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_is_working_age: true, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_capital_for_year: 0, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_weekly_income: 470.99, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_eligible_liability_for_year: 3650, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_number_of_days_in_financial_year: 365, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_non_dependant_deduction_band: 0, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_chargeable_non_dependant_count: 0}
-  output: {uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_income_band: 5}
-- name: arun_ctr_zero_award_above_top_band
-  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
-  input: {uk-arun:policies/arun/council-tax-reduction#input.local_authority_is_arun: true, uk-arun:policies/arun/council-tax-reduction#input.council_tax_reduction_household_in_england: true, uk-arun:policies/arun/council-tax-reduction#input.would_claim_council_tax_reduction: true, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_is_working_age: true, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_capital_for_year: 0, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_weekly_income: 471.00, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_eligible_liability_for_year: 3650, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_number_of_days_in_financial_year: 365, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_non_dependant_deduction_band: 0, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_chargeable_non_dependant_count: 0}
-  output: {uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_annual_amount: 0}
-- name: arun_ctr_income_above_top_band
-  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
-  input: {uk-arun:policies/arun/council-tax-reduction#input.local_authority_is_arun: true, uk-arun:policies/arun/council-tax-reduction#input.council_tax_reduction_household_in_england: true, uk-arun:policies/arun/council-tax-reduction#input.would_claim_council_tax_reduction: true, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_is_working_age: true, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_capital_for_year: 0, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_weekly_income: 471.00, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_eligible_liability_for_year: 3650, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_number_of_days_in_financial_year: 365, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_non_dependant_deduction_band: 0, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_chargeable_non_dependant_count: 0}
-  output: {uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_income_band: 0}
+  input:
+    uk-arun:policies/arun/council-tax-reduction#input.local_authority_is_arun: true
+    uk-arun:policies/arun/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-arun:policies/arun/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_is_working_age: true
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_support: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_related_esa: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_based_jsa: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_capital_for_year: 0
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_weekly_income: 0
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_eligible_liability_for_year: 3650
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_number_of_days_in_financial_year: 365
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_chargeable_non_dependant_count: 0
+  output:
+    # Printed values: s.21(1) 100 per cent; s.19(1) £6,000; s.22(1) "x 1/7";
+    # s.21(7) £1 per week; s.23(3) band codes A-E = 1-5 and their upper limits.
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_maximum_support_rate: 1
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_capital_limit: 6000
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_days_per_week: 7
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_minimum_award_weekly: 1
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_band_1: 1
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_band_2: 2
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_band_3: 3
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_band_4: 4
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_band_5: 5
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_band_1_upper_income: 219.99
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_band_2_upper_income: 279.99
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_band_3_upper_income: 345.99
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_band_4_upper_income: 405.99
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_band_5_upper_income: 470.99
+    # Deduction band 0 (exempt under s.22(2)) carries no deduction.
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_non_dependant_weekly_deduction_by_band: 0
 
-- name: arun_ctr_capital_at_6000
+# --- Band edges: each upper limit selects its own band, the next penny the next band ---
+
+- name: arun_ctr_income_0_band_a
   period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
-  input: {uk-arun:policies/arun/council-tax-reduction#input.local_authority_is_arun: true, uk-arun:policies/arun/council-tax-reduction#input.council_tax_reduction_household_in_england: true, uk-arun:policies/arun/council-tax-reduction#input.would_claim_council_tax_reduction: true, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_is_working_age: true, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_capital_for_year: 6000, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_weekly_income: 0, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_eligible_liability_for_year: 3650, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_number_of_days_in_financial_year: 365, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_non_dependant_deduction_band: 0, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_chargeable_non_dependant_count: 0}
-  output: {uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_capital_eligible: holds}
-- name: arun_ctr_maximum_daily_amount
+  input:
+    uk-arun:policies/arun/council-tax-reduction#input.local_authority_is_arun: true
+    uk-arun:policies/arun/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-arun:policies/arun/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_is_working_age: true
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_support: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_related_esa: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_based_jsa: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_capital_for_year: 0
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_weekly_income: 0
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_eligible_liability_for_year: 3650
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_number_of_days_in_financial_year: 365
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_chargeable_non_dependant_count: 0
+  output:
+    # Band A: 100% x £10.00 = £10.00 a day; x 365 = £3,650.
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_receives_relevant_benefit: not_holds
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_capital_eligible: holds
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_non_dependant_deduction_for_day: 0
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_maximum_for_day: 10
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_income_band: 1
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_annual_amount: 3650
+
+- name: arun_ctr_income_below_band_a_floor
   period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
-  input: {uk-arun:policies/arun/council-tax-reduction#input.local_authority_is_arun: true, uk-arun:policies/arun/council-tax-reduction#input.council_tax_reduction_household_in_england: true, uk-arun:policies/arun/council-tax-reduction#input.would_claim_council_tax_reduction: true, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_is_working_age: true, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_capital_for_year: 0, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_weekly_income: 0, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_eligible_liability_for_year: 3650, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_number_of_days_in_financial_year: 365, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_non_dependant_deduction_band: 0, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_chargeable_non_dependant_count: 0}
-  output: {uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_maximum_for_day: 10}
-- name: arun_ctr_capital_at_6000_01
+  input:
+    uk-arun:policies/arun/council-tax-reduction#input.local_authority_is_arun: true
+    uk-arun:policies/arun/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-arun:policies/arun/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_is_working_age: true
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_support: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_related_esa: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_based_jsa: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_capital_for_year: 0
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_weekly_income: -0.01
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_eligible_liability_for_year: 3650
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_number_of_days_in_financial_year: 365
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_chargeable_non_dependant_count: 0
+  output:
+    # Band A starts at £0; -£0.01 is in no printed band (s.13(f)), so no award.
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_income_band: 0
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_annual_amount: 0
+
+- name: arun_ctr_income_219_99_band_a
   period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
-  input: {uk-arun:policies/arun/council-tax-reduction#input.local_authority_is_arun: true, uk-arun:policies/arun/council-tax-reduction#input.council_tax_reduction_household_in_england: true, uk-arun:policies/arun/council-tax-reduction#input.would_claim_council_tax_reduction: true, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_is_working_age: true, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_capital_for_year: 6000.01, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_weekly_income: 0, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_eligible_liability_for_year: 3650, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_number_of_days_in_financial_year: 365, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_non_dependant_deduction_band: 0, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_chargeable_non_dependant_count: 0}
-  output: {uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_capital_eligible: not_holds}
-- name: arun_ctr_non_dependant_deduction
+  input:
+    uk-arun:policies/arun/council-tax-reduction#input.local_authority_is_arun: true
+    uk-arun:policies/arun/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-arun:policies/arun/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_is_working_age: true
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_support: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_related_esa: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_based_jsa: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_capital_for_year: 0
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_weekly_income: 219.99
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_eligible_liability_for_year: 3650
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_number_of_days_in_financial_year: 365
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_chargeable_non_dependant_count: 0
+  output:
+    # Top of band A: 100% x £10.00 x 365 = £3,650.
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_income_band: 1
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_annual_amount: 3650
+
+- name: arun_ctr_income_220_00_band_b
   period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
-  input: {uk-arun:policies/arun/council-tax-reduction#input.local_authority_is_arun: true, uk-arun:policies/arun/council-tax-reduction#input.council_tax_reduction_household_in_england: true, uk-arun:policies/arun/council-tax-reduction#input.would_claim_council_tax_reduction: true, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_is_working_age: true, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_capital_for_year: 0, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_weekly_income: 0, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_eligible_liability_for_year: 3650, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_number_of_days_in_financial_year: 365, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_non_dependant_deduction_band: 1, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_chargeable_non_dependant_count: 1}
-  output: {uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_non_dependant_deduction_for_day: "0.7142857142857142857142857143"}
-- name: arun_ctr_minimum_award_below_one_weekly
+  input:
+    uk-arun:policies/arun/council-tax-reduction#input.local_authority_is_arun: true
+    uk-arun:policies/arun/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-arun:policies/arun/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_is_working_age: true
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_support: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_related_esa: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_based_jsa: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_capital_for_year: 0
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_weekly_income: 220.00
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_eligible_liability_for_year: 3650
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_number_of_days_in_financial_year: 365
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_chargeable_non_dependant_count: 0
+  output:
+    # Band B: 70% x £10.00 = £7.00 a day; x 365 = £2,555.
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_income_band: 2
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_annual_amount: 2555
+
+- name: arun_ctr_income_279_99_band_b
   period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
-  input: {uk-arun:policies/arun/council-tax-reduction#input.local_authority_is_arun: true, uk-arun:policies/arun/council-tax-reduction#input.council_tax_reduction_household_in_england: true, uk-arun:policies/arun/council-tax-reduction#input.would_claim_council_tax_reduction: true, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_is_working_age: true, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_capital_for_year: 0, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_weekly_income: 0, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_eligible_liability_for_year: 52, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_number_of_days_in_financial_year: 365, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_non_dependant_deduction_band: 0, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_chargeable_non_dependant_count: 0}
-  output: {uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_annual_amount: 0}
-- name: arun_ctr_minimum_award_at_one_weekly
+  input:
+    uk-arun:policies/arun/council-tax-reduction#input.local_authority_is_arun: true
+    uk-arun:policies/arun/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-arun:policies/arun/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_is_working_age: true
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_support: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_related_esa: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_based_jsa: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_capital_for_year: 0
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_weekly_income: 279.99
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_eligible_liability_for_year: 3650
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_number_of_days_in_financial_year: 365
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_chargeable_non_dependant_count: 0
+  output:
+    # Top of band B: 70% x £10.00 x 365 = £2,555.
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_income_band: 2
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_annual_amount: 2555
+
+- name: arun_ctr_income_280_00_band_c
   period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
-  input: {uk-arun:policies/arun/council-tax-reduction#input.local_authority_is_arun: true, uk-arun:policies/arun/council-tax-reduction#input.council_tax_reduction_household_in_england: true, uk-arun:policies/arun/council-tax-reduction#input.would_claim_council_tax_reduction: true, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_is_working_age: true, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_capital_for_year: 0, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_weekly_income: 0, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_eligible_liability_for_year: 52.14285714285714285714285715, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_number_of_days_in_financial_year: 365, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_non_dependant_deduction_band: 0, uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_chargeable_non_dependant_count: 0}
-  output: {uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_annual_amount: 52.14285714285714285714285715}
+  input:
+    uk-arun:policies/arun/council-tax-reduction#input.local_authority_is_arun: true
+    uk-arun:policies/arun/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-arun:policies/arun/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_is_working_age: true
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_support: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_related_esa: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_based_jsa: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_capital_for_year: 0
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_weekly_income: 280.00
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_eligible_liability_for_year: 3650
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_number_of_days_in_financial_year: 365
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_chargeable_non_dependant_count: 0
+  output:
+    # Band C: 50% x £10.00 = £5.00 a day; x 365 = £1,825. One more penny of weekly
+    # income than the case above cuts the award by (70% - 50%) x £3,650 = £730.
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_income_band: 3
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_annual_amount: 1825
+
+- name: arun_ctr_income_345_99_band_c
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-arun:policies/arun/council-tax-reduction#input.local_authority_is_arun: true
+    uk-arun:policies/arun/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-arun:policies/arun/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_is_working_age: true
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_support: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_related_esa: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_based_jsa: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_capital_for_year: 0
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_weekly_income: 345.99
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_eligible_liability_for_year: 3650
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_number_of_days_in_financial_year: 365
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_chargeable_non_dependant_count: 0
+  output:
+    # Top of band C: 50% x £10.00 x 365 = £1,825.
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_income_band: 3
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_annual_amount: 1825
+
+- name: arun_ctr_income_346_00_band_d
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-arun:policies/arun/council-tax-reduction#input.local_authority_is_arun: true
+    uk-arun:policies/arun/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-arun:policies/arun/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_is_working_age: true
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_support: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_related_esa: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_based_jsa: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_capital_for_year: 0
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_weekly_income: 346.00
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_eligible_liability_for_year: 3650
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_number_of_days_in_financial_year: 365
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_chargeable_non_dependant_count: 0
+  output:
+    # Band D: 30% x £10.00 = £3.00 a day; x 365 = £1,095.
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_income_band: 4
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_annual_amount: 1095
+
+- name: arun_ctr_income_405_99_band_d
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-arun:policies/arun/council-tax-reduction#input.local_authority_is_arun: true
+    uk-arun:policies/arun/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-arun:policies/arun/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_is_working_age: true
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_support: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_related_esa: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_based_jsa: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_capital_for_year: 0
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_weekly_income: 405.99
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_eligible_liability_for_year: 3650
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_number_of_days_in_financial_year: 365
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_chargeable_non_dependant_count: 0
+  output:
+    # Top of band D: 30% x £10.00 x 365 = £1,095.
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_income_band: 4
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_annual_amount: 1095
+
+- name: arun_ctr_income_406_00_band_e
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-arun:policies/arun/council-tax-reduction#input.local_authority_is_arun: true
+    uk-arun:policies/arun/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-arun:policies/arun/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_is_working_age: true
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_support: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_related_esa: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_based_jsa: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_capital_for_year: 0
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_weekly_income: 406.00
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_eligible_liability_for_year: 3650
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_number_of_days_in_financial_year: 365
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_chargeable_non_dependant_count: 0
+  output:
+    # Band E: 10% x £10.00 = £1.00 a day; x 365 = £365.
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_income_band: 5
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_annual_amount: 365
+
+- name: arun_ctr_income_470_99_band_e
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-arun:policies/arun/council-tax-reduction#input.local_authority_is_arun: true
+    uk-arun:policies/arun/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-arun:policies/arun/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_is_working_age: true
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_support: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_related_esa: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_based_jsa: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_capital_for_year: 0
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_weekly_income: 470.99
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_eligible_liability_for_year: 3650
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_number_of_days_in_financial_year: 365
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_chargeable_non_dependant_count: 0
+  output:
+    # Top of band E: 10% x £10.00 x 365 = £365 (£7.00 a week, above the £1 minimum).
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_income_band: 5
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_annual_amount: 365
+
+- name: arun_ctr_income_471_00_no_band
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-arun:policies/arun/council-tax-reduction#input.local_authority_is_arun: true
+    uk-arun:policies/arun/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-arun:policies/arun/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_is_working_age: true
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_support: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_related_esa: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_based_jsa: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_capital_for_year: 0
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_weekly_income: 471.00
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_eligible_liability_for_year: 3650
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_number_of_days_in_financial_year: 365
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_chargeable_non_dependant_count: 0
+  output:
+    # Above £470.99 no printed band applies: band 0, no award.
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_income_band: 0
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_annual_amount: 0
+
+# --- Within a band the award does not change (no excess-income taper) ---
+
+- name: arun_ctr_income_230_band_b
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-arun:policies/arun/council-tax-reduction#input.local_authority_is_arun: true
+    uk-arun:policies/arun/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-arun:policies/arun/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_is_working_age: true
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_support: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_related_esa: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_based_jsa: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_capital_for_year: 0
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_weekly_income: 230
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_eligible_liability_for_year: 3650
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_number_of_days_in_financial_year: 365
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_chargeable_non_dependant_count: 0
+  output:
+    # Band B: 70% x £10.00 x 365 = £2,555.
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_income_band: 2
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_annual_amount: 2555
+
+- name: arun_ctr_income_270_band_b
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-arun:policies/arun/council-tax-reduction#input.local_authority_is_arun: true
+    uk-arun:policies/arun/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-arun:policies/arun/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_is_working_age: true
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_support: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_related_esa: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_based_jsa: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_capital_for_year: 0
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_weekly_income: 270
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_eligible_liability_for_year: 3650
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_number_of_days_in_financial_year: 365
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_chargeable_non_dependant_count: 0
+  output:
+    # £40 a week more than the case above, still band B: change in support = £0.
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_income_band: 2
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_annual_amount: 2555
+
+# --- Schedule 3 paragraph 8: relevant benefits take band A ---
+
+- name: arun_ctr_income_support_income_300_band_a
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-arun:policies/arun/council-tax-reduction#input.local_authority_is_arun: true
+    uk-arun:policies/arun/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-arun:policies/arun/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_is_working_age: true
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_support: true
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_related_esa: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_based_jsa: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_capital_for_year: 0
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_weekly_income: 300
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_eligible_liability_for_year: 3650
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_number_of_days_in_financial_year: 365
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_chargeable_non_dependant_count: 0
+  output:
+    # £300 a week would be band C (£1,825), but Income Support routes to band A:
+    # 100% x £10.00 x 365 = £3,650.
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_receives_relevant_benefit: holds
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_income_band: 1
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_annual_amount: 3650
+
+- name: arun_ctr_income_related_esa_income_471_band_a
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-arun:policies/arun/council-tax-reduction#input.local_authority_is_arun: true
+    uk-arun:policies/arun/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-arun:policies/arun/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_is_working_age: true
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_support: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_related_esa: true
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_based_jsa: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_capital_for_year: 0
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_weekly_income: 471
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_eligible_liability_for_year: 3650
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_number_of_days_in_financial_year: 365
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_chargeable_non_dependant_count: 0
+  output:
+    # £471 a week is above every band, but income-related ESA routes to band A: £3,650.
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_receives_relevant_benefit: holds
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_income_band: 1
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_annual_amount: 3650
+
+- name: arun_ctr_income_based_jsa_income_220_band_a
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-arun:policies/arun/council-tax-reduction#input.local_authority_is_arun: true
+    uk-arun:policies/arun/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-arun:policies/arun/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_is_working_age: true
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_support: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_related_esa: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_based_jsa: true
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_capital_for_year: 0
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_weekly_income: 220
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_eligible_liability_for_year: 3650
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_number_of_days_in_financial_year: 365
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_chargeable_non_dependant_count: 0
+  output:
+    # £220 a week would be band B (£2,555); income-based JSA routes to band A: £3,650.
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_receives_relevant_benefit: holds
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_income_band: 1
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_annual_amount: 3650
+
+- name: arun_ctr_income_support_capital_disregarded
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-arun:policies/arun/council-tax-reduction#input.local_authority_is_arun: true
+    uk-arun:policies/arun/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-arun:policies/arun/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_is_working_age: true
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_support: true
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_related_esa: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_based_jsa: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_capital_for_year: 6000.01
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_weekly_income: 0
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_eligible_liability_for_year: 3650
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_number_of_days_in_financial_year: 365
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_chargeable_non_dependant_count: 0
+  output:
+    # Schedule 7 paragraph 8 disregards the whole of the capital, so the £6,000 limit
+    # does not exclude: band A, £3,650.
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_capital_eligible: holds
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_annual_amount: 3650
+
+# --- Section 19 capital limit: "exceeds £6,000" excludes, exactly £6,000 does not ---
+
+- name: arun_ctr_capital_6000
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-arun:policies/arun/council-tax-reduction#input.local_authority_is_arun: true
+    uk-arun:policies/arun/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-arun:policies/arun/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_is_working_age: true
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_support: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_related_esa: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_based_jsa: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_capital_for_year: 6000
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_weekly_income: 0
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_eligible_liability_for_year: 3650
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_number_of_days_in_financial_year: 365
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_chargeable_non_dependant_count: 0
+  output:
+    # £6,000 does not exceed £6,000: eligible, band A, £3,650.
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_capital_eligible: holds
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_annual_amount: 3650
+
+- name: arun_ctr_capital_6000_01
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-arun:policies/arun/council-tax-reduction#input.local_authority_is_arun: true
+    uk-arun:policies/arun/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-arun:policies/arun/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_is_working_age: true
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_support: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_related_esa: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_based_jsa: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_capital_for_year: 6000.01
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_weekly_income: 0
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_eligible_liability_for_year: 3650
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_number_of_days_in_financial_year: 365
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_chargeable_non_dependant_count: 0
+  output:
+    # £6,000.01 exceeds £6,000: excluded, no award.
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_capital_eligible: not_holds
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_annual_amount: 0
+
+# --- Section 22 non-dependant deductions, taken off the maximum before the band rate ---
+
+- name: arun_ctr_one_non_dependant_band_a
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-arun:policies/arun/council-tax-reduction#input.local_authority_is_arun: true
+    uk-arun:policies/arun/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-arun:policies/arun/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_is_working_age: true
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_support: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_related_esa: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_based_jsa: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_capital_for_year: 0
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_weekly_income: 0
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_eligible_liability_for_year: 3650
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_number_of_days_in_financial_year: 365
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_non_dependant_deduction_band: 1
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_chargeable_non_dependant_count: 1
+  output:
+    # £5.00 x 1/7 = 5/7 a day (0.714285...). Maximum = 10 - 5/7 = 65/7 a day
+    # (9.285714...). Band A: 65/7 x 365 = 23725/7 = £3,389.2857... a year, which is
+    # £3,650 less £5 a week for 365/7 weeks (£260.7142...).
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_non_dependant_weekly_deduction_by_band: 5
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_non_dependant_deduction_for_day: "0.7142857142857142857142857143"
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_maximum_for_day: "9.285714285714285714285714286"
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_annual_amount: "3389.2857142857142857142857144"
+
+- name: arun_ctr_two_non_dependants_band_a
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-arun:policies/arun/council-tax-reduction#input.local_authority_is_arun: true
+    uk-arun:policies/arun/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-arun:policies/arun/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_is_working_age: true
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_support: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_related_esa: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_based_jsa: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_capital_for_year: 0
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_weekly_income: 0
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_eligible_liability_for_year: 3650
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_number_of_days_in_financial_year: 365
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_non_dependant_deduction_band: 1
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_chargeable_non_dependant_count: 2
+  output:
+    # 2 x 5/7 = 10/7 a day. Maximum = 10 - 10/7 = 60/7 a day. Band A:
+    # 60/7 x 365 = 21900/7 = £3,128.5714... a year.
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_non_dependant_deduction_for_day: "1.4285714285714285714285714286"
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_maximum_for_day: "8.571428571428571428571428571"
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_annual_amount: "3128.5714285714285714285714284"
+
+- name: arun_ctr_exempt_non_dependant
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-arun:policies/arun/council-tax-reduction#input.local_authority_is_arun: true
+    uk-arun:policies/arun/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-arun:policies/arun/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_is_working_age: true
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_support: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_related_esa: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_based_jsa: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_capital_for_year: 0
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_weekly_income: 0
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_eligible_liability_for_year: 3650
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_number_of_days_in_financial_year: 365
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_chargeable_non_dependant_count: 1
+  output:
+    # A non-dependant exempted by s.22(2) (deduction band 0) costs nothing: £3,650.
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_non_dependant_weekly_deduction_by_band: 0
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_non_dependant_deduction_for_day: 0
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_annual_amount: 3650
+
+- name: arun_ctr_non_dependant_band_b_rate_applies_after_deduction
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-arun:policies/arun/council-tax-reduction#input.local_authority_is_arun: true
+    uk-arun:policies/arun/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-arun:policies/arun/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_is_working_age: true
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_support: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_related_esa: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_based_jsa: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_capital_for_year: 0
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_weekly_income: 220
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_eligible_liability_for_year: 3650
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_number_of_days_in_financial_year: 365
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_non_dependant_deduction_band: 1
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_chargeable_non_dependant_count: 1
+  output:
+    # s.23(2) applies the band rate to the s.21 maximum, which is net of the deduction:
+    # 70% x 65/7 = £6.50 a day; x 365 = £2,372.50. (Deducting after the band rate would
+    # give £2,555 - £260.71 = £2,294.29.)
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_income_band: 2
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_annual_amount: 2372.5
+
+- name: arun_ctr_deduction_exceeds_maximum
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-arun:policies/arun/council-tax-reduction#input.local_authority_is_arun: true
+    uk-arun:policies/arun/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-arun:policies/arun/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_is_working_age: true
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_support: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_related_esa: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_based_jsa: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_capital_for_year: 0
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_weekly_income: 0
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_eligible_liability_for_year: 255.5
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_number_of_days_in_financial_year: 365
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_non_dependant_deduction_band: 1
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_chargeable_non_dependant_count: 2
+  output:
+    # A/B = 255.5/365 = £0.70 a day; deductions 10/7 = £1.4285... a day exceed it,
+    # so the maximum floors at zero and nothing is payable.
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_maximum_for_day: 0
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_annual_amount: 0
+
+# --- Section 21(7): nothing payable where entitlement is less than £1 a week ---
+
+- name: arun_ctr_minimum_award_below_one_pound_band_a
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-arun:policies/arun/council-tax-reduction#input.local_authority_is_arun: true
+    uk-arun:policies/arun/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-arun:policies/arun/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_is_working_age: true
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_support: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_related_esa: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_based_jsa: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_capital_for_year: 0
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_weekly_income: 0
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_eligible_liability_for_year: 51.83
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_number_of_days_in_financial_year: 365
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_chargeable_non_dependant_count: 0
+  output:
+    # A/B = 51.83/365 = £0.142 a day; x 7 = £0.994 a week, less than £1: nothing.
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_maximum_for_day: 0.142
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_annual_amount: 0
+
+- name: arun_ctr_minimum_award_above_one_pound_band_a
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-arun:policies/arun/council-tax-reduction#input.local_authority_is_arun: true
+    uk-arun:policies/arun/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-arun:policies/arun/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_is_working_age: true
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_support: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_related_esa: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_based_jsa: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_capital_for_year: 0
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_weekly_income: 0
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_eligible_liability_for_year: 52.195
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_number_of_days_in_financial_year: 365
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_chargeable_non_dependant_count: 0
+  output:
+    # A/B = 52.195/365 = £0.143 a day; x 7 = £1.001 a week, not less than £1:
+    # payable, 0.143 x 365 = £52.195.
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_maximum_for_day: 0.143
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_annual_amount: 52.195
+
+- name: arun_ctr_minimum_award_exactly_one_pound
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-arun:policies/arun/council-tax-reduction#input.local_authority_is_arun: true
+    uk-arun:policies/arun/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-arun:policies/arun/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_is_working_age: true
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_support: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_related_esa: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_based_jsa: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_capital_for_year: 0
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_weekly_income: 0
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_eligible_liability_for_year: 1095
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_number_of_days_in_financial_year: 365
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_non_dependant_deduction_band: 1
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_chargeable_non_dependant_count: 4
+  output:
+    # A/B = 1095/365 = £3.00 a day; four deductions = 20/7 a day; maximum = 1/7 a day,
+    # exactly £1.00 a week, which is not less than £1: payable, 365/7 = £52.1428... a year.
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_annual_amount: "52.142857142857142857142857158"
+
+- name: arun_ctr_minimum_award_below_one_pound_band_e
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-arun:policies/arun/council-tax-reduction#input.local_authority_is_arun: true
+    uk-arun:policies/arun/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-arun:policies/arun/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_is_working_age: true
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_support: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_related_esa: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_based_jsa: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_capital_for_year: 0
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_weekly_income: 406
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_eligible_liability_for_year: 511
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_number_of_days_in_financial_year: 365
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_chargeable_non_dependant_count: 0
+  output:
+    # A/B = 511/365 = £1.40 a day; band E 10% = £0.14 a day = £0.98 a week: nothing.
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_income_band: 5
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_annual_amount: 0
+
+- name: arun_ctr_minimum_award_above_one_pound_band_e
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-arun:policies/arun/council-tax-reduction#input.local_authority_is_arun: true
+    uk-arun:policies/arun/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-arun:policies/arun/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_is_working_age: true
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_support: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_related_esa: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_based_jsa: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_capital_for_year: 0
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_weekly_income: 406
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_eligible_liability_for_year: 525.6
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_number_of_days_in_financial_year: 365
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_chargeable_non_dependant_count: 0
+  output:
+    # A/B = 525.6/365 = £1.44 a day; band E 10% = £0.144 a day = £1.008 a week:
+    # payable, 0.144 x 365 = £52.56.
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_income_band: 5
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_annual_amount: 52.56
+
+# --- Outside the scheme or no claim: no award ---
+
+- name: arun_ctr_pensioner_outside_working_age_scheme
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-arun:policies/arun/council-tax-reduction#input.local_authority_is_arun: true
+    uk-arun:policies/arun/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-arun:policies/arun/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_is_working_age: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_support: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_related_esa: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_based_jsa: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_capital_for_year: 0
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_weekly_income: 0
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_eligible_liability_for_year: 3650
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_number_of_days_in_financial_year: 365
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_chargeable_non_dependant_count: 0
+  output:
+    # A pensioner falls under the prescribed pension-age scheme, not Class D.
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_annual_amount: 0
+
+- name: arun_ctr_other_authority
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-arun:policies/arun/council-tax-reduction#input.local_authority_is_arun: false
+    uk-arun:policies/arun/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-arun:policies/arun/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_is_working_age: true
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_support: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_related_esa: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_based_jsa: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_capital_for_year: 0
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_weekly_income: 0
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_eligible_liability_for_year: 3650
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_number_of_days_in_financial_year: 365
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_chargeable_non_dependant_count: 0
+  output:
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_annual_amount: 0
+
+- name: arun_ctr_outside_england
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-arun:policies/arun/council-tax-reduction#input.local_authority_is_arun: true
+    uk-arun:policies/arun/council-tax-reduction#input.council_tax_reduction_household_in_england: false
+    uk-arun:policies/arun/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_is_working_age: true
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_support: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_related_esa: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_based_jsa: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_capital_for_year: 0
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_weekly_income: 0
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_eligible_liability_for_year: 3650
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_number_of_days_in_financial_year: 365
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_chargeable_non_dependant_count: 0
+  output:
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_annual_amount: 0
+
+- name: arun_ctr_no_application
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-arun:policies/arun/council-tax-reduction#input.local_authority_is_arun: true
+    uk-arun:policies/arun/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-arun:policies/arun/council-tax-reduction#input.would_claim_council_tax_reduction: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_is_working_age: true
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_support: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_related_esa: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_applicant_or_partner_receives_income_based_jsa: false
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_capital_for_year: 0
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_assessed_weekly_income: 0
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_eligible_liability_for_year: 3650
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_number_of_days_in_financial_year: 365
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_non_dependant_deduction_band: 0
+    uk-arun:policies/arun/council-tax-reduction#input.arun_council_tax_reduction_chargeable_non_dependant_count: 0
+  output:
+    # Class D requires a valid application (s.13(g)).
+    uk-arun:policies/arun/council-tax-reduction#arun_council_tax_reduction_annual_amount: 0
