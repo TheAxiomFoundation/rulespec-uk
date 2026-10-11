@@ -1,7 +1,7 @@
 - name: charnwood_ctr_printed_parameters
   period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
   output:
-    uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_maximum_support_rate: 1
+    uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_maximum_support_rate: 0.85
     uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_taper_whole_percentage_points: 2
     uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_taper_fraction_numerator: 6
     uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_taper_fraction_denominator: 7
@@ -27,7 +27,7 @@
     uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_applicable_amount_for_year: 520
     uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_non_dependant_deductions_for_year: 0
   output:
-    uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_annual_amount: 1000
+    uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_annual_amount: 850
 
 - name: charnwood_ctr_working_age_scope
   period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
@@ -42,7 +42,7 @@
   input:
     uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_actual_liability_for_year: 1000
     uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_non_dependant_deductions_for_year: 0
-  output: {uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_maximum_council_tax_reduction_for_year: 1000}
+  output: {uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_maximum_council_tax_reduction_for_year: 850}
 
 - name: charnwood_ctr_excess_income
   period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
@@ -113,7 +113,7 @@
     uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_applicable_amount_for_year: 0
     uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_non_dependant_deductions_for_year: 0
   output:
-    uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_annual_amount: 896
+    uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_annual_amount: 746
 
 - name: charnwood_ctr_tariff_threshold
   period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
@@ -234,23 +234,23 @@
     uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_non_dependant_high_band_lower_threshold: 485.00
     uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_non_dependant_top_income_threshold: 604.99
 
-# Paragraph 29(1): 100 per cent of liability less non-dependant deductions.
+# Paragraph 29(1) and (1A): 85 per cent of liability less non-dependant deductions.
 # The fixture supplies £5.20 a week over a 52-week year, £270.40;
-# 1000 x 1 - 270.40 = 729.60.
+# 1000 x 0.85 - 270.40 = 579.60.
 - name: charnwood_ctr_maximum_amount_less_non_dependant_deductions
   period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
   input:
     uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_actual_liability_for_year: 1000
     uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_non_dependant_deductions_for_year: 270.40
   output:
-    uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_maximum_council_tax_reduction_for_year: 729.60
+    uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_maximum_council_tax_reduction_for_year: 579.60
 
 # Taper periodisation, clear of the capital cliff (capital 0, no tariff income),
 # the Class E exhaustion edge and any floor. Income £150 a week (7800 a year) over
 # an applicable amount of £100 a week (5200) is a weekly excess of £50 (2600 a year).
 # Amount B is 2 6/7 per cent of £50 = £1.428571 a day against the daily maximum,
 # x 7 = £10 a week = 20 per cent of £50. Over a 52-week year: 0.20 x 2600 = 520,
-# and support is 2600 - 520 = 2080 (£50 - £10 = £40 a week x 52).
+# and support is 2600 x 0.85 - 520 = 2210 - 520 = 1690 (£42.50 - £10 = £32.50 a week x 52).
 - name: charnwood_ctr_taper_weekly_excess_50
   period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
   input:
@@ -267,11 +267,11 @@
     uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_excess_income_for_year: 2600
     uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_income_taper_deduction_for_year: 520
     uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_class_e: holds
-    uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_annual_amount: 2080
+    uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_annual_amount: 1690
 
 # The weekly excess rises by £10 to £60 (income 8320 a year, excess 3120).
-# Support falls by 20 per cent of the increase: £2 a week, 104 over 52 weeks, from 2080
-# to 1976 (0.20 x 3120 = 624; 2600 - 624 = 1976). At 2 6/7 per cent applied to
+# Support falls by 20 per cent of the increase: £2 a week, 104 over 52 weeks, from 1690
+# to 1586 (0.20 x 3120 = 624; 2210 - 624 = 1586). At 2 6/7 per cent applied to
 # the annual excess, support would fall by only 14.86 a year.
 - name: charnwood_ctr_taper_weekly_excess_60
   period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
@@ -289,10 +289,10 @@
     uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_excess_income_for_year: 3120
     uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_income_taper_deduction_for_year: 624
     uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_class_e: holds
-    uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_annual_amount: 1976
+    uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_annual_amount: 1586
 
-# Class E needs amount A to exceed amount B. With A = 1000, B = 0.20 x 4999.99
-# = 999.998, so A exceeds B and support is 1000 - 999.998 = 0.002.
+# Class E needs amount A to exceed amount B. With A = 1000 x 0.85 = 850, B = 0.20
+# x 4249.99 = 849.998, so A exceeds B and support is 850 - 849.998 = 0.002.
 - name: charnwood_ctr_taper_just_below_exhaustion
   period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
   input:
@@ -302,15 +302,15 @@
     uk-charnwood:policies/charnwood/council-tax-reduction#input.would_claim_council_tax_reduction: true
     uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_assessed_capital_for_year: 0
     uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_actual_liability_for_year: 1000
-    uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_assessed_income_for_year: 4999.99
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_assessed_income_for_year: 4249.99
     uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_applicable_amount_for_year: 0
     uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_non_dependant_deductions_for_year: 0
   output:
-    uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_income_taper_deduction_for_year: 999.998
+    uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_income_taper_deduction_for_year: 849.998
     uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_class_e: holds
     uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_annual_amount: 0.002
 
-# B = 0.20 x 5000 = 1000 equals A, so A does not exceed B: no Class E, no support.
+# B = 0.20 x 4250 = 850 equals A, so A does not exceed B: no Class E, no support.
 - name: charnwood_ctr_taper_exhaustion_zero_award
   period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
   input:
@@ -320,18 +320,18 @@
     uk-charnwood:policies/charnwood/council-tax-reduction#input.would_claim_council_tax_reduction: true
     uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_assessed_capital_for_year: 0
     uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_actual_liability_for_year: 1000
-    uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_assessed_income_for_year: 5000
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_assessed_income_for_year: 4250
     uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_applicable_amount_for_year: 0
     uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_non_dependant_deductions_for_year: 0
   output:
-    uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_income_taper_deduction_for_year: 1000
+    uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_income_taper_deduction_for_year: 850
     uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_class_e: not_holds
     uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_annual_amount: 0
 
 # Paragraph 57(1)(b) adds tariff income to weekly income. Capital 6500 is two
 # started £250 steps over £6,000: £2 a week, 104 over 52 weeks. Income equals the
 # applicable amount, so the excess is the tariff income alone: 0.20 x 104 = 20.8,
-# and support is 1000 - 20.8 = 979.2.
+# and support is 1000 x 0.85 - 20.8 = 829.2.
 - name: charnwood_ctr_tariff_income_enters_excess
   period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
   input:
@@ -348,10 +348,11 @@
     uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_tariff_income_for_year: 104
     uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_excess_income_for_year: 104
     uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_income_taper_deduction_for_year: 20.8
-    uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_annual_amount: 979.2
+    uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_annual_amount: 829.2
 
 # Capital of exactly £16,000 does not exceed £16,000. Tariff income is 40 steps,
-# £40 a week, 2080 over 52 weeks, below the 5200 applicable amount: Class D, full 1000.
+# £40 a week, 2080 over 52 weeks, below the 5200 applicable amount: Class D, the
+# full maximum of 1000 x 0.85 = 850.
 - name: charnwood_ctr_capital_at_limit_full_award
   period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
   input:
@@ -367,7 +368,7 @@
   output:
     uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_tariff_income_for_year: 2080
     uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_class_d: holds
-    uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_annual_amount: 1000
+    uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_annual_amount: 850
 
 # One penny over £16,000 falls in the paragraph 23 excluded class: no support.
 - name: charnwood_ctr_capital_over_limit_zero_award
@@ -467,9 +468,9 @@
     uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_non_dependant_deduction_band: 0
     uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_individual_non_dependant_deduction_weekly: 0
 
-# Non-dependant deductions of 829.40 (£15.95 a week over 52 weeks) exceed a
-# liability of 500. The maximum is floored at zero rather than going to
-# -329.40, so the Class D award is nil, not a charge.
+# Non-dependant deductions of 829.40 (£15.95 a week over 52 weeks) exceed 85 per
+# cent of a liability of 500, 425. The maximum is floored at zero rather than
+# going to -404.40, so the Class D award is nil, not a charge.
 - name: charnwood_ctr_maximum_floored_at_zero
   period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
   input:

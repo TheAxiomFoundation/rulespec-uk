@@ -15,9 +15,9 @@ module:
     less amount B. Paragraph 29(1) prints 100 per cent, and paragraph 29(1A)
     says that for a person who is not a pensioner (1) has effect as if "100 per
     cent" were substituted for "85 per cent". Sub-paragraph (1) contains no "85
-    per cent", so the literal text leaves 100 per cent, which this module
-    encodes; reading (1A) as intended to change the rate gives 85 per cent. That
-    conflict is recorded here and awaits a campaign ruling. Amount B is 2 6/7 per
+    per cent", so the literal text would leave 100 per cent; under the campaign
+    ruling this module reads (1A) as setting the working-age maximum at 85 per
+    cent, the only change its words can make. Amount B is 2 6/7 per
     cent of the excess of income for the relevant week over the applicable
     amount, deducted from the maximum in respect of a day, so the same-period
     taper is 20 per cent of weekly excess per week; this module applies 20 per
@@ -60,13 +60,12 @@ rules:
               excerpt: '(1A) In relation to a person who is not a pensioner, sub-paragraph (1) above shall have effect as if the words "100 per cent" were substituted for the words "85 per cent"'
     versions:
       - effective_from: '2026-04-01'
-        # Sub-paragraph (1) prints 100 per cent. Sub-paragraph (1A) substitutes
-        # "100 per cent" for "85 per cent" for persons who are not pensioners,
-        # but (1) contains no "85 per cent", so read literally (1A) changes
-        # nothing and the working-age maximum stays 100 per cent. Read as
-        # intending a change, (1A) would make it 85 per cent. Which reading
-        # controls is awaiting a campaign ruling; see the module summary.
-        formula: '1'
+        # Sub-paragraph (1) prints 100 per cent. Sub-paragraph (1A) exists only
+        # to change (1) for persons who are not pensioners, and the only change
+        # its words can make is to 85 per cent; read literally it would change
+        # nothing, since (1) contains no "85 per cent". This module applies the
+        # 85 per cent working-age maximum under the campaign ruling.
+        formula: '0.85'
   - name: charnwood_council_tax_reduction_taper_whole_percentage_points
     kind: parameter
     dtype: Number
