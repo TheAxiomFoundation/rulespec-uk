@@ -3,17 +3,25 @@ module:
   proof_validation:
     required: true
   source_verification:
-    corpus_citation_path: uk-crawley/manual/council-tax-reduction-scheme-2026-2027/page-51
+    corpus_citation_path: uk-crawley/manual/council-tax-reduction-scheme-2026-2027/page-66
   summary: |-
-    Crawley Council Tax Reduction working-age alignment surface for the 2026-2027 scheme: it applies the local maximum-liability award, working-age UC applicable-amount treatment, capital limit and tariff income, 20 percent excess-income taper, and working-age non-dependant deductions used by PolicyEngine UK's Kingston CTR implementation.
+    Crawley Borough Council's adopted 2026/27 working-age council tax reduction scheme, Classes D and E. Section 57.1 sets the daily maximum at 100 per cent of the daily council tax liability, less the section 58 non-dependant deductions. For Class E, section 59.1 and Class E condition k deduct 2 6/7 per cent of the weekly excess of income over the applicable amount from that daily maximum, so the seven daily deductions in a reduction week withdraw 20 per cent of the weekly excess; this module applies that same-period 20 percent rate to annual excess income against the annual maximum. Capital above £9,000 excludes support (section 33.1). Section 17.1(b) adds the weekly tariff income calculated in line with Housing Benefit Regulations 2006 regulation 52, which Crawley's scheme incorporates without printing its own figures; for Universal Credit cases section 15A.1 substitutes the Secretary of State's income calculation, whose section 15A.2 adjustments include no tariff addition. Support below £5.00 x 1/7 a day, £5.00 a week, is not paid (section 57A.1). Weekly amounts are annualised over 52 weeks, the scheme's section 23.1 monthly-to-weekly divisor. No council-tax-band cap or reduced maximum percentage is printed. Footnote 16's 2013 transitional capital protection, the Class D and E general conditions, the section 60 and 61 extended reductions and the pension-age provisions are outside this module.
   deferred_outputs:
-    - output: uk-crawley:policies/kingston-upon-thames/council-tax-reduction/e#applicable_premiums_amount
-      reason: Page 38(e) adds premiums determined under Parts 3 and 4 of the applicable-amount Schedule. This module does not encode those category-specific premium eligibility and amount schedules, so the premium component is deferred rather than treated as zero or inferred from an unrelated amount.
+    - output: uk-crawley:policies/crawley/council-tax-reduction/section-12-and-schedule-1#applicable_amount
+      reason: Section 12.1 and Schedule 1 build the legacy weekly applicable amount from personal allowances, family premium, premiums, the work-related activity or support component, and any transitional addition. This award-surface module consumes that applicable amount as an input rather than encoding the premium eligibility and amount schedules.
+    - output: uk-crawley:policies/crawley/council-tax-reduction/section-17#regulation_52_tariff_income_weekly
+      reason: Section 17.1(b) adds the weekly income calculated in line with Housing Benefit Regulations 2006 regulation 52. Crawley's scheme prints no tariff threshold, band size or weekly amount of its own, so this module consumes the regulation 52 weekly tariff income as an input instead of restating national figures as local parameters.
+    - output: uk-crawley:policies/crawley/council-tax-reduction/section-58#household_non_dependant_deductions
+      reason: This module encodes the per-person section 58.1 and 58.2 deduction amounts. The household total after the section 58.3 couple rule, section 58.5 apportionment and the section 58.6 applicant protections is consumed as an input.
+    - output: uk-crawley:policies/crawley/council-tax-reduction/section-33-footnote-16#transitional_capital_limit_protection
+      reason: Footnote 16 to section 33.1 limits to 8.5 per cent the reduction in support for an applicant who received maximum council tax benefit at 100 per cent on 31 March 2013 and is affected by the reduction in the capital limit to £9,000. The footnote does not state the base the 8.5 per cent applies to, and this module does not encode that closed transitional cohort.
+    - output: uk-crawley:policies/crawley/council-tax-reduction/section-1.7#class_d_or_e_general_conditions
+      reason: This module applies the working-age population, application, capital and income conditions of Classes D and E. Their liability, residence, absence, persons-from-abroad (section 7) and student (section 45) conditions are not encoded here, nor are the section 60 and 61 extended reductions.
 rules:
   - name: crawley_council_tax_reduction_maximum_support_rate
     kind: parameter
     dtype: Rate
-    source: Crawley Council Tax Reduction Scheme 2026-2027 paragraph 29
+    source: Crawley Council Tax Reduction Scheme 2026/27 section 57.1
     metadata:
       proof:
         atoms:
@@ -21,7 +29,7 @@ rules:
             kind: amount
             source:
               corpus_citation_path: uk-crawley/manual/council-tax-reduction-scheme-2026-2027/page-66
-              excerpt: "100 per cent, of the amount A divided by B"
+              excerpt: "shall be 100 per cent, of the amount A divided by B"
     versions:
       - effective_from: '2026-04-01'
         formula: |-
@@ -32,7 +40,7 @@ rules:
     dtype: Money
     period: Year
     unit: GBP
-    source: Crawley Council Tax Reduction Scheme 2026-2027 tariff-income upper capital bound
+    source: Crawley Council Tax Reduction Scheme 2026/27 section 33.1 capital limit
     metadata:
       proof:
         atoms:
@@ -40,81 +48,24 @@ rules:
             kind: amount
             source:
               corpus_citation_path: uk-crawley/manual/council-tax-reduction-scheme-2026-2027/page-51
-              excerpt: "reduction in the capital limit to £9000"
+              excerpt: "33.1 For the purposes of this scheme, the prescribed amount is £9,000"
     versions:
       - effective_from: '2026-04-01'
         formula: |-
           9000
-
-  - name: crawley_council_tax_reduction_tariff_income_threshold
-    kind: parameter
-    dtype: Money
-    period: Year
-    unit: GBP
-    source: Crawley Council Tax Reduction Scheme 2026-2027 paragraph 72
-    metadata:
-      proof:
-        atoms:
-          - path: versions[0].formula
-            kind: amount
-            source:
-              corpus_citation_path: uk-crawley/manual/council-tax-reduction-scheme-2026-2027/page-66
-              excerpt: "£5.00 x 1/7"
-    versions:
-      - effective_from: '2026-04-01'
-        formula: |-
-          9000
-
-  - name: crawley_council_tax_reduction_tariff_income_step
-    kind: parameter
-    dtype: Money
-    period: Year
-    unit: GBP
-    source: Crawley Council Tax Reduction Scheme 2026-2027 paragraph 72
-    metadata:
-      proof:
-        atoms:
-          - path: versions[0].formula
-            kind: amount
-            source:
-              corpus_citation_path: uk-crawley/manual/council-tax-reduction-scheme-2026-2027/page-66
-              excerpt: "£5.00 x 1/7"
-    versions:
-      - effective_from: '2026-04-01'
-        formula: |-
-          1
-
-  - name: crawley_council_tax_reduction_tariff_income_weekly_amount_per_step
-    kind: parameter
-    dtype: Money
-    period: Week
-    unit: GBP
-    source: Crawley Council Tax Reduction Scheme 2026-2027 paragraph 72
-    metadata:
-      proof:
-        atoms:
-          - path: versions[0].formula
-            kind: amount
-            source:
-              corpus_citation_path: uk-crawley/manual/council-tax-reduction-scheme-2026-2027/page-66
-              excerpt: "£5.00 x 1/7"
-    versions:
-      - effective_from: '2026-04-01'
-        formula: |-
-          1
 
   - name: crawley_council_tax_reduction_days_per_week
     kind: parameter
     dtype: Number
-    source: Crawley Council Tax Reduction Scheme 2026-2027 daily deduction conversion
+    source: Crawley Council Tax Reduction Scheme 2026/27 section 2.1 definition of a support or reduction week
     metadata:
       proof:
         atoms:
           - path: versions[0].formula
-            kind: amount
+            kind: definition
             source:
-              corpus_citation_path: uk-crawley/manual/council-tax-reduction-scheme-2026-2027/page-66
-              excerpt: "£20.00 x 1/7"
+              corpus_citation_path: uk-crawley/manual/council-tax-reduction-scheme-2026-2027/page-17
+              excerpt: "‘support or reduction week’ means a period of 7 consecutive days commencing upon a Monday and ending on a Sunday"
     versions:
       - effective_from: '2026-04-01'
         formula: |-
@@ -123,7 +74,7 @@ rules:
   - name: crawley_council_tax_reduction_taper_whole_percentage_points
     kind: parameter
     dtype: Number
-    source: Crawley Council Tax Reduction Scheme 2026-2027 section 59 taper percentage
+    source: Crawley Council Tax Reduction Scheme 2026/27 section 59.1 taper percentage
     metadata:
       proof:
         atoms:
@@ -131,7 +82,7 @@ rules:
             kind: amount
             source:
               corpus_citation_path: uk-crawley/manual/council-tax-reduction-scheme-2026-2027/page-68
-              excerpt: "2 6/7 per cent"
+              excerpt: "shall be 2 6/7 per cent"
     versions:
       - effective_from: '2026-04-01'
         formula: |-
@@ -140,7 +91,7 @@ rules:
   - name: crawley_council_tax_reduction_taper_fraction_numerator
     kind: parameter
     dtype: Number
-    source: Crawley Council Tax Reduction Scheme 2026-2027 section 59 taper percentage
+    source: Crawley Council Tax Reduction Scheme 2026/27 section 59.1 taper percentage
     metadata:
       proof:
         atoms:
@@ -148,16 +99,33 @@ rules:
             kind: amount
             source:
               corpus_citation_path: uk-crawley/manual/council-tax-reduction-scheme-2026-2027/page-68
-              excerpt: "2 6/7 per cent"
+              excerpt: "shall be 2 6/7 per cent"
     versions:
       - effective_from: '2026-04-01'
         formula: |-
           6
 
+  - name: crawley_council_tax_reduction_taper_fraction_denominator
+    kind: parameter
+    dtype: Number
+    source: Crawley Council Tax Reduction Scheme 2026/27 section 59.1 taper percentage
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk-crawley/manual/council-tax-reduction-scheme-2026-2027/page-68
+              excerpt: "shall be 2 6/7 per cent"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          7
+
   - name: crawley_council_tax_reduction_per_cent_unit
     kind: parameter
     dtype: Rate
-    source: Crawley Council Tax Reduction Scheme 2026-2027 percentage notation
+    source: Crawley Council Tax Reduction Scheme 2026/27 percentage notation
     metadata:
       proof:
         atoms:
@@ -171,10 +139,10 @@ rules:
         formula: |-
           0.01
 
-  - name: crawley_council_tax_reduction_withdrawal_rate
+  - name: crawley_council_tax_reduction_daily_taper_rate
     kind: parameter
     dtype: Rate
-    source: Crawley Council Tax Reduction Scheme 2026-2027 class E excess-income percentage
+    source: Crawley Council Tax Reduction Scheme 2026/27 section 59.1 and Class E condition k daily taper percentage
     metadata:
       proof:
         atoms:
@@ -182,16 +150,48 @@ rules:
             kind: formula
             source:
               corpus_citation_path: uk-crawley/manual/council-tax-reduction-scheme-2026-2027/page-68
-              excerpt: "2 6/7 per cent"
+              excerpt: "The prescribed percentage for the purpose of calculating support as a percentage of excess of income over the applicable amount, which is deducted from maximum council tax support, shall be 2 6/7 per cent."
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk-crawley/manual/council-tax-reduction-scheme-2026-2027/page-9
+              excerpt: "amount B is 2 6/7 per cent of the difference between his income for the relevant week and his applicable amount"
     versions:
       - effective_from: '2026-04-01'
         formula: |-
-          (crawley_council_tax_reduction_taper_whole_percentage_points + crawley_council_tax_reduction_taper_fraction_numerator / crawley_council_tax_reduction_days_per_week) * crawley_council_tax_reduction_per_cent_unit
+          (crawley_council_tax_reduction_taper_whole_percentage_points * crawley_council_tax_reduction_taper_fraction_denominator + crawley_council_tax_reduction_taper_fraction_numerator) / crawley_council_tax_reduction_taper_fraction_denominator * crawley_council_tax_reduction_per_cent_unit
+
+  - name: crawley_council_tax_reduction_withdrawal_rate
+    kind: parameter
+    dtype: Rate
+    source: Crawley Council Tax Reduction Scheme 2026/27 Class E condition k and section 59.1 same-period weekly taper
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk-crawley/manual/council-tax-reduction-scheme-2026-2027/page-9
+              excerpt: "amount A is the maximum Council Tax Reduction in respect of the day in the applicant’s case"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk-crawley/manual/council-tax-reduction-scheme-2026-2027/page-9
+              excerpt: "amount B is 2 6/7 per cent of the difference between his income for the relevant week and his applicable amount"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk-crawley/manual/council-tax-reduction-scheme-2026-2027/page-17
+              excerpt: "‘support or reduction week’ means a period of 7 consecutive days"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          (crawley_council_tax_reduction_taper_whole_percentage_points * crawley_council_tax_reduction_taper_fraction_denominator + crawley_council_tax_reduction_taper_fraction_numerator) * crawley_council_tax_reduction_days_per_week / crawley_council_tax_reduction_taper_fraction_denominator * crawley_council_tax_reduction_per_cent_unit
 
   - name: crawley_council_tax_reduction_remunerative_work_hours
     kind: parameter
     dtype: Number
-    source: Crawley Council Tax Reduction Scheme 2026-2027 paragraph 10
+    source: Crawley Council Tax Reduction Scheme 2026/27 section 6.1
     metadata:
       proof:
         atoms:
@@ -199,7 +199,7 @@ rules:
             kind: amount
             source:
               corpus_citation_path: uk-crawley/manual/council-tax-reduction-scheme-2026-2027/page-20
-              excerpt: "not less than 16 hours a week"
+              excerpt: "he is engaged on average, for not less than 16 hours a week, in work for which payment is made or which is done in expectation of payment."
     versions:
       - effective_from: '2026-04-01'
         formula: |-
@@ -208,15 +208,15 @@ rules:
   - name: crawley_council_tax_reduction_weeks_per_year
     kind: parameter
     dtype: Number
-    source: Crawley Council Tax Reduction Scheme 2026-2027 weekly-to-annual conversion denominator
+    source: Crawley Council Tax Reduction Scheme 2026/27 section 23.1 monthly-to-weekly conversion
     metadata:
       proof:
         atoms:
           - path: versions[0].formula
             kind: amount
             source:
-              corpus_citation_path: uk-crawley/manual/council-tax-reduction-scheme-2026-2027/page-61
-              excerpt: "52 or 53"
+              corpus_citation_path: uk-crawley/manual/council-tax-reduction-scheme-2026-2027/page-40
+              excerpt: "in a case where that period is a month, by multiplying the amount of the payment by 12 and dividing the product by 52"
     versions:
       - effective_from: '2026-04-01'
         formula: |-
@@ -227,7 +227,7 @@ rules:
     dtype: Money
     period: Week
     unit: GBP
-    source: Crawley Council Tax Reduction Scheme 2026-2027 paragraph 30A
+    source: Crawley Council Tax Reduction Scheme 2026/27 section 58.1 other non-dependant deduction
     metadata:
       proof:
         atoms:
@@ -235,7 +235,7 @@ rules:
             kind: amount
             source:
               corpus_citation_path: uk-crawley/manual/council-tax-reduction-scheme-2026-2027/page-66
-              excerpt: "£5.00 x 1/7"
+              excerpt: "in respect of a non-dependant aged 18 or over to whom sub-paragraph (a) does not apply, £5.00 x 1/7"
     versions:
       - effective_from: '2026-04-01'
         formula: |-
@@ -246,7 +246,7 @@ rules:
     dtype: Money
     period: Week
     unit: GBP
-    source: Crawley Council Tax Reduction Scheme 2026-2027 paragraph 30A
+    source: Crawley Council Tax Reduction Scheme 2026/27 section 58.2 £100 to £200 income band
     metadata:
       proof:
         atoms:
@@ -254,7 +254,7 @@ rules:
             kind: amount
             source:
               corpus_citation_path: uk-crawley/manual/council-tax-reduction-scheme-2026-2027/page-66
-              excerpt: "£10.00"
+              excerpt: "not less than £100.00, but less than £200.00, the deduction to be made under this section shall be £10.00"
     versions:
       - effective_from: '2026-04-01'
         formula: |-
@@ -265,7 +265,7 @@ rules:
     dtype: Money
     period: Week
     unit: GBP
-    source: Crawley Council Tax Reduction Scheme 2026-2027 paragraph 30A
+    source: Crawley Council Tax Reduction Scheme 2026/27 section 58.2 £200 to £300 income band
     metadata:
       proof:
         atoms:
@@ -273,7 +273,7 @@ rules:
             kind: amount
             source:
               corpus_citation_path: uk-crawley/manual/council-tax-reduction-scheme-2026-2027/page-66
-              excerpt: "£15.00"
+              excerpt: "not less than £200.00, but less than £300.00, the deduction to be made under this section shall be £15.00"
     versions:
       - effective_from: '2026-04-01'
         formula: |-
@@ -284,7 +284,7 @@ rules:
     dtype: Money
     period: Week
     unit: GBP
-    source: Crawley Council Tax Reduction Scheme 2026-2027 paragraph 30A
+    source: Crawley Council Tax Reduction Scheme 2026/27 sections 58.1 and 58.2 remunerative-work deduction
     metadata:
       proof:
         atoms:
@@ -292,7 +292,12 @@ rules:
             kind: amount
             source:
               corpus_citation_path: uk-crawley/manual/council-tax-reduction-scheme-2026-2027/page-66
-              excerpt: "£20.00 x 1/7"
+              excerpt: "in respect of a non-dependant aged 18 or over in remunerative work, £20.00 x 1/7"
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk-crawley/manual/council-tax-reduction-scheme-2026-2027/page-66
+              excerpt: "not less than £300.00, the deduction shall be £20.00"
     versions:
       - effective_from: '2026-04-01'
         formula: |-
@@ -303,7 +308,7 @@ rules:
     dtype: Money
     period: Week
     unit: GBP
-    source: Crawley Council Tax Reduction Scheme 2026-2027 paragraph 30A
+    source: Crawley Council Tax Reduction Scheme 2026/27 section 58.2 £100 income edge
     metadata:
       proof:
         atoms:
@@ -311,7 +316,12 @@ rules:
             kind: amount
             source:
               corpus_citation_path: uk-crawley/manual/council-tax-reduction-scheme-2026-2027/page-66
-              excerpt: "not less than £100.00"
+              excerpt: "less than £100.00, the deduction to be made under this paragraph shall be that specified in paragraph 58.1(b)"
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk-crawley/manual/council-tax-reduction-scheme-2026-2027/page-66
+              excerpt: "not less than £100.00, but less than £200.00"
     versions:
       - effective_from: '2026-04-01'
         formula: |-
@@ -322,26 +332,7 @@ rules:
     dtype: Money
     period: Week
     unit: GBP
-    source: Crawley Council Tax Reduction Scheme 2026-2027 paragraph 30A
-    metadata:
-      proof:
-        atoms:
-          - path: versions[0].formula
-            kind: amount
-            source:
-              corpus_citation_path: uk-crawley/manual/council-tax-reduction-scheme-2026-2027/page-66
-              excerpt: "not less than £200.00"
-    versions:
-      - effective_from: '2026-04-01'
-        formula: |-
-          200
-
-  - name: crawley_council_tax_reduction_non_dependant_top_income_threshold_weekly
-    kind: parameter
-    dtype: Money
-    period: Week
-    unit: GBP
-    source: Crawley Council Tax Reduction Scheme 2026-2027 paragraph 30A
+    source: Crawley Council Tax Reduction Scheme 2026/27 section 58.2 £200 income edge
     metadata:
       proof:
         atoms:
@@ -353,22 +344,84 @@ rules:
     versions:
       - effective_from: '2026-04-01'
         formula: |-
+          200
+
+  - name: crawley_council_tax_reduction_non_dependant_top_income_threshold_weekly
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Crawley Council Tax Reduction Scheme 2026/27 section 58.2 £300 income edge
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk-crawley/manual/council-tax-reduction-scheme-2026-2027/page-66
+              excerpt: "not less than £300.00, the deduction shall be £20.00"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
           300
+
+  - name: crawley_council_tax_reduction_minimum_award_weekly
+    kind: parameter
+    dtype: Money
+    period: Week
+    unit: GBP
+    source: Crawley Council Tax Reduction Scheme 2026/27 section 57A.1 minimum council tax support
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: amount
+            source:
+              corpus_citation_path: uk-crawley/manual/council-tax-reduction-scheme-2026-2027/page-66
+              excerpt: "is less than £5.00 x 1/7, then no amount of support shall be paid whatsoever."
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          5
+
+  - name: crawley_council_tax_reduction_minimum_award_for_year
+    kind: parameter
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Crawley Council Tax Reduction Scheme 2026/27 section 57A.1 minimum council tax support, annualised
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk-crawley/manual/council-tax-reduction-scheme-2026-2027/page-66
+              excerpt: "57A.1 Where the amount of an applicant’s council tax support in respect of a day for which he is liable to pay council tax, is less than £5.00 x 1/7, then no amount of support shall be paid whatsoever."
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk-crawley/manual/council-tax-reduction-scheme-2026-2027/page-40
+              excerpt: "by multiplying the amount of the payment by 12 and dividing the product by 52"
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          crawley_council_tax_reduction_minimum_award_weekly * crawley_council_tax_reduction_weeks_per_year
 
   - name: crawley_council_tax_reduction_working_age_scheme_applies
     kind: derived
     entity: Household
     dtype: Judgment
     period: Year
-    source: Crawley Council Tax Reduction Scheme 2026-2027 working-age class D and E eligibility surface
+    source: Crawley Council Tax Reduction Scheme 2026/27 section 1.6 working-age scheme population
     metadata:
       proof:
         atoms:
           - path: versions[0].formula
             kind: condition
             source:
-              corpus_citation_path: uk-crawley/manual/council-tax-reduction-scheme-2026-2027/page-20
-              excerpt: "policy for working age applicants"
+              corpus_citation_path: uk-crawley/manual/council-tax-reduction-scheme-2026-2027/page-8
+              excerpt: "this scheme only applies to a person who; a. has not attained the qualifying age for state pension credit; or b. has attained the qualifying age for state pension credit if he, and his partner, is a person on income support, on an income-based jobseeker’s allowance, on an income-related employment and support allowance or on universal credit."
     versions:
       - effective_from: '2026-04-01'
         formula: |-
@@ -379,7 +432,7 @@ rules:
     entity: Household
     dtype: Judgment
     period: Year
-    source: Crawley Council Tax Reduction Scheme 2026-2027 UC applicable-amount condition
+    source: Crawley Council Tax Reduction Scheme 2026/27 section 14.1 Universal Credit applicable-amount condition
     metadata:
       proof:
         atoms:
@@ -387,7 +440,7 @@ rules:
             kind: condition
             source:
               corpus_citation_path: uk-crawley/manual/council-tax-reduction-scheme-2026-2027/page-30
-              excerpt: "who has, or"
+              excerpt: "In determining the applicable amount for a week of an applicant— (a) who has, or (b) who (jointly with his partner) has, an award of universal credit"
     versions:
       - effective_from: '2026-04-01'
         formula: |-
@@ -399,7 +452,7 @@ rules:
     dtype: Money
     period: Year
     unit: GBP
-    source: Crawley Council Tax Reduction Scheme 2026-2027 applicable amount for working-age UC cases
+    source: Crawley Council Tax Reduction Scheme 2026/27 sections 12.1 and 14.1 applicable amount
     metadata:
       proof:
         atoms:
@@ -407,7 +460,12 @@ rules:
             kind: formula
             source:
               corpus_citation_path: uk-crawley/manual/council-tax-reduction-scheme-2026-2027/page-30
-              excerpt: "the authority must use the calculation or estimate of the maximum amount"
+              excerpt: "the authority must use the calculation or estimate of the maximum amount of the applicant, or the applicant and his partner jointly (as the case may be)"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk-crawley/manual/council-tax-reduction-scheme-2026-2027/page-30
+              excerpt: "12.1 Subject to sections 13 and 14,an applicant’s weekly applicable amount shall be aggregate of such of the following amounts as may apply in his case"
     versions:
       - effective_from: '2026-04-01'
         formula: |-
@@ -418,7 +476,7 @@ rules:
     entity: Household
     dtype: Judgment
     period: Year
-    source: Crawley Council Tax Reduction Scheme 2026-2027 working-age capital upper bound
+    source: Crawley Council Tax Reduction Scheme 2026/27 section 33.1 and Classes D and E capital condition
     metadata:
       proof:
         atoms:
@@ -426,7 +484,12 @@ rules:
             kind: condition
             source:
               corpus_citation_path: uk-crawley/manual/council-tax-reduction-scheme-2026-2027/page-51
-              excerpt: "£9,00016"
+              excerpt: "no support shall be granted when the applicant has an amount greater that this level."
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk-crawley/manual/council-tax-reduction-scheme-2026-2027/page-9
+              excerpt: "h. not have capital savings above £9,000"
     versions:
       - effective_from: '2026-04-01'
         formula: |-
@@ -438,19 +501,24 @@ rules:
     dtype: Money
     period: Year
     unit: GBP
-    source: Crawley Council Tax Reduction Scheme 2026-2027 paragraph 72 working-age tariff income
+    source: Crawley Council Tax Reduction Scheme 2026/27 section 17.1(b) tariff income incorporating Housing Benefit Regulations 2006 regulation 52, and section 15A.1
     metadata:
       proof:
         atoms:
           - path: versions[0].formula
             kind: formula
             source:
-              corpus_citation_path: uk-crawley/manual/council-tax-reduction-scheme-2026-2027/page-66
-              excerpt: "£5.00 x 1/7"
+              corpus_citation_path: uk-crawley/manual/council-tax-reduction-scheme-2026-2027/page-34
+              excerpt: "b. by adding to that amount, the weekly income calculated in line with regulation 52 of the Housing Benefit Regulations 2006 (calculation to tariff income from capital)"
+          - path: versions[0].formula
+            kind: exception
+            source:
+              corpus_citation_path: uk-crawley/manual/council-tax-reduction-scheme-2026-2027/page-33
+              excerpt: "use the calculation or estimate of the income of the applicant, or the applicant and his partner jointly (as the case may be), made by the Secretary of State for the purpose of determining the award of universal credit."
     versions:
       - effective_from: '2026-04-01'
         formula: |-
-          if crawley_council_tax_reduction_has_universal_credit_award: 0 else: crawley_council_tax_reduction_tariff_income_weekly_amount_per_step * ceil(max(0, crawley_council_tax_reduction_assessed_capital_for_year - crawley_council_tax_reduction_tariff_income_threshold) / crawley_council_tax_reduction_tariff_income_step) * crawley_council_tax_reduction_weeks_per_year
+          if crawley_council_tax_reduction_has_universal_credit_award: 0 else: crawley_council_tax_reduction_regulation_52_tariff_income_weekly * crawley_council_tax_reduction_weeks_per_year
 
   - name: crawley_council_tax_reduction_applicable_income_with_tariff_for_year
     kind: derived
@@ -458,7 +526,7 @@ rules:
     dtype: Money
     period: Year
     unit: GBP
-    source: Crawley Council Tax Reduction Scheme 2026-2027 income calculation including capital tariff
+    source: Crawley Council Tax Reduction Scheme 2026/27 section 17.1 income calculation including capital tariff
     metadata:
       proof:
         atoms:
@@ -478,7 +546,7 @@ rules:
     dtype: Money
     period: Year
     unit: GBP
-    source: Crawley Council Tax Reduction Scheme 2026-2027 class E excess-income amount B
+    source: Crawley Council Tax Reduction Scheme 2026/27 section 59.1 excess income and Class D income-based benefit condition
     metadata:
       proof:
         atoms:
@@ -486,7 +554,12 @@ rules:
             kind: formula
             source:
               corpus_citation_path: uk-crawley/manual/council-tax-reduction-scheme-2026-2027/page-68
-              excerpt: "income exceeds their applicable amount"
+              excerpt: "Where an applicant’s income exceeds their applicable amount"
+          - path: versions[0].formula
+            kind: exception
+            source:
+              corpus_citation_path: uk-crawley/manual/council-tax-reduction-scheme-2026-2027/page-8
+              excerpt: "or the applicant or partner is in receipt of income support, jobseekers’ allowance (income based) or employment and support allowance (income related)"
     versions:
       - effective_from: '2026-04-01'
         formula: |-
@@ -498,20 +571,20 @@ rules:
     dtype: Money
     period: Year
     unit: GBP
-    source: Crawley Council Tax Reduction Scheme 2026-2027 class E amount B
+    source: Crawley Council Tax Reduction Scheme 2026/27 section 59.1 and Class E condition k taper deduction
     metadata:
       proof:
         atoms:
           - path: versions[0].formula
             kind: formula
             source:
-              corpus_citation_path: uk-crawley/manual/council-tax-reduction-scheme-2026-2027/page-6
-              excerpt: "2 6/7 per cent"
+              corpus_citation_path: uk-crawley/manual/council-tax-reduction-scheme-2026-2027/page-68
+              excerpt: "their council tax support shall be calculated by deducting their excess income multiplied by the taper from their maximum council tax support"
           - path: versions[0].formula
             kind: formula
             source:
-              corpus_citation_path: uk-crawley/manual/council-tax-reduction-scheme-2026-2027/page-68
-              excerpt: "deducting their excess income multiplied by the taper"
+              corpus_citation_path: uk-crawley/manual/council-tax-reduction-scheme-2026-2027/page-9
+              excerpt: "amount B is 2 6/7 per cent of the difference between his income for the relevant week and his applicable amount"
     versions:
       - effective_from: '2026-04-01'
         formula: |-
@@ -522,7 +595,7 @@ rules:
     entity: Person
     dtype: Judgment
     period: Year
-    source: Crawley Council Tax Reduction Scheme 2026-2027 remunerative-work definition
+    source: Crawley Council Tax Reduction Scheme 2026/27 section 6.1 remunerative work
     metadata:
       proof:
         atoms:
@@ -530,7 +603,7 @@ rules:
             kind: condition
             source:
               corpus_citation_path: uk-crawley/manual/council-tax-reduction-scheme-2026-2027/page-20
-              excerpt: "not less than 16 hours a week"
+              excerpt: "for not less than 16 hours a week, in work for which payment is made or which is done in expectation of payment."
     versions:
       - effective_from: '2026-04-01'
         formula: |-
@@ -542,7 +615,7 @@ rules:
     dtype: Money
     period: Year
     unit: GBP
-    source: Crawley Council Tax Reduction Scheme 2026-2027 paragraph 30A working-age non-dependant deductions
+    source: Crawley Council Tax Reduction Scheme 2026/27 sections 58.1, 58.2, 58.6 and 58.7 working-age non-dependant deductions
     metadata:
       proof:
         atoms:
@@ -550,34 +623,39 @@ rules:
             kind: formula
             source:
               corpus_citation_path: uk-crawley/manual/council-tax-reduction-scheme-2026-2027/page-66
-              excerpt: "Subject to the following provisions of this paragraph, the non-dependant deductions"
+              excerpt: "58.1 Subject to the following provisions of this paragraph, the non-dependant deductions in respect of a day referred to in section 57 (maximum council tax support) shall be;"
           - path: versions[0].formula
             kind: formula
             source:
               corpus_citation_path: uk-crawley/manual/council-tax-reduction-scheme-2026-2027/page-66
-              excerpt: "normal gross weekly income"
+              excerpt: "In the case of a non-dependant aged 18 or over to whom paragraph 58.1(a) applies, where it is shown to the appropriate authority that his normal gross weekly income is"
           - path: versions[0].formula
-            kind: formula
+            kind: exception
             source:
               corpus_citation_path: uk-crawley/manual/council-tax-reduction-scheme-2026-2027/page-67
-              excerpt: "No deduction shall be made in respect of any non-dependants"
+              excerpt: "No deduction shall be made in respect of any non-dependants occupying an applicant’s dwelling if the applicant or his partner is"
+          - path: versions[0].formula
+            kind: exception
+            source:
+              corpus_citation_path: uk-crawley/manual/council-tax-reduction-scheme-2026-2027/page-67
+              excerpt: "No deduction shall be made in respect of a non-dependant if"
     versions:
       - effective_from: '2026-04-01'
         formula: |-
-          if not crawley_council_tax_reduction_is_non_dependant or crawley_council_tax_reduction_non_dependant_exempt: 0 else: (if crawley_council_tax_reduction_non_dependant_in_remunerative_work and crawley_council_tax_reduction_non_dependant_normal_gross_weekly_income >= crawley_council_tax_reduction_non_dependant_top_income_threshold_weekly: crawley_council_tax_reduction_top_non_dependant_deduction_weekly else: (if crawley_council_tax_reduction_non_dependant_in_remunerative_work and crawley_council_tax_reduction_non_dependant_normal_gross_weekly_income >= crawley_council_tax_reduction_non_dependant_high_income_threshold_weekly: crawley_council_tax_reduction_high_non_dependant_deduction_weekly else: (if crawley_council_tax_reduction_non_dependant_in_remunerative_work and crawley_council_tax_reduction_non_dependant_normal_gross_weekly_income >= crawley_council_tax_reduction_non_dependant_mid_income_threshold_weekly: crawley_council_tax_reduction_mid_non_dependant_deduction_weekly else: crawley_council_tax_reduction_low_non_dependant_deduction_weekly))) * crawley_council_tax_reduction_weeks_per_year
+          if not crawley_council_tax_reduction_is_non_dependant or not crawley_council_tax_reduction_non_dependant_is_aged_18_or_over or crawley_council_tax_reduction_non_dependant_exempt: 0 else: (if crawley_council_tax_reduction_non_dependant_in_remunerative_work and crawley_council_tax_reduction_non_dependant_normal_gross_weekly_income >= crawley_council_tax_reduction_non_dependant_top_income_threshold_weekly: crawley_council_tax_reduction_top_non_dependant_deduction_weekly else: (if crawley_council_tax_reduction_non_dependant_in_remunerative_work and crawley_council_tax_reduction_non_dependant_normal_gross_weekly_income >= crawley_council_tax_reduction_non_dependant_high_income_threshold_weekly: crawley_council_tax_reduction_high_non_dependant_deduction_weekly else: (if crawley_council_tax_reduction_non_dependant_in_remunerative_work and crawley_council_tax_reduction_non_dependant_normal_gross_weekly_income >= crawley_council_tax_reduction_non_dependant_mid_income_threshold_weekly: crawley_council_tax_reduction_mid_non_dependant_deduction_weekly else: crawley_council_tax_reduction_low_non_dependant_deduction_weekly))) * crawley_council_tax_reduction_weeks_per_year
 
-  - name: simulated_crawley_council_tax_reduction_annual_amount
+  - name: crawley_council_tax_reduction_support_before_minimum_for_year
     kind: derived
     entity: Household
     dtype: Money
     period: Year
     unit: GBP
-    source: Crawley Council Tax Reduction Scheme 2026-2027 working-age classes D and E amount calculation
+    source: Crawley Council Tax Reduction Scheme 2026/27 sections 57.1 and 59.1 support before the section 57A minimum
     metadata:
       proof:
         atoms:
           - path: versions[0].formula
-            kind: amount
+            kind: formula
             source:
               corpus_citation_path: uk-crawley/manual/council-tax-reduction-scheme-2026-2027/page-66
               excerpt: "less any deductions in respect of non-dependants which fall to be made under section 58"
@@ -585,16 +663,46 @@ rules:
             kind: formula
             source:
               corpus_citation_path: uk-crawley/manual/council-tax-reduction-scheme-2026-2027/page-68
-              excerpt: "deducting their excess income multiplied by the taper"
+              excerpt: "deducting their excess income multiplied by the taper from their maximum council tax support"
           - path: versions[0].formula
             kind: condition
             source:
-              corpus_citation_path: uk-crawley/manual/council-tax-reduction-scheme-2026-2027/page-6
-              excerpt: "who has made an application"
+              corpus_citation_path: uk-crawley/manual/council-tax-reduction-scheme-2026-2027/page-9
+              excerpt: "be a person in respect of whom amount A exceeds amount B"
     versions:
       - effective_from: '2026-04-01'
         formula: |-
-          if crawley_council_tax_reduction_working_age_scheme_applies and would_claim_council_tax_reduction and crawley_council_tax_reduction_capital_eligible: max(0, crawley_council_tax_reduction_maximum_eligible_liability_for_year * crawley_council_tax_reduction_maximum_support_rate - crawley_council_tax_reduction_income_taper_deduction_for_year - crawley_council_tax_reduction_non_dependant_deductions_for_year) else: 0
+          max(0, crawley_council_tax_reduction_maximum_eligible_liability_for_year * crawley_council_tax_reduction_maximum_support_rate - crawley_council_tax_reduction_income_taper_deduction_for_year - crawley_council_tax_reduction_non_dependant_deductions_for_year)
+
+  - name: simulated_crawley_council_tax_reduction_annual_amount
+    kind: derived
+    entity: Household
+    dtype: Money
+    period: Year
+    unit: GBP
+    source: Crawley Council Tax Reduction Scheme 2026/27 Classes D and E award with the section 57A minimum
+    metadata:
+      proof:
+        atoms:
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk-crawley/manual/council-tax-reduction-scheme-2026-2027/page-9
+              excerpt: "j. have made a valid application for reduction"
+          - path: versions[0].formula
+            kind: condition
+            source:
+              corpus_citation_path: uk-crawley/manual/council-tax-reduction-scheme-2026-2027/page-51
+              excerpt: "no support shall be granted when the applicant has an amount greater that this level."
+          - path: versions[0].formula
+            kind: exception
+            source:
+              corpus_citation_path: uk-crawley/manual/council-tax-reduction-scheme-2026-2027/page-66
+              excerpt: "is less than £5.00 x 1/7, then no amount of support shall be paid whatsoever."
+    versions:
+      - effective_from: '2026-04-01'
+        formula: |-
+          if crawley_council_tax_reduction_working_age_scheme_applies and would_claim_council_tax_reduction and crawley_council_tax_reduction_capital_eligible: (if crawley_council_tax_reduction_support_before_minimum_for_year < crawley_council_tax_reduction_minimum_award_for_year: 0 else: crawley_council_tax_reduction_support_before_minimum_for_year) else: 0
 
   - name: crawley_council_tax_reduction_annual_amount
     kind: derived
@@ -602,15 +710,15 @@ rules:
     dtype: Money
     period: Year
     unit: GBP
-    source: Crawley Council Tax Reduction Scheme 2026-2027 final working-age local award surface
+    source: Crawley Council Tax Reduction Scheme 2026/27 final working-age award for the 2026/27 financial year
     metadata:
       proof:
         atoms:
           - path: versions[0].formula
-            kind: formula
+            kind: effective_period
             source:
-              corpus_citation_path: uk-crawley/manual/council-tax-reduction-scheme-2026-2027/page-66
-              excerpt: "amount of a person’s maximum council tax support"
+              corpus_citation_path: uk-crawley/manual/council-tax-reduction-scheme-2026-2027/page-5
+              excerpt: "is effective from 1st April 2026 for a period of one financial year."
     versions:
       - effective_from: '2026-04-01'
         formula: |-
