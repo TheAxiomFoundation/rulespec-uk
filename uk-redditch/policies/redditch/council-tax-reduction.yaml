@@ -9,12 +9,12 @@ module:
     #   checked_paths: [uk/statutes/ukpga/1992/14/13A, uk/regulations/uksi/2012/2885, uk/regulations/uksi/2012/2886]
     #   rationale: LGFA 1992 section 13A delegates the working-age scheme to Redditch District Council, so the adopted document is operative. The apply-stage encoder strips this attestation to the singular source-verification contract after local gates pass.
   summary: |-
-    Redditch's adopted 2026-27 working-age scheme is a weekly-income banded discount applied to its defined maximum Council Tax Reduction, rather than an excess-income taper. The maximum is 100 percent of eligible liability; Schedule 1 applies 100.00, 80.00, 55.00, 30.00, or 0.00 percent by family and weekly income. Capital above £6,000 gives no reduction, and Income Support, income-related ESA, and income-based JSA are awarded Band 1. The working-age award provisions do not state a taper, tariff-income conversion, non-dependant deduction, or minimum-award floor, so none is invented here. Pension-age prescribed-scheme provisions are outside this module.
+    Redditch's adopted 2026-27 working-age scheme is a weekly-income banded discount applied to its defined maximum Council Tax Reduction, rather than an excess-income taper. The maximum is 100 percent of eligible liability; Schedule 1 applies 100.00, 80.00, 55.00, 30.00, or 0.00 percent by family and weekly income. Assessed capital above £6,000 gives no reduction, and Income Support, income-related ESA, and income-based JSA are awarded Band 1. The working-age award provisions do not state a taper, tariff-income conversion, non-dependant deduction, or minimum-award floor, so none is invented here. Pension-age prescribed-scheme provisions are outside this module.
   deferred_outputs:
     - output: uk-redditch:policies/redditch/council-tax-reduction/sections-15-to-47-and-schedules-2-to-3#assessed_weekly_income
       reason: The award surface consumes weekly income after the scheme's detailed income, disregard, and attribution rules, which are outside this module.
     - output: uk-redditch:policies/redditch/council-tax-reduction/sections-15-to-47-and-schedules-2-to-3#assessed_capital
-      reason: The award surface consumes capital after the scheme's detailed capital valuation and attribution rules, which are outside this module.
+      reason: The award surface consumes capital after the scheme's detailed capital valuation, attribution, and Schedule 3 disregard rules, including the disregard of a passported applicant's whole capital, which are outside this module.
     - output: uk-redditch:policies/redditch/council-tax-reduction/section-48#eligible_annual_liability
       reason: The award surface consumes annual liability after the section 48 daily-liability, discount, and joint-liability calculation, which is outside this module.
 rules:
@@ -83,7 +83,7 @@ rules:
             kind: amount
             source:
               corpus_citation_path: uk-redditch/manual/council-tax-reduction-scheme-2026-2027/page-48
-              excerpt: "shall be 100 per cent, of the amount A divided by B where;"
+              excerpt: "respect of a day for which he is liable to pay council tax, shall be 100 per cent, of the amount A divided by B where;"
     versions:
       - effective_from: '2026-04-01'
         formula: |-
@@ -445,7 +445,7 @@ rules:
             kind: formula
             source:
               corpus_citation_path: uk-redditch/manual/council-tax-reduction-scheme-2026-2027/page-48
-              excerpt: "shall be 100 per cent, of the amount A divided by B where;"
+              excerpt: "respect of a day for which he is liable to pay council tax, shall be 100 per cent, of the amount A divided by B where;"
     versions:
       - effective_from: '2026-04-01'
         formula: |-
