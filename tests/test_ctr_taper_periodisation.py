@@ -33,6 +33,20 @@ except ImportError:
 
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+def _load_fixture_data():
+    import importlib.util
+
+    spec = importlib.util.spec_from_file_location(
+        "ctr_taper_original_cases_fixture",
+        ROOT / "tests/ctr_taper_original_cases_fixture.py",
+    )
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module.DATA
+
+
 COUNCILS = ("oldham", "east-hertfordshire")
 PERIODS = {
     "tax_year": {
@@ -42,9 +56,7 @@ PERIODS = {
         "period_kind": "benefit_week", "start": "2026-04-06", "end": "2026-04-12"
     },
 }
-ORIGINAL_CASES = json.loads(
-    (ROOT / "tests/fixtures/ctr_taper_original_cases.json").read_text()
-)["councils"]
+ORIGINAL_CASES = _load_fixture_data()["councils"]
 SOURCE_DAILY_RATE = (Fraction(2) + Fraction(6, 7)) / 100
 SAME_PERIOD_RATE = 7 * SOURCE_DAILY_RATE
 WEEKS_PER_YEAR = 52
