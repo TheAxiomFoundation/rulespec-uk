@@ -92,14 +92,15 @@ the equivalent weekly deduction is 20 percent of that excess: multiply the
 daily deduction by seven, or use the derived same-period rate after converting
 the calculation consistently.
 
-The campaign provides current examples of this failure. Rechecked on
-2026-10-09 at `1c1101c`,
-[Oldham](../uk-oldham/policies/oldham/council-tax-reduction.yaml) applies
+The campaign provides examples of this failure. Until #447,
+[Oldham](../uk-oldham/policies/oldham/council-tax-reduction.yaml) applied
 `(2 + 6/7) × 0.01` directly to an annual excess, and
 [East Hertfordshire](../uk-east-hertfordshire/policies/east-hertfordshire/council-tax-reduction.yaml)
-applies the same rate to a weekly excess. Both call the parameter a weekly
-rate. Their companion expectations reproduce that calculation, so a passing
-companion suite cannot establish period consistency. The public review on
+applied the same rate to a weekly excess, while both called the parameter a
+weekly rate. Their companion expectations reproduced that calculation, so a
+passing companion suite could not establish period consistency. #447 repaired
+both and added the period-consistency tests in
+`tests/test_ctr_taper_periodisation.py`. The public review on
 [#140](https://github.com/TheAxiomFoundation/rulespec-uk/issues/140#issuecomment-5845299202)
 records the source context and the broader failure class.
 
