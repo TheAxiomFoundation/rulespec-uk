@@ -486,3 +486,40 @@
     uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_maximum_council_tax_reduction_for_year: 0
     uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_class_d: holds
     uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_annual_amount: 0
+
+# Paragraph 3(1)(b): Classes D and E are persons who are not pensioners. A
+# pensioner falls outside this working-age module, so no Class D award here.
+- name: charnwood_ctr_pensioner_out_of_scope
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.local_authority_is_charnwood: true
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_applicant_is_not_pensioner: false
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_assessed_capital_for_year: 0
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_actual_liability_for_year: 1000
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_assessed_income_for_year: 0
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_applicable_amount_for_year: 5200
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_working_age_scheme_applies: not_holds
+    uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_class_d: not_holds
+    uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_annual_amount: 0
+
+# The scheme has effect only in Charnwood's area, so a household elsewhere gets
+# no award from this module.
+- name: charnwood_ctr_other_authority_out_of_scope
+  period: {period_kind: tax_year, start: '2026-04-01', end: '2027-03-31'}
+  input:
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.local_authority_is_charnwood: false
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_applicant_is_not_pensioner: true
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_assessed_capital_for_year: 0
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_actual_liability_for_year: 1000
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_assessed_income_for_year: 0
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_applicable_amount_for_year: 5200
+    uk-charnwood:policies/charnwood/council-tax-reduction#input.charnwood_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_working_age_scheme_applies: not_holds
+    uk-charnwood:policies/charnwood/council-tax-reduction#charnwood_council_tax_reduction_annual_amount: 0
