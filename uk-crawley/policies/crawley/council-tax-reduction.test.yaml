@@ -330,6 +330,49 @@
     uk-crawley:policies/crawley/council-tax-reduction#crawley_council_tax_reduction_income_taper_deduction_for_year: 20.8
     uk-crawley:policies/crawley/council-tax-reduction#crawley_council_tax_reduction_annual_amount: 1779.2
 
+- name: crawley_ctr_capital_at_16000_still_yields_regulation_52_tariff_but_fails_9000_limit
+  period: *tax_year
+  input:
+    uk-crawley:policies/crawley/council-tax-reduction#input.local_authority_is_crawley: true
+    uk-crawley:policies/crawley/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-crawley:policies/crawley/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: false
+    uk-crawley:policies/crawley/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_assessed_capital_for_year: 16000
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_universal_credit_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_uc_maximum_amount_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_legacy_applicable_amount_for_year: 5200
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_applicable_income_for_year: 5200
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_tariff_income_prescribed_circumstances: false
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_relevant_income_based_benefit: false
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-crawley:policies/crawley/council-tax-reduction#crawley_council_tax_reduction_tariff_income_applies: holds
+    uk-crawley:policies/crawley/council-tax-reduction#crawley_council_tax_reduction_tariff_income_for_year: 2080
+    uk-crawley:policies/crawley/council-tax-reduction#crawley_council_tax_reduction_capital_eligible: not_holds
+    uk-crawley:policies/crawley/council-tax-reduction#crawley_council_tax_reduction_annual_amount: 0
+
+- name: crawley_ctr_capital_over_16000_has_no_regulation_52_tariff
+  period: *tax_year
+  input:
+    uk-crawley:policies/crawley/council-tax-reduction#input.local_authority_is_crawley: true
+    uk-crawley:policies/crawley/council-tax-reduction#input.council_tax_reduction_household_in_england: true
+    uk-crawley:policies/crawley/council-tax-reduction#input.council_tax_reduction_household_has_pensioner: false
+    uk-crawley:policies/crawley/council-tax-reduction#input.would_claim_council_tax_reduction: true
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_assessed_capital_for_year: 16000.01
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_maximum_eligible_liability_for_year: 1800
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_universal_credit_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_uc_maximum_amount_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_legacy_applicable_amount_for_year: 5200
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_applicable_income_for_year: 5200
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_tariff_income_prescribed_circumstances: false
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_relevant_income_based_benefit: false
+    uk-crawley:policies/crawley/council-tax-reduction#input.crawley_council_tax_reduction_non_dependant_deductions_for_year: 0
+  output:
+    uk-crawley:policies/crawley/council-tax-reduction#crawley_council_tax_reduction_tariff_income_applies: not_holds
+    uk-crawley:policies/crawley/council-tax-reduction#crawley_council_tax_reduction_tariff_income_for_year: 0
+    uk-crawley:policies/crawley/council-tax-reduction#crawley_council_tax_reduction_annual_amount: 0
+
 - name: crawley_ctr_prescribed_circumstances_raise_tariff_threshold_to_10000
   period: *tax_year
   input:
