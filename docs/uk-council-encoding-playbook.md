@@ -151,6 +151,28 @@ record the controlling-source decision. The [campaign hand-off](uk-ctr/README.md
 and [section citation map](uk-ctr/section-ingest.md) preserve the unresolved
 question and the evidence needed to continue.
 
+### Publisher confirmations
+
+When a council answers a question about its own scheme, the answer can confirm
+or contradict the reading an encoding adopted. Record it with the rules below.
+The RuleSpec `interpretations` metadata being added in
+[axiom-rules-engine#247](https://github.com/TheAxiomFoundation/axiom-rules-engine/pull/247)
+proposes a `confirmation` record that holds the organisation, date, quoted
+sentence and public URL as `by`, `date`, `excerpt` and `record`; the private
+original and its hash stay outside it.
+
+- Cite the organisation and the date of its reply. Never cite an officer's
+  name, email address, or mailbox or message identifier.
+- Quote only the factual sentence that answers the question. When the email
+  carries a protective marking or a non-disclosure footer, quote it only after
+  the council gives permission. Until then the reading stays recorded as a
+  ruling or an open question, not as a confirmation.
+- Keep the original message privately, outside the repository, with its hash.
+- Auto-replies and acknowledgements never count as confirmations.
+- Ask new clarification questions as Freedom of Information requests through
+  WhatDoTheyKnow, so each answer has a permanent public URL that the record
+  can cite.
+
 ### Operative-year traps
 
 A current cover or filename does not make prior-year substantive text operative.
