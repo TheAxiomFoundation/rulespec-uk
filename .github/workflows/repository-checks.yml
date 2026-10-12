@@ -20,41 +20,70 @@ permissions:
 jobs:
   workflow-toolchain:
     runs-on: ubuntu-latest
-    outputs:
-      axiom_encode_ref: ${{ steps.pins.outputs.axiom_encode_ref }}
-      axiom_compose_ref: ${{ steps.pins.outputs.axiom_compose_ref }}
-      axiom_rules_engine_ref: ${{ steps.pins.outputs.axiom_rules_engine_ref }}
-      axiom_corpus_ref: ${{ steps.pins.outputs.axiom_corpus_ref }}
-      rulespec_us_ref: ${{ steps.pins.outputs.rulespec_us_ref }}
+    # Staged metadata; these values are not inputs to the validation call.
+    env:
+      AXIOM_ENCODE_VERSION: "0.2.1337"
+      AXIOM_COMPOSE_REF: b9606380e78733bf50d17a9c19043f63fcc8bd63
     steps:
       - name: Checkout rules repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           persist-credentials: false
 
-      - name: Read workflow toolchain
+      - name: Set up Python
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
+        with:
+          python-version: "3.13"
+
+      - name: Install workflow parser
+        run: python -m pip install PyYAML==6.0.3
+
+      - name: Check workflow toolchain mirror
         id: pins
         shell: bash
         run: |
           set -euo pipefail
-          python - <<'PY' >> "$GITHUB_OUTPUT"
+          python - <<'PY'
           import re
           import tomllib
           from pathlib import Path
+          import yaml
 
           path = Path(".axiom/workflow-toolchain.toml")
-          toolchain = tomllib.loads(path.read_text())["workflow_toolchain"]
+          document = tomllib.loads(path.read_text())
+          if set(document) != {"workflow_toolchain"}:
+              raise SystemExit(f"{path}: expected only the workflow_toolchain table")
+          toolchain = document["workflow_toolchain"]
+          workflow = yaml.safe_load(Path(".github/workflows/repository-checks.yml").read_text())
+          validation = workflow["jobs"]["validate"]
+          metadata = workflow["jobs"]["workflow-toolchain"]["env"]
+          shared = re.fullmatch(
+              r"TheAxiomFoundation/\.github/\.github/workflows/validate-rulespec\.yml@([0-9a-f]{40})",
+              validation["uses"],
+          )
+          if shared is None:
+              raise SystemExit("workflow must pin the shared validation workflow to a full lowercase commit SHA")
+          expected = {
+              "axiom_encode_version": metadata["AXIOM_ENCODE_VERSION"],
+              "axiom_compose_ref": metadata["AXIOM_COMPOSE_REF"],
+              "shared_workflow_ref": shared[1],
+          }
           for key in (
               "axiom_encode_ref",
-              "axiom_compose_ref",
               "axiom_rules_engine_ref",
               "axiom_corpus_ref",
               "rulespec_us_ref",
           ):
-              value = toolchain.get(key)
-              if not isinstance(value, str) or re.fullmatch(r"[0-9a-f]{40}", value) is None:
-                  raise SystemExit(f"{path}: {key} must be a full lowercase commit SHA")
-              print(f"{key}={value}")
+              expected[key] = validation["with"][key.replace("_", "-")]
+          if not isinstance(toolchain, dict) or set(toolchain) != set(expected):
+              raise SystemExit(f"{path}: expected exactly {', '.join(sorted(expected))}")
+          for key, value in expected.items():
+              pattern = r"[0-9]+\.[0-9]+\.[0-9]+" if key == "axiom_encode_version" else r"[0-9a-f]{40}"
+              if not isinstance(value, str) or re.fullmatch(pattern, value) is None:
+                  raise SystemExit(f"workflow: {key} must be a literal string matching {pattern}")
+              if toolchain[key] != value:
+                  raise SystemExit(f"{path}: {key} must match literal workflow value {value}")
+          print("Workflow toolchain mirror matches repository-checks.yml.")
           PY
 
   validate:
@@ -62,10 +91,10 @@ jobs:
     uses: TheAxiomFoundation/.github/.github/workflows/validate-rulespec.yml@842c69d6aa62a0d75a4da850fabc3d0df20701d7
     secrets: inherit
     with:
-      axiom-encode-ref: ${{ needs.workflow-toolchain.outputs.axiom_encode_ref }}
-      axiom-rules-engine-ref: ${{ needs.workflow-toolchain.outputs.axiom_rules_engine_ref }}
-      axiom-corpus-ref: ${{ needs.workflow-toolchain.outputs.axiom_corpus_ref }}
-      rulespec-us-ref: ${{ needs.workflow-toolchain.outputs.rulespec_us_ref }}
+      axiom-encode-ref: c326d1ac0acdb557f047a3054160b19dd72602fa
+      axiom-rules-engine-ref: 05eac9d2f89dabe5c6673176260762cef3a58f47
+      axiom-corpus-ref: 440162d04375a5071f2ac02de94f85def3e74053
+      rulespec-us-ref: 0f291b367bf7e15555f9973112278c5cbf221653
       validate-roots: auto
       run-generated-guard: false
       guard-programs-root: false
