@@ -5,7 +5,7 @@ module:
   source_verification:
     corpus_citation_path: uk-babergh/manual/council-tax-reduction-scheme-2026-2027/page-87
   summary: |-
-    Babergh's 2026-27 working-age scheme provides a 100 percent daily maximum of eligible liability, reduced by daily non-dependant deductions. For Class E the document literally prints a 20 percent daily taper against excess weekly income, equivalent to 140 percent across the printed seven-day week. Class F (Universal Credit) receives the daily maximum less one seventh of its Schedule 5 weekly contribution. The annual output multiplies the resulting daily award by the actual number of days in the financial year, not by a fixed 52 weeks. Paragraph 58 incorporates annually uprated non-dependant amounts by reference but does not print them, so this module consumes the assessed daily deduction without encoding an ungrounded table. Capital above £16,000 excludes entitlement, while capital over £6,000 creates £1 weekly tariff income per £250 or part. Awards below £1 a benefit week are not payable. The pension-age prescribed scheme is outside this module.
+    Babergh's 2026-27 working-age scheme provides a 100 percent daily maximum of eligible liability, reduced by daily non-dependant deductions. Paragraph 59.1 says: "The prescribed daily percentage for the purposes of calculating support as a percentage of income over the applicable amount, which is deducted from maximum council tax reduction, shall be 20 per cent." This module applies the maintainer's 2026-10-10 purposive ruling: Class E deducts 20 percent of weekly excess per week, converted to a daily deduction before subtraction from the daily maximum. The prescribed and default schemes' 2 6/7 percent daily deduction is 20 percent weekly; the printed 20 percent here was not divided by seven. A literal reading withdraws £1.40 of weekly support for each £1 of weekly excess income (140 percent) and does not fit Babergh's Universal Credit table. Ipswich applies the same weekly reading to the shared text. The existing daily_taper_rate identifier retains the printed 20 percent parameter, rather than a daily deduction rate against weekly excess. Class F (Universal Credit) receives the daily maximum less one seventh of its Schedule 5 weekly contribution. The annual output multiplies the resulting daily award by the actual number of days in the financial year, not by a fixed 52 weeks. Paragraph 58 incorporates annually uprated non-dependant amounts by reference but does not print them, so this module consumes the assessed daily deduction without encoding an ungrounded table. Capital above £16,000 excludes entitlement, while capital over £6,000 creates £1 weekly tariff income per £250 or part. Paragraph 18.1.2 adds that tariff to assessed weekly income before subtracting the applicable amount; the assessed-income input excludes this separately calculated tariff. Awards below £1 a benefit week are not payable. The pension-age prescribed scheme is outside this module.
   deferred_outputs:
     - output: uk-babergh:policies/babergh/council-tax-reduction/paragraphs-12-to-33-and-schedules-1-to-3#applicable_amount_and_assessed_income
       reason: The award surface consumes assessed income and applicable amount; detailed premiums, earnings, disregards, and Universal Credit assessment are outside this module.
@@ -76,17 +76,14 @@ rules:
   - name: babergh_council_tax_reduction_weekly_taper_rate
     kind: parameter
     dtype: Rate
-    source: Babergh Council Tax Reduction Scheme 2026/27 paragraph 59.1, daily rate aggregated over the defined seven-day week
+    source: Babergh Council Tax Reduction Scheme 2026/27 paragraph 59.1, printed percentage read as the same-period weekly rate under the 2026-10-10 ruling
     metadata:
       proof:
         atoms:
           - path: 'versions[0].formula'
             kind: formula
             source: {corpus_citation_path: uk-babergh/manual/council-tax-reduction-scheme-2026-2027/page-87, excerpt: "The prescribed daily percentage for the purposes of calculating support as a percentage of income over the applicable amount, which is deducted from maximum council tax reduction, shall be 20 per cent."}
-          - path: 'versions[0].formula'
-            kind: formula
-            source: {corpus_citation_path: uk-babergh/manual/council-tax-reduction-scheme-2026-2027/page-21, excerpt: "“week” means a period of 7 consecutive days starting on a Monday and ending on a Sunday;"}
-    versions: [{effective_from: '2026-04-01', formula: "babergh_council_tax_reduction_daily_taper_rate * babergh_council_tax_reduction_days_per_week"}]
+    versions: [{effective_from: '2026-04-01', formula: "babergh_council_tax_reduction_daily_taper_rate"}]
 
   - name: babergh_council_tax_reduction_minimum_award_weekly
     kind: parameter
@@ -152,7 +149,7 @@ rules:
     dtype: Money
     period: Week
     unit: GBP
-    source: Babergh Council Tax Reduction Scheme 2026/27 paragraphs 1.10.10 and 18.1
+    source: Babergh Council Tax Reduction Scheme 2026/27 paragraphs 1.10.10, 18.1.1 and 18.1.2
     metadata:
       proof:
         atoms:
@@ -162,7 +159,10 @@ rules:
           - path: 'versions[0].formula'
             kind: formula
             source: {corpus_citation_path: uk-babergh/manual/council-tax-reduction-scheme-2026-2027/page-42, excerpt: "the income of an applicant is to be calculated on a weekly basis"}
-    versions: [{effective_from: '2026-04-01', formula: "max(0, babergh_council_tax_reduction_assessed_income_weekly - babergh_council_tax_reduction_applicable_amount_weekly)"}]
+          - path: 'versions[0].formula'
+            kind: formula
+            source: {corpus_citation_path: uk-babergh/manual/council-tax-reduction-scheme-2026-2027/page-42, excerpt: "by adding to that amount, the weekly income calculated under paragraph 42 (tariff income); and"}
+    versions: [{effective_from: '2026-04-01', formula: "max(0, babergh_council_tax_reduction_assessed_income_weekly + babergh_council_tax_reduction_tariff_income_weekly - babergh_council_tax_reduction_applicable_amount_weekly)"}]
 
   - name: babergh_council_tax_reduction_class_e_taper_deduction_daily
     kind: derived
@@ -170,9 +170,17 @@ rules:
     dtype: Money
     period: Day
     unit: GBP
-    source: Babergh Council Tax Reduction Scheme 2026/27 paragraph 59.1
-    metadata: {proof: {atoms: [{path: 'versions[0].formula', kind: formula, source: {corpus_citation_path: uk-babergh/manual/council-tax-reduction-scheme-2026-2027/page-87, excerpt: "The prescribed daily percentage for the purposes of calculating support as a percentage of income over the applicable amount, which is deducted from maximum council tax reduction, shall be 20 per cent."}}]}}
-    versions: [{effective_from: '2026-04-01', formula: "babergh_council_tax_reduction_excess_income_weekly * babergh_council_tax_reduction_daily_taper_rate"}]
+    source: Babergh Council Tax Reduction Scheme 2026/27 paragraph 59.1 under the 2026-10-10 weekly reading, converted to a daily deduction using paragraph 2
+    metadata:
+      proof:
+        atoms:
+          - path: 'versions[0].formula'
+            kind: formula
+            source: {corpus_citation_path: uk-babergh/manual/council-tax-reduction-scheme-2026-2027/page-87, excerpt: "The prescribed daily percentage for the purposes of calculating support as a percentage of income over the applicable amount, which is deducted from maximum council tax reduction, shall be 20 per cent."}
+          - path: 'versions[0].formula'
+            kind: formula
+            source: {corpus_citation_path: uk-babergh/manual/council-tax-reduction-scheme-2026-2027/page-21, excerpt: "“week” means a period of 7 consecutive days starting on a Monday and ending on a Sunday;"}
+    versions: [{effective_from: '2026-04-01', formula: "babergh_council_tax_reduction_excess_income_weekly * babergh_council_tax_reduction_weekly_taper_rate / babergh_council_tax_reduction_days_per_week"}]
 
   - name: babergh_council_tax_reduction_class_e_amount_before_floor_for_day
     kind: derived

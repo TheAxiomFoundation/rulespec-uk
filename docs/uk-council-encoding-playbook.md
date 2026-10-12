@@ -83,6 +83,74 @@ printed structure, such as maximum less excess income multiplied by the taper.
 If no linkage sentence exists, encode the printed award basis and record the
 verified absence; do not guess.
 
+### Daily, weekly and annual taper consistency
+
+Read the period of the maximum, the income excess and the deduction together.
+A rate's name or `period:` declaration does not convert its operands. Where a
+scheme deducts 2 6/7 percent of a **weekly** excess from a **daily** maximum,
+the equivalent weekly deduction is 20 percent of that excess: multiply the
+daily deduction by seven, or use the derived same-period rate after converting
+the calculation consistently.
+
+The campaign provides examples of this failure. Until #447,
+[Oldham](../uk-oldham/policies/oldham/council-tax-reduction.yaml) applied
+`(2 + 6/7) × 0.01` directly to an annual excess, and
+[East Hertfordshire](../uk-east-hertfordshire/policies/east-hertfordshire/council-tax-reduction.yaml)
+applied the same rate to a weekly excess, while both called the parameter a
+weekly rate. Their companion expectations reproduced that calculation, so a
+passing companion suite could not establish period consistency. #447 repaired
+both and added the period-consistency tests in
+`tests/test_ctr_taper_periodisation.py`. The public review on
+[#140](https://github.com/TheAxiomFoundation/rulespec-uk/issues/140#issuecomment-5845299202)
+records the source context and the broader failure class.
+
+Check: derive the expected same-period rate from the operative provision,
+using grounded conversion parameters. In cases clear of capital cliffs, band
+edges, minimum awards and the zero floor, increase weekly excess by a known
+amount and assert the change in weekly support. Verify that daily, weekly and
+annual formulations agree after conversion. Compare with a national module
+only where the council retains that provision, including its local overrides;
+a global requirement that every council taper be 20 percent would be wrong.
+Re-derive companion expectations from the text before testing the repair.
+
+### Contradictory source provisions and related schemes
+
+A verbatim excerpt can still omit the sentence that changes its meaning. When
+source provisions disagree, record both provisions and the unresolved decision
+instead of silently selecting a value or copying a neighbouring council.
+
+[Babergh](../uk-babergh/policies/babergh/council-tax-reduction.yaml) and
+[Ipswich](../uk-ipswich/policies/ipswich/council-tax-reduction.yaml) print the
+same sentence: a "prescribed daily percentage" of 20 per cent, deducted from a
+maximum that the scheme states per day. Read literally, that withdraws 140
+percent of a week's excess income per week. Until October 2026 the two modules
+disagreed: Babergh subtracted 20 percent of a weekly excess from a daily
+maximum, and Ipswich applied 20 percent to annual excess against an annual
+maximum. The
+[maintainer's issue reply](https://github.com/TheAxiomFoundation/rulespec-uk/issues/140#issuecomment-5872231649)
+identified the wording as an unresolved interpretation.
+
+The maintainer ruled on 10 October 2026 that the sentence means 20 percent of
+weekly excess per week, for every scheme with this wording. The prescribed and
+default schemes deduct 2 6/7 percent a day from a daily maximum, which is 20
+percent a week, and these schemes printed "20 per cent" without dividing by
+seven. Babergh now applies that reading and quotes the literal sentence and the
+ruling in its module summary. Ipswich and
+[Guildford](../uk-guildford/policies/guildford/council-tax-reduction.yaml)
+already apply 20 percent to same-period excess. The ruling also names Mid
+Suffolk, which is not in this repository yet.
+
+The ruling settles this wording only. Formula agreement and familiar rates did
+not settle it, and will not settle the next conflict: record both provisions
+and ask.
+
+Arun illustrates a different conflict: s.23(3) prints band A at 100 percent,
+while Schedule 3 paragraph 1 prints 90 percent for the same scheme year. Keep
+both citations, establish the adopted instrument and any final amendment, and
+record the controlling-source decision. The [campaign hand-off](uk-ctr/README.md)
+and [section citation map](uk-ctr/section-ingest.md) preserve the unresolved
+question and the evidence needed to continue.
+
 ### Operative-year traps
 
 A current cover or filename does not make prior-year substantive text operative.
@@ -314,6 +382,23 @@ mark CI unverified rather than borrowing another PR's state.
 For a re-review, cite the reviewer's own prior findings. Inspect the production
 rule and the regression test, not only the repair summary. State whether each
 finding is resolved, still present, renamed, or suppressed.
+
+Review the full bound source, including neighbouring provisions. Embedded
+proof excerpts are a useful index, but cannot reveal a population heading or
+qualification omitted from the excerpt. Resolve the release in
+`.axiom/toolchain.toml`, then locate its council version in `axiom-corpus` under
+`data/corpus/provisions/uk-<council>/manual/<version>.jsonl`. Read the relevant
+page rows and their context, and inspect the original official document when a
+table or typography affects interpretation. For example, the
+[Arun release rows](https://github.com/TheAxiomFoundation/axiom-corpus/blob/440162d04375a5071f2ac02de94f85def3e74053/data/corpus/provisions/uk-arun/manual/2026-09-05-arun-council-tax-reduction-2026-2027.jsonl)
+show both sides of the band A conflict. Pin the release commit in the review's
+source links so a later ingest does not change the evidence being reviewed.
+
+Source and companion gates also do not establish how a module was generated.
+Inspect the encoder's required receipts separately. A historical module without
+those receipts does not acquire them by passing today's validation or by
+changing its citation granularity. Use the documented campaign decision before
+representing such a module as compliant with the supervised encoder regime.
 
 The merge gate is `SHIP` plus green CI on the reviewed head. A static `SHIP` with
 CI marked unverified is not the merge condition. Any semantic edit after a

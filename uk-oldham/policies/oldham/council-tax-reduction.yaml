@@ -140,7 +140,7 @@ rules:
     kind: parameter
     dtype: Rate
     period: Week
-    source: Oldham Council Tax Reduction Scheme 2025-26 paragraph 17(f)(ii), derived from the printed mixed-number percentage
+    source: Oldham Council Tax Reduction Scheme 2025-26 paragraphs 17(f)(ii) and 28(2), weekly rate derived from the printed daily mixed-number percentage
     metadata:
       proof:
         atoms:
@@ -149,10 +149,17 @@ rules:
             source:
               corpus_citation_path: uk-oldham/manual/council-tax-reduction-scheme-2025-26/page-21
               excerpt: "amount B is 2 6/7 per cent of the difference between his income for the relevant week and"
+          - path: versions[0].formula
+            kind: formula
+            source:
+              corpus_citation_path: uk-oldham/manual/council-tax-reduction-scheme-2025-26/page-32
+              excerpt: "the maximum council tax reduction payable to a person who is not a pensioner in respect of a day is 100 per cent of the amount A/B less C"
     versions:
       - effective_from: '2026-04-01'
+        # (2 + 6/7) percent of weekly excess per day, multiplied by seven days.
+        # Cancel the denominator before division to keep the weekly rate exact.
         formula: |-
-          (oldham_council_tax_reduction_taper_whole_percentage_points + oldham_council_tax_reduction_taper_fraction_numerator / oldham_council_tax_reduction_days_per_week) * oldham_council_tax_reduction_per_cent_unit
+          (oldham_council_tax_reduction_taper_whole_percentage_points * oldham_council_tax_reduction_days_per_week + oldham_council_tax_reduction_taper_fraction_numerator) * oldham_council_tax_reduction_per_cent_unit
 
   - name: oldham_council_tax_reduction_capital_limit
     kind: parameter

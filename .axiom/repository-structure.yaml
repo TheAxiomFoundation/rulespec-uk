@@ -345,6 +345,12 @@ path_rules:
       - ".jsonl"
       - ".xml"
   - patterns:
+      - "docs/uk-ctr/*"
+    allow_extensions:
+      - ".md"
+    allow_filenames:
+      - "councils.csv"
+  - patterns:
       - "docs/**"
     allow_extensions:
       - ".md"
