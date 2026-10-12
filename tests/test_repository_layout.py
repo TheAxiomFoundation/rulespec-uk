@@ -239,14 +239,20 @@ def test_canonical_content_uses_regular_exact_yaml_files_without_aliases() -> No
 
 def test_encoding_manifests_use_only_the_canonical_root_mirror() -> None:
     manifest_root = ROOT / ".axiom" / "encoding-manifests"
-    jurisdictions = {path.name for path in jurisdiction_dirs()}
+    structure = yaml.safe_load((ROOT / ".axiom" / "repository-structure.yaml").read_text())
+    # Retirement can remove a jurisdiction's final content root. Its receipt
+    # namespace remains canonical because the jurisdiction is still admitted.
+    jurisdictions = {
+        name for name in structure["allowed_root_directories"]
+        if JURISDICTION_DIR_RE.fullmatch(name)
+    }
     problems: list[str] = []
 
     if manifest_root.is_symlink():
         problems.append("aliased manifest root: .axiom/encoding-manifests")
 
-    for jurisdiction in jurisdiction_dirs():
-        nested = jurisdiction / ".axiom" / "encoding-manifests"
+    for jurisdiction in sorted(jurisdictions):
+        nested = ROOT / jurisdiction / ".axiom" / "encoding-manifests"
         if nested.exists() or nested.is_symlink():
             problems.append(f"co-located manifest root: {nested.relative_to(ROOT)}")
 
@@ -315,6 +321,19 @@ def test_encoding_manifests_use_only_the_canonical_root_mirror() -> None:
             problems.append(f"missing mirrored primary module: {relative.as_posix()}")
 
     assert problems == []
+
+
+def test_legacy_applied_manifests_are_not_kept_as_migration_inputs() -> None:
+    manifest_root = ROOT / ".axiom" / "encoding-manifests"
+    manifests = sorted(
+        path.relative_to(ROOT).as_posix() for path in manifest_root.rglob("*.json")
+    )
+
+    assert manifests == [], (
+        "prelaunch hard cut requires deleting every legacy applied manifest; "
+        "trusted v5 manifests must be regenerated from the named release, not "
+        f"carried forward as compatibility inputs: {manifests}"
+    )
 
 
 def test_rulespec_files_have_companion_tests() -> None:

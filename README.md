@@ -18,17 +18,28 @@ Use the exact `.yaml` extension under one of the five jurisdiction-scoped roots.
 Do not add repository-root content trees, `.yml` aliases, symlinks, or Python
 program implementations. ProgramSpecs are declarative composition only.
 
-Atomic modules and their companion tests must come from the supervised encoder,
-with signed `axiom-encode/applied-rulespec/v5` receipts under
-`.axiom/encoding-manifests/<jurisdiction>/<atomic-root>/`, mirroring the module
-path with the `.json` extension. Existing modules without receipts stay untouched
-until replaced by encoder output. Signed retirement receipts may remain after
-the files they cover are deleted. No workflow may accept an older schema as
-current attestation.
+Legacy applied manifests are deleted, not retained as migration inputs. This
+migration snapshot intentionally contains no applied manifests; the named-release
+trusted signer must regenerate `applied-rulespec/v5` attestations before release.
+No workflow may accept an older schema as current attestation.
 
-`.axiom/workflow-toolchain.toml` pins the tools used by validation and signed
-generation; `.axiom/toolchain.toml` binds the signed corpus release and validation
-waiver set. UK encoding uses the supervised `targeted-signed-reencode.yml`
-workflow in axiom-encode with `country=uk`.
+Repository checks continue to prohibit every encoding manifest. The canonical
+receipt-layout test is an additional staged check for a later encoder re-pin.
+The prohibition is lifted only once the pinned encoder's guard verifies every
+added or modified receipt, including receipt-only changes, with trusted
+signature, hash, and provenance verification.
+
+That later migration requires atomic modules and their companion tests to come
+from the supervised encoder, with signed `axiom-encode/applied-rulespec/v5`
+receipts under `.axiom/encoding-manifests/<jurisdiction>/<atomic-root>/`,
+mirroring the module path with the `.json` extension. Existing modules without
+receipts stay untouched until replaced by encoder output. Signed retirement
+receipts may then remain after their files and the jurisdiction's last content
+root are deleted, provided the jurisdiction remains registered.
+
+The staged `.axiom/workflow-toolchain.toml` is the validation reader's pin source
+only. The bulk-generation workflow retains its separate dependency refs;
+compose does not consume the new file or its output yet. `.axiom/toolchain.toml`
+continues to bind the signed corpus release and validation waiver set.
 
 Jurisdiction-specific materials belong in this repo. Shared federal materials belong in `rulespec-us`.
