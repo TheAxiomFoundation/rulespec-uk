@@ -155,10 +155,11 @@ question and the evidence needed to continue.
 
 When a council answers a question about its own scheme, the answer can confirm
 or contradict the reading an encoding adopted. Record it with the rules below.
-The `confirmation` record of the RuleSpec `interpretations` metadata, being
-added in
-[axiom-rules-engine#247](https://github.com/TheAxiomFoundation/axiom-rules-engine/pull/247),
-uses the same fields.
+The RuleSpec `interpretations` metadata being added in
+[axiom-rules-engine#247](https://github.com/TheAxiomFoundation/axiom-rules-engine/pull/247)
+proposes a `confirmation` record that holds the organisation, date, quoted
+sentence and public URL as `by`, `date`, `excerpt` and `record`; the private
+original and its hash stay outside it.
 
 - Cite the organisation and the date of its reply. Never cite an officer's
   name, email address, or mailbox or message identifier.
