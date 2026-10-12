@@ -239,39 +239,86 @@ def test_canonical_content_uses_regular_exact_yaml_files_without_aliases() -> No
 
 def test_encoding_manifests_use_only_the_canonical_root_mirror() -> None:
     manifest_root = ROOT / ".axiom" / "encoding-manifests"
-    jurisdictions = {path.name for path in jurisdiction_dirs()}
+    structure = yaml.safe_load((ROOT / ".axiom" / "repository-structure.yaml").read_text())
+    # Retirement can remove a jurisdiction's final content root. Its receipt
+    # namespace remains canonical because the jurisdiction is still admitted.
+    jurisdictions = {
+        name for name in structure["allowed_root_directories"]
+        if JURISDICTION_DIR_RE.fullmatch(name)
+    }
     problems: list[str] = []
 
-    for jurisdiction in jurisdiction_dirs():
-        nested = jurisdiction / ".axiom" / "encoding-manifests"
+    if manifest_root.is_symlink():
+        problems.append("aliased manifest root: .axiom/encoding-manifests")
+
+    for jurisdiction in sorted(jurisdictions):
+        nested = ROOT / jurisdiction / ".axiom" / "encoding-manifests"
         if nested.exists() or nested.is_symlink():
             problems.append(f"co-located manifest root: {nested.relative_to(ROOT)}")
 
-    for manifest in sorted(manifest_root.rglob("*.json")):
+    for manifest in sorted(manifest_root.rglob("*")):
         relative = manifest.relative_to(manifest_root)
+        if manifest.is_symlink():
+            problems.append(f"aliased manifest path: {relative.as_posix()}")
+            continue
+        if not manifest.is_file():
+            continue
+        if manifest.suffix != ".json":
+            problems.append(f"not exact .json: {relative.as_posix()}")
+            continue
         if len(relative.parts) < 3 or relative.parts[0] not in jurisdictions:
             problems.append(f"noncanonical manifest path: {relative.as_posix()}")
             continue
         jurisdiction, source_root = relative.parts[:2]
         if source_root not in ATOMIC_CONTENT_DIRS:
             problems.append(f"non-atomic manifest path: {relative.as_posix()}")
+            continue
         payload = json.loads(manifest.read_text())
-        for applied in payload.get("applied_files", []):
+        if not isinstance(payload, dict):
+            problems.append(f"manifest is not an object: {relative.as_posix()}")
+            continue
+        if payload.get("schema_version") != "axiom-encode/applied-rulespec/v5":
+            problems.append(f"not a current v5 receipt: {relative.as_posix()}")
+        applied_files = payload.get("applied_files")
+        if not isinstance(applied_files, list) or not applied_files:
+            problems.append(f"missing applied files: {relative.as_posix()}")
+            continue
+        mirrored_module = relative.with_suffix(".yaml").as_posix()
+        applied_paths: set[str] = set()
+        for applied in applied_files:
             applied_path = applied.get("path") if isinstance(applied, dict) else None
             if not isinstance(applied_path, str):
                 problems.append(f"invalid applied path: {relative.as_posix()}")
                 continue
             parts = Path(applied_path).parts
             if (
-                len(parts) < 3
-                or parts[0] != jurisdiction
-                or parts[1] not in ATOMIC_CONTENT_DIRS
-                or Path(applied_path).suffix != ".yaml"
-                or not (ROOT / applied_path).is_file()
+                Path(applied_path).is_absolute()
+                or ".." in parts
+                or not parts
             ):
                 problems.append(
                     f"noncanonical applied path in {relative.as_posix()}: {applied_path}"
                 )
+                continue
+            # Signed replacement receipts can also cover reconciled metadata.
+            # The encoder guard verifies which metadata rewrites are permitted.
+            if len(parts) >= 2 and parts[1] in ATOMIC_CONTENT_DIRS:
+                if (
+                    len(parts) < 3
+                    or parts[0] not in jurisdictions
+                    or Path(applied_path).suffix != ".yaml"
+                ):
+                    problems.append(f"noncanonical atomic applied path: {applied_path}")
+                    continue
+            applied_paths.add(applied_path)
+            target = ROOT / applied_path
+            if applied.get("deleted") is True:
+                if target.exists() or target.is_symlink():
+                    problems.append(f"retired file still exists: {applied_path}")
+            elif not target.is_file() or target.is_symlink():
+                problems.append(f"missing regular applied file: {applied_path}")
+        if mirrored_module.endswith(".test.yaml") or mirrored_module not in applied_paths:
+            problems.append(f"missing mirrored primary module: {relative.as_posix()}")
 
     assert problems == []
 
