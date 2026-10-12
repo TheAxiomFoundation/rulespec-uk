@@ -88,7 +88,7 @@ jobs:
 
   validate:
     needs: workflow-toolchain
-    uses: TheAxiomFoundation/.github/.github/workflows/validate-rulespec.yml@842c69d6aa62a0d75a4da850fabc3d0df20701d7
+    uses: TheAxiomFoundation/.github/.github/workflows/validate-rulespec.yml@aeb741d49f51b4feecbd5bac8ec03d5063fbb8f7
     secrets: inherit
     with:
       axiom-encode-ref: c326d1ac0acdb557f047a3054160b19dd72602fa
