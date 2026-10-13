@@ -1,0 +1,16 @@
+- name: capital deducts sale expenses and secured encumbrance
+  period: 2026-04
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-35#input.capital_current_market_or_surrender_value: 1000
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-35#input.expenses_attributable_to_capital_sale: true
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-35#input.encumbrance_secured_on_capital: 200
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-35#capital_value_after_sale_expenses_and_encumbrance: 700
+- name: capital does not deduct sale expenses when no sale expenses arise
+  period: 2026-04
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-35#input.capital_current_market_or_surrender_value: 1000
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-35#input.expenses_attributable_to_capital_sale: false
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-35#input.encumbrance_secured_on_capital: 200
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-35#capital_value_after_sale_expenses_and_encumbrance: 800
