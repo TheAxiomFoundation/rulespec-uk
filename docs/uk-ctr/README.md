@@ -235,15 +235,21 @@ over all 159 council scopes before encoding.
   - `axiom-encode retire` records signed deletions, but only for a module
     covered by an existing signed encode manifest (`cmd_retire`), and none of
     the 100 council modules has one.
-  - On `axiom-encode` `main`, `encode --apply --replace-rulespec-path`
-    regenerates a module at an existing path.
+  - On `axiom-encode` `main`, `encode --apply --mode repo-augmented
+    --replace-rulespec-path` regenerates a module at an existing path, but only
+    from the single citation the module declares in
+    `source_verification.corpus_citation_path`. Every council module declares
+    one page row, so the replacement would be encoded from that page alone: it
+    gains a receipt but not the award surface.
 
-  The options, for a maintainer decision: after the encoder re-pin, replace
-  each module with `--replace-rulespec-path` before the rebind removes its page
-  rows; change the encoder so it can retire unreceipted modules; or take a
-  reviewed guard exception (`.axiom/generated-guard-exception.md`: issue or PR
-  URL on line 1, `expires: YYYY-MM-DD` on line 2) for the retirements. Settle
-  this before re-versioning any encoded council.
+  The options, for a maintainer decision: after the encoder re-pin, replace each
+  module from its declared page to obtain a receipt, then `retire` it in the
+  rebind that brings the council's section rows; or change the encoder so it can
+  retire unreceipted modules. A reviewed guard exception is not open to this
+  repository today: the shared workflow at `b36f534` lets only `rulespec-us`
+  turn the guard off ("Authorize exact reviewed migration"), so that route would
+  first need a shared-workflow change. Settle this before re-versioning any
+  encoded council.
 - **Wakefield.** The 35 draft signed-backfill PRs (#269–#303) add per-block
   modules beside the merged award-surface module. Decide which layout stays.
 
@@ -347,7 +353,9 @@ In outline:
 `councils.csv` has one row per English authority in ONS code order. Module and
 PR statuses were reconciled on 2026-10-09 and again on 2026-10-14, when the 34
 closed wave-11 councils returned to `ingested` with their reference tags in
-`notes`. Ingestion, source URLs and
+`notes`, and the notes for Arun, Babergh, Ipswich, Guildford, Mid Suffolk, East
+Hertfordshire and Oldham were brought up to date with the October rulings and
+repairs. Ingestion, source URLs and
 heading-family observations retain the campaign snapshot dates in the notes;
 verify them before a new ingest. The repository's smaller
 [`data/councils/registry.csv`](../../data/councils/registry.csv) keeps its original

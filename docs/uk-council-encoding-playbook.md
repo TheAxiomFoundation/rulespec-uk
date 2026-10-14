@@ -212,8 +212,9 @@ only identify the year and the instrument, they are corroboration: value atoms
 cite the scheme-text page that prints the value. Where an adopted resolution
 itself sets a binding amendment or uprating, that resolution is operative text
 under the incorporation gate above, and the atom for that value cites the
-resolution. Example: one merged module takes its maximum-award starting point
-from the Full Council minutes that continued the scheme.
+resolution. Example: one merged module takes its 2026/27 flat-rate
+non-dependant deduction for Universal Credit households (£8.36) from the Full
+Council minutes, the only adopted text that prints it.
 
 ### Provision-role anchoring
 
