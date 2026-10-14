@@ -303,7 +303,7 @@ constraints below were checked against `axiom-corpus` `main` at `dc82e4c4` and
   Re-version a council with a merged module only in a change that also replaces
   or retires that module; under the generated-RuleSpec guard, deleting a module
   needs a changed receipt that marks it deleted, which `axiom-encode retire`
-  records. Councils with no module, such as Arun, carry no such cost.
+  records. Councils with no module, such as Arun, need no replacement.
 - **Path-mapping events do not exist yet.** `schema/citation-path.v1.md` §6
   specifies `split`, `merge` and `retire` events and is headed "spec only — no
   implementation here"; no event stream is produced. A page-to-section change
