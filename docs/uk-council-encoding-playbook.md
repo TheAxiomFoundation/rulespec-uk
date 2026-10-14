@@ -8,6 +8,12 @@ validation before the method is treated as established there. Replace
 council-specific labels with the authority, instrument, program, and period
 relevant to the lane.
 
+Since 2026-10-11, council modules in this repository come only from the
+supervised encoder ([campaign route](uk-ctr/README.md#the-route)). The
+generator described here, a model working from a scheme-specific steer, is
+retired. The error classes, checks, gate battery and review protocol are how
+encoder output is reviewed.
+
 ## The two-layer harness
 
 The harness has two layers.
@@ -145,11 +151,12 @@ not settle it, and will not settle the next conflict: record both provisions
 and ask.
 
 Arun illustrates a different conflict: s.23(3) prints band A at 100 percent,
-while Schedule 3 paragraph 1 prints 90 percent for the same scheme year. Keep
-both citations, establish the adopted instrument and any final amendment, and
-record the controlling-source decision. The [campaign hand-off](uk-ctr/README.md)
-and [section citation map](uk-ctr/section-ingest.md) preserve the unresolved
-question and the evidence needed to continue.
+while Schedule 3 paragraph 1 prints 90 percent for the same scheme year, and
+s.23(4) calls the schedule a summary. The maintainer ruled on 10 October 2026
+that band A is 100 percent, following s.23(3). An Arun encoding keeps both
+citations, records the ruling, and still encodes Schedule 3's passported
+band A rule. The [campaign hand-off](uk-ctr/README.md#arun-band-a-ruled-100)
+and [section citation map](uk-ctr/section-ingest.md) hold the evidence.
 
 ### Publisher confirmations
 
@@ -193,6 +200,13 @@ an unbroken identification chain to the exact scheme text. Classify the chain as
 “uprate”, “as amended”, or “new income bands”; include every determinate overlay
 or reject the corpus. Cite the commencement or scheme-year clause, or the page-1
 identification atom for a year-silent appendix.
+
+A revision or replacement scheme must be made no later than 11 March in the
+financial year before it takes effect (LGFA 1992 Schedule 1A paragraph 5), so a
+later adoption cannot make a scheme operative for the target year. Adoption
+minutes, reports and decision records identify the year and the instrument;
+they are corroboration, never value sources. Every value atom cites the
+scheme-text page that prints the value.
 
 ### Provision-role anchoring
 
@@ -239,6 +253,42 @@ Check: write boundary pairs before trusting the selector: below/at/above as the
 wording requires. Inspect comparison operators in the derived rule and assert
 the selected band as well as the final award.
 
+### Strict class boundaries and the equality gap
+
+Many schemes define one class by income "less than" the applicable amount and
+another by income "greater than" it. Income exactly equal to the applicable
+amount is then in neither class. Encode the classes as printed. A taper written
+as the maximum less a rate times `max(0, income − applicable amount)` awards
+the full maximum at equality, whatever the classes say.
+
+Real example: several wave-11 modules computed the award from that `max(0, …)`
+form with no class predicate, so a household whose income equalled its
+applicable amount received full support that no printed class granted. Another
+tested the boundary with whole-pound incomes on either side of the equality
+point instead of the penny neighbours.
+
+Check: assert the class predicates themselves. Add cases at income equal to the
+applicable amount and one penny either side. Where the printed classes leave
+equality uncovered, preserve the gap, assert its outcome in a companion case,
+and record it as a drafting gap; never extend a class to close it.
+
+### Award entitlement conditions
+
+The award rule carries every printed entitlement condition, not only the
+capital limit: the working-age population (not a pensioner), membership of an
+award class, a made application where the scheme requires one, and any
+passported route that sets the award regardless of income.
+
+Real example: several wave-11 modules gated the award on capital alone, so a
+pensioner, a non-applicant or a household in no class still received the
+working-age award. Another omitted a printed passported branch for applicants
+on Income Support, income-based Jobseeker's Allowance or income-related
+Employment and Support Allowance.
+
+Check: for each printed condition, add a case in which only that condition
+fails and the award is zero. For each passported route, add a case whose income
+alone would give a lower award.
+
 ### Per-household parameter collapse
 
 Do not replace a family- or household-indexed table with one scalar ceiling,
@@ -253,6 +303,21 @@ Check: represent the printed grid as an indexed parameter table, cover every
 family column, and test the terminal edge independently for each category. Table
 proof must span all claimed cells; a same-amount row still needs the atom for the
 claimed row.
+
+### Liability ceilings
+
+Where the maximum is computed on the lower of the actual liability and the
+charge for a stated band (a Band B, C or D cap), the module computes that
+minimum itself. Taking an already-capped liability as an input moves the
+scheme's rule outside the module.
+
+Real example: two wave-11 modules accepted a pre-capped liability input for a
+printed Band D ceiling, so neither module ever applied the cap.
+
+Check: encode `min(actual liability, band charge)` with the band charge as a
+grounded parameter or a declared input. Add one case where the actual liability
+is strictly below the ceiling and one where the ceiling binds; a case at
+equality demonstrates neither branch.
 
 ### Companion coverage
 
@@ -269,6 +334,13 @@ each cliff, the zero branch, each parameter, and every derived rule. Use one
 derived-output entity per case. Hand-derive expected values from the printed
 grid. Quote the engine's exact decimal string when division repeats; do not use
 a float-truncated expectation.
+
+Case mechanics the campaign's gates enforced or its reviews kept finding:
+every case assigns every factual input the module declares, including inputs
+that are false; companions use no YAML merge anchors; parameter tables are not
+keyed by booleans, so branch with conditions over grounded parameters instead.
+For tariff income, test the threshold and the first step on both sides,
+following the scheme's "or part thereof" wording.
 
 Indexed-table assertion boundary (adjudicated wave 8): direct per-index
 assertions are required where the index is a factual input slot; where the
@@ -306,6 +378,13 @@ Check: proof validation should find printed forms in the atoms for source
 parameters; formula review should trace every derived number to those parameters.
 For weekly/daily conversions and similar arithmetic, encode the formula and let
 the engine calculate the result.
+
+For percentages, the merged council modules that pass use a `Rate` parameter of
+0.01 grounded on the scheme's own "per cent" wording (for example "100 per cent
+of the amount A/B") and multiply by it. During the campaign a `/100` divisor
+repeatedly failed the numeric-grounding check ("Ungrounded generated numeric
+literal"), and no merged module divides by 100. Decompose a mixed number such
+as 2 6/7 into its printed whole number, numerator and denominator.
 
 ### Test suppression and mislabeling
 
