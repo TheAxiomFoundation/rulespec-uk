@@ -239,12 +239,16 @@ over all 159 council scopes before encoding.
     --replace-rulespec-path` regenerates a module at an existing path, but only
     from the single citation the module declares in
     `source_verification.corpus_citation_path`. Every council module declares
-    one page row, so the replacement would be encoded from that page alone: it
-    gains a receipt but not the award surface.
+    one page row (a block row for Leeds and Wakefield), so the replacement
+    would be encoded from that row alone: it gains a receipt but not the award
+    surface.
 
   The options, for a maintainer decision: after the encoder re-pin, replace each
-  module from its declared page to obtain a receipt, then `retire` it in the
-  rebind that brings the council's section rows; or change the encoder so it can
+  module from its declared row to obtain a receipt, then `retire` it around the
+  rebind that brings the council's section rows (whether before the rebind or in
+  the same PR depends on how the guard re-checks the retired module's source
+  against the newly bound release, and is part of what to settle); or change
+  the encoder so it can
   retire unreceipted modules. A reviewed guard exception is not open to this
   repository today: the shared workflow at `b36f534` lets only `rulespec-us`
   turn the guard off ("Authorize exact reviewed migration"), so that route would
