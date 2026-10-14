@@ -298,12 +298,15 @@ constraints below were checked against `axiom-corpus` `main` at `dc82e4c4` and
   citation path appears in two scopes. A page-row version and a section-row
   version of the same council document share the document's own path, so a
   release carries one or the other. Binding the section-row version therefore
-  removes the page rows from the served corpus. 262 files across 98 councils in
-  `rulespec-uk` cite council page rows, and Leeds and Wakefield cite block rows.
-  Re-version a council with a merged module only in a change that also replaces
-  or retires that module; under the generated-RuleSpec guard, deleting a module
-  needs a changed receipt that marks it deleted, which `axiom-encode retire`
-  records. Councils with no module, such as Arun, need no replacement.
+  removes the page rows from the served corpus. In `rulespec-uk`, 98 module
+  files and 164 vendored corpus copies (82 councils) cite council page rows, and
+  Leeds and Wakefield cite block rows. Re-version a council with a merged module
+  only in a change that also replaces or retires that module. Under the
+  generated-RuleSpec guard that needs a receipt, and `axiom-encode retire` only
+  retires modules covered by an existing signed encode manifest, which none of
+  the 100 has; the [README](README.md#design-questions-the-route-has-to-answer)
+  lists the options. Councils with no module, such as Arun, need no
+  replacement.
 - **Path-mapping events do not exist yet.** `schema/citation-path.v1.md` §6
   specifies `split`, `merge` and `retire` events and is headed "spec only — no
   implementation here"; no event stream is produced. A page-to-section change
@@ -316,8 +319,8 @@ constraints below were checked against `axiom-corpus` `main` at `dc82e4c4` and
   explicitly allowed. Keep the `<date>-<slug>-council-tax-reduction-2026-2027`
   form with a later date.
 - **Source bytes live outside git.** Since
-  [axiom-corpus#769](https://github.com/TheAxiomFoundation/axiom-corpus/pull/769)
-  (2026-09-29), each scope's sources, inventory, provisions and coverage are
+  [axiom-corpus#774](https://github.com/TheAxiomFoundation/axiom-corpus/pull/774)
+  (2026-09-30; tooling in #769), each scope's sources, inventory, provisions and coverage are
   pinned by `.axiom/corpus-locks/<jurisdiction>/<document_class>/<version>.json`
   and fetched with `axiom-corpus-ingest corpus fetch`. Extracting from a fetched
   copy through a document's `local_path` works, but `_download_document` then
@@ -326,10 +329,11 @@ constraints below were checked against `axiom-corpus` `main` at `dc82e4c4` and
   sha256 against the locked source; otherwise correct the recorded URL before
   signing.
 - **52 council scopes have no committed extraction manifest.** 107 council
-  manifests are in `.axiom/corpus-manifests/`; the other 52 scopes' signed
-  ingest manifests record an extraction command that read a manifest which was
-  never committed. Rebuild it from the scope's inventory before adding an
-  `extraction` block.
+  manifests are in `.axiom/corpus-manifests/`. For 51 of the other 52 scopes the
+  signed ingest manifest records an extraction command that read a manifest
+  which was never committed; Kingston's records a release promotion instead.
+  Rebuild the manifest from the scope's inventory before adding an `extraction`
+  block.
 
 Procedure:
 
@@ -340,18 +344,22 @@ Procedure:
    printed contents and operative headings; account for every missing,
    duplicated or unexpected label. Inspect page spans and the full bodies of
    award provisions and schedules, including boundaries adjoining a page break.
-   Run `scripts/validate_citation_paths.py` and confirm running headers and
+   Fetch the locked provisions (`axiom-corpus-ingest corpus fetch --path data/corpus/provisions`),
+   run `scripts/validate_citation_paths.py`, and confirm running headers and
    footers are gone.
-3. Sign from a clean tracked tree with
-   `axiom-corpus-ingest sign-ingest-manifest --lock --push`, which writes the
-   scope's lock and uploads its bytes; commit the signed ingest manifest and the
-   lock together. The current references are
+3. Commit the manifest so the tracked tree is clean, then sign with
+   `axiom-corpus-ingest sign-ingest-manifest --jurisdiction <jurisdiction> --document-class manual --version <version> --command "<the exact extract command>" --lock --push`,
+   which writes the scope's lock and uploads its bytes; commit the signed
+   ingest manifest and the lock together. The current references are
    [`docs/corpus-storage.md`](https://github.com/TheAxiomFoundation/axiom-corpus/blob/main/docs/corpus-storage.md)
    and [`docs/named-release-publication.md`](https://github.com/TheAxiomFoundation/axiom-corpus/blob/main/docs/named-release-publication.md).
    Extraction success alone does not publish or bind anything.
-4. Cut and publish a release that swaps the scope's version, then bind it in
-   `rulespec-uk` (`.axiom/toolchain.toml`, `.axiom/workflow-toolchain.toml` and
-   both workflow corpus refs; see the [README](README.md#corpus-procedure)).
+4. Cut a release that swaps the scope's version. Merging the selector does not
+   publish it: dispatch `publish.yml`, then the mirror and activation
+   workflows with that run's ID. Bind it in `rulespec-uk`
+   (`.axiom/toolchain.toml`, `.axiom/workflow-toolchain.toml` and both workflow
+   corpus refs), which needs an encoder pin with `corpus-fetch`; see the
+   [README](README.md#corpus-procedure).
    Verify that the chosen section citation resolves in that release before
    asking the supervised encoder to use it.
 5. Pilot one Arun and one Crawley component through the supervised encoder.

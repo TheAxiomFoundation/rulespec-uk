@@ -4,8 +4,8 @@ This directory records the campaign to encode every English billing authority's
 working-age council tax reduction (CTR) scheme and how to continue it.
 
 - Epic and decision record: [rulespec-uk#140](https://github.com/TheAxiomFoundation/rulespec-uk/issues/140)
-  (assigned to [@vahid-ahmadi](https://github.com/vahid-ahmadi); the route
-  and the wave-11 calls were taken back by the maintainer on
+  (assigned to [@vahid-ahmadi](https://github.com/vahid-ahmadi); the maintainer
+  took the route and the wave-11 calls on
   [10 October 2026](https://github.com/TheAxiomFoundation/rulespec-uk/issues/140#issuecomment-6102095622)).
 - The route, decided 2026-10-11: [below](#the-route).
 - Council registry: [`councils.csv`](councils.csv).
@@ -22,12 +22,17 @@ The campaign registry contains 296 English authorities from the ONS April 2025
 local authority district list: 63 E06, 164 E07, 36 E08 and 33 E09 codes
 (recounted from the registry on 2026-10-09).
 
-The target layout for each council is a jurisdiction root, `uk-<slug>/`, and a
-working-age module at
+Each council has a jurisdiction root, `uk-<slug>/`. Its award surface covers
+the maximum reduction, taper or band grid, capital limit and tariff income,
+non-dependant deductions, minimum award and the formula connecting them. The
+100 merged modules put the whole surface in one module at
 `uk-<slug>/policies/<slug>/council-tax-reduction.yaml`, with a companion test.
-Its award surface covers the maximum reduction, taper or band grid, capital
-limit and tariff income, non-dependant deductions, minimum award and the
-formula connecting them.
+That is the legacy layout. On the [chosen route](#the-route) the encoder writes
+one module per section citation, and each council's award is assembled under
+`uk-<slug>/programs/` ([design questions](#design-questions-the-route-has-to-answer)).
+`tests/test_council_registry.py` recognises only the legacy path as `encoded`,
+so the first council finished on the route also needs that test and the
+registry's status rule updated.
 
 **Scotland needs no per-council modules.** It has one national CTR scheme,
 with working-age rules in SSI 2021/249 and pension-age rules in SSI 2012/319.
@@ -67,8 +72,10 @@ The encoder cannot reach a council's award surface from today's page rows
 (see [the Arun pilot](#evidence-the-supervised-encoder-on-arun)). So the route
 re-ingests each council scheme with section rows, encodes the award-surface
 sections, and assembles them per council. That is option A′'s design. The
-corpus half is proven on Arun and Crawley. The encoder and assembly halves
-are not yet proven. [How to continue](#how-to-continue) gives the steps.
+corpus half has been demonstrated on Arun and Crawley, though not yet signed or
+released, and the known extraction defects are listed in
+[`section-ingest.md`](section-ingest.md). The encoder and assembly halves are
+not yet proven. [How to continue](#how-to-continue) gives the steps.
 
 ## Status on 2026-10-14
 
@@ -88,15 +95,16 @@ Corpus side:
   ([`.axiom/toolchain.toml`](../../.axiom/toolchain.toml)). Its 191 scopes are
   33 national `uk` scopes and 158 council scopes.
 - `axiom-corpus` holds 159 council scopes. Since
-  [axiom-corpus#769](https://github.com/TheAxiomFoundation/axiom-corpus/pull/769)
-  (2026-09-29) their bytes live outside git. Each scope is pinned by a lock
+  [axiom-corpus#774](https://github.com/TheAxiomFoundation/axiom-corpus/pull/774)
+  (2026-09-30; tooling in #769) their bytes live outside git. Each scope is pinned by a lock
   file, `.axiom/corpus-locks/uk-<slug>/manual/<version>.json`, and fetched with
   `axiom-corpus-ingest corpus fetch`.
 - 107 council scopes have their extraction manifest committed in
   `.axiom/corpus-manifests/`. The other 52 (for example Ashford, Blackpool and
-  Bristol) do not, although their signed ingest manifests record an extraction
-  command that read one. Rebuild the manifest from the scope's inventory before
-  re-versioning one of those.
+  Bristol) do not. For 51 of them the signed ingest manifest records an
+  extraction command that read one; Kingston's records a release promotion
+  instead. Rebuild the manifest from the scope's inventory before re-versioning
+  one of those.
 
 ## Continuous integration and receipts
 
@@ -106,21 +114,29 @@ Measured at `main` `3d0ecdc8` on 2026-10-14:
   ([#459](https://github.com/TheAxiomFoundation/rulespec-uk/pull/459),
   2026-10-12). It checks the modules a pull request changes. The 100 council
   modules on `main` carry no receipt and stay as they are until a PR changes
-  one. From then on, the change has to come from the encoder.
+  one. From then on, the change has to come from the encoder, and for these
+  unreceipted modules there is no supported path yet (see
+  [replacing a merged module](#design-questions-the-route-has-to-answer)).
 - The shared validation workflow is pinned at `b36f534`
   ([#464](https://github.com/TheAxiomFoundation/rulespec-uk/pull/464)). The
   encoder is still pinned at `c326d1ac` (0.2.1337).
   [`.axiom/workflow-toolchain.toml`](../../.axiom/workflow-toolchain.toml)
   mirrors those pins, and CI fails if it drifts
   ([#461](https://github.com/TheAxiomFoundation/rulespec-uk/pull/461)).
-- There are no files under `.axiom/encoding-manifests/`. Two tests still forbid
-  any: `tests/test_encoding_manifest_prohibition.py`, and
+- There are no files under `.axiom/encoding-manifests/`.
   `test_legacy_applied_manifests_are_not_kept_as_migration_inputs` in
-  `tests/test_repository_layout.py`. A canonical receipt layout is staged in
+  `tests/test_repository_layout.py` fails if any manifest JSON exists, and
+  `tests/test_encoding_manifest_prohibition.py` pins that behaviour; both change
+  at the re-pin. A canonical receipt layout is staged in
   `tests/test_encoding_manifest_retirement_layout.py`.
 - The migration's remaining step is an encoder re-pin whose guard verifies
   receipts, which retires the prohibition. Until it lands, no encoder output
   can be committed here.
+- The same re-pin is needed before rulespec-uk can bind any newer corpus
+  release. Every release cut now points at a corpus commit with lock files, and
+  the shared workflow at `b36f534` then requires an encoder with `corpus-fetch`
+  ([axiom-encode#1742](https://github.com/TheAxiomFoundation/axiom-encode/pull/1742),
+  2026-10-10), which `c326d1ac` predates.
 
 ## Evidence: the supervised encoder on Arun
 
@@ -180,6 +196,12 @@ records it with the Babergh ruling. A reply from the council would be recorded
 under the playbook's
 [publisher-confirmation rules](../uk-council-encoding-playbook.md#publisher-confirmations).
 
+Still open for Arun: whether the grid printed "for 2026/27" in s.23 already
+reflects paragraph 7's CPI uprating. The repaired reference module
+(`oracle/uk-ctr/wave11/uk-arun/pr310-repaired`) encodes the printed figures and
+records the uprating as an open question. Settle it before comparing encoder
+output with that module.
+
 The historical duplicate-grid sweep (an archival record; its run artifacts are
 not published) covered 138 manuals, before the next 21 scopes were added. Its
 Arun-only result excluded some grid layouts and DOCX blocks. Repeat the check
@@ -193,18 +215,35 @@ over all 159 council scopes before encoding.
   [`uk/programs/universal-credit/fy-2026-27.yaml`](../../uk/programs/universal-credit/fy-2026-27.yaml)
   does for Universal Credit. The shared workflow's pre-check requires every
   ProgramSpec import to resolve to an existing encoded module, and allows only
-  the literals 0, 1 and 12, so amounts and rates must come from encoded
-  modules. The supervised guard does not treat `programs/` as encoder output.
-  Nothing exempts a hand-assembled composition module under `policies/`.
+  the literals 0, 1 and 12, so amounts, rates and period conversions (days per
+  week, days in the year) must come from encoded modules. Arun's maximum is
+  daily (A/B) while its grid and minimum award are weekly, so its assembly
+  depends on those conversions. The supervised guard does not treat
+  `programs/` as encoder output. Nothing exempts a hand-assembled composition
+  module under `policies/`.
 - **Replacing a merged module.** One UK release cannot carry two versions of
   the same document (see [`section-ingest.md`](section-ingest.md#re-versioning-a-scope-with-section-rows)).
   Re-versioning a council to section rows therefore removes the page rows its
-  merged module cites. 262 files across 98 councils cite council page rows;
-  Leeds and Wakefield cite block rows. The rebind that brings a council's
-  section rows must also replace or retire that council's module. Under the
-  guard, deleting a module needs a changed receipt that marks it deleted;
-  `axiom-encode retire` deletes files and records those signed deletion
-  entries. Prove the sequence on the first encoded council to be re-versioned.
+  merged module cites. 262 files cite council page rows: the 98 module files
+  and 164 vendored corpus copies under `uk-<slug>/data/corpus/` (82 councils),
+  which go stale at the re-version. Leeds and Wakefield cite block rows. The
+  rebind that brings a council's section rows must also replace or retire that
+  council's module, and today there is no supported way to do that:
+  - Under the guard, deleting or changing a module needs a changed receipt
+    covering it (`guard_generated_change_issues` in `axiom-encode` at
+    `c326d1ac`).
+  - `axiom-encode retire` records signed deletions, but only for a module
+    covered by an existing signed encode manifest (`cmd_retire`), and none of
+    the 100 council modules has one.
+  - On `axiom-encode` `main`, `encode --apply --replace-rulespec-path`
+    regenerates a module at an existing path.
+
+  The options, for a maintainer decision: after the encoder re-pin, replace
+  each module with `--replace-rulespec-path` before the rebind removes its page
+  rows; change the encoder so it can retire unreceipted modules; or take a
+  reviewed guard exception (`.axiom/generated-guard-exception.md`: issue or PR
+  URL on line 1, `expires: YYYY-MM-DD` on line 2) for the retirements. Settle
+  this before re-versioning any encoded council.
 - **Wakefield.** The 35 draft signed-backfill PRs (#269–#303) add per-block
   modules beside the merged award-surface module. Decide which layout stays.
 
@@ -225,8 +264,8 @@ over all 159 council scopes before encoding.
 to an annual or weekly excess
 ([#140](https://github.com/TheAxiomFoundation/rulespec-uk/issues/140#issuecomment-5845299202)).
 #447 repaired both, with period invariants and differential checks against the
-national rules (`tests/test_ctr_taper_periodisation.py`). `uk-babergh` read
-Ipswich's identical "prescribed daily percentage" sentence as an effective
+national rules (`tests/test_ctr_taper_periodisation.py`). `uk-babergh` read its
+"prescribed daily percentage" sentence (identical to Ipswich's) as an effective
 140% weekly taper and left tariff income out of the excess; #449 applied the
 10 October 2026 ruling (20% of weekly excess per week) and counts tariff
 income. Both landed before the guard went on. Any further correction to a
@@ -234,31 +273,35 @@ merged module now has to come from the encoder.
 
 ## How to continue
 
-1. **Finish the signed-workflow migration.** The encoder re-pin that admits
-   verified receipts and retires the manifest prohibition comes first; no
+1. **Finish the signed-workflow migration.** The encoder re-pin comes first:
+   it admits verified receipts, retires the manifest prohibition, and brings
+   the `corpus-fetch` support that binding any newer corpus release needs. No
    council encode can land before it.
 2. **Re-version Arun with section rows.** Arun has no module on `main`, so no
-   citation breaks. Use the tested extraction block and its two fixes in
+   citation breaks. Use the tested extraction block, with its bare-number fix, in
    [`section-ingest.md`](section-ingest.md#arun-family-a-the-extraction-block),
    and follow the corpus procedure below.
 3. **Cut, publish and bind** a release carrying the new Arun version.
 4. **Encode Arun's sections** without `--apply` first, under the trusted
    signing supervisor:
-   `axiom-encode encode uk-arun/manual/council-tax-reduction-scheme-2026-2027/23 --backend codex`,
+   `axiom-encode encode uk-arun/manual/council-tax-reduction-scheme-2026-2027/23 --backend codex`
+   (abbreviated: the encoder also requires `--corpus-path`,
+   `--axiom-rules-engine-path` and `--policy-repo-path`),
    then `/19`, `/21`, `/22` and `/schedule-3`. Read the encoder's own gates.
    Then run them through the signed workflow so the modules land with
    receipts.
-5. **Assemble Arun** as a ProgramSpec under `uk-arun/programs/`, wiring
-   maximum → grid → non-dependant deductions → £1 floor, with Schedule 3
-   paragraph 8's passported band A.
+5. **Assemble Arun** as a ProgramSpec under `uk-arun/programs/`: the s.21
+   maximum (100% of A/B less non-dependant deductions), then the s.23 band
+   discount applied to that maximum, then s.21(7)'s rule that nothing is
+   payable below £1 a week, with Schedule 3 paragraph 8's passported band A.
 6. **Compare** its outputs with `oracle/uk-ctr/wave11/uk-arun/pr310-repaired`
    on a shared household grid. Adjudicate every disagreement against the
    scheme text, applying the band A ruling.
 7. **Repeat on Crawley** (heading family B; award rules in `/1`, `/57`, `/57A`,
    `/58` and `/59`) with the label fixes in
    [`section-ingest.md`](section-ingest.md#crawley-family-b-the-template-scheme).
-8. **Take the first already-encoded council** through the same cycle, with
-   the module replacement in its rebind.
+8. **Take the first already-encoded council** through the same cycle, once
+   the module-replacement question above is settled.
 9. **Scale by heading family**, A and B first, then C–H.
 
 ### Corpus procedure
@@ -276,24 +319,28 @@ In outline:
    Name the version `<date>-<slug>-council-tax-reduction-2026-2027` with a
    later date than the served version: activation refuses a version that sorts
    before the one it replaces.
-3. Sign from a clean tracked tree with
-   `axiom-corpus-ingest sign-ingest-manifest --lock --push`. This writes the
-   scope's lock file and uploads the bytes. One commit carries the signed
-   ingest manifest and the lock.
-4. Run `scripts/validate_citation_paths.py`. It fails when a family of
+3. Commit the extraction manifest, so the tracked tree is clean, then sign:
+   `axiom-corpus-ingest sign-ingest-manifest --jurisdiction uk-<slug> --document-class manual --version <version> --command "<the exact extract command>" --lock --push`.
+   This writes the scope's lock file and uploads the bytes. One commit carries
+   the signed ingest manifest and the lock.
+4. Fetch the locked provisions (`axiom-corpus-ingest corpus fetch --path data/corpus/provisions`),
+   then run `scripts/validate_citation_paths.py`. It fails when a family of
    irregular paths (page or block rows, spaces, en dashes, uppercase, truncated
    segments) grows past its baseline, and raising a baseline is a reviewed
    change.
 5. Cut a release: add one new `manifests/releases/uk-rulespec-<date>.json` that
-   copies the previous selector and swaps in the new version. Merging it
-   publishes the release; then dispatch the mirror and activation workflows.
+   copies the previous selector and swaps in the new version, and merge it after
+   green CI. Merging does not publish. Dispatch `publish.yml` with the selector
+   name; when it succeeds, dispatch `mirror-release.yml` and
+   `activate-release.yml` with that publish run's ID. Activation waits for
+   approval in the protected `release-activation` environment.
 6. Rebind `rulespec-uk` in one PR. Set the release name and content digest in
    `.axiom/toolchain.toml`, leaving the waiver digest alone. Set the cut's merge
    commit as `axiom_corpus_ref` in `.axiom/workflow-toolchain.toml`,
    `axiom-corpus-ref` in `.github/workflows/repository-checks.yml`, and
    `AXIOM_CORPUS_REF` in `.github/workflows/bulk-encode.yml`. The PR's validate
    job fetches the published release object and fails until the mirror has
-   finished.
+   finished. It also needs the encoder re-pin with `corpus-fetch` (step 1).
 
 ## The registry
 

@@ -201,12 +201,19 @@ an unbroken identification chain to the exact scheme text. Classify the chain as
 or reject the corpus. Cite the commencement or scheme-year clause, or the page-1
 identification atom for a year-silent appendix.
 
-A revision or replacement scheme must be made no later than 11 March in the
-financial year before it takes effect (LGFA 1992 Schedule 1A paragraph 5), so a
-later adoption cannot make a scheme operative for the target year. Adoption
-minutes, reports and decision records identify the year and the instrument;
-they are corroboration, never value sources. Every value atom cites the
-scheme-text page that prints the value.
+LGFA 1992 Schedule 1A paragraph 5 requires a revision or replacement scheme to
+be made no later than 11 March in the financial year before it takes effect.
+A decision dated after that deadline does not meet the requirement, so treat
+the operative year as not established and record the question rather than
+encoding it.
+
+Adoption records play two roles. Where minutes, reports or decision records
+only identify the year and the instrument, they are corroboration: value atoms
+cite the scheme-text page that prints the value. Where an adopted resolution
+itself sets a binding amendment or uprating, that resolution is operative text
+under the incorporation gate above, and the atom for that value cites the
+resolution. Example: one merged module takes its maximum-award starting point
+from the Full Council minutes that continued the scheme.
 
 ### Provision-role anchoring
 
@@ -267,10 +274,13 @@ applicable amount received full support that no printed class granted. Another
 tested the boundary with whole-pound incomes on either side of the equality
 point instead of the penny neighbours.
 
-Check: assert the class predicates themselves. Add cases at income equal to the
-applicable amount and one penny either side. Where the printed classes leave
-equality uncovered, preserve the gap, assert its outcome in a companion case,
-and record it as a drafting gap; never extend a class to close it.
+Check: read the operative class conditions, not class headings or summaries;
+a heading can say "less than" while the operative condition says "does not
+exceed". Assert the class predicates themselves. Add cases at income equal to
+the applicable amount and one penny either side. Where the operative conditions
+leave equality uncovered, do not extend a class to close the gap on your own
+reading: record both readings and get a ruling, as for contradictory
+provisions, then assert the ruled outcome in a companion case.
 
 ### Award entitlement conditions
 
@@ -336,8 +346,9 @@ grid. Quote the engine's exact decimal string when division repeats; do not use
 a float-truncated expectation.
 
 Case mechanics the campaign's gates enforced or its reviews kept finding:
-every case assigns every factual input the module declares, including inputs
-that are false; companions use no YAML merge anchors; parameter tables are not
+every case assigns every factual input that the outputs under test depend on,
+including inputs that are false (a parameter-only case may have none);
+companions use no YAML merge anchors; parameter tables are not
 keyed by booleans, so branch with conditions over grounded parameters instead.
 For tariff income, test the threshold and the first step on both sides,
 following the scheme's "or part thereof" wording.
@@ -379,12 +390,14 @@ parameters; formula review should trace every derived number to those parameters
 For weekly/daily conversions and similar arithmetic, encode the formula and let
 the engine calculate the result.
 
-For percentages, the merged council modules that pass use a `Rate` parameter of
-0.01 grounded on the scheme's own "per cent" wording (for example "100 per cent
-of the amount A/B") and multiply by it. During the campaign a `/100` divisor
-repeatedly failed the numeric-grounding check ("Ungrounded generated numeric
-literal"), and no merged module divides by 100. Decompose a mixed number such
-as 2 6/7 into its printed whole number, numerator and denominator.
+For percentages, most merged council modules ground the printed percentage
+directly as a decimal `Rate` (for example 0.2 for "20 per cent"). Seven of the
+100 instead use a `Rate` unit of 0.01 grounded on the scheme's own "per cent"
+wording (for example "100 per cent of the amount A/B") and multiply by it,
+which keeps a mixed number such as 2 6/7 visible as its printed whole number,
+numerator and denominator. During the campaign a `/100` divisor repeatedly
+failed the numeric-grounding check ("Ungrounded generated numeric literal"),
+and no merged module divides by 100.
 
 ### Test suppression and mislabeling
 
