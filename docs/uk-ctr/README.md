@@ -254,8 +254,8 @@ merged module now has to come from the encoder.
 6. **Compare** its outputs with `oracle/uk-ctr/wave11/uk-arun/pr310-repaired`
    on a shared household grid. Adjudicate every disagreement against the
    scheme text, applying the band A ruling.
-7. **Repeat on Crawley** (heading family B, award rules in `/1`, `/57A` and
-   `/58`) with the label fixes in
+7. **Repeat on Crawley** (heading family B; award rules in `/1`, `/57`, `/57A`,
+   `/58` and `/59`) with the label fixes in
    [`section-ingest.md`](section-ingest.md#crawley-family-b-the-template-scheme).
 8. **Take the first already-encoded council** through the same cycle, with
    the module replacement in its rebind.
