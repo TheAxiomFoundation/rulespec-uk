@@ -3,9 +3,11 @@
 This directory records the campaign to encode every English billing authority's
 working-age council tax reduction (CTR) scheme and how to continue it.
 
-- Epic and decision record: [rulespec-uk#140](https://github.com/TheAxiomFoundation/rulespec-uk/issues/140).
-- Campaign owner: [@vahid-ahmadi](https://github.com/vahid-ahmadi), as recorded in
-  [the 2026-09-28 hand-off](https://github.com/TheAxiomFoundation/rulespec-uk/issues/140#issuecomment-5872231649).
+- Epic and decision record: [rulespec-uk#140](https://github.com/TheAxiomFoundation/rulespec-uk/issues/140)
+  (assigned to [@vahid-ahmadi](https://github.com/vahid-ahmadi); the route
+  and the wave-11 calls were taken back by the maintainer on
+  [10 October 2026](https://github.com/TheAxiomFoundation/rulespec-uk/issues/140#issuecomment-6102095622)).
+- The route, decided 2026-10-11: [below](#the-route).
 - Council registry: [`councils.csv`](councils.csv).
 - Section-level ingest evidence: [`section-ingest.md`](section-ingest.md).
 - Encoding and review method: [`../uk-council-encoding-playbook.md`](../uk-council-encoding-playbook.md).
@@ -38,69 +40,89 @@ from the English periodisation errors below: it correctly applies the daily
 percentage to weekly excess against a daily maximum; its period label needs
 correction. Scottish composition belongs to #442, outside this council registry.
 
-## Status measured on 2026-10-09
+## The route
 
-Measurements used `main` at `1c1101c` (before this change).
-Tracked module paths were counted with `git ls-files`; open council PRs were
-queried read-only with:
+On 2026-10-11 the open question this document used to pose (A′, B or C,
+below) was settled in favour of the supervised encoder. As each closing
+comment on the wave-11 PRs says (for example
+[#310](https://github.com/TheAxiomFoundation/rulespec-uk/pull/310#issuecomment-6110687103)):
 
-```bash
-gh pr list -R TheAxiomFoundation/rulespec-uk --state open --search CTR \
-  --limit 1000 --json number,title,files,mergeable,statusCheckRollup
-```
+- Council CTR modules in this repository will come from the supervised
+  encoder once rulespec-uk is on the signed encoder workflow. Agent-written
+  council modules will not land.
+- The 34 wave-11 encode PRs (#308 and #310–#342) were closed without merging.
+- Their work is kept as annotated reference tags: an `-original` tag for each
+  of the 34 PR heads, and a `-repaired` tag for the 8 that had a repair round
+  with hand-derived companion cases (Arun, Bournemouth, Christchurch and Poole,
+  Burnley, Charnwood, Crawley, Eastleigh, Mid Suffolk, Redditch). They are
+  named `oracle/uk-ctr/wave11/<jurisdiction>/pr<N>-original` or
+  `…-repaired`. The tag `oracle/uk-ctr/main-2026-10-11` marks `main` at
+  `c65fd7df`, which holds the 100 merged council modules with the #447 and #449
+  repairs.
+- Those tags are references, not ground truth. Encoder output for a council
+  is compared with them on a shared household grid, and every disagreement is
+  adjudicated against the scheme text.
 
-Only PRs adding a council's `council-tax-reduction.yaml` count as council
-encoding PRs; the worklist PR returned by the search does not.
+The encoder cannot reach a council's award surface from today's page rows
+(see [the Arun pilot](#evidence-the-supervised-encoder-on-arun)). So the route
+re-ingests each council scheme with section rows, encodes the award-surface
+sections, and assembles them per council. That is option A′'s design. The
+corpus half is proven on Arun and Crawley. The encoder and assembly halves
+are not yet proven. [How to continue](#how-to-continue) gives the steps.
 
-| Stage | Councils | Evidence and measurement date |
+## Status on 2026-10-14
+
+| Stage | Councils | Evidence |
 |---|---:|---|
-| Module on main | 100 | Tracked module paths at `1c1101c`, 2026-10-09 |
-| Open wave-11 encoding PR | 34 | GitHub query, 2026-10-09: #308 and #310–#342 |
-| Ingested, no module or open encoding PR | 25 | Bound selector rechecked 2026-10-09: 24 scopes; historical 2026-09-28 record: Shropshire outside the release |
-| Not ingested in the campaign snapshot | 137 | 2026-10-09 set difference against the bound selector and historical Shropshire record |
-| **Total** | **296** | Registry identities, recounted 2026-10-09 |
+| Module on `main` | 100 | `uk-<slug>/policies/<slug>/council-tax-reduction.yaml`; no encoding receipts |
+| Ingested and released, no module | 58 | 24 never encoded, plus the 34 closed wave-11 councils; all in `uk-rulespec-2026-09-07` |
+| Ingested, withdrawn from releases | 1 | Shropshire: the ingested text is the 2024/25 default scheme under a 2026/27 cover |
+| Not ingested | 137 | discovery, fetch or verification stage; see `notes` in [`councils.csv`](councils.csv) |
+| **Total** | **296** | |
 
-The main-module and open-PR counts are unchanged from the 2026-09-28 report.
-The [bound selector](https://github.com/TheAxiomFoundation/axiom-corpus/blob/440162d04375a5071f2ac02de94f85def3e74053/manifests/releases/uk-rulespec-2026-09-07.json)
-was reread on 2026-10-09: its 191 scopes comprise 33 national scopes and 158
-council scopes, including every merged and open-PR council. All recorded
-released versions in `councils.csv` match it. The bound release remains
-`uk-rulespec-2026-09-07` in [the toolchain pin](../../.axiom/toolchain.toml).
-Adding the historically ingested Shropshire scope gives the retained
-159-council snapshot. These figures remain unchanged from 2026-09-28. The
-137 figure describes councils outside this snapshot, rather than a fresh query
-of live corpus ingestion. Discovery findings and Shropshire’s status retain
-their 2026-09-28 date; verify them before new work. The historical section
-survey and document counts are in [`section-ingest.md`](section-ingest.md).
+No council encode PR is open.
 
-All 34 council PRs report `CONFLICTING` on 2026-10-09. The same query shows
-22 with no attached check results and 12 with attached results; this does not
-establish that a PR never ran CI or that its current head passes. Reconcile the
-shared `oracle-coverage-pending.yaml` ledger, update the corpus pin and require
-fresh checks on each reviewed head before landing.
+Corpus side:
 
-## The encoder-regime decision
+- `rulespec-uk` binds release `uk-rulespec-2026-09-07`
+  ([`.axiom/toolchain.toml`](../../.axiom/toolchain.toml)). Its 191 scopes are
+  33 national `uk` scopes and 158 council scopes.
+- `axiom-corpus` holds 159 council scopes. Since
+  [axiom-corpus#769](https://github.com/TheAxiomFoundation/axiom-corpus/pull/769)
+  (2026-09-29) their bytes live outside git. Each scope is pinned by a lock
+  file, `.axiom/corpus-locks/uk-<slug>/manual/<version>.json`, and fetched with
+  `axiom-corpus-ingest corpus fetch`.
+- 107 council scopes have their extraction manifest committed in
+  `.axiom/corpus-manifests/`. The other 52 (for example Ashford, Blackpool and
+  Bristol) do not, although their signed ingest manifests record an extraction
+  command that read one. Rebuild the manifest from the scope's inventory before
+  re-versioning one of those.
 
-Measured on 2026-10-09, `git ls-files '.axiom/encoding-manifests/**'` returns
-**zero encoding receipts**. The 100 merged council modules therefore have no
-tracked receipts. The hand-off on #140 identifies these and the open wave as
-campaign encodes produced outside the supervised encoder path.
+## Continuous integration and receipts
 
-The [current workflow](../../.github/workflows/repository-checks.yml) pins the
-shared validation workflow at `842c69d` and sets `run-generated-guard: false`.
-The [shared workflow at `6c2d9eb`](https://github.com/TheAxiomFoundation/.github/blob/6c2d9eb/.github/workflows/validate-rulespec.yml),
-read on 2026-10-09, requires supervised `axiom-encode encode --apply` content
-when the guard is enabled, or a reviewed, dated exception when it is disabled.
-The existing [migration test](../../tests/test_repository_layout.py)
-also asserts that the encoding-manifest directory contains no JSON files.
-A route that introduces newly supervised receipts must reconcile this empty-
-directory assertion with the new receipt contract in a separate reviewed
-change; generating receipts alone will not pass the current suite.
+Measured at `main` `3d0ecdc8` on 2026-10-14:
 
-That later guard contract requires an authorizing issue or PR URL on line 1
-of `.axiom/generated-guard-exception.md` and `expires: YYYY-MM-DD` on line 2,
-with a date that has not expired in UTC. A workflow upgrade needs a decision
-about the existing unreceipted content.
+- The generated-RuleSpec guard is on
+  ([#459](https://github.com/TheAxiomFoundation/rulespec-uk/pull/459),
+  2026-10-12). It checks the modules a pull request changes. The 100 council
+  modules on `main` carry no receipt and stay as they are until a PR changes
+  one. From then on, the change has to come from the encoder.
+- The shared validation workflow is pinned at `b36f534`
+  ([#464](https://github.com/TheAxiomFoundation/rulespec-uk/pull/464)). The
+  encoder is still pinned at `c326d1ac` (0.2.1337).
+  [`.axiom/workflow-toolchain.toml`](../../.axiom/workflow-toolchain.toml)
+  mirrors those pins, and CI fails if it drifts
+  ([#461](https://github.com/TheAxiomFoundation/rulespec-uk/pull/461)).
+- There are no files under `.axiom/encoding-manifests/`. Two tests still forbid
+  any: `tests/test_encoding_manifest_prohibition.py`, and
+  `test_legacy_applied_manifests_are_not_kept_as_migration_inputs` in
+  `tests/test_repository_layout.py`. A canonical receipt layout is staged in
+  `tests/test_encoding_manifest_retirement_layout.py`.
+- The migration's remaining step is an encoder re-pin whose guard verifies
+  receipts, which retires the prohibition. Until it lands, no encoder output
+  can be committed here.
+
+## Evidence: the supervised encoder on Arun
 
 The 2026-09-13 Arun pilot explains the granularity problem. A page citation
 omitted award components on other pages; adding repository context did not
@@ -117,176 +139,168 @@ retained pilot recorded:
 | Arun whole document, source only | 8 | Grid, capital limit and formula present; deductions and minimum missing; coverage gates failed |
 | Campaign module in #310, comparison only | 21 | Campaign gates passed; the band A source conflict remained unresolved |
 
-Section ingest was demonstrated on Arun and Crawley; section-citation encoding
-and composition still need a full pilot.
+The mechanism, read from `axiom-encode` (unchanged between the pinned
+`c326d1ac` and later `main`): the encoder's source text for a citation is that
+provision row's body. A row with no body of its own, such as a document row,
+is composed from all of its descendants. Repository context is added beside
+the source and never widens it.
 
-### A′: section ingest and supervised re-encoding
+### Options weighed before the decision
 
-Re-version council corpus scopes with `extraction.segmentation: labeled_sections`,
-encode each award component through the supervised encoder, and compose the
-resulting modules into a council award. Use earlier modules as comparison
-material after correcting known errors; independently derive expected awards
-from the source rather than copying their tests.
+From 2026-09-13 to 2026-10-11 the campaign weighed three options:
 
-The corpus spike succeeded with manifest configuration on Arun and Crawley.
-Their heading families A and B contain 90 of the historical survey's 169 PDFs,
-across 155 PDF-sourced council scopes. Other families need configuration and
-coverage checks. The encoder and composition steps remain unproven for this
-campaign; prove them before scaling. See [`section-ingest.md`](section-ingest.md).
+- **A′**: re-ingest by section, encode through the supervised encoder, and
+  compose per council. The chosen route takes this design.
+- **B**: land the steered PRs under a written, time-limited exception to the
+  encoder-only rule and backfill receipts later. Not adopted.
+- **C**: stop council encoding at the 100 merged modules. Not adopted.
 
-### B: reviewed exception and supervised backfill
+## Open questions and known blockers
 
-Retain existing modules and consider landing corrected open PRs under an
-explicit, time-limited exception. Record the covered modules, authority and
-expiry, then backfill through supervised re-encoding. Do not equate an exception
-with an encoding receipt, or promise receipts can be attached to unchanged
-campaign output.
+### Arun band A: ruled 100%
 
-The draft Wakefield PRs #269–#303 remain open on 2026-10-09 (read-only
-`gh pr list --state open --search Wakefield`). Their per-block modules overlap
-the existing award-surface module, illustrating the layout and composition
-question that backfill must resolve. This route retains useful work sooner,
-but still needs source review, defect repairs and a demonstrated backfill path.
-
-### C: pause further council encoding
-
-Keep the 100 modules already on main, close or defer the 34 open encoding PRs,
-and retain the corpus and findings for later section-level work. Continue to
-repair known defects in merged modules. This option does not resolve the
-receipt gap; reconsider it before adopting the later generated-content guard.
-
-## Open questions
-
-### 1. A′, B or C
-
-@vahid-ahmadi owns this decision under the public hand-off on #140. Record the
-chosen route and the disposition of existing modules and open PRs there.
-The retained campaign recommendation is to pilot A′ before scaling; that is
-an evidence-based proposal, not a decision already made by the new owner.
-
-### 2. Arun band A: 100% or 90%
-
-The retained source review found a conflict in the adopted 2026/27 scheme:
+Arun's adopted 2026/27 scheme prints band A twice:
 
 | Provision | Page | Band A (£0–£219.99) |
 |---|---:|---:|
 | Section 23(2)–(3) | 28 | 100% |
 | Schedule 3 paragraph 1 | 80 | 90% |
 
-Bands B–E agree at 70%, 50%, 30% and 10%. Section 23(4) describes the schedule
-as a summary, but Schedule 3 also contains operative rules: paragraph 7's CPI
-uprating and paragraph 8's treatment of specified passporting benefits.
-The source pointers and proposed section citations are in
-[`section-ingest.md`](section-ingest.md#aruns-award-surface-as-citations).
-The [public review of #310](https://github.com/TheAxiomFoundation/rulespec-uk/pull/310)
-raises the unresolved adoption evidence. Resolve the operative band A with the
-Full Council adoption record or council clarification, and record the ruling
-with the encoding. Neither the pilot's 90% result nor the PR's 100% result
-settles the conflict.
+Bands B–E agree at 70%, 50%, 30% and 10%. Section 23(4) describes the
+schedule as a summary. Schedule 3 also carries rules found nowhere else:
+paragraph 7's CPI uprating of the bands and paragraph 8's band A for
+applicants on specified passporting benefits.
+
+The maintainer ruled on 10 October 2026 that band A is **100%**, following
+s.23(3). An Arun encoding applies the ruling, cites both provisions, records
+the ruling with the encoding, and still encodes paragraph 8 and records
+paragraph 7's uprating rule. The
+[playbook](../uk-council-encoding-playbook.md#contradictory-source-provisions-and-related-schemes)
+records it with the Babergh ruling. A reply from the council would be recorded
+under the playbook's
+[publisher-confirmation rules](../uk-council-encoding-playbook.md#publisher-confirmations).
 
 The historical duplicate-grid sweep (an archival record; its run artifacts are
-not published) covered 138 manuals, before the next
-21 scopes were added. Its Arun-only result excluded some grid layouts and
-DOCX blocks. Repeat the check over the full bound inventory before encoding.
+not published) covered 138 manuals, before the next 21 scopes were added. Its
+Arun-only result excluded some grid layouts and DOCX blocks. Repeat the check
+over all 159 council scopes before encoding.
 
-### 3. Known correctness and source blockers
+### Design questions the route has to answer
 
-`uk-oldham` and `uk-east-hertfordshire` had the periodisation errors reported
-on [#140](https://github.com/TheAxiomFoundation/rulespec-uk/issues/140#issuecomment-5845299202):
-Oldham applied the daily 2 6/7% coefficient to annual excess, and East
-Hertfordshire applied it to weekly excess before scaling the award, so both
-withdrew support at one-seventh of the intended same-period 20% rate. #447
-repaired both, with period invariants and differential checks against the
-national rules (`tests/test_ctr_taper_periodisation.py`).
+- **Assembly.** Encoder modules are named after their citation, e.g.
+  `uk-arun/policies/council-tax-reduction-scheme-2026-2027/23.yaml`. Per-council
+  assembly belongs in `uk-<slug>/programs/` as an axiom-compose ProgramSpec, as
+  [`uk/programs/universal-credit/fy-2026-27.yaml`](../../uk/programs/universal-credit/fy-2026-27.yaml)
+  does for Universal Credit. The shared workflow's pre-check requires every
+  ProgramSpec import to resolve to an existing encoded module, and allows only
+  the literals 0, 1 and 12, so amounts and rates must come from encoded
+  modules. The supervised guard does not treat `programs/` as encoder output.
+  Nothing exempts a hand-assembled composition module under `policies/`.
+- **Replacing a merged module.** One UK release cannot carry two versions of
+  the same document (see [`section-ingest.md`](section-ingest.md#re-versioning-a-scope-with-section-rows)).
+  Re-versioning a council to section rows therefore removes the page rows its
+  merged module cites. 262 files across 98 councils cite council page rows;
+  Leeds and Wakefield cite block rows. The rebind that brings a council's
+  section rows must also replace or retire that council's module. Under the
+  guard, deleting a module needs a changed receipt that marks it deleted;
+  `axiom-encode retire` deletes files and records those signed deletion
+  entries. Prove the sequence on the first encoded council to be re-versioned.
+- **Wakefield.** The 35 draft signed-backfill PRs (#269–#303) add per-block
+  modules beside the merged award-surface module. Decide which layout stays.
 
-`uk-babergh` and `uk-ipswich` quote the same scheme sentence, a "prescribed
-daily percentage" of 20 per cent. The maintainer ruled on 10 October 2026 that
-it means 20% of weekly excess per week. `uk-babergh` had scaled it into an
-effective 140% weekly taper and left tariff income out of the excess; it now
-applies the ruling and counts tariff income. `uk-ipswich` and `uk-guildford`
-already use 20% on same-period excess. The
-[playbook](../uk-council-encoding-playbook.md) records the ruling and the
-review checks.
+### Source blockers
 
-Other retained discovery blockers require renewed source verification:
-
-- **Hyndburn:** conflicting working-age contributions in the scheme; obtain the
-  adoption record and establish the operative value before ingest.
+- **Hyndburn:** the scheme states two different working-age contributions.
+  Obtain the adoption record and establish the operative value before ingest.
 - **Shropshire:** the recorded text is a prior-year default scheme beneath a
   newer cover; obtain the actual operative scheme before releasing it again.
 - **Bedford:** the retained discovery record identifies an adopted default
   scheme with local amendments (paragraphs 1.2 and 3.1), rather than a summary.
   Verify that adoption evidence, then encode the incorporated SI 2012/2886
-  provisions together with Bedford’s operative amendments.
-- **Wakefield:** settle how supervised per-block modules compose into or replace
-  the existing award-surface module.
+  provisions together with Bedford's operative amendments.
+
+### Repairs already made on main
+
+`uk-oldham` and `uk-east-hertfordshire` applied the daily 2 6/7% coefficient
+to an annual or weekly excess
+([#140](https://github.com/TheAxiomFoundation/rulespec-uk/issues/140#issuecomment-5845299202)).
+#447 repaired both, with period invariants and differential checks against the
+national rules (`tests/test_ctr_taper_periodisation.py`). `uk-babergh` read
+Ipswich's identical "prescribed daily percentage" sentence as an effective
+140% weekly taper and left tariff income out of the excess; #449 applied the
+10 October 2026 ruling (20% of weekly excess per week) and counts tariff
+income. Both landed before the guard went on. Any further correction to a
+merged module now has to come from the encoder.
 
 ## How to continue
 
-### Under every option: source and corpus work
+1. **Finish the signed-workflow migration.** The encoder re-pin that admits
+   verified receipts and retires the manifest prohibition comes first; no
+   council encode can land before it.
+2. **Re-version Arun with section rows.** Arun has no module on `main`, so no
+   citation breaks. Use the tested extraction block and its two fixes in
+   [`section-ingest.md`](section-ingest.md#arun-family-a-the-extraction-block),
+   and follow the corpus procedure below.
+3. **Cut, publish and bind** a release carrying the new Arun version.
+4. **Encode Arun's sections** without `--apply` first, under the trusted
+   signing supervisor:
+   `axiom-encode encode uk-arun/manual/council-tax-reduction-scheme-2026-2027/23 --backend codex`,
+   then `/19`, `/21`, `/22` and `/schedule-3`. Read the encoder's own gates.
+   Then run them through the signed workflow so the modules land with
+   receipts.
+5. **Assemble Arun** as a ProgramSpec under `uk-arun/programs/`, wiring
+   maximum → grid → non-dependant deductions → £1 floor, with Schedule 3
+   paragraph 8's passported band A.
+6. **Compare** its outputs with `oracle/uk-ctr/wave11/uk-arun/pr310-repaired`
+   on a shared household grid. Adjudicate every disagreement against the
+   scheme text, applying the band A ruling.
+7. **Repeat on Crawley** (heading family B, award rules in `/1`, `/57A` and
+   `/58`) with the label fixes in
+   [`section-ingest.md`](section-ingest.md#crawley-family-b-the-template-scheme).
+8. **Take the first already-encoded council** through the same cycle, with
+   the module replacement in its rebind.
+9. **Scale by heading family**, A and B first, then C–H.
 
-1. Select a council from `councils.csv`. Verify the official working-age scheme,
-   target year and lawful adoption; retain the exact incorporated scheme,
-   resolution and amendments, source URLs, hashes and retrieval dates. A draft,
-   summary, cover year or pension-only instrument is insufficient.
-2. In `axiom-corpus`, create or update a document manifest and extract into a new
-   immutable scope version. For continuation schemes, preserve the adoption
-   record and base instrument together. Check source references, coverage and
-   citation identities; section re-versioning also needs explicit mappings
-   from retired page identities.
-3. Review the corpus change and pass its checks. Cut a new named selector with
-   exact scopes, preflight it, publish and verify the signed release, and
-   preview its scope effects before activation through the protected workflow.
-   Merging corpus files alone does not publish a release.
-4. Rebind `rulespec-uk` to that release's name and signed content digest in
-   `.axiom/toolchain.toml`, then verify all referenced citations and run checks.
-   Update registry statuses only when their evidence changes.
+### Corpus procedure
 
-Use the corpus [ingestion runbook](https://github.com/TheAxiomFoundation/axiom-corpus/blob/3858e928/docs/agent-ingestion-runbook.md)
-and [named-release contract](https://github.com/TheAxiomFoundation/axiom-corpus/blob/3858e928/docs/named-release-publication.md)
-(read on 2026-10-09) for the concrete commands and publication boundary.
+Work in `axiom-corpus` on a branch pushed to the organization repository (not
+a fork); it merges only with merge commits. The current references are
+[`docs/corpus-storage.md`](https://github.com/TheAxiomFoundation/axiom-corpus/blob/main/docs/corpus-storage.md)
+("Ingest" and "Releases") and
+[`docs/named-release-publication.md`](https://github.com/TheAxiomFoundation/axiom-corpus/blob/main/docs/named-release-publication.md).
+In outline:
 
-### Under A′
-
-1. Settle Arun's source conflict. Re-version its scope with the tested
-   [extraction block](section-ingest.md#arun-family-a-the-extraction-block),
-   verify every label, and put it in a signed release bound by this repository.
-2. Pilot without applying output:
-   `axiom-encode encode uk-arun/manual/council-tax-reduction-scheme-2026-2027/23 --backend codex`.
-   Inspect its gates, then repeat for `/19`, `/21`, `/22` and `/schedule-3`.
-3. Demonstrate supervised application with receipts and a composition that
-   connects maximum, grid, deductions and floor. Test against independently
-   derived awards and the resolved adoption evidence.
-4. Repeat on Crawley after repairing the section-label misses described in the
-   spike, including minimum-award section 57A; encode the maximum, minimum,
-   deductions and taper as well as the introduction. Scale by heading family only after both complete cycles pass.
-5. Replace the superseded council module as the receipted composition lands;
-   close or update the corresponding open PR and registry entry.
-
-### Under B
-
-1. Obtain the reviewed exception and record its scope and expiry before moving
-   to a workflow that requires it.
-2. Update each council PR onto current main according to the hand-off on #140;
-   reconcile the ledger as current main plus only that council's declarations,
-   with the ceiling equal to the resulting entry count.
-3. Check citations against the bound release, repair semantic findings, and
-   require fresh gates and independent source review on the proposed head.
-   Land sequentially because each merge changes the shared ledger.
-4. Pilot supervised receipt backfill and composition on one council, resolve
-   layout overlap, then expand before the exception expires.
-
-### Under C
-
-Record the pause and PR dispositions on #140. If a PR closes without merging,
-return its council to the appropriate ingested status. Keep the corpus evidence
-and discovery blockers, repair merged defects, and define the evidence needed
-to resume.
+1. Write or rebuild the council's extraction manifest in
+   `.axiom/corpus-manifests/uk-<slug>-council-tax-reduction.json`.
+2. Extract with `axiom-corpus-ingest extract-official-documents --base data/corpus --version <version> --manifest <manifest>`.
+   Name the version `<date>-<slug>-council-tax-reduction-2026-2027` with a
+   later date than the served version: activation refuses a version that sorts
+   before the one it replaces.
+3. Sign from a clean tracked tree with
+   `axiom-corpus-ingest sign-ingest-manifest --lock --push`. This writes the
+   scope's lock file and uploads the bytes. One commit carries the signed
+   ingest manifest and the lock.
+4. Run `scripts/validate_citation_paths.py`. It fails when a family of
+   irregular paths (page or block rows, spaces, en dashes, uppercase, truncated
+   segments) grows past its baseline, and raising a baseline is a reviewed
+   change.
+5. Cut a release: add one new `manifests/releases/uk-rulespec-<date>.json` that
+   copies the previous selector and swaps in the new version. Merging it
+   publishes the release; then dispatch the mirror and activation workflows.
+6. Rebind `rulespec-uk` in one PR. Set the release name and content digest in
+   `.axiom/toolchain.toml`, leaving the waiver digest alone. Set the cut's merge
+   commit as `axiom_corpus_ref` in `.axiom/workflow-toolchain.toml`,
+   `axiom-corpus-ref` in `.github/workflows/repository-checks.yml`, and
+   `AXIOM_CORPUS_REF` in `.github/workflows/bulk-encode.yml`. The PR's validate
+   job fetches the published release object and fails until the mirror has
+   finished.
 
 ## The registry
 
 `councils.csv` has one row per English authority in ONS code order. Module and
-open-PR statuses were reconciled on 2026-10-09. Ingestion, source URLs and
+PR statuses were reconciled on 2026-10-09 and again on 2026-10-14, when the 34
+closed wave-11 councils returned to `ingested` with their reference tags in
+`notes`. Ingestion, source URLs and
 heading-family observations retain the campaign snapshot dates in the notes;
 verify them before a new ingest. The repository's smaller
 [`data/councils/registry.csv`](../../data/councils/registry.csv) keeps its original
@@ -297,7 +311,7 @@ identity and source fields, with only observed module/PR statuses updated.
 | `ons_code`, `name` | ONS April 2025 local authority district identity |
 | `jurisdiction` | `uk-<slug>` repository and corpus root |
 | `status` | Pipeline stage below |
-| `pr` | Current open council encoding PR number, if any |
+| `pr` | Open council encoding PR number, if any (none since 2026-10-11) |
 | `corpus_version` | Recorded scope version; provenance dates are in `notes` |
 | `heading_family` | Historical scheme-PDF family from the section survey |
 | `scheme_url` | Recorded official source or best-known discovery URL |
@@ -307,7 +321,7 @@ identity and source fields, with only observed module/PR statuses updated.
 | Status | Meaning |
 |---|---|
 | `encoded` | Council module on main; does not imply a receipt or correct award |
-| `encode-pr-open` | Council module in the open PR identified in `pr` |
+| `encode-pr-open` | Council module in the open PR identified in `pr` (unused since 2026-10-11) |
 | `ingested` | Recorded in the bound release, without a module or open encode PR |
 | `ingested-unreleased` | Recorded corpus scope outside the bound release |
 | `continuation-pair-ready` | Continuation resolution and base scheme located |
