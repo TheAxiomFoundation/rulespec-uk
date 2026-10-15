@@ -3,39 +3,23 @@
 A durable queue → **planner** for bulk RuleSpec encoding. `bulk/worklist.yaml`
 is the committed queue of already-ingested UK provisions to encode;
 `.github/workflows/bulk-encode.yml` turns a dispatch into a *plan* — the batch
-selection plus the exact pinned toolchain a signed-apply encode leg consumes —
-and verifies the pinned signed corpus release resolves. The encoder and the CI
-gates own correctness. This system is **plumbing**: it never edits or invents
-generated values. Its only judgement is *which* provisions to queue.
+selection plus the pinned toolchain context for signed encoding —
+and optionally verifies the pinned signed corpus release resolves. The encoder
+and the CI gates own correctness. This system is **plumbing**: it never edits
+or invents generated values. Its only judgement is *which* provisions to queue.
 
-## Why this is a planner, not an autonomous encoder
+## Central signing
 
-Before the canonical-provenance hard cut (axiom-encode#1108) this workflow ran
-an autonomous `encode --apply` leg in CI, signing the apply manifest from the
-`AXIOM_ENCODE_APPLY_SIGNING_KEY` secret. That path is gone. Under the pinned
-encoder (≥ 0.2.1215):
+Signing is central in axiom-encode's
+[`targeted-signed-reencode` workflow](https://github.com/TheAxiomFoundation/axiom-encode/blob/main/.github/workflows/targeted-signed-reencode.yml),
+which signs only on `main` in a protected environment. The repository copy of
+the apply signing secret was deleted; the direct-signing `encode` job and its
+`run_encode` input have been removed from this planner.
 
-- `AXIOM_ENCODE_APPLY_SIGNING_KEY` in the environment is **fatal at startup**; and
-- `encode --apply` signs a `v5`/Ed25519 apply manifest through an **externally
-  attached** trusted broker — an external Ed25519 signer connected on
-  `--apply-signer-fd`, with no unsigned path.
-
-A CI runner cannot self-provision that signer without reintroducing a raw
-private key into the runner, which is exactly what the hard cut removes.
-axiom-encode's own bulk lane was cut to routing-only for the same reason. So the
-migration split the old workflow in two:
-
-- **This workflow's `plan` / `verify-release` jobs (the planner)** — select the
-  batch and resolve the pinned toolchain / signed corpus release. No secrets.
-- **The signed encode leg (Path B), the `encode` job** — a signer-attached job
-  that provisions the trusted signing supervisor with a **production external
-  apply signer** (`cmd/axiom-encode-apply-signer` in axiom-encode) and runs
-  `encode --apply` under it, producing a `v5`/Ed25519 module + manifest and
-  opening one PR per module. Fans out over the `plan` job's matrix seam. Gated:
-  it runs on `schedule`, or on `workflow_dispatch` with `-f run_encode=true`.
-
-The `encode` job is the only part that uses the apply signing secret; a plain
-plan dispatch (`run_encode` unset) never touches it.
+This workflow's `plan` and optional `verify-release` jobs select the batch and
+resolve the pinned toolchain / signed corpus release with no repository
+secrets. It runs only on `workflow_dispatch`; there is no schedule. Hand off
+selected citations or targets to the central workflow for signed encoding.
 
 ## Pieces
 
@@ -64,32 +48,8 @@ the pinned signed corpus release object from R2; it **fails closed** until the
 release is published (set `-f verify_release=false` to skip it while a release
 rebind is pending). A `concurrency` group serialises whole dispatches.
 
-The `plan` and `verify-release` jobs use **no** repository secrets. The `encode`
-job uses three: `OPENAI_API_KEY` (generation), `BULK_ENCODE_TOKEN` (PR creation),
-and `AXIOM_ENCODE_APPLY_SIGNER_ED25519_PRIVATE_KEY` — the raw 32-byte Ed25519
-apply seed (base64), delivered only to the one signing step's `env:`. The
-launcher reads it, clears it from the environment, and streams it to the signer
-over a pipe, so the supervised encoder never sees it. Because this workflow
-triggers only on `workflow_dispatch`/`schedule` (never `pull_request`), a fork or
-PR-modified workflow can never see the secret.
-
-`AXIOM_ENCODE_APPLY_SIGNING_KEY` (the pre-#1108 HMAC env-var key) is **obsolete**:
-it is fatal at encoder startup and no job references it. Delete it from the repo.
-
-### Running the signed encode leg
-
-```bash
-# Plan + sign + open PRs for the England-pensioner CTR batch:
-gh workflow run bulk-encode.yml -f batch=CTR-ENP -f limit=8 -f run_encode=true \
-  --repo TheAxiomFoundation/rulespec-uk
-```
-
-Prerequisites (one-time, operator):
-- `AXIOM_ENCODE_APPLY_SIGNER_ED25519_PRIVATE_KEY` set as a repository (or org)
-  Actions secret to the base64 raw-32 Ed25519 apply seed whose public half is the
-  `AXIOM_ENCODE_APPLY_SIGNING_PUBLIC_KEY` Actions variable.
-- `AXIOM_ENCODE_REF` (here and in `repository-checks.yml`, in lockstep) pinned to
-  an axiom-encode commit that contains `cmd/axiom-encode-apply-signer`.
+Planning needs no apply signing key. Use the central
+`targeted-signed-reencode` workflow for signed encoding.
 
 ## What each job does
 
@@ -109,26 +69,14 @@ opens PRs. The authoritative gate remains the required `validate / validate`
 check (`repository-checks.yml` → the shared, supervised `validate-rulespec`
 workflow).
 
-## Handoff to the signed encode leg (the seam)
+## Handoff to central signing
 
-The signed encode leg (Path B, lane O) attaches to this planner without
-reworking selection or resolution. The plan is emitted two ways:
+The plan records selected targets and their pinned context for handoff to
+axiom-encode's `targeted-signed-reencode` workflow. It is emitted two ways:
 
 - **Job outputs** `plan.outputs.matrix` and `plan.outputs.count`. `matrix` is
-  the `compute_matrix.py --format matrix` result — `{"include": [ … ]}` — so a
-  downstream job in this workflow can fan out with:
-
-  ```yaml
-  encode:
-    needs: plan
-    if: ${{ needs.plan.outputs.count != '0' }}
-    strategy:
-      matrix:
-        item: ${{ fromJSON(needs.plan.outputs.matrix).include }}
-    # … checkout pinned deps, provision supervisor + attach the external apply
-    # signer (--apply-signer-fd), encode --apply --corpus-path _axiom/axiom-corpus,
-    # open one PR per module …
-  ```
+  the `compute_matrix.py --format matrix` result — `{"include": [ … ]}` —
+  and `count` is the number of selected entries.
 
 - **`bulk-plan.json`** (the `bulk-plan` artifact) — the same selection enriched
   with the resolved toolchain, dependency pins, corpus release, `corpus_path`,
@@ -143,10 +91,10 @@ Each selection item is:
 ```
 
 `citation` XOR `target` is set (see the worklist schema below); `roots` is added
-in `bulk-plan.json`. The signed leg reads `citation` (a corpus path the encoder
-resolves) or `target` (a module path / council scope it re-emits), uses the
-`pins` to check out the identical toolchain, and runs under the supervisor with
-`--corpus-path` = the plan's `corpus_path`.
+in `bulk-plan.json`. `citation` is a corpus path the encoder resolves; `target`
+is a module path / council scope it re-emits. The artifact also records `pins`
+and `corpus_path` for the encoding handoff. Dispatch signed encoding through
+the central workflow; this planner only produces the plan and release checks.
 
 ## Worklist schema
 
@@ -191,6 +139,9 @@ is the entry's citation or target) is a local convenience.
 
 ## The fixture-split follow-up loop (signed leg)
 
+The signed-leg notes below record the earlier bulk encoding design and pilot
+findings. Current signed runs use the central workflow linked above.
+
 `--apply` succeeds when the module compiles, validates, and its proof tree
 checks. The **companion test fixtures** are a separate quality tier: the #1060
 ceiling means gpt-5.5-authored fixtures sometimes fail. When that happens the
@@ -212,7 +163,7 @@ and once they land the required check goes green and auto-merge completes.
 | companion test red only | fixtures (#1060) | `needs-fixtures`; run the follow-up fixture pass. |
 | self-import / same-section subsection import error | encode#1058 | The section is too cross-reference-heavy for a clean atomic encode. Drop it from the worklist or split the citation to the self-contained fragment. |
 | `oracle coverage ... unmapped` on the PR | oracle mapping | The output needs a PolicyEngine/UKMOD oracle mapping entry. Out of scope for the encode leg; handle as a mapping follow-up. |
-| 429 from OpenAI | rate limit | Lower `limit`/`max-parallel` or re-dispatch later. The concurrency group prevents overlapping runs. |
+| 429 from OpenAI | rate limit | Re-dispatch later. This planner's concurrency group serialises planning dispatches only. |
 
 ## Extending the worklist
 
