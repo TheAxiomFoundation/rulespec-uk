@@ -1,0 +1,9 @@
+- name: minimum_council_tax_support_entitlement
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2026-04-06'
+    end: '2026-04-12'
+  input: {}
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-44#minimum_council_tax_support_entitlement: 1.0
