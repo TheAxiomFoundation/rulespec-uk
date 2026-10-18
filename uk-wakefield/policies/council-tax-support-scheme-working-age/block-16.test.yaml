@@ -1,0 +1,36 @@
+- name: current_universal_credit_claim_entitled_uses_section_1
+  period: 2026-04
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-16#input.has_current_claim_for_universal_credit: true
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-16#input.is_entitled_to_universal_credit: true
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-16#input.is_receiving_housing_benefit: false
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-16#income_and_capital_assessed_under_part_3_section_1: holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-16#income_and_capital_assessed_under_part_3_section_2: not_holds
+- name: universal_credit_claimant_not_entitled_receiving_housing_benefit_uses_section_2
+  period: 2026-04
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-16#input.has_current_claim_for_universal_credit: true
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-16#input.is_entitled_to_universal_credit: false
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-16#input.is_receiving_housing_benefit: true
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-16#income_and_capital_assessed_under_part_3_section_1: not_holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-16#income_and_capital_assessed_under_part_3_section_2: holds
+- name: universal_credit_claimant_not_entitled_not_receiving_housing_benefit_uses_section_1
+  period: 2026-04
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-16#input.has_current_claim_for_universal_credit: true
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-16#input.is_entitled_to_universal_credit: false
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-16#input.is_receiving_housing_benefit: false
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-16#income_and_capital_assessed_under_part_3_section_1: holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-16#income_and_capital_assessed_under_part_3_section_2: not_holds
+- name: no_current_universal_credit_claim_uses_section_2
+  period: 2026-04
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-16#input.has_current_claim_for_universal_credit: false
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-16#input.is_entitled_to_universal_credit: true
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-16#input.is_receiving_housing_benefit: false
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-16#income_and_capital_assessed_under_part_3_section_1: not_holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-16#income_and_capital_assessed_under_part_3_section_2: holds
