@@ -1,0 +1,397 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-45
+    source_sha256: d848fbb092d161b8694b20cbd02b40dbcfbc6dfc88301d9d25323e49ba6ce316
+  summary: “Paragraphs 2 to 7 apply to an application made under this scheme.” An
+    application may be made in writing, electronically in accordance with Part 9,
+    or by telephone where the authority has published a telephone number. Written
+    applications require the designated office and a properly completed form; defective
+    written, electronic, and telephone applications have the stated correction routes.
+    Telephone validity may require approval of the authority's written statement.
+inputs:
+- name: application_made_under_scheme
+  entity: CouncilTaxSupportApplication
+  dtype: Boolean
+  period: Month
+- name: electronic_communication_complies_with_part_9
+  entity: CouncilTaxSupportApplication
+  dtype: Boolean
+  period: Month
+- name: authority_has_published_telephone_application_number
+  entity: CouncilTaxSupportApplication
+  dtype: Boolean
+  period: Month
+- name: written_application_made_to_designated_office
+  entity: CouncilTaxSupportApplication
+  dtype: Boolean
+  period: Month
+- name: written_application_uses_form_provided_by_authority
+  entity: CouncilTaxSupportApplication
+  dtype: Boolean
+  period: Month
+- name: written_application_form_completed_in_accordance_with_instructions
+  entity: CouncilTaxSupportApplication
+  dtype: Boolean
+  period: Month
+- name: authority_accepts_written_application_form_as_properly_completed
+  entity: CouncilTaxSupportApplication
+  dtype: Boolean
+  period: Month
+- name: written_application_uses_form_approved_for_purpose
+  entity: CouncilTaxSupportApplication
+  dtype: Boolean
+  period: Month
+- name: authority_accepts_nonapproved_written_application_as_sufficient
+  entity: CouncilTaxSupportApplication
+  dtype: Boolean
+  period: Month
+- name: electronic_application_provides_all_information_authority_requires
+  entity: CouncilTaxSupportApplication
+  dtype: Boolean
+  period: Month
+- name: authority_requires_telephone_written_statement_approval
+  entity: CouncilTaxSupportApplication
+  dtype: Boolean
+  period: Month
+- name: telephone_applicant_approves_authority_written_statement_of_circumstances
+  entity: CouncilTaxSupportApplication
+  dtype: Boolean
+  period: Month
+- name: telephone_application_provides_all_information_requested_during_call
+  entity: CouncilTaxSupportApplication
+  dtype: Boolean
+  period: Month
+rules:
+- name: application_procedures_apply
+  kind: derived
+  entity: CouncilTaxSupportApplication
+  dtype: Judgment
+  period: Month
+  source: paragraph 2
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: condition
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-45
+          excerpt: Paragraphs 2 to 7 apply to an application made under this scheme.
+  versions:
+  - effective_from: '0001-01-01'
+    formula: application_made_under_scheme
+- name: written_application_method_available
+  kind: derived
+  entity: CouncilTaxSupportApplication
+  dtype: Judgment
+  period: Month
+  source: paragraph 3, writing branch
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: condition
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-45
+          excerpt: 'An application may be made:'
+  versions:
+  - effective_from: '0001-01-01'
+    formula: application_procedures_apply
+- name: electronic_application_method_available
+  kind: derived
+  entity: CouncilTaxSupportApplication
+  dtype: Judgment
+  period: Month
+  source: paragraph 3, electronic communication branch
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: condition
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-45
+          excerpt: by means of an electronic communication in accordance with Part
+            9
+  versions:
+  - effective_from: '0001-01-01'
+    formula: 'application_procedures_apply
+
+      and electronic_communication_complies_with_part_9'
+- name: telephone_application_method_available
+  kind: derived
+  entity: CouncilTaxSupportApplication
+  dtype: Judgment
+  period: Month
+  source: paragraph 3, telephone branch
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: condition
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-45
+          excerpt: where an authority has published a telephone number for the purpose
+            of receiving such
+  versions:
+  - effective_from: '0001-01-01'
+    formula: 'application_procedures_apply
+
+      and authority_has_published_telephone_application_number'
+- name: written_application_form_properly_completed
+  kind: derived
+  entity: CouncilTaxSupportApplication
+  dtype: Judgment
+  period: Month
+  source: paragraph 5(b)
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: definition
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-45
+          excerpt: properly completed if it is completed in accordance with the instructions
+            on the form
+  versions:
+  - effective_from: '0001-01-01'
+    formula: 'written_application_uses_form_provided_by_authority
+
+      and written_application_form_completed_in_accordance_with_instructions'
+- name: written_application_valid
+  kind: derived
+  entity: CouncilTaxSupportApplication
+  dtype: Judgment
+  period: Month
+  source: paragraph 4(a)
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: condition
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-45
+          excerpt: must be made to the designated office on a properly completed form
+  versions:
+  - effective_from: '0001-01-01'
+    formula: 'written_application_method_available
+
+      and written_application_made_to_designated_office
+
+      and written_application_form_properly_completed'
+- name: written_application_defective_on_supplied_form
+  kind: derived
+  entity: CouncilTaxSupportApplication
+  dtype: Judgment
+  period: Month
+  source: paragraph 5(a)(i)
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: exception
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-45
+          excerpt: it was made on the form supplied for the purpose but that form
+            is not accepted by the
+  versions:
+  - effective_from: '0001-01-01'
+    formula: 'written_application_method_available
+
+      and written_application_uses_form_provided_by_authority
+
+      and not authority_accepts_written_application_form_as_properly_completed'
+- name: written_application_defective_on_nonapproved_form
+  kind: derived
+  entity: CouncilTaxSupportApplication
+  dtype: Judgment
+  period: Month
+  source: paragraph 5(a)(ii)
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: exception
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-45
+          excerpt: it was made in writing but not on the form approved for the purpose
+            and the authority
+  versions:
+  - effective_from: '0001-01-01'
+    formula: 'written_application_method_available
+
+      and not written_application_uses_form_approved_for_purpose
+
+      and not authority_accepts_nonapproved_written_application_as_sufficient'
+- name: authority_may_request_completion_of_supplied_form_defect
+  kind: derived
+  entity: CouncilTaxSupportApplication
+  dtype: Judgment
+  period: Month
+  source: paragraph 5(a)
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: condition
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-45
+          excerpt: in a case to which paragraph (i) applies, request the applicant
+            to complete the defective application
+  versions:
+  - effective_from: '0001-01-01'
+    formula: written_application_defective_on_supplied_form
+- name: authority_may_supply_approved_form_for_nonapproved_form_defect
+  kind: derived
+  entity: CouncilTaxSupportApplication
+  dtype: Judgment
+  period: Month
+  source: paragraph 5(a)
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: condition
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-45
+          excerpt: in the case to which paragraph (ii) applies, supply the applicant
+            with the approved form
+  versions:
+  - effective_from: '0001-01-01'
+    formula: written_application_defective_on_nonapproved_form
+- name: authority_may_request_information_for_nonapproved_form_defect
+  kind: derived
+  entity: CouncilTaxSupportApplication
+  dtype: Judgment
+  period: Month
+  source: paragraph 5(a)
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: condition
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-45
+          excerpt: or request further information and evidence
+  versions:
+  - effective_from: '0001-01-01'
+    formula: written_application_defective_on_nonapproved_form
+- name: electronic_application_defective
+  kind: derived
+  entity: CouncilTaxSupportApplication
+  dtype: Judgment
+  period: Month
+  source: paragraph 6(b)
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: definition
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-45
+          excerpt: defective if the applicant does not provide all the information
+            the authority requires
+  versions:
+  - effective_from: '0001-01-01'
+    formula: 'electronic_application_method_available
+
+      and not electronic_application_provides_all_information_authority_requires'
+- name: authority_must_provide_electronic_defect_correction_opportunity
+  kind: derived
+  entity: CouncilTaxSupportApplication
+  dtype: Judgment
+  period: Month
+  source: paragraph 6(a)
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: condition
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-45
+          excerpt: an authority must provide the person making the application with
+            an opportunity to correct the defect
+  versions:
+  - effective_from: '0001-01-01'
+    formula: electronic_application_defective
+- name: telephone_application_valid
+  kind: derived
+  entity: CouncilTaxSupportApplication
+  dtype: Judgment
+  period: Month
+  source: paragraph 7
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: condition
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-45
+          excerpt: only valid if the person making the application approves a written
+            Statement of his circumstances
+  versions:
+  - effective_from: '0001-01-01'
+    formula: 'telephone_application_method_available
+
+      and
+
+      (not authority_requires_telephone_written_statement_approval
+
+      or telephone_applicant_approves_authority_written_statement_of_circumstances)'
+- name: telephone_application_defective
+  kind: derived
+  entity: CouncilTaxSupportApplication
+  dtype: Judgment
+  period: Month
+  source: paragraph 8(b)
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: definition
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-45
+          excerpt: defective if the applicant does not provide all the information
+            the authority requests during the telephone call
+  versions:
+  - effective_from: '0001-01-01'
+    formula: 'telephone_application_method_available
+
+      and not telephone_application_provides_all_information_requested_during_call'
+- name: authority_must_provide_telephone_defect_correction_opportunity
+  kind: derived
+  entity: CouncilTaxSupportApplication
+  dtype: Judgment
+  period: Month
+  source: paragraph 8(a)
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: condition
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-45
+          excerpt: an authority must provide the person making the application with
+            an opportunity to correct the defect
+  versions:
+  - effective_from: '0001-01-01'
+    formula: telephone_application_defective
+- name: authority_must_provide_written_application_form_free_of_charge
+  kind: derived
+  entity: StateAgency
+  dtype: Judgment
+  period: Month
+  source: paragraph 4(b)
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: condition
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-45
+          excerpt: The form must be provided free of charge by the authority for the
+            purpose.
+  versions:
+  - effective_from: '0001-01-01'
+    formula: 'true'
