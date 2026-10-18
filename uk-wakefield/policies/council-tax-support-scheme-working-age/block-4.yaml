@@ -1,0 +1,249 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-4
+    source_sha256: 8d3fbf30aaa86cf4adcef9657ec4e9576c277ae0465084616257fdedc72eeaa3
+  summary: “pensioner” means a person who has attained the qualifying age for state
+    pension credit and neither that person nor a partner has specified income-related
+    benefits or a non-disregarded universal credit award. “person who is not a pensioner”
+    covers the converse cases. A universal credit award is disregarded during the
+    relevant period or where regulation 60A of the Universal Credit (Transitional
+    Provisions) Regulations 2014 applies.
+rules:
+- name: person_has_income_related_benefit_disqualification
+  kind: derived
+  entity: Person
+  dtype: Judgment
+  period: Day
+  source: paragraph (1)(a)(ii)(aa) and paragraph (1)(b)(ii)(aa)
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: condition
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-4
+          excerpt: a person on income support, on an income-based jobseeker’s allowance
+            or on an income-related employment and support allowance
+  versions:
+  - effective_from: '0001-01-01'
+    formula: 'person_is_on_income_support
+
+      or person_is_on_income_based_jobseekers_allowance
+
+      or person_is_on_income_related_employment_and_support_allowance'
+- name: partner_has_income_related_benefit_disqualification
+  kind: derived
+  entity: Person
+  dtype: Judgment
+  period: Day
+  source: paragraph (1)(a)(ii)(aa) and paragraph (1)(b)(ii)(aa)
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: condition
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-4
+          excerpt: 'he is not and, if he has a partner, his partner is not:'
+  versions:
+  - effective_from: '0001-01-01'
+    formula: "person_has_partner\nand (\n  partner_is_on_income_support\n  or partner_is_on_income_based_jobseekers_allowance\n\
+      \  or partner_is_on_income_related_employment_and_support_allowance\n)"
+- name: relevant_period_applies
+  kind: derived
+  entity: Person
+  dtype: Judgment
+  period: Day
+  source: paragraph (3)
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: definition
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-4
+          excerpt: period beginning with the day on which P and each partner of P
+            has attained the qualifying age
+      - path: versions[0].formula
+        kind: ordering
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-4
+          excerpt: ending with the day on which the last assessment period for universal
+            credit ends
+  versions:
+  - effective_from: '0001-01-01'
+    formula: "person_has_attained_qualifying_age_for_state_pension_credit\nand (\n\
+      \  not person_has_partner\n  or partner_has_attained_qualifying_age_for_state_pension_credit\n\
+      )\nand day_is_on_or_before_end_of_last_universal_credit_assessment_period"
+- name: universal_credit_award_is_disregarded
+  kind: derived
+  entity: Person
+  dtype: Judgment
+  period: Day
+  source: paragraph (2)
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: exception
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-4
+          excerpt: where regulation 60A of the Universal Credit (Transitional Provisions)
+            Regulations 2014 applies in respect of the award.
+  versions:
+  - effective_from: '0001-01-01'
+    formula: 'relevant_period_applies
+
+      or universal_credit_transitional_provisions_regulation_60a_applies'
+- name: person_has_non_disregarded_universal_credit_award
+  kind: derived
+  entity: Person
+  dtype: Judgment
+  period: Day
+  source: paragraph (1)(a)(ii)(bb) and paragraph (2)
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: exception
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-4
+          excerpt: a person with an award of universal credit
+  versions:
+  - effective_from: '0001-01-01'
+    formula: 'person_has_award_of_universal_credit
+
+      and not universal_credit_award_is_disregarded'
+- name: partner_has_non_disregarded_universal_credit_award
+  kind: derived
+  entity: Person
+  dtype: Judgment
+  period: Day
+  source: paragraph (1)(a)(ii)(bb) and paragraph (2)
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: exception
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-4
+          excerpt: 'he is not and, if he has a partner, his partner is not:'
+  versions:
+  - effective_from: '0001-01-01'
+    formula: 'person_has_partner
+
+      and partner_has_award_of_universal_credit
+
+      and not universal_credit_award_is_disregarded'
+- name: pensioner
+  kind: derived
+  entity: Person
+  dtype: Judgment
+  period: Day
+  source: paragraph (1)(a)
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: definition
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-4
+          excerpt: 'a “pensioner” if: he has attained the qualifying age for state
+            pension credit'
+      - path: versions[0].formula
+        kind: exception
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-4
+          excerpt: he is not and, if he has a partner, his partner is not
+  versions:
+  - effective_from: '0001-01-01'
+    formula: 'person_has_attained_qualifying_age_for_state_pension_credit
+
+      and not person_has_income_related_benefit_disqualification
+
+      and not partner_has_income_related_benefit_disqualification
+
+      and not person_has_non_disregarded_universal_credit_award
+
+      and not partner_has_non_disregarded_universal_credit_award'
+- name: person_who_is_not_a_pensioner
+  kind: derived
+  entity: Person
+  dtype: Judgment
+  period: Day
+  source: paragraph (1)(b)
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: definition
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-4
+          excerpt: a “person who is not a pensioner” if
+  versions:
+  - effective_from: '0001-01-01'
+    formula: 'not person_has_attained_qualifying_age_for_state_pension_credit
+
+      or person_has_income_related_benefit_disqualification
+
+      or partner_has_income_related_benefit_disqualification
+
+      or person_has_non_disregarded_universal_credit_award
+
+      or partner_has_non_disregarded_universal_credit_award'
+inputs:
+- name: person_has_attained_qualifying_age_for_state_pension_credit
+  entity: Person
+  dtype: Boolean
+  period: Day
+- name: person_has_partner
+  entity: Person
+  dtype: Boolean
+  period: Day
+- name: partner_has_attained_qualifying_age_for_state_pension_credit
+  entity: Person
+  dtype: Boolean
+  period: Day
+- name: person_is_on_income_support
+  entity: Person
+  dtype: Boolean
+  period: Day
+- name: person_is_on_income_based_jobseekers_allowance
+  entity: Person
+  dtype: Boolean
+  period: Day
+- name: person_is_on_income_related_employment_and_support_allowance
+  entity: Person
+  dtype: Boolean
+  period: Day
+- name: partner_is_on_income_support
+  entity: Person
+  dtype: Boolean
+  period: Day
+- name: partner_is_on_income_based_jobseekers_allowance
+  entity: Person
+  dtype: Boolean
+  period: Day
+- name: partner_is_on_income_related_employment_and_support_allowance
+  entity: Person
+  dtype: Boolean
+  period: Day
+- name: person_has_award_of_universal_credit
+  entity: Person
+  dtype: Boolean
+  period: Day
+- name: partner_has_award_of_universal_credit
+  entity: Person
+  dtype: Boolean
+  period: Day
+- name: day_is_on_or_before_end_of_last_universal_credit_assessment_period
+  entity: Person
+  dtype: Boolean
+  period: Day
+- name: universal_credit_transitional_provisions_regulation_60a_applies
+  entity: Person
+  dtype: Boolean
+  period: Day
