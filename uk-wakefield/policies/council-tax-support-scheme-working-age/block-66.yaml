@@ -1,0 +1,41 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-66
+    source_sha256: 73bca2185f08bc79c92ec92f6f2ec36e8838f3e616f0ec909912f17debcf0540
+  summary: In this Part, “information” includes an application, certificate, notice
+    or other evidence; “official computer system” means a computer system maintained
+    by or on behalf of an authority for sending, receiving, processing or storing
+    information.
+rules:
+- name: information
+  kind: parameter
+  dtype: String
+  source: block 66
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: definition
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-66
+  versions:
+  - effective_from: '0001-01-01'
+    formula: '"application, certificate, notice or other evidence"'
+- name: official_computer_system
+  kind: parameter
+  dtype: String
+  source: block 66
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: definition
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-66
+  versions:
+  - effective_from: '0001-01-01'
+    formula: '"computer system maintained by or on behalf of an authority for sending,
+      receiving, processing or storing information"'
