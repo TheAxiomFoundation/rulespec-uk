@@ -1,0 +1,62 @@
+format: rulespec/v1
+rules:
+- name: rule_4_reference_number
+  kind: parameter
+  dtype: Integer
+  source: Wakefield Council Tax Support Scheme (Working Age), Rule 6
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: parameter
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-6
+          excerpt: For the purposes of Rule 4
+  versions:
+  - effective_from: '0001-01-01'
+    formula: '4'
+- name: person_is_not_taken_to_be_member_of_couple_for_rule_4
+  kind: derived
+  entity: Person
+  dtype: Judgment
+  period: Month
+  source: Wakefield Council Tax Support Scheme (Working Age), Rule 6
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: condition
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-6
+          excerpt: a husband or wife by virtue of a marriage entered into under a
+            law which permits polygamy
+      - path: versions[0].formula
+        kind: exception
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-6
+          excerpt: either party to the marriage has for the time being any spouse
+            additional to the other party
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-6
+          excerpt: neither party to the marriage is to be taken to be a member of
+            a couple
+  versions:
+  - effective_from: '0001-01-01'
+    formula: 'person_is_husband_or_wife_by_marriage_under_law_permitting_polygamy
+
+      and either_party_to_marriage_has_additional_spouse'
+inputs:
+- name: person_is_husband_or_wife_by_marriage_under_law_permitting_polygamy
+  entity: Person
+  dtype: Boolean
+  period: Month
+- name: either_party_to_marriage_has_additional_spouse
+  entity: Person
+  dtype: Boolean
+  period: Month
+module:
+  source_verification:
+    corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-6
+    source_sha256: a9d59ed8237ed35c2fa43d3b0563e27141a1bf04b95480c8e29a14ff99feabea
