@@ -1,0 +1,141 @@
+- name: writing_application_is_permitted
+  period: 2026-04
+  input:
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-61#input.electronic_communication_is_in_accordance_with_part_9
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-61#input.authority_has_published_telephone_number_for_receiving_applications
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-61#input.authority_has_made_section_13a_1_c_determination_for_class
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-61#input.person_is_in_class_of_section_13a_1_c_determination
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-61#input.person_would_otherwise_be_entitled_to_scheme_reduction
+    : true
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-61#reduction_application_may_be_made_in_writing: holds
+- name: compliant_electronic_application_is_permitted
+  period: 2026-04
+  input:
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-61#input.electronic_communication_is_in_accordance_with_part_9
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-61#input.authority_has_published_telephone_number_for_receiving_applications
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-61#input.authority_has_made_section_13a_1_c_determination_for_class
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-61#input.person_is_in_class_of_section_13a_1_c_determination
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-61#input.person_would_otherwise_be_entitled_to_scheme_reduction
+    : true
+  output:
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-61#reduction_application_may_be_made_by_electronic_communication
+    : holds
+- name: noncompliant_electronic_communication_is_not_permitted_application_method
+  period: 2026-04
+  input:
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-61#input.electronic_communication_is_in_accordance_with_part_9
+    : false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-61#input.authority_has_published_telephone_number_for_receiving_applications
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-61#input.authority_has_made_section_13a_1_c_determination_for_class
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-61#input.person_is_in_class_of_section_13a_1_c_determination
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-61#input.person_would_otherwise_be_entitled_to_scheme_reduction
+    : true
+  output:
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-61#reduction_application_may_be_made_by_electronic_communication
+    : not_holds
+- name: telephone_application_is_permitted_when_number_published
+  period: 2026-04
+  input:
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-61#input.electronic_communication_is_in_accordance_with_part_9
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-61#input.authority_has_published_telephone_number_for_receiving_applications
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-61#input.authority_has_made_section_13a_1_c_determination_for_class
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-61#input.person_is_in_class_of_section_13a_1_c_determination
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-61#input.person_would_otherwise_be_entitled_to_scheme_reduction
+    : true
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-61#reduction_application_may_be_made_by_telephone: holds
+- name: telephone_application_is_not_permitted_without_published_number
+  period: 2026-04
+  input:
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-61#input.electronic_communication_is_in_accordance_with_part_9
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-61#input.authority_has_published_telephone_number_for_receiving_applications
+    : false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-61#input.authority_has_made_section_13a_1_c_determination_for_class
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-61#input.person_is_in_class_of_section_13a_1_c_determination
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-61#input.person_would_otherwise_be_entitled_to_scheme_reduction
+    : true
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-61#reduction_application_may_be_made_by_telephone: not_holds
+- name: qualifying_application_may_be_treated_as_section_13a_application
+  period: 2026-04
+  input:
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-61#input.electronic_communication_is_in_accordance_with_part_9
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-61#input.authority_has_published_telephone_number_for_receiving_applications
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-61#input.authority_has_made_section_13a_1_c_determination_for_class
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-61#input.person_is_in_class_of_section_13a_1_c_determination
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-61#input.person_would_otherwise_be_entitled_to_scheme_reduction
+    : true
+  output:
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-61#scheme_reduction_application_may_be_treated_as_section_13a_1_c_application
+    : holds
+- name: treatment_not_available_without_authority_determination
+  period: 2026-04
+  input:
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-61#input.electronic_communication_is_in_accordance_with_part_9
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-61#input.authority_has_published_telephone_number_for_receiving_applications
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-61#input.authority_has_made_section_13a_1_c_determination_for_class
+    : false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-61#input.person_is_in_class_of_section_13a_1_c_determination
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-61#input.person_would_otherwise_be_entitled_to_scheme_reduction
+    : true
+  output:
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-61#scheme_reduction_application_may_be_treated_as_section_13a_1_c_application
+    : not_holds
+- name: treatment_not_available_outside_determined_class
+  period: 2026-04
+  input:
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-61#input.electronic_communication_is_in_accordance_with_part_9
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-61#input.authority_has_published_telephone_number_for_receiving_applications
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-61#input.authority_has_made_section_13a_1_c_determination_for_class
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-61#input.person_is_in_class_of_section_13a_1_c_determination
+    : false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-61#input.person_would_otherwise_be_entitled_to_scheme_reduction
+    : true
+  output:
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-61#scheme_reduction_application_may_be_treated_as_section_13a_1_c_application
+    : not_holds
+- name: treatment_not_available_without_otherwise_scheme_entitlement
+  period: 2026-04
+  input:
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-61#input.electronic_communication_is_in_accordance_with_part_9
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-61#input.authority_has_published_telephone_number_for_receiving_applications
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-61#input.authority_has_made_section_13a_1_c_determination_for_class
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-61#input.person_is_in_class_of_section_13a_1_c_determination
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-61#input.person_would_otherwise_be_entitled_to_scheme_reduction
+    : false
+  output:
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-61#scheme_reduction_application_may_be_treated_as_section_13a_1_c_application
+    : not_holds
