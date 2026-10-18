@@ -1,0 +1,14 @@
+- name: rules_apply_to_person_who_is_not_a_pensioner
+  period: 2026-04
+  input:
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-2#input.person_is_not_a_pensioner_as_prescribed_in_rule_3
+    : true
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-2#working_age_council_tax_support_rules_apply: holds
+- name: rules_do_not_apply_to_pensioner
+  period: 2026-04
+  input:
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-2#input.person_is_not_a_pensioner_as_prescribed_in_rule_3
+    : false
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-2#working_age_council_tax_support_rules_apply: not_holds
