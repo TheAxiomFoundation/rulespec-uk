@@ -1,0 +1,45 @@
+- name: capital_below_limit_does_not_trigger_disentitlement
+  period: 2026-04
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-8#input.capital_assessed_in_accordance_with_part_3: 5999
+  output:
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-8#not_entitled_to_council_tax_support_due_to_excess_capital
+    : not_holds
+- name: capital_at_source_stated_limit_does_not_trigger_disentitlement
+  period: 2026-04
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-8#input.capital_assessed_in_accordance_with_part_3: 6000
+  output:
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-8#not_entitled_to_council_tax_support_due_to_excess_capital
+    : not_holds
+- name: capital_in_excess_of_limit_triggers_disentitlement
+  period: 2026-04
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-8#input.capital_assessed_in_accordance_with_part_3: 6001
+  output:
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-8#not_entitled_to_council_tax_support_due_to_excess_capital
+    : holds
+- name: capital_below_limit_entitles_person_to_support
+  period: 2026-04
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-8#input.capital: 5999
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-8#entitled_to_council_tax_support: holds
+- name: capital_at_source_stated_limit_entitles_person_to_support
+  period: 2026-04
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-8#input.capital: 6000
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-8#entitled_to_council_tax_support: holds
+- name: capital_in_excess_of_limit_disentitles_person_from_support
+  period: 2026-04
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-8#input.capital: 6001
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-8#entitled_to_council_tax_support: not_holds
+- name: capital_at_limit_entitles_person_to_support
+  period: 2026-04
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-8#input.capital: 6000
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-8#entitled_to_council_tax_support: holds
