@@ -1,0 +1,72 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-38
+    source_sha256: 5e200f64225dcbff9b926a252c202a7c09793b1d22885eb08e839a446e99f23c
+  summary: Any amount of notional capital determined under Rule 36 can be reduced
+    on the 1st April each year by the previous financial year's Council Tax liability
+    less counterfactual Council Tax Support.
+inputs:
+- name: notional_capital_has_been_determined_under_rule_36
+  entity: Household
+  dtype: Boolean
+  period: Day
+- name: day_is_first_april
+  entity: Household
+  dtype: Boolean
+  period: Day
+- name: council_tax_liability_due_in_previous_financial_year
+  entity: Household
+  dtype: Money
+  unit: GBP
+  period: Day
+- name: council_tax_support_that_would_have_been_awarded_without_rule_36
+  entity: Household
+  dtype: Money
+  unit: GBP
+  period: Day
+rules:
+- name: notional_capital_determination_rule_number
+  kind: parameter
+  dtype: Integer
+  source: uk-wakefield/manual/council-tax-support-scheme-working-age/block-38
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: parameter
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-38
+          excerpt: determined under Rule 36
+  versions:
+  - effective_from: '0001-01-01'
+    formula: '36'
+- name: annual_notional_capital_reduction
+  kind: derived
+  entity: Household
+  dtype: Money
+  unit: GBP
+  period: Day
+  source: uk-wakefield/manual/council-tax-support-scheme-working-age/block-38
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-38
+          excerpt: reduced on the 1st April each year by an amount equivalent to the
+            authorities Council Tax liability due in the previous financial year,
+            less any Council Tax Support
+      - path: versions[0].formula
+        kind: condition
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-38
+          excerpt: Any amount of notional capital determined under Rule 36
+  versions:
+  - effective_from: '0001-01-01'
+    formula: "if notional_capital_has_been_determined_under_rule_36 and day_is_first_april:\n\
+      \  council_tax_liability_due_in_previous_financial_year - council_tax_support_that_would_have_been_awarded_without_rule_36\n\
+      else: 0"
