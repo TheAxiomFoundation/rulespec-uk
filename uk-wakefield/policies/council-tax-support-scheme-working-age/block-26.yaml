@@ -1,0 +1,93 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-26
+    source_sha256: 5da1d582583b4fcb6a81875767c4628d7ff8552f096795b69c84fc96018dd066
+  summary: '"Notional Earnings will apply" where a service is performed for another
+    person or company and no earnings are paid or less than the minimum or living
+    wage is paid. Weekly notional earnings are the applicable wage multiplied by weekly
+    hours worked, unless the employing person or company''s means are insufficient
+    to pay.'
+inputs:
+- name: service_is_performed_for_another_person_or_company
+  entity: Person
+  dtype: Boolean
+  period: Week
+- name: employing_person_or_company_makes_no_payment_of_earnings
+  entity: Person
+  dtype: Boolean
+  period: Week
+- name: employing_person_or_company_pays_less_than_minimum_or_living_wage
+  entity: Person
+  dtype: Boolean
+  period: Week
+- name: person_satisfies_authority_employer_means_insufficient_to_pay
+  entity: Person
+  dtype: Boolean
+  period: Week
+- name: hourly_minimum_or_living_wage_for_person_of_same_age
+  entity: Person
+  dtype: Money
+  unit: GBP
+  period: Week
+- name: weekly_hours_worked_for_service
+  entity: Person
+  dtype: Decimal
+  period: Week
+rules:
+- name: notional_earnings_apply
+  kind: derived
+  entity: Person
+  dtype: Judgment
+  period: Week
+  source: uk-wakefield/manual/council-tax-support-scheme-working-age/block-26(satz-1)
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: condition
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-26
+          excerpt: a service is performed for another person or company; and
+      - path: versions[0].formula
+        kind: condition
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-26
+          excerpt: makes no payment of earnings, or pays less than the minimum or
+            living wage.
+      - path: versions[0].formula
+        kind: exception
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-26
+          excerpt: unless the person satisfies the authority that the means of that
+            employing person or company are insufficient for them to pay, or to pay
+            more for the service.
+  versions:
+  - effective_from: '2026-04-01'
+    formula: "service_is_performed_for_another_person_or_company\nand (\n  employing_person_or_company_makes_no_payment_of_earnings\n\
+      \  or employing_person_or_company_pays_less_than_minimum_or_living_wage\n)\n\
+      and\nnot person_satisfies_authority_employer_means_insufficient_to_pay"
+- name: notional_weekly_earnings
+  kind: derived
+  entity: Person
+  dtype: Money
+  unit: GBP
+  period: Week
+  source: uk-wakefield/manual/council-tax-support-scheme-working-age/block-26(satz-4)
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-26
+          excerpt: 4A of the National Minimum Wage Regulations 2015, multiplied by
+            the weekly hours worked, unless the person satisfies the authority that
+            the means of that employing person or company are insufficient for them
+            to pay, or to pay more for the service.
+  versions:
+  - effective_from: '2026-04-01'
+    formula: "if notional_earnings_apply:\n  hourly_minimum_or_living_wage_for_person_of_same_age\
+      \ * weekly_hours_worked_for_service\nelse: 0"

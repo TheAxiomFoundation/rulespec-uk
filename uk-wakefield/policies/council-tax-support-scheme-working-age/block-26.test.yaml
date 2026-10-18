@@ -1,0 +1,105 @@
+- name: no_payment_service_creates_notional_weekly_earnings
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2026-04-06'
+    end: '2026-04-12'
+  input:
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-26#input.service_is_performed_for_another_person_or_company
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-26#input.employing_person_or_company_makes_no_payment_of_earnings
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-26#input.employing_person_or_company_pays_less_than_minimum_or_living_wage
+    : false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-26#input.person_satisfies_authority_employer_means_insufficient_to_pay
+    : false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-26#input.hourly_minimum_or_living_wage_for_person_of_same_age
+    : 12
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-26#input.weekly_hours_worked_for_service: 10
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-26#notional_earnings_apply: holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-26#notional_weekly_earnings: 120
+- name: no_service_prevents_notional_earnings
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2026-04-06'
+    end: '2026-04-12'
+  input:
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-26#input.service_is_performed_for_another_person_or_company
+    : false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-26#input.employing_person_or_company_makes_no_payment_of_earnings
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-26#input.employing_person_or_company_pays_less_than_minimum_or_living_wage
+    : false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-26#input.person_satisfies_authority_employer_means_insufficient_to_pay
+    : false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-26#input.hourly_minimum_or_living_wage_for_person_of_same_age
+    : 12
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-26#input.weekly_hours_worked_for_service: 10
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-26#notional_earnings_apply: not_holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-26#notional_weekly_earnings: 0
+- name: adequate_payment_prevents_notional_earnings
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2026-04-06'
+    end: '2026-04-12'
+  input:
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-26#input.service_is_performed_for_another_person_or_company
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-26#input.employing_person_or_company_makes_no_payment_of_earnings
+    : false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-26#input.employing_person_or_company_pays_less_than_minimum_or_living_wage
+    : false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-26#input.person_satisfies_authority_employer_means_insufficient_to_pay
+    : false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-26#input.hourly_minimum_or_living_wage_for_person_of_same_age
+    : 12
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-26#input.weekly_hours_worked_for_service: 10
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-26#notional_earnings_apply: not_holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-26#notional_weekly_earnings: 0
+- name: insufficient_employer_means_prevents_notional_earnings
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2026-04-06'
+    end: '2026-04-12'
+  input:
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-26#input.service_is_performed_for_another_person_or_company
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-26#input.employing_person_or_company_makes_no_payment_of_earnings
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-26#input.employing_person_or_company_pays_less_than_minimum_or_living_wage
+    : false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-26#input.person_satisfies_authority_employer_means_insufficient_to_pay
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-26#input.hourly_minimum_or_living_wage_for_person_of_same_age
+    : 12
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-26#input.weekly_hours_worked_for_service: 10
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-26#notional_earnings_apply: not_holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-26#notional_weekly_earnings: 0
+- name: below_wage_payment_creates_notional_weekly_earnings
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2026-04-06'
+    end: '2026-04-12'
+  input:
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-26#input.service_is_performed_for_another_person_or_company
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-26#input.employing_person_or_company_makes_no_payment_of_earnings
+    : false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-26#input.employing_person_or_company_pays_less_than_minimum_or_living_wage
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-26#input.person_satisfies_authority_employer_means_insufficient_to_pay
+    : false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-26#input.hourly_minimum_or_living_wage_for_person_of_same_age
+    : 12
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-26#input.weekly_hours_worked_for_service: 10
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-26#notional_earnings_apply: holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-26#notional_weekly_earnings: 120
