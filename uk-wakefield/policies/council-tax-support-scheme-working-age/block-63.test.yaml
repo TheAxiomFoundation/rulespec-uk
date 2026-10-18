@@ -1,0 +1,6 @@
+- name: recovers_all_excess_council_tax_support
+  period: 2026-04
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-63#input.excess_council_tax_support: 125.5
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-63#excess_council_tax_support_recovery_amount: 125.5
