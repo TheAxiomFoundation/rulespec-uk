@@ -1,0 +1,92 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-60
+    source_sha256: 2a010eb2a11212128e7741d934efd87d790131e546ec61197ce495b3b40a254b
+  summary: Where an application is made to the current authority and the applicant
+    or partner receives an extended reduction from another billing authority in England
+    or a billing authority in Wales, the current authority must reduce the applicant's
+    scheme reduction by that extended reduction.
+inputs:
+- name: application_made_to_current_authority
+  entity: Person
+  dtype: Boolean
+  period: Year
+- name: applicant_receives_extended_reduction_from_another_english_billing_authority
+  entity: Person
+  dtype: Boolean
+  period: Year
+- name: partner_receives_extended_reduction_from_another_english_billing_authority
+  entity: Person
+  dtype: Boolean
+  period: Year
+- name: applicant_receives_extended_reduction_from_welsh_billing_authority
+  entity: Person
+  dtype: Boolean
+  period: Year
+- name: partner_receives_extended_reduction_from_welsh_billing_authority
+  entity: Person
+  dtype: Boolean
+  period: Year
+- name: reduction_to_which_applicant_is_entitled
+  entity: Person
+  dtype: Money
+  period: Year
+- name: extended_reduction_amount
+  entity: Person
+  dtype: Money
+  period: Year
+rules:
+- name: extended_reduction_coordination_applies
+  kind: derived
+  entity: Person
+  dtype: Judgment
+  period: Year
+  source: uk-wakefield/manual/council-tax-support-scheme-working-age/block-60
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: condition
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-60
+          excerpt: an application is made to the authority (“the current authority”)
+      - path: versions[0].formula
+        kind: condition
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-60
+          excerpt: the applicant or the partner of the applicant, is in receipt of
+            an extended reduction
+      - path: versions[0].formula
+        kind: condition
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-60
+          excerpt: another billing authority in England; or a billing authority in
+            Wales
+  versions:
+  - effective_from: '0001-01-01'
+    formula: "application_made_to_current_authority\nand (\n  applicant_receives_extended_reduction_from_another_english_billing_authority\n\
+      \  or partner_receives_extended_reduction_from_another_english_billing_authority\n\
+      \  or applicant_receives_extended_reduction_from_welsh_billing_authority\n \
+      \ or partner_receives_extended_reduction_from_welsh_billing_authority\n)"
+- name: reduction_after_extended_reduction
+  kind: derived
+  entity: Person
+  dtype: Money
+  period: Year
+  source: uk-wakefield/manual/council-tax-support-scheme-working-age/block-60
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-60
+          excerpt: the current authority must reduce any reduction to which the applicant
+            is entitled under its scheme by the amount of that extended reduction.
+  versions:
+  - effective_from: '0001-01-01'
+    formula: 'if extended_reduction_coordination_applies: max(0, reduction_to_which_applicant_is_entitled
+      - extended_reduction_amount) else: reduction_to_which_applicant_is_entitled'
