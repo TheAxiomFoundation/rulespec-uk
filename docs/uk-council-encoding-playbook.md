@@ -393,9 +393,9 @@ the engine calculate the result.
 
 For percentages, most merged council modules ground the printed percentage
 directly as a decimal `Rate` (for example 0.2 for "20 per cent"). Seven of the
-100 instead use a `Rate` unit of 0.01 grounded on the scheme's own "per cent"
-wording (for example "100 per cent of the amount A/B") and multiply by it,
-which keeps a mixed number such as 2 6/7 visible as its printed whole number,
+100 instead declare a `Rate` unit of 0.01 grounded on the scheme's own "per cent"
+wording (for example "100 per cent of the amount A/B"), and six of them multiply
+by it (Middlesbrough declares the unit but does not use it), which keeps a mixed number such as 2 6/7 visible as its printed whole number,
 numerator and denominator. During the campaign a `/100` divisor repeatedly
 failed the numeric-grounding check ("Ungrounded generated numeric literal"),
 and no merged module divides by 100.
