@@ -7,7 +7,8 @@ spike used the source corpus at [`440162d0`](https://github.com/TheAxiomFoundati
 the commit bound by `uk-rulespec-2026-09-07`. The section outputs described
 below are historical extraction results, not a published section-row release.
 
-**Result:** the corpus half of A′ needs manifest configuration only, no code.
+**Result:** the corpus half of A′, the route chosen on 2026-10-11 (see the
+[README](README.md#the-route)), needs manifest configuration only, no code.
 It was demonstrated on Arun (heading family A) and Crawley (family B).
 The archived survey below contains 169 PDFs across 155 PDF-sourced council
 scopes; 90 PDFs fall in families A/B, with documents of different lengths. The encoder half
@@ -96,11 +97,20 @@ What each part does:
   `sched` group keeps both patterns' groups aligned for the template.
 - `section_label_pattern` with `label_only_heading_pattern` handles a label on
   its own line with the heading on the next line, and `Schedule N` labels.
-- `section_label_replacements` turns `Schedule 3` into `schedule-3`, so no path
-  segment contains a space (which would count against the corpus's
-  space-segment ratchet).
+- `section_label_replacements` turns `Schedule 3` into `schedule-3`. A literal
+  `Schedule 3` segment would count against two of the corpus's citation-path
+  ratchets: space segments and uppercase segments.
 - `drop_line_patterns` removes the running header, the header with a page
   number, and bare page numbers.
+
+Fix one defect before reusing this block: the bare-number pattern
+`^\\s*\\d{1,3}\\s*$` also deletes paragraph numbers that a scheme prints on
+their own line. Arun's page 80 prints Schedule 3's paragraphs as `1`, `2`, `4`,
+`5` and `6` (the scheme has no paragraph 3) and then `7.` and `8.`. The
+extracted `schedule-3` body keeps the text of every paragraph and the `7.` and
+`8.` markers, but loses the other five numbers. Narrow the pattern, for example
+to page numbers in the footer position, before any citation or review relies on
+Schedule 3 paragraph numbers.
 
 The 2026-09-13 spike recorded 96 rows, 1 document and 95 sections; the
 95-section extraction was reproduced against the bound PDF and pinned extractor
@@ -126,8 +136,9 @@ currently bound page-row release. Source text can be inspected in the
 | `/23` | Amount of reduction under this scheme: Class D | 28–29 | banded discount on the s.21 maximum: A 100%, B 70%, C 50%, D 30%, E 10% |
 | `/schedule-3` | Calculation of the amount of Council Tax Reduction | 80 | the same grid with band A at **90%**; the linkage sentence (discount based on the scheme's maximum, income and capital); CPI uprating of the bands (¶7); band A for Income Support, income-related ESA and income-based JSA (¶8) |
 
-`/23` and `/schedule-3` disagree on band A. That is open question 2 in the
-[README](README.md).
+`/23` and `/schedule-3` disagree on band A. The maintainer ruled on
+10 October 2026 that band A is 100%, following s.23(3); see the
+[README](README.md#arun-band-a-ruled-100).
 
 Cosmetic quirks, not blocking: each section's `heading` starts with its label
 (`"19 Class of person…"`), as in production `labeled_sections` output; the
@@ -145,6 +156,16 @@ inserts such as `7A.0`. The Arun block transfers with two changes:
 - add the council's own running header to `drop_line_patterns`, here
   `^\\s*Crawley Council Tax Reduction Scheme 2026/27\\s*$`. Without it, 56
   section bodies kept the header.
+
+Lettered labels need one more decision before publication. A label such as
+`7A` becomes an uppercase path segment (`…/7A`), and the corpus's
+`scripts/validate_citation_paths.py` counts every path containing an uppercase
+character in its `uppercase_segments` family. The script fails when a family's
+live count exceeds its baseline in `schema/citation-path.v1.json`, and raising
+a baseline is a reviewed change. Either map each lettered label to lower case
+with `section_label_replacements` (`"7A": "7a"`), or carry a reviewed baseline
+raise in the same corpus PR. Crawley has 12 such labels in the strict
+extraction (14 once `57A` and `60C` are repaired), and family B covers 73 PDFs.
 
 The 2026-09-13 spike recorded 113 rows, 1 document and 112 sections; the
 112-section extraction was reproduced against the bound PDF and pinned extractor
@@ -266,31 +287,81 @@ extract, and check the label list against the contents page.
 
 Changing segmentation changes citation identities. Carry out this work in
 `axiom-corpus`, then bind the resulting signed release in `rulespec-uk`; adding
-an extraction block here cannot change the externally bound corpus.
+an extraction block here cannot change the externally bound corpus. The
+constraints below were checked against `axiom-corpus` `main` at `dc82e4c4` and
+`axiom-encode` at `c326d1ac` (rulespec-uk's encoder pin) on 2026-10-14.
+
+- **One version of a document per release.** UK releases use the
+  `complete-expression-dates-v1` quality profile. Under it,
+  `_check_release_citation_uniqueness` in
+  `src/axiom_corpus/corpus/release_quality.py` rejects a release in which any
+  citation path appears in two scopes. A page-row version and a section-row
+  version of the same council document share the document's own path, so a
+  release carries one or the other. Binding the section-row version therefore
+  removes the page rows from the served corpus. In `rulespec-uk`, 98 module
+  files and 164 vendored corpus copies (82 councils) cite council page rows, and
+  Leeds and Wakefield cite block rows. Re-version a council with a merged module
+  only in a change that also replaces or retires that module. Under the
+  generated-RuleSpec guard that needs a receipt, and `axiom-encode retire` only
+  retires modules covered by an existing signed encode manifest, which none of
+  the 100 has; the [README](README.md#design-questions-the-route-has-to-answer)
+  lists the options. Councils with no module, such as Arun, need no
+  replacement.
+- **Path-mapping events do not exist yet.** `schema/citation-path.v1.md` §6
+  specifies `split`, `merge` and `retire` events and is headed "spec only — no
+  implementation here"; no event stream is produced. A page-to-section change
+  is many-to-many: a section spans pages and a page holds several sections.
+  Until the stream exists, put the page-to-section correspondence (from each
+  section's `page_start` and `page_end`) in the corpus PR description.
+- **The new version must sort after the served one.** Activation's
+  monotonicity check (`scripts/check_release_gate.py`) refuses a release whose
+  version for a scope sorts before the active one unless regression is
+  explicitly allowed. Keep the `<date>-<slug>-council-tax-reduction-2026-2027`
+  form with a later date.
+- **Source bytes live outside git.** Since
+  [axiom-corpus#774](https://github.com/TheAxiomFoundation/axiom-corpus/pull/774)
+  (2026-09-30; tooling in #769), each scope's sources, inventory, provisions and coverage are
+  pinned by `.axiom/corpus-locks/<jurisdiction>/<document_class>/<version>.json`
+  and fetched with `axiom-corpus-ingest corpus fetch`. Extracting from a fetched
+  copy through a document's `local_path` works, but `_download_document` then
+  records the absolute `file://` path as every row's `download_url`, with no
+  content type. Prefer downloading again from the official URL and checking the
+  sha256 against the locked source; otherwise correct the recorded URL before
+  signing.
+- **52 council scopes have no committed extraction manifest.** 107 council
+  manifests are in `.axiom/corpus-manifests/`. For 51 of the other 52 scopes the
+  signed ingest manifest records an extraction command that read a manifest
+  which was never committed; Kingston's records a release promotion instead.
+  Rebuild the manifest from the scope's inventory before adding an `extraction`
+  block.
+
+Procedure:
 
 1. Start from the council's verified source manifest and preserve its source
    identity, operative-period evidence and source-byte hash. Add the extraction
-   configuration to that document and create a new scope version; preserve the
-   published page-row version for existing citations. Record identity-mapping
-   events from the prior page rows to the new section rows, including splits
-   where a page contributes to several sections or a section spans several
-   pages. Keep the mapping events and signed ingest evidence with the new
-   version so citation continuity is explicit.
-2. Extract the new version. Compare the complete label list with the printed
-   contents and operative headings; account for every missing, duplicated or
-   unexpected label. Inspect page spans and the full bodies of award provisions
-   and schedules, including boundaries adjoining a page break. Validate citation
-   paths and remove running headers and footers.
-3. Commit the manifest and corpus artifacts using the corpus repository's
-   current ingest and re-versioning checks, using the
-   [ingestion runbook](https://github.com/TheAxiomFoundation/axiom-corpus/blob/3858e928/docs/agent-ingestion-runbook.md)
-   as the procedure reference. Follow its
-   [named-release publication procedure](https://github.com/TheAxiomFoundation/axiom-corpus/blob/3858e928/docs/named-release-publication.md)
-   to publish a release containing the new scope version. Extraction success
-   alone does not publish or bind it.
-4. Update `rulespec-uk`'s `.axiom/toolchain.toml` to the signed release through
-   the repository's binding checks. Verify that the chosen section citation
-   resolves in that release before asking the supervised encoder to use it.
+   configuration to that document.
+2. Extract a new scope version. Compare the complete label list with the
+   printed contents and operative headings; account for every missing,
+   duplicated or unexpected label. Inspect page spans and the full bodies of
+   award provisions and schedules, including boundaries adjoining a page break.
+   Fetch the locked provisions (`axiom-corpus-ingest corpus fetch --path data/corpus/provisions`),
+   run `scripts/validate_citation_paths.py`, and confirm running headers and
+   footers are gone.
+3. Commit the manifest so the tracked tree is clean, then sign with
+   `axiom-corpus-ingest sign-ingest-manifest --jurisdiction <jurisdiction> --document-class manual --version <version> --command "<the exact extract command>" --lock --push`,
+   which writes the scope's lock and uploads its bytes; commit the signed
+   ingest manifest and the lock together. The current references are
+   [`docs/corpus-storage.md`](https://github.com/TheAxiomFoundation/axiom-corpus/blob/main/docs/corpus-storage.md)
+   and [`docs/named-release-publication.md`](https://github.com/TheAxiomFoundation/axiom-corpus/blob/main/docs/named-release-publication.md).
+   Extraction success alone does not publish or bind anything.
+4. Cut a release that swaps the scope's version. Merging the selector does not
+   publish it: dispatch `publish.yml`, then the mirror and activation
+   workflows with that run's ID. Bind it in `rulespec-uk`
+   (`.axiom/toolchain.toml`, `.axiom/workflow-toolchain.toml` and both workflow
+   corpus refs), which needs an encoder pin with `corpus-fetch`; see the
+   [README](README.md#corpus-procedure).
+   Verify that the chosen section citation resolves in that release before
+   asking the supervised encoder to use it.
 5. Pilot one Arun and one Crawley component through the supervised encoder.
    Inspect emitted evidence and receipts, run the full gate battery, and review
    the legal formula against the complete section and related provisions. Only
@@ -304,12 +375,16 @@ changed to section rows.
 
 - Whether `axiom-encode encode` on a section citation (Arun `/23`, Crawley
   `/1`) under the signing supervisor yields a module that passes the encoder's
-  own gates. This is the first thing to test under A′, and it needs a
-  section-row version in a signed, bound release.
+  own gates. This is the first thing to test on the chosen route, and it needs
+  a section-row version in a signed, bound release.
 - The encoder names a module after its citation (for example
-  `policies/<document>/23.yaml`), not `policies/<council>/council-tax-reduction`.
-  How the per-council composition module references the component modules
-  still has to be designed.
+  `uk-arun/policies/council-tax-reduction-scheme-2026-2027/23.yaml`), not
+  `policies/<council>/council-tax-reduction`. The per-council assembly is
+  expected to be an axiom-compose ProgramSpec under `uk-<slug>/programs/`, like
+  `uk/programs/universal-credit/fy-2026-27.yaml`: the shared workflow requires
+  each ProgramSpec import to resolve to an existing encoded module and allows
+  only the literals 0, 1 and 12. Whether one ProgramSpec can wire a council's
+  section modules into its award is untested.
 - Schedule paragraphs as their own rows (`schedule-3/2`): in the spike a schedule was
   one row, which is enough for the award surface. Paragraph rows need a small
   extractor change to carry the schedule prefix onto paragraph labels.
