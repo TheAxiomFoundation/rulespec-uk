@@ -137,6 +137,17 @@ Measured at `main` `3d0ecdc8` on 2026-10-14:
   the shared workflow at `b36f534` then requires an encoder with `corpus-fetch`
   ([axiom-encode#1742](https://github.com/TheAxiomFoundation/axiom-encode/pull/1742),
   2026-10-10), which `c326d1ac` predates.
+- Since that measurement,
+  [#492](https://github.com/TheAxiomFoundation/rulespec-uk/pull/492) re-pins
+  the encoder to `fa0da5e8` (0.2.2211), which carries `corpus-fetch` and
+  verifies manifests on receipt-only change sets
+  ([axiom-encode#1853](https://github.com/TheAxiomFoundation/axiom-encode/pull/1853)).
+  The 37 validation waivers the new validator needs were staged in
+  [#494](https://github.com/TheAxiomFoundation/rulespec-uk/pull/494): 35 council
+  modules, which the signed re-encodes in
+  [#493](https://github.com/TheAxiomFoundation/rulespec-uk/issues/493) retire,
+  and new fingerprints for two national modules. Retiring the manifest
+  prohibition above is the next step.
 
 ## Evidence: the supervised encoder on Arun
 
@@ -283,7 +294,8 @@ merged module now has to come from the encoder.
 
 ## How to continue
 
-1. **Finish the signed-workflow migration.** The encoder re-pin comes first:
+1. **Finish the signed-workflow migration.** The encoder re-pin
+   ([#492](https://github.com/TheAxiomFoundation/rulespec-uk/pull/492)) comes first:
    it admits verified receipts, retires the manifest prohibition, and brings
    the `corpus-fetch` support that binding any newer corpus release needs. No
    council encode can land before it.
