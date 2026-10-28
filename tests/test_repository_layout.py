@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import json
+import math
+import os
 import re
 from pathlib import Path
 
@@ -8,6 +10,9 @@ import yaml
 
 
 ROOT = Path(__file__).resolve().parents[1]
+# The only schema an encoding receipt may declare. It is the encoder's
+# APPLIED_ENCODING_MANIFEST_SCHEMA at the pinned axiom-encode.
+TRUSTED_APPLIED_MANIFEST_SCHEMA = "axiom-encode/applied-rulespec/v5"
 # Country-monorepo layout: every RuleSpec filesystem root lives beneath one
 # direct UK jurisdiction directory. Only the four atomic roots are indexed as
 # rulespec/v1 modules; programs/ contains declarative composition specs.
@@ -94,6 +99,94 @@ def iter_repo_files() -> list[Path]:
         if path.is_file():
             files.append(path)
     return sorted(files)
+
+
+def encoding_manifest_tree() -> tuple[list[Path], list[str]]:
+    """Walk `.axiom/encoding-manifests/` without following any symlink.
+
+    Returns the regular files beneath the manifest root, and one problem for
+    each entry that is not a real directory or regular file: a symlinked
+    `.axiom`, a symlinked manifest root, a symlinked directory at any depth
+    beneath it, a symlinked receipt, or a special file. Every symlink is
+    refused, including one that resolves inside the repository: this is a
+    stricter rule than containment, and it is intended. A symlinked directory
+    is reported and never entered, so the walk reads nothing outside the real
+    tree. (`Path.rglob` would start from the target of a symlinked `.axiom` or
+    manifest root, so this walk does not use it.)
+
+    These guarantees hold for a stable tree. The walk reopens entries by name,
+    so it does not defend against a concurrent writer that swaps an entry for
+    a symlink while the walk runs.
+    """
+    metadata_root = ROOT / ".axiom"
+    manifest_root = metadata_root / "encoding-manifests"
+    if metadata_root.is_symlink():
+        return [], ["aliased manifest ancestor: .axiom"]
+    if manifest_root.is_symlink():
+        return [], ["aliased manifest root: .axiom/encoding-manifests"]
+    if not manifest_root.exists():
+        return [], []
+    if not manifest_root.is_dir():
+        return [], ["manifest root is not a directory: .axiom/encoding-manifests"]
+
+    files: list[Path] = []
+    problems: list[str] = []
+    pending = [manifest_root]
+    while pending:
+        with os.scandir(pending.pop()) as entries:
+            for entry in entries:
+                path = Path(entry.path)
+                relative = path.relative_to(manifest_root).as_posix()
+                if entry.is_symlink():
+                    problems.append(f"aliased manifest path: {relative}")
+                elif entry.is_dir(follow_symlinks=False):
+                    pending.append(path)
+                elif entry.is_file(follow_symlinks=False):
+                    files.append(path)
+                else:
+                    problems.append(f"not a regular file: {relative}")
+    return sorted(files), sorted(problems)
+
+
+def _refuse_json_constant(name: str) -> object:
+    raise ValueError(f"non-standard JSON constant {name}")
+
+
+def _finite_json_float(text: str) -> float:
+    value = float(text)
+    if not math.isfinite(value):
+        raise ValueError(f"JSON number out of range: {text}")
+    return value
+
+
+def _unique_json_object(pairs: list[tuple[str, object]]) -> dict[str, object]:
+    payload = dict(pairs)
+    if len(payload) != len(pairs):
+        raise ValueError("duplicate JSON object key")
+    return payload
+
+
+def load_encoding_manifest(path: Path) -> tuple[object, str | None]:
+    """Parse a receipt as UTF-8 JSON; return (payload, None) or (None, why).
+
+    Beyond Python's decoder, every object must have unique keys (otherwise the
+    last `schema_version` would silently win) and every number must be finite:
+    the NaN, Infinity and -Infinity literals are refused, and so is a number
+    such as 1e999 that overflows to infinity.
+    """
+    try:
+        return (
+            json.loads(
+                path.read_bytes().decode("utf-8"),
+                parse_constant=_refuse_json_constant,
+                parse_float=_finite_json_float,
+                object_pairs_hook=_unique_json_object,
+            ),
+            None,
+        )
+    except (ValueError, RecursionError) as exc:
+        # UnicodeDecodeError and json.JSONDecodeError are both ValueErrors.
+        return None, type(exc).__name__
 
 
 def iter_rulespec_files() -> list[Path]:
@@ -238,7 +331,24 @@ def test_canonical_content_uses_regular_exact_yaml_files_without_aliases() -> No
 
 
 def test_encoding_manifests_use_only_the_canonical_root_mirror() -> None:
+    """Receipts sit only at the canonical mirror of the module they cover.
+
+    A receipt is `.axiom/encoding-manifests/<jurisdiction>/<atomic-root>/...json`
+    for a registered jurisdiction, mirrors the primary module it applies, and
+    lists only applied files that exist as regular files or are recorded as
+    deleted. No symlink may sit on the way to a receipt: `.axiom`,
+    `.axiom/encoding-manifests`, every directory beneath it and the receipt
+    file itself must be real, whatever the symlink resolves to (see
+    `encoding_manifest_tree`).
+
+    These repository tests check layout and schema only. Cryptographic
+    verification is the encoder's job in CI through the shared validation
+    workflow at the pinned encoder.
+    """
     manifest_root = ROOT / ".axiom" / "encoding-manifests"
+    manifests, problems = encoding_manifest_tree()
+    # Reject aliases before even reading metadata through a symlinked .axiom.
+    assert problems == [], problems
     structure = yaml.safe_load((ROOT / ".axiom" / "repository-structure.yaml").read_text())
     # Retirement can remove a jurisdiction's final content root. Its receipt
     # namespace remains canonical because the jurisdiction is still admitted.
@@ -246,23 +356,13 @@ def test_encoding_manifests_use_only_the_canonical_root_mirror() -> None:
         name for name in structure["allowed_root_directories"]
         if JURISDICTION_DIR_RE.fullmatch(name)
     }
-    problems: list[str] = []
-
-    if manifest_root.is_symlink():
-        problems.append("aliased manifest root: .axiom/encoding-manifests")
-
     for jurisdiction in sorted(jurisdictions):
         nested = ROOT / jurisdiction / ".axiom" / "encoding-manifests"
         if nested.exists() or nested.is_symlink():
             problems.append(f"co-located manifest root: {nested.relative_to(ROOT)}")
 
-    for manifest in sorted(manifest_root.rglob("*")):
+    for manifest in manifests:
         relative = manifest.relative_to(manifest_root)
-        if manifest.is_symlink():
-            problems.append(f"aliased manifest path: {relative.as_posix()}")
-            continue
-        if not manifest.is_file():
-            continue
         if manifest.suffix != ".json":
             problems.append(f"not exact .json: {relative.as_posix()}")
             continue
@@ -273,11 +373,14 @@ def test_encoding_manifests_use_only_the_canonical_root_mirror() -> None:
         if source_root not in ATOMIC_CONTENT_DIRS:
             problems.append(f"non-atomic manifest path: {relative.as_posix()}")
             continue
-        payload = json.loads(manifest.read_text())
+        payload, parse_error = load_encoding_manifest(manifest)
+        if parse_error is not None:
+            problems.append(f"manifest is not JSON: {relative.as_posix()}")
+            continue
         if not isinstance(payload, dict):
             problems.append(f"manifest is not an object: {relative.as_posix()}")
             continue
-        if payload.get("schema_version") != "axiom-encode/applied-rulespec/v5":
+        if payload.get("schema_version") != TRUSTED_APPLIED_MANIFEST_SCHEMA:
             problems.append(f"not a current v5 receipt: {relative.as_posix()}")
         applied_files = payload.get("applied_files")
         if not isinstance(applied_files, list) or not applied_files:
@@ -323,16 +426,34 @@ def test_encoding_manifests_use_only_the_canonical_root_mirror() -> None:
     assert problems == []
 
 
-def test_legacy_applied_manifests_are_not_kept_as_migration_inputs() -> None:
-    manifest_root = ROOT / ".axiom" / "encoding-manifests"
-    manifests = sorted(
-        path.relative_to(ROOT).as_posix() for path in manifest_root.rglob("*.json")
-    )
+def test_applied_manifests_use_trusted_v5_schema() -> None:
+    """Every receipt is a UTF-8 JSON object declaring the trusted v5 schema.
 
-    assert manifests == [], (
-        "prelaunch hard cut requires deleting every legacy applied manifest; "
-        "trusted v5 manifests must be regenerated from the named release, not "
-        f"carried forward as compatibility inputs: {manifests}"
+    Every file under `.axiom/encoding-manifests/` must parse as JSON, be an
+    object, and set `schema_version` to `TRUSTED_APPLIED_MANIFEST_SCHEMA`.
+    An entry this check cannot read as a regular file without following a
+    symlink is refused too, so it fails closed.
+
+    These repository tests check layout and schema only. Cryptographic
+    verification is the encoder's job in CI through the shared validation
+    workflow at the pinned encoder.
+    """
+    manifest_root = ROOT / ".axiom" / "encoding-manifests"
+    manifests, problems = encoding_manifest_tree()
+    for manifest in manifests:
+        relative = manifest.relative_to(manifest_root).as_posix()
+        payload, parse_error = load_encoding_manifest(manifest)
+        if parse_error is not None:
+            problems.append(f"not JSON ({parse_error}): {relative}")
+        elif not isinstance(payload, dict):
+            problems.append(f"not a JSON object: {relative}")
+        elif payload.get("schema_version") != TRUSTED_APPLIED_MANIFEST_SCHEMA:
+            problems.append(
+                f"untrusted schema {payload.get('schema_version')!r}: {relative}"
+            )
+
+    assert problems == [], (
+        f"encoding receipts must declare {TRUSTED_APPLIED_MANIFEST_SCHEMA}: {problems}"
     )
 
 

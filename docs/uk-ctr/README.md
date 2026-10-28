@@ -109,7 +109,8 @@ Corpus side:
 
 ## Continuous integration and receipts
 
-Measured at `main` `3d0ecdc8` on 2026-10-14:
+Measured at `main` `3d0ecdc8` on 2026-10-14, with the encoder pin and receipt
+policy updated for #492 and #502:
 
 - The generated-RuleSpec guard is on
   ([#459](https://github.com/TheAxiomFoundation/rulespec-uk/pull/459),
@@ -120,35 +121,36 @@ Measured at `main` `3d0ecdc8` on 2026-10-14:
   [replacing a merged module](#design-questions-the-route-has-to-answer)).
 - The shared validation workflow is pinned at `b36f534`
   ([#464](https://github.com/TheAxiomFoundation/rulespec-uk/pull/464)). The
-  encoder is still pinned at `c326d1ac` (0.2.1337).
+  encoder is now pinned at `fa0da5e8` (0.2.2211), set by
+  [#492](https://github.com/TheAxiomFoundation/rulespec-uk/pull/492).
   [`.axiom/workflow-toolchain.toml`](../../.axiom/workflow-toolchain.toml)
   mirrors those pins, and CI fails if it drifts
   ([#461](https://github.com/TheAxiomFoundation/rulespec-uk/pull/461)).
 - There are no files under `.axiom/encoding-manifests/`.
-  `test_legacy_applied_manifests_are_not_kept_as_migration_inputs` in
-  `tests/test_repository_layout.py` fails if any manifest JSON exists, and
-  `tests/test_encoding_manifest_prohibition.py` pins that behaviour; both change
-  at the re-pin. A canonical receipt layout is staged in
-  `tests/test_encoding_manifest_retirement_layout.py`.
-- The migration's remaining step is an encoder re-pin whose guard verifies
-  receipts, which retires the prohibition. Until it lands, no encoder output
-  can be committed here.
-- The same re-pin is needed before rulespec-uk can bind any newer corpus
-  release. Every release cut now points at a corpus commit with lock files, and
-  the shared workflow at `b36f534` then requires an encoder with `corpus-fetch`
+  [#502](https://github.com/TheAxiomFoundation/rulespec-uk/pull/502) retires
+  the blanket manifest prohibition.
+  `test_applied_manifests_use_trusted_v5_schema` and
+  `test_encoding_manifests_use_only_the_canonical_root_mirror` in
+  `tests/test_repository_layout.py` admit receipts only as UTF-8 JSON objects
+  with unique keys and finite numbers (no `NaN` or infinite values) declaring
+  `axiom-encode/applied-rulespec/v5` in canonical layout. In the checked-out tree, every symlink on the receipt
+  path is refused, including one that resolves inside the repository. These
+  tests check schema and layout; the pinned encoder in
+  the shared CI workflow verifies signatures, hashes and provenance.
+  `tests/test_encoding_manifest_retirement_layout.py` covers receipts whose
+  `applied_files` entries record deletions.
+- The pinned encoder carries `corpus-fetch`
   ([axiom-encode#1742](https://github.com/TheAxiomFoundation/axiom-encode/pull/1742),
-  2026-10-10), which `c326d1ac` predates.
-- Since that measurement,
-  [#492](https://github.com/TheAxiomFoundation/rulespec-uk/pull/492) re-pins
-  the encoder to `fa0da5e8` (0.2.2211), which carries `corpus-fetch` and
-  verifies manifests on receipt-only change sets
+  2026-10-10), which the shared workflow at `b36f534` requires when binding
+  corpus releases backed by lock files. The encoder re-pin needed for newer
+  corpus releases is complete.
+- The pinned encoder also verifies manifests on receipt-only change sets
   ([axiom-encode#1853](https://github.com/TheAxiomFoundation/axiom-encode/pull/1853)).
   The 37 validation waivers the new validator needs were staged in
   [#494](https://github.com/TheAxiomFoundation/rulespec-uk/pull/494): 35 council
   modules, which the signed re-encodes in
   [#493](https://github.com/TheAxiomFoundation/rulespec-uk/issues/493) retire,
-  and new fingerprints for two national modules. Retiring the manifest
-  prohibition above is the next step.
+  and new fingerprints for two national modules.
 
 ## Evidence: the supervised encoder on Arun
 
@@ -167,7 +169,7 @@ retained pilot recorded:
 | Arun whole document, source only | 8 | Grid, capital limit and formula present; deductions and minimum missing; coverage gates failed |
 | Campaign module in #310, comparison only | 21 | Campaign gates passed; the band A source conflict remained unresolved |
 
-The mechanism, read from `axiom-encode` (unchanged between the pinned
+The mechanism, read from `axiom-encode` (unchanged between the then-pinned
 `c326d1ac` and later `main`): the encoder's source text for a citation is that
 provision row's body. A row with no body of its own, such as a document row,
 is composed from all of its descendants. Repository context is added beside
@@ -255,7 +257,7 @@ over all 159 council scopes before encoding.
     would be encoded from that row alone: it gains a receipt but not the award
     surface.
 
-  The options, for a maintainer decision: after the encoder re-pin, replace each
+  The options, for a maintainer decision: replace each
   module from its declared row to obtain a receipt, then `retire` it around the
   rebind that brings the council's section rows (whether before the rebind or in
   the same PR depends on how the guard re-checks the retired module's source
@@ -295,11 +297,12 @@ merged module now has to come from the encoder.
 
 ## How to continue
 
-1. **Finish the signed-workflow migration.** The encoder re-pin
-   ([#492](https://github.com/TheAxiomFoundation/rulespec-uk/pull/492)) comes first:
-   it admits verified receipts, retires the manifest prohibition, and brings
-   the `corpus-fetch` support that binding any newer corpus release needs. No
-   council encode can land before it.
+1. **Signed-workflow migration: done.**
+   [#492](https://github.com/TheAxiomFoundation/rulespec-uk/pull/492) re-pinned
+   the encoder with receipt verification and `corpus-fetch` support.
+   [#502](https://github.com/TheAxiomFoundation/rulespec-uk/pull/502)
+   retires the blanket manifest prohibition and admits v5 receipts in
+   canonical layout without symlinks; the encoder verifies them in CI.
 2. **Re-version Arun with section rows.** Arun has no module on `main`, so no
    citation breaks. Use the tested extraction block, with its bare-number fix, in
    [`section-ingest.md`](section-ingest.md#arun-family-a-the-extraction-block),
@@ -363,7 +366,7 @@ In outline:
    `axiom-corpus-ref` in `.github/workflows/repository-checks.yml`, and
    `AXIOM_CORPUS_REF` in `.github/workflows/bulk-encode.yml`. The PR's validate
    job fetches the published release object and fails until the mirror has
-   finished. It also needs the encoder re-pin with `corpus-fetch` (step 1).
+   finished.
 
 ## The registry
 
