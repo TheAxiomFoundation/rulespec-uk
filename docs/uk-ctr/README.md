@@ -131,9 +131,9 @@ policy updated for #492 and #502:
   the blanket manifest prohibition.
   `test_applied_manifests_use_trusted_v5_schema` and
   `test_encoding_manifests_use_only_the_canonical_root_mirror` in
-  `tests/test_repository_layout.py` admit receipts only as strict UTF-8 JSON
-  objects (no `NaN` or `Infinity`) declaring `axiom-encode/applied-rulespec/v5`
-  in canonical layout. In the checked-out tree, every symlink on the receipt
+  `tests/test_repository_layout.py` admit receipts only as UTF-8 JSON objects
+  with unique keys and finite numbers (no `NaN` or infinite values) declaring
+  `axiom-encode/applied-rulespec/v5` in canonical layout. In the checked-out tree, every symlink on the receipt
   path is refused, including one that resolves inside the repository. These
   tests check schema and layout; the pinned encoder in
   the shared CI workflow verifies signatures, hashes and provenance.

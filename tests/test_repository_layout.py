@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import math
 import os
 import re
 from pathlib import Path
@@ -151,17 +152,35 @@ def _refuse_json_constant(name: str) -> object:
     raise ValueError(f"non-standard JSON constant {name}")
 
 
-def load_encoding_manifest(path: Path) -> tuple[object, str | None]:
-    """Parse a receipt as strict UTF-8 JSON; return (payload, None) or (None, why).
+def _finite_json_float(text: str) -> float:
+    value = float(text)
+    if not math.isfinite(value):
+        raise ValueError(f"JSON number out of range: {text}")
+    return value
 
-    NaN, Infinity and -Infinity are refused: Python's decoder accepts them, but
-    they are not JSON (RFC 8259).
+
+def _unique_json_object(pairs: list[tuple[str, object]]) -> dict[str, object]:
+    payload = dict(pairs)
+    if len(payload) != len(pairs):
+        raise ValueError("duplicate JSON object key")
+    return payload
+
+
+def load_encoding_manifest(path: Path) -> tuple[object, str | None]:
+    """Parse a receipt as UTF-8 JSON; return (payload, None) or (None, why).
+
+    Beyond Python's decoder, every object must have unique keys (otherwise the
+    last `schema_version` would silently win) and every number must be finite:
+    the NaN, Infinity and -Infinity literals are refused, and so is a number
+    such as 1e999 that overflows to infinity.
     """
     try:
         return (
             json.loads(
                 path.read_bytes().decode("utf-8"),
                 parse_constant=_refuse_json_constant,
+                parse_float=_finite_json_float,
+                object_pairs_hook=_unique_json_object,
             ),
             None,
         )

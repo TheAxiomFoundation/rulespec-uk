@@ -41,6 +41,7 @@ def receipt_bytes(kind: str, applied_files: list[dict]) -> bytes:
         return json.dumps(
             {**receipt, "schema_version": json.loads(kind.removeprefix("schema="))}
         ).encode()
+    open_receipt = json.dumps(receipt).encode()[:-1]  # without the closing brace
     non_json = {
         "non-json-yaml": f"schema_version: {V5}\n".encode(),
         "non-json-empty": b"",
@@ -52,6 +53,14 @@ def receipt_bytes(kind: str, applied_files: list[dict]) -> bytes:
         "non-json-negative-infinity": json.dumps(
             {**receipt, "extra": float("-inf")}
         ).encode(),
+        # Valid JSON text that Python reads as an infinite float.
+        "non-json-overflow": open_receipt + b', "extra": 1e999}',
+        "non-json-negative-overflow": open_receipt + b', "extra": -1e999}',
+        # A repeated key: Python keeps the last, so this would read as v5.
+        "non-json-duplicate-key": b'{"schema_version": '
+        + json.dumps("axiom-encode/applied-rulespec/v4").encode()
+        + b", "
+        + json.dumps(receipt).encode()[1:],
     }
     if kind in non_json:
         return non_json[kind]
@@ -81,6 +90,9 @@ NON_JSON_KINDS = (
     "non-json-nan",
     "non-json-infinity",
     "non-json-negative-infinity",
+    "non-json-overflow",
+    "non-json-negative-overflow",
+    "non-json-duplicate-key",
 )
 NON_OBJECT_KINDS = (
     "non-object-list",
