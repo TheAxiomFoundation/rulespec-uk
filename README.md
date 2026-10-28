@@ -50,12 +50,12 @@ the shared workflow validates the proposed pins. A change to a dependency ref,
 the staged `axiom_compose_ref`, or the shared workflow pin (the table's
 `shared_workflow_ref` or the caller's `uses:` line) selects the full
 toolchain-bump validation, and such a change fails when it comes with any other
-file. The shared workflow never reads `axiom_encode_version`; only the mirror
-check compares it. The bulk-generation workflow keeps its own dependency refs
+file. The shared workflow only checks that `axiom_encode_version` is a string;
+only the mirror check compares its value. The bulk-generation workflow keeps its own dependency refs
 and does not read this table. The caller passes no `axiom-compose-ref`, so the
 composer never runs: the mirror check compares the staged `axiom_compose_ref`
 with the caller's metadata, and a change to it counts as a pin change, but no
-step uses it.
+step checks out or builds the composer.
 `.axiom/toolchain.toml` continues to bind the signed corpus release and validation
 waiver set.
 
