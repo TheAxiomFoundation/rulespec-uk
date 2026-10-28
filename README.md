@@ -41,17 +41,21 @@ jurisdiction remains registered.
 `.github/workflows/repository-checks.yml`, and that workflow's
 `workflow-toolchain` job fails if any value differs. Since the shared workflow
 pin moved to `882c5f11` ([#503](https://github.com/TheAxiomFoundation/rulespec-uk/pull/503)),
-the shared workflow also reads this table from the protected commit (a pull
-request's base, or the current `main` commit for push, scheduled and manual
-runs). It takes each dependency pin from the table before the caller's literal
-input, and fails when an effective input does not match. A pull request that
-changes only this table, the caller workflow and `.axiom/toolchain.toml` is
-validated against its proposed pins, and a dependency pin change selects the
-full toolchain-bump validation. A pin change in this table or the caller that
-comes with any other file fails. The bulk-generation workflow keeps its own
-dependency refs and does not read this table. The caller passes no
-`axiom-compose-ref`, so the composer stays off: the staged `axiom_compose_ref`
-is checked against the caller's metadata but not used.
+the shared workflow also reads this table from the protected commit: a pull
+request's base, or, for push, scheduled and manual runs, the `main` commit under
+validation. It takes each dependency pin from the table before the caller's
+literal input, and fails when an effective input does not match. When a pull
+request changes only this table, the caller workflow and `.axiom/toolchain.toml`,
+the shared workflow validates the proposed pins. A change to a dependency ref,
+the staged `axiom_compose_ref`, or the shared workflow pin (the table's
+`shared_workflow_ref` or the caller's `uses:` line) selects the full
+toolchain-bump validation, and such a change fails when it comes with any other
+file. The shared workflow never reads `axiom_encode_version`; only the mirror
+check compares it. The bulk-generation workflow keeps its own dependency refs
+and does not read this table. The caller passes no `axiom-compose-ref`, so the
+composer never runs: the mirror check compares the staged `axiom_compose_ref`
+with the caller's metadata, and a change to it counts as a pin change, but no
+step uses it.
 `.axiom/toolchain.toml` continues to bind the signed corpus release and validation
 waiver set.
 
