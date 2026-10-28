@@ -21,13 +21,14 @@ program implementations. ProgramSpecs are declarative composition only.
 Legacy applied manifests are deleted, not retained as migration inputs. The
 blanket encoding-manifest prohibition was retired in
 [#502](https://github.com/TheAxiomFoundation/rulespec-uk/pull/502). Repository
-checks admit receipts only as UTF-8 JSON objects declaring
-`axiom-encode/applied-rulespec/v5`, under
+checks admit receipts only as strict UTF-8 JSON objects (no `NaN` or
+`Infinity`) declaring `axiom-encode/applied-rulespec/v5`, under
 `.axiom/encoding-manifests/<jurisdiction>/<atomic-root>/`, mirroring the module
-path with the `.json` extension. Every symlink on the receipt path is refused,
-including one that resolves inside the repository. These checks cover layout
-and schema; signature, hash and provenance verification belongs to the pinned
-encoder's guard in the shared CI workflow, including receipt-only changes.
+path with the `.json` extension. In the checked-out tree, every symlink on the
+receipt path is refused, including one that resolves inside the repository.
+These checks cover layout and schema; signature, hash and provenance
+verification belongs to the pinned encoder's guard in the shared CI workflow,
+including receipt-only changes.
 
 Atomic modules and their companion tests must come from the supervised encoder
 with signed receipts. Existing modules without receipts stay untouched until

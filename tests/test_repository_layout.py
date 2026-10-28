@@ -112,6 +112,10 @@ def encoding_manifest_tree() -> tuple[list[Path], list[str]]:
     is reported and never entered, so the walk reads nothing outside the real
     tree. (`Path.rglob` would start from the target of a symlinked `.axiom` or
     manifest root, so this walk does not use it.)
+
+    These guarantees hold for a stable tree. The walk reopens entries by name,
+    so it does not defend against a concurrent writer that swaps an entry for
+    a symlink while the walk runs.
     """
     metadata_root = ROOT / ".axiom"
     manifest_root = metadata_root / "encoding-manifests"
@@ -143,10 +147,24 @@ def encoding_manifest_tree() -> tuple[list[Path], list[str]]:
     return sorted(files), sorted(problems)
 
 
+def _refuse_json_constant(name: str) -> object:
+    raise ValueError(f"non-standard JSON constant {name}")
+
+
 def load_encoding_manifest(path: Path) -> tuple[object, str | None]:
-    """Parse a receipt as UTF-8 JSON; return (payload, None) or (None, why)."""
+    """Parse a receipt as strict UTF-8 JSON; return (payload, None) or (None, why).
+
+    NaN, Infinity and -Infinity are refused: Python's decoder accepts them, but
+    they are not JSON (RFC 8259).
+    """
     try:
-        return json.loads(path.read_bytes().decode("utf-8")), None
+        return (
+            json.loads(
+                path.read_bytes().decode("utf-8"),
+                parse_constant=_refuse_json_constant,
+            ),
+            None,
+        )
     except (ValueError, RecursionError) as exc:
         # UnicodeDecodeError and json.JSONDecodeError are both ValueErrors.
         return None, type(exc).__name__

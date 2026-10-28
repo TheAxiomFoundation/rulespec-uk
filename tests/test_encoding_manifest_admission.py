@@ -46,6 +46,12 @@ def receipt_bytes(kind: str, applied_files: list[dict]) -> bytes:
         "non-json-empty": b"",
         "non-json-truncated": json.dumps(receipt).encode()[:-1],
         "non-json-invalid-utf8": b'{"schema_version": "\xff"}',
+        # Python's json module writes and reads these; RFC 8259 JSON has none.
+        "non-json-nan": json.dumps({**receipt, "extra": float("nan")}).encode(),
+        "non-json-infinity": json.dumps({**receipt, "extra": float("inf")}).encode(),
+        "non-json-negative-infinity": json.dumps(
+            {**receipt, "extra": float("-inf")}
+        ).encode(),
     }
     if kind in non_json:
         return non_json[kind]
@@ -72,6 +78,9 @@ NON_JSON_KINDS = (
     "non-json-empty",
     "non-json-truncated",
     "non-json-invalid-utf8",
+    "non-json-nan",
+    "non-json-infinity",
+    "non-json-negative-infinity",
 )
 NON_OBJECT_KINDS = (
     "non-object-list",
