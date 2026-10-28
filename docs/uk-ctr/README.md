@@ -110,7 +110,7 @@ Corpus side:
 ## Continuous integration and receipts
 
 Measured at `main` `3d0ecdc8` on 2026-10-14, with the encoder pin and receipt
-policy updated for #492 and this change:
+policy updated for #492 and #502:
 
 - The generated-RuleSpec guard is on
   ([#459](https://github.com/TheAxiomFoundation/rulespec-uk/pull/459),
@@ -127,7 +127,8 @@ policy updated for #492 and this change:
   mirrors those pins, and CI fails if it drifts
   ([#461](https://github.com/TheAxiomFoundation/rulespec-uk/pull/461)).
 - There are no files under `.axiom/encoding-manifests/`.
-  This change retires the blanket manifest prohibition.
+  [#502](https://github.com/TheAxiomFoundation/rulespec-uk/pull/502) retires
+  the blanket manifest prohibition.
   `test_applied_manifests_use_trusted_v5_schema` and
   `test_encoding_manifests_use_only_the_canonical_root_mirror` in
   `tests/test_repository_layout.py` admit receipts only as UTF-8 JSON objects
@@ -297,8 +298,9 @@ merged module now has to come from the encoder.
 
 1. **Signed-workflow migration: done.**
    [#492](https://github.com/TheAxiomFoundation/rulespec-uk/pull/492) re-pinned
-   the encoder with receipt verification and `corpus-fetch` support. This
-   change retires the blanket manifest prohibition and admits v5 receipts in
+   the encoder with receipt verification and `corpus-fetch` support.
+   [#502](https://github.com/TheAxiomFoundation/rulespec-uk/pull/502)
+   retires the blanket manifest prohibition and admits v5 receipts in
    canonical layout without symlinks; the encoder verifies them in CI.
 2. **Re-version Arun with section rows.** Arun has no module on `main`, so no
    citation breaks. Use the tested extraction block, with its bare-number fix, in

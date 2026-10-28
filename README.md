@@ -19,7 +19,8 @@ Do not add repository-root content trees, `.yml` aliases, symlinks, or Python
 program implementations. ProgramSpecs are declarative composition only.
 
 Legacy applied manifests are deleted, not retained as migration inputs. The
-blanket encoding-manifest prohibition is retired by this change. Repository
+blanket encoding-manifest prohibition was retired in
+[#502](https://github.com/TheAxiomFoundation/rulespec-uk/pull/502). Repository
 checks admit receipts only as UTF-8 JSON objects declaring
 `axiom-encode/applied-rulespec/v5`, under
 `.axiom/encoding-manifests/<jurisdiction>/<atomic-root>/`, mirroring the module
