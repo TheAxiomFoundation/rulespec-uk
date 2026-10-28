@@ -149,3 +149,21 @@ def test_plan_steps_produce_artifact_without_secrets(tmp_path, batch, expected_c
         assert "::warning::" not in result.stderr
     else:
         assert "::warning::No pending worklist entries match" in result.stderr
+
+
+def test_bulk_workflow_pins_match_the_validate_job():
+    """bulk-encode.yml says its refs must EXACTLY match repository-checks.yml; hold it to that."""
+    checks = yaml.load(
+        (ROOT / ".github/workflows/repository-checks.yml").read_text(), Loader=yaml.BaseLoader
+    )
+    validate = checks["jobs"]["validate"]["with"]
+    env = _workflow()["env"]
+    pairs = {
+        "AXIOM_ENCODE_REF": "axiom-encode-ref",
+        "AXIOM_RULES_ENGINE_REF": "axiom-rules-engine-ref",
+        "AXIOM_CORPUS_REF": "axiom-corpus-ref",
+        "RULESPEC_US_REF": "rulespec-us-ref",
+    }
+    assert {k for k in env if k.endswith("_REF")} == set(pairs)
+    for env_key, input_key in pairs.items():
+        assert env[env_key] == validate[input_key], env_key

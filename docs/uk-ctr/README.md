@@ -91,7 +91,8 @@ No council encode PR is open.
 
 Corpus side:
 
-- `rulespec-uk` binds release `uk-rulespec-2026-10-25-pe-child-definitions`
+- Since [rulespec-uk#491](https://github.com/TheAxiomFoundation/rulespec-uk/pull/491),
+  `rulespec-uk` binds release `uk-rulespec-2026-10-25-pe-child-definitions`
   ([`.axiom/toolchain.toml`](../../.axiom/toolchain.toml)). Its 193 scopes are
   35 national `uk` scopes and 158 council scopes.
 - `axiom-corpus` holds 159 council scopes. Since

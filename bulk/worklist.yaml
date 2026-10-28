@@ -1072,8 +1072,9 @@ entries:
     87.88 each. (3) para 12 disability premium: (a) single claimant or lone parent under the qualifying
     age for state pension credit meeting para 13, 44.85; (b) claimant has a partner and the claimant (13(1)(a)
     or (b)) or the partner (13(1)(a)), each under that age, meets it, 64.00. Inputs are claimant age,
-    partner age, single claimant / lone parent / couple status (the reg 2 definitions are not in the pinned
-    release; scope them exactly as inputs), main phase ESA, and the para 13 benefits of the claimant and
+    partner age, single claimant / lone parent / couple status (the reg 2 definitions are in the pinned
+    release since the re-pin to uk-rulespec-2026-10-25-pe-child-definitions, but no module encodes them
+    yet; scope them exactly as inputs), main phase ESA, and the para 13 benefits of the claimant and
     partner only. Companion tests (2026-27, weekly): single aged 24 -> 75.65; single aged 25 -> 95.55;
     single aged 20 on main phase ESA -> 95.55; lone parent aged 17 -> 75.65; lone parent aged 18 -> 95.55;
     lone parent aged 24 -> 95.55 (uk/policies/housing_benefit_composed_entitlement_pipeline.yaml hb_pilot_weekly_personal_allowance
@@ -1096,7 +1097,8 @@ entries:
     first_child_or_qualifying_young_person_born_before_6_april_2017_weekly_amount, additional_amount_applicable,
     ...) so the companion test and consumers keep resolving. Required new outputs (Person / Family, Week):
     para 2(1) child = a person under the age of 16, computed from age; qualifying young person = the reg
-    4A meaning, which the pinned release carries since the 2026-10-25 re-pin but no module encodes yet: a scoped input deferred to uk/regulations/uksi/2002/1792/4A.yaml;
+    4A meaning, which the pinned release carries since the re-pin to uk-rulespec-2026-10-25-pe-child-definitions
+    but no module encodes yet: a scoped input deferred to uk/regulations/uksi/2002/1792/4A.yaml;
     para 3 responsibility (normally lives with the claimant; not for a QYP living as a couple with the
     claimant; only the person with main responsibility where the child lives with two or more persons
     who are not a couple); paras 4-5 treated as not responsible while looked after by a local authority
@@ -1133,7 +1135,8 @@ entries:
     allowance by that amount: there is no cap at unused allowance. The module also has no output for the
     s55B(1) reduction itself (the s55B(3) appropriate percentage, i.e. the basic, Scottish basic or Welsh
     basic rate, times the transferable amount). Required outputs: entitlement judgment (s55B(2)(a)-(d);
-    the s55C election stays a scoped input until s55C is ingested), transferable_amount, marriage_allowance_tax_reduction,
+    the s55C election stays a scoped input until a module encodes s55C, which the pinned release carries
+    since the re-pin to uk-rulespec-2026-10-25-pe-child-definitions), transferable_amount, marriage_allowance_tax_reduction,
     relinquishing_personal_allowance_reduction (s55B(6); nil in the s55B(7) death case). Companion tests
     (personal allowance 12,570, basic rate 0.20): 2026-27 conditions met -> transferable 1,260, reduction
     252, relinquishing allowance reduced by 1,260; same with relinquishing spouse''s unused allowance
