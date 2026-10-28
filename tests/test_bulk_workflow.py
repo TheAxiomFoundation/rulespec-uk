@@ -165,5 +165,6 @@ def test_bulk_workflow_pins_match_the_validate_job():
         "RULESPEC_US_REF": "rulespec-us-ref",
     }
     assert {k for k in env if k.endswith("_REF")} == set(pairs)
+    assert {k for k in validate if k.endswith("-ref")} == set(pairs.values())
     for env_key, input_key in pairs.items():
         assert env[env_key] == validate[input_key], env_key
