@@ -1,0 +1,6 @@
+- name: recovers_excess_support_from_person_allowed_support
+  period: 2026-04
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-64#input.excess_support_allowed: 125.5
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-64#excess_support_recoverable: 125.5
