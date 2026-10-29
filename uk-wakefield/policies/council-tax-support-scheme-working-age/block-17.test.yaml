@@ -1,0 +1,6 @@
+- name: universal_credit_gross_earned_income_is_used_as_gross_earnings
+  period: 2026-04
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-17#input.universal_credit_gross_earned_income: 1250
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-17#gross_earnings: 1250
