@@ -1,0 +1,120 @@
+- name: one-year-average-method
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2026-04-06'
+    end: '2026-04-12'
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-28#input.earnings_consist_of_self_employment: true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-28#input.applicant_recently_became_engaged_in_self_employment
+    : false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-28#input.business_pattern_change_likely_affects_normal_business_pattern
+    : false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-28#input.computation_period_enables_more_accurate_weekly_determination
+    : false
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-28#input.average_weekly_earnings_over_one_year: 420
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-28#input.earnings_over_computation_period: 700
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-28#input.computation_period_day_count: 14
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-28#self_employment_earnings_determination_applies: holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-28#one_year_average_method_applies: holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-28#computation_period_method_applies: not_holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-28#weekly_self_employment_earnings: 420
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-28#self_employment_calculation_period_is_assessment_period
+    : holds
+- name: recent-self-employment-computation-period
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2026-04-06'
+    end: '2026-04-12'
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-28#input.earnings_consist_of_self_employment: true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-28#input.applicant_recently_became_engaged_in_self_employment
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-28#input.business_pattern_change_likely_affects_normal_business_pattern
+    : false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-28#input.computation_period_enables_more_accurate_weekly_determination
+    : true
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-28#input.average_weekly_earnings_over_one_year: 420
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-28#input.earnings_over_computation_period: 700
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-28#input.computation_period_day_count: 14
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-28#self_employment_earnings_determination_applies: holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-28#one_year_average_method_applies: not_holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-28#computation_period_method_applies: holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-28#weekly_self_employment_earnings: 350
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-28#self_employment_calculation_period_is_assessment_period
+    : holds
+- name: changed-business-pattern-computation-period
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2026-04-06'
+    end: '2026-04-12'
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-28#input.earnings_consist_of_self_employment: true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-28#input.applicant_recently_became_engaged_in_self_employment
+    : false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-28#input.business_pattern_change_likely_affects_normal_business_pattern
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-28#input.computation_period_enables_more_accurate_weekly_determination
+    : true
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-28#input.average_weekly_earnings_over_one_year: 420
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-28#input.earnings_over_computation_period: 840
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-28#input.computation_period_day_count: 14
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-28#self_employment_earnings_determination_applies: holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-28#one_year_average_method_applies: not_holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-28#computation_period_method_applies: holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-28#weekly_self_employment_earnings: 420
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-28#self_employment_calculation_period_is_assessment_period
+    : holds
+- name: computation-period-not-more-accurate
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2026-04-06'
+    end: '2026-04-12'
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-28#input.earnings_consist_of_self_employment: true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-28#input.applicant_recently_became_engaged_in_self_employment
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-28#input.business_pattern_change_likely_affects_normal_business_pattern
+    : false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-28#input.computation_period_enables_more_accurate_weekly_determination
+    : false
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-28#input.average_weekly_earnings_over_one_year: 420
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-28#input.earnings_over_computation_period: 700
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-28#input.computation_period_day_count: 14
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-28#self_employment_earnings_determination_applies: holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-28#one_year_average_method_applies: not_holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-28#computation_period_method_applies: not_holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-28#weekly_self_employment_earnings: 0
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-28#self_employment_calculation_period_is_assessment_period
+    : holds
+- name: non-self-employment-earnings
+  period:
+    period_kind: custom
+    name: benefit_week
+    start: '2026-04-06'
+    end: '2026-04-12'
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-28#input.earnings_consist_of_self_employment: false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-28#input.applicant_recently_became_engaged_in_self_employment
+    : false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-28#input.business_pattern_change_likely_affects_normal_business_pattern
+    : false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-28#input.computation_period_enables_more_accurate_weekly_determination
+    : false
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-28#input.average_weekly_earnings_over_one_year: 420
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-28#input.earnings_over_computation_period: 700
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-28#input.computation_period_day_count: 14
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-28#self_employment_earnings_determination_applies: not_holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-28#one_year_average_method_applies: not_holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-28#computation_period_method_applies: not_holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-28#weekly_self_employment_earnings: 0
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-28#self_employment_calculation_period_is_assessment_period
+    : not_holds
