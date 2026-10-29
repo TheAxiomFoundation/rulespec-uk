@@ -1,0 +1,48 @@
+- name: reduction_on_first_april_for_rule_36_notional_capital
+  period:
+    period_kind: custom
+    name: day
+    start: '2026-04-01'
+    end: '2026-04-01'
+  input:
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-38#input.notional_capital_has_been_determined_under_rule_36
+    : true
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-38#input.day_is_first_april: true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-38#input.council_tax_liability_due_in_previous_financial_year
+    : 1200
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-38#input.council_tax_support_that_would_have_been_awarded_without_rule_36
+    : 300
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-38#annual_notional_capital_reduction: 900
+- name: no_reduction_when_notional_capital_not_determined_under_rule_36
+  period:
+    period_kind: custom
+    name: day
+    start: '2026-04-01'
+    end: '2026-04-01'
+  input:
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-38#input.notional_capital_has_been_determined_under_rule_36
+    : false
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-38#input.day_is_first_april: true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-38#input.council_tax_liability_due_in_previous_financial_year
+    : 1200
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-38#input.council_tax_support_that_would_have_been_awarded_without_rule_36
+    : 300
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-38#annual_notional_capital_reduction: 0
+- name: no_reduction_other_than_on_first_april
+  period:
+    period_kind: custom
+    name: day
+    start: '2026-04-02'
+    end: '2026-04-02'
+  input:
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-38#input.notional_capital_has_been_determined_under_rule_36
+    : true
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-38#input.day_is_first_april: false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-38#input.council_tax_liability_due_in_previous_financial_year
+    : 1200
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-38#input.council_tax_support_that_would_have_been_awarded_without_rule_36
+    : 300
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-38#annual_notional_capital_reduction: 0
