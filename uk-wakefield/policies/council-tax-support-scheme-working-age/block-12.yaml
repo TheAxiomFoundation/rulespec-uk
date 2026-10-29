@@ -1,0 +1,68 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-12
+    source_sha256: c2eae7816d81140816e9b561b96c8ccf969e44499ea14a34fa04f9ebb7f67ee6
+  summary: Subject to Rule 12, a person liable for Council Tax for a dwelling but
+    absent from that dwelling is not entitled to Council Tax Support under this scheme.
+inputs:
+- name: person_is_liable_for_council_tax_for_dwelling
+  entity: Person
+  dtype: Boolean
+  period: Month
+- name: person_is_absent_from_liability_dwelling
+  entity: Person
+  dtype: Boolean
+  period: Month
+- name: rule_12_displaces_absence_disqualification
+  entity: Person
+  dtype: Boolean
+  period: Month
+rules:
+- name: subject_to_rule_reference_number
+  kind: parameter
+  dtype: Integer
+  period: Month
+  source: Wakefield Council Tax Support Scheme (Working Age), Rule 12
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: parameter
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-12
+          excerpt: Subject to Rule 12
+  versions:
+  - effective_from: '0001-01-01'
+    formula: '12'
+- name: council_tax_support_entitlement
+  kind: derived
+  entity: Person
+  dtype: Judgment
+  period: Month
+  source: Wakefield Council Tax Support Scheme (Working Age), Rule 12
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: exception
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-12
+          excerpt: Subject to Rule 12
+      - path: versions[0].formula
+        kind: condition
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-12
+          excerpt: a person who is liable for Council Tax for a dwelling but is absent
+            from that dwelling
+      - path: versions[0].formula
+        kind: predicate
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-12
+          excerpt: is not entitled to Council Tax Support under this scheme
+  versions:
+  - effective_from: '0001-01-01'
+    formula: "rule_12_displaces_absence_disqualification\nor not (\n  person_is_liable_for_council_tax_for_dwelling\n\
+      \  and person_is_absent_from_liability_dwelling\n)"
