@@ -1,0 +1,107 @@
+- name: delivery_to_council_recorded_is_presumed
+  period:
+    period_kind: custom
+    name: day
+    start: '2026-04-01'
+    end: '2026-04-01'
+  input:
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-71#input.necessary_to_prove_electronic_communication_resulted_in_delivery
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-71#input.information_delivered_to_relevant_council_is_recorded_on_official_computer_system
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-71#input.information_delivered_by_relevant_council_is_recorded_on_official_computer_system
+    : false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-71#input.information_delivered_to_relevant_council_is_not_recorded_on_official_computer_system
+    : false
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-71#electronic_communication_delivery_is_presumed: holds
+- name: delivery_by_council_recorded_is_presumed
+  period:
+    period_kind: custom
+    name: day
+    start: '2026-04-01'
+    end: '2026-04-01'
+  input:
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-71#input.necessary_to_prove_electronic_communication_resulted_in_delivery
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-71#input.information_delivered_to_relevant_council_is_recorded_on_official_computer_system
+    : false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-71#input.information_delivered_by_relevant_council_is_recorded_on_official_computer_system
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-71#input.information_delivered_to_relevant_council_is_not_recorded_on_official_computer_system
+    : false
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-71#electronic_communication_delivery_is_presumed: holds
+- name: delivery_is_not_presumed_when_council_delivery_is_unrecorded
+  period:
+    period_kind: custom
+    name: day
+    start: '2026-04-01'
+    end: '2026-04-01'
+  input:
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-71#input.necessary_to_prove_electronic_communication_resulted_in_delivery
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-71#input.information_delivered_to_relevant_council_is_recorded_on_official_computer_system
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-71#input.information_delivered_by_relevant_council_is_recorded_on_official_computer_system
+    : false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-71#input.information_delivered_to_relevant_council_is_not_recorded_on_official_computer_system
+    : true
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-71#electronic_communication_delivery_is_presumed: not_holds
+- name: delivery_presumption_does_not_operate_without_proof_requirement
+  period:
+    period_kind: custom
+    name: day
+    start: '2026-04-01'
+    end: '2026-04-01'
+  input:
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-71#input.necessary_to_prove_electronic_communication_resulted_in_delivery
+    : false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-71#input.information_delivered_to_relevant_council_is_recorded_on_official_computer_system
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-71#input.information_delivered_by_relevant_council_is_recorded_on_official_computer_system
+    : false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-71#input.information_delivered_to_relevant_council_is_not_recorded_on_official_computer_system
+    : false
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-71#electronic_communication_delivery_is_presumed: not_holds
+- name: recorded_receipt_time_and_date_are_presumed
+  period:
+    period_kind: custom
+    name: day
+    start: '2026-04-01'
+    end: '2026-04-01'
+  input:
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-71#input.necessary_to_prove_when_electronically_sent_information_was_received
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-71#input.receipt_time_and_date_are_recorded_on_official_computer_system
+    : true
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-71#recorded_receipt_time_and_date_are_presumed: holds
+- name: receipt_time_and_date_are_not_presumed_without_record
+  period:
+    period_kind: custom
+    name: day
+    start: '2026-04-01'
+    end: '2026-04-01'
+  input:
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-71#input.necessary_to_prove_when_electronically_sent_information_was_received
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-71#input.receipt_time_and_date_are_recorded_on_official_computer_system
+    : false
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-71#recorded_receipt_time_and_date_are_presumed: not_holds
+- name: receipt_time_and_date_presumption_does_not_operate_without_proof_requirement
+  period:
+    period_kind: custom
+    name: day
+    start: '2026-04-01'
+    end: '2026-04-01'
+  input:
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-71#input.necessary_to_prove_when_electronically_sent_information_was_received
+    : false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-71#input.receipt_time_and_date_are_recorded_on_official_computer_system
+    : true
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-71#recorded_receipt_time_and_date_are_presumed: not_holds
