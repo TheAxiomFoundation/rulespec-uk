@@ -1,0 +1,161 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-57
+    source_sha256: ffa1512779d9a3c428511a50fedc81fac7e1c000c50279e8eebb28c0dce388f2
+  summary: A person aggrieved by a decision affecting entitlement to, or the amount
+    of, a reduction may serve written notice. The authority must consider the matter
+    and notify the person; a person still aggrieved following either notification,
+    or not notified within two months, may appeal to a Valuation Tribunal.
+inputs:
+- name: person_is_aggrieved_by_decision
+  entity: Person
+  dtype: Boolean
+  period: Month
+- name: decision_affects_entitlement_to_reduction
+  entity: Person
+  dtype: Boolean
+  period: Month
+- name: decision_affects_amount_of_reduction
+  entity: Person
+  dtype: Boolean
+  period: Month
+- name: authority_has_been_served_written_notice_stating_matter_and_grounds
+  entity: LocalAuthority
+  dtype: Boolean
+  period: Month
+- name: person_is_still_aggrieved_following_ground_not_well_founded_notification
+  entity: Person
+  dtype: Boolean
+  period: Month
+- name: person_is_still_aggrieved_following_steps_taken_notification
+  entity: Person
+  dtype: Boolean
+  period: Month
+- name: authority_failed_to_notify_person_within_two_months_of_notice_service
+  entity: Person
+  dtype: Boolean
+  period: Month
+rules:
+- name: valuation_tribunal_act_year
+  kind: parameter
+  dtype: Integer
+  source: paragraph (3)
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: parameter
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-57
+          excerpt: under section 16 of the 1992 Act.
+  versions:
+  - effective_from: '0001-01-01'
+    formula: '1992'
+- name: person_may_serve_written_notice
+  kind: derived
+  entity: Person
+  dtype: Judgment
+  period: Month
+  source: paragraph (1)
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: condition
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-57
+          excerpt: 'A person who is aggrieved by a decision of the authority which
+            affects:'
+      - path: versions[0].formula
+        kind: predicate
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-57
+          excerpt: the person’s entitlement to a reduction under this scheme, or
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-57
+          excerpt: may serve a written notice on that authority stating the matter
+            by which, and the grounds on which, he is aggrieved.
+  versions:
+  - effective_from: '0001-01-01'
+    formula: "person_is_aggrieved_by_decision\nand (\n  decision_affects_entitlement_to_reduction\n\
+      \  or decision_affects_amount_of_reduction\n)"
+- name: authority_must_consider_notice_matter
+  kind: derived
+  entity: LocalAuthority
+  dtype: Judgment
+  period: Month
+  source: paragraph (2)(a)
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: condition
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-57
+          excerpt: consider the matter to which the notice relates;
+  versions:
+  - effective_from: '0001-01-01'
+    formula: authority_has_been_served_written_notice_stating_matter_and_grounds
+- name: authority_must_notify_aggrieved_person
+  kind: derived
+  entity: LocalAuthority
+  dtype: Judgment
+  period: Month
+  source: paragraph (2)(b)
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: condition
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-57
+          excerpt: notify the aggrieved person in writing
+      - path: versions[0].formula
+        kind: ordering
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-57
+          excerpt: that the ground is not well founded, giving reasons for that belief;
+            or
+  versions:
+  - effective_from: '0001-01-01'
+    formula: authority_has_been_served_written_notice_stating_matter_and_grounds
+- name: person_may_appeal_to_valuation_tribunal
+  kind: derived
+  entity: Person
+  dtype: Judgment
+  period: Month
+  source: paragraph (3)
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: condition
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-57
+          excerpt: following notification under paragraph (2)(b)(i) or (ii), the person
+            is still aggrieved
+      - path: versions[0].formula
+        kind: exception
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-57
+          excerpt: Where, following notification under paragraph (2)(b)(i) or (ii),
+            the person is still aggrieved, or if the authority fails to notify the
+            person aggrieved in accordance with paragraph (2)(b) within two months
+            of the service of his notice, he may appeal to a Valuation Tribunal under
+            section 16 of the 1992 Act.
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-57
+          excerpt: he may appeal to a Valuation Tribunal
+  versions:
+  - effective_from: '0001-01-01'
+    formula: "person_is_aggrieved_by_decision\nand (\n  decision_affects_entitlement_to_reduction\n\
+      \  or decision_affects_amount_of_reduction\n)\nand (\n  person_is_still_aggrieved_following_ground_not_well_founded_notification\n\
+      \  or person_is_still_aggrieved_following_steps_taken_notification\n  or authority_failed_to_notify_person_within_two_months_of_notice_service\n\
+      )"
