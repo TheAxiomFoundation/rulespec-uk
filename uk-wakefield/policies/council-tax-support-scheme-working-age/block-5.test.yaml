@@ -1,0 +1,40 @@
+- name: married_or_civil_partners_in_same_household_are_a_couple
+  period: 2026-04
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-5#input.members_are_married_or_civil_partners: true
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-5#input.members_are_in_same_household: true
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-5#input.members_are_not_married_or_civil_partners: false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-5#input.members_are_living_together_as_if_married_or_civil_partners
+    : false
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-5#couple: holds
+- name: married_or_civil_partners_not_in_same_household_are_not_a_couple
+  period: 2026-04
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-5#input.members_are_married_or_civil_partners: true
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-5#input.members_are_in_same_household: false
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-5#input.members_are_not_married_or_civil_partners: false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-5#input.members_are_living_together_as_if_married_or_civil_partners
+    : false
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-5#couple: not_holds
+- name: unmarried_people_living_together_as_if_married_or_civil_partners_are_a_couple
+  period: 2026-04
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-5#input.members_are_married_or_civil_partners: false
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-5#input.members_are_in_same_household: false
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-5#input.members_are_not_married_or_civil_partners: true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-5#input.members_are_living_together_as_if_married_or_civil_partners
+    : true
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-5#couple: holds
+- name: unmarried_people_not_living_together_as_if_married_or_civil_partners_are_not_a_couple
+  period: 2026-04
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-5#input.members_are_married_or_civil_partners: false
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-5#input.members_are_in_same_household: false
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-5#input.members_are_not_married_or_civil_partners: true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-5#input.members_are_living_together_as_if_married_or_civil_partners
+    : false
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-5#couple: not_holds
