@@ -42,14 +42,11 @@ concurrency:
   group: bulk-encode-plan
   cancel-in-progress: false
 
-# Dependency pins, EXACTLY matching .github/workflows/repository-checks.yml so a
-# generation session and the PR CI resolve the identical toolchain. Bump these
-# in lockstep with repository-checks.yml.
+# Each job's "Resolve pinned dependency refs" step loads the four dependency
+# refs from .axiom/workflow-toolchain.toml, the checked mirror of the literal pins
+# in .github/workflows/repository-checks.yml, so a generation session and the PR
+# CI resolve the identical toolchain and a re-pin never edits this file.
 env:
-  AXIOM_ENCODE_REF: fa0da5e834214052cc8d9d381e25ff409dd1062f
-  AXIOM_RULES_ENGINE_REF: 05eac9d2f89dabe5c6673176260762cef3a58f47
-  AXIOM_CORPUS_REF: 9d174d88119fd6e6ace02d7c94eec7bb47e363f0
-  RULESPEC_US_REF: 0f291b367bf7e15555f9973112278c5cbf221653
   CORPUS_RELEASE_BASE_URL: https://pub-a8952f8657fc49fda358146ac001366c.r2.dev
 
 jobs:
@@ -71,6 +68,37 @@ jobs:
 
       - name: Install PyYAML
         run: python -m pip install --upgrade pip pyyaml
+
+      - name: Resolve pinned dependency refs
+        id: pins
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY' >> "$GITHUB_ENV"
+          import re
+          import tomllib
+          from pathlib import Path
+
+          path = Path(".axiom/workflow-toolchain.toml")
+          document = tomllib.loads(path.read_text())
+          toolchain = document.get("workflow_toolchain")
+          if set(document) != {"workflow_toolchain"} or not isinstance(toolchain, dict):
+              raise SystemExit(f"{path}: expected only the workflow_toolchain table")
+          pins = {}
+          for name, key in (
+              ("AXIOM_ENCODE_REF", "axiom_encode_ref"),
+              ("AXIOM_RULES_ENGINE_REF", "axiom_rules_engine_ref"),
+              ("AXIOM_CORPUS_REF", "axiom_corpus_ref"),
+              ("RULESPEC_US_REF", "rulespec_us_ref"),
+          ):
+              value = toolchain.get(key)
+              if not isinstance(value, str) or re.fullmatch(r"[0-9a-f]{40}", value) is None:
+                  raise SystemExit(f"{path}: {key} must be a full lowercase commit SHA")
+              pins[name] = value
+          # Validate every ref before writing any, so a bad table sets nothing.
+          for name, value in pins.items():
+              print(f"{name}={value}")
+          PY
 
       - name: Resolve pinned RuleSpec toolchain (strict 3-key contract)
         id: toolchain
@@ -184,7 +212,7 @@ jobs:
             echo
             echo "- Batch: \`${BATCH:-(all pending)}\` | limit: \`$LIMIT\` | selected: **$count**"
             echo "- Corpus release: \`$RELEASE\`"
-            echo "- Encoder pin: \`$AXIOM_ENCODE_REF\` (matches repository-checks.yml)"
+            echo "- Encoder pin: \`$AXIOM_ENCODE_REF\` (from .axiom/workflow-toolchain.toml)"
             echo
             echo "\`bulk-plan.json\` (uploaded as an artifact) records selected targets and their pinned context."
             echo "Signing is central in axiom-encode's targeted-signed-reencode workflow; see bulk/README.md."
@@ -224,6 +252,37 @@ jobs:
         uses: actions/setup-python@v6.2.0
         with:
           python-version: "3.14"
+
+      - name: Resolve pinned dependency refs
+        id: pins
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY' >> "$GITHUB_ENV"
+          import re
+          import tomllib
+          from pathlib import Path
+
+          path = Path(".axiom/workflow-toolchain.toml")
+          document = tomllib.loads(path.read_text())
+          toolchain = document.get("workflow_toolchain")
+          if set(document) != {"workflow_toolchain"} or not isinstance(toolchain, dict):
+              raise SystemExit(f"{path}: expected only the workflow_toolchain table")
+          pins = {}
+          for name, key in (
+              ("AXIOM_ENCODE_REF", "axiom_encode_ref"),
+              ("AXIOM_RULES_ENGINE_REF", "axiom_rules_engine_ref"),
+              ("AXIOM_CORPUS_REF", "axiom_corpus_ref"),
+              ("RULESPEC_US_REF", "rulespec_us_ref"),
+          ):
+              value = toolchain.get(key)
+              if not isinstance(value, str) or re.fullmatch(r"[0-9a-f]{40}", value) is None:
+                  raise SystemExit(f"{path}: {key} must be a full lowercase commit SHA")
+              pins[name] = value
+          # Validate every ref before writing any, so a bad table sets nothing.
+          for name, value in pins.items():
+              print(f"{name}={value}")
+          PY
 
       - name: Checkout axiom-corpus (pinned; matches repository-checks.yml)
         uses: actions/checkout@v6.0.2
