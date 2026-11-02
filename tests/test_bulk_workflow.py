@@ -15,7 +15,8 @@ import pytest
 import yaml
 
 try:
-    from hypothesis import given, settings, strategies as st
+    from hypothesis import given, settings
+    from hypothesis import strategies as st
 except ImportError:
     given = None
 
@@ -89,7 +90,7 @@ def test_plan_steps_produce_artifact_without_secrets(tmp_path, batch, expected_c
     }
     result = subprocess.run(
         ["/bin/bash", "-c", steps["pins"]["run"]], cwd=tmp_path,
-        env=environment, capture_output=True, text=True, timeout=60,
+        env=environment, capture_output=True, text=True, timeout=60, check=False,
     )
     assert result.returncode == 0, result.stderr
     pins = _outputs(tmp_path / "pins-env")
@@ -197,7 +198,7 @@ def _run_pins_step(tmp_path, toolchain_text):
             "PATH": f"{Path(sys.executable).parent}:/usr/bin:/bin",
             "GITHUB_ENV": str(env_file),
         },
-        capture_output=True, text=True, timeout=60,
+        capture_output=True, text=True, timeout=60, check=False,
     )
     return result, env_file
 
@@ -224,7 +225,13 @@ def test_bulk_workflow_loads_its_pins_before_any_step_uses_them():
     """A re-pin edits only the configuration files, never bulk-encode.yml."""
     workflow = _workflow()
     assert not [key for key in workflow["env"] if key.endswith("_REF")]
-    assert re.search(r"\b[0-9a-f]{40}\b", WORKFLOW_PATH.read_text()) is None
+    # A SHA-pinned action (`uses: owner/action@<sha>`) names no dependency ref.
+    literals = [
+        line for line in WORKFLOW_PATH.read_text().splitlines()
+        if re.search(r"\b[0-9a-f]{40}\b", line)
+        and re.match(r"\s*(?:- )?uses:", line) is None
+    ]
+    assert literals == []
     plan_steps = workflow["jobs"]["plan"]["steps"]
     pins_step = next(step for step in plan_steps if step.get("id") == "pins")
     for steps in (plan_steps, workflow["jobs"]["verify-release"]["steps"]):
@@ -235,40 +242,62 @@ def test_bulk_workflow_loads_its_pins_before_any_step_uses_them():
         assert all("_REF" not in json.dumps(step) for step in steps[:loaded])
 
 
-@pytest.mark.parametrize(
-    "toolchain_text, message",
-    [
-        (_toolchain_text(axiom_corpus_ref='"main"'), "axiom_corpus_ref must be"),
-        (_toolchain_text(axiom_corpus_ref=f'"{"A" * 40}"'), "axiom_corpus_ref must be"),
-        (_toolchain_text(axiom_corpus_ref=f'"{"a" * 39}"'), "axiom_corpus_ref must be"),
-        (_toolchain_text(axiom_corpus_ref=f'"{"a" * 41}"'), "axiom_corpus_ref must be"),
-        (_toolchain_text(axiom_corpus_ref=f'"{"g" * 40}"'), "axiom_corpus_ref must be"),
-        (
-            _toolchain_text(axiom_corpus_ref=f'"{"a" * 40}\\nAXIOM_CORPUS_REF={"b" * 40}"'),
-            "axiom_corpus_ref must be",
-        ),
-        (_toolchain_text(axiom_corpus_ref="40"), "axiom_corpus_ref must be"),
-        (_toolchain_text(axiom_corpus_ref=None), "axiom_corpus_ref must be"),
-        (_toolchain_text(rulespec_us_ref='"main"'), "rulespec_us_ref must be"),
-        (
-            _toolchain_text().replace("[workflow_toolchain]", "[toolchain]"),
-            "expected only the workflow_toolchain table",
-        ),
-        (
-            _toolchain_text() + "[other]\nkey = 1\n",
-            "expected only the workflow_toolchain table",
-        ),
-    ],
-    ids=[
-        "branch", "uppercase", "short", "long", "non-hex", "newline", "integer",
-        "missing", "last-ref", "wrong-table", "extra-table",
-    ],
-)
-def test_pins_step_rejects_a_ref_that_is_not_a_full_commit(tmp_path, toolchain_text, message):
-    result, env_file = _run_pins_step(tmp_path, toolchain_text)
+SAMPLE_SHA = "0123456789abcdef" * 2 + "01234567"
+REF_KEYS = tuple(key for key, _ in REF_INPUTS.values())
+
+
+def _corruptions(sha, at):
+    """TOML values for one ref that are not a full lowercase commit SHA string."""
+    digits = "".join(str(int(char, 16) % 10) for char in sha)
+    return {
+        "branch": '"main"',
+        "uppercase": f'"{sha[:at]}{"ABCDEF"[at % 6]}{sha[at + 1:]}"',
+        "non-hex": f'"{sha[:at]}{"gz-./_"[at % 6]}{sha[at + 1:]}"',
+        "short": f'"{sha[:at]}"',
+        "long": f'"{sha}{sha[:at + 1]}"',
+        "leading-space": f'" {sha}"',
+        "trailing-space": f'"{sha} "',
+        "trailing-newline": f'"{sha}\\n"',
+        "injected-line": f'"{sha}\\nAXIOM_CORPUS_REF={sha[::-1]}"',
+        "integer": "1" + digits[1:],
+        "array": f'["{sha}"]',
+        "boolean": "true",
+        "table": f'{{ sha = "{sha}" }}',
+        "missing": None,
+    }
+
+
+CORRUPTIONS = tuple(_corruptions(SAMPLE_SHA, 0))
+
+
+def _check_rejected(directory, toolchain_text, message):
+    result, env_file = _run_pins_step(directory, toolchain_text)
     assert result.returncode != 0
     assert message in result.stderr
     assert env_file.read_text() == ""
+
+
+@pytest.mark.parametrize("corruption", CORRUPTIONS)
+@pytest.mark.parametrize("key", REF_KEYS)
+def test_pins_step_rejects_a_ref_that_is_not_a_full_commit(tmp_path, key, corruption):
+    _check_rejected(
+        tmp_path,
+        _toolchain_text(**{key: _corruptions(SAMPLE_SHA, 7)[corruption]}),
+        f"{key} must be a full lowercase commit SHA",
+    )
+
+
+@pytest.mark.parametrize(
+    "toolchain_text",
+    [
+        _toolchain_text().replace("[workflow_toolchain]", "[toolchain]"),
+        _toolchain_text() + "[other]\nkey = 1\n",
+        "workflow_toolchain = 1\n",
+    ],
+    ids=["wrong-table", "extra-table", "not-a-table"],
+)
+def test_pins_step_rejects_any_table_but_workflow_toolchain(tmp_path, toolchain_text):
+    _check_rejected(tmp_path, toolchain_text, "expected only the workflow_toolchain table")
 
 
 def _check_generated_pins(tmp_path_factory, shas):
@@ -300,3 +329,22 @@ else:
     )
     def test_pins_step_sets_each_ref_under_its_own_name(tmp_path_factory, shas):
         _check_generated_pins(tmp_path_factory, shas)
+
+
+# Without Hypothesis, test_pins_step_rejects_a_ref_that_is_not_a_full_commit
+# covers every ref and corruption at one position.
+if given is not None:
+    @settings(max_examples=48, deadline=None, derandomize=True, database=None)
+    @given(
+        key=st.sampled_from(REF_KEYS),
+        sha=st.text(alphabet="0123456789abcdef", min_size=40, max_size=40),
+        at=st.integers(min_value=0, max_value=39),
+        corruption=st.sampled_from(CORRUPTIONS),
+    )
+    def test_pins_step_rejects_any_corrupted_ref(tmp_path_factory, key, sha, at, corruption):
+        with TemporaryDirectory(dir=tmp_path_factory.getbasetemp()) as directory:
+            _check_rejected(
+                Path(directory),
+                _toolchain_text(**{key: _corruptions(sha, at)[corruption]}),
+                f"{key} must be a full lowercase commit SHA",
+            )

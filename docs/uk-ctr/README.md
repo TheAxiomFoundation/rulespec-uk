@@ -367,9 +367,10 @@ In outline:
    `.github/workflows/bulk-encode.yml` reads its refs from
    `.axiom/workflow-toolchain.toml`, so it needs no edit. The shared validate
    job accepts a dependency-pin change only from a PR that changes nothing
-   outside those three files, so record the new release in this README in a
-   follow-up PR. The PR's validate job fetches the published release object and
-   fails until the mirror has finished.
+   outside `.axiom/toolchain.toml`, `.axiom/workflow-toolchain.toml` and
+   `.github/workflows/repository-checks.yml`, so record the new release in
+   this README in a follow-up PR. The PR's validate job fetches the published
+   release object and fails until the mirror has finished.
 
 ## The registry
 
