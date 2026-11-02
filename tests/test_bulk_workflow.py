@@ -23,6 +23,10 @@ except ImportError:
 
 ROOT = Path(__file__).resolve().parents[1]
 WORKFLOW_PATH = ROOT / ".github/workflows/bulk-encode.yml"
+SHA_LITERAL = re.compile(r"\b[0-9a-fA-F]{40}\b")
+THIRD_PARTY_USES = re.compile(
+    r"\s*(?:-\s+)?uses:(?!\s*[\"']?TheAxiomFoundation/)", re.IGNORECASE
+)
 KINGSTON = (
     "uk-kingston-upon-thames/policies/kingston-upon-thames/council-tax-reduction.yaml"
 )
@@ -221,17 +225,21 @@ def test_bulk_workflow_pins_match_the_validate_job(tmp_path):
     }
 
 
+def _dependency_sha_literals(text):
+    """Lines that hard-code a commit SHA, other than third-party actions pinned by SHA."""
+    # A SHA-pinned TheAxiomFoundation action pins a dependency in this file,
+    # where a three-file re-pin can't move it.
+    return [
+        line for line in text.splitlines()
+        if SHA_LITERAL.search(line) and THIRD_PARTY_USES.match(line) is None
+    ]
+
+
 def test_bulk_workflow_loads_its_pins_before_any_step_uses_them():
     """A re-pin edits only the configuration files, never bulk-encode.yml."""
     workflow = _workflow()
     assert not [key for key in workflow["env"] if key.endswith("_REF")]
-    # A SHA-pinned action (`uses: owner/action@<sha>`) names no dependency ref.
-    literals = [
-        line for line in WORKFLOW_PATH.read_text().splitlines()
-        if re.search(r"\b[0-9a-f]{40}\b", line)
-        and re.match(r"\s*(?:- )?uses:", line) is None
-    ]
-    assert literals == []
+    assert _dependency_sha_literals(WORKFLOW_PATH.read_text()) == []
     plan_steps = workflow["jobs"]["plan"]["steps"]
     pins_step = next(step for step in plan_steps if step.get("id") == "pins")
     for steps in (plan_steps, workflow["jobs"]["verify-release"]["steps"]):
@@ -240,6 +248,29 @@ def test_bulk_workflow_loads_its_pins_before_any_step_uses_them():
         loaded = ids.index("pins")
         assert steps[loaded] == pins_step
         assert all("_REF" not in json.dumps(step) for step in steps[:loaded])
+
+
+@pytest.mark.parametrize(
+    "line, flagged",
+    [
+        (f"  AXIOM_CORPUS_REF: {'a' * 40}", True),
+        (f"          ref: {'A' * 40}", True),
+        (f"      - uses: TheAxiomFoundation/axiom-corpus/.github/actions/fetch@{'a' * 40}", True),
+        (f"        uses: theaxiomfoundation/axiom-encode/.github/actions/setup@{'a' * 40}", True),
+        (f"        uses: \"TheAxiomFoundation/axiom-encode/setup@{'a' * 40}\"", True),
+        (f"      - uses: actions/checkout@{'a' * 40}", False),
+        (f"        uses: actions/setup-python@{'a' * 40}", False),
+        (f"      -   uses: 'actions/checkout@{'a' * 40}'", False),
+        ("      - uses: actions/checkout@v6.0.2", False),
+    ],
+    ids=[
+        "env", "uppercase-ref", "axiom-action", "axiom-action-lowercase",
+        "axiom-action-quoted", "third-party-step", "third-party-key",
+        "third-party-quoted", "tag",
+    ],
+)
+def test_literal_check_flags_dependency_pins_but_not_third_party_actions(line, flagged):
+    assert (_dependency_sha_literals(line) != []) is flagged
 
 
 SAMPLE_SHA = "0123456789abcdef" * 2 + "01234567"

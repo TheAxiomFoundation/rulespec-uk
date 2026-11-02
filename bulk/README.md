@@ -63,9 +63,8 @@ Planning needs no apply signing key. Use the central
    `axiom-corpus`, fetches the pinned signed corpus release object from R2,
    verifies its name + content sha256, and authenticates its provenance commit
    against the corpus default branch and the pinned checkout — mirroring the
-   shared `validate-rulespec` resolution. The Ed25519 signature and full
-   grounding are verified downstream by the supervised PR CI and the signed
-   encode leg.
+   shared `validate-rulespec` resolution. The supervised PR CI and the signed
+   encode leg verify the Ed25519 signature and full grounding downstream.
 
 The workflow **never** signs, **never** runs `encode --apply`, and **never**
 opens PRs. The authoritative gate remains the required `validate / validate`
