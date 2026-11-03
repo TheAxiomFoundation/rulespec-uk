@@ -1,4 +1,4 @@
-"""Workflow pins stay authoritative while the staged TOML mirrors them."""
+"""The staged workflow-toolchain TOML mirrors the caller workflow's literal pins."""
 
 from __future__ import annotations
 
