@@ -362,11 +362,15 @@ In outline:
    approval in the protected `release-activation` environment.
 6. Rebind `rulespec-uk` in one PR. Set the release name and content digest in
    `.axiom/toolchain.toml`, leaving the waiver digest alone. Set the cut's merge
-   commit as `axiom_corpus_ref` in `.axiom/workflow-toolchain.toml`,
-   `axiom-corpus-ref` in `.github/workflows/repository-checks.yml`, and
-   `AXIOM_CORPUS_REF` in `.github/workflows/bulk-encode.yml`. The PR's validate
-   job fetches the published release object and fails until the mirror has
-   finished.
+   commit as `axiom_corpus_ref` in `.axiom/workflow-toolchain.toml` and
+   `axiom-corpus-ref` in `.github/workflows/repository-checks.yml`.
+   `.github/workflows/bulk-encode.yml` reads its refs from
+   `.axiom/workflow-toolchain.toml`, so it needs no edit. The shared validate
+   job accepts a dependency-pin change only from a PR that changes nothing
+   outside `.axiom/toolchain.toml`, `.axiom/workflow-toolchain.toml` and
+   `.github/workflows/repository-checks.yml`, so record the new release in
+   this README in a follow-up PR. The PR's validate job fetches the published
+   release object and fails until the mirror has finished.
 
 ## The registry
 
