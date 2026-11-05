@@ -91,10 +91,10 @@ No council encode PR is open.
 
 Corpus side:
 
-- Since [rulespec-uk#491](https://github.com/TheAxiomFoundation/rulespec-uk/pull/491),
-  `rulespec-uk` binds release `uk-rulespec-2026-10-25-pe-child-definitions`
-  ([`.axiom/toolchain.toml`](../../.axiom/toolchain.toml)). Its 193 scopes are
-  35 national `uk` scopes and 158 council scopes.
+- Since [rulespec-uk#538](https://github.com/TheAxiomFoundation/rulespec-uk/pull/538),
+  `rulespec-uk` binds release `uk-rulespec-2026-11-02-uc-retirement-pension-income`
+  ([`.axiom/toolchain.toml`](../../.axiom/toolchain.toml)). Its 195 scopes are
+  37 national `uk` scopes and 158 council scopes.
 - `axiom-corpus` holds 159 council scopes. Since
   [axiom-corpus#774](https://github.com/TheAxiomFoundation/axiom-corpus/pull/774)
   (2026-09-30; tooling in #769) their bytes live outside git. Each scope is pinned by a lock
