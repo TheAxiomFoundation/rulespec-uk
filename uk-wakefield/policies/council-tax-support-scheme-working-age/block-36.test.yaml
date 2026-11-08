@@ -1,0 +1,70 @@
+- name: transferable_capital_with_sale_expenses
+  period: 2026-04
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-36#input.transfer_to_united_kingdom_is_prohibited: false
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-36#input.current_market_or_surrender_value_in_country: 1000
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-36#input.willing_buyer_sale_price_in_united_kingdom: 600
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-36#input.sale_expenses_are_attributable_to_sale: true
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-36#input.encumbrances_secured_on_capital: 100
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-36#capital_value_outside_united_kingdom: 800
+- name: prohibited_transfer_with_sale_expenses
+  period: 2026-04
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-36#input.transfer_to_united_kingdom_is_prohibited: true
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-36#input.current_market_or_surrender_value_in_country: 1000
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-36#input.willing_buyer_sale_price_in_united_kingdom: 600
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-36#input.sale_expenses_are_attributable_to_sale: true
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-36#input.encumbrances_secured_on_capital: 100
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-36#capital_value_outside_united_kingdom: 440
+- name: prohibited_transfer_sale_expenses_deducted
+  period: 2026-04
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-36#input.transfer_to_united_kingdom_is_prohibited: true
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-36#input.current_market_or_surrender_value_in_country: 1000
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-36#input.willing_buyer_sale_price_in_united_kingdom: 600
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-36#input.sale_expenses_are_attributable_to_sale: true
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-36#input.encumbrances_secured_on_capital: 100
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-36#capital_value_outside_united_kingdom: 440
+- name: prohibited_transfer_without_sale_expenses
+  period: 2026-04
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-36#input.transfer_to_united_kingdom_is_prohibited: true
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-36#input.current_market_or_surrender_value_in_country: 1000
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-36#input.willing_buyer_sale_price_in_united_kingdom: 600
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-36#input.sale_expenses_are_attributable_to_sale: false
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-36#input.encumbrances_secured_on_capital: 100
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-36#capital_value_outside_united_kingdom: 500
+- name: transferable_capital_with_sale_expenses_and_encumbrances
+  period: 2026-04
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-36#input.transfer_to_united_kingdom_is_prohibited: false
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-36#input.current_market_or_surrender_value_in_country: 1000
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-36#input.willing_buyer_sale_price_in_united_kingdom: 800
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-36#input.sale_expenses_are_attributable_to_sale: true
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-36#input.encumbrances_secured_on_capital: 200
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-36#capital_value_outside_united_kingdom: 700
+- name: prohibited_transfer_uses_united_kingdom_willing_buyer_price
+  period: 2026-04
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-36#input.transfer_to_united_kingdom_is_prohibited: true
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-36#input.current_market_or_surrender_value_in_country: 1000
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-36#input.willing_buyer_sale_price_in_united_kingdom: 600
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-36#input.sale_expenses_are_attributable_to_sale: true
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-36#input.encumbrances_secured_on_capital: 40
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-36#capital_value_outside_united_kingdom: 500
+- name: transferable_capital_without_sale_expenses
+  period: 2026-04
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-36#input.transfer_to_united_kingdom_is_prohibited: false
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-36#input.current_market_or_surrender_value_in_country: 900
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-36#input.willing_buyer_sale_price_in_united_kingdom: 600
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-36#input.sale_expenses_are_attributable_to_sale: false
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-36#input.encumbrances_secured_on_capital: 100
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-36#capital_value_outside_united_kingdom: 800
