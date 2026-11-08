@@ -1,0 +1,56 @@
+- name: decision_within_fourteen_days_complies
+  period:
+    period_kind: custom
+    name: day
+    start: '2026-04-01'
+    end: '2026-04-01'
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-55#input.authority_made_decision: true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-55#input.days_from_receipt_of_all_claim_information_to_decision
+    : 10
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-55#input.decision_made_as_soon_as_reasonably_practicable_thereafter
+    : false
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-55#authority_decision_made_within_required_time: holds
+- name: no_decision_does_not_comply
+  period:
+    period_kind: custom
+    name: day
+    start: '2026-04-01'
+    end: '2026-04-01'
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-55#input.authority_made_decision: false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-55#input.days_from_receipt_of_all_claim_information_to_decision
+    : 10
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-55#input.decision_made_as_soon_as_reasonably_practicable_thereafter
+    : false
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-55#authority_decision_made_within_required_time: not_holds
+- name: later_reasonably_practicable_decision_complies
+  period:
+    period_kind: custom
+    name: day
+    start: '2026-04-01'
+    end: '2026-04-01'
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-55#input.authority_made_decision: true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-55#input.days_from_receipt_of_all_claim_information_to_decision
+    : 15
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-55#input.decision_made_as_soon_as_reasonably_practicable_thereafter
+    : true
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-55#authority_decision_made_within_required_time: holds
+- name: later_unreasonably_delayed_decision_does_not_comply
+  period:
+    period_kind: custom
+    name: day
+    start: '2026-04-01'
+    end: '2026-04-01'
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-55#input.authority_made_decision: true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-55#input.days_from_receipt_of_all_claim_information_to_decision
+    : 15
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-55#input.decision_made_as_soon_as_reasonably_practicable_thereafter
+    : false
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-55#authority_decision_made_within_required_time: not_holds
