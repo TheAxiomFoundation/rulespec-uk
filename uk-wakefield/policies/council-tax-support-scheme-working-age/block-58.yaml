@@ -1,0 +1,16 @@
+format: rulespec/v1
+module:
+  status: deferred
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-58
+    source_sha256: 96fa80480058a284b14fe84647e190181bbf4ef4226c754bcfd2918d57250983
+  summary: Council Tax Support will be awarded by reducing the Council Tax liability
+    of the applicant.
+  deferred_outputs:
+  - output: uk-wakefield:policies/council-tax-support-scheme-working-age/block-58#council_tax_support_award
+    reason: block-58 states that Council Tax Support will be awarded by reducing the
+      Council Tax liability of the applicant, but supplies no amount, rate, formula,
+      or rule for determining the reduction.
+rules: []
