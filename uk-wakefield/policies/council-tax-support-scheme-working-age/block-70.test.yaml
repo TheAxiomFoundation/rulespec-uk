@@ -1,0 +1,112 @@
+- name: sender_presumption_holds_when_all_sender_conditions_hold
+  period:
+    period_kind: custom
+    name: day
+    start: '2026-04-01'
+    end: '2026-04-01'
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-70#input.identity_must_be_proved_for_legal_proceedings: true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-70#input.information_is_delivered_by_electronic_communication_to_official_computer_system
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-70#input.person_name_is_recorded_as_sender_on_that_official_computer_system
+    : true
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-70#recorded_person_is_presumed_sender: holds
+- name: sender_presumption_does_not_hold_without_legal_proceedings_identity_issue
+  period:
+    period_kind: custom
+    name: day
+    start: '2026-04-01'
+    end: '2026-04-01'
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-70#input.identity_must_be_proved_for_legal_proceedings: false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-70#input.information_is_delivered_by_electronic_communication_to_official_computer_system
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-70#input.person_name_is_recorded_as_sender_on_that_official_computer_system
+    : true
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-70#recorded_person_is_presumed_sender: not_holds
+- name: sender_presumption_does_not_hold_without_delivery_to_official_system
+  period:
+    period_kind: custom
+    name: day
+    start: '2026-04-01'
+    end: '2026-04-01'
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-70#input.identity_must_be_proved_for_legal_proceedings: true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-70#input.information_is_delivered_by_electronic_communication_to_official_computer_system
+    : false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-70#input.person_name_is_recorded_as_sender_on_that_official_computer_system
+    : true
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-70#recorded_person_is_presumed_sender: not_holds
+- name: sender_presumption_does_not_hold_without_sender_name_record
+  period:
+    period_kind: custom
+    name: day
+    start: '2026-04-01'
+    end: '2026-04-01'
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-70#input.identity_must_be_proved_for_legal_proceedings: true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-70#input.information_is_delivered_by_electronic_communication_to_official_computer_system
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-70#input.person_name_is_recorded_as_sender_on_that_official_computer_system
+    : false
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-70#recorded_person_is_presumed_sender: not_holds
+- name: recipient_presumption_holds_when_all_recipient_conditions_hold
+  period:
+    period_kind: custom
+    name: day
+    start: '2026-04-01'
+    end: '2026-04-01'
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-70#input.identity_must_be_proved_for_legal_proceedings: true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-70#input.information_is_delivered_by_electronic_communication_from_official_computer_system
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-70#input.person_name_is_recorded_as_recipient_on_that_official_computer_system
+    : true
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-70#recorded_person_is_presumed_recipient: holds
+- name: recipient_presumption_does_not_hold_without_legal_proceedings_identity_issue
+  period:
+    period_kind: custom
+    name: day
+    start: '2026-04-01'
+    end: '2026-04-01'
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-70#input.identity_must_be_proved_for_legal_proceedings: false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-70#input.information_is_delivered_by_electronic_communication_from_official_computer_system
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-70#input.person_name_is_recorded_as_recipient_on_that_official_computer_system
+    : true
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-70#recorded_person_is_presumed_recipient: not_holds
+- name: recipient_presumption_does_not_hold_without_delivery_from_official_system
+  period:
+    period_kind: custom
+    name: day
+    start: '2026-04-01'
+    end: '2026-04-01'
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-70#input.identity_must_be_proved_for_legal_proceedings: true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-70#input.information_is_delivered_by_electronic_communication_from_official_computer_system
+    : false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-70#input.person_name_is_recorded_as_recipient_on_that_official_computer_system
+    : true
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-70#recorded_person_is_presumed_recipient: not_holds
+- name: recipient_presumption_does_not_hold_without_recipient_name_record
+  period:
+    period_kind: custom
+    name: day
+    start: '2026-04-01'
+    end: '2026-04-01'
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-70#input.identity_must_be_proved_for_legal_proceedings: true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-70#input.information_is_delivered_by_electronic_communication_from_official_computer_system
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-70#input.person_name_is_recorded_as_recipient_on_that_official_computer_system
+    : false
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-70#recorded_person_is_presumed_recipient: not_holds
