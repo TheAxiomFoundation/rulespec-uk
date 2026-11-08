@@ -1,0 +1,127 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-39
+    source_sha256: 7476c84c412a8c453a99b8105bb2e24fef3ce654fdcda4d1003b0b0996d0e5a4
+  summary: Except where capital is disregarded under Rule 36(4), an applicant jointly
+    beneficially entitled in possession to a capital asset is treated, absent evidence
+    to the contrary, as equally entitled to the whole beneficial interest; Rules 33
+    to 35 apply as if the capital were actual capital possessed.
+inputs:
+- name: applicant_is_beneficially_entitled_in_possession_to_capital_asset
+  entity: Person
+  dtype: Boolean
+  period: Month
+- name: jointly_entitled_person_count
+  entity: Person
+  dtype: Count
+  period: Month
+- name: no_evidence_to_contrary_of_equal_shares
+  entity: Person
+  dtype: Boolean
+  period: Month
+- name: applicant_possesses_capital_disregarded_under_rule_36_4
+  entity: Person
+  dtype: Boolean
+  period: Month
+- name: jointly_beneficially_entitled_capital_amount
+  entity: Person
+  dtype: Money
+  unit: GBP
+  period: Month
+rules:
+- name: capital_calculation_rules_first_reference
+  kind: parameter
+  dtype: Integer
+  period: Month
+  source: uk-wakefield/manual/council-tax-support-scheme-working-age/block-39
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: parameter
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-39
+          excerpt: Rules 33 to 35 apply
+  versions:
+  - effective_from: '0001-01-01'
+    formula: '33'
+- name: capital_calculation_rules_last_reference
+  kind: parameter
+  dtype: Integer
+  period: Month
+  source: uk-wakefield/manual/council-tax-support-scheme-working-age/block-39
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: parameter
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-39
+          excerpt: Rules 33 to 35 apply
+  versions:
+  - effective_from: '0001-01-01'
+    formula: '35'
+- name: joint_capital_equal_share_treatment_applies
+  kind: derived
+  entity: Person
+  dtype: Judgment
+  period: Month
+  source: uk-wakefield/manual/council-tax-support-scheme-working-age/block-39
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: condition
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-39
+          excerpt: where an applicant and one or more persons are beneficially entitled
+            in possession
+      - path: versions[0].formula
+        kind: default
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-39
+          excerpt: in the absence of evidence to the contrary
+      - path: versions[0].formula
+        kind: exception
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-39
+          excerpt: Except where an applicant possesses capital which is disregarded
+            under Rule 36(4)
+  versions:
+  - effective_from: '0001-01-01'
+    formula: 'applicant_is_beneficially_entitled_in_possession_to_capital_asset
+
+      and jointly_entitled_person_count >= 2
+
+      and no_evidence_to_contrary_of_equal_shares
+
+      and not applicant_possesses_capital_disregarded_under_rule_36_4'
+- name: applicant_equal_share_of_jointly_entitled_capital
+  kind: derived
+  entity: Person
+  dtype: Money
+  unit: GBP
+  period: Month
+  source: uk-wakefield/manual/council-tax-support-scheme-working-age/block-39
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-39
+          excerpt: each of them were entitled in possession to the whole beneficial
+            interest therein in an equal share
+      - path: versions[0].formula
+        kind: exception
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-39
+          excerpt: Except where an applicant possesses capital which is disregarded
+            under Rule 36(4)
+  versions:
+  - effective_from: '0001-01-01'
+    formula: "if joint_capital_equal_share_treatment_applies:\n  jointly_beneficially_entitled_capital_amount\
+      \ / jointly_entitled_person_count\nelse: 0"
