@@ -1,0 +1,24 @@
+- name: polygamous_marriage_party_with_additional_spouse_is_not_member_of_couple
+  period: 2026-04
+  input:
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-6#input.person_is_husband_or_wife_by_marriage_under_law_permitting_polygamy
+    : true
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-6#input.either_party_to_marriage_has_additional_spouse: true
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-6#person_is_not_taken_to_be_member_of_couple_for_rule_4: holds
+- name: marriage_not_under_polygamy_permitting_law_does_not_trigger_rule
+  period: 2026-04
+  input:
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-6#input.person_is_husband_or_wife_by_marriage_under_law_permitting_polygamy
+    : false
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-6#input.either_party_to_marriage_has_additional_spouse: true
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-6#person_is_not_taken_to_be_member_of_couple_for_rule_4: not_holds
+- name: no_additional_spouse_does_not_trigger_rule
+  period: 2026-04
+  input:
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-6#input.person_is_husband_or_wife_by_marriage_under_law_permitting_polygamy
+    : true
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-6#input.either_party_to_marriage_has_additional_spouse: false
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-6#person_is_not_taken_to_be_member_of_couple_for_rule_4: not_holds
