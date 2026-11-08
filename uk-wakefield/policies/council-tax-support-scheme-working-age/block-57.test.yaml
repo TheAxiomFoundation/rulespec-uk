@@ -1,0 +1,104 @@
+- name: written_notice_may_be_served_for_entitlement_decision
+  period: 2026-04
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-57#input.person_is_aggrieved_by_decision: true
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-57#input.decision_affects_entitlement_to_reduction: true
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-57#input.decision_affects_amount_of_reduction: false
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-57#person_may_serve_written_notice: holds
+- name: written_notice_may_be_served_for_reduction_amount_decision
+  period: 2026-04
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-57#input.person_is_aggrieved_by_decision: true
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-57#input.decision_affects_entitlement_to_reduction: false
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-57#input.decision_affects_amount_of_reduction: true
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-57#person_may_serve_written_notice: holds
+- name: written_notice_may_not_be_served_when_person_is_not_aggrieved
+  period: 2026-04
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-57#input.person_is_aggrieved_by_decision: false
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-57#input.decision_affects_entitlement_to_reduction: true
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-57#input.decision_affects_amount_of_reduction: false
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-57#person_may_serve_written_notice: not_holds
+- name: written_notice_may_not_be_served_when_decision_affects_neither_matter
+  period: 2026-04
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-57#input.person_is_aggrieved_by_decision: true
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-57#input.decision_affects_entitlement_to_reduction: false
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-57#input.decision_affects_amount_of_reduction: false
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-57#person_may_serve_written_notice: not_holds
+- name: authority_must_consider_and_notify_after_notice_service
+  period: 2026-04
+  input:
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-57#input.authority_has_been_served_written_notice_stating_matter_and_grounds
+    : true
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-57#authority_must_consider_notice_matter: holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-57#authority_must_notify_aggrieved_person: holds
+- name: authority_duties_do_not_apply_before_notice_service
+  period: 2026-04
+  input:
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-57#input.authority_has_been_served_written_notice_stating_matter_and_grounds
+    : false
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-57#authority_must_consider_notice_matter: not_holds
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-57#authority_must_notify_aggrieved_person: not_holds
+- name: appeal_may_follow_ground_not_well_founded_notification
+  period: 2026-04
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-57#input.person_is_aggrieved_by_decision: true
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-57#input.decision_affects_entitlement_to_reduction: true
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-57#input.decision_affects_amount_of_reduction: false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-57#input.person_is_still_aggrieved_following_ground_not_well_founded_notification
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-57#input.person_is_still_aggrieved_following_steps_taken_notification
+    : false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-57#input.authority_failed_to_notify_person_within_two_months_of_notice_service
+    : false
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-57#person_may_appeal_to_valuation_tribunal: holds
+- name: appeal_may_follow_steps_taken_notification
+  period: 2026-04
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-57#input.person_is_aggrieved_by_decision: true
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-57#input.decision_affects_entitlement_to_reduction: false
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-57#input.decision_affects_amount_of_reduction: true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-57#input.person_is_still_aggrieved_following_ground_not_well_founded_notification
+    : false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-57#input.person_is_still_aggrieved_following_steps_taken_notification
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-57#input.authority_failed_to_notify_person_within_two_months_of_notice_service
+    : false
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-57#person_may_appeal_to_valuation_tribunal: holds
+- name: appeal_may_follow_notification_failure
+  period: 2026-04
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-57#input.person_is_aggrieved_by_decision: true
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-57#input.decision_affects_entitlement_to_reduction: true
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-57#input.decision_affects_amount_of_reduction: false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-57#input.person_is_still_aggrieved_following_ground_not_well_founded_notification
+    : false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-57#input.person_is_still_aggrieved_following_steps_taken_notification
+    : false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-57#input.authority_failed_to_notify_person_within_two_months_of_notice_service
+    : true
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-57#person_may_appeal_to_valuation_tribunal: holds
+- name: appeal_may_not_be_made_without_continuing_grievance_or_notification_failure
+  period: 2026-04
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-57#input.person_is_aggrieved_by_decision: true
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-57#input.decision_affects_entitlement_to_reduction: true
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-57#input.decision_affects_amount_of_reduction: false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-57#input.person_is_still_aggrieved_following_ground_not_well_founded_notification
+    : false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-57#input.person_is_still_aggrieved_following_steps_taken_notification
+    : false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-57#input.authority_failed_to_notify_person_within_two_months_of_notice_service
+    : false
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-57#person_may_appeal_to_valuation_tribunal: not_holds
