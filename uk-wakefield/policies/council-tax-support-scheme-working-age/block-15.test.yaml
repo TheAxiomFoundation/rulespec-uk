@@ -1,0 +1,27 @@
+- name: current_universal_credit_claim_when_monthly_review_is_active_and_in_line_with_assessment_period
+  period: 2026-04
+  input:
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-15#input.universal_credit_claim_is_actively_subject_to_monthly_review_by_department_for_work_and_pensions
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-15#input.monthly_review_is_in_line_with_person_universal_credit_assessment_period
+    : true
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-15#current_universal_credit_claim: holds
+- name: current_universal_credit_claim_not_current_when_monthly_review_is_not_active
+  period: 2026-04
+  input:
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-15#input.universal_credit_claim_is_actively_subject_to_monthly_review_by_department_for_work_and_pensions
+    : false
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-15#input.monthly_review_is_in_line_with_person_universal_credit_assessment_period
+    : true
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-15#current_universal_credit_claim: not_holds
+- name: current_universal_credit_claim_not_current_when_review_is_not_in_line_with_assessment_period
+  period: 2026-04
+  input:
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-15#input.universal_credit_claim_is_actively_subject_to_monthly_review_by_department_for_work_and_pensions
+    : true
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-15#input.monthly_review_is_in_line_with_person_universal_credit_assessment_period
+    : false
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-15#current_universal_credit_claim: not_holds
