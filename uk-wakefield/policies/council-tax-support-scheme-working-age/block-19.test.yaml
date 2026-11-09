@@ -1,0 +1,7 @@
+- name: universal_credit_gross_self_employed_income_is_used_as_gross_earnings
+  period: 2026-04
+  input:
+    ? uk-wakefield:policies/council-tax-support-scheme-working-age/block-19#input.gross_self_employed_income_used_in_universal_credit_calculation
+    : 825
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-19#gross_earnings: 825
