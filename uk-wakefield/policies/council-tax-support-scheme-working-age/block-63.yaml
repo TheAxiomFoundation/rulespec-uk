@@ -1,0 +1,33 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-63
+    source_sha256: 8d790ccd7e3480acc77fdac991bd0f24d007f145c5e6d93caf746bdd2f3597d0
+  summary: All excess Council Tax Support will be recovered in full.
+inputs:
+- name: excess_council_tax_support
+  entity: Household
+  dtype: Money
+  period: Month
+  unit: GBP
+rules:
+- name: excess_council_tax_support_recovery_amount
+  kind: derived
+  entity: Household
+  dtype: Money
+  period: Month
+  unit: GBP
+  source: Wakefield Council Tax Support Scheme (Working Age), block 63
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-63
+          excerpt: All excess Council Tax Support will be recovered in full.
+  versions:
+  - effective_from: '0001-01-01'
+    formula: excess_council_tax_support
