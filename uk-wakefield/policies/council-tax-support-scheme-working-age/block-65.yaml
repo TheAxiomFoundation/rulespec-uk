@@ -1,0 +1,35 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-65
+    source_sha256: 9f6a6f39ef0d496f26d465a32d27a7890ca9a234c1f2d70e70d444aa15938a26
+  summary: All excess Council Tax Support will be recovered from the applicants Council
+    Tax account.
+inputs:
+- name: excess_council_tax_support
+  entity: Household
+  dtype: Money
+  period: Month
+  unit: GBP
+rules:
+- name: excess_council_tax_support_recovered_from_council_tax_account
+  kind: derived
+  entity: Household
+  dtype: Money
+  period: Month
+  unit: GBP
+  source: uk-wakefield/manual/council-tax-support-scheme-working-age/block-65
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-65
+          excerpt: All excess Council Tax Support will be recovered from the applicants
+            Council Tax account.
+  versions:
+  - effective_from: '0001-01-01'
+    formula: excess_council_tax_support
