@@ -1,0 +1,96 @@
+{
+  "applied_files": [
+    {
+      "path": "uk/regulations/ssi/2012/319/14.yaml",
+      "sha256": "6a4e08abc074a16b373f6b2dca852ad1779f87bb50552defc9a87dca7ca79561"
+    },
+    {
+      "path": "uk/regulations/ssi/2012/319/14.test.yaml",
+      "sha256": "6d49641dbb088275eac1b9348575b7e1d287a610f1446d3cfa75ffbcd3581870"
+    }
+  ],
+  "axiom_encode_git": {
+    "commit": "7b0eaada49acdce4edf52688ac7f17deef108b69",
+    "dirty_tracked": false,
+    "identity_source": "trusted-runtime-attestation",
+    "root": "/opt/axiom-verification/python/runtime-attestation.json",
+    "version": "0.2.2354",
+    "version_commit": "7b0eaada49acdce4edf52688ac7f17deef108b69"
+  },
+  "axiom_encode_version": "0.2.2354",
+  "backend": "openai",
+  "citation": "uk/regulation/ssi/2012/319/14",
+  "context_manifest_file": "/home/runner/work/_temp/generated/target/_eval_workspaces/openai-gpt-6-sol/uk-regulation-ssi-2012-319-14/workspace/context-manifest.json",
+  "context_manifest_sha256": "b1f998ffbc16cb4e4b8d2097cde35a9746de8cba47be8f72f2bd4e89bfcb95e3",
+  "generated_at": "2026-11-11T21:10:53.753283+00:00",
+  "generated_output_file": "/home/runner/work/_temp/generated/target/openai-gpt-6-sol/regulations/ssi/2012/319/14.yaml",
+  "generated_output_root": "/home/runner/work/_temp/generated/target",
+  "generated_output_sha256": "6a4e08abc074a16b373f6b2dca852ad1779f87bb50552defc9a87dca7ca79561",
+  "generation_prompt_sha256": "092d842c299bb9fe78e29d158315902e5922bac36e3d4b7a3632e0eb6e44b153",
+  "model": "gpt-6-sol",
+  "run_id": "859cf26f",
+  "runner": "openai-gpt-6-sol",
+  "schema_version": "axiom-encode/applied-rulespec/v5",
+  "signature": {
+    "algorithm": "ed25519-domain-v1",
+    "key_id": "sha256:24a78725a23b1c83cfc38bdc22f75401d8008e7a8477796b55179d1fc79c4d9a",
+    "value": "ecozkQqHKiTotmweW/gAyEcRq6Wb4QGd39aaJQAJ/wSucKt/BxRgd2VqPzFeyQVtvV5SEC7cRc0FbsE3ku40CA=="
+  },
+  "source_attestation": {
+    "component_rows": [],
+    "corpus_release": "uk-rulespec-2026-11-02-uc-retirement-pension-income",
+    "corpus_release_content_sha256": "8f20bbf043216f2bfe48fdd3cef70681ba70e448caf1e3c51e8d28bf13046b0b",
+    "corpus_release_selector_sha256": "f4b4e4dd5ba944d6dfa573227ec695c663dcb02f7a207255aca40c9314a31272",
+    "corpus_source": "local",
+    "expression_date": "2026-07-13",
+    "generation_input_sha256": "96c3e74c64fca582480560eab6f48e2580f60bab59524053cde80e3c8941f29f",
+    "provision_file": "data/corpus/provisions/uk/regulation/2026-07-13-uk-ctr-scp-award-r2026-07-20-datefix.jsonl",
+    "provision_file_sha256": "c83b45c299b3a0bb9e7a93e524bcad0cd5fdb61a227c4be77606a59a88e8fb59",
+    "requested_corpus_citation_path": "uk/regulation/ssi/2012/319/14",
+    "resolved_corpus_citation_path": "uk/regulation/ssi/2012/319/14",
+    "resolved_text_sha256": "96c3e74c64fca582480560eab6f48e2580f60bab59524053cde80e3c8941f29f",
+    "row": {
+      "body_sha256": "96c3e74c64fca582480560eab6f48e2580f60bab59524053cde80e3c8941f29f",
+      "citation_path": "uk/regulation/ssi/2012/319/14",
+      "document_class": "regulation",
+      "expression_date": "2026-07-13",
+      "jurisdiction": "uk",
+      "line_number": 1,
+      "provision_file": "data/corpus/provisions/uk/regulation/2026-07-13-uk-ctr-scp-award-r2026-07-20-datefix.jsonl",
+      "provision_file_sha256": "c83b45c299b3a0bb9e7a93e524bcad0cd5fdb61a227c4be77606a59a88e8fb59",
+      "record_id": "a9404add-1116-5fbf-85f0-08566bf9aa16",
+      "source_as_of": "2026-07-13",
+      "source_path": "sources/uk/regulation/2026-07-13-uk-ctr-scp-award-r2026-07-20-datefix/ssi/2012/319/regulation-14.xml",
+      "version": "2026-07-13-uk-ctr-scp-award-r2026-07-20-datefix"
+    },
+    "rulespec_root": "rulespec-uk/uk",
+    "source_as_of": "2026-07-13",
+    "source_sha256": "96c3e74c64fca582480560eab6f48e2580f60bab59524053cde80e3c8941f29f"
+  },
+  "tool": "axiom-encode encode --apply",
+  "trace_file": "/home/runner/work/_temp/generated/target/traces/openai-gpt-6-sol/uk-regulation-ssi-2012-319-14.json",
+  "trace_sha256": "3d5d850f311705ff97b08042ffbebf85a5e0d2c3290adb2b28ecc1353a2cdbf1",
+  "validation_execution": {
+    "axiom_encode": {
+      "commit": "7b0eaada49acdce4edf52688ac7f17deef108b69",
+      "identity_source": "trusted-runtime-attestation",
+      "repository": "github.com/TheAxiomFoundation/axiom-encode",
+      "version": "0.2.2354"
+    },
+    "axiom_rules_engine": {
+      "commit": "363c6a6c56f7ad130996b63f7a09cfd4c3d9b021",
+      "repository": "github.com/TheAxiomFoundation/axiom-rules-engine"
+    },
+    "policy_pre_apply": {
+      "pre_apply_content_sha256": "dac7ed4da0811df3ab30804ac74c5c132fff6b8b7fe4ca4a25078698f4636a16",
+      "pre_apply_file_count": 641,
+      "rulespec_root": "rulespec-uk/uk",
+      "toolchain_contract_sha256": "3eee2a28f628779707c5749b20b9513ba1c1cc9a5159d064757ef00149be4f65",
+      "validation_waiver_set_sha256": "f13760dd67a400b0624e40e29e045607552aafbfd480a13917170837289158b4"
+    },
+    "rulespec_dependencies": [],
+    "rulespec_scope": "active_jurisdiction_and_country_ancestors",
+    "schema": "axiom-encode/apply-validation-execution/v2"
+  },
+  "validation_waiver_set_sha256": "f13760dd67a400b0624e40e29e045607552aafbfd480a13917170837289158b4"
+}
