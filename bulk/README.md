@@ -53,16 +53,18 @@ Planning needs no apply signing key. Use the central
 
 ## What each job does
 
-1. **plan** — reads the strict 3-key `.axiom/toolchain.toml` (rejecting the
-   removed pre-#133 keys — the #144 defect), runs `compute_matrix.py
-   --status pending` (optionally `--batch`, `--limit`), and emits the plan. No
-   network, no supervisor, no signing.
-2. **verify-release** — checks out the pinned `axiom-corpus`, fetches the pinned
-   signed corpus release object from R2, verifies its name + content sha256, and
-   authenticates its provenance commit against the corpus default branch and the
-   pinned checkout — mirroring the shared `validate-rulespec` resolution. The
-   Ed25519 signature and full grounding are verified downstream by the supervised
-   PR CI and the signed encode leg.
+1. **plan** — loads the four dependency refs from
+   `.axiom/workflow-toolchain.toml`, reads the strict 3-key
+   `.axiom/toolchain.toml` (rejecting the removed pre-#133 keys — the #144
+   defect), runs `compute_matrix.py --status pending` (optionally `--batch`,
+   `--limit`), and emits the plan. The plan step itself makes no network
+   calls, starts no supervisor and signs nothing.
+2. **verify-release** — loads the same refs, checks out the pinned
+   `axiom-corpus`, fetches the pinned signed corpus release object from R2,
+   verifies its name + content sha256, and authenticates its provenance commit
+   against the corpus default branch and the pinned checkout — mirroring the
+   shared `validate-rulespec` resolution. The supervised PR CI and the signed
+   encode leg verify the Ed25519 signature and full grounding downstream.
 
 The workflow **never** signs, **never** runs `encode --apply`, and **never**
 opens PRs. The authoritative gate remains the required `validate / validate`

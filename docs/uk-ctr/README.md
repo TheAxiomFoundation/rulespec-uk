@@ -91,10 +91,10 @@ No council encode PR is open.
 
 Corpus side:
 
-- Since [rulespec-uk#491](https://github.com/TheAxiomFoundation/rulespec-uk/pull/491),
-  `rulespec-uk` binds release `uk-rulespec-2026-10-25-pe-child-definitions`
-  ([`.axiom/toolchain.toml`](../../.axiom/toolchain.toml)). Its 193 scopes are
-  35 national `uk` scopes and 158 council scopes.
+- Since [rulespec-uk#538](https://github.com/TheAxiomFoundation/rulespec-uk/pull/538),
+  `rulespec-uk` binds release `uk-rulespec-2026-11-02-uc-retirement-pension-income`
+  ([`.axiom/toolchain.toml`](../../.axiom/toolchain.toml)). Its 195 scopes are
+  37 national `uk` scopes and 158 council scopes.
 - `axiom-corpus` holds 159 council scopes. Since
   [axiom-corpus#774](https://github.com/TheAxiomFoundation/axiom-corpus/pull/774)
   (2026-09-30; tooling in #769) their bytes live outside git. Each scope is pinned by a lock
@@ -362,11 +362,15 @@ In outline:
    approval in the protected `release-activation` environment.
 6. Rebind `rulespec-uk` in one PR. Set the release name and content digest in
    `.axiom/toolchain.toml`, leaving the waiver digest alone. Set the cut's merge
-   commit as `axiom_corpus_ref` in `.axiom/workflow-toolchain.toml`,
-   `axiom-corpus-ref` in `.github/workflows/repository-checks.yml`, and
-   `AXIOM_CORPUS_REF` in `.github/workflows/bulk-encode.yml`. The PR's validate
-   job fetches the published release object and fails until the mirror has
-   finished.
+   commit as `axiom_corpus_ref` in `.axiom/workflow-toolchain.toml` and
+   `axiom-corpus-ref` in `.github/workflows/repository-checks.yml`.
+   `.github/workflows/bulk-encode.yml` reads its refs from
+   `.axiom/workflow-toolchain.toml`, so it needs no edit. The shared validate
+   job accepts a dependency-pin change only from a PR that changes nothing
+   outside `.axiom/toolchain.toml`, `.axiom/workflow-toolchain.toml` and
+   `.github/workflows/repository-checks.yml`, so record the new release in
+   this README in a follow-up PR. The PR's validate job fetches the published
+   release object and fails until the mirror has finished.
 
 ## The registry
 
