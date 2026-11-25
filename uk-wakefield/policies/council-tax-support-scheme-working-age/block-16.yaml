@@ -1,0 +1,95 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-16
+    source_sha256: daaf6681cab2a2c3a3cb701c7655ec41c9aa4b5c706eff48a0ac65af8be9cd72
+  summary: Except where the Universal Credit claimant is not entitled to Universal
+    Credit and is receiving Housing Benefit, income and capital are assessed under
+    Part 3 Section 1 for a person with a current Universal Credit claim; otherwise
+    the stated non-Universal-Credit-claim and exception cases are assessed under Part
+    3 Section 2.
+inputs:
+- name: has_current_claim_for_universal_credit
+  entity: Person
+  dtype: Boolean
+  period: Month
+- name: is_entitled_to_universal_credit
+  entity: Person
+  dtype: Boolean
+  period: Month
+- name: is_receiving_housing_benefit
+  entity: Person
+  dtype: Boolean
+  period: Month
+rules:
+- name: income_and_capital_assessed_under_part_3_section_1
+  kind: derived
+  entity: Person
+  dtype: Judgment
+  period: Month
+  source: Wakefield Council Tax Support Scheme (Working Age), block 16, paragraph
+    1
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: exception
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-16
+          excerpt: Except where paragraph (3) applies
+      - path: versions[0].formula
+        kind: condition
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-16
+          excerpt: where a person has a current claim for Universal Credit
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-16
+          excerpt: income and capital will be assessed in accordance with Part 3 Section
+            1
+  versions:
+  - effective_from: '0001-01-01'
+    formula: 'has_current_claim_for_universal_credit
+
+      and (is_entitled_to_universal_credit or not is_receiving_housing_benefit)'
+- name: income_and_capital_assessed_under_part_3_section_2
+  kind: derived
+  entity: Person
+  dtype: Judgment
+  period: Month
+  source: Wakefield Council Tax Support Scheme (Working Age), block 16, paragraphs
+    2-3
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: condition
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-16
+          excerpt: Where a person does not have a current claim for Universal Credit
+      - path: versions[0].formula
+        kind: exception
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-16
+          excerpt: has a current claim for Universal Credit but is not entitled to
+            Universal Credit; and is entitled to and receiving Housing Benefit
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-16
+          excerpt: income and capital will be assessed in accordance with Part 3 Section
+            2
+  versions:
+  - effective_from: '0001-01-01'
+    formula: '(not has_current_claim_for_universal_credit)
+
+      or
+
+      (has_current_claim_for_universal_credit
+
+      and not is_entitled_to_universal_credit
+
+      and is_receiving_housing_benefit)'
