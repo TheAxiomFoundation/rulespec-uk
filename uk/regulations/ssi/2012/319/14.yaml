@@ -1,16 +1,71 @@
 format: rulespec/v1
-module:
-  proof_validation:
-    required: true
-  source_verification:
-    corpus_citation_path: uk/regulation/ssi/2012/319/14
-  summary: A relevant person is entitled in respect of a day when the common conditions
-    and either the income-based or alternative-maximum conditions are satisfied, entitlement
-    has commenced, and the reduction is not less than that calculated under regulation
-    14A. Amount B is 2 6/7 per cent of weekly income exceeding the applicable amount;
-    where both routes apply, the greater reduction is awarded.
 imports:
 - uk:regulations/ssi/2012/319/14A#council_tax_reduction_before_regulation_14_comparison
+inputs:
+- name: relevant_person_is_liable_to_pay_council_tax_under_section_75
+  entity: Person
+  dtype: Boolean
+  period: Day
+- name: relevant_person_is_liable_for_council_tax_for_dwelling_as_sole_or_main_residence
+  entity: Person
+  dtype: Boolean
+  period: Day
+- name: regulation_15_applies
+  entity: Person
+  dtype: Boolean
+  period: Day
+- name: regulation_16_applies
+  entity: Person
+  dtype: Boolean
+  period: Day
+- name: regulation_19_applies
+  entity: Person
+  dtype: Boolean
+  period: Day
+- name: relevant_person_has_made_application_in_accordance_with_part_9
+  entity: Person
+  dtype: Boolean
+  period: Day
+- name: relevant_person_entitlement_to_council_tax_reduction_has_commenced
+  entity: Person
+  dtype: Boolean
+  period: Day
+- name: relevant_person_has_no_income
+  entity: Person
+  dtype: Boolean
+  period: Day
+- name: relevant_person_weekly_income
+  entity: Person
+  dtype: Money
+  period: Week
+  unit: GBP
+- name: applicable_amount
+  entity: Person
+  dtype: Money
+  period: Week
+  unit: GBP
+- name: appropriate_maximum_council_tax_reduction_exists
+  entity: Person
+  dtype: Boolean
+  period: Day
+- name: appropriate_maximum_council_tax_reduction
+  entity: Person
+  dtype: Money
+  period: Day
+  unit: GBP
+- name: no_included_other_resident_is_liable_to_pay_rent_to_relevant_person
+  entity: Person
+  dtype: Boolean
+  period: Day
+- name: relevant_person_is_entitled_to_alternative_maximum_reduction_because_of_resident_income
+  entity: Person
+  dtype: Boolean
+  period: Day
+- name: appropriate_alternative_maximum_council_tax_reduction
+  entity: Person
+  dtype: Money
+  period: Day
+  unit: GBP
 rules:
 - name: regulation_14_income_excess_reduction_rate
   kind: parameter
@@ -23,10 +78,10 @@ rules:
         kind: parameter
         source:
           corpus_citation_path: uk/regulation/ssi/2012/319/14
-          excerpt: amount B is 2 6/7 per cent of the difference
+          excerpt: 2 6/7 per cent
   versions:
   - effective_from: '0001-01-01'
-    formula: '0.02857142857142857142857142857'
+    formula: "0.02857142857142857142857142857"
 - name: regulation_14_common_conditions_satisfied
   kind: derived
   entity: Person
@@ -67,12 +122,53 @@ rules:
         kind: formula
         source:
           corpus_citation_path: uk/regulation/ssi/2012/319/14
-          excerpt: amount B is 2 6/7 per cent of the difference
+          excerpt: amount B is 2 6/7 per cent of the difference between the person's
+            income in respect of the week in which the day falls and the applicable
+            amount
   versions:
   - effective_from: '0001-01-01'
-    formula: 'regulation_14_income_excess_reduction_rate
+    formula: regulation_14_income_excess_reduction_rate * max(0, relevant_person_weekly_income
+      - applicable_amount)
+- name: regulation_14_paragraph_5_a_applies
+  kind: derived
+  entity: Person
+  dtype: Judgment
+  period: Day
+  source: The Council Tax Reduction (Scotland) Regulations 2012, regulation 14(5)(a)
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: condition
+        source:
+          corpus_citation_path: uk/regulation/ssi/2012/319/14
+          excerpt: the relevant person has no income; or the relevant person's income
+            does not exceed the applicable amount
+  versions:
+  - effective_from: '0001-01-01'
+    formula: 'relevant_person_has_no_income
 
-      * max(0, relevant_person_weekly_income - applicable_amount)'
+      or relevant_person_weekly_income <= applicable_amount'
+- name: regulation_14_paragraph_5_b_applies
+  kind: derived
+  entity: Person
+  dtype: Judgment
+  period: Day
+  source: The Council Tax Reduction (Scotland) Regulations 2012, regulation 14(5)(b)
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: condition
+        source:
+          corpus_citation_path: uk/regulation/ssi/2012/319/14
+          excerpt: neither paragraph (a)(i) or (ii) applies to the relevant person
+            but amount A exceeds amount B
+  versions:
+  - effective_from: '0001-01-01'
+    formula: 'not regulation_14_paragraph_5_a_applies
+
+      and appropriate_maximum_council_tax_reduction > regulation_14_income_excess_reduction_amount'
 - name: regulation_14_income_route_satisfied
   kind: derived
   entity: Person
@@ -88,9 +184,9 @@ rules:
           corpus_citation_path: uk/regulation/ssi/2012/319/14
   versions:
   - effective_from: '0001-01-01'
-    formula: "appropriate_maximum_council_tax_reduction_exists\nand (\n  relevant_person_has_no_income\n\
-      \  or relevant_person_weekly_income <= applicable_amount\n  or appropriate_maximum_council_tax_reduction\
-      \ > regulation_14_income_excess_reduction_amount\n)"
+    formula: 'appropriate_maximum_council_tax_reduction_exists
+
+      and (regulation_14_paragraph_5_a_applies or regulation_14_paragraph_5_b_applies)'
 - name: regulation_14_alternative_route_satisfied
   kind: derived
   entity: Person
@@ -109,6 +205,66 @@ rules:
     formula: 'no_included_other_resident_is_liable_to_pay_rent_to_relevant_person
 
       and relevant_person_is_entitled_to_alternative_maximum_reduction_because_of_resident_income'
+- name: regulation_14_paragraph_8_a_amount
+  kind: derived
+  entity: Person
+  dtype: Money
+  period: Day
+  unit: GBP
+  source: The Council Tax Reduction (Scotland) Regulations 2012, regulation 14(8)(a)
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: uk/regulation/ssi/2012/319/14
+          excerpt: if paragraph (5)(a) applies, the amount which is the appropriate
+            maximum council tax reduction
+  versions:
+  - effective_from: '0001-01-01'
+    formula: 'if regulation_14_paragraph_5_a_applies: appropriate_maximum_council_tax_reduction
+      else: 0'
+- name: regulation_14_paragraph_8_b_amount
+  kind: derived
+  entity: Person
+  dtype: Money
+  period: Day
+  unit: GBP
+  source: The Council Tax Reduction (Scotland) Regulations 2012, regulation 14(8)(b)
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: uk/regulation/ssi/2012/319/14
+          excerpt: if paragraph (5)(b) applies, the amount found by deducting amount
+            B from amount A
+  versions:
+  - effective_from: '0001-01-01'
+    formula: 'if regulation_14_paragraph_5_b_applies: max(0, appropriate_maximum_council_tax_reduction
+      - regulation_14_income_excess_reduction_amount) else: 0'
+- name: regulation_14_paragraph_8_c_amount
+  kind: derived
+  entity: Person
+  dtype: Money
+  period: Day
+  unit: GBP
+  source: The Council Tax Reduction (Scotland) Regulations 2012, regulation 14(8)(c)
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: uk/regulation/ssi/2012/319/14
+          excerpt: if paragraph (6) applies, the amount which is the appropriate alternative
+            maximum council tax reduction
+  versions:
+  - effective_from: '0001-01-01'
+    formula: 'if regulation_14_alternative_route_satisfied: appropriate_alternative_maximum_council_tax_reduction
+      else: 0'
 - name: regulation_14_reduction_before_regulation_14a_comparison
   kind: derived
   entity: Person
@@ -123,13 +279,13 @@ rules:
         kind: formula
         source:
           corpus_citation_path: uk/regulation/ssi/2012/319/14
+          excerpt: the amount to which the person is entitled is whichever is the
+            greater
   versions:
   - effective_from: '0001-01-01'
-    formula: "max(\n  (if regulation_14_income_route_satisfied:\n    if relevant_person_has_no_income\
-      \ or relevant_person_weekly_income <= applicable_amount:\n      appropriate_maximum_council_tax_reduction\n\
-      \    else:\n      max(0, appropriate_maximum_council_tax_reduction - regulation_14_income_excess_reduction_amount)\n\
-      \  else:\n    0),\n  (if regulation_14_alternative_route_satisfied:\n    appropriate_alternative_maximum_council_tax_reduction\n\
-      \  else:\n    0)\n)"
+    formula: "max(\n  (if regulation_14_income_route_satisfied:\n    regulation_14_paragraph_8_a_amount\
+      \ + regulation_14_paragraph_8_b_amount\n  else:\n    0),\n  regulation_14_paragraph_8_c_amount\n\
+      )"
 - name: regulation_14_reduction_entitlement
   kind: derived
   entity: Person
@@ -143,6 +299,13 @@ rules:
         kind: condition
         source:
           corpus_citation_path: uk/regulation/ssi/2012/319/14
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: uk/regulation/ssi/2012/319/14
+          excerpt: The condition referred to in paragraph (1) is that the amount of
+            council tax reduction calculated under this regulation is not less than
+            the amount of council tax reduction calculated under regulation 14A.
       - path: versions[0].formula
         kind: import
         import:
@@ -164,8 +327,7 @@ rules:
   dtype: Money
   period: Day
   unit: GBP
-  source: The Council Tax Reduction (Scotland) Regulations 2012, regulation 14(1),
-    (8)-(9)
+  source: The Council Tax Reduction (Scotland) Regulations 2012, regulation 14(8)-(9)
   metadata:
     proof:
       atoms:
@@ -173,7 +335,13 @@ rules:
         kind: formula
         source:
           corpus_citation_path: uk/regulation/ssi/2012/319/14
+          excerpt: the amount to which the person is entitled is whichever is the
+            greater
   versions:
   - effective_from: '0001-01-01'
     formula: 'if regulation_14_reduction_entitlement: regulation_14_reduction_before_regulation_14a_comparison
       else: 0'
+module:
+  source_verification:
+    corpus_citation_path: uk/regulation/ssi/2012/319/14
+    source_sha256: 96c3e74c64fca582480560eab6f48e2580f60bab59524053cde80e3c8941f29f
