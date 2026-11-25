@@ -1,0 +1,14 @@
+- name: excess_support_is_support_awarded_beyond_entitlement
+  period: 2026-04
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-62#input.council_tax_support_awarded: 150
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-62#input.council_tax_support_entitlement: 100
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-62#excess_support: 50
+- name: no_excess_support_when_award_does_not_exceed_entitlement
+  period: 2026-04
+  input:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-62#input.council_tax_support_awarded: 100
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-62#input.council_tax_support_entitlement: 150
+  output:
+    uk-wakefield:policies/council-tax-support-scheme-working-age/block-62#excess_support: 0
