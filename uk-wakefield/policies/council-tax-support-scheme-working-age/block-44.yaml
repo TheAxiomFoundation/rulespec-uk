@@ -1,0 +1,28 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-44
+    source_sha256: f89bd65300746b845f8a2399f79af41b8c6e0eccd232eb99d6c88dcd6bf458ca
+  summary: The minimum Council Tax Support entitlement payable shall be £1.00 per
+    week.
+rules:
+- name: minimum_council_tax_support_entitlement
+  kind: parameter
+  dtype: Money
+  period: Week
+  unit: GBP
+  source: Wakefield Council Tax Support Scheme (Working Age), block 44
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: amount
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-44
+          excerpt: minimum Council Tax Support entitlement payable shall be £1.00
+            per week
+  versions:
+  - effective_from: '0001-01-01'
+    formula: '1.00'
