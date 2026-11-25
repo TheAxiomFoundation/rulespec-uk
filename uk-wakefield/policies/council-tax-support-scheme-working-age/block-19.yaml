@@ -1,0 +1,35 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-19
+    source_sha256: 99d7d95d892c62cbced7639df52f008bd9b586fa8f343deee5329c0a4ea47779
+  summary: The amount of gross self-employed income used in the calculation of Universal
+    Credit shall be used as gross earnings.
+inputs:
+- name: gross_self_employed_income_used_in_universal_credit_calculation
+  entity: Person
+  dtype: Money
+  period: Month
+  unit: GBP
+rules:
+- name: gross_earnings
+  kind: derived
+  entity: Person
+  dtype: Money
+  period: Month
+  unit: GBP
+  source: uk-wakefield/manual/council-tax-support-scheme-working-age/block-19
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-19
+          excerpt: The amount of gross self-employed income used in the calculation
+            of Universal Credit shall be used as gross earnings.
+  versions:
+  - effective_from: '0001-01-01'
+    formula: gross_self_employed_income_used_in_universal_credit_calculation
