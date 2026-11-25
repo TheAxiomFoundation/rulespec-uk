@@ -1,0 +1,61 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-55
+    source_sha256: 6794d857dc04fabb1c867e093c52e73e781cb06837eb2f49eac79d3395d1db9d
+  summary: The authority must make a decision on an application within 14 days of
+    receiving all information to determine the claim, or as soon as reasonably practicable
+    thereafter.
+inputs:
+- name: authority_made_decision
+  entity: CouncilTaxSupportApplication
+  dtype: Boolean
+  period: Day
+- name: days_from_receipt_of_all_claim_information_to_decision
+  entity: CouncilTaxSupportApplication
+  dtype: Integer
+  period: Day
+- name: decision_made_as_soon_as_reasonably_practicable_thereafter
+  entity: CouncilTaxSupportApplication
+  dtype: Boolean
+  period: Day
+rules:
+- name: decision_time_limit_days
+  kind: parameter
+  dtype: Integer
+  period: Day
+  source: uk-wakefield/manual/council-tax-support-scheme-working-age/block-55
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: parameter
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-55
+          excerpt: within 14 days
+  versions:
+  - effective_from: '0001-01-01'
+    formula: '14'
+- name: authority_decision_made_within_required_time
+  kind: derived
+  entity: CouncilTaxSupportApplication
+  dtype: Judgment
+  period: Day
+  source: uk-wakefield/manual/council-tax-support-scheme-working-age/block-55
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-55
+          excerpt: The authority must make a decision on an application under this
+            scheme within 14 days of receiving all the information to determine the
+            claim, or as soon as reasonably practicable thereafter.
+  versions:
+  - effective_from: '0001-01-01'
+    formula: "authority_made_decision\nand (\n  days_from_receipt_of_all_claim_information_to_decision\
+      \ <= decision_time_limit_days\n  or decision_made_as_soon_as_reasonably_practicable_thereafter\n\
+      )"
