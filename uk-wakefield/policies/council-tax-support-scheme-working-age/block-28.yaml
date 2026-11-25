@@ -1,0 +1,175 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-28
+    source_sha256: 6ac628260bfb94c5c250ddb46e30217cb368b656891342ed14519d910dc791b6
+  summary: “Where the earnings of an applicant consist of earnings from employment
+    as a self-employed earner,” weekly earnings are determined by average weekly earnings
+    over one year or, for recent engagement or a likely business-pattern change, over
+    a computation period that enables a more accurate determination. Computation-period
+    earnings are divided by its days and multiplied by 7; the calculation period is
+    the assessment period.
+inputs:
+- name: earnings_consist_of_self_employment
+  entity: Person
+  dtype: Boolean
+  period: Week
+- name: applicant_recently_became_engaged_in_self_employment
+  entity: Person
+  dtype: Boolean
+  period: Week
+- name: business_pattern_change_likely_affects_normal_business_pattern
+  entity: Person
+  dtype: Boolean
+  period: Week
+- name: computation_period_enables_more_accurate_weekly_determination
+  entity: Person
+  dtype: Boolean
+  period: Week
+- name: average_weekly_earnings_over_one_year
+  entity: Person
+  dtype: Money
+  unit: GBP
+  period: Week
+- name: earnings_over_computation_period
+  entity: Person
+  dtype: Money
+  unit: GBP
+  period: Week
+- name: computation_period_day_count
+  entity: Person
+  dtype: Count
+  period: Day
+rules:
+- name: computation_period_weekly_multiplier
+  kind: parameter
+  dtype: Count
+  source: Wakefield Council Tax Support Scheme (Working Age), paragraph 28(2)
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: parameter
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-28
+          excerpt: the product multiplied by 7
+  versions:
+  - effective_from: '0001-01-01'
+    formula: '7'
+- name: self_employment_earnings_determination_applies
+  kind: derived
+  entity: Person
+  dtype: Judgment
+  period: Week
+  source: Wakefield Council Tax Support Scheme (Working Age), paragraph 28(1)
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: condition
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-28
+          excerpt: Where the earnings of an applicant consist of earnings from employment
+            as a self-employed earner
+  versions:
+  - effective_from: '0001-01-01'
+    formula: earnings_consist_of_self_employment
+- name: one_year_average_method_applies
+  kind: derived
+  entity: Person
+  dtype: Judgment
+  period: Week
+  source: Wakefield Council Tax Support Scheme (Working Age), paragraph 28(1)(a)
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: condition
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-28
+          excerpt: over a period of one year
+  versions:
+  - effective_from: '0001-01-01'
+    formula: 'earnings_consist_of_self_employment
+
+      and not applicant_recently_became_engaged_in_self_employment
+
+      and not business_pattern_change_likely_affects_normal_business_pattern'
+- name: computation_period_method_applies
+  kind: derived
+  entity: Person
+  dtype: Judgment
+  period: Week
+  source: Wakefield Council Tax Support Scheme (Working Age), paragraph 28(1)(b)
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: condition
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-28
+          excerpt: recently become engaged in that employment or there has been a
+            change which is likely to affect the normal pattern of business
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-28
+          excerpt: or where the applicant has recently become engaged in that employment
+            or there has been a change which is likely to affect the normal pattern
+            of business, over such other period (“computation period”) as may, in
+            the particular case, enable the weekly amount of his earnings to be determined
+            more accurately.
+  versions:
+  - effective_from: '0001-01-01'
+    formula: "earnings_consist_of_self_employment\nand (\n  applicant_recently_became_engaged_in_self_employment\n\
+      \  or business_pattern_change_likely_affects_normal_business_pattern\n)\nand\
+      \ computation_period_enables_more_accurate_weekly_determination"
+- name: weekly_self_employment_earnings
+  kind: derived
+  entity: Person
+  dtype: Money
+  unit: GBP
+  period: Week
+  source: Wakefield Council Tax Support Scheme (Working Age), paragraphs 28(1)-(2)
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-28
+          excerpt: earnings over the computation period are to be divided by the number
+            equal to the number of days in that period and the product multiplied
+            by 7
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-28
+          excerpt: over a period of one year
+  versions:
+  - effective_from: '0001-01-01'
+    formula: "if computation_period_method_applies:\n  earnings_over_computation_period\
+      \ / computation_period_day_count * computation_period_weekly_multiplier\nelse:\n\
+      \  if one_year_average_method_applies:\n    average_weekly_earnings_over_one_year\n\
+      \  else:\n    0"
+- name: self_employment_calculation_period_is_assessment_period
+  kind: derived
+  entity: Person
+  dtype: Judgment
+  period: Week
+  source: Wakefield Council Tax Support Scheme (Working Age), paragraph 28(3)
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: definition
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-28
+          excerpt: The period over which the weekly amount of an applicant’s earnings
+            is calculated in accordance with this paragraph will be his assessment
+            period.
+  versions:
+  - effective_from: '0001-01-01'
+    formula: self_employment_earnings_determination_applies
