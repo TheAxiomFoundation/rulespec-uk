@@ -1,0 +1,103 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-70
+    source_sha256: fddc2362eda397b351b9cfae22b9d7c0baa9b083c3498e86983912de94be053f
+  summary: If identity must be proved in legal proceedings, the sender of electronically
+    communicated information delivered to an official computer system, or the recipient
+    of such information delivered from an official computer system, is presumed to
+    be the person recorded under that name on that system.
+inputs:
+- name: identity_must_be_proved_for_legal_proceedings
+  entity: Person
+  dtype: Boolean
+  period: Day
+- name: information_is_delivered_by_electronic_communication_to_official_computer_system
+  entity: Person
+  dtype: Boolean
+  period: Day
+- name: person_name_is_recorded_as_sender_on_that_official_computer_system
+  entity: Person
+  dtype: Boolean
+  period: Day
+- name: information_is_delivered_by_electronic_communication_from_official_computer_system
+  entity: Person
+  dtype: Boolean
+  period: Day
+- name: person_name_is_recorded_as_recipient_on_that_official_computer_system
+  entity: Person
+  dtype: Boolean
+  period: Day
+rules:
+- name: recorded_person_is_presumed_sender
+  kind: derived
+  entity: Person
+  dtype: Judgment
+  period: Day
+  source: uk-wakefield/manual/council-tax-support-scheme-working-age/block-70 (sender
+    branch)
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: condition
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-70
+          excerpt: If it is necessary to prove, for the purpose of any legal proceedings,
+            the identity of
+      - path: versions[0].formula
+        kind: predicate
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-70
+          excerpt: the sender of any information delivered by means of an electronic
+            communication to an official computer system
+      - path: versions[0].formula
+        kind: default
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-70
+          excerpt: is to be presumed to be the person whose name is recorded as such
+            on that official computer system
+  versions:
+  - effective_from: '0001-01-01'
+    formula: 'identity_must_be_proved_for_legal_proceedings
+
+      and information_is_delivered_by_electronic_communication_to_official_computer_system
+
+      and person_name_is_recorded_as_sender_on_that_official_computer_system'
+- name: recorded_person_is_presumed_recipient
+  kind: derived
+  entity: Person
+  dtype: Judgment
+  period: Day
+  source: uk-wakefield/manual/council-tax-support-scheme-working-age/block-70 (recipient
+    branch)
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: condition
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-70
+          excerpt: If it is necessary to prove, for the purpose of any legal proceedings,
+            the identity of
+      - path: versions[0].formula
+        kind: predicate
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-70
+          excerpt: the recipient of any such information delivered by means of an
+            electronic communication from an official computer system
+      - path: versions[0].formula
+        kind: default
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-70
+          excerpt: is to be presumed to be the person whose name is recorded as such
+            on that official computer system
+  versions:
+  - effective_from: '0001-01-01'
+    formula: 'identity_must_be_proved_for_legal_proceedings
+
+      and information_is_delivered_by_electronic_communication_from_official_computer_system
+
+      and person_name_is_recorded_as_recipient_on_that_official_computer_system'
