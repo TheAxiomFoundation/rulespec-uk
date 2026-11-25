@@ -1,0 +1,35 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-14
+    source_sha256: 04b5ba894dba28e086e5238c390aef4290db07b31c585249ac7b9154773f98d4
+  summary: A person is not entitled to Council Tax Support under this scheme for a
+    day where their Council Tax liability has been reduced as a consequence of the
+    authority’s Local Foster Carers Discount.
+inputs:
+- name: council_tax_liability_reduced_by_local_foster_carers_discount
+  entity: Person
+  dtype: Boolean
+  period: Day
+rules:
+- name: council_tax_support_entitlement
+  kind: derived
+  entity: Person
+  dtype: Judgment
+  period: Day
+  source: uk-wakefield/manual/council-tax-support-scheme-working-age/block-14
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: exception
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-14
+          excerpt: A person is not entitled to Council Tax Support under this scheme
+            in respect of a day or days where their Council Tax liability has been
+            reduced as a consequence of the authority’s Local Foster Carers Discount.
+  versions:
+  - effective_from: '0001-01-01'
+    formula: not council_tax_liability_reduced_by_local_foster_carers_discount
