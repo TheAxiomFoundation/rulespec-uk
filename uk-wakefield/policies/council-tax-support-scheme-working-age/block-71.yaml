@@ -1,0 +1,99 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-71
+    source_sha256: 975f78d66d9c18a62381c31b2166a945b6fe1b0912341baa50e0bec5964cfb50
+  summary: Delivery resulting from an electronic communication is presumed where delivery
+    to, or by, the relevant council is recorded on an official computer system; it
+    is presumed not to have resulted where delivered information to the council is
+    not so recorded. Receipt time and date are presumed to be those recorded on an
+    official computer system.
+inputs:
+- name: necessary_to_prove_electronic_communication_resulted_in_delivery
+  entity: LegalProceeding
+  dtype: Boolean
+  period: Day
+- name: information_delivered_to_relevant_council_is_recorded_on_official_computer_system
+  entity: LegalProceeding
+  dtype: Boolean
+  period: Day
+- name: information_delivered_by_relevant_council_is_recorded_on_official_computer_system
+  entity: LegalProceeding
+  dtype: Boolean
+  period: Day
+- name: information_delivered_to_relevant_council_is_not_recorded_on_official_computer_system
+  entity: LegalProceeding
+  dtype: Boolean
+  period: Day
+- name: necessary_to_prove_when_electronically_sent_information_was_received
+  entity: LegalProceeding
+  dtype: Boolean
+  period: Day
+- name: receipt_time_and_date_are_recorded_on_official_computer_system
+  entity: LegalProceeding
+  dtype: Boolean
+  period: Day
+rules:
+- name: electronic_communication_delivery_is_presumed
+  kind: derived
+  entity: LegalProceeding
+  dtype: Judgment
+  period: Day
+  source: block-71, first and second paragraphs
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-71
+          excerpt: this is presumed to have been the case where
+      - path: versions[0].formula
+        kind: condition
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-71
+          excerpt: any such information has been delivered to the relevant council,
+            if the delivery of that information has been recorded on an official computer
+            system; or
+      - path: versions[0].formula
+        kind: condition
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-71
+          excerpt: any such information has been delivered by the relevant council,
+            if the delivery of that information has been recorded on an official computer
+            system.
+      - path: versions[0].formula
+        kind: exception
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-71
+          excerpt: presumed not to be the case if that information delivered to the
+            relevant council has not been recorded
+  versions:
+  - effective_from: '0001-01-01'
+    formula: "necessary_to_prove_electronic_communication_resulted_in_delivery\nand\
+      \ not information_delivered_to_relevant_council_is_not_recorded_on_official_computer_system\n\
+      and (\n  information_delivered_to_relevant_council_is_recorded_on_official_computer_system\n\
+      \  or information_delivered_by_relevant_council_is_recorded_on_official_computer_system\n\
+      )"
+- name: recorded_receipt_time_and_date_are_presumed
+  kind: derived
+  entity: LegalProceeding
+  dtype: Judgment
+  period: Day
+  source: block-71, third paragraph
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: formula
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-71
+          excerpt: the time and date of receipt is presumed to be that recorded on
+            an official computer system
+  versions:
+  - effective_from: '0001-01-01'
+    formula: 'necessary_to_prove_when_electronically_sent_information_was_received
+
+      and receipt_time_and_date_are_recorded_on_official_computer_system'
