@@ -1,0 +1,53 @@
+format: rulespec/v1
+module:
+  proof_validation:
+    required: true
+  source_verification:
+    corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-2
+    source_sha256: 6cbbe4ba954a322b5789c4f6f6ed9c648e9192134eb1df3e59ad1e72168fe34c
+  summary: These rules only apply to persons who are not a pensioner, as prescribed
+    in Rule 3, and come into force from 1st April 2026.
+inputs:
+- name: person_is_not_a_pensioner_as_prescribed_in_rule_3
+  entity: Person
+  dtype: Boolean
+  period: Month
+rules:
+- name: pensioner_prescription_rule_reference
+  kind: parameter
+  dtype: Integer
+  source: Wakefield Council Tax Support Scheme (Working Age) 2026/27, block 2
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: parameter
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-2
+          excerpt: as prescribed in Rule 3
+  versions:
+  - effective_from: '2026-04-01'
+    formula: '3'
+- name: working_age_council_tax_support_rules_apply
+  kind: derived
+  entity: Person
+  dtype: Judgment
+  period: Month
+  source: Wakefield Council Tax Support Scheme (Working Age) 2026/27, block 2
+  metadata:
+    proof:
+      atoms:
+      - path: versions[0].formula
+        kind: condition
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-2
+          excerpt: only apply to persons who are not a pensioner, as prescribed in
+            Rule 3
+      - path: versions[0].effective_from
+        kind: effective_period
+        source:
+          corpus_citation_path: uk-wakefield/manual/council-tax-support-scheme-working-age/block-2
+          excerpt: come into force from 1st April 2026
+  versions:
+  - effective_from: '2026-04-01'
+    formula: person_is_not_a_pensioner_as_prescribed_in_rule_3
